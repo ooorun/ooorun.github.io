@@ -1,6 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>如何安装 Node.js</title>
+    <url>/post/how-to-install-nodejs.html</url>
+    <content><![CDATA[<p>本文将带介绍如何在电脑上安装 Node.js 运行环境，从而可以使用丰富的应用 Nodejs 程序。 </p>
+<div class="tabs"><div class="nav-tabs"><button type="button" class="tab active">Windows</button><button type="button" class="tab">macOS</button></div><div class="tab-contents"><div class="tab-item-content active"><h2 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h2><p>测试安装环境为 <code>Windows 11</code></p>
+<h3 id="下载-Node-js"><a href="#下载-Node-js" class="headerlink" title="下载 Node.js"></a>下载 Node.js</h3><p>访问 Node.js 的官方网站的 <a href="https://nodejs.org/zh-cn/download/prebuilt-installer">下载页面</a> 下载安装包。 </p>
+<p>我们选择 <strong>预构建安装程序</strong> ，选择一下自己的系统与 CPU 架构类型， Windows 一般选择 <strong>x64</strong>，再选择 Node.js 版本。</p>
+<div class="note info modern"><p>推荐选择版本号为偶数的 LTS 版本</p>
+</div>
+![nodejs-home-page](https://img.nep.me/i/2024/12/13/7fzq5m-2.webp)
+
+<h3 id="安装-Node-js"><a href="#安装-Node-js" class="headerlink" title="安装 Node.js"></a>安装 Node.js</h3><p>然后打开安装程序 <code>node-v22.12.0-x64.msi</code>，安装过程没有陷阱，我们 <strong>同意</strong> 协议后，一路点击 Next 即可。  </p>
+<p><img src="https://img.nep.me/i/2024/12/13/7hc7pi-2.webp" alt="nodejs-setup"></p>
+<p>安装完成后，打开终端程序：</p>
+<ul>
+<li>右键点击开始菜单，选择终端</li>
+<li>或是按 <code>Windows + R</code> 快捷键打开 <strong>运行</strong> 窗口，输入 <code>cmd</code> ，回车打开</li>
+<li>或是在资源管理器的地址栏中输入 <code>cmd</code> 回车打开（终端的运行目录将是资源管理器所在的目录）</li>
+</ul>
+<p>运行下面的命令测试安装结果。</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">node -v</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm -v</span><br></pre></td></tr></table></figure>
+
+<p>如果可以成功输出版本号，表示安装成功。  </p>
+<p><img src="https://img.nep.me/i/2024/12/13/7ilvge-2.webp" alt="nodejs-install-done"></p></div><div class="tab-item-content"><h2 id="macOS"><a href="#macOS" class="headerlink" title="macOS"></a>macOS</h2><p>测试安装环境为 <code>macOS 15.1</code> ，macOS 更推荐使用 **包管理器 <code>Homebrew</code> 进行安装。</p>
+<blockquote>
+<p>Homebrew 是 macOS 和 Linux 缺失软件包的管理器，用于安装 Apple没有预装但你需要的东西。</p>
+</blockquote>
+<p>安装需要使用终端，<a href="https://support.apple.com/zh-cn/guide/terminal/apd5265185d-f365-44cb-8b09-71a064a42125/mac">在 Mac 上打开或退出“终端”</a>：</p>
+<ul>
+<li>启动台 &gt; 其他 &gt; 终端</li>
+<li><strong>启动台</strong> 或是　<code>Commond⌘ + 空格</code> 打开聚焦搜索，搜索 <strong>终端</strong> 或是 <strong>Terminal</strong></li>
+</ul>
+<h3 id="安装-Homebrew"><a href="#安装-Homebrew" class="headerlink" title="安装 Homebrew"></a>安装 Homebrew</h3><p>复制安装命令  </p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">/bin/bash -c <span class="string">&quot;<span class="subst">$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)</span>&quot;</span></span><br></pre></td></tr></table></figure>
+<p>可以访问 <a href="https://brew.sh/zh-cn/">Homebrew 官网</a> 查看</p>
+<p>在终端内执行安装命令，安装时需要输入你的电脑密码进行授权：  </p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">==&gt; Checking <span class="keyword">for</span> `<span class="built_in">sudo</span>` access (<span class="built_in">which</span> may request your password)...</span><br><span class="line">Password:</span><br></pre></td></tr></table></figure>
+<p>brew 会提示将安装的软件以及创建的文件夹，按回车继续，等待下载和安装完成。</p>
+<p>命令执行结束后按照提示复制执行下面的三条命令添加 PATH ：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> &gt;&gt; /Users/me/.zprofile</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;eval &quot;$(/opt/homebrew/bin/brew shellenv)&quot;&#x27;</span> &gt;&gt; /Users/me/.zprofile</span><br><span class="line"><span class="built_in">eval</span> <span class="string">&quot;<span class="subst">$(/opt/homebrew/bin/brew shellenv)</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>然后可以执行 <code>brew -v</code> 测试安装结果，成功会显示 Hombrew 的版本号。   </p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt;brew -v</span><br><span class="line">Homebrew 4.4.11</span><br></pre></td></tr></table></figure>
+<p>如果使用了 <code>oh-my-zsh</code> ，需要执行下面的命令。</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export PATH=&quot;/opt/homebrew/bin:$PATH&quot;&#x27;</span> &gt;&gt; ~/.zshrc   </span><br><span class="line"><span class="built_in">source</span> ~/.zshrc</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装-Nodejs"><a href="#安装-Nodejs" class="headerlink" title="安装 Nodejs"></a>安装 Nodejs</h3><p>打开终端，执行</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">brew install node</span><br></pre></td></tr></table></figure>
+
+<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt;node -v</span><br><span class="line">v23.4.0</span><br><span class="line"></span><br><span class="line">&gt;npm -v</span><br><span class="line">10.9.2</span><br></pre></td></tr></table></figure>
+
+<h3 id="brew-常用命令"><a href="#brew-常用命令" class="headerlink" title="brew 常用命令"></a>brew 常用命令</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 安装指定</span></span><br><span class="line">brew install node@22</span><br><span class="line"></span><br><span class="line"><span class="comment"># 卸载</span></span><br><span class="line">brew remove node</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看已安装软件</span></span><br><span class="line">brew list </span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查更新</span></span><br><span class="line">brew update</span><br><span class="line"></span><br><span class="line"><span class="comment"># 下载更新</span></span><br><span class="line">brew upgrade</span><br></pre></td></tr></table></figure></div></div><div class="tab-to-top"><button type="button" aria-label="scroll to top"><i class="fas fa-arrow-up"></i></button></div></div>
+
+<h2 id="其他操作"><a href="#其他操作" class="headerlink" title="其他操作"></a>其他操作</h2><h3 id="更换镜像源"><a href="#更换镜像源" class="headerlink" title="更换镜像源"></a>更换镜像源</h3><div class="note info modern"><p>中国大陆用户可以使用下面的命令切换使用淘宝的镜像源，加速下载</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm config <span class="built_in">set</span> registry https://registry.npm.taobao.org</span><br></pre></td></tr></table></figure></div>
+<p>查看当前的镜像源</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm config get registry</span><br></pre></td></tr></table></figure>
+
+
+]]></content>
+      <categories>
+        <category>教程</category>
+      </categories>
+      <tags>
+        <tag>Nodejs</tag>
+        <tag>macOS</tag>
+        <tag>Windows</tag>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Docker 项目，使用 EasyImage 轻松搭建个人图床</title>
     <url>/post/docker-project-easy-images.html</url>
     <content><![CDATA[<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>我们有时需要上传一些图片用于个人博客，或是其他项目分享，如果你也像我一样更加希望图片存放在自己的服务器上而不是第三方平台上，那么推荐搭建一个属于自己的图床。  </p>
@@ -129,78 +201,6 @@
         <tag>Docker Compose</tag>
         <tag>EasyImage</tag>
         <tag>图床</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>如何安装 Node.js</title>
-    <url>/post/how-to-install-nodejs.html</url>
-    <content><![CDATA[<p>本文将带介绍如何在电脑上安装 Node.js 运行环境，从而可以使用丰富的应用 Nodejs 程序。 </p>
-<div class="tabs"><div class="nav-tabs"><button type="button" class="tab active">Windows</button><button type="button" class="tab">macOS</button></div><div class="tab-contents"><div class="tab-item-content active"><h2 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h2><p>测试安装环境为 <code>Windows 11</code></p>
-<h3 id="下载-Node-js"><a href="#下载-Node-js" class="headerlink" title="下载 Node.js"></a>下载 Node.js</h3><p>访问 Node.js 的官方网站的 <a href="https://nodejs.org/zh-cn/download/prebuilt-installer">下载页面</a> 下载安装包。 </p>
-<p>我们选择 <strong>预构建安装程序</strong> ，选择一下自己的系统与 CPU 架构类型， Windows 一般选择 <strong>x64</strong>，再选择 Node.js 版本。</p>
-<div class="note info modern"><p>推荐选择版本号为偶数的 LTS 版本</p>
-</div>
-![nodejs-home-page](https://img.nep.me/i/2024/12/13/7fzq5m-2.webp)
-
-<h3 id="安装-Node-js"><a href="#安装-Node-js" class="headerlink" title="安装 Node.js"></a>安装 Node.js</h3><p>然后打开安装程序 <code>node-v22.12.0-x64.msi</code>，安装过程没有陷阱，我们 <strong>同意</strong> 协议后，一路点击 Next 即可。  </p>
-<p><img src="https://img.nep.me/i/2024/12/13/7hc7pi-2.webp" alt="nodejs-setup"></p>
-<p>安装完成后，打开终端程序：</p>
-<ul>
-<li>右键点击开始菜单，选择终端</li>
-<li>或是按 <code>Windows + R</code> 快捷键打开 <strong>运行</strong> 窗口，输入 <code>cmd</code> ，回车打开</li>
-<li>或是在资源管理器的地址栏中输入 <code>cmd</code> 回车打开（终端的运行目录将是资源管理器所在的目录）</li>
-</ul>
-<p>运行下面的命令测试安装结果。</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">node -v</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm -v</span><br></pre></td></tr></table></figure>
-
-<p>如果可以成功输出版本号，表示安装成功。  </p>
-<p><img src="https://img.nep.me/i/2024/12/13/7ilvge-2.webp" alt="nodejs-install-done"></p></div><div class="tab-item-content"><h2 id="macOS"><a href="#macOS" class="headerlink" title="macOS"></a>macOS</h2><p>测试安装环境为 <code>macOS 15.1</code> ，macOS 更推荐使用 **包管理器 <code>Homebrew</code> 进行安装。</p>
-<blockquote>
-<p>Homebrew 是 macOS 和 Linux 缺失软件包的管理器，用于安装 Apple没有预装但你需要的东西。</p>
-</blockquote>
-<p>安装需要使用终端，<a href="https://support.apple.com/zh-cn/guide/terminal/apd5265185d-f365-44cb-8b09-71a064a42125/mac">在 Mac 上打开或退出“终端”</a>：</p>
-<ul>
-<li>启动台 &gt; 其他 &gt; 终端</li>
-<li><strong>启动台</strong> 或是　<code>Commond⌘ + 空格</code> 打开聚焦搜索，搜索 <strong>终端</strong> 或是 <strong>Terminal</strong></li>
-</ul>
-<h3 id="安装-Homebrew"><a href="#安装-Homebrew" class="headerlink" title="安装 Homebrew"></a>安装 Homebrew</h3><p>复制安装命令  </p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">/bin/bash -c <span class="string">&quot;<span class="subst">$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)</span>&quot;</span></span><br></pre></td></tr></table></figure>
-<p>可以访问 <a href="https://brew.sh/zh-cn/">Homebrew 官网</a> 查看</p>
-<p>在终端内执行安装命令，安装时需要输入你的电脑密码进行授权：  </p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">==&gt; Checking <span class="keyword">for</span> `<span class="built_in">sudo</span>` access (<span class="built_in">which</span> may request your password)...</span><br><span class="line">Password:</span><br></pre></td></tr></table></figure>
-<p>brew 会提示将安装的软件以及创建的文件夹，按回车继续，等待下载和安装完成。</p>
-<p>命令执行结束后按照提示复制执行下面的三条命令添加 PATH ：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> &gt;&gt; /Users/me/.zprofile</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;eval &quot;$(/opt/homebrew/bin/brew shellenv)&quot;&#x27;</span> &gt;&gt; /Users/me/.zprofile</span><br><span class="line"><span class="built_in">eval</span> <span class="string">&quot;<span class="subst">$(/opt/homebrew/bin/brew shellenv)</span>&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>然后可以执行 <code>brew -v</code> 测试安装结果，成功会显示 Hombrew 的版本号。   </p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt;brew -v</span><br><span class="line">Homebrew 4.4.11</span><br></pre></td></tr></table></figure>
-<p>如果使用了 <code>oh-my-zsh</code> ，需要执行下面的命令。</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export PATH=&quot;/opt/homebrew/bin:$PATH&quot;&#x27;</span> &gt;&gt; ~/.zshrc   </span><br><span class="line"><span class="built_in">source</span> ~/.zshrc</span><br></pre></td></tr></table></figure>
-
-<h3 id="安装-Nodejs"><a href="#安装-Nodejs" class="headerlink" title="安装 Nodejs"></a>安装 Nodejs</h3><p>打开终端，执行</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">brew install node</span><br></pre></td></tr></table></figure>
-
-<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt;node -v</span><br><span class="line">v23.4.0</span><br><span class="line"></span><br><span class="line">&gt;npm -v</span><br><span class="line">10.9.2</span><br></pre></td></tr></table></figure>
-
-<h3 id="brew-常用命令"><a href="#brew-常用命令" class="headerlink" title="brew 常用命令"></a>brew 常用命令</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 安装指定</span></span><br><span class="line">brew install node@22</span><br><span class="line"></span><br><span class="line"><span class="comment"># 卸载</span></span><br><span class="line">brew remove node</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看已安装软件</span></span><br><span class="line">brew list </span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查更新</span></span><br><span class="line">brew update</span><br><span class="line"></span><br><span class="line"><span class="comment"># 下载更新</span></span><br><span class="line">brew upgrade</span><br></pre></td></tr></table></figure></div></div><div class="tab-to-top"><button type="button" aria-label="scroll to top"><i class="fas fa-arrow-up"></i></button></div></div>
-
-<h2 id="其他操作"><a href="#其他操作" class="headerlink" title="其他操作"></a>其他操作</h2><h3 id="更换镜像源"><a href="#更换镜像源" class="headerlink" title="更换镜像源"></a>更换镜像源</h3><div class="note info modern"><p>中国大陆用户可以使用下面的命令切换使用淘宝的镜像源，加速下载</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm config <span class="built_in">set</span> registry https://registry.npm.taobao.org</span><br></pre></td></tr></table></figure></div>
-<p>查看当前的镜像源</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm config get registry</span><br></pre></td></tr></table></figure>
-
-
-]]></content>
-      <categories>
-        <category>教程</category>
-      </categories>
-      <tags>
-        <tag>Nodejs</tag>
-        <tag>macOS</tag>
-        <tag>Windows</tag>
-        <tag>Linux</tag>
       </tags>
   </entry>
   <entry>
