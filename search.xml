@@ -229,7 +229,7 @@
   <entry>
     <title>如何使用 SSH key 连接 GitHub</title>
     <url>/post/how-to-add-ssh-key-to-github.html</url>
-    <content><![CDATA[<p>我们如果从 GitHub 推送拉取仓库时，每次输入账户密码会很麻烦，添加一个 SSH key 可以省略这个过程。  </p>
+    <content><![CDATA[<p>如果需要频繁的进行 GitHub pull&#x2F;push 操作，使用 SSH key 绑定到 GitHub 会更加方便，绑定后将使用公钥加密来验证用户身份，比传统的用户名和密码方式更安全。  </p>
 <p>本文命令与截图对应下面的系统版本</p>
 <ul>
 <li><strong>Windows 11</strong> : 需要先安装 <a href="https://git-scm.com/downloads/win">Git</a> , 安装选项全部选择默认即可</li>
@@ -246,7 +246,7 @@
 <p>安装 Git 后，使用 <code>git -v</code> 测试，如果安装成功会显示版本号</p>
 <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt; git -v</span><br><span class="line">git version 2.47.1</span><br></pre></td></tr></table></figure>
 <p>然后设置 Git 的个人信息</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;yourname&quot;</span></span><br><span class="line">git config --global user.email <span class="string">&quot;youremail&quot;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;yourname&quot;</span></span><br><span class="line">git config --global user.email <span class="string">&quot;your_email@example.com&quot;</span></span><br></pre></td></tr></table></figure>
 
 <h2 id="测试一下-github-com"><a href="#测试一下-github-com" class="headerlink" title="测试一下 github.com"></a>测试一下 github.com</h2><div class="note info modern"><p>Windows 10 用户可以使用 Git Bash</p>
 </div>
@@ -259,19 +259,19 @@
 <p>我们没有添加过 SSH key，会提示 <code>Permission denied (publickey).</code></p>
 <div class="tabs"><div class="nav-tabs"><button type="button" class="tab active">Windows</button><button type="button" class="tab">macOS</button></div><div class="tab-contents"><div class="tab-item-content active"><p><img src="https://img.nep.me/i/2024/12/13/122owl6-2.webp"></p></div><div class="tab-item-content"><p><img src="https://img.nep.me/i/2024/12/13/124oz3l-2.webp"></p></div></div><div class="tab-to-top"><button type="button" aria-label="scroll to top"><i class="fas fa-arrow-up"></i></button></div></div>
 
-<h2 id="创建-SSH-Key"><a href="#创建-SSH-Key" class="headerlink" title="创建 SSH Key"></a>创建 SSH Key</h2><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> .ssh</span><br><span class="line"></span><br><span class="line">ssh-keygen -t rsa -C <span class="string">&quot;youremail&quot;</span></span><br></pre></td></tr></table></figure>
+<h2 id="创建-SSH-Key"><a href="#创建-SSH-Key" class="headerlink" title="创建 SSH Key"></a>创建 SSH Key</h2><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> .ssh</span><br><span class="line"></span><br><span class="line">ssh-keygen -t rsa -C <span class="string">&quot;your_email@example.com&quot;</span></span><br></pre></td></tr></table></figure>
 
 <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">C:\Users\ME\.ssh&gt;ssh-keygen -t rsa</span><br><span class="line"></span><br><span class="line">Generating public/private rsa key pair.</span><br><span class="line"><span class="comment"># 设置保存文件名，留空则为 id_rsa</span></span><br><span class="line">Enter file <span class="keyword">in</span> <span class="built_in">which</span> to save the key (C:\Users\ME/.ssh/id_rsa):</span><br><span class="line"><span class="comment"># 设置密码，留空则是没有密码</span></span><br><span class="line">Enter passphrase (empty <span class="keyword">for</span> no passphrase):</span><br><span class="line"><span class="comment"># 确认密码</span></span><br><span class="line">Enter same passphrase again:</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成的私钥</span></span><br><span class="line">Your identification has been saved <span class="keyword">in</span> C:\Users\ME/.ssh/id_rsa</span><br><span class="line"><span class="comment"># 生成的公钥</span></span><br><span class="line">Your public key has been saved <span class="keyword">in</span> C:\Users\ME/.ssh/id_rsa.pub</span><br></pre></td></tr></table></figure>
 <div class="note warning modern"><p><code>.pub</code> 后缀的是公钥，可以公开，<strong>私钥相当于个人密码，要小心保存</strong></p>
 </div>
 
-<div class="note info modern"><p>git 默认会自动查找名称为 <code>id_rsa</code> 的 ssh key ，所以可以不设置文件名称 </p>
+<div class="note info modern"><p>git 默认会查找名称为 <code>id_rsa</code> 的 SSH key </p>
 </div>
 
 <div class="note primary modern"><p>如果设置了文件名称，或是生成其他格式的 SSH key 可以查看后文的配合 <code>SSH config</code> 的部分</p>
 </div>
 
-<div class="note default modern"><p>rsa 格式的 key 内容很长，我们可以直接使用 <code>ssh-keygen</code> 生成 <code>ed25519</code> 格式的 key，更简洁，更安全</p>
+<div class="note default modern"><p>rsa 格式的 key 内容很长，使用 <code>ssh-keygen -t ed25519</code> 生成 <code>ed25519</code> 格式的 key，更简洁，更安全</p>
 </div>
 
 <h2 id="添加公钥到-GitHub"><a href="#添加公钥到-GitHub" class="headerlink" title="添加公钥到 GitHub"></a>添加公钥到 GitHub</h2><p>使用命令或是文本编辑器查看公钥的内容</p>
@@ -279,7 +279,7 @@
 <li>Windows 使用 <code>type id_rsa.pub</code> </li>
 <li>macOS &#x2F; Linux 使用 <code>cat id_rsa.pub</code></li>
 </ul>
-<p>访问 <a href="https://github.com/settings/keys">Github - SSH Keys</a>，手动访问路径：右上角点击 <strong>头像</strong> &gt; <strong>Settings</strong> &gt; <strong>SSH and GPG keys</strong></p>
+<p>访问 <a href="https://github.com/settings/keys">Github - SSH Keys</a>，点击右上角 <strong>New SSH key</strong>。<br>手动访问路径：右上角点击 <strong>头像</strong> &gt; <strong>Settings</strong> &gt; <strong>SSH and GPG keys</strong> &gt; <strong>New SSH key</strong></p>
 <p><img src="https://img.nep.me/i/2024/12/13/12s8co0-2.webp" alt="github-add-ssh-key"></p>
 <ul>
 <li><strong>Title</strong>：取个备注名字</li>
@@ -293,12 +293,17 @@
 <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt;ssh -T git@github.com</span><br><span class="line">Hi &lt;Your username&gt;! You<span class="string">&#x27;ve successfully authenticated, but GitHub does not provide shell access.</span></span><br></pre></td></tr></table></figure>
 
 <h2 id="配合-SSH-config-使用"><a href="#配合-SSH-config-使用" class="headerlink" title="配合 SSH config 使用"></a>配合 SSH config 使用</h2><p>如果我们的私钥的名称不是 <code>id_rsa</code> ，我们将仍然无法成功连接 GitHub ，你可以将私钥修改文件名后再试试 </p>
-<div class="tabs"><div class="nav-tabs"><button type="button" class="tab active">Windows</button><button type="button" class="tab">macOS</button></div><div class="tab-contents"><div class="tab-item-content active"><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt; rename id_rsa id_mysshkey</span><br><span class="line"></span><br><span class="line">&gt; ssh -T git@github.com</span><br><span class="line">git@github.com: Permission denied (publickey).</span><br></pre></td></tr></table></figure></div><div class="tab-item-content"><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt; <span class="built_in">mv</span> id_rsa id_mysshkey</span><br><span class="line"></span><br><span class="line">&gt; ssh -T git@github.com</span><br><span class="line">git@github.com: Permission denied (publickey).</span><br></pre></td></tr></table></figure></div></div><div class="tab-to-top"><button type="button" aria-label="scroll to top"><i class="fas fa-arrow-up"></i></button></div></div>
+<div class="tabs"><div class="nav-tabs"><button type="button" class="tab active">Windows</button><button type="button" class="tab">macOS&Linux</button></div><div class="tab-contents"><div class="tab-item-content active"><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt; rename id_rsa id_mysshkey</span><br><span class="line"></span><br><span class="line">&gt; ssh -T git@github.com</span><br><span class="line">git@github.com: Permission denied (publickey).</span><br></pre></td></tr></table></figure></div><div class="tab-item-content"><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt; <span class="built_in">mv</span> id_rsa id_mysshkey</span><br><span class="line"></span><br><span class="line">&gt; ssh -T git@github.com</span><br><span class="line">git@github.com: Permission denied (publickey).</span><br></pre></td></tr></table></figure></div></div><div class="tab-to-top"><button type="button" aria-label="scroll to top"><i class="fas fa-arrow-up"></i></button></div></div>
 
 <p>这时我们可以通过在 <code>.ssh</code> 文件夹中创建一个 <code>config</code> 文件，填入下面的内容来告诉 git 程序在哪里找到密钥</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Host github.com</span><br><span class="line">    HostName github.com</span><br><span class="line">    User git</span><br><span class="line">    IdentityFile ~/.ssh/id_mysshkey</span><br></pre></td></tr></table></figure>
 
-<p>其中 <code>IdentityFile</code> 部分填写私钥的路径， <code>~</code> 代表用户 Home 目录<br>    - Windows 相当于 <code>C:\Users\&lt;username&gt;\</code><br>    - macOS 相当于 <code>/Users/&lt;username&gt;/</code><br>    - Linux 相当于 <code>/root/</code> 或是 <code>/&lt;username&gt;/</code></p>
+<p>其中 <code>IdentityFile</code> 部分填写私钥的路径， <code>~</code> 代表用户 Home 目录</p>
+<ul>
+<li>Windows 相当于 <code>C:\Users\&lt;username&gt;\</code></li>
+<li>macOS 相当于 <code>/Users/&lt;username&gt;/</code></li>
+<li>Linux 相当于 <code>/root/</code> 或是 <code>/home/&lt;username&gt;/</code></li>
+</ul>
 <p>再进行测试，发现又能显示成功的欢迎消息。  </p>
 <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt;ssh -T git@github.com</span><br><span class="line">Hi &lt;Your username&gt;! You<span class="string">&#x27;ve successfully authenticated, but GitHub does not provide shell access.</span></span><br></pre></td></tr></table></figure>
 

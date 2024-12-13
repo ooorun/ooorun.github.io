@@ -1,8 +1,8 @@
+http://ooo.run/post/how-to-add-ssh-key-to-github.html
 http://ooo.run/post/how-to-install-homebrew-on-macos.html
 http://ooo.run/post/how-to-install-nodejs.html
 http://ooo.run/post/how-to-add-comment-system-for-static-blog.html
 http://ooo.run/post/start-blog-with-hexo-and-github.html
-http://ooo.run/post/how-to-add-ssh-key-to-github.html
 http://ooo.run/post/docker-project-easy-images.html
 http://ooo.run/about/index.html
 http://ooo.run/link/index.html
