@@ -332,7 +332,7 @@
 <p>首先第一步前往域名服务商或是 Cloudflare ，在 DNS 设置中添加一条 CNAME 域名记录</p>
 <ul>
 <li>类型为 <code>CNAME</code></li>
-<li>名称主域名填写 <code>@</code> (代表 <a href="https://ooo.run),或是/">https://ooo.run)，或是</a> www 或是一个其他的子域名前缀</li>
+<li>名称主域名填写 <code>@</code> ( 代表 <a href="https://ooo.run/">https://ooo.run</a> )，也可以是 www 或一个其他的子域名</li>
 <li>内容是 <code>username.github.io</code><br><img src="https://img.nep.me/i/2024/12/13/akqwpo-2.webp" alt="cloudflare cname"></li>
 </ul>
 <p>第二步访问 GitHub 网站，在仓库的 <code>Settings</code> &gt; <code>Pages</code> &gt; <code>Custon domain</code> 中，填写我们的域名。</p>
@@ -342,13 +342,10 @@
 <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">hexo g </span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure>
 
 <p>然后我们就可以通过自己的域名访问博客了。</p>
-<div class="note warning modern"><p>TODO: 设置评论</p>
+<h2 id="添加评论系统"><a href="#添加评论系统" class="headerlink" title="添加评论系统"></a>添加评论系统</h2><div class="note warning modern"><p>TODO: 设置评论</p>
 </div>
 
-<div class="note warning modern"><p>TODO: 备份 + Github Action 免去手动 deploy</p>
-</div>
-
-<div class="note warning modern"><p>TODO: 我的 Butterfly 设置过程</p>
+<h2 id="做好备份"><a href="#做好备份" class="headerlink" title="做好备份"></a>做好备份</h2><div class="note warning modern"><p>TODO: 备份 + Github Action 免去手动 deploy</p>
 </div>
 
 <h2 id="常用的-Hexo-命令介绍"><a href="#常用的-Hexo-命令介绍" class="headerlink" title="常用的 Hexo 命令介绍"></a>常用的 Hexo 命令介绍</h2><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 本地预览</span></span><br><span class="line">hexo s</span><br><span class="line"><span class="comment"># 等同于</span></span><br><span class="line">hexo server</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成站点</span></span><br><span class="line">hexo g</span><br><span class="line"><span class="comment"># 等同于</span></span><br><span class="line">hexo generate</span><br><span class="line"></span><br><span class="line"><span class="comment"># 部署</span></span><br><span class="line">hexo d</span><br><span class="line"><span class="comment"># 等同于</span></span><br><span class="line">hexo deploy </span><br><span class="line"></span><br><span class="line"><span class="comment"># 清除缓存，有时遇到一些错误，可以先执行一下 hexo clean</span></span><br><span class="line">hexo clean</span><br></pre></td></tr></table></figure>
