@@ -16,12 +16,7 @@
 <li>支持限制最低宽度&#x2F;高度上传</li>
 <li>支持API</li>
 <li>在线管理图片</li>
-<li>支持网站统计</li>
-<li>支持设置广告</li>
-<li>支持图片鉴黄</li>
-<li>支持自定义代码</li>
-<li>支持上传IP黑白名单</li>
-<li>支持创建仅上传用户</li>
+<li>等更多功能</li>
 </ul>
 <h2 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h2><p>本文的命令适用于 Debian 12，并且需要在 root 用户下完成，请使用 <code>sudo -i</code> 或 <code>su root</code> 切换到 root 用户进行操作。</p>
 <h3 id="安装-Docker"><a href="#安装-Docker" class="headerlink" title="安装 Docker"></a>安装 Docker</h3><p>相比于直接安装 Debian 仓库中的 docker，更推荐使用 Docker 官方的源进行安装，并且将安装 <code>docker compose</code> 进行管理 Docker 项目。</p>
