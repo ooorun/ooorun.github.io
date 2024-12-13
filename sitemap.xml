@@ -129,20 +129,6 @@
   </url>
   
   <url>
-    <loc>http://ooo.run/tags/GitHub/</loc>
-    <lastmod>2024-12-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://ooo.run/tags/SSH/</loc>
-    <lastmod>2024-12-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>http://ooo.run/tags/Hexo/</loc>
     <lastmod>2024-12-13</lastmod>
     <changefreq>weekly</changefreq>
@@ -172,6 +158,20 @@
   
   <url>
     <loc>http://ooo.run/tags/Giscus/</loc>
+    <lastmod>2024-12-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://ooo.run/tags/GitHub/</loc>
+    <lastmod>2024-12-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://ooo.run/tags/SSH/</loc>
     <lastmod>2024-12-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
