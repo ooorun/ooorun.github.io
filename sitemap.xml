@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://ooo.run/post/how-to-add-comment-system-for-static-blog.html</loc>
+    
+    <lastmod>2024-12-14</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://ooo.run/post/use-nginx-proxy-manager.html</loc>
     
     <lastmod>2024-12-14</lastmod>
@@ -21,15 +30,6 @@
   
   <url>
     <loc>http://ooo.run/css/custom.css</loc>
-    
-    <lastmod>2024-12-14</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://ooo.run/post/how-to-add-comment-system-for-static-blog.html</loc>
     
     <lastmod>2024-12-14</lastmod>
     
