@@ -151,20 +151,6 @@
   </url>
   
   <url>
-    <loc>http://ooo.run/tags/EasyImage/</loc>
-    <lastmod>2024-12-14</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://ooo.run/tags/%E5%9B%BE%E5%BA%8A/</loc>
-    <lastmod>2024-12-14</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>http://ooo.run/tags/Debian/</loc>
     <lastmod>2024-12-14</lastmod>
     <changefreq>weekly</changefreq>
@@ -173,6 +159,20 @@
   
   <url>
     <loc>http://ooo.run/tags/Linux/</loc>
+    <lastmod>2024-12-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://ooo.run/tags/EasyImage/</loc>
+    <lastmod>2024-12-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://ooo.run/tags/%E5%9B%BE%E5%BA%8A/</loc>
     <lastmod>2024-12-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -214,20 +214,6 @@
   </url>
   
   <url>
-    <loc>http://ooo.run/tags/Homebrew/</loc>
-    <lastmod>2024-12-14</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://ooo.run/tags/macOS/</loc>
-    <lastmod>2024-12-14</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>http://ooo.run/tags/GitHub/</loc>
     <lastmod>2024-12-14</lastmod>
     <changefreq>weekly</changefreq>
@@ -242,6 +228,27 @@
   </url>
   
   <url>
+    <loc>http://ooo.run/tags/Homebrew/</loc>
+    <lastmod>2024-12-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://ooo.run/tags/macOS/</loc>
+    <lastmod>2024-12-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://ooo.run/tags/Butterfly/</loc>
+    <lastmod>2024-12-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>http://ooo.run/tags/Nodejs/</loc>
     <lastmod>2024-12-14</lastmod>
     <changefreq>weekly</changefreq>
@@ -250,13 +257,6 @@
   
   <url>
     <loc>http://ooo.run/tags/Windows/</loc>
-    <lastmod>2024-12-14</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://ooo.run/tags/Butterfly/</loc>
     <lastmod>2024-12-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
