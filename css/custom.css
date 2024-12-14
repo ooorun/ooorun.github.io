@@ -1,0 +1,16 @@
+/* note 块，代码块， tab 块 不要圆角 */
+.container .tabs {
+  border-radius: 0 !important;
+}
+.container figure.highlight {
+  border-radius: 0 !important;
+}
+blockquote {
+  border-radius: 0 !important;
+}
+/* 给图片价格边框 */
+img {
+  border: 1px solid #ccc; /* 1px 灰色边框 */
+  padding: 2px; /* 图片内边距为 2px */
+  box-sizing: border-box; /* 保证边框和内边距不影响图片尺寸 */
+}
