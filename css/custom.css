@@ -8,9 +8,9 @@
 blockquote {
   border-radius: 0 !important;
 }
-/* 给图片价格边框 */
+/* 给文章内的图片给图片加个边框 */
 img {
-  border: 1px solid #ccc; /* 1px 灰色边框 */
+  border: 1px solid #eee; /* 1px 灰色边框 */
   padding: 2px; /* 图片内边距为 2px */
   box-sizing: border-box; /* 保证边框和内边距不影响图片尺寸 */
 }
