@@ -1,0 +1,1482 @@
+<!doctype html>
+
+<html lang="zh-CN" data-fancybox-enabled="1">
+<head>
+  
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FM1N1NHQ90"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-FM1N1NHQ90');
+</script>
+
+
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f7f3e9">
+
+<title>赛博菩萨：Cloudflare 免费账户可用服务详情 | O&#39;s World</title>
+<meta name="description" content="Cloudflare 免费级别服务全景：从 DNS&#x2F;CDN 到 Workers 全栈边缘平台 适用对象：个人开发者、独立产品、开源项目、中小团队 PoC、低成本出海&#x2F;全球访问场景 重要提醒：免费额度、区域可用性、服务条款和滥用限制会变化。本文基于公开页面整理，生产上线前请以 Cloudflare 与竞品的官方定价&#x2F;限制页面为准...">
+<meta property="og:type" content="article">
+<meta property="og:title" content="赛博菩萨：Cloudflare 免费账户可用服务详情 | O&#39;s World">
+<meta property="og:url" content="https://ooo.run/post/cloudflare-free-tier.html">
+<meta property="og:site_name" content="O&#39;s World">
+<meta property="og:description" content="Cloudflare 免费级别服务全景：从 DNS&#x2F;CDN 到 Workers 全栈边缘平台 适用对象：个人开发者、独立产品、开源项目、中小团队 PoC、低成本出海&#x2F;全球访问场景 重要提醒：免费额度、区域可用性、服务条款和滥用限制会变化。本文基于公开页面整理，生产上线前请以 Cloudflare 与竞品的官方定价&#x2F;限制页面为准...">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img.nep.me/ooo/cover-cloudflare.webp">
+<meta property="article:published_time" content="2026-06-08T07:55:14.000Z">
+<meta property="article:modified_time" content="2026-06-24T11:35:25.080Z">
+<meta property="article:author" content="Mr. O">
+<meta property="article:tag" content="Cloudflare">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img.nep.me/ooo/cover-cloudflare.webp">
+<link rel="canonical" href="https://ooo.run/post/cloudflare-free-tier.html">
+
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"赛博菩萨：Cloudflare 免费账户可用服务详情","name":"赛博菩萨：Cloudflare 免费账户可用服务详情 | O's World","description":"Cloudflare 免费级别服务全景：从 DNS&#x2F;CDN 到 Workers 全栈边缘平台 适用对象：个人开发者、独立产品、开源项目、中小团队 PoC、低成本出海&#x2F;全球访问场景 重要提醒：免费额度、区域可用性、服务条款和滥用限制会变化。本文基于公开页面整理，生产上线前请以 Cloudflare 与竞品的官方定价&#x2F;限制页面为准...","url":"https://ooo.run/post/cloudflare-free-tier.html","inLanguage":"zh-CN","isPartOf":{"@type":"WebSite","name":"O's World","url":"https://ooo.run/"},"image":["https://img.nep.me/ooo/cover-cloudflare.webp"],"mainEntityOfPage":"https://ooo.run/post/cloudflare-free-tier.html","datePublished":"2026-06-08T07:55:14.000Z","dateModified":"2026-06-24T11:35:25.080Z","author":{"@type":"Person","name":"Mr. O"},"publisher":{"@type":"Organization","name":"O's World"},"keywords":"Cloudflare"}</script>
+
+<script>
+  (function () {
+    var accents = { orange: 1, purple: 1, sakura: 1, blue: 1, pink: 1, green: 1, black: 1 };
+    var match = document.cookie.match(/(?:^|;\s*)flatpaper-accent=([^;]+)/);
+    var accent = 'blue';
+    if (match) {
+      try { accent = decodeURIComponent(match[1]); } catch (e) {}
+    }
+    if (!accents[accent]) accent = 'blue';
+    document.documentElement.setAttribute('data-accent', accent);
+    try {
+      if (localStorage.getItem('flatpaper-mode') === 'dark') {
+        document.documentElement.classList.add('dark-mode');
+      }
+    } catch (e) {}
+  })();
+</script>
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+
+
+
+  
+<script defer src="https://u.nep.me/script.js" data-website-id="768b68c3-d4ed-429e-aa11-f5099ea5adbf" data-domains="ooo.run"></script>
+
+
+  
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8052638941019443" crossorigin="anonymous"></script>
+
+
+  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/artalk@2.9.1/dist/Artalk.css">
+
+<script defer src="https://cdn.jsdelivr.net/npm/artalk@2.9.1/dist/Artalk.js"></script>
+
+
+  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css">
+<script defer src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+
+
+  
+<meta name="generator" content="Hexo 8.1.2"><link rel="alternate" href="/atom.xml" title="O's World" type="application/atom+xml">
+</head>
+
+<body
+  class="is-post tag-style-tape"
+  data-default-accent="blue"
+  data-code-theme="simple"
+  data-note-style="sticky"
+  data-note-icons="on"
+  data-button-style="tape"
+  data-strong-accent="on"
+>
+  <div class="page-grain"></div>
+  <svg width="0" height="0" style="position:absolute;z-index:-1;" aria-hidden="true">
+    <defs>
+      <filter id="paper-edge" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" result="noise" />
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G" />
+      </filter>
+    </defs>
+  </svg>
+  
+  <header class="site-header">
+  
+  <button class="icon-button js-sidebar-toggle sidebar-toggle" type="button" aria-label="打开侧边栏" aria-controls="paper-sidebar-drawer" aria-expanded="false">
+    
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu" aria-hidden="true"><path d="M4 12h16"/><path d="M4 6h16"/><path d="M4 18h16"/></svg>
+
+  </button>
+
+  <div class="brand">
+    <div class="brand-mark-wrapper">
+      
+        <button class="brand-mark" type="button" aria-label="打开站点导航" aria-haspopup="true" aria-expanded="false" aria-controls="brand-nav-menu">
+          
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-grid" aria-hidden="true"><rect width="7" height="7" x="3" y="3" rx="1" /><rect width="7" height="7" x="14" y="3" rx="1" /><rect width="7" height="7" x="14" y="14" rx="1" /><rect width="7" height="7" x="3" y="14" rx="1" /></svg>
+
+        </button>
+        <div class="brand-nav-menu" id="brand-nav-menu" role="menu">
+          
+            <div class="brand-nav-group">
+              <div class="brand-nav-title">Blog</div>
+              
+                <a role="menuitem" href="https://ooo.run/" target="_blank" rel="noopener noreferrer">
+                  
+                    <img src="https://ooo.run/favicon.ico" alt="" class="nav-img-icon" aria-hidden="true" />
+                  
+                  <span>O‘s World</span>
+                </a>
+              
+            </div>
+          
+            <div class="brand-nav-group">
+              <div class="brand-nav-title">Project</div>
+              
+                <a role="menuitem" href="https://tools.ooo.run" target="_blank" rel="noopener noreferrer">
+                  
+                    <img src="https://tools.ooo.run/favicon.png" alt="" class="nav-img-icon" aria-hidden="true" />
+                  
+                  <span>简易工具</span>
+                </a>
+              
+                <a role="menuitem" href="https://ooo.run/games" target="_blank" rel="noopener noreferrer">
+                  
+                    <img src="https://img.nep.me/ooo/game.webp" alt="" class="nav-img-icon" aria-hidden="true" />
+                  
+                  <span>简单游戏</span>
+                </a>
+              
+            </div>
+          
+        </div>
+      
+    </div>
+    <a class="brand-text" href="/">O&#39;s World</a>
+  </div>
+
+  <nav class="site-nav" aria-label="主导航">
+    
+      
+        <a class="site-nav-link " href="/">
+          
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-home" aria-hidden="true"><path d="m3 10 9-7 9 7"/><path d="M5 10v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V10"/><path d="M9 21v-6h6v6"/></svg>
+
+          <span>首页</span>
+        </a>
+      
+    
+      
+        <a class="site-nav-link " href="/links/">
+          
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+
+          <span>友链</span>
+        </a>
+      
+    
+      
+        <div class="site-nav-item has-children">
+          <button class="site-nav-link site-nav-parent" type="button" aria-haspopup="true" aria-expanded="false">
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder" aria-hidden="true"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg>
+
+            <span>文章</span>
+          </button>
+          <div class="site-nav-menu" role="menu">
+            
+              <a role="menuitem" class="" href="/archives/">
+                
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-archive" aria-hidden="true"><rect width="20" height="5" x="2" y="3" rx="1"/><path d="M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8"/><path d="M10 12h4"/></svg>
+
+                <span>归档</span>
+              </a>
+            
+              <a role="menuitem" class="" href="/categories/">
+                
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder" aria-hidden="true"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg>
+
+                <span>分类</span>
+              </a>
+            
+              <a role="menuitem" class="" href="/tags/">
+                
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tag" aria-hidden="true"><path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"/><circle cx="7.5" cy="7.5" r=".5" fill="currentColor"/></svg>
+
+                <span>标签</span>
+              </a>
+            
+          </div>
+        </div>
+      
+    
+  </nav>
+
+  <div class="header-tools">
+    <button class="icon-button js-search-open" type="button" aria-label="搜索文章">
+      
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+
+    </button>
+    <div class="accent-picker">
+      <button class="icon-button accent-toggle" type="button" aria-label="选择主题色" title="选择主题色" aria-haspopup="true" aria-expanded="false" aria-controls="accent-menu">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-palette" aria-hidden="true"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 5.9 2 10.8c0 3.3 2.7 6 6 6h1.2c.8 0 1.4.6 1.4 1.4 0 .4-.2.8-.2 1.2 0 .8.6 1.6 1.6 1.6 5.5 0 10-4.2 10-9.4C22 6.3 17.5 2 12 2Z"/></svg>
+
+      </button>
+      <div class="accent-menu" id="accent-menu" role="menu" aria-label="主题色">
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="橙色" aria-checked="false" data-accent-option="orange">
+          <span class="accent-swatch accent-swatch--orange" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="紫色" aria-checked="false" data-accent-option="purple">
+          <span class="accent-swatch accent-swatch--purple" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="樱花粉" aria-checked="false" data-accent-option="sakura">
+          <span class="accent-swatch accent-swatch--sakura" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="蓝色" aria-checked="false" data-accent-option="blue">
+          <span class="accent-swatch accent-swatch--blue" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="粉色" aria-checked="false" data-accent-option="pink">
+          <span class="accent-swatch accent-swatch--pink" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="绿色" aria-checked="false" data-accent-option="green">
+          <span class="accent-swatch accent-swatch--green" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="黑色" aria-checked="false" data-accent-option="black">
+          <span class="accent-swatch accent-swatch--black" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
+    <button class="theme-toggle" type="button" aria-label="切换颜色模式">
+      <span class="theme-icon theme-icon--sun">
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sun" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+</span>
+      <span class="theme-icon theme-icon--moon">
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-moon" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+</span>
+    </button>
+  </div>
+</header>
+
+
+  
+  <main class="paper-shell paper-shell--article">
+    
+
+<aside id="paper-sidebar-drawer" class="paper-sidebar paper-sidebar--right" aria-label="侧边栏">
+  <div class="drawer-toolbar" aria-label="侧边栏工具">
+    <div class="drawer-accent-options" role="group" aria-label="主题色">
+      <button type="button" class="accent-option" aria-label="橙色" aria-pressed="false" data-accent-option="orange">
+        <span class="accent-swatch accent-swatch--orange" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="accent-option" aria-label="紫色" aria-pressed="false" data-accent-option="purple">
+        <span class="accent-swatch accent-swatch--purple" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="accent-option" aria-label="樱花粉" aria-pressed="false" data-accent-option="sakura">
+        <span class="accent-swatch accent-swatch--sakura" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="accent-option" aria-label="蓝色" aria-pressed="false" data-accent-option="blue">
+        <span class="accent-swatch accent-swatch--blue" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="accent-option" aria-label="粉色" aria-pressed="false" data-accent-option="pink">
+        <span class="accent-swatch accent-swatch--pink" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="accent-option" aria-label="绿色" aria-pressed="false" data-accent-option="green">
+        <span class="accent-swatch accent-swatch--green" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="accent-option" aria-label="黑色" aria-pressed="false" data-accent-option="black">
+        <span class="accent-swatch accent-swatch--black" aria-hidden="true"></span>
+      </button>
+    </div>
+    <button class="icon-button drawer-close js-sidebar-close" type="button" aria-label="关闭侧边栏">
+      
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+
+    </button>
+  </div>
+
+  <section class="side-card nav-card">
+    <nav class="site-nav-drawer" aria-label="移动端导航">
+      
+        
+          <a class="" href="/">
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-home" aria-hidden="true"><path d="m3 10 9-7 9 7"/><path d="M5 10v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V10"/><path d="M9 21v-6h6v6"/></svg>
+
+            <span>首页</span>
+          </a>
+        
+      
+        
+          <a class="" href="/links/">
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+
+            <span>友链</span>
+          </a>
+        
+      
+        
+          <div class="drawer-nav-group">
+            <button class="drawer-nav-parent" type="button" aria-expanded="false">
+              
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder" aria-hidden="true"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg>
+
+              <span>文章</span>
+            </button>
+            <div class="drawer-nav-children">
+              
+                <a class="" href="/archives/">
+                  
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-archive" aria-hidden="true"><rect width="20" height="5" x="2" y="3" rx="1"/><path d="M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8"/><path d="M10 12h4"/></svg>
+
+                  <span>归档</span>
+                </a>
+              
+                <a class="" href="/categories/">
+                  
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder" aria-hidden="true"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg>
+
+                  <span>分类</span>
+                </a>
+              
+                <a class="" href="/tags/">
+                  
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tag" aria-hidden="true"><path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"/><circle cx="7.5" cy="7.5" r=".5" fill="currentColor"/></svg>
+
+                  <span>标签</span>
+                </a>
+              
+            </div>
+          </div>
+        
+      
+    </nav>
+  </section>
+
+  <section class="side-card profile-card">
+    
+      <div class="avatar" aria-hidden="true">
+        <span></span><i></i><em></em><b></b>
+      </div>
+    
+    <h3>Mr. O</h3>
+    <p class="profile-role">独立开发者</p>
+    <p>探索互联网世界，分享实用教程与精彩内容，发现更多有趣之处。</p>
+    
+      <div class="site-info" aria-label="站点信息">
+        
+          
+            <a class="site-info__item" href="/archives/">
+              <strong>63</strong>
+              <span>文章</span>
+            </a>
+          
+        
+          
+            <a class="site-info__item" href="/categories/">
+              <strong>6</strong>
+              <span>分类</span>
+            </a>
+          
+        
+          
+            <a class="site-info__item" href="/tags/">
+              <strong>100</strong>
+              <span>标签</span>
+            </a>
+          
+        
+      </div>
+    
+    <div class="socials">
+      
+        <a href="https://t.me/fortewave" target="_blank" rel="noopener" aria-label="Telegram">
+          
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="currentColor" class="lucide lucide-telegram" aria-hidden="true"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+
+          
+        </a>
+      
+      
+        <a href="/atom.xml" aria-label="RSS feed" title="RSS">
+          
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-rss" aria-hidden="true"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg>
+
+        </a>
+      
+    </div>
+  </section>
+
+  
+    <section class="side-card brand-link-card" aria-label="站点链接">
+      
+        <div class="brand-link-group">
+          <div class="brand-link-title">Blog</div>
+          <div class="brand-link-list">
+            
+              <a href="https://ooo.run/" target="_blank" rel="noopener noreferrer">
+                
+                  <img src="https://ooo.run/favicon.ico" alt="" class="nav-img-icon" aria-hidden="true" />
+                
+                <span>O‘s World</span>
+              </a>
+            
+          </div>
+        </div>
+      
+        <div class="brand-link-group">
+          <div class="brand-link-title">Project</div>
+          <div class="brand-link-list">
+            
+              <a href="https://tools.ooo.run" target="_blank" rel="noopener noreferrer">
+                
+                  <img src="https://tools.ooo.run/favicon.png" alt="" class="nav-img-icon" aria-hidden="true" />
+                
+                <span>简易工具</span>
+              </a>
+            
+              <a href="https://ooo.run/games" target="_blank" rel="noopener noreferrer">
+                
+                  <img src="https://img.nep.me/ooo/game.webp" alt="" class="nav-img-icon" aria-hidden="true" />
+                
+                <span>简单游戏</span>
+              </a>
+            
+          </div>
+        </div>
+      
+    </section>
+  
+
+  
+    <div class="post-sticky-stack">
+      <section class="side-card toc-card">
+        <header class="toc-card__head">
+          <h2>
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-table-of-contents" aria-hidden="true"><path d="M16 12H3"/><path d="M16 18H3"/><path d="M16 6H3"/><path d="M21 12h.01"/><path d="M21 18h.01"/><path d="M21 6h.01"/></svg>
+文章目录</h2>
+          <button type="button" class="toc-toggle-all" data-action="toggle-toc" aria-pressed="false" aria-label="展开全部目录" title="展开全部目录">
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+
+          </button>
+        </header>
+        <div class="toc-content">
+          
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Cloudflare-%E5%85%8D%E8%B4%B9%E7%BA%A7%E5%88%AB%E6%9C%8D%E5%8A%A1%E5%85%A8%E6%99%AF%EF%BC%9A%E4%BB%8E-DNS-CDN-%E5%88%B0-Workers-%E5%85%A8%E6%A0%88%E8%BE%B9%E7%BC%98%E5%B9%B3%E5%8F%B0"><span class="toc-text">Cloudflare 免费级别服务全景：从 DNS&#x2F;CDN 到 Workers 全栈边缘平台</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E5%8F%A5%E8%AF%9D%E7%BB%93%E8%AE%BA"><span class="toc-text">一句话结论</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Cloudflare-%E5%85%8D%E8%B4%B9%E7%BA%A7%E5%88%AB%E8%83%BD%E7%94%A8%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-text">1. Cloudflare 免费级别能用什么？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E7%BD%91%E7%AB%99%E5%9F%BA%E7%A1%80%E8%AE%BE%E6%96%BD%EF%BC%9ADNS%E3%80%81TLS%E3%80%81CDN%E3%80%81DDoS"><span class="toc-text">1.1 网站基础设施：DNS、TLS、CDN、DDoS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-Web-%E5%AE%89%E5%85%A8%EF%BC%9AWAF%E3%80%81%E8%A7%84%E5%88%99%E3%80%81%E9%80%9F%E7%8E%87%E9%99%90%E5%88%B6%E3%80%81%E7%83%AD%E9%93%BE%E9%98%B2%E6%8A%A4"><span class="toc-text">1.2 Web 安全：WAF、规则、速率限制、热链防护</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E5%89%8D%E7%AB%AF%E6%89%98%E7%AE%A1%EF%BC%9ACloudflare-Pages"><span class="toc-text">1.3 前端托管：Cloudflare Pages</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-%E8%BE%B9%E7%BC%98%E5%87%BD%E6%95%B0%EF%BC%9ACloudflare-Workers"><span class="toc-text">1.4 边缘函数：Cloudflare Workers</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-5-%E6%95%B0%E6%8D%AE%E4%B8%8E%E5%AD%98%E5%82%A8%EF%BC%9AKV%E3%80%81D1%E3%80%81R2%E3%80%81Durable-Objects%E3%80%81Queues%E3%80%81Hyperdrive"><span class="toc-text">1.5 数据与存储：KV、D1、R2、Durable Objects、Queues、Hyperdrive</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-6-%E6%9C%BA%E5%99%A8%E4%BA%BA%E9%98%B2%E6%8A%A4%E4%B8%8E%E9%9A%90%E7%A7%81%E5%88%86%E6%9E%90%EF%BC%9ATurnstile%E3%80%81Web-Analytics%E3%80%81Zaraz"><span class="toc-text">1.6 机器人防护与隐私分析：Turnstile、Web Analytics、Zaraz</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-7-%E9%82%AE%E4%BB%B6%E8%BD%AC%E5%8F%91%EF%BC%9AEmail-Routing"><span class="toc-text">1.7 邮件转发：Email Routing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-8-Zero-Trust%E3%80%81Access-%E4%B8%8E-Tunnel"><span class="toc-text">1.8 Zero Trust、Access 与 Tunnel</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-9-AI-%E7%9B%B8%E5%85%B3%EF%BC%9AWorkers-AI%E3%80%81AI-Gateway%E3%80%81AI-Search%E3%80%81Browser-Run%E3%80%81Workflows"><span class="toc-text">1.9 AI 相关：Workers AI、AI Gateway、AI Search、Browser Run、Workflows</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-10-%E5%85%8D%E8%B4%B9%E5%B1%82%E4%B8%8D%E7%AD%89%E4%BA%8E%E6%89%80%E6%9C%89-Cloudflare-%E6%9C%8D%E5%8A%A1%E9%83%BD%E5%85%8D%E8%B4%B9"><span class="toc-text">1.10 免费层不等于所有 Cloudflare 服务都免费</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%92%8C%E7%AB%9E%E5%93%81%E6%80%8E%E4%B9%88%E5%AF%B9%E6%A0%87%EF%BC%9F"><span class="toc-text">2. 和竞品怎么对标？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-Cloudflare-Pages-vs-Vercel-Hobby-vs-Netlify-Free"><span class="toc-text">2.1 Cloudflare Pages vs Vercel Hobby vs Netlify Free</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-Cloudflare-Workers-vs-AWS-Lambda"><span class="toc-text">2.2 Cloudflare Workers vs AWS Lambda</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-Cloudflare-R2-vs-AWS-S3-CloudFront"><span class="toc-text">2.3 Cloudflare R2 vs AWS S3 &#x2F; CloudFront</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-Cloudflare-CDN-WAF-vs-AWS-CloudFront-WAF%E3%80%81Fastly"><span class="toc-text">2.4 Cloudflare CDN&#x2F;WAF vs AWS CloudFront&#x2F;WAF、Fastly</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-Cloudflare-Access-Tunnel-vs-Tailscale-vs-ngrok"><span class="toc-text">2.5 Cloudflare Access&#x2F;Tunnel vs Tailscale vs ngrok</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-6-Turnstile-vs-reCAPTCHA-vs-hCaptcha"><span class="toc-text">2.6 Turnstile vs reCAPTCHA vs hCaptcha</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Cloudflare-Free-%E6%9C%80%E9%80%82%E5%90%88%E7%9A%84-8-%E7%B1%BB%E9%A1%B9%E7%9B%AE"><span class="toc-text">3. Cloudflare Free 最适合的 8 类项目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E5%85%8D%E8%B4%B9%E5%B1%82%E4%BD%BF%E7%94%A8%E5%BB%BA%E8%AE%AE"><span class="toc-text">4. 免费层使用建议</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E6%9E%B6%E6%9E%84%E4%B8%8A%E5%B0%BD%E9%87%8F%E2%80%9C%E9%9D%99%E6%80%81%E4%BC%98%E5%85%88%E3%80%81%E8%BE%B9%E7%BC%98%E8%A1%A5%E5%8A%A8%E6%80%81%E2%80%9D"><span class="toc-text">4.1 架构上尽量“静态优先、边缘补动态”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E6%8A%8A%E5%A4%A7%E6%96%87%E4%BB%B6%E6%94%BE-R2%EF%BC%8C%E4%B8%8D%E8%A6%81%E5%A1%9E%E8%BF%9B-Pages-%E6%9E%84%E5%BB%BA%E4%BA%A7%E7%89%A9"><span class="toc-text">4.2 把大文件放 R2，不要塞进 Pages 构建产物</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-KV%E3%80%81D1%E3%80%81Durable-Objects-%E5%88%86%E5%B7%A5%E8%A6%81%E6%B8%85%E6%A5%9A"><span class="toc-text">4.3 KV、D1、Durable Objects 分工要清楚</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-4-%E7%94%9F%E4%BA%A7%E5%89%8D%E5%81%9A%E9%A2%9D%E5%BA%A6%E9%A2%84%E7%AE%97"><span class="toc-text">4.4 生产前做额度预算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-5-%E5%85%8D%E8%B4%B9%E5%B1%82%E8%A6%81%E6%9C%89%E2%80%9C%E9%99%8D%E7%BA%A7%E7%AD%96%E7%95%A5%E2%80%9D"><span class="toc-text">4.5 免费层要有“降级策略”</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E6%80%BB%E7%BB%93%EF%BC%9ACloudflare-Free-%E7%9A%84%E7%9C%9F%E5%AE%9E%E5%AE%9A%E4%BD%8D"><span class="toc-text">5. 总结：Cloudflare Free 的真实定位</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E8%B5%84%E6%96%99%E6%9D%A5%E6%BA%90%E4%B8%8E%E6%A0%B8%E5%AF%B9%E5%85%A5%E5%8F%A3"><span class="toc-text">6. 资料来源与核对入口</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Cloudflare-%E5%AE%98%E6%96%B9%E8%B5%84%E6%96%99"><span class="toc-text">Cloudflare 官方资料</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AB%9E%E5%93%81%E8%B5%84%E6%96%99"><span class="toc-text">竞品资料</span></a></li></ol></li></ol>
+          
+        </div>
+      </section>
+      
+
+  <section class="side-card recent-card latest-posts-card">
+    <h2>
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-history" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l4 2"/></svg>
+最新文章</h2>
+    <ul class="recent-list">
+      
+        <li>
+          <a class="recent-item" href="/post/docker-run-fizzy-kanban.html">
+            <strong>使用 Docker 部署 Fizzy ： 一个轻量、漂亮、可自托管的看板工具</strong>
+            <em>2026-06-23</em>
+          </a>
+        </li>
+      
+        <li>
+          <a class="recent-item" href="/post/codex-is-buring-your-ssd.html">
+            <strong>Codex 的日志记录消耗 SSD 寿命？OpenAI 已修复</strong>
+            <em>2026-06-23</em>
+          </a>
+        </li>
+      
+        <li>
+          <a class="recent-item" href="/post/how-much-can-you-save-with-subscription-vs-api.html">
+            <strong>榨干 AI 订阅额度：使用 Claude Pro 与 ChatGPT 订阅到底能省多少钱？</strong>
+            <em>2026-06-21</em>
+          </a>
+        </li>
+      
+        <li>
+          <a class="recent-item" href="/post/darkbloom-nodes-macbook-ai-mining-earnings.html">
+            <strong>新时代挖矿：看看你的 Mac 一个月能赚多少钱</strong>
+            <em>2026-06-19</em>
+          </a>
+        </li>
+      
+        <li>
+          <a class="recent-item" href="/post/project-tiny-world-builder.html">
+            <strong>宝藏开源项目： Tiny World Builder - 在浏览器里创建迷你世界</strong>
+            <em>2026-06-16</em>
+          </a>
+        </li>
+      
+    </ul>
+  </section>
+
+
+    </div>
+  
+
+  
+
+</aside>
+
+    <section class="paper-main">
+      
+
+<div class="article-tape-wrap">
+<span class="tape tape--top-right" aria-hidden="true"></span>
+<article class="article-paper">
+  <header class="article-header">
+    
+      <a class="label-pill" href="/categories/%E7%AC%94%E8%AE%B0/">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder" aria-hidden="true"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg>
+
+        笔记
+      </a>
+    
+    <h1>赛博菩萨：Cloudflare 免费账户可用服务详情</h1>
+    <div class="meta-line meta-line--article">
+      <span class="meta-date">
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar" aria-hidden="true"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>
+2026-06-08</span>
+      
+        <span class="meta-tags">
+          
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tag" aria-hidden="true"><path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"/><circle cx="7.5" cy="7.5" r=".5" fill="currentColor"/></svg>
+
+          <a class="meta-tag-link" href="/tags/Cloudflare/">#Cloudflare</a>
+        </span>
+      
+    </div>
+  </header>
+
+  
+
+
+  <div class="article-content">
+    <h3 id="Cloudflare-免费级别服务全景：从-DNS-CDN-到-Workers-全栈边缘平台"><a href="#Cloudflare-免费级别服务全景：从-DNS-CDN-到-Workers-全栈边缘平台" class="headerlink" title="Cloudflare 免费级别服务全景：从 DNS&#x2F;CDN 到 Workers 全栈边缘平台"></a>Cloudflare 免费级别服务全景：从 DNS&#x2F;CDN 到 Workers 全栈边缘平台</h3><blockquote>
+<p>适用对象：个人开发者、独立产品、开源项目、中小团队 PoC、低成本出海&#x2F;全球访问场景  </p>
+</blockquote>
+<blockquote>
+<p>重要提醒：免费额度、区域可用性、服务条款和滥用限制会变化。本文基于公开页面整理，生产上线前请以 Cloudflare 与竞品的官方定价&#x2F;限制页面为准。</p>
+</blockquote>
+<hr>
+<h2 id="一句话结论"><a href="#一句话结论" class="headerlink" title="一句话结论"></a>一句话结论</h2><p>Cloudflare 的免费级别已经不只是“免费 CDN”。它更像一套覆盖 <strong>域名 DNS、TLS、基础 DDoS&#x2F;CDN&#x2F;WAF、静态托管、边缘函数、对象存储、Serverless 数据库、队列、表单&#x2F;机器人防护、网站分析、邮件转发、Zero Trust 访问、隧道、以及部分 AI 能力</strong> 的入门级互联网应用平台。</p>
+<p>和 Vercel、Netlify、AWS、Fastly、Tailscale、ngrok、reCAPTCHA、hCaptcha 等竞品相比，Cloudflare Free 最大的优势是：<strong>免费服务覆盖面极广，很多能力天然集成在同一个边缘网络和控制台里</strong>。它的弱点也很明确：<strong>免费层没有商业级 SLA&#x2F;支持保障，部分额度是硬限制，复杂框架体验不一定比 Vercel&#x2F;Netlify 顺滑，重计算&#x2F;重数据库&#x2F;重媒体场景很快会撞上限制或需要付费。</strong></p>
+<hr>
+<h2 id="1-Cloudflare-免费级别能用什么？"><a href="#1-Cloudflare-免费级别能用什么？" class="headerlink" title="1. Cloudflare 免费级别能用什么？"></a>1. Cloudflare 免费级别能用什么？</h2><p>下面按使用场景整理。具体限额建议上线前再次核对官方文档。</p>
+<h3 id="1-1-网站基础设施：DNS、TLS、CDN、DDoS"><a href="#1-1-网站基础设施：DNS、TLS、CDN、DDoS" class="headerlink" title="1.1 网站基础设施：DNS、TLS、CDN、DDoS"></a>1.1 网站基础设施：DNS、TLS、CDN、DDoS</h3><table>
+<thead>
+<tr>
+<th>服务</th>
+<th>免费层可用能力</th>
+<th>适合场景</th>
+<th>注意点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>DNS</td>
+<td>权威 DNS、API、DDoS 韧性、常见 DNS 管理能力</td>
+<td>域名解析、海外访问优化、把域名接入 Cloudflare</td>
+<td>高级流量调度、企业 DNS 功能可能需要付费</td>
+</tr>
+<tr>
+<td>SSL&#x2F;TLS</td>
+<td>免费 TLS 证书，自动签发与续期</td>
+<td>为网站开启 HTTPS</td>
+<td>复杂证书、自定义证书管理、高级证书能力可能要单独购买</td>
+</tr>
+<tr>
+<td>CDN &#x2F; 缓存</td>
+<td>通过 Cloudflare 代理缓存静态内容、降低源站压力</td>
+<td>博客、官网、文档、静态资源</td>
+<td>动态内容缓存、图片&#x2F;视频处理、Argo、负载均衡等属于更高级或付费能力</td>
+</tr>
+<tr>
+<td>DDoS 基础防护</td>
+<td>免费计划也包含基础的安全与性能保护</td>
+<td>个人站点、小团队站点、开源项目</td>
+<td>企业级 DDoS SLA、Bot 管理和高级安全策略需要更高套餐</td>
+</tr>
+</tbody></table>
+<p><strong>评价：</strong> 如果只是把一个网站放到全球网络前面，Cloudflare Free 的门槛很低：改 DNS、开代理、开 HTTPS，就能获得基础加速和安全收益。这是 Cloudflare 免费层最有竞争力的入口能力。</p>
+<hr>
+<h3 id="1-2-Web-安全：WAF、规则、速率限制、热链防护"><a href="#1-2-Web-安全：WAF、规则、速率限制、热链防护" class="headerlink" title="1.2 Web 安全：WAF、规则、速率限制、热链防护"></a>1.2 Web 安全：WAF、规则、速率限制、热链防护</h3><p>Cloudflare WAF 相关文档显示，免费计划可用的安全能力包括但不限于：</p>
+<ul>
+<li>WAF 自定义规则；</li>
+<li>1 条 Rate Limiting 规则；</li>
+<li>Free Managed Ruleset；</li>
+<li>Email Obfuscation；</li>
+<li>Hotlink Protection；</li>
+<li>IP Access Rules；</li>
+<li>User Agent Blocking；</li>
+<li>Zone Lockdown；</li>
+<li>Security Analytics；</li>
+<li>采样的 Security Events 日志。</li>
+</ul>
+<p><strong>适合场景：</strong></p>
+<ul>
+<li>个人网站防爬、防热链；</li>
+<li>小型 API 做基础速率限制；</li>
+<li>WordPress、文档站、营销站做基础 WAF；</li>
+<li>在没有预算采购独立 WAF 的情况下先建立安全底线。</li>
+</ul>
+<p><strong>注意点：</strong> 免费层是“够用的基础防护”，不是完整的企业级 Web 安全平台。Bot Management、更多高级托管规则、更多速率限制、高级日志和安全分析通常要升级。</p>
+<hr>
+<h3 id="1-3-前端托管：Cloudflare-Pages"><a href="#1-3-前端托管：Cloudflare-Pages" class="headerlink" title="1.3 前端托管：Cloudflare Pages"></a>1.3 前端托管：Cloudflare Pages</h3><p>Cloudflare Pages 是免费层里非常值得关注的一项服务，适合静态站、Jamstack、文档站、落地页、前端应用和轻量全栈项目。</p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>免费层常见额度&#x2F;能力</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>站点数量</td>
+<td>官方页面显示所有计划支持 unlimited sites</td>
+</tr>
+<tr>
+<td>seats &#x2F; 团队成员</td>
+<td>官方页面显示所有计划支持 unlimited seats</td>
+</tr>
+<tr>
+<td>请求数与带宽</td>
+<td>官方页面显示 Pages 所有计划支持 unlimited requests &#x2F; bandwidth</td>
+</tr>
+<tr>
+<td>构建次数</td>
+<td>Free：500 builds &#x2F; month</td>
+</tr>
+<tr>
+<td>并发构建</td>
+<td>Free：1 concurrent build</td>
+</tr>
+<tr>
+<td>自定义域名</td>
+<td>Free：每个项目 100 个 custom domains</td>
+</tr>
+<tr>
+<td>文件数量</td>
+<td>Free：每个站点 20,000 files</td>
+</tr>
+<tr>
+<td>单个静态资源</td>
+<td>25 MiB；更大文件建议使用 R2</td>
+</tr>
+<tr>
+<td>Pages Functions</td>
+<td>按 Workers 计费&#x2F;计量；Free 层计入 Workers Free 配额</td>
+</tr>
+<tr>
+<td>静态资产请求</td>
+<td>Workers&#x2F;Pages 静态资产请求免费且不限量</td>
+</tr>
+</tbody></table>
+<p><strong>适合场景：</strong></p>
+<ul>
+<li>个人博客、知识库、开源文档；</li>
+<li>公司官网、产品落地页；</li>
+<li>React&#x2F;Vue&#x2F;Svelte&#x2F;Astro&#x2F;Hugo 等静态构建项目；</li>
+<li>带少量 API 的前端项目，例如表单提交、Webhook、登录回调。</li>
+</ul>
+<p><strong>和 Vercel &#x2F; Netlify 的差异：</strong></p>
+<ul>
+<li>Cloudflare Pages 的免费静态资源请求和带宽口径非常慷慨，适合流量不稳定的静态站；</li>
+<li>Vercel 对 Next.js 的开发体验通常更强，尤其是 Next.js 原生功能、预览部署、生态集成；</li>
+<li>Netlify 的表单、部署工作流、插件生态成熟，但免费层采用信用额度模型，需要关注 credit 消耗。</li>
+</ul>
+<hr>
+<h3 id="1-4-边缘函数：Cloudflare-Workers"><a href="#1-4-边缘函数：Cloudflare-Workers" class="headerlink" title="1.4 边缘函数：Cloudflare Workers"></a>1.4 边缘函数：Cloudflare Workers</h3><p>Workers 是 Cloudflare 开发者平台的核心。免费层当前包括：</p>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>Free 层典型额度</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>请求</td>
+<td>100,000 requests &#x2F; day</td>
+</tr>
+<tr>
+<td>CPU 时间</td>
+<td>10 ms CPU &#x2F; invocation</td>
+</tr>
+<tr>
+<td>单次 invocation 最大 CPU</td>
+<td>文档中显示默认&#x2F;最大 CPU 限制，免费层以短 CPU 任务为主</td>
+</tr>
+<tr>
+<td>Cron &#x2F; Queue Consumer</td>
+<td>有单次运行时长限制</td>
+</tr>
+<tr>
+<td>静态资产请求</td>
+<td>免费且不限量</td>
+</tr>
+<tr>
+<td>Workers Logs</td>
+<td>Free：约 200,000 log events &#x2F; day，保留 3 天</td>
+</tr>
+</tbody></table>
+<p><strong>适合场景：</strong></p>
+<ul>
+<li>API 网关、轻量接口、Webhook；</li>
+<li>A&#x2F;B test、重定向、鉴权、Header 改写；</li>
+<li>静态站旁边的少量动态逻辑；</li>
+<li>代理第三方 API、做缓存、做边缘安全校验；</li>
+<li>与 KV、D1、R2、Queues、Durable Objects 组合成轻量后端。</li>
+</ul>
+<p><strong>不适合：</strong></p>
+<ul>
+<li>长时间 CPU 计算；</li>
+<li>大型后端单体迁移；</li>
+<li>重任务、重数据库事务、复杂后台作业；</li>
+<li>对 Node.js 运行时兼容性要求非常完整的项目。</li>
+</ul>
+<hr>
+<h3 id="1-5-数据与存储：KV、D1、R2、Durable-Objects、Queues、Hyperdrive"><a href="#1-5-数据与存储：KV、D1、R2、Durable-Objects、Queues、Hyperdrive" class="headerlink" title="1.5 数据与存储：KV、D1、R2、Durable Objects、Queues、Hyperdrive"></a>1.5 数据与存储：KV、D1、R2、Durable Objects、Queues、Hyperdrive</h3><p>Cloudflare 的免费层已经可以搭出一个小型全栈应用。</p>
+<table>
+<thead>
+<tr>
+<th>服务</th>
+<th>免费层核心额度&#x2F;能力</th>
+<th>典型用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Workers KV</td>
+<td>100,000 reads&#x2F;day、1,000 writes&#x2F;day、1,000 deletes&#x2F;day、1,000 list&#x2F;day、1 GB 存储</td>
+<td>配置、缓存、Feature Flags、低频写入数据</td>
+</tr>
+<tr>
+<td>D1</td>
+<td>5M rows read&#x2F;day、100k rows written&#x2F;day、5 GB 存储</td>
+<td>小型 SQLite Serverless 数据库、原型、轻量业务数据</td>
+</tr>
+<tr>
+<td>R2</td>
+<td>10 GB-month&#x2F;month、1M Class A ops&#x2F;month、10M Class B ops&#x2F;month、无互联网出口流量费</td>
+<td>对象存储、图片&#x2F;附件、静态大文件、备份</td>
+</tr>
+<tr>
+<td>Durable Objects</td>
+<td>Free 可使用 SQLite-backed Durable Objects；请求、duration、SQL 读写和存储有免费限额</td>
+<td>协作状态、聊天室、锁、会话、计数器</td>
+</tr>
+<tr>
+<td>Queues</td>
+<td>Free：10,000 operations&#x2F;day，24h retention</td>
+<td>异步任务、削峰、事件处理</td>
+</tr>
+<tr>
+<td>Hyperdrive</td>
+<td>Free：100,000 database queries&#x2F;day</td>
+<td>优化 Workers 访问外部数据库的连接与查询</td>
+</tr>
+</tbody></table>
+<p><strong>架构建议：</strong></p>
+<ul>
+<li><strong>KV</strong> 用来读多写少，不要拿它做强一致数据库；</li>
+<li><strong>D1</strong> 适合小型关系数据和原型，但要设计好索引和写入频率；</li>
+<li><strong>R2</strong> 是 Cloudflare 免费层里对标 S3 的关键服务，尤其是“无出口流量费”对下载型场景很有吸引力；</li>
+<li><strong>Queues</strong> 适合把用户请求和后台处理拆开；</li>
+<li><strong>Durable Objects</strong> 适合需要按对象聚合状态的实时&#x2F;协作场景，但要理解它的编程模型；</li>
+<li><strong>Hyperdrive</strong> 适合你已经有 Postgres&#x2F;MySQL 等外部数据库，希望从 Workers 更高效访问。</li>
+</ul>
+<hr>
+<h3 id="1-6-机器人防护与隐私分析：Turnstile、Web-Analytics、Zaraz"><a href="#1-6-机器人防护与隐私分析：Turnstile、Web-Analytics、Zaraz" class="headerlink" title="1.6 机器人防护与隐私分析：Turnstile、Web Analytics、Zaraz"></a>1.6 机器人防护与隐私分析：Turnstile、Web Analytics、Zaraz</h3><table>
+<thead>
+<tr>
+<th>服务</th>
+<th>免费层能力</th>
+<th>对标竞品</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Turnstile</td>
+<td>Free：最多 20 widgets、所有 widget 类型、unlimited challenges、每 widget 10 个 hostname</td>
+<td>Google reCAPTCHA、hCaptcha</td>
+</tr>
+<tr>
+<td>Web Analytics</td>
+<td>免费、隐私优先，不依赖 cookie&#x2F;localStorage&#x2F;client-side state，不做 fingerprinting</td>
+<td>Google Analytics、Plausible、Fathom</td>
+</tr>
+<tr>
+<td>Zaraz</td>
+<td>所有 Cloudflare 用户可用；每账户每月 1,000,000 free Zaraz Events</td>
+<td>Google Tag Manager、Segment、Tealium</td>
+</tr>
+</tbody></table>
+<p><strong>评价：</strong></p>
+<ul>
+<li>Turnstile 很适合替换传统 CAPTCHA，减少用户体验损耗；</li>
+<li>Web Analytics 适合只需要 PV、访客、来源、页面路径等轻量指标的站点；</li>
+<li>Zaraz 适合把第三方脚本移到边缘执行，减少前端性能损耗。</li>
+</ul>
+<hr>
+<h3 id="1-7-邮件转发：Email-Routing"><a href="#1-7-邮件转发：Email-Routing" class="headerlink" title="1.7 邮件转发：Email Routing"></a>1.7 邮件转发：Email Routing</h3><p>Email Routing 是一个免费的自定义域名邮件转发服务，可以把 <code>hello@example.com</code>、<code>support@example.com</code> 等地址转发到你的现有邮箱。Cloudflare 官方强调它不存储或访问邮件内容，并提供与 DNS 记录相关的配置。</p>
+<p><strong>适合场景：</strong></p>
+<ul>
+<li>个人域名邮箱转发；</li>
+<li>开源项目&#x2F;小产品的联系邮箱；</li>
+<li>不想购买完整企业邮箱，但希望域名邮箱看起来更专业。</li>
+</ul>
+<p><strong>注意点：</strong> 它主要是转发，不是完整邮箱托管；发信、团队邮箱、归档、合规等能力仍需要 Gmail&#x2F;Google Workspace、Microsoft 365、Fastmail、Zoho Mail 等服务。</p>
+<hr>
+<h3 id="1-8-Zero-Trust、Access-与-Tunnel"><a href="#1-8-Zero-Trust、Access-与-Tunnel" class="headerlink" title="1.8 Zero Trust、Access 与 Tunnel"></a>1.8 Zero Trust、Access 与 Tunnel</h3><p>Cloudflare Zero Trust 免费层适合小团队和 PoC。官方页面将 Free Plan 标为 <code>$0 forever</code>，适合 50 人以下团队或企业 PoC；Cloudflare Access 可用于保护自托管、SaaS、非 Web 应用访问，减少传统 VPN 依赖。Cloudflare Tunnel 可用出站连接把源站接入 Cloudflare，避免暴露公网入站端口。</p>
+<table>
+<thead>
+<tr>
+<th>服务</th>
+<th>免费层价值</th>
+<th>对标竞品</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Cloudflare Access</td>
+<td>保护内部应用、后台、预发布环境</td>
+<td>Tailscale、Teleport、Okta、Google BeyondCorp 类方案</td>
+</tr>
+<tr>
+<td>Cloudflare Tunnel</td>
+<td>不暴露公网 IP&#x2F;端口，把内网服务安全接入 Cloudflare</td>
+<td>ngrok、Tailscale Funnel、frp、localtunnel</td>
+</tr>
+</tbody></table>
+<p><strong>适合场景：</strong></p>
+<ul>
+<li>保护 <code>/admin</code>、Grafana、内部工具、预发布环境；</li>
+<li>家庭实验室&#x2F;NAS&#x2F;内网服务安全暴露；</li>
+<li>替代简单 VPN 或跳板机；</li>
+<li>临时演示本地服务。</li>
+</ul>
+<hr>
+<h3 id="1-9-AI-相关：Workers-AI、AI-Gateway、AI-Search、Browser-Run、Workflows"><a href="#1-9-AI-相关：Workers-AI、AI-Gateway、AI-Search、Browser-Run、Workflows" class="headerlink" title="1.9 AI 相关：Workers AI、AI Gateway、AI Search、Browser Run、Workflows"></a>1.9 AI 相关：Workers AI、AI Gateway、AI Search、Browser Run、Workflows</h3><p>Cloudflare 免费层也开始覆盖 AI 与自动化相关能力。</p>
+<table>
+<thead>
+<tr>
+<th>服务</th>
+<th>免费层能力</th>
+<th>适合场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Workers AI</td>
+<td>10,000 Neurons&#x2F;day 免费分配；超过需要 Workers Paid</td>
+<td>小模型推理、嵌入、原型</td>
+</tr>
+<tr>
+<td>AI Gateway</td>
+<td>核心功能所有计划可用；Workers Free 有日志额度</td>
+<td>多模型网关、缓存、速率限制、观测</td>
+</tr>
+<tr>
+<td>AI Search</td>
+<td>open beta 期间在限制内免费；有实例数、文件数、查询数、爬取页数等限制</td>
+<td>文档搜索、站内搜索、RAG 原型</td>
+</tr>
+<tr>
+<td>Browser Run</td>
+<td>Free：10 minutes&#x2F;day、3 concurrent browsers</td>
+<td>浏览器自动化、截图、网页抓取原型</td>
+</tr>
+<tr>
+<td>Workflows</td>
+<td>Free 可用，配额与 Workers Free 相关，并有存储限制</td>
+<td>多步骤任务、状态机、异步编排</td>
+</tr>
+</tbody></table>
+<p><strong>注意点：</strong> AI Search 仍处在 beta&#x2F;变化较快的阶段；AI 推理、模型选择、日志保留、数据合规和供应商成本都需要单独评估。</p>
+<hr>
+<h3 id="1-10-免费层不等于所有-Cloudflare-服务都免费"><a href="#1-10-免费层不等于所有-Cloudflare-服务都免费" class="headerlink" title="1.10 免费层不等于所有 Cloudflare 服务都免费"></a>1.10 免费层不等于所有 Cloudflare 服务都免费</h3><p>下列能力通常不应被当作“免费核心能力”来规划：</p>
+<ul>
+<li>Argo Smart Routing；</li>
+<li>Load Balancing；</li>
+<li>Advanced Certificates；</li>
+<li>Images、Stream 等媒体产品；</li>
+<li>APO for WordPress；</li>
+<li>高级 Bot Management；</li>
+<li>企业级日志、SLA、支持；</li>
+<li>Containers：官方定价页显示 Containers 在 Workers Paid 下计费，Free 不提供对应 CPU&#x2F;内存&#x2F;磁盘额度；</li>
+<li>Vectorize：Cloudflare 文档页面存在“仅 Workers Paid 可用”的表述，同时表格也列出部分 Free 行，建议上线前特别核对，不要把它作为稳定免费的基础依赖。</li>
+</ul>
+<hr>
+<h2 id="2-和竞品怎么对标？"><a href="#2-和竞品怎么对标？" class="headerlink" title="2. 和竞品怎么对标？"></a>2. 和竞品怎么对标？</h2><h3 id="2-1-Cloudflare-Pages-vs-Vercel-Hobby-vs-Netlify-Free"><a href="#2-1-Cloudflare-Pages-vs-Vercel-Hobby-vs-Netlify-Free" class="headerlink" title="2.1 Cloudflare Pages vs Vercel Hobby vs Netlify Free"></a>2.1 Cloudflare Pages vs Vercel Hobby vs Netlify Free</h3><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>Cloudflare Pages Free</th>
+<th>Vercel Hobby</th>
+<th>Netlify Free</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>核心定位</td>
+<td>静态站 + 边缘函数 + 全球网络</td>
+<td>个人项目、小型应用，Next.js 体验强</td>
+<td>Jamstack 托管、部署工作流、插件生态</td>
+</tr>
+<tr>
+<td>商业用途</td>
+<td>需按 Cloudflare 条款确认具体使用</td>
+<td>官方明确 Hobby 面向个人非商业项目</td>
+<td>Free 可用于入门，但受 credit 限制</td>
+</tr>
+<tr>
+<td>静态站流量</td>
+<td>Pages 官方页面显示 unlimited requests &#x2F; bandwidth</td>
+<td>有 edge request 等额度</td>
+<td>以 credits 消耗为核心</td>
+</tr>
+<tr>
+<td>构建</td>
+<td>500 builds&#x2F;month，1 concurrent build</td>
+<td>有项目、资源、函数等限制</td>
+<td>300 credits&#x2F;month；生产构建会消耗 credits</td>
+</tr>
+<tr>
+<td>函数</td>
+<td>Pages Functions 计入 Workers Free：100k requests&#x2F;day</td>
+<td>1M function invocations&#x2F;month 等 Hobby 限额</td>
+<td>Functions&#x2F;compute 消耗 credits</td>
+</tr>
+<tr>
+<td>框架体验</td>
+<td>通用静态和边缘平台强</td>
+<td>Next.js 原生体验通常最好</td>
+<td>Jamstack 工作流成熟</td>
+</tr>
+</tbody></table>
+<p><strong>选择建议：</strong></p>
+<ul>
+<li>你要 <strong>低成本静态站、文档站、全球访问、免费带宽口径更宽</strong>：优先 Cloudflare Pages；</li>
+<li>你要 <strong>Next.js 最新能力、预览部署、Vercel 生态</strong>：优先 Vercel；</li>
+<li>你要 <strong>Netlify Forms、插件、成熟 Jamstack 工作流</strong>：优先 Netlify。</li>
+</ul>
+<hr>
+<h3 id="2-2-Cloudflare-Workers-vs-AWS-Lambda"><a href="#2-2-Cloudflare-Workers-vs-AWS-Lambda" class="headerlink" title="2.2 Cloudflare Workers vs AWS Lambda"></a>2.2 Cloudflare Workers vs AWS Lambda</h3><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>Cloudflare Workers Free</th>
+<th>AWS Lambda Free Tier</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>免费请求</td>
+<td>100,000 requests&#x2F;day</td>
+<td>1M requests&#x2F;month</td>
+</tr>
+<tr>
+<td>免费计算</td>
+<td>10ms CPU&#x2F;invocation，偏轻量边缘任务</td>
+<td>400,000 GB-seconds&#x2F;month，通用函数模型</td>
+</tr>
+<tr>
+<td>部署位置</td>
+<td>Cloudflare 全球边缘网络</td>
+<td>AWS 区域 + 可结合 CloudFront&#x2F;API Gateway</td>
+</tr>
+<tr>
+<td>运行模型</td>
+<td>Web 标准、边缘运行时、冷启动体验好</td>
+<td>语言&#x2F;runtime 丰富，AWS 生态完整</td>
+</tr>
+<tr>
+<td>成本结构</td>
+<td>与 Cloudflare 数据&#x2F;边缘服务集成</td>
+<td>Lambda 之外还可能有 API Gateway、CloudFront、S3、WAF、日志等成本</td>
+</tr>
+</tbody></table>
+<p><strong>选择建议：</strong></p>
+<ul>
+<li>API 网关、轻量业务逻辑、边缘改写、低延迟全球入口：Workers 很合适；</li>
+<li>Python&#x2F;Java&#x2F;.NET、长一点的任务、复杂 AWS 资源联动：Lambda 更合适；</li>
+<li>大规模生产系统：应按真实请求、CPU、日志、数据库、出口流量分别测算。</li>
+</ul>
+<hr>
+<h3 id="2-3-Cloudflare-R2-vs-AWS-S3-CloudFront"><a href="#2-3-Cloudflare-R2-vs-AWS-S3-CloudFront" class="headerlink" title="2.3 Cloudflare R2 vs AWS S3 &#x2F; CloudFront"></a>2.3 Cloudflare R2 vs AWS S3 &#x2F; CloudFront</h3><p>Cloudflare R2 的免费层包含对象存储容量和操作次数额度，并且核心卖点是 <strong>无互联网出口流量费</strong>。AWS S3&#x2F;CloudFront 则是生态最成熟的组合：CloudFront 有持续可用的免费流量&#x2F;请求额度，S3 和 AWS Free Tier 的规则则会随账户新旧、credits、区域和服务政策变化。</p>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>Cloudflare R2 Free</th>
+<th>AWS S3 + CloudFront</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>对象存储</td>
+<td>10 GB&#x2F;month 免费</td>
+<td>AWS Free Tier&#x2F;credits&#x2F;区域规则需按账户确认</td>
+</tr>
+<tr>
+<td>出口流量</td>
+<td>R2 官方强调无出口流量费用</td>
+<td>CloudFront 有每月免费额度，超出按区域&#x2F;请求计费</td>
+</tr>
+<tr>
+<td>生态</td>
+<td>与 Workers、Pages 集成很顺</td>
+<td>AWS SDK、IAM、企业生态最成熟</td>
+</tr>
+<tr>
+<td>适合</td>
+<td>下载站、图片&#x2F;附件、边缘应用存储</td>
+<td>企业云架构、复杂权限、数据湖、合规生态</td>
+</tr>
+</tbody></table>
+<p><strong>选择建议：</strong></p>
+<ul>
+<li>个人产品、大文件下载、静态资源分发：R2 免费层很有吸引力；</li>
+<li>企业级对象存储治理、跨 AWS 服务集成、复杂 IAM：S3 仍是事实标准。</li>
+</ul>
+<hr>
+<h3 id="2-4-Cloudflare-CDN-WAF-vs-AWS-CloudFront-WAF、Fastly"><a href="#2-4-Cloudflare-CDN-WAF-vs-AWS-CloudFront-WAF、Fastly" class="headerlink" title="2.4 Cloudflare CDN&#x2F;WAF vs AWS CloudFront&#x2F;WAF、Fastly"></a>2.4 Cloudflare CDN&#x2F;WAF vs AWS CloudFront&#x2F;WAF、Fastly</h3><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>Cloudflare Free</th>
+<th>AWS CloudFront&#x2F;WAF</th>
+<th>Fastly</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>CDN 入门成本</td>
+<td>免费接入 DNS&#x2F;CDN&#x2F;TLS&#x2F;基础安全</td>
+<td>CloudFront 有每月免费额度</td>
+<td>有 free tier，超出按量</td>
+</tr>
+<tr>
+<td>WAF</td>
+<td>免费层有基础 WAF 与规则能力</td>
+<td>AWS WAF 按 Web ACL、规则、请求计费</td>
+<td>高级边缘能力强，多为付费</td>
+</tr>
+<tr>
+<td>易用性</td>
+<td>控制台统一，DNS 接入简单</td>
+<td>AWS 体系复杂但能力强</td>
+<td>工程能力强，适合高要求 CDN</td>
+</tr>
+<tr>
+<td>适合</td>
+<td>低成本综合防护</td>
+<td>AWS 原生架构</td>
+<td>高性能、可编程边缘、企业 CDN</td>
+</tr>
+</tbody></table>
+<p><strong>选择建议：</strong></p>
+<ul>
+<li>预算为零且要 DNS+TLS+CDN+基础 WAF 一体化：Cloudflare；</li>
+<li>已经深度 AWS 化：CloudFront + AWS WAF；</li>
+<li>有专业 CDN 调优&#x2F;边缘计算需求：Fastly；</li>
+</ul>
+<hr>
+<h3 id="2-5-Cloudflare-Access-Tunnel-vs-Tailscale-vs-ngrok"><a href="#2-5-Cloudflare-Access-Tunnel-vs-Tailscale-vs-ngrok" class="headerlink" title="2.5 Cloudflare Access&#x2F;Tunnel vs Tailscale vs ngrok"></a>2.5 Cloudflare Access&#x2F;Tunnel vs Tailscale vs ngrok</h3><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>Cloudflare Access&#x2F;Tunnel</th>
+<th>Tailscale Free</th>
+<th>ngrok Free</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>主要用途</td>
+<td>保护内部应用、通过 Tunnel 暴露服务且隐藏源站</td>
+<td>个人&#x2F;小团队 Mesh VPN</td>
+<td>本地开发临时公网访问</td>
+</tr>
+<tr>
+<td>免费层</td>
+<td>Zero Trust Free 适合 50 人以下&#x2F;PoC；Tunnel 可免费创建</td>
+<td>Personal 计划免费，最多 6 users，设备数宽松</td>
+<td>3 online endpoints、1GB data transfer out、20k HTTP requests&#x2F;month、3 agents</td>
+</tr>
+<tr>
+<td>访问模型</td>
+<td>基于 Cloudflare 边缘、身份策略、应用访问</td>
+<td>设备到设备的私有网络</td>
+<td>公网隧道&#x2F;开发者入口</td>
+</tr>
+<tr>
+<td>适合</td>
+<td>内部 Web 应用、后台、Zero Trust 访问</td>
+<td>个人设备、家庭实验室、私网互联</td>
+<td>Demo、本地 webhook、临时测试</td>
+</tr>
+</tbody></table>
+<p><strong>选择建议：</strong></p>
+<ul>
+<li>要把内部 Web 应用挂到域名下并加身份验证：Cloudflare Access + Tunnel；</li>
+<li>要像 VPN 一样访问所有设备：Tailscale；</li>
+<li>要快速给本地服务一个公网地址做 demo：ngrok。</li>
+</ul>
+<hr>
+<h3 id="2-6-Turnstile-vs-reCAPTCHA-vs-hCaptcha"><a href="#2-6-Turnstile-vs-reCAPTCHA-vs-hCaptcha" class="headerlink" title="2.6 Turnstile vs reCAPTCHA vs hCaptcha"></a>2.6 Turnstile vs reCAPTCHA vs hCaptcha</h3><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>Cloudflare Turnstile Free</th>
+<th>Google reCAPTCHA Essentials</th>
+<th>hCaptcha Basic</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>免费额度</td>
+<td>20 widgets、unlimited challenges</td>
+<td>免费 10,000 assessments&#x2F;month，超出若未开 billing 会报错</td>
+<td>免费最高 100,000 requests&#x2F;month</td>
+</tr>
+<tr>
+<td>用户体验</td>
+<td>主打无感&#x2F;低摩擦验证</td>
+<td>生态广、Google 风控能力强</td>
+<td>独立 CAPTCHA 服务，兼容性较好</td>
+</tr>
+<tr>
+<td>适合</td>
+<td>表单、防注册、防滥用、登录保护</td>
+<td>已经使用 Google Cloud&#x2F;需要 reCAPTCHA 风控</td>
+<td>需要 CAPTCHA 替代方案</td>
+</tr>
+</tbody></table>
+<p><strong>选择建议：</strong></p>
+<ul>
+<li>个人站、小产品、希望减少 CAPTCHA 打扰：Turnstile 优先；</li>
+<li>已经在 Google 风控体系内：reCAPTCHA；</li>
+<li>想要 reCAPTCHA 替代品且额度口径合适：hCaptcha。</li>
+</ul>
+<hr>
+<h2 id="3-Cloudflare-Free-最适合的-8-类项目"><a href="#3-Cloudflare-Free-最适合的-8-类项目" class="headerlink" title="3. Cloudflare Free 最适合的 8 类项目"></a>3. Cloudflare Free 最适合的 8 类项目</h2><ol>
+<li><p><strong>个人博客 &#x2F; 文档站 &#x2F; 开源项目官网</strong><br>Pages + DNS + SSL + Web Analytics 基本够用。</p>
+</li>
+<li><p><strong>静态营销站 &#x2F; 落地页</strong><br>Pages + CDN + Turnstile + Email Routing 可以快速上线。</p>
+</li>
+<li><p><strong>小型 API &#x2F; Webhook 网关</strong><br>Workers + KV&#x2F;D1 + WAF + Rate Limiting 适合低成本运行。</p>
+</li>
+<li><p><strong>轻量全栈应用原型</strong><br>Pages 前端、Workers API、D1 数据库、R2 文件存储、Queues 异步任务。</p>
+</li>
+<li><p><strong>下载型资源站 &#x2F; 附件存储</strong><br>R2 的免费容量和无出口流量费很有价值，但要关注操作次数和滥用规则。</p>
+</li>
+<li><p><strong>内部工具 &#x2F; 后台管理系统</strong><br>Cloudflare Access + Tunnel 可以减少公开暴露源站的风险。</p>
+</li>
+<li><p><strong>反垃圾表单 &#x2F; 注册保护</strong><br>Turnstile 替代传统 CAPTCHA，用户体验通常更轻。</p>
+</li>
+<li><p><strong>AI 应用原型</strong><br>Workers AI + AI Gateway + AI Search beta 可以做轻量 RAG、模型代理、观测和缓存。</p>
+</li>
+</ol>
+<hr>
+<h2 id="4-免费层使用建议"><a href="#4-免费层使用建议" class="headerlink" title="4. 免费层使用建议"></a>4. 免费层使用建议</h2><h3 id="4-1-架构上尽量“静态优先、边缘补动态”"><a href="#4-1-架构上尽量“静态优先、边缘补动态”" class="headerlink" title="4.1 架构上尽量“静态优先、边缘补动态”"></a>4.1 架构上尽量“静态优先、边缘补动态”</h3><p>Cloudflare Free 最适合静态内容和轻量边缘逻辑。能静态生成的页面尽量静态生成；能缓存的数据尽量缓存；动态 API 尽量保持短小。</p>
+<h3 id="4-2-把大文件放-R2，不要塞进-Pages-构建产物"><a href="#4-2-把大文件放-R2，不要塞进-Pages-构建产物" class="headerlink" title="4.2 把大文件放 R2，不要塞进 Pages 构建产物"></a>4.2 把大文件放 R2，不要塞进 Pages 构建产物</h3><p>Pages 单个静态资源大小有限制，更大的图片、附件、下载包建议用 R2，并通过 Workers 或自定义域名分发。</p>
+<h3 id="4-3-KV、D1、Durable-Objects-分工要清楚"><a href="#4-3-KV、D1、Durable-Objects-分工要清楚" class="headerlink" title="4.3 KV、D1、Durable Objects 分工要清楚"></a>4.3 KV、D1、Durable Objects 分工要清楚</h3><ul>
+<li>KV：读多写少、最终一致、配置&#x2F;缓存；</li>
+<li>D1：关系数据、小型业务表；</li>
+<li>Durable Objects：按对象聚合状态、协作、锁、会话；</li>
+<li>Queues：异步任务和削峰；</li>
+<li>R2：对象&#x2F;文件。</li>
+</ul>
+<h3 id="4-4-生产前做额度预算"><a href="#4-4-生产前做额度预算" class="headerlink" title="4.4 生产前做额度预算"></a>4.4 生产前做额度预算</h3><p>至少估算：</p>
+<ul>
+<li>每日 Workers 请求量；</li>
+<li>每次请求 CPU 时间；</li>
+<li>D1 行读取&#x2F;写入；</li>
+<li>KV 读写次数；</li>
+<li>R2 Class A &#x2F; Class B 操作；</li>
+<li>Pages 构建次数；</li>
+<li>Turnstile widget 数；</li>
+<li>Web Analytics&#x2F;Zaraz 事件量；</li>
+<li>Zero Trust 用户数。</li>
+</ul>
+<h3 id="4-5-免费层要有“降级策略”"><a href="#4-5-免费层要有“降级策略”" class="headerlink" title="4.5 免费层要有“降级策略”"></a>4.5 免费层要有“降级策略”</h3><p>免费额度一旦触顶，常见结果不是自动扩容，而是报错、暂停、等待下个周期或需要升级。建议：</p>
+<ul>
+<li>给 Workers 设置告警；</li>
+<li>对写入操作做限流；</li>
+<li>对日志采样；</li>
+<li>大流量静态内容强缓存；</li>
+<li>有付费升级预案；</li>
+<li>关键业务不要只依赖免费层。</li>
+</ul>
+<hr>
+<h2 id="5-总结：Cloudflare-Free-的真实定位"><a href="#5-总结：Cloudflare-Free-的真实定位" class="headerlink" title="5. 总结：Cloudflare Free 的真实定位"></a>5. 总结：Cloudflare Free 的真实定位</h2><p>Cloudflare 免费级别的价值在于：它让开发者用接近零成本获得一套现代互联网应用的基础能力：</p>
+<ul>
+<li>域名解析；</li>
+<li>HTTPS；</li>
+<li>CDN；</li>
+<li>DDoS 与基础 WAF；</li>
+<li>静态托管；</li>
+<li>边缘函数；</li>
+<li>Serverless 数据库和对象存储；</li>
+<li>队列与状态对象；</li>
+<li>Bot 防护；</li>
+<li>隐私友好的分析；</li>
+<li>邮件转发；</li>
+<li>Zero Trust 访问；</li>
+<li>AI 原型能力。</li>
+</ul>
+<p>如果你的目标是 <strong>个人项目、开源项目、小型商业验证、低成本全球部署、快速 PoC</strong>，Cloudflare Free 是当前最值得优先评估的平台之一。</p>
+<p>如果你的目标是 <strong>商业 SLA、完整支持、复杂后端、重计算、大规模数据库、重媒体处理、复杂合规、安全审计、企业采购</strong>，Cloudflare 免费层应该只作为入口方案，后续需要升级到 paid plan 或选择更合适的云服务组合。</p>
+<hr>
+<h2 id="6-资料来源与核对入口"><a href="#6-资料来源与核对入口" class="headerlink" title="6. 资料来源与核对入口"></a>6. 资料来源与核对入口</h2><h3 id="Cloudflare-官方资料"><a href="#Cloudflare-官方资料" class="headerlink" title="Cloudflare 官方资料"></a>Cloudflare 官方资料</h3><ul>
+<li>Cloudflare Free Plan: <a target="_blank" rel="noopener" href="https://www.cloudflare.com/plans/free/">https://www.cloudflare.com/plans/free/</a></li>
+<li>Cloudflare Plans FAQ: <a target="_blank" rel="noopener" href="https://www.cloudflare.com/plans/faq/">https://www.cloudflare.com/plans/faq/</a></li>
+<li>Cloudflare DNS: <a target="_blank" rel="noopener" href="https://www.cloudflare.com/products/dns/">https://www.cloudflare.com/products/dns/</a></li>
+<li>Cloudflare SSL: <a target="_blank" rel="noopener" href="https://www.cloudflare.com/products/ssl/">https://www.cloudflare.com/products/ssl/</a></li>
+<li>Cloudflare WAF Docs: <a target="_blank" rel="noopener" href="https://developers.cloudflare.com/waf/">https://developers.cloudflare.com/waf/</a></li>
+<li>Cloudflare Pages Limits: <a target="_blank" rel="noopener" href="https://developers.cloudflare.com/pages/platform/limits/">https://developers.cloudflare.com/pages/platform/limits/</a></li>
+<li>Cloudflare Pages Functions Pricing: <a target="_blank" rel="noopener" href="https://developers.cloudflare.com/pages/functions/pricing/">https://developers.cloudflare.com/pages/functions/pricing/</a></li>
+<li>Cloudflare Pages Product Page: <a target="_blank" rel="noopener" href="https://www.cloudflare-cn.com/developer-platform/products/pages/">https://www.cloudflare-cn.com/developer-platform/products/pages/</a></li>
+<li>Cloudflare Workers Pricing: <a target="_blank" rel="noopener" href="https://developers.cloudflare.com/workers/platform/pricing/">https://developers.cloudflare.com/workers/platform/pricing/</a></li>
+<li>Workers KV Pricing: <a target="_blank" rel="noopener" href="https://developers.cloudflare.com/kv/platform/pricing/">https://developers.cloudflare.com/kv/platform/pricing/</a></li>
+<li>Cloudflare D1 Pricing: <a target="_blank" rel="noopener" href="https://developers.cloudflare.com/d1/platform/pricing/">https://developers.cloudflare.com/d1/platform/pricing/</a></li>
+<li>Cloudflare R2 Pricing: <a target="_blank" rel="noopener" href="https://developers.cloudflare.com/r2/pricing/">https://developers.cloudflare.com/r2/pricing/</a></li>
+<li>Durable Objects Pricing: <a target="_blank" rel="noopener" href="https://developers.cloudflare.com/durable-objects/platform/pricing/">https://developers.cloudflare.com/durable-objects/platform/pricing/</a></li>
+<li>Queues Pricing: <a target="_blank" rel="noopener" href="https://developers.cloudflare.com/queues/platform/pricing/">https://developers.cloudflare.com/queues/platform/pricing/</a></li>
+<li>Hyperdrive Pricing: <a target="_blank" rel="noopener" href="https://developers.cloudflare.com/hyperdrive/platform/pricing/">https://developers.cloudflare.com/hyperdrive/platform/pricing/</a></li>
+<li>Turnstile Plans: <a target="_blank" rel="noopener" href="https://developers.cloudflare.com/turnstile/plans/">https://developers.cloudflare.com/turnstile/plans/</a></li>
+<li>Cloudflare Web Analytics: <a target="_blank" rel="noopener" href="https://www.cloudflare.com/web-analytics/">https://www.cloudflare.com/web-analytics/</a></li>
+<li>Zaraz Pricing: <a target="_blank" rel="noopener" href="https://developers.cloudflare.com/zaraz/pricing/">https://developers.cloudflare.com/zaraz/pricing/</a></li>
+<li>Email Routing: <a target="_blank" rel="noopener" href="https://www.cloudflare.com/products/email-routing/">https://www.cloudflare.com/products/email-routing/</a></li>
+<li>Cloudflare Access: <a target="_blank" rel="noopener" href="https://www.cloudflare.com/sase/products/access/">https://www.cloudflare.com/sase/products/access/</a></li>
+<li>Cloudflare Zero Trust Network Access: <a target="_blank" rel="noopener" href="https://www.cloudflare-cn.com/products/zero-trust/zero-trust-network-access/">https://www.cloudflare-cn.com/products/zero-trust/zero-trust-network-access/</a></li>
+<li>Cloudflare Tunnel: <a target="_blank" rel="noopener" href="https://www.cloudflare-cn.com/products/tunnel/">https://www.cloudflare-cn.com/products/tunnel/</a></li>
+<li>Workers AI Pricing: <a target="_blank" rel="noopener" href="https://developers.cloudflare.com/workers-ai/platform/pricing/">https://developers.cloudflare.com/workers-ai/platform/pricing/</a></li>
+<li>AI Gateway Pricing: <a target="_blank" rel="noopener" href="https://developers.cloudflare.com/ai-gateway/reference/pricing/">https://developers.cloudflare.com/ai-gateway/reference/pricing/</a></li>
+<li>AI Search Limits &amp; Pricing: <a target="_blank" rel="noopener" href="https://developers.cloudflare.com/ai-search/platform/limits-pricing/">https://developers.cloudflare.com/ai-search/platform/limits-pricing/</a></li>
+<li>Browser Run Pricing: <a target="_blank" rel="noopener" href="https://developers.cloudflare.com/browser-run/pricing/">https://developers.cloudflare.com/browser-run/pricing/</a></li>
+<li>Workflows Pricing: <a target="_blank" rel="noopener" href="https://developers.cloudflare.com/workflows/reference/pricing/">https://developers.cloudflare.com/workflows/reference/pricing/</a></li>
+<li>Containers Pricing: <a target="_blank" rel="noopener" href="https://developers.cloudflare.com/containers/pricing/">https://developers.cloudflare.com/containers/pricing/</a></li>
+</ul>
+<h3 id="竞品资料"><a href="#竞品资料" class="headerlink" title="竞品资料"></a>竞品资料</h3><ul>
+<li>Vercel Hobby Plan: <a target="_blank" rel="noopener" href="https://vercel.com/docs/plans/hobby">https://vercel.com/docs/plans/hobby</a></li>
+<li>Netlify Pricing: <a target="_blank" rel="noopener" href="https://www.netlify.com/pricing/">https://www.netlify.com/pricing/</a></li>
+<li>Netlify Manage Billing &#x2F; Usage Limits: <a target="_blank" rel="noopener" href="https://docs.netlify.com/manage-billing/overview/">https://docs.netlify.com/manage-billing/overview/</a></li>
+<li>AWS Lambda Pricing: <a target="_blank" rel="noopener" href="https://aws.amazon.com/lambda/pricing/">https://aws.amazon.com/lambda/pricing/</a></li>
+<li>AWS Free Tier: <a target="_blank" rel="noopener" href="https://aws.amazon.com/free/">https://aws.amazon.com/free/</a></li>
+<li>AWS CloudFront Free Tier Announcement: <a target="_blank" rel="noopener" href="https://aws.amazon.com/about-aws/whats-new/2021/11/aws-price-reduction-data-transfers-internet/">https://aws.amazon.com/about-aws/whats-new/2021/11/aws-price-reduction-data-transfers-internet/</a></li>
+<li>AWS WAF Pricing: <a target="_blank" rel="noopener" href="https://aws.amazon.com/waf/pricing/">https://aws.amazon.com/waf/pricing/</a></li>
+<li>Fastly Pricing: <a target="_blank" rel="noopener" href="https://www.fastly.com/pricing">https://www.fastly.com/pricing</a></li>
+<li>Tailscale Pricing: <a target="_blank" rel="noopener" href="https://tailscale.com/pricing">https://tailscale.com/pricing</a></li>
+<li>ngrok Pricing: <a target="_blank" rel="noopener" href="https://ngrok.com/pricing">https://ngrok.com/pricing</a></li>
+<li>Google reCAPTCHA Billing: <a target="_blank" rel="noopener" href="https://docs.cloud.google.com/recaptcha/docs/billing-information">https://docs.cloud.google.com/recaptcha/docs/billing-information</a></li>
+<li>hCaptcha Plans: <a target="_blank" rel="noopener" href="https://www.hcaptcha.com/plans">https://www.hcaptcha.com/plans</a></li>
+</ul>
+
+  </div>
+
+  <footer class="article-reactions">
+    <div class="reaction-group">
+      <button type="button" class="reaction reaction--comment" aria-label="跳转到评论区" data-action="scroll-to-comments">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
+
+      </button>
+      <span class="reaction-label">评论</span>
+      
+    </div>
+    <div class="reaction-group reaction-group--right">
+      
+      <button type="button" class="reaction reaction--share" aria-label="分享" data-action="share">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-share-2" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" x2="15.42" y1="13.51" y2="17.49"/><line x1="15.41" x2="8.59" y1="6.51" y2="10.49"/></svg>
+
+      </button>
+      <span class="reaction-label">分享</span>
+    </div>
+  </footer>
+
+  
+
+
+  <nav class="article-actions">
+    
+      <a class="article-action article-action--prev" href="/post/anthropic-releases-claude-fable-5.html">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left" aria-hidden="true"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+
+        <span class="action-label">上一篇</span>
+        <span class="action-title">Anthropic 发布 Claude Fable 5：首个公开 Mythos-class 模型亮相，但充满限制</span>
+      </a>
+    
+    
+      <a class="article-action article-action--next" href="/post/animation-cheatsheet.html">
+        <span class="action-label">下一篇</span>
+        <span class="action-title">UI 设计动画词汇表：用专业术语精准描述你想要的动效</span>
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+
+      </a>
+    
+  </nav>
+</article>
+</div>
+
+<button type="button" class="back-to-top" data-action="scroll-to-top" aria-label="返回顶部" hidden>
+  
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up" aria-hidden="true"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg>
+
+</button>
+
+
+  <section class="related-paper">
+    <header class="related-paper__head">
+      <h2>
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+相关文章</h2>
+      <a class="related-paper__more" href="/archives/">
+        <span>查看更多</span>
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+
+      </a>
+    </header>
+    <div class="related-paper__grid">
+      
+        <a class="related-card" href="/post/codex-is-buring-your-ssd.html">
+          <span class="related-card__thumb">
+            
+<div class="paper-thumb paper-thumb-0 paper-thumb--cover">
+  
+    <img class="paper-thumb__img" src="https://img.nep.me/ooo/cover-codex-bug-fixed.webp" alt="Codex 的日志记录消耗 SSD 寿命？OpenAI 已修复" loading="lazy" referrerpolicy="no-referrer">
+  
+</div>
+
+          </span>
+          <span class="related-card__body">
+            <strong class="related-card__title">Codex 的日志记录消耗 SSD 寿命？OpenAI 已修复</strong>
+            <em class="related-card__date">2026-06-23</em>
+          </span>
+        </a>
+      
+        <a class="related-card" href="/post/how-much-can-you-save-with-subscription-vs-api.html">
+          <span class="related-card__thumb">
+            
+<div class="paper-thumb paper-thumb-1 paper-thumb--cover">
+  
+    <img class="paper-thumb__img" src="https://img.nep.me/ooo/cover-ai-sub.webp" alt="榨干 AI 订阅额度：使用 Claude Pro 与 ChatGPT 订阅到底能省多少钱？" loading="lazy" referrerpolicy="no-referrer">
+  
+</div>
+
+          </span>
+          <span class="related-card__body">
+            <strong class="related-card__title">榨干 AI 订阅额度：使用 Claude Pro 与 ChatGPT 订阅到底能省多少钱？</strong>
+            <em class="related-card__date">2026-06-21</em>
+          </span>
+        </a>
+      
+        <a class="related-card" href="/post/animation-cheatsheet.html">
+          <span class="related-card__thumb">
+            
+<div class="paper-thumb paper-thumb-2 paper-thumb--cover">
+  
+    <img class="paper-thumb__img" src="https://img.nep.me/ooo/cover-animation-vocabulary.webp" alt="UI 设计动画词汇表：用专业术语精准描述你想要的动效" loading="lazy" referrerpolicy="no-referrer">
+  
+</div>
+
+          </span>
+          <span class="related-card__body">
+            <strong class="related-card__title">UI 设计动画词汇表：用专业术语精准描述你想要的动效</strong>
+            <em class="related-card__date">2026-06-02</em>
+          </span>
+        </a>
+      
+        <a class="related-card" href="/post/claude-code-show-5h-quota-without-plugin.html">
+          <span class="related-card__thumb">
+            
+<div class="paper-thumb paper-thumb-0 paper-thumb--cover">
+  
+    <img class="paper-thumb__img" src="https://img.nep.me/ooo/cover-claude-code-statusline.webp" alt="不使用插件让 Claude Code 显示额度使用情况" loading="lazy" referrerpolicy="no-referrer">
+  
+</div>
+
+          </span>
+          <span class="related-card__body">
+            <strong class="related-card__title">不使用插件让 Claude Code 显示额度使用情况</strong>
+            <em class="related-card__date">2026-05-30</em>
+          </span>
+        </a>
+      
+    </div>
+  </section>
+
+
+      
+
+<section class="comments-section" aria-label="评论">
+  <header class="comments-section__head">
+    <h2>
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
+评论</h2>
+  </header>
+  <div id="artalk-comments"></div>
+</section>
+<script>
+window.addEventListener('load', function () {
+  if (typeof Artalk === 'undefined' || typeof Artalk.init !== 'function') return;
+  Artalk.init({
+    el: '#artalk-comments',
+    pageKey: "https://ooo.run/post/cloudflare-free-tier.html",
+    pageTitle: "赛博菩萨：Cloudflare 免费账户可用服务详情",
+    server: "https://artalk.ooo.run",
+    site: "Mr. O 的博客"
+  });
+});
+</script>
+
+
+    </section>
+    
+  </main>
+
+  <div class="sidebar-backdrop js-sidebar-close" aria-hidden="true"></div>
+
+  
+<footer class="site-footer">
+  <span class="site-footer__left">© 2026 By Mr. O · Theme FramedInfra Based on <a href="https://github.com/Homulilly/hexo-theme-flatpaper" target="_blank">FlatPaper</a></span>
+  <span class="site-footer__right"><a href="/terms">服务条款</a> · <a href="/privacy">隐私政策</a> <br /> <a href="https://tools.ooo.run" target="_blank">简易工具</a></span>
+</footer>
+
+  
+<div class="search-panel" aria-hidden="true" data-index-url="/flatpaper-search.json">
+  <div class="search-backdrop js-search-close"></div>
+  <section class="search-dialog" role="dialog" aria-modal="true" aria-label="搜索文章">
+    <span class="tape tape--top-left" aria-hidden="true"></span>
+    <header class="search-head">
+      <h2><span class="green-dot"></span>搜索文章</h2>
+      <button class="icon-button js-search-close" type="button" aria-label="关闭搜索">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+
+      </button>
+    </header>
+    <label class="search-field">
+      
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+
+      <input id="flatpaper-search" class="search-input" type="search" placeholder="输入关键词，按 Esc 关闭" autocomplete="off">
+    </label>
+    <div class="search-results" data-empty="输入关键词后显示匹配的文章">
+      <p class="search-empty">输入关键词后显示匹配的文章</p>
+    </div>
+  </section>
+</div>
+
+  <script>
+  window.FLATPAPER_I18N = {"language":"zh-CN","common.posts":"文章","common.categories":"分类","common.tags":"标签","common.comments":"评论","common.share":"分享","common.page":"页面","common.archive":"归档","common.post_list":"文章列表","common.search_posts":"搜索文章","common.random_posts":"随机文章","common.reward":"赞赏","common.view_all":"查看全部","pagination.prev":"上一页","pagination.next":"下一页","pagination.post_pager":"文章分页","pagination.archive_pager":"归档分页","index.featured":"精选文章","index.pinned":"置顶","index.read_more":"阅读全文","index.previous_slide":"上一张","index.next_slide":"下一张","index.carousel_pagination":"轮播页码","index.carousel_slide":"第 %d 张","index.latest_posts":"最新文章","index.empty_posts":"还没有文章。创建第一篇文章后，这里会显示最新内容。","archive.title":"归档","archive.post_list":"文章列表","taxonomy.category_count":"%d 篇","taxonomy.empty_categories":"暂时还没有分类。","taxonomy.empty_tags":"暂时还没有标签。","links.label":"友链","links.title":"友情链接","links.empty_data":"暂未加载到友链数据。请确认 source/_data/links.yml 存在并已 hexo clean。","links.rss_label":"%s 的 RSS","friends_feed.label":"朋友圈","friends_feed.title":"友链朋友圈","friends_feed.loading":"正在加载友链动态…","friends_feed.missing_url":"暂未配置 all.json 地址。","friends_feed.load_failed":"友链动态加载失败，请稍后再试。","friends_feed.empty":"暂时没有抓取到友链文章。","friends_feed.load_more":"加载更多","friends_feed.updated_at":"更新于 %s","friends_feed.friend_count":"%d 位友邻","friends_feed.active_count":"%d 位活跃","friends_feed.article_count":"%d 篇文章","friends_feed.unknown_author":"未知站点","friends_feed.date_unknown":"时间未知","post.scroll_to_comments":"跳转到评论区","post.previous":"上一篇","post.next":"下一篇","post.no_previous":"没有更早的文章了","post.no_next":"已经是最新的一篇","post.back_to_top":"返回顶部","post.related_posts":"相关文章","post.view_more":"查看更多","not_found.label":"页面走丢了","not_found.title":"找不到这个页面","not_found.text":"这个地址可能已经移动、删除，或者从未存在。","not_found.home":"返回首页","not_found.search":"搜索文章","search.placeholder":"输入关键词，按 Esc 关闭","search.empty":"输入关键词后显示匹配的文章","search.loading":"正在加载搜索索引…","search.load_failed":"搜索索引加载失败，请重新打开搜索重试","search.no_result":"没有找到与 \"%s\" 相关的文章","search.close":"关闭搜索","code.copy":"复制代码","code.collapse":"折叠代码","code.expand":"展开代码","heading.anchor":"链接到此节: %s","head.tag":"标签：%s","head.category":"分类：%s","head.archive":"归档","head.archive_with_date":"归档：%s","head.page_number":"第 %d 页","navigation.primary":"主导航","navigation.mobile":"移动端导航","navigation.brand_home":"FlatPaper 首页","navigation.brand_menu":"打开站点导航","navigation.open_sidebar":"打开侧边栏","navigation.close_sidebar":"关闭侧边栏","navigation.sidebar":"侧边栏","navigation.sidebar_tools":"侧边栏工具","navigation.site_links":"站点链接","navigation.site_info":"站点信息","colors.choose_theme_color":"选择主题色","colors.theme_color":"主题色","colors.toggle_color_mode":"切换颜色模式","colors.green":"绿色","colors.purple":"紫色","colors.pink":"粉色","colors.sakura":"樱花粉","colors.blue":"蓝色","colors.orange":"橙色","colors.black":"黑色","profile.default_bio":"热爱生活，热爱代码，喜欢分享技术与生活中的点滴。","welcome.cta":"开始阅读","welcome.title":"欢迎来到 FlatPaper","welcome.text":"一个专注于内容与阅读体验的博客主题。","home_hero.label":"首页开屏","home_hero.enter":"进入首页","home_hero.note":"今日","home_hero.default_subtitle":"日常记录","home_hero.nav_links":"开屏导航","home_hero.profile_links":"个人链接","home_hero.tools":"开屏工具","home_hero.shuffle_stickers":"打乱贴纸位置","home_hero.link":"链接","home_hero.sticker_image":"贴纸图片","home_hero.visit_confirm":"要访问 %s 吗？","home_hero.visit":"访问","home_hero.cancel":"取消","toc.title":"文章目录","toc.empty":"目录会根据文章标题自动生成。","toc.expand_all":"展开全部目录","toc.collapse_all":"收起全部目录","sidebar.hot_tags":"热门标签","sidebar.latest_posts":"最新文章"};
+  </script>
+  
+<script src="/js/main.js"></script>
+
+  
+</body>
+</html>

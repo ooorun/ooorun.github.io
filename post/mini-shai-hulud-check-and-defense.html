@@ -1,0 +1,1664 @@
+<!doctype html>
+
+<html lang="zh-CN" data-fancybox-enabled="1">
+<head>
+  
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FM1N1NHQ90"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-FM1N1NHQ90');
+</script>
+
+
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f7f3e9">
+
+<title>Mini Shai-Hulud 供应链攻击事件解析与检测指南 | O&#39;s World</title>
+<meta name="description" content="2026 年 5 月 11 日，出现了一起针对 npm 与 PyPI 生态的协同供应链攻击。此次攻击同时波及多个知名的 npm 与 PyPI 软件包。 这不是一次普通的恶意包投放事件。攻击者并未简单依赖窃取 npm 凭据，而是利用 GitHub Actions、缓存污染、OIDC Token 滥用、恶意依赖、持久化守护进程以及多通道 C2 基础设施，构建了一...">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mini Shai-Hulud 供应链攻击事件解析与检测指南 | O&#39;s World">
+<meta property="og:url" content="https://ooo.run/post/mini-shai-hulud-check-and-defense.html">
+<meta property="og:site_name" content="O&#39;s World">
+<meta property="og:description" content="2026 年 5 月 11 日，出现了一起针对 npm 与 PyPI 生态的协同供应链攻击。此次攻击同时波及多个知名的 npm 与 PyPI 软件包。 这不是一次普通的恶意包投放事件。攻击者并未简单依赖窃取 npm 凭据，而是利用 GitHub Actions、缓存污染、OIDC Token 滥用、恶意依赖、持久化守护进程以及多通道 C2 基础设施，构建了一...">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img.nep.me/ooo/cover-supply-chain-attack.webp">
+<meta property="article:published_time" content="2026-05-13T05:22:24.000Z">
+<meta property="article:modified_time" content="2026-06-24T11:35:25.080Z">
+<meta property="article:author" content="Mr. O">
+<meta property="article:tag" content="NPM">
+<meta property="article:tag" content="安全">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img.nep.me/ooo/cover-supply-chain-attack.webp">
+<link rel="canonical" href="https://ooo.run/post/mini-shai-hulud-check-and-defense.html">
+
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Mini Shai-Hulud 供应链攻击事件解析与检测指南","name":"Mini Shai-Hulud 供应链攻击事件解析与检测指南 | O's World","description":"2026 年 5 月 11 日，出现了一起针对 npm 与 PyPI 生态的协同供应链攻击。此次攻击同时波及多个知名的 npm 与 PyPI 软件包。 这不是一次普通的恶意包投放事件。攻击者并未简单依赖窃取 npm 凭据，而是利用 GitHub Actions、缓存污染、OIDC Token 滥用、恶意依赖、持久化守护进程以及多通道 C2 基础设施，构建了一...","url":"https://ooo.run/post/mini-shai-hulud-check-and-defense.html","inLanguage":"zh-CN","isPartOf":{"@type":"WebSite","name":"O's World","url":"https://ooo.run/"},"image":["https://img.nep.me/ooo/cover-supply-chain-attack.webp"],"mainEntityOfPage":"https://ooo.run/post/mini-shai-hulud-check-and-defense.html","datePublished":"2026-05-13T05:22:24.000Z","dateModified":"2026-06-24T11:35:25.080Z","author":{"@type":"Person","name":"Mr. O"},"publisher":{"@type":"Organization","name":"O's World"},"keywords":"NPM, 安全"}</script>
+
+<script>
+  (function () {
+    var accents = { orange: 1, purple: 1, sakura: 1, blue: 1, pink: 1, green: 1, black: 1 };
+    var match = document.cookie.match(/(?:^|;\s*)flatpaper-accent=([^;]+)/);
+    var accent = 'blue';
+    if (match) {
+      try { accent = decodeURIComponent(match[1]); } catch (e) {}
+    }
+    if (!accents[accent]) accent = 'blue';
+    document.documentElement.setAttribute('data-accent', accent);
+    try {
+      if (localStorage.getItem('flatpaper-mode') === 'dark') {
+        document.documentElement.classList.add('dark-mode');
+      }
+    } catch (e) {}
+  })();
+</script>
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+
+
+
+  
+<script defer src="https://u.nep.me/script.js" data-website-id="768b68c3-d4ed-429e-aa11-f5099ea5adbf" data-domains="ooo.run"></script>
+
+
+  
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8052638941019443" crossorigin="anonymous"></script>
+
+
+  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/artalk@2.9.1/dist/Artalk.css">
+
+<script defer src="https://cdn.jsdelivr.net/npm/artalk@2.9.1/dist/Artalk.js"></script>
+
+
+  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css">
+<script defer src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+
+
+  
+<meta name="generator" content="Hexo 8.1.2"><link rel="alternate" href="/atom.xml" title="O's World" type="application/atom+xml">
+</head>
+
+<body
+  class="is-post tag-style-tape"
+  data-default-accent="blue"
+  data-code-theme="simple"
+  data-note-style="sticky"
+  data-note-icons="on"
+  data-button-style="tape"
+  data-strong-accent="on"
+>
+  <div class="page-grain"></div>
+  <svg width="0" height="0" style="position:absolute;z-index:-1;" aria-hidden="true">
+    <defs>
+      <filter id="paper-edge" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" result="noise" />
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G" />
+      </filter>
+    </defs>
+  </svg>
+  
+  <header class="site-header">
+  
+  <button class="icon-button js-sidebar-toggle sidebar-toggle" type="button" aria-label="打开侧边栏" aria-controls="paper-sidebar-drawer" aria-expanded="false">
+    
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu" aria-hidden="true"><path d="M4 12h16"/><path d="M4 6h16"/><path d="M4 18h16"/></svg>
+
+  </button>
+
+  <div class="brand">
+    <div class="brand-mark-wrapper">
+      
+        <button class="brand-mark" type="button" aria-label="打开站点导航" aria-haspopup="true" aria-expanded="false" aria-controls="brand-nav-menu">
+          
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-grid" aria-hidden="true"><rect width="7" height="7" x="3" y="3" rx="1" /><rect width="7" height="7" x="14" y="3" rx="1" /><rect width="7" height="7" x="14" y="14" rx="1" /><rect width="7" height="7" x="3" y="14" rx="1" /></svg>
+
+        </button>
+        <div class="brand-nav-menu" id="brand-nav-menu" role="menu">
+          
+            <div class="brand-nav-group">
+              <div class="brand-nav-title">Blog</div>
+              
+                <a role="menuitem" href="https://ooo.run/" target="_blank" rel="noopener noreferrer">
+                  
+                    <img src="https://ooo.run/favicon.ico" alt="" class="nav-img-icon" aria-hidden="true" />
+                  
+                  <span>O‘s World</span>
+                </a>
+              
+            </div>
+          
+            <div class="brand-nav-group">
+              <div class="brand-nav-title">Project</div>
+              
+                <a role="menuitem" href="https://tools.ooo.run" target="_blank" rel="noopener noreferrer">
+                  
+                    <img src="https://tools.ooo.run/favicon.png" alt="" class="nav-img-icon" aria-hidden="true" />
+                  
+                  <span>简易工具</span>
+                </a>
+              
+                <a role="menuitem" href="https://ooo.run/games" target="_blank" rel="noopener noreferrer">
+                  
+                    <img src="https://img.nep.me/ooo/game.webp" alt="" class="nav-img-icon" aria-hidden="true" />
+                  
+                  <span>简单游戏</span>
+                </a>
+              
+            </div>
+          
+        </div>
+      
+    </div>
+    <a class="brand-text" href="/">O&#39;s World</a>
+  </div>
+
+  <nav class="site-nav" aria-label="主导航">
+    
+      
+        <a class="site-nav-link " href="/">
+          
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-home" aria-hidden="true"><path d="m3 10 9-7 9 7"/><path d="M5 10v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V10"/><path d="M9 21v-6h6v6"/></svg>
+
+          <span>首页</span>
+        </a>
+      
+    
+      
+        <a class="site-nav-link " href="/links/">
+          
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+
+          <span>友链</span>
+        </a>
+      
+    
+      
+        <div class="site-nav-item has-children">
+          <button class="site-nav-link site-nav-parent" type="button" aria-haspopup="true" aria-expanded="false">
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder" aria-hidden="true"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg>
+
+            <span>文章</span>
+          </button>
+          <div class="site-nav-menu" role="menu">
+            
+              <a role="menuitem" class="" href="/archives/">
+                
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-archive" aria-hidden="true"><rect width="20" height="5" x="2" y="3" rx="1"/><path d="M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8"/><path d="M10 12h4"/></svg>
+
+                <span>归档</span>
+              </a>
+            
+              <a role="menuitem" class="" href="/categories/">
+                
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder" aria-hidden="true"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg>
+
+                <span>分类</span>
+              </a>
+            
+              <a role="menuitem" class="" href="/tags/">
+                
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tag" aria-hidden="true"><path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"/><circle cx="7.5" cy="7.5" r=".5" fill="currentColor"/></svg>
+
+                <span>标签</span>
+              </a>
+            
+          </div>
+        </div>
+      
+    
+  </nav>
+
+  <div class="header-tools">
+    <button class="icon-button js-search-open" type="button" aria-label="搜索文章">
+      
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+
+    </button>
+    <div class="accent-picker">
+      <button class="icon-button accent-toggle" type="button" aria-label="选择主题色" title="选择主题色" aria-haspopup="true" aria-expanded="false" aria-controls="accent-menu">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-palette" aria-hidden="true"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 5.9 2 10.8c0 3.3 2.7 6 6 6h1.2c.8 0 1.4.6 1.4 1.4 0 .4-.2.8-.2 1.2 0 .8.6 1.6 1.6 1.6 5.5 0 10-4.2 10-9.4C22 6.3 17.5 2 12 2Z"/></svg>
+
+      </button>
+      <div class="accent-menu" id="accent-menu" role="menu" aria-label="主题色">
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="橙色" aria-checked="false" data-accent-option="orange">
+          <span class="accent-swatch accent-swatch--orange" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="紫色" aria-checked="false" data-accent-option="purple">
+          <span class="accent-swatch accent-swatch--purple" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="樱花粉" aria-checked="false" data-accent-option="sakura">
+          <span class="accent-swatch accent-swatch--sakura" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="蓝色" aria-checked="false" data-accent-option="blue">
+          <span class="accent-swatch accent-swatch--blue" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="粉色" aria-checked="false" data-accent-option="pink">
+          <span class="accent-swatch accent-swatch--pink" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="绿色" aria-checked="false" data-accent-option="green">
+          <span class="accent-swatch accent-swatch--green" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="黑色" aria-checked="false" data-accent-option="black">
+          <span class="accent-swatch accent-swatch--black" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
+    <button class="theme-toggle" type="button" aria-label="切换颜色模式">
+      <span class="theme-icon theme-icon--sun">
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sun" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+</span>
+      <span class="theme-icon theme-icon--moon">
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-moon" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+</span>
+    </button>
+  </div>
+</header>
+
+
+  
+  <main class="paper-shell paper-shell--article">
+    
+
+<aside id="paper-sidebar-drawer" class="paper-sidebar paper-sidebar--right" aria-label="侧边栏">
+  <div class="drawer-toolbar" aria-label="侧边栏工具">
+    <div class="drawer-accent-options" role="group" aria-label="主题色">
+      <button type="button" class="accent-option" aria-label="橙色" aria-pressed="false" data-accent-option="orange">
+        <span class="accent-swatch accent-swatch--orange" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="accent-option" aria-label="紫色" aria-pressed="false" data-accent-option="purple">
+        <span class="accent-swatch accent-swatch--purple" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="accent-option" aria-label="樱花粉" aria-pressed="false" data-accent-option="sakura">
+        <span class="accent-swatch accent-swatch--sakura" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="accent-option" aria-label="蓝色" aria-pressed="false" data-accent-option="blue">
+        <span class="accent-swatch accent-swatch--blue" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="accent-option" aria-label="粉色" aria-pressed="false" data-accent-option="pink">
+        <span class="accent-swatch accent-swatch--pink" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="accent-option" aria-label="绿色" aria-pressed="false" data-accent-option="green">
+        <span class="accent-swatch accent-swatch--green" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="accent-option" aria-label="黑色" aria-pressed="false" data-accent-option="black">
+        <span class="accent-swatch accent-swatch--black" aria-hidden="true"></span>
+      </button>
+    </div>
+    <button class="icon-button drawer-close js-sidebar-close" type="button" aria-label="关闭侧边栏">
+      
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+
+    </button>
+  </div>
+
+  <section class="side-card nav-card">
+    <nav class="site-nav-drawer" aria-label="移动端导航">
+      
+        
+          <a class="" href="/">
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-home" aria-hidden="true"><path d="m3 10 9-7 9 7"/><path d="M5 10v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V10"/><path d="M9 21v-6h6v6"/></svg>
+
+            <span>首页</span>
+          </a>
+        
+      
+        
+          <a class="" href="/links/">
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+
+            <span>友链</span>
+          </a>
+        
+      
+        
+          <div class="drawer-nav-group">
+            <button class="drawer-nav-parent" type="button" aria-expanded="false">
+              
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder" aria-hidden="true"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg>
+
+              <span>文章</span>
+            </button>
+            <div class="drawer-nav-children">
+              
+                <a class="" href="/archives/">
+                  
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-archive" aria-hidden="true"><rect width="20" height="5" x="2" y="3" rx="1"/><path d="M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8"/><path d="M10 12h4"/></svg>
+
+                  <span>归档</span>
+                </a>
+              
+                <a class="" href="/categories/">
+                  
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder" aria-hidden="true"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg>
+
+                  <span>分类</span>
+                </a>
+              
+                <a class="" href="/tags/">
+                  
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tag" aria-hidden="true"><path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"/><circle cx="7.5" cy="7.5" r=".5" fill="currentColor"/></svg>
+
+                  <span>标签</span>
+                </a>
+              
+            </div>
+          </div>
+        
+      
+    </nav>
+  </section>
+
+  <section class="side-card profile-card">
+    
+      <div class="avatar" aria-hidden="true">
+        <span></span><i></i><em></em><b></b>
+      </div>
+    
+    <h3>Mr. O</h3>
+    <p class="profile-role">独立开发者</p>
+    <p>探索互联网世界，分享实用教程与精彩内容，发现更多有趣之处。</p>
+    
+      <div class="site-info" aria-label="站点信息">
+        
+          
+            <a class="site-info__item" href="/archives/">
+              <strong>63</strong>
+              <span>文章</span>
+            </a>
+          
+        
+          
+            <a class="site-info__item" href="/categories/">
+              <strong>6</strong>
+              <span>分类</span>
+            </a>
+          
+        
+          
+            <a class="site-info__item" href="/tags/">
+              <strong>100</strong>
+              <span>标签</span>
+            </a>
+          
+        
+      </div>
+    
+    <div class="socials">
+      
+        <a href="https://t.me/fortewave" target="_blank" rel="noopener" aria-label="Telegram">
+          
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="currentColor" class="lucide lucide-telegram" aria-hidden="true"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+
+          
+        </a>
+      
+      
+        <a href="/atom.xml" aria-label="RSS feed" title="RSS">
+          
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-rss" aria-hidden="true"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg>
+
+        </a>
+      
+    </div>
+  </section>
+
+  
+    <section class="side-card brand-link-card" aria-label="站点链接">
+      
+        <div class="brand-link-group">
+          <div class="brand-link-title">Blog</div>
+          <div class="brand-link-list">
+            
+              <a href="https://ooo.run/" target="_blank" rel="noopener noreferrer">
+                
+                  <img src="https://ooo.run/favicon.ico" alt="" class="nav-img-icon" aria-hidden="true" />
+                
+                <span>O‘s World</span>
+              </a>
+            
+          </div>
+        </div>
+      
+        <div class="brand-link-group">
+          <div class="brand-link-title">Project</div>
+          <div class="brand-link-list">
+            
+              <a href="https://tools.ooo.run" target="_blank" rel="noopener noreferrer">
+                
+                  <img src="https://tools.ooo.run/favicon.png" alt="" class="nav-img-icon" aria-hidden="true" />
+                
+                <span>简易工具</span>
+              </a>
+            
+              <a href="https://ooo.run/games" target="_blank" rel="noopener noreferrer">
+                
+                  <img src="https://img.nep.me/ooo/game.webp" alt="" class="nav-img-icon" aria-hidden="true" />
+                
+                <span>简单游戏</span>
+              </a>
+            
+          </div>
+        </div>
+      
+    </section>
+  
+
+  
+    <div class="post-sticky-stack">
+      <section class="side-card toc-card">
+        <header class="toc-card__head">
+          <h2>
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-table-of-contents" aria-hidden="true"><path d="M16 12H3"/><path d="M16 18H3"/><path d="M16 6H3"/><path d="M21 12h.01"/><path d="M21 18h.01"/><path d="M21 6h.01"/></svg>
+文章目录</h2>
+          <button type="button" class="toc-toggle-all" data-action="toggle-toc" aria-pressed="false" aria-label="展开全部目录" title="展开全部目录">
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+
+          </button>
+        </header>
+        <div class="toc-content">
+          
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E4%BA%8B%E4%BB%B6%E6%A6%82%E8%A7%88"><span class="toc-text">一、事件概览</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81TanStack-%E6%94%BB%E5%87%BB%E9%93%BE%EF%BC%9AGitHub-Actions-%E6%88%90%E4%B8%BA%E7%AA%81%E7%A0%B4%E5%8F%A3"><span class="toc-text">二、TanStack 攻击链：GitHub Actions 成为突破口</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#UiPath-%E7%9A%84%E6%84%9F%E6%9F%93%E5%8F%98%E7%A7%8D"><span class="toc-text">UiPath 的感染变种</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E6%81%B6%E6%84%8F-Payload%EF%BC%9A%E5%87%AD%E8%AF%81%E7%AA%83%E5%8F%96%E4%B8%8E%E8%A0%95%E8%99%AB%E5%BC%8F%E4%BC%A0%E6%92%AD"><span class="toc-text">三、恶意 Payload：凭证窃取与蠕虫式传播</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A0%B4%E5%9D%8F%E6%80%A7%E7%9A%84%E6%9C%AC%E5%9C%B0%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B"><span class="toc-text">破坏性的本地守护进程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E6%A3%80%E6%9F%A5%E6%8C%87%E5%8D%97"><span class="toc-text">四、检查指南</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E4%BB%B6"><span class="toc-text">文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C-IOC"><span class="toc-text">网络 IOC</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E7%89%B9%E5%BE%81"><span class="toc-text">其他特征</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E5%8F%97%E5%BD%B1%E5%93%8D%E7%9A%84%E8%BD%AF%E4%BB%B6%E5%8C%85"><span class="toc-text">五、受影响的软件包</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#PyPI"><span class="toc-text">PyPI</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NPM"><span class="toc-text">NPM</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E8%AF%AD"><span class="toc-text">结语</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-text">参考资料</span></a></li></ol>
+          
+        </div>
+      </section>
+      
+
+  <section class="side-card recent-card latest-posts-card">
+    <h2>
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-history" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l4 2"/></svg>
+最新文章</h2>
+    <ul class="recent-list">
+      
+        <li>
+          <a class="recent-item" href="/post/docker-run-fizzy-kanban.html">
+            <strong>使用 Docker 部署 Fizzy ： 一个轻量、漂亮、可自托管的看板工具</strong>
+            <em>2026-06-23</em>
+          </a>
+        </li>
+      
+        <li>
+          <a class="recent-item" href="/post/codex-is-buring-your-ssd.html">
+            <strong>Codex 的日志记录消耗 SSD 寿命？OpenAI 已修复</strong>
+            <em>2026-06-23</em>
+          </a>
+        </li>
+      
+        <li>
+          <a class="recent-item" href="/post/how-much-can-you-save-with-subscription-vs-api.html">
+            <strong>榨干 AI 订阅额度：使用 Claude Pro 与 ChatGPT 订阅到底能省多少钱？</strong>
+            <em>2026-06-21</em>
+          </a>
+        </li>
+      
+        <li>
+          <a class="recent-item" href="/post/darkbloom-nodes-macbook-ai-mining-earnings.html">
+            <strong>新时代挖矿：看看你的 Mac 一个月能赚多少钱</strong>
+            <em>2026-06-19</em>
+          </a>
+        </li>
+      
+        <li>
+          <a class="recent-item" href="/post/project-tiny-world-builder.html">
+            <strong>宝藏开源项目： Tiny World Builder - 在浏览器里创建迷你世界</strong>
+            <em>2026-06-16</em>
+          </a>
+        </li>
+      
+    </ul>
+  </section>
+
+
+    </div>
+  
+
+  
+
+</aside>
+
+    <section class="paper-main">
+      
+
+<div class="article-tape-wrap">
+<span class="tape tape--top-right" aria-hidden="true"></span>
+<article class="article-paper">
+  <header class="article-header">
+    
+      <a class="label-pill" href="/categories/%E7%AC%94%E8%AE%B0/">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder" aria-hidden="true"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg>
+
+        笔记
+      </a>
+    
+    <h1>Mini Shai-Hulud 供应链攻击事件解析与检测指南</h1>
+    <div class="meta-line meta-line--article">
+      <span class="meta-date">
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar" aria-hidden="true"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>
+2026-05-13</span>
+      
+        <span class="meta-tags">
+          
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tag" aria-hidden="true"><path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"/><circle cx="7.5" cy="7.5" r=".5" fill="currentColor"/></svg>
+
+          <a class="meta-tag-link" href="/tags/NPM/">#NPM</a><a class="meta-tag-link" href="/tags/%E5%AE%89%E5%85%A8/">#安全</a>
+        </span>
+      
+    </div>
+  </header>
+
+  
+
+
+  <div class="article-content">
+    <p>2026 年 5 月 11 日，出现了一起针对 npm 与 PyPI 生态的协同供应链攻击。此次攻击同时波及多个知名的 npm 与 PyPI 软件包。</p>
+<p>这不是一次普通的恶意包投放事件。攻击者并未简单依赖窃取 npm 凭据，而是利用 GitHub Actions、缓存污染、OIDC Token 滥用、恶意依赖、持久化守护进程以及多通道 C2 基础设施，构建了一条完整的供应链入侵链路。</p>
+<p>TanStack 相关恶意版本发布具体时间：北京时间 <strong>5 月 12 日凌晨 3:20 至 3:26（UTC+8）</strong></p>
+<hr>
+<h2 id="一、事件概览"><a href="#一、事件概览" class="headerlink" title="一、事件概览"></a>一、事件概览</h2><p>本次攻击影响了 npm 与 PyPI 两大生态中的多个高价值包。</p>
+<p>主要受影响的软件包：</p>
+<ul>
+<li><code>@tanstack</code> 下的软件包，例如 <code>@tanstack/react-router</code>，这是 React 生态中最广泛使用的路由库之一，每周下载量约 1200 万次， <code>@tanstack/vue-router</code> 也受到影响。</li>
+<li><code>@uipath</code> 下的软件包，包括 UiPath 企业自动化平台相关工具、CLI 与 Agent SDK</li>
+<li><code>@mistralai/mistralai</code>，即 Mistral AI 官方 TypeScript 客户端</li>
+<li><code>@opensearch-project/opensearch</code> </li>
+<li>PyPI 上的 <code>mistralai</code>: 2.4.6</li>
+<li>PyPI 上的 <code>guardrails-ai</code> : 0.10.1</li>
+</ul>
+<p>npm 团队已经注意到该攻击活动，并快速移除了恶意版本。</p>
+<blockquote>
+<p>可以在文章结尾查看已知的具体受影响的软件包。</p>
+</blockquote>
+<h2 id="二、TanStack-攻击链：GitHub-Actions-成为突破口"><a href="#二、TanStack-攻击链：GitHub-Actions-成为突破口" class="headerlink" title="二、TanStack 攻击链：GitHub Actions 成为突破口"></a>二、TanStack 攻击链：GitHub Actions 成为突破口</h2><p>TanStack 的失陷源于一条针对 GitHub Actions 的复杂漏洞利用链（包含三个漏洞）：</p>
+<p>攻击链大致如下：</p>
+<ol>
+<li>攻击者 fork 了 <code>TanStack/router</code> 仓库。</li>
+<li>攻击者将 fork 后的仓库重命名为 <code>zblgg/configuration</code> 规避了 Fork 列表的审查。</li>
+<li>攻击者提交 Pull Request，触发目标仓库中的 <code>pull_request_target</code> 工作流。</li>
+<li>该工作流错误地 checkout 并执行了攻击者 fork 中的代码。</li>
+<li>攻击者借此污染 GitHub Actions 缓存，将恶意 pnpm store 写入缓存。</li>
+<li>后续合法维护者的 PR 被合并到 main 分支时，release workflow 恢复了被污染的缓存。</li>
+<li>攻击者控制的二进制文件从 GitHub Actions Runner 的进程内存中读取 OIDC Token。</li>
+<li>攻击者使用这些 Token 发布恶意 npm 包版本。</li>
+</ol>
+<p>这一链路最值得关注的地方在于：攻击者无需窃取 npm 凭据，也能完成恶意包发布。</p>
+<p>这说明在现代软件供应链中，包管理账号本身已不再是唯一的关键资产。CI&#x2F;CD 工作流、缓存、OIDC Token、发布权限和工作流边界同样是高价值攻击面。</p>
+<h3 id="UiPath-的感染变种"><a href="#UiPath-的感染变种" class="headerlink" title="UiPath 的感染变种"></a>UiPath 的感染变种</h3><p>在 <code>@tanstack</code> 受到攻击后不久，<code>@uipath</code> 也宣告失陷。这些包使用一个预安装脚本（<code>node setup.mjs</code>）下载 Bun 运行时环境并执行恶意 payload。这与之前 SAP 失陷事件中的交付机制相同。UiPath 变种使用了重新混淆过的 payload 和不同的 Campaign Key，但连接的是相同的 C2（命令与控制）基础设施。</p>
+<h2 id="三、恶意-Payload：凭证窃取与蠕虫式传播"><a href="#三、恶意-Payload：凭证窃取与蠕虫式传播" class="headerlink" title="三、恶意 Payload：凭证窃取与蠕虫式传播"></a>三、恶意 Payload：凭证窃取与蠕虫式传播</h2><p>本次恶意 payload 具备自我传播能力，主要窃取以下类型的凭据和身份材料：</p>
+<p>它主要锁定以下目标：</p>
+<ul>
+<li>CI&#x2F;CD 令牌（GitHub Actions OIDC、GitLab、CircleCI）</li>
+<li>云服务凭证（AWS IMDSv2、GCP、Azure）</li>
+<li>Kubernetes 服务账号</li>
+<li>HashiCorp Vault</li>
+<li>Package registry tokens</li>
+</ul>
+<p><strong>蠕虫行为</strong>：恶意软件会使用窃取来的 npm 令牌和 GitHub Actions OIDC 令牌，进一步向受害者拥有写入权限的其他包发布投毒版本，从而在 npm 生态系统中像蠕虫一样迅速蔓延。</p>
+<h3 id="破坏性的本地守护进程"><a href="#破坏性的本地守护进程" class="headerlink" title="破坏性的本地守护进程"></a>破坏性的本地守护进程</h3><p>如果恶意软件发现了有效的目标 <code>ghp_</code> 开头的 <code>GitHub Personal Access Token</code> 或 <code>gho_</code> 开头的 <code>OAuth Token</code>，它在本地会安装一个持久化守护进程：</p>
+<p>macOS：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~/Library/LaunchAgents/com.user.gh-token-monitor.plist</span><br></pre></td></tr></table></figure>
+
+<p>Linux：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~/.config/systemd/user/gh-token-monitor.service</span><br></pre></td></tr></table></figure>
+
+<p><strong>如果它因 GitHub 令牌被撤销而收到 40X 错误，该进程会尝试执行 <code>rm -rf ~/</code>，直接清空用户主目录！</strong>  不过该守护进程会在运行 24 小时后自动退出。</p>
+<blockquote>
+<p>注：与之前的 Mini Shai-Hulud 变种一样，该恶意软件会检查系统是否配置为俄语，如果是，则直接终止运行，不窃取任何数据。</p>
+</blockquote>
+<h2 id="四、检查指南"><a href="#四、检查指南" class="headerlink" title="四、检查指南"></a>四、检查指南</h2><ol>
+<li><strong>排查软件包</strong>：搜索 lockfiles 和 CI 日志，是否出现受影响的软件包版本。检查包根目录下是否存在 <code>router_init.js</code> 或 <code>setup.mjs</code>。</li>
+<li><strong>检查并清除持久化威胁</strong>：在开发者机器上搜索 <code>gh-token-monitor</code> 守护进程并将其删除（路径见下方指标）。</li>
+<li><strong>轮换所有凭证</strong>：如果怀疑受到影响，请立即轮换 GitHub 令牌、npm 令牌、AWS 凭证、Vault 令牌、Kubernetes 服务账号和 CI&#x2F;CD 机密信息。<blockquote>
+<p><strong>警告：在吊销 GitHub 令牌之前，请务必先检查并移除持久化守护进程，以免触发恶意软件的（<code>rm -rf ~/</code>）命令。</strong></p>
+</blockquote>
+</li>
+<li><strong>检查 IDE 目录</strong>：检查 <code>.claude/</code> 和 <code>.vscode/</code> 目录中是否残留 <code>router_runtime.js</code> 或 <code>setup.mjs</code>。这些文件在执行 <code>npm uninstall</code> 后仍可能驻留。</li>
+<li><strong>屏蔽 C2 目标域名</strong>：在 DNS&#x2F;代理层面拦截 <code>git-tanstack.com</code> 以及 <code>*.getsession.org</code>。</li>
+</ol>
+<h3 id="文件"><a href="#文件" class="headerlink" title="文件"></a>文件</h3><table>
+<thead>
+<tr>
+<th align="left">文件名称</th>
+<th align="left">详情</th>
+<th align="left">SHA-256 &#x2F; SHA-1</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>router_init.js</code></td>
+<td align="left">2,341,681 bytes</td>
+<td align="left">SHA256:<br>&#96;&#96;ab4fcadaec49c03278063dd269ea5eef82d24f2124a8e15d7b90f2fa8601266c&#96;</td>
+</tr>
+<tr>
+<td align="left"><code>router_init.js</code></td>
+<td align="left">2,339,346 bytes</td>
+<td align="left">SHA256:<br><code>2ec78d556d696e208927cc503d48e4b5eb56b31abc2870c2ed2e98d6be27fc96</code><br>SHA1:<br> <code>e7d582b98ca80690883175470e96f703ef6dc497</code></td>
+</tr>
+<tr>
+<td align="left"><code>setup.mjs</code></td>
+<td align="left">5,047 bytes</td>
+<td align="left">SHA256:<br><code>2258284d65f63829bd67eaba01ef6f1ada2f593f9bbe41678b2df360bd90d3df</code><br>SHA1:<br> <code>12f35b1081b17d21815b35feb57ab03d02482116</code></td>
+</tr>
+<tr>
+<td align="left"><code>opensearch_init.js</code></td>
+<td align="left">-</td>
+<td align="left">SHA1:<br><code>820fa07a7328b6cf2b417078e103721d4d8f2e79</code></td>
+</tr>
+</tbody></table>
+<h3 id="网络-IOC"><a href="#网络-IOC" class="headerlink" title="网络 IOC"></a>网络 IOC</h3><table>
+<thead>
+<tr>
+<th align="left">类型</th>
+<th align="left">目标</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>C2 域名</strong></td>
+<td align="left"><code>git-tanstack.com</code></td>
+</tr>
+<tr>
+<td align="left"><strong>Session 种子节点</strong></td>
+<td align="left"><code>seed1.getsession.org</code>, <code>seed2.getsession.org</code>, <code>seed3.getsession.org</code></td>
+</tr>
+<tr>
+<td align="left"><strong>Session 文件服务器</strong></td>
+<td align="left"><code>filev2.getsession.org</code></td>
+</tr>
+<tr>
+<td align="left"><strong>C2 IP 地址</strong></td>
+<td align="left"><code>83.142.209.194</code></td>
+</tr>
+<tr>
+<td align="left"><strong>PyPI Payload URL</strong></td>
+<td align="left"><code>git-tanstack.com/tmp/transformers.pyz</code></td>
+</tr>
+</tbody></table>
+<h3 id="其他特征"><a href="#其他特征" class="headerlink" title="其他特征"></a>其他特征</h3><table>
+<thead>
+<tr>
+<th align="left">类别</th>
+<th align="left">特征描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>服务名称</strong></td>
+<td align="left"><code>gh-token-monitor</code></td>
+</tr>
+<tr>
+<td align="left"><strong>macOS 路径</strong></td>
+<td align="left"><code>~/Library/LaunchAgents/com.user.gh-token-monitor.plist</code></td>
+</tr>
+<tr>
+<td align="left"><strong>Linux 路径</strong></td>
+<td align="left"><code>~/.config/systemd/user/gh-token-monitor.service</code></td>
+</tr>
+<tr>
+<td align="left"><strong>运行时痕迹</strong></td>
+<td align="left"><code>router_runtime.js</code> , <code>tanstack_runner.js</code></td>
+</tr>
+<tr>
+<td align="left"><strong>Hook 执行命令</strong></td>
+<td align="left"><code>preinstall: node setup.mjs</code></td>
+</tr>
+<tr>
+<td align="left"><strong>恶意 Git 依赖</strong></td>
+<td align="left"><code>github:tanstack/router#79ac49eedf774dd4b0cfa308722bc463cfe5885c</code></td>
+</tr>
+<tr>
+<td align="left"><strong>特定运行环境</strong></td>
+<td align="left">Bun Version <code>1.3.13</code></td>
+</tr>
+</tbody></table>
+<h2 id="五、受影响的软件包"><a href="#五、受影响的软件包" class="headerlink" title="五、受影响的软件包"></a>五、受影响的软件包</h2><h3 id="PyPI"><a href="#PyPI" class="headerlink" title="PyPI"></a>PyPI</h3><ul>
+<li><code>guardrails-ai@0.10.1</code></li>
+<li><code>mistralai@2.4.6</code></li>
+</ul>
+<h3 id="NPM"><a href="#NPM" class="headerlink" title="NPM"></a>NPM</h3><table>
+<thead>
+<tr>
+<th align="left">Package</th>
+<th align="left">Affected Versions</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">@beproduct&#x2F;nestjs-auth</td>
+<td align="left">0.1.2, 0.1.3, 0.1.4, 0.1.5, 0.1.6, 0.1.7, 0.1.8, 0.1.9, 0.1.10, 0.1.11, 0.1.12, 0.1.13, 0.1.14, 0.1.15, 0.1.16, 0.1.17, 0.1.18, 0.1.19</td>
+</tr>
+<tr>
+<td align="left">@cap-js&#x2F;db-service</td>
+<td align="left">2.10.1</td>
+</tr>
+<tr>
+<td align="left">@cap-js&#x2F;postgres</td>
+<td align="left">2.2.2</td>
+</tr>
+<tr>
+<td align="left">@cap-js&#x2F;sqlite</td>
+<td align="left">2.2.2</td>
+</tr>
+<tr>
+<td align="left">@dirigible-ai&#x2F;sdk</td>
+<td align="left">0.6.2, 0.6.3</td>
+</tr>
+<tr>
+<td align="left">@draftauth&#x2F;client</td>
+<td align="left">0.2.1, 0.2.2</td>
+</tr>
+<tr>
+<td align="left">@draftauth&#x2F;core</td>
+<td align="left">0.13.1, 0.13.2</td>
+</tr>
+<tr>
+<td align="left">@draftlab&#x2F;auth</td>
+<td align="left">0.24.1, 0.24.2</td>
+</tr>
+<tr>
+<td align="left">@draftlab&#x2F;auth-router</td>
+<td align="left">0.5.1, 0.5.2</td>
+</tr>
+<tr>
+<td align="left">@draftlab&#x2F;db</td>
+<td align="left">0.16.1, 0.16.2</td>
+</tr>
+<tr>
+<td align="left">@mesadev&#x2F;rest</td>
+<td align="left">0.28.3</td>
+</tr>
+<tr>
+<td align="left">@mesadev&#x2F;saguaro</td>
+<td align="left">0.4.22</td>
+</tr>
+<tr>
+<td align="left">@mesadev&#x2F;sdk</td>
+<td align="left">0.28.3</td>
+</tr>
+<tr>
+<td align="left">@mistralai&#x2F;mistralai</td>
+<td align="left">2.2.2, 2.2.3, 2.2.4</td>
+</tr>
+<tr>
+<td align="left">@mistralai&#x2F;mistralai-azure</td>
+<td align="left">1.7.1, 1.7.2, 1.7.3</td>
+</tr>
+<tr>
+<td align="left">@mistralai&#x2F;mistralai-gcp</td>
+<td align="left">1.7.1, 1.7.2, 1.7.3</td>
+</tr>
+<tr>
+<td align="left">@ml-toolkit-ts&#x2F;preprocessing</td>
+<td align="left">1.0.2, 1.0.3</td>
+</tr>
+<tr>
+<td align="left">@ml-toolkit-ts&#x2F;xgboost</td>
+<td align="left">1.0.3, 1.0.4</td>
+</tr>
+<tr>
+<td align="left">@opensearch-project&#x2F;opensearch</td>
+<td align="left">3.5.3, 3.6.2, 3.7.0, 3.8.0</td>
+</tr>
+<tr>
+<td align="left">@squawk&#x2F;airport-data</td>
+<td align="left">0.7.4, 0.7.5, 0.7.6, 0.7.7, 0.7.8</td>
+</tr>
+<tr>
+<td align="left">@squawk&#x2F;airports</td>
+<td align="left">0.6.2, 0.6.3, 0.6.4, 0.6.5, 0.6.6</td>
+</tr>
+<tr>
+<td align="left">@squawk&#x2F;airspace</td>
+<td align="left">0.8.1, 0.8.2, 0.8.3, 0.8.4, 0.8.5</td>
+</tr>
+<tr>
+<td align="left">@squawk&#x2F;airspace-data</td>
+<td align="left">0.5.3, 0.5.4, 0.5.5, 0.5.6, 0.5.7</td>
+</tr>
+<tr>
+<td align="left">@squawk&#x2F;airway-data</td>
+<td align="left">0.5.4, 0.5.5, 0.5.6, 0.5.7, 0.5.8</td>
+</tr>
+<tr>
+<td align="left">@squawk&#x2F;airways</td>
+<td align="left">0.4.2, 0.4.3, 0.4.4, 0.4.5, 0.4.6</td>
+</tr>
+<tr>
+<td align="left">@squawk&#x2F;fix-data</td>
+<td align="left">0.6.4, 0.6.5, 0.6.6, 0.6.7, 0.6.8</td>
+</tr>
+<tr>
+<td align="left">@squawk&#x2F;fixes</td>
+<td align="left">0.3.2, 0.3.3, 0.3.4, 0.3.5, 0.3.6</td>
+</tr>
+<tr>
+<td align="left">@squawk&#x2F;flight-math</td>
+<td align="left">0.5.4, 0.5.5, 0.5.6, 0.5.7, 0.5.8</td>
+</tr>
+<tr>
+<td align="left">@squawk&#x2F;flightplan</td>
+<td align="left">0.5.2, 0.5.3, 0.5.4, 0.5.5, 0.5.6</td>
+</tr>
+<tr>
+<td align="left">@squawk&#x2F;geo</td>
+<td align="left">0.4.4, 0.4.5, 0.4.6, 0.4.7, 0.4.8</td>
+</tr>
+<tr>
+<td align="left">@squawk&#x2F;icao-registry</td>
+<td align="left">0.5.2, 0.5.3, 0.5.4, 0.5.5, 0.5.6</td>
+</tr>
+<tr>
+<td align="left">@squawk&#x2F;icao-registry-data</td>
+<td align="left">0.8.4, 0.8.5, 0.8.6, 0.8.7, 0.8.8</td>
+</tr>
+<tr>
+<td align="left">@squawk&#x2F;mcp</td>
+<td align="left">0.9.1, 0.9.2, 0.9.3, 0.9.4, 0.9.5</td>
+</tr>
+<tr>
+<td align="left">@squawk&#x2F;navaid-data</td>
+<td align="left">0.6.4, 0.6.5, 0.6.6, 0.6.7, 0.6.8</td>
+</tr>
+<tr>
+<td align="left">@squawk&#x2F;navaids</td>
+<td align="left">0.4.2, 0.4.3, 0.4.4, 0.4.5, 0.4.6</td>
+</tr>
+<tr>
+<td align="left">@squawk&#x2F;notams</td>
+<td align="left">0.3.6, 0.3.7, 0.3.8, 0.3.9, 0.3.10</td>
+</tr>
+<tr>
+<td align="left">@squawk&#x2F;procedure-data</td>
+<td align="left">0.7.3, 0.7.4, 0.7.5, 0.7.6, 0.7.7</td>
+</tr>
+<tr>
+<td align="left">@squawk&#x2F;procedures</td>
+<td align="left">0.5.2, 0.5.3, 0.5.4, 0.5.5, 0.5.6</td>
+</tr>
+<tr>
+<td align="left">@squawk&#x2F;types</td>
+<td align="left">0.8.1, 0.8.2, 0.8.3, 0.8.4, 0.8.5</td>
+</tr>
+<tr>
+<td align="left">@squawk&#x2F;units</td>
+<td align="left">0.4.3, 0.4.4, 0.4.5, 0.4.6, 0.4.7</td>
+</tr>
+<tr>
+<td align="left">@squawk&#x2F;weather</td>
+<td align="left">0.5.6, 0.5.7, 0.5.8, 0.5.9, 0.5.10</td>
+</tr>
+<tr>
+<td align="left">@supersurkhet&#x2F;cli</td>
+<td align="left">0.0.2, 0.0.3, 0.0.4, 0.0.5, 0.0.6, 0.0.7</td>
+</tr>
+<tr>
+<td align="left">@supersurkhet&#x2F;sdk</td>
+<td align="left">0.0.2, 0.0.3, 0.0.4, 0.0.5, 0.0.6, 0.0.7</td>
+</tr>
+<tr>
+<td align="left">@tallyui&#x2F;components</td>
+<td align="left">1.0.1, 1.0.2, 1.0.3</td>
+</tr>
+<tr>
+<td align="left">@tallyui&#x2F;connector-medusa</td>
+<td align="left">1.0.1, 1.0.2, 1.0.3</td>
+</tr>
+<tr>
+<td align="left">@tallyui&#x2F;connector-shopify</td>
+<td align="left">1.0.1, 1.0.2, 1.0.3</td>
+</tr>
+<tr>
+<td align="left">@tallyui&#x2F;connector-vendure</td>
+<td align="left">1.0.1, 1.0.2, 1.0.3</td>
+</tr>
+<tr>
+<td align="left">@tallyui&#x2F;connector-woocommerce</td>
+<td align="left">1.0.1, 1.0.2, 1.0.3</td>
+</tr>
+<tr>
+<td align="left">@tallyui&#x2F;core</td>
+<td align="left">0.2.1, 0.2.2, 0.2.3</td>
+</tr>
+<tr>
+<td align="left">@tallyui&#x2F;database</td>
+<td align="left">1.0.1, 1.0.2, 1.0.3</td>
+</tr>
+<tr>
+<td align="left">@tallyui&#x2F;pos</td>
+<td align="left">0.1.1, 0.1.2, 0.1.3</td>
+</tr>
+<tr>
+<td align="left">@tallyui&#x2F;storage-sqlite</td>
+<td align="left">0.2.1, 0.2.2, 0.2.3</td>
+</tr>
+<tr>
+<td align="left">@tallyui&#x2F;theme</td>
+<td align="left">0.2.1, 0.2.2, 0.2.3</td>
+</tr>
+<tr>
+<td align="left">@tanstack&#x2F;arktype-adapter</td>
+<td align="left">1.166.12, 1.166.15</td>
+</tr>
+<tr>
+<td align="left">@tanstack&#x2F;eslint-plugin-router</td>
+<td align="left">1.161.9, 1.161.12</td>
+</tr>
+<tr>
+<td align="left">@tanstack&#x2F;eslint-plugin-start</td>
+<td align="left">0.0.4, 0.0.7</td>
+</tr>
+<tr>
+<td align="left">@tanstack&#x2F;history</td>
+<td align="left">1.161.9, 1.161.12</td>
+</tr>
+<tr>
+<td align="left">@tanstack&#x2F;nitro-v2-vite-plugin</td>
+<td align="left">1.154.12, 1.154.15</td>
+</tr>
+<tr>
+<td align="left">@tanstack&#x2F;react-router</td>
+<td align="left">1.169.5, 1.169.8</td>
+</tr>
+<tr>
+<td align="left">@tanstack&#x2F;react-router-devtools</td>
+<td align="left">1.166.16, 1.166.19</td>
+</tr>
+<tr>
+<td align="left">@tanstack&#x2F;react-router-ssr-query</td>
+<td align="left">1.166.15, 1.166.18</td>
+</tr>
+<tr>
+<td align="left">@tanstack&#x2F;react-start</td>
+<td align="left">1.167.68, 1.167.71</td>
+</tr>
+<tr>
+<td align="left">@tanstack&#x2F;react-start-client</td>
+<td align="left">1.166.51, 1.166.54</td>
+</tr>
+<tr>
+<td align="left">@tanstack&#x2F;react-start-rsc</td>
+<td align="left">0.0.47, 0.0.50</td>
+</tr>
+<tr>
+<td align="left">@tanstack&#x2F;react-start-server</td>
+<td align="left">1.166.55, 1.166.58</td>
+</tr>
+<tr>
+<td align="left">@tanstack&#x2F;router-cli</td>
+<td align="left">1.166.46, 1.166.49</td>
+</tr>
+<tr>
+<td align="left">@tanstack&#x2F;router-core</td>
+<td align="left">1.169.5, 1.169.8</td>
+</tr>
+<tr>
+<td align="left">@tanstack&#x2F;router-devtools</td>
+<td align="left">1.166.16, 1.166.19</td>
+</tr>
+<tr>
+<td align="left">@tanstack&#x2F;router-devtools-core</td>
+<td align="left">1.167.6, 1.167.9</td>
+</tr>
+<tr>
+<td align="left">@tanstack&#x2F;router-generator</td>
+<td align="left">1.166.45, 1.166.48</td>
+</tr>
+<tr>
+<td align="left">@tanstack&#x2F;router-plugin</td>
+<td align="left">1.167.38, 1.167.41</td>
+</tr>
+<tr>
+<td align="left">@tanstack&#x2F;router-ssr-query-core</td>
+<td align="left">1.168.3, 1.168.6</td>
+</tr>
+<tr>
+<td align="left">@tanstack&#x2F;router-utils</td>
+<td align="left">1.161.11, 1.161.14</td>
+</tr>
+<tr>
+<td align="left">@tanstack&#x2F;router-vite-plugin</td>
+<td align="left">1.166.53, 1.166.56</td>
+</tr>
+<tr>
+<td align="left">@tanstack&#x2F;solid-router</td>
+<td align="left">1.169.5, 1.169.8</td>
+</tr>
+<tr>
+<td align="left">@tanstack&#x2F;solid-router-devtools</td>
+<td align="left">1.166.16, 1.166.19</td>
+</tr>
+<tr>
+<td align="left">@tanstack&#x2F;solid-router-ssr-query</td>
+<td align="left">1.166.15, 1.166.18</td>
+</tr>
+<tr>
+<td align="left">@tanstack&#x2F;solid-start</td>
+<td align="left">1.167.65, 1.167.68</td>
+</tr>
+<tr>
+<td align="left">@tanstack&#x2F;solid-start-client</td>
+<td align="left">1.166.50, 1.166.53</td>
+</tr>
+<tr>
+<td align="left">@tanstack&#x2F;solid-start-server</td>
+<td align="left">1.166.54, 1.166.57</td>
+</tr>
+<tr>
+<td align="left">@tanstack&#x2F;start-client-core</td>
+<td align="left">1.168.5, 1.168.8</td>
+</tr>
+<tr>
+<td align="left">@tanstack&#x2F;start-fn-stubs</td>
+<td align="left">1.161.9, 1.161.12</td>
+</tr>
+<tr>
+<td align="left">@tanstack&#x2F;start-plugin-core</td>
+<td align="left">1.169.23, 1.169.26</td>
+</tr>
+<tr>
+<td align="left">@tanstack&#x2F;start-server-core</td>
+<td align="left">1.167.33, 1.167.36</td>
+</tr>
+<tr>
+<td align="left">@tanstack&#x2F;start-static-server-functions</td>
+<td align="left">1.166.44, 1.166.47</td>
+</tr>
+<tr>
+<td align="left">@tanstack&#x2F;start-storage-context</td>
+<td align="left">1.166.38, 1.166.41</td>
+</tr>
+<tr>
+<td align="left">@tanstack&#x2F;valibot-adapter</td>
+<td align="left">1.166.12, 1.166.15</td>
+</tr>
+<tr>
+<td align="left">@tanstack&#x2F;virtual-file-routes</td>
+<td align="left">1.161.10, 1.161.13</td>
+</tr>
+<tr>
+<td align="left">@tanstack&#x2F;vue-router</td>
+<td align="left">1.169.5, 1.169.8</td>
+</tr>
+<tr>
+<td align="left">@tanstack&#x2F;vue-router-devtools</td>
+<td align="left">1.166.16, 1.166.19</td>
+</tr>
+<tr>
+<td align="left">@tanstack&#x2F;vue-router-ssr-query</td>
+<td align="left">1.166.15, 1.166.18</td>
+</tr>
+<tr>
+<td align="left">@tanstack&#x2F;vue-start</td>
+<td align="left">1.167.61, 1.167.64</td>
+</tr>
+<tr>
+<td align="left">@tanstack&#x2F;vue-start-client</td>
+<td align="left">1.166.46, 1.166.49</td>
+</tr>
+<tr>
+<td align="left">@tanstack&#x2F;vue-start-server</td>
+<td align="left">1.166.50, 1.166.53</td>
+</tr>
+<tr>
+<td align="left">@tanstack&#x2F;zod-adapter</td>
+<td align="left">1.166.12, 1.166.15</td>
+</tr>
+<tr>
+<td align="left">@taskflow-corp&#x2F;cli</td>
+<td align="left">0.1.24, 0.1.25, 0.1.26, 0.1.27, 0.1.28, 0.1.29</td>
+</tr>
+<tr>
+<td align="left">@tolka&#x2F;cli</td>
+<td align="left">1.0.2, 1.0.3, 1.0.4, 1.0.5, 1.0.6</td>
+</tr>
+<tr>
+<td align="left">@uipath&#x2F;access-policy-sdk</td>
+<td align="left">0.3.1</td>
+</tr>
+<tr>
+<td align="left">@uipath&#x2F;access-policy-tool</td>
+<td align="left">0.3.1</td>
+</tr>
+<tr>
+<td align="left">@uipath&#x2F;admin-tool</td>
+<td align="left">0.1.1</td>
+</tr>
+<tr>
+<td align="left">@uipath&#x2F;agent-sdk</td>
+<td align="left">1.0.2</td>
+</tr>
+<tr>
+<td align="left">@uipath&#x2F;agent-tool</td>
+<td align="left">1.0.1</td>
+</tr>
+<tr>
+<td align="left">@uipath&#x2F;agent.sdk</td>
+<td align="left">0.0.18</td>
+</tr>
+<tr>
+<td align="left">@uipath&#x2F;aops-policy-tool</td>
+<td align="left">0.3.1</td>
+</tr>
+<tr>
+<td align="left">@uipath&#x2F;ap-chat</td>
+<td align="left">1.5.7</td>
+</tr>
+<tr>
+<td align="left">@uipath&#x2F;api-workflow-tool</td>
+<td align="left">1.0.1</td>
+</tr>
+<tr>
+<td align="left">@uipath&#x2F;apollo-core</td>
+<td align="left">5.9.2</td>
+</tr>
+<tr>
+<td align="left">@uipath&#x2F;apollo-react</td>
+<td align="left">4.24.5</td>
+</tr>
+<tr>
+<td align="left">@uipath&#x2F;apollo-wind</td>
+<td align="left">2.16.2</td>
+</tr>
+<tr>
+<td align="left">@uipath&#x2F;auth</td>
+<td align="left">1.0.1</td>
+</tr>
+<tr>
+<td align="left">@uipath&#x2F;case-tool</td>
+<td align="left">1.0.1</td>
+</tr>
+<tr>
+<td align="left">@uipath&#x2F;cli</td>
+<td align="left">1.0.1</td>
+</tr>
+<tr>
+<td align="left">@uipath&#x2F;codedagent-tool</td>
+<td align="left">1.0.1</td>
+</tr>
+<tr>
+<td align="left">@uipath&#x2F;codedagents-tool</td>
+<td align="left">0.1.12</td>
+</tr>
+<tr>
+<td align="left">@uipath&#x2F;codedapp-tool</td>
+<td align="left">1.0.1</td>
+</tr>
+<tr>
+<td align="left">@uipath&#x2F;common</td>
+<td align="left">1.0.1</td>
+</tr>
+<tr>
+<td align="left">@uipath&#x2F;context-grounding-tool</td>
+<td align="left">0.1.1</td>
+</tr>
+<tr>
+<td align="left">@uipath&#x2F;data-fabric-tool</td>
+<td align="left">1.0.2</td>
+</tr>
+<tr>
+<td align="left">@uipath&#x2F;docsai-tool</td>
+<td align="left">1.0.1</td>
+</tr>
+<tr>
+<td align="left">@uipath&#x2F;filesystem</td>
+<td align="left">1.0.1</td>
+</tr>
+<tr>
+<td align="left">@uipath&#x2F;flow-tool</td>
+<td align="left">1.0.2</td>
+</tr>
+<tr>
+<td align="left">@uipath&#x2F;functions-tool</td>
+<td align="left">1.0.1</td>
+</tr>
+<tr>
+<td align="left">@uipath&#x2F;gov-tool</td>
+<td align="left">0.3.1</td>
+</tr>
+<tr>
+<td align="left">@uipath&#x2F;identity-tool</td>
+<td align="left">0.1.1</td>
+</tr>
+<tr>
+<td align="left">@uipath&#x2F;insights-sdk</td>
+<td align="left">1.0.1</td>
+</tr>
+<tr>
+<td align="left">@uipath&#x2F;insights-tool</td>
+<td align="left">1.0.1</td>
+</tr>
+<tr>
+<td align="left">@uipath&#x2F;integrationservice-sdk</td>
+<td align="left">1.0.2</td>
+</tr>
+<tr>
+<td align="left">@uipath&#x2F;integrationservice-tool</td>
+<td align="left">1.0.2</td>
+</tr>
+<tr>
+<td align="left">@uipath&#x2F;llmgw-tool</td>
+<td align="left">1.0.1</td>
+</tr>
+<tr>
+<td align="left">@uipath&#x2F;maestro-sdk</td>
+<td align="left">1.0.1</td>
+</tr>
+<tr>
+<td align="left">@uipath&#x2F;maestro-tool</td>
+<td align="left">1.0.1</td>
+</tr>
+<tr>
+<td align="left">@uipath&#x2F;orchestrator-tool</td>
+<td align="left">1.0.1</td>
+</tr>
+<tr>
+<td align="left">@uipath&#x2F;packager-tool-apiworkflow</td>
+<td align="left">0.0.19</td>
+</tr>
+<tr>
+<td align="left">@uipath&#x2F;packager-tool-bpmn</td>
+<td align="left">0.0.9</td>
+</tr>
+<tr>
+<td align="left">@uipath&#x2F;packager-tool-case</td>
+<td align="left">0.0.9</td>
+</tr>
+<tr>
+<td align="left">@uipath&#x2F;packager-tool-connector</td>
+<td align="left">0.0.19</td>
+</tr>
+<tr>
+<td align="left">@uipath&#x2F;packager-tool-flow</td>
+<td align="left">0.0.19</td>
+</tr>
+<tr>
+<td align="left">@uipath&#x2F;packager-tool-functions</td>
+<td align="left">0.1.1</td>
+</tr>
+<tr>
+<td align="left">@uipath&#x2F;packager-tool-webapp</td>
+<td align="left">1.0.6</td>
+</tr>
+<tr>
+<td align="left">@uipath&#x2F;packager-tool-workflowcompiler</td>
+<td align="left">0.0.16</td>
+</tr>
+<tr>
+<td align="left">@uipath&#x2F;packager-tool-workflowcompiler-browser</td>
+<td align="left">0.0.34</td>
+</tr>
+<tr>
+<td align="left">@uipath&#x2F;platform-tool</td>
+<td align="left">1.0.1</td>
+</tr>
+<tr>
+<td align="left">@uipath&#x2F;project-packager</td>
+<td align="left">1.1.16</td>
+</tr>
+<tr>
+<td align="left">@uipath&#x2F;resource-tool</td>
+<td align="left">1.0.1</td>
+</tr>
+<tr>
+<td align="left">@uipath&#x2F;resourcecatalog-tool</td>
+<td align="left">0.1.1</td>
+</tr>
+<tr>
+<td align="left">@uipath&#x2F;resources-tool</td>
+<td align="left">0.1.11</td>
+</tr>
+<tr>
+<td align="left">@uipath&#x2F;robot</td>
+<td align="left">1.3.4</td>
+</tr>
+<tr>
+<td align="left">@uipath&#x2F;rpa-legacy-tool</td>
+<td align="left">1.0.1</td>
+</tr>
+<tr>
+<td align="left">@uipath&#x2F;rpa-tool</td>
+<td align="left">0.9.5</td>
+</tr>
+<tr>
+<td align="left">@uipath&#x2F;solution-packager</td>
+<td align="left">0.0.35</td>
+</tr>
+<tr>
+<td align="left">@uipath&#x2F;solution-tool</td>
+<td align="left">1.0.1</td>
+</tr>
+<tr>
+<td align="left">@uipath&#x2F;solutionpackager-sdk</td>
+<td align="left">1.0.11</td>
+</tr>
+<tr>
+<td align="left">@uipath&#x2F;solutionpackager-tool-core</td>
+<td align="left">0.0.34</td>
+</tr>
+<tr>
+<td align="left">@uipath&#x2F;tasks-tool</td>
+<td align="left">1.0.1</td>
+</tr>
+<tr>
+<td align="left">@uipath&#x2F;telemetry</td>
+<td align="left">0.0.7</td>
+</tr>
+<tr>
+<td align="left">@uipath&#x2F;test-manager-tool</td>
+<td align="left">1.0.2</td>
+</tr>
+<tr>
+<td align="left">@uipath&#x2F;tool-workflowcompiler</td>
+<td align="left">0.0.12</td>
+</tr>
+<tr>
+<td align="left">@uipath&#x2F;traces-tool</td>
+<td align="left">1.0.1</td>
+</tr>
+<tr>
+<td align="left">@uipath&#x2F;ui-widgets-multi-file-upload</td>
+<td align="left">1.0.1</td>
+</tr>
+<tr>
+<td align="left">@uipath&#x2F;uipath-python-bridge</td>
+<td align="left">1.0.1</td>
+</tr>
+<tr>
+<td align="left">@uipath&#x2F;vertical-solutions-tool</td>
+<td align="left">1.0.1</td>
+</tr>
+<tr>
+<td align="left">@uipath&#x2F;vss</td>
+<td align="left">0.1.6</td>
+</tr>
+<tr>
+<td align="left">@uipath&#x2F;widget.sdk</td>
+<td align="left">1.2.3</td>
+</tr>
+<tr>
+<td align="left">agentwork-cli</td>
+<td align="left">0.1.4, 0.1.5</td>
+</tr>
+<tr>
+<td align="left">cmux-agent-mcp</td>
+<td align="left">0.1.3, 0.1.4, 0.1.5, 0.1.6, 0.1.7, 0.1.8</td>
+</tr>
+<tr>
+<td align="left">cross-stitch</td>
+<td align="left">1.1.3, 1.1.4, 1.1.5, 1.1.6, 1.1.7</td>
+</tr>
+<tr>
+<td align="left">git-branch-selector</td>
+<td align="left">1.3.3, 1.3.4, 1.3.5, 1.3.6, 1.3.7</td>
+</tr>
+<tr>
+<td align="left">git-git-git</td>
+<td align="left">1.0.8, 1.0.9, 1.0.10, 1.0.11, 1.0.12</td>
+</tr>
+<tr>
+<td align="left">guardrails-ai</td>
+<td align="left">0.10.1</td>
+</tr>
+<tr>
+<td align="left">intercom-client</td>
+<td align="left">7.0.4</td>
+</tr>
+<tr>
+<td align="left">lightning</td>
+<td align="left">2.6.2, 2.6.3</td>
+</tr>
+<tr>
+<td align="left">mbt</td>
+<td align="left">1.2.48</td>
+</tr>
+<tr>
+<td align="left">mistralai</td>
+<td align="left">2.4.6</td>
+</tr>
+<tr>
+<td align="left">ml-toolkit-ts</td>
+<td align="left">1.0.4, 1.0.5</td>
+</tr>
+<tr>
+<td align="left">nextmove-mcp</td>
+<td align="left">0.1.3, 0.1.4, 0.1.5, 0.1.6, 0.1.7</td>
+</tr>
+<tr>
+<td align="left">safe-action</td>
+<td align="left">0.8.3, 0.8.4</td>
+</tr>
+<tr>
+<td align="left">ts-dna</td>
+<td align="left">3.0.1, 3.0.2, 3.0.3, 3.0.4, 3.0.5</td>
+</tr>
+<tr>
+<td align="left">wot-api</td>
+<td align="left">0.8.1, 0.8.2, 0.8.3, 0.8.4</td>
+</tr>
+</tbody></table>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>这次攻击展示了供应链攻击的新趋势：攻击者不再只盯着包管理器账号，而是将 GitHub Actions、缓存、OIDC、开发者终端、CI&#x2F;CD Secret 和开源包发布流程串联成完整攻击链。</p>
+<p>对于安全团队而言，单纯“升级依赖”已经不够。真正有效的防护需要覆盖从代码提交、CI 执行、凭据签发、包发布到开发者本地环境的全链路。</p>
+<p>这次事件也再次提醒我们：CI&#x2F;CD 是生产系统的一部分，依赖包是执行代码的一部分，开发者机器也是供应链边界的一部分。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.wiz.io/blog/mini-shai-hulud-strikes-again-tanstack-more-npm-packages-compromised#notable-updates-14">Mini Shai-Hulud Strikes Again: TanStack + more npm Packages Compromised
+</a></li>
+<li><a target="_blank" rel="noopener" href="https://digital.nhs.uk/cyber-alerts/2026/cc-4781">Supply Chain Attack Affecting Numerous npm and PyPI Packages</a></li>
+<li><a target="_blank" rel="noopener" href="https://socket.dev/blog/tanstack-npm-packages-compromised-mini-shai-hulud-supply-chain-attack#All-Compromised-Packages">TanStack npm Packages Compromised in Ongoing Mini Shai-Hulud Supply-Chain Attack</a></li>
+</ul>
+
+  </div>
+
+  <footer class="article-reactions">
+    <div class="reaction-group">
+      <button type="button" class="reaction reaction--comment" aria-label="跳转到评论区" data-action="scroll-to-comments">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
+
+      </button>
+      <span class="reaction-label">评论</span>
+      
+    </div>
+    <div class="reaction-group reaction-group--right">
+      
+      <button type="button" class="reaction reaction--share" aria-label="分享" data-action="share">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-share-2" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" x2="15.42" y1="13.51" y2="17.49"/><line x1="15.41" x2="8.59" y1="6.51" y2="10.49"/></svg>
+
+      </button>
+      <span class="reaction-label">分享</span>
+    </div>
+  </footer>
+
+  
+
+
+  <nav class="article-actions">
+    
+      <a class="article-action article-action--prev" href="/post/avoid-leaking-secrets-in-shell-history.html">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left" aria-hidden="true"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+
+        <span class="action-label">上一篇</span>
+        <span class="action-title">别让终端历史成为你的&#34;密码本&#34;：避免记录敏感命的实用指南</span>
+      </a>
+    
+    
+      <a class="article-action article-action--next" href="/post/chatgpt-business-enable-codex-device-code.html">
+        <span class="action-label">下一篇</span>
+        <span class="action-title">ChatGPT Business 为成员启用设备代码身份验证</span>
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+
+      </a>
+    
+  </nav>
+</article>
+</div>
+
+<button type="button" class="back-to-top" data-action="scroll-to-top" aria-label="返回顶部" hidden>
+  
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up" aria-hidden="true"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg>
+
+</button>
+
+
+  <section class="related-paper">
+    <header class="related-paper__head">
+      <h2>
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+相关文章</h2>
+      <a class="related-paper__more" href="/archives/">
+        <span>查看更多</span>
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+
+      </a>
+    </header>
+    <div class="related-paper__grid">
+      
+        <a class="related-card" href="/post/codex-is-buring-your-ssd.html">
+          <span class="related-card__thumb">
+            
+<div class="paper-thumb paper-thumb-0 paper-thumb--cover">
+  
+    <img class="paper-thumb__img" src="https://img.nep.me/ooo/cover-codex-bug-fixed.webp" alt="Codex 的日志记录消耗 SSD 寿命？OpenAI 已修复" loading="lazy" referrerpolicy="no-referrer">
+  
+</div>
+
+          </span>
+          <span class="related-card__body">
+            <strong class="related-card__title">Codex 的日志记录消耗 SSD 寿命？OpenAI 已修复</strong>
+            <em class="related-card__date">2026-06-23</em>
+          </span>
+        </a>
+      
+        <a class="related-card" href="/post/how-much-can-you-save-with-subscription-vs-api.html">
+          <span class="related-card__thumb">
+            
+<div class="paper-thumb paper-thumb-1 paper-thumb--cover">
+  
+    <img class="paper-thumb__img" src="https://img.nep.me/ooo/cover-ai-sub.webp" alt="榨干 AI 订阅额度：使用 Claude Pro 与 ChatGPT 订阅到底能省多少钱？" loading="lazy" referrerpolicy="no-referrer">
+  
+</div>
+
+          </span>
+          <span class="related-card__body">
+            <strong class="related-card__title">榨干 AI 订阅额度：使用 Claude Pro 与 ChatGPT 订阅到底能省多少钱？</strong>
+            <em class="related-card__date">2026-06-21</em>
+          </span>
+        </a>
+      
+        <a class="related-card" href="/post/cloudflare-free-tier.html">
+          <span class="related-card__thumb">
+            
+<div class="paper-thumb paper-thumb-2 paper-thumb--cover">
+  
+    <img class="paper-thumb__img" src="https://img.nep.me/ooo/cover-cloudflare.webp" alt="赛博菩萨：Cloudflare 免费账户可用服务详情" loading="lazy" referrerpolicy="no-referrer">
+  
+</div>
+
+          </span>
+          <span class="related-card__body">
+            <strong class="related-card__title">赛博菩萨：Cloudflare 免费账户可用服务详情</strong>
+            <em class="related-card__date">2026-06-08</em>
+          </span>
+        </a>
+      
+        <a class="related-card" href="/post/animation-cheatsheet.html">
+          <span class="related-card__thumb">
+            
+<div class="paper-thumb paper-thumb-0 paper-thumb--cover">
+  
+    <img class="paper-thumb__img" src="https://img.nep.me/ooo/cover-animation-vocabulary.webp" alt="UI 设计动画词汇表：用专业术语精准描述你想要的动效" loading="lazy" referrerpolicy="no-referrer">
+  
+</div>
+
+          </span>
+          <span class="related-card__body">
+            <strong class="related-card__title">UI 设计动画词汇表：用专业术语精准描述你想要的动效</strong>
+            <em class="related-card__date">2026-06-02</em>
+          </span>
+        </a>
+      
+    </div>
+  </section>
+
+
+      
+
+<section class="comments-section" aria-label="评论">
+  <header class="comments-section__head">
+    <h2>
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
+评论</h2>
+  </header>
+  <div id="artalk-comments"></div>
+</section>
+<script>
+window.addEventListener('load', function () {
+  if (typeof Artalk === 'undefined' || typeof Artalk.init !== 'function') return;
+  Artalk.init({
+    el: '#artalk-comments',
+    pageKey: "https://ooo.run/post/mini-shai-hulud-check-and-defense.html",
+    pageTitle: "Mini Shai-Hulud 供应链攻击事件解析与检测指南",
+    server: "https://artalk.ooo.run",
+    site: "Mr. O 的博客"
+  });
+});
+</script>
+
+
+    </section>
+    
+  </main>
+
+  <div class="sidebar-backdrop js-sidebar-close" aria-hidden="true"></div>
+
+  
+<footer class="site-footer">
+  <span class="site-footer__left">© 2026 By Mr. O · Theme FramedInfra Based on <a href="https://github.com/Homulilly/hexo-theme-flatpaper" target="_blank">FlatPaper</a></span>
+  <span class="site-footer__right"><a href="/terms">服务条款</a> · <a href="/privacy">隐私政策</a> <br /> <a href="https://tools.ooo.run" target="_blank">简易工具</a></span>
+</footer>
+
+  
+<div class="search-panel" aria-hidden="true" data-index-url="/flatpaper-search.json">
+  <div class="search-backdrop js-search-close"></div>
+  <section class="search-dialog" role="dialog" aria-modal="true" aria-label="搜索文章">
+    <span class="tape tape--top-left" aria-hidden="true"></span>
+    <header class="search-head">
+      <h2><span class="green-dot"></span>搜索文章</h2>
+      <button class="icon-button js-search-close" type="button" aria-label="关闭搜索">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+
+      </button>
+    </header>
+    <label class="search-field">
+      
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+
+      <input id="flatpaper-search" class="search-input" type="search" placeholder="输入关键词，按 Esc 关闭" autocomplete="off">
+    </label>
+    <div class="search-results" data-empty="输入关键词后显示匹配的文章">
+      <p class="search-empty">输入关键词后显示匹配的文章</p>
+    </div>
+  </section>
+</div>
+
+  <script>
+  window.FLATPAPER_I18N = {"language":"zh-CN","common.posts":"文章","common.categories":"分类","common.tags":"标签","common.comments":"评论","common.share":"分享","common.page":"页面","common.archive":"归档","common.post_list":"文章列表","common.search_posts":"搜索文章","common.random_posts":"随机文章","common.reward":"赞赏","common.view_all":"查看全部","pagination.prev":"上一页","pagination.next":"下一页","pagination.post_pager":"文章分页","pagination.archive_pager":"归档分页","index.featured":"精选文章","index.pinned":"置顶","index.read_more":"阅读全文","index.previous_slide":"上一张","index.next_slide":"下一张","index.carousel_pagination":"轮播页码","index.carousel_slide":"第 %d 张","index.latest_posts":"最新文章","index.empty_posts":"还没有文章。创建第一篇文章后，这里会显示最新内容。","archive.title":"归档","archive.post_list":"文章列表","taxonomy.category_count":"%d 篇","taxonomy.empty_categories":"暂时还没有分类。","taxonomy.empty_tags":"暂时还没有标签。","links.label":"友链","links.title":"友情链接","links.empty_data":"暂未加载到友链数据。请确认 source/_data/links.yml 存在并已 hexo clean。","links.rss_label":"%s 的 RSS","friends_feed.label":"朋友圈","friends_feed.title":"友链朋友圈","friends_feed.loading":"正在加载友链动态…","friends_feed.missing_url":"暂未配置 all.json 地址。","friends_feed.load_failed":"友链动态加载失败，请稍后再试。","friends_feed.empty":"暂时没有抓取到友链文章。","friends_feed.load_more":"加载更多","friends_feed.updated_at":"更新于 %s","friends_feed.friend_count":"%d 位友邻","friends_feed.active_count":"%d 位活跃","friends_feed.article_count":"%d 篇文章","friends_feed.unknown_author":"未知站点","friends_feed.date_unknown":"时间未知","post.scroll_to_comments":"跳转到评论区","post.previous":"上一篇","post.next":"下一篇","post.no_previous":"没有更早的文章了","post.no_next":"已经是最新的一篇","post.back_to_top":"返回顶部","post.related_posts":"相关文章","post.view_more":"查看更多","not_found.label":"页面走丢了","not_found.title":"找不到这个页面","not_found.text":"这个地址可能已经移动、删除，或者从未存在。","not_found.home":"返回首页","not_found.search":"搜索文章","search.placeholder":"输入关键词，按 Esc 关闭","search.empty":"输入关键词后显示匹配的文章","search.loading":"正在加载搜索索引…","search.load_failed":"搜索索引加载失败，请重新打开搜索重试","search.no_result":"没有找到与 \"%s\" 相关的文章","search.close":"关闭搜索","code.copy":"复制代码","code.collapse":"折叠代码","code.expand":"展开代码","heading.anchor":"链接到此节: %s","head.tag":"标签：%s","head.category":"分类：%s","head.archive":"归档","head.archive_with_date":"归档：%s","head.page_number":"第 %d 页","navigation.primary":"主导航","navigation.mobile":"移动端导航","navigation.brand_home":"FlatPaper 首页","navigation.brand_menu":"打开站点导航","navigation.open_sidebar":"打开侧边栏","navigation.close_sidebar":"关闭侧边栏","navigation.sidebar":"侧边栏","navigation.sidebar_tools":"侧边栏工具","navigation.site_links":"站点链接","navigation.site_info":"站点信息","colors.choose_theme_color":"选择主题色","colors.theme_color":"主题色","colors.toggle_color_mode":"切换颜色模式","colors.green":"绿色","colors.purple":"紫色","colors.pink":"粉色","colors.sakura":"樱花粉","colors.blue":"蓝色","colors.orange":"橙色","colors.black":"黑色","profile.default_bio":"热爱生活，热爱代码，喜欢分享技术与生活中的点滴。","welcome.cta":"开始阅读","welcome.title":"欢迎来到 FlatPaper","welcome.text":"一个专注于内容与阅读体验的博客主题。","home_hero.label":"首页开屏","home_hero.enter":"进入首页","home_hero.note":"今日","home_hero.default_subtitle":"日常记录","home_hero.nav_links":"开屏导航","home_hero.profile_links":"个人链接","home_hero.tools":"开屏工具","home_hero.shuffle_stickers":"打乱贴纸位置","home_hero.link":"链接","home_hero.sticker_image":"贴纸图片","home_hero.visit_confirm":"要访问 %s 吗？","home_hero.visit":"访问","home_hero.cancel":"取消","toc.title":"文章目录","toc.empty":"目录会根据文章标题自动生成。","toc.expand_all":"展开全部目录","toc.collapse_all":"收起全部目录","sidebar.hot_tags":"热门标签","sidebar.latest_posts":"最新文章"};
+  </script>
+  
+<script src="/js/main.js"></script>
+
+  
+</body>
+</html>

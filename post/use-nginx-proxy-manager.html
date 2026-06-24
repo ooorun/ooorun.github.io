@@ -1,0 +1,939 @@
+<!doctype html>
+
+<html lang="zh-CN" data-fancybox-enabled="1">
+<head>
+  
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FM1N1NHQ90"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-FM1N1NHQ90');
+</script>
+
+
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f7f3e9">
+
+<title>Nginx Proxy Manager 使用教程 | O&#39;s World</title>
+<meta name="description" content="前言对于现在网站来说， HTTPS 证书已经必不可少，虽然我们已经可以使用 Let’s Encrypt 获取免费证书，并且可以使用 acme.sh 快速申请、自动续期，但是每次添加新域名时仍然需要编辑 Nginx 配置文件，略有麻烦。 本文将介绍使用 Nginx Proxy Manager 设置 Nginx 反向代理，同时支持自动申请、续期 HTTPS 证书...">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nginx Proxy Manager 使用教程 | O&#39;s World">
+<meta property="og:url" content="https://ooo.run/post/use-nginx-proxy-manager.html">
+<meta property="og:site_name" content="O&#39;s World">
+<meta property="og:description" content="前言对于现在网站来说， HTTPS 证书已经必不可少，虽然我们已经可以使用 Let’s Encrypt 获取免费证书，并且可以使用 acme.sh 快速申请、自动续期，但是每次添加新域名时仍然需要编辑 Nginx 配置文件，略有麻烦。 本文将介绍使用 Nginx Proxy Manager 设置 Nginx 反向代理，同时支持自动申请、续期 HTTPS 证书...">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img.nep.me/i/2025/07/29/lm7e6x.webp">
+<meta property="article:published_time" content="2024-12-14T17:16:18.000Z">
+<meta property="article:modified_time" content="2026-06-24T11:35:25.076Z">
+<meta property="article:author" content="Mr. O">
+<meta property="article:tag" content="Docker">
+<meta property="article:tag" content="HTTPS">
+<meta property="article:tag" content="Nginx Proxy Manager">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img.nep.me/i/2025/07/29/lm7e6x.webp">
+<link rel="canonical" href="https://ooo.run/post/use-nginx-proxy-manager.html">
+
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Nginx Proxy Manager 使用教程","name":"Nginx Proxy Manager 使用教程 | O's World","description":"前言对于现在网站来说， HTTPS 证书已经必不可少，虽然我们已经可以使用 Let’s Encrypt 获取免费证书，并且可以使用 acme.sh 快速申请、自动续期，但是每次添加新域名时仍然需要编辑 Nginx 配置文件，略有麻烦。 本文将介绍使用 Nginx Proxy Manager 设置 Nginx 反向代理，同时支持自动申请、续期 HTTPS 证书...","url":"https://ooo.run/post/use-nginx-proxy-manager.html","inLanguage":"zh-CN","isPartOf":{"@type":"WebSite","name":"O's World","url":"https://ooo.run/"},"image":["https://img.nep.me/i/2025/07/29/lm7e6x.webp"],"mainEntityOfPage":"https://ooo.run/post/use-nginx-proxy-manager.html","datePublished":"2024-12-14T17:16:18.000Z","dateModified":"2026-06-24T11:35:25.076Z","author":{"@type":"Person","name":"Mr. O"},"publisher":{"@type":"Organization","name":"O's World"},"keywords":"Docker, Nginx Proxy Manager, HTTPS"}</script>
+
+<script>
+  (function () {
+    var accents = { orange: 1, purple: 1, sakura: 1, blue: 1, pink: 1, green: 1, black: 1 };
+    var match = document.cookie.match(/(?:^|;\s*)flatpaper-accent=([^;]+)/);
+    var accent = 'blue';
+    if (match) {
+      try { accent = decodeURIComponent(match[1]); } catch (e) {}
+    }
+    if (!accents[accent]) accent = 'blue';
+    document.documentElement.setAttribute('data-accent', accent);
+    try {
+      if (localStorage.getItem('flatpaper-mode') === 'dark') {
+        document.documentElement.classList.add('dark-mode');
+      }
+    } catch (e) {}
+  })();
+</script>
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+
+
+
+  
+<script defer src="https://u.nep.me/script.js" data-website-id="768b68c3-d4ed-429e-aa11-f5099ea5adbf" data-domains="ooo.run"></script>
+
+
+  
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8052638941019443" crossorigin="anonymous"></script>
+
+
+  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/artalk@2.9.1/dist/Artalk.css">
+
+<script defer src="https://cdn.jsdelivr.net/npm/artalk@2.9.1/dist/Artalk.js"></script>
+
+
+  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css">
+<script defer src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+
+
+  
+<meta name="generator" content="Hexo 8.1.2"><link rel="alternate" href="/atom.xml" title="O's World" type="application/atom+xml">
+</head>
+
+<body
+  class="is-post tag-style-tape"
+  data-default-accent="blue"
+  data-code-theme="simple"
+  data-note-style="sticky"
+  data-note-icons="on"
+  data-button-style="tape"
+  data-strong-accent="on"
+>
+  <div class="page-grain"></div>
+  <svg width="0" height="0" style="position:absolute;z-index:-1;" aria-hidden="true">
+    <defs>
+      <filter id="paper-edge" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" result="noise" />
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G" />
+      </filter>
+    </defs>
+  </svg>
+  
+  <header class="site-header">
+  
+  <button class="icon-button js-sidebar-toggle sidebar-toggle" type="button" aria-label="打开侧边栏" aria-controls="paper-sidebar-drawer" aria-expanded="false">
+    
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu" aria-hidden="true"><path d="M4 12h16"/><path d="M4 6h16"/><path d="M4 18h16"/></svg>
+
+  </button>
+
+  <div class="brand">
+    <div class="brand-mark-wrapper">
+      
+        <button class="brand-mark" type="button" aria-label="打开站点导航" aria-haspopup="true" aria-expanded="false" aria-controls="brand-nav-menu">
+          
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-grid" aria-hidden="true"><rect width="7" height="7" x="3" y="3" rx="1" /><rect width="7" height="7" x="14" y="3" rx="1" /><rect width="7" height="7" x="14" y="14" rx="1" /><rect width="7" height="7" x="3" y="14" rx="1" /></svg>
+
+        </button>
+        <div class="brand-nav-menu" id="brand-nav-menu" role="menu">
+          
+            <div class="brand-nav-group">
+              <div class="brand-nav-title">Blog</div>
+              
+                <a role="menuitem" href="https://ooo.run/" target="_blank" rel="noopener noreferrer">
+                  
+                    <img src="https://ooo.run/favicon.ico" alt="" class="nav-img-icon" aria-hidden="true" />
+                  
+                  <span>O‘s World</span>
+                </a>
+              
+            </div>
+          
+            <div class="brand-nav-group">
+              <div class="brand-nav-title">Project</div>
+              
+                <a role="menuitem" href="https://tools.ooo.run" target="_blank" rel="noopener noreferrer">
+                  
+                    <img src="https://tools.ooo.run/favicon.png" alt="" class="nav-img-icon" aria-hidden="true" />
+                  
+                  <span>简易工具</span>
+                </a>
+              
+                <a role="menuitem" href="https://ooo.run/games" target="_blank" rel="noopener noreferrer">
+                  
+                    <img src="https://img.nep.me/ooo/game.webp" alt="" class="nav-img-icon" aria-hidden="true" />
+                  
+                  <span>简单游戏</span>
+                </a>
+              
+            </div>
+          
+        </div>
+      
+    </div>
+    <a class="brand-text" href="/">O&#39;s World</a>
+  </div>
+
+  <nav class="site-nav" aria-label="主导航">
+    
+      
+        <a class="site-nav-link " href="/">
+          
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-home" aria-hidden="true"><path d="m3 10 9-7 9 7"/><path d="M5 10v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V10"/><path d="M9 21v-6h6v6"/></svg>
+
+          <span>首页</span>
+        </a>
+      
+    
+      
+        <a class="site-nav-link " href="/links/">
+          
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+
+          <span>友链</span>
+        </a>
+      
+    
+      
+        <div class="site-nav-item has-children">
+          <button class="site-nav-link site-nav-parent" type="button" aria-haspopup="true" aria-expanded="false">
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder" aria-hidden="true"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg>
+
+            <span>文章</span>
+          </button>
+          <div class="site-nav-menu" role="menu">
+            
+              <a role="menuitem" class="" href="/archives/">
+                
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-archive" aria-hidden="true"><rect width="20" height="5" x="2" y="3" rx="1"/><path d="M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8"/><path d="M10 12h4"/></svg>
+
+                <span>归档</span>
+              </a>
+            
+              <a role="menuitem" class="" href="/categories/">
+                
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder" aria-hidden="true"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg>
+
+                <span>分类</span>
+              </a>
+            
+              <a role="menuitem" class="" href="/tags/">
+                
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tag" aria-hidden="true"><path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"/><circle cx="7.5" cy="7.5" r=".5" fill="currentColor"/></svg>
+
+                <span>标签</span>
+              </a>
+            
+          </div>
+        </div>
+      
+    
+  </nav>
+
+  <div class="header-tools">
+    <button class="icon-button js-search-open" type="button" aria-label="搜索文章">
+      
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+
+    </button>
+    <div class="accent-picker">
+      <button class="icon-button accent-toggle" type="button" aria-label="选择主题色" title="选择主题色" aria-haspopup="true" aria-expanded="false" aria-controls="accent-menu">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-palette" aria-hidden="true"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 5.9 2 10.8c0 3.3 2.7 6 6 6h1.2c.8 0 1.4.6 1.4 1.4 0 .4-.2.8-.2 1.2 0 .8.6 1.6 1.6 1.6 5.5 0 10-4.2 10-9.4C22 6.3 17.5 2 12 2Z"/></svg>
+
+      </button>
+      <div class="accent-menu" id="accent-menu" role="menu" aria-label="主题色">
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="橙色" aria-checked="false" data-accent-option="orange">
+          <span class="accent-swatch accent-swatch--orange" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="紫色" aria-checked="false" data-accent-option="purple">
+          <span class="accent-swatch accent-swatch--purple" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="樱花粉" aria-checked="false" data-accent-option="sakura">
+          <span class="accent-swatch accent-swatch--sakura" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="蓝色" aria-checked="false" data-accent-option="blue">
+          <span class="accent-swatch accent-swatch--blue" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="粉色" aria-checked="false" data-accent-option="pink">
+          <span class="accent-swatch accent-swatch--pink" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="绿色" aria-checked="false" data-accent-option="green">
+          <span class="accent-swatch accent-swatch--green" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="黑色" aria-checked="false" data-accent-option="black">
+          <span class="accent-swatch accent-swatch--black" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
+    <button class="theme-toggle" type="button" aria-label="切换颜色模式">
+      <span class="theme-icon theme-icon--sun">
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sun" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+</span>
+      <span class="theme-icon theme-icon--moon">
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-moon" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+</span>
+    </button>
+  </div>
+</header>
+
+
+  
+  <main class="paper-shell paper-shell--article">
+    
+
+<aside id="paper-sidebar-drawer" class="paper-sidebar paper-sidebar--right" aria-label="侧边栏">
+  <div class="drawer-toolbar" aria-label="侧边栏工具">
+    <div class="drawer-accent-options" role="group" aria-label="主题色">
+      <button type="button" class="accent-option" aria-label="橙色" aria-pressed="false" data-accent-option="orange">
+        <span class="accent-swatch accent-swatch--orange" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="accent-option" aria-label="紫色" aria-pressed="false" data-accent-option="purple">
+        <span class="accent-swatch accent-swatch--purple" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="accent-option" aria-label="樱花粉" aria-pressed="false" data-accent-option="sakura">
+        <span class="accent-swatch accent-swatch--sakura" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="accent-option" aria-label="蓝色" aria-pressed="false" data-accent-option="blue">
+        <span class="accent-swatch accent-swatch--blue" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="accent-option" aria-label="粉色" aria-pressed="false" data-accent-option="pink">
+        <span class="accent-swatch accent-swatch--pink" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="accent-option" aria-label="绿色" aria-pressed="false" data-accent-option="green">
+        <span class="accent-swatch accent-swatch--green" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="accent-option" aria-label="黑色" aria-pressed="false" data-accent-option="black">
+        <span class="accent-swatch accent-swatch--black" aria-hidden="true"></span>
+      </button>
+    </div>
+    <button class="icon-button drawer-close js-sidebar-close" type="button" aria-label="关闭侧边栏">
+      
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+
+    </button>
+  </div>
+
+  <section class="side-card nav-card">
+    <nav class="site-nav-drawer" aria-label="移动端导航">
+      
+        
+          <a class="" href="/">
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-home" aria-hidden="true"><path d="m3 10 9-7 9 7"/><path d="M5 10v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V10"/><path d="M9 21v-6h6v6"/></svg>
+
+            <span>首页</span>
+          </a>
+        
+      
+        
+          <a class="" href="/links/">
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+
+            <span>友链</span>
+          </a>
+        
+      
+        
+          <div class="drawer-nav-group">
+            <button class="drawer-nav-parent" type="button" aria-expanded="false">
+              
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder" aria-hidden="true"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg>
+
+              <span>文章</span>
+            </button>
+            <div class="drawer-nav-children">
+              
+                <a class="" href="/archives/">
+                  
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-archive" aria-hidden="true"><rect width="20" height="5" x="2" y="3" rx="1"/><path d="M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8"/><path d="M10 12h4"/></svg>
+
+                  <span>归档</span>
+                </a>
+              
+                <a class="" href="/categories/">
+                  
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder" aria-hidden="true"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg>
+
+                  <span>分类</span>
+                </a>
+              
+                <a class="" href="/tags/">
+                  
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tag" aria-hidden="true"><path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"/><circle cx="7.5" cy="7.5" r=".5" fill="currentColor"/></svg>
+
+                  <span>标签</span>
+                </a>
+              
+            </div>
+          </div>
+        
+      
+    </nav>
+  </section>
+
+  <section class="side-card profile-card">
+    
+      <div class="avatar" aria-hidden="true">
+        <span></span><i></i><em></em><b></b>
+      </div>
+    
+    <h3>Mr. O</h3>
+    <p class="profile-role">独立开发者</p>
+    <p>探索互联网世界，分享实用教程与精彩内容，发现更多有趣之处。</p>
+    
+      <div class="site-info" aria-label="站点信息">
+        
+          
+            <a class="site-info__item" href="/archives/">
+              <strong>63</strong>
+              <span>文章</span>
+            </a>
+          
+        
+          
+            <a class="site-info__item" href="/categories/">
+              <strong>6</strong>
+              <span>分类</span>
+            </a>
+          
+        
+          
+            <a class="site-info__item" href="/tags/">
+              <strong>100</strong>
+              <span>标签</span>
+            </a>
+          
+        
+      </div>
+    
+    <div class="socials">
+      
+        <a href="https://t.me/fortewave" target="_blank" rel="noopener" aria-label="Telegram">
+          
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="currentColor" class="lucide lucide-telegram" aria-hidden="true"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+
+          
+        </a>
+      
+      
+        <a href="/atom.xml" aria-label="RSS feed" title="RSS">
+          
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-rss" aria-hidden="true"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg>
+
+        </a>
+      
+    </div>
+  </section>
+
+  
+    <section class="side-card brand-link-card" aria-label="站点链接">
+      
+        <div class="brand-link-group">
+          <div class="brand-link-title">Blog</div>
+          <div class="brand-link-list">
+            
+              <a href="https://ooo.run/" target="_blank" rel="noopener noreferrer">
+                
+                  <img src="https://ooo.run/favicon.ico" alt="" class="nav-img-icon" aria-hidden="true" />
+                
+                <span>O‘s World</span>
+              </a>
+            
+          </div>
+        </div>
+      
+        <div class="brand-link-group">
+          <div class="brand-link-title">Project</div>
+          <div class="brand-link-list">
+            
+              <a href="https://tools.ooo.run" target="_blank" rel="noopener noreferrer">
+                
+                  <img src="https://tools.ooo.run/favicon.png" alt="" class="nav-img-icon" aria-hidden="true" />
+                
+                <span>简易工具</span>
+              </a>
+            
+              <a href="https://ooo.run/games" target="_blank" rel="noopener noreferrer">
+                
+                  <img src="https://img.nep.me/ooo/game.webp" alt="" class="nav-img-icon" aria-hidden="true" />
+                
+                <span>简单游戏</span>
+              </a>
+            
+          </div>
+        </div>
+      
+    </section>
+  
+
+  
+    <div class="post-sticky-stack">
+      <section class="side-card toc-card">
+        <header class="toc-card__head">
+          <h2>
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-table-of-contents" aria-hidden="true"><path d="M16 12H3"/><path d="M16 18H3"/><path d="M16 6H3"/><path d="M21 12h.01"/><path d="M21 18h.01"/><path d="M21 6h.01"/></svg>
+文章目录</h2>
+          <button type="button" class="toc-toggle-all" data-action="toggle-toc" aria-pressed="false" aria-label="展开全部目录" title="展开全部目录">
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+
+          </button>
+        </header>
+        <div class="toc-content">
+          
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8E-Nginx-%E5%AF%B9%E6%AF%94"><span class="toc-text">与 Nginx 对比</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E6%9C%9F%E5%87%86%E5%A4%87"><span class="toc-text">前期准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-Docker-%E5%AE%89%E8%A3%85"><span class="toc-text">使用 Docker 安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%BF%E9%97%AE%E9%9D%A2%E6%9D%BF"><span class="toc-text">访问面板</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%9F%E8%83%BD%E4%BB%8B%E7%BB%8D"><span class="toc-text">功能介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%B3%E8%AF%B7%E8%AF%81%E4%B9%A6"><span class="toc-text">申请证书</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%95%E5%9F%9F%E5%90%8D%E8%AF%81%E4%B9%A6"><span class="toc-text">单域名证书</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%B3%E8%AF%B7%E6%B3%9B%E5%9F%9F%E5%90%8D%E8%AF%81%E4%B9%A6"><span class="toc-text">申请泛域名证书</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E5%8F%8D%E4%BB%A3%E7%AB%99%E7%82%B9"><span class="toc-text">添加反代站点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B%EF%BC%9A%E5%8F%8D%E4%BB%A3%E7%AE%A1%E7%90%86%E9%A1%B5%E9%9D%A2"><span class="toc-text">示例：反代管理页面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E9%85%8D%E7%BD%AE"><span class="toc-text">查看配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8D%E4%BB%A3%E5%AE%BF%E4%B8%BB%E6%9C%BA%E7%9A%84%E9%9D%99%E6%80%81%E7%AB%99%E7%82%B9"><span class="toc-text">反代宿主机的静态站点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li></ol>
+          
+        </div>
+      </section>
+      
+
+  <section class="side-card recent-card latest-posts-card">
+    <h2>
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-history" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l4 2"/></svg>
+最新文章</h2>
+    <ul class="recent-list">
+      
+        <li>
+          <a class="recent-item" href="/post/docker-run-fizzy-kanban.html">
+            <strong>使用 Docker 部署 Fizzy ： 一个轻量、漂亮、可自托管的看板工具</strong>
+            <em>2026-06-23</em>
+          </a>
+        </li>
+      
+        <li>
+          <a class="recent-item" href="/post/codex-is-buring-your-ssd.html">
+            <strong>Codex 的日志记录消耗 SSD 寿命？OpenAI 已修复</strong>
+            <em>2026-06-23</em>
+          </a>
+        </li>
+      
+        <li>
+          <a class="recent-item" href="/post/how-much-can-you-save-with-subscription-vs-api.html">
+            <strong>榨干 AI 订阅额度：使用 Claude Pro 与 ChatGPT 订阅到底能省多少钱？</strong>
+            <em>2026-06-21</em>
+          </a>
+        </li>
+      
+        <li>
+          <a class="recent-item" href="/post/darkbloom-nodes-macbook-ai-mining-earnings.html">
+            <strong>新时代挖矿：看看你的 Mac 一个月能赚多少钱</strong>
+            <em>2026-06-19</em>
+          </a>
+        </li>
+      
+        <li>
+          <a class="recent-item" href="/post/project-tiny-world-builder.html">
+            <strong>宝藏开源项目： Tiny World Builder - 在浏览器里创建迷你世界</strong>
+            <em>2026-06-16</em>
+          </a>
+        </li>
+      
+    </ul>
+  </section>
+
+
+    </div>
+  
+
+  
+
+</aside>
+
+    <section class="paper-main">
+      
+
+<div class="article-tape-wrap">
+<span class="tape tape--top-right" aria-hidden="true"></span>
+<article class="article-paper">
+  <header class="article-header">
+    
+      <a class="label-pill" href="/categories/%E6%95%99%E7%A8%8B/">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder" aria-hidden="true"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg>
+
+        教程
+      </a>
+    
+    <h1>Nginx Proxy Manager 使用教程</h1>
+    <div class="meta-line meta-line--article">
+      <span class="meta-date">
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar" aria-hidden="true"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>
+2024-12-15</span>
+      
+        <span class="meta-tags">
+          
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tag" aria-hidden="true"><path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"/><circle cx="7.5" cy="7.5" r=".5" fill="currentColor"/></svg>
+
+          <a class="meta-tag-link" href="/tags/Docker/">#Docker</a><a class="meta-tag-link" href="/tags/Nginx-Proxy-Manager/">#Nginx Proxy Manager</a><a class="meta-tag-link" href="/tags/HTTPS/">#HTTPS</a>
+        </span>
+      
+    </div>
+  </header>
+
+  
+
+
+  <div class="article-content">
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>对于现在网站来说， HTTPS 证书已经必不可少，虽然我们已经可以使用 Let’s Encrypt 获取免费证书，并且可以使用 acme.sh 快速申请、自动续期，但是每次添加新域名时仍然需要编辑 Nginx 配置文件，略有麻烦。  </p>
+<p>本文将介绍使用 <strong>Nginx Proxy Manager</strong> 设置 Nginx 反向代理，同时支持自动申请、续期 HTTPS 证书，即便在局域网内也可以使用 API 申请证书！  </p>
+<p>Nginx Proxy Manager 完全是图形界面，不懂代码也没有关系，非常适合个人使用！   </p>
+<p>主要特点：</p>
+<ul>
+<li>漂亮的用户界面</li>
+<li>轻松的反向代理设置</li>
+<li>轻松配置HTTPS，内置对 Let’s Encrypt 的支持</li>
+<li>提供 Docker 镜像 ，轻松部署</li>
+<li>支持多用户，提供简单的访问权限设置</li>
+</ul>
+<h2 id="与-Nginx-对比"><a href="#与-Nginx-对比" class="headerlink" title="与 Nginx 对比"></a>与 Nginx 对比</h2><table>
+<thead>
+<tr>
+<th align="center">特性</th>
+<th align="center">Nginx Proxy Manager</th>
+<th align="center">Nginx（手动配置）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong>配置方式</strong></td>
+<td align="center">Web 界面管理，操作简单</td>
+<td align="center">手动编辑配置文件，灵活度高</td>
+</tr>
+<tr>
+<td align="center"><strong>功能性</strong></td>
+<td align="center">基础反向代理与 SSL 管理</td>
+<td align="center">支持高级功能与复杂场景</td>
+</tr>
+<tr>
+<td align="center"><strong>安全性</strong></td>
+<td align="center">更新频率较低，依赖第三方维护</td>
+<td align="center">官方定期更新，更安全可靠</td>
+</tr>
+<tr>
+<td align="center"><strong>错误容忍</strong></td>
+<td align="center">错误配置可能影响整体服务</td>
+<td align="center">站点配置独立，互不影响</td>
+</tr>
+<tr>
+<td align="center"><strong>性能</strong></td>
+<td align="center">对高并发请求性能有限，适合轻量应用</td>
+<td align="center">原生性能，支持高并发场景</td>
+</tr>
+<tr>
+<td align="center"><strong>适用场景</strong></td>
+<td align="center">适合小型项目、无技术背景的用户</td>
+<td align="center">适合大型项目与高级用户</td>
+</tr>
+</tbody></table>
+<h2 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h2><p>Nginx Proxy Manager 使用 <code>Docker</code> 部署，因此你的服务器上需要安装 Docker 与 Docker Compose 。</p>
+<p>如果你还未安装，可以查看：<a href="https://ooo.run/post/debian-install-docker.html" target="_blank">在 Debian 中安装 Docker 以及 Docker Compose</a></p>
+<h2 id="使用-Docker-安装"><a href="#使用-Docker-安装" class="headerlink" title="使用 Docker 安装"></a>使用 Docker 安装</h2><p>创建一个工作目录，然后在其中创建 <code>docker-compose.yml</code> 文件，填入下面的内容</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">app:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">&#x27;jc21/nginx-proxy-manager:latest&#x27;</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">unless-stopped</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&#x27;80:80&#x27;</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&#x27;81:81&#x27;</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&#x27;443:443&#x27;</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./data:/data</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./letsencrypt:/etc/letsencrypt</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>80 是网站的 80 端口</li>
+<li>81 是 Nginx Proxy Manager 的管理端口</li>
+<li>443 是网站的 443 端口</li>
+</ul>
+<p>Nginx Proxy Manager 的数据保存在 <code>docker-compose.yml</code> 同目录下 <code>.data</code> 文件夹，证书保存在 <code>./letsencrypt</code> 文件夹。<br>也可以自己修改路径。</p>
+<details class="flatpaper-note flatpaper-note--warning"><summary class="flatpaper-note__title"><span class="flatpaper-note__icon" aria-hidden="true"></span><span class="flatpaper-note__label">modern</span><span class="flatpaper-note__chevron" aria-hidden="true"></span></summary><div class="flatpaper-note__body"><p>由于都需要使用 80 &#x2F; 443 端口，所以如果宿主机有安装 Nginx ，请先禁用</p></div></details>
+
+<p>使用 <code>docker compose</code> 运行 Nginx Proxy Manager</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker compose pull </span><br><span class="line">docker compose up -d</span><br></pre></td></tr></table></figure>
+
+<h2 id="访问面板"><a href="#访问面板" class="headerlink" title="访问面板"></a>访问面板</h2><p>启动后，访问 <code>http://&lt;server_ip&gt;:81</code> 即可打开管理面板。   </p>
+<p><img src="https://img.nep.me/i/2024/12/15/3w01bl-2.webp" alt="nginx-proxy-manager-login-screen"></p>
+<p>默认管理员用户如下，登陆后会要求重新设置邮箱与密码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Email:    admin@example.com</span><br><span class="line">Password: changeme</span><br></pre></td></tr></table></figure>
+<details class="flatpaper-note flatpaper-note--warning"><summary class="flatpaper-note__title"><span class="flatpaper-note__icon" aria-hidden="true"></span><span class="flatpaper-note__label">modern</span><span class="flatpaper-note__chevron" aria-hidden="true"></span></summary><div class="flatpaper-note__body"><p>启动后，请立即登陆面板，设置账户与密码</p></div></details>
+
+<h2 id="功能介绍"><a href="#功能介绍" class="headerlink" title="功能介绍"></a>功能介绍</h2><p>安装完成后，我们可以在顶部查看 Nginx Proxy Manager 的功能区</p>
+<ul>
+<li><strong>Hosts</strong>: 反代站点管理</li>
+<li><strong>Access Lists</strong>: 管理访问限制策略</li>
+<li><strong>SSL Certificates</strong> : SSL 证书管理</li>
+<li><strong>Users</strong> : 用户管理，Nginx Proxy Manager 提供简单的用户管理</li>
+<li><strong>Audit Log</strong> : 日志</li>
+<li><strong>Settings</strong> : 设置当请求的域名不在站点列表时的回应</li>
+</ul>
+<img src="https://img.nep.me/i/2024/12/15/8rqhli-2.webp" style="width:50%;" alt="image" />
+
+<h2 id="申请证书"><a href="#申请证书" class="headerlink" title="申请证书"></a>申请证书</h2><p>首先我们需要为域名申请证书，点击顶部的 <code>SSL Certificates</code> ，再点击 <code>Add SSL Certificate</code><br><img src="https://img.nep.me/i/2024/12/15/3us18w-2.webp" alt="Nginx Proxy Manager get SSL"></p>
+<p>Nginx Proxy Manager 生成的证书会自动续期。  </p>
+<h3 id="单域名证书"><a href="#单域名证书" class="headerlink" title="单域名证书"></a>单域名证书</h3><p>如果我们申请单域名证书，只需要</p>
+<ul>
+<li>将域名解析到服务器</li>
+<li><strong>Domain Names</strong> 填写需要申请证书的域名</li>
+<li>填写 Let’s Encrypt 需要使用的邮箱</li>
+<li>同意 Let’s Encrypt Terms of Service </li>
+<li>然后点击 <strong>Save</strong> 就可以了</li>
+</ul>
+<p><img src="https://img.nep.me/i/2024/12/15/3zn2an-2.webp" alt="Nginx Proxy Manager Add Single Cert"> </p>
+<p>当然保存前可以先点击 <strong>Test Server Reachability</strong> 测试一下<br><img src="https://img.nep.me/i/2024/12/15/408w0j-2.webp" alt="Nginx Proxy Manager Test Reachability"></p>
+<h3 id="申请泛域名证书"><a href="#申请泛域名证书" class="headerlink" title="申请泛域名证书"></a>申请泛域名证书</h3><p>申请 ***.example.com** 泛域名证书需要修改 DNS 记录，需要通过 API 的方式申请，Nginx Proxy Manager 的支持列表非常的长，这里以 Cloudflare 为例。  </p>
+<p>首先我们需要获取 API 令牌，访问 <a target="_blank" rel="noopener" href="https://dash.cloudflare.com/profile/api-tokens">https://dash.cloudflare.com/profile/api-tokens</a> 点击 <strong>创建令牌</strong>，下一步中选择使用 <code>编辑区域 DNS</code> 对应的 <code>使用模版</code>。<br><img src="https://img.nep.me/i/2024/12/15/45kt7a-2.webp"></p>
+<p>下一步种设置具体的令牌信息：</p>
+<ul>
+<li><strong>令牌名称</strong>：改个用于区分的名字</li>
+<li><strong>权限</strong>：保持默认 <strong>编辑</strong></li>
+<li><strong>区域资源</strong>： 特定区域，然后选择对应的域名</li>
+<li><strong>客户端 IP 筛选</strong>：设置可以使用令牌的 IP，可以选择 在 ，然后填写您的服务器 IP</li>
+<li><strong>TTL</strong>： 令牌有效期，默认是永久有效<img src="https://img.nep.me/i/2024/12/15/46p2d9-2.webp" style="width:75%;" alt="Clodflare API Token Config" /></li>
+</ul>
+<p>点击 <strong>继续以显示摘要</strong> ，确认令牌的信息，如果没有错误，点击 <strong>创建令牌</strong></p>
+<p>创建后将显示 Token ，点击 <strong>Copy</strong> 复制。<br><img src="https://img.nep.me/i/2024/12/15/4ajdxe-2.webp"></p>
+<details class="flatpaper-note flatpaper-note--info"><summary class="flatpaper-note__title"><span class="flatpaper-note__icon" aria-hidden="true"></span><span class="flatpaper-note__label">modern</span><span class="flatpaper-note__chevron" aria-hidden="true"></span></summary><div class="flatpaper-note__body"><p>只有这一次机会查看 Token 明文，无法再次查看。 </p></div></details>
+
+<p>然后在 Nginx Proxy Manager 中申请证书 </p>
+<ul>
+<li><strong>Domain Names</strong> 填写 <code>*.example.com</code> 与 <code>expample.com</code></li>
+<li>填写 Let’s Encrypt 需要使用的邮箱</li>
+<li>打开 <strong>Use a DNS Challenge</strong></li>
+<li><strong>DNS Provide</strong> 选择 <strong>Cloudflare</strong></li>
+<li>替换 <strong>Credential File Content</strong> 中的 <code>token</code> </li>
+<li>同意 Let’s Encrypt Terms of Service</li>
+<li>点击 <code>Save</code> 申请</li>
+</ul>
+<img src="https://img.nep.me/i/2024/12/15/51nizh-2.webp" style="width:50%;" alt="image" />
+
+<p>成功后即会在列表中显示<br><img src="https://img.nep.me/i/2024/12/15/545b7p-2.webp"> </p>
+<h2 id="添加反代站点"><a href="#添加反代站点" class="headerlink" title="添加反代站点"></a>添加反代站点</h2><h3 id="示例：反代管理页面"><a href="#示例：反代管理页面" class="headerlink" title="示例：反代管理页面"></a>示例：反代管理页面</h3><p>Nginx Proxy Manager 默认端口是报漏在公网中的，这很不安全，如果设置完成后取消这个端口映射，以后需要修改配置时又比较麻烦，我们可以设置一个二级域名来访问，首先解析一个二级域名例如 <code>nginx.example.com</code> 指向服务器。</p>
+<p>在 <code>Hosts</code> &gt; <code>Proxy Hosts</code> 中点击 <code>Add Proxy Host</code> 添加站点，管理页面的目标地址是 <code>http://127.0.0.1:81</code></p>
+<ul>
+<li><strong>Domain Names</strong>: 填写你的二级域名</li>
+<li><strong>Scheme</strong>: 目标网站的协议，<code>http</code></li>
+<li><strong>Forward Hostname&#x2F;IP</strong>: 目标网站的域名或是 IP，这里填 <code>127.0.0.1</code></li>
+<li><strong>Forward Port</strong>: 目标网站的端口 <code>81</code></li>
+<li><strong>Cache Assets</strong>： 是否启用缓存</li>
+<li><strong>Block Common Exploits</strong>: 阻止常见漏洞</li>
+<li><strong>Websockets Support</strong>: 是否开启 Websockets 支持 </li>
+<li><strong>Accessible</strong>: 设置访问限制</li>
+</ul>
+<img src="https://img.nep.me/i/2024/12/15/5qnmd0-2.webp" style="width:50%;" alt="image" />
+
+<p>然后点击顶部 <code>SSL</code> 选择证书</p>
+<ul>
+<li><strong>Force SSL</strong> : 是否强制使用 <code>https://</code> 访问</li>
+<li><strong>HTTP&#x2F;2 Support</strong> : 是否开启 HTTP&#x2F;2 支持</li>
+<li><strong>HSTS Enabled</strong> : 是否开启 HSTS ，开启后用户访问过一次之后将只会使用 https 访问</li>
+<li><strong>HSTS Subdomains</strong> : 子域名是否开启 HSTS</li>
+</ul>
+<img src="https://img.nep.me/i/2024/12/15/5lxr81-2.webp" style="width:50%;" alt="image" />
+
+
+<p>我们可以在 Advanced 中添加自定义设置，比如</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">gzip on;</span><br><span class="line">gzip_min_length 1k;</span><br><span class="line">gzip_comp_level 2;</span><br><span class="line">gzip_types text/plain application/javascript application/x-javascript text/css application/xml text/javascript application/x-httpd-php image/jpeg image/gif image/png font/ttf font/otf image/svg+xml;</span><br><span class="line">gzip_vary on;</span><br></pre></td></tr></table></figure>
+
+<p>最中将被插入在站点配置中。</p>
+<p>如果添加 <code>Location</code> 段则必须包含转发转发内容。</p>
+<p>然后使用浏览器访问 <code>https://nginx.example.com</code> ，如果可以成功访问，我们就可以注释掉 docker 配置文件中的管理端口了！</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">ports:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">&#x27;80:80&#x27;</span></span><br><span class="line">  <span class="comment"># - &#x27;81:81&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>然后重新创建并运行 Nginx Proxy Manager 容器：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker compose down</span><br><span class="line">docker compose up -d</span><br></pre></td></tr></table></figure>
+
+<details class="flatpaper-note flatpaper-note--info"><summary class="flatpaper-note__title"><span class="flatpaper-note__icon" aria-hidden="true"></span><span class="flatpaper-note__label">modern</span><span class="flatpaper-note__chevron" aria-hidden="true"></span></summary><div class="flatpaper-note__body"><p>因为管理页面位于容器内部，所以可以使用 <code>127.0.0.1</code></p></div></details>
+
+<p>无法使用 <code>127.0.0.1</code> 反代宿主机以及宿主机上的其他 Docker 容器的服务，需要使用 <code>ip addr show docker0</code> 查看 docker 网络的 ip 地址，一般为 <code>172.17.0.1</code>, 并且其他 docker 容器的也需要设置监听到 <code>172.17.0.1</code> 而非 <code>127.0.0.1</code> 来关闭公网访问</p>
+<p><img src="https://img.nep.me/i/2024/12/15/72czrt-2.webp"></p>
+<h3 id="查看配置"><a href="#查看配置" class="headerlink" title="查看配置"></a>查看配置</h3><p>Nginx Proxy Manager 添加的站点的配置位于宿主机 <code>data/nginx/proxy_host</code> ，以数字递增的 <code>conf</code> 文件。</p>
+<h3 id="反代宿主机的静态站点"><a href="#反代宿主机的静态站点" class="headerlink" title="反代宿主机的静态站点"></a>反代宿主机的静态站点</h3><p>由于 Nginx Proxy Manager 需要使用 80 与 443 端口，Nginx 无法同时使用这两个端口在宿主机上设置静态站点，可以设置 Nginx 监听 <code>172.17.0.1:8080</code> ，然后使用 Nginx Proxy Manager 添加指向 Nginx 的反向代理。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>如果你是个人用户，且主要使用 Nginx 的反向代理功能，Nginx Proxy Manager 是一个简化设置流程的理想选择，尤其在 SSL 证书配置方面更为便捷，更适合初学者，也可以在局域网内使用。  </p>
+<p>如果你需要直接使用 Nginx 提供网站服务，尤其是在<strong>生产环境</strong>中，推荐选择手动配置 Nginx，以充分发挥其性能和灵活性，可以使用 acme.sh 获取 SSL 证书，实现自动续期。  </p>
+
+  </div>
+
+  <footer class="article-reactions">
+    <div class="reaction-group">
+      <button type="button" class="reaction reaction--comment" aria-label="跳转到评论区" data-action="scroll-to-comments">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
+
+      </button>
+      <span class="reaction-label">评论</span>
+      
+    </div>
+    <div class="reaction-group reaction-group--right">
+      
+      <button type="button" class="reaction reaction--share" aria-label="分享" data-action="share">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-share-2" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" x2="15.42" y1="13.51" y2="17.49"/><line x1="15.41" x2="8.59" y1="6.51" y2="10.49"/></svg>
+
+      </button>
+      <span class="reaction-label">分享</span>
+    </div>
+  </footer>
+
+  
+
+
+  <nav class="article-actions">
+    
+      <a class="article-action article-action--prev" href="/post/change-hexo-theme-to-anzhiyu.html">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left" aria-hidden="true"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+
+        <span class="action-label">上一篇</span>
+        <span class="action-title">将博客主题更换为安知鱼</span>
+      </a>
+    
+    
+      <a class="article-action article-action--next" href="/post/debian-install-docker.html">
+        <span class="action-label">下一篇</span>
+        <span class="action-title">在 Debian 12 中安装 Docker 以及 Docker Compose</span>
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+
+      </a>
+    
+  </nav>
+</article>
+</div>
+
+<button type="button" class="back-to-top" data-action="scroll-to-top" aria-label="返回顶部" hidden>
+  
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up" aria-hidden="true"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg>
+
+</button>
+
+
+  <section class="related-paper">
+    <header class="related-paper__head">
+      <h2>
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+相关文章</h2>
+      <a class="related-paper__more" href="/archives/">
+        <span>查看更多</span>
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+
+      </a>
+    </header>
+    <div class="related-paper__grid">
+      
+        <a class="related-card" href="/post/docker-run-fizzy-kanban.html">
+          <span class="related-card__thumb">
+            
+<div class="paper-thumb paper-thumb-0 paper-thumb--cover">
+  
+    <img class="paper-thumb__img" src="https://img.nep.me/ooo/cover-fizzy.webp" alt="使用 Docker 部署 Fizzy ： 一个轻量、漂亮、可自托管的看板工具" loading="lazy" referrerpolicy="no-referrer">
+  
+</div>
+
+          </span>
+          <span class="related-card__body">
+            <strong class="related-card__title">使用 Docker 部署 Fizzy ： 一个轻量、漂亮、可自托管的看板工具</strong>
+            <em class="related-card__date">2026-06-23</em>
+          </span>
+        </a>
+      
+        <a class="related-card" href="/post/use-docker-run-wallos.html">
+          <span class="related-card__thumb">
+            
+<div class="paper-thumb paper-thumb-1 paper-thumb--cover">
+  
+    <img class="paper-thumb__img" src="https://img.nep.me/ooo/cover-wallos.webp" alt="使用 Docker 与 Wallos 快速搭建个人订阅管理系统" loading="lazy" referrerpolicy="no-referrer">
+  
+</div>
+
+          </span>
+          <span class="related-card__body">
+            <strong class="related-card__title">使用 Docker 与 Wallos 快速搭建个人订阅管理系统</strong>
+            <em class="related-card__date">2025-09-12</em>
+          </span>
+        </a>
+      
+        <a class="related-card" href="/post/use-docker-run-ezbookkeeping.html">
+          <span class="related-card__thumb">
+            
+<div class="paper-thumb paper-thumb-2 paper-thumb--cover">
+  
+    <img class="paper-thumb__img" src="https://img.nep.me/i/2026/01/21/cover-ezbookkeeping.webp" alt="使用 Docker 与 ezBookkeeping 快速搭建美观的个人记账系统" loading="lazy" referrerpolicy="no-referrer">
+  
+</div>
+
+          </span>
+          <span class="related-card__body">
+            <strong class="related-card__title">使用 Docker 与 ezBookkeeping 快速搭建美观的个人记账系统</strong>
+            <em class="related-card__date">2025-09-02</em>
+          </span>
+        </a>
+      
+        <a class="related-card" href="/post/use-docker-run-bitwarden.html">
+          <span class="related-card__thumb">
+            
+<div class="paper-thumb paper-thumb-0 paper-thumb--cover">
+  
+    <img class="paper-thumb__img" src="https://img.nep.me/i/2025/08/26/cover-bitwarden.webp" alt="使用 Docker 轻松部署 Bitwarden 服务端，搭建你自己的密码管理器" loading="lazy" referrerpolicy="no-referrer">
+  
+</div>
+
+          </span>
+          <span class="related-card__body">
+            <strong class="related-card__title">使用 Docker 轻松部署 Bitwarden 服务端，搭建你自己的密码管理器</strong>
+            <em class="related-card__date">2025-08-26</em>
+          </span>
+        </a>
+      
+    </div>
+  </section>
+
+
+      
+
+<section class="comments-section" aria-label="评论">
+  <header class="comments-section__head">
+    <h2>
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
+评论</h2>
+  </header>
+  <div id="artalk-comments"></div>
+</section>
+<script>
+window.addEventListener('load', function () {
+  if (typeof Artalk === 'undefined' || typeof Artalk.init !== 'function') return;
+  Artalk.init({
+    el: '#artalk-comments',
+    pageKey: "https://ooo.run/post/use-nginx-proxy-manager.html",
+    pageTitle: "Nginx Proxy Manager 使用教程",
+    server: "https://artalk.ooo.run",
+    site: "Mr. O 的博客"
+  });
+});
+</script>
+
+
+    </section>
+    
+  </main>
+
+  <div class="sidebar-backdrop js-sidebar-close" aria-hidden="true"></div>
+
+  
+<footer class="site-footer">
+  <span class="site-footer__left">© 2026 By Mr. O · Theme FramedInfra Based on <a href="https://github.com/Homulilly/hexo-theme-flatpaper" target="_blank">FlatPaper</a></span>
+  <span class="site-footer__right"><a href="/terms">服务条款</a> · <a href="/privacy">隐私政策</a> <br /> <a href="https://tools.ooo.run" target="_blank">简易工具</a></span>
+</footer>
+
+  
+<div class="search-panel" aria-hidden="true" data-index-url="/flatpaper-search.json">
+  <div class="search-backdrop js-search-close"></div>
+  <section class="search-dialog" role="dialog" aria-modal="true" aria-label="搜索文章">
+    <span class="tape tape--top-left" aria-hidden="true"></span>
+    <header class="search-head">
+      <h2><span class="green-dot"></span>搜索文章</h2>
+      <button class="icon-button js-search-close" type="button" aria-label="关闭搜索">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+
+      </button>
+    </header>
+    <label class="search-field">
+      
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+
+      <input id="flatpaper-search" class="search-input" type="search" placeholder="输入关键词，按 Esc 关闭" autocomplete="off">
+    </label>
+    <div class="search-results" data-empty="输入关键词后显示匹配的文章">
+      <p class="search-empty">输入关键词后显示匹配的文章</p>
+    </div>
+  </section>
+</div>
+
+  <script>
+  window.FLATPAPER_I18N = {"language":"zh-CN","common.posts":"文章","common.categories":"分类","common.tags":"标签","common.comments":"评论","common.share":"分享","common.page":"页面","common.archive":"归档","common.post_list":"文章列表","common.search_posts":"搜索文章","common.random_posts":"随机文章","common.reward":"赞赏","common.view_all":"查看全部","pagination.prev":"上一页","pagination.next":"下一页","pagination.post_pager":"文章分页","pagination.archive_pager":"归档分页","index.featured":"精选文章","index.pinned":"置顶","index.read_more":"阅读全文","index.previous_slide":"上一张","index.next_slide":"下一张","index.carousel_pagination":"轮播页码","index.carousel_slide":"第 %d 张","index.latest_posts":"最新文章","index.empty_posts":"还没有文章。创建第一篇文章后，这里会显示最新内容。","archive.title":"归档","archive.post_list":"文章列表","taxonomy.category_count":"%d 篇","taxonomy.empty_categories":"暂时还没有分类。","taxonomy.empty_tags":"暂时还没有标签。","links.label":"友链","links.title":"友情链接","links.empty_data":"暂未加载到友链数据。请确认 source/_data/links.yml 存在并已 hexo clean。","links.rss_label":"%s 的 RSS","friends_feed.label":"朋友圈","friends_feed.title":"友链朋友圈","friends_feed.loading":"正在加载友链动态…","friends_feed.missing_url":"暂未配置 all.json 地址。","friends_feed.load_failed":"友链动态加载失败，请稍后再试。","friends_feed.empty":"暂时没有抓取到友链文章。","friends_feed.load_more":"加载更多","friends_feed.updated_at":"更新于 %s","friends_feed.friend_count":"%d 位友邻","friends_feed.active_count":"%d 位活跃","friends_feed.article_count":"%d 篇文章","friends_feed.unknown_author":"未知站点","friends_feed.date_unknown":"时间未知","post.scroll_to_comments":"跳转到评论区","post.previous":"上一篇","post.next":"下一篇","post.no_previous":"没有更早的文章了","post.no_next":"已经是最新的一篇","post.back_to_top":"返回顶部","post.related_posts":"相关文章","post.view_more":"查看更多","not_found.label":"页面走丢了","not_found.title":"找不到这个页面","not_found.text":"这个地址可能已经移动、删除，或者从未存在。","not_found.home":"返回首页","not_found.search":"搜索文章","search.placeholder":"输入关键词，按 Esc 关闭","search.empty":"输入关键词后显示匹配的文章","search.loading":"正在加载搜索索引…","search.load_failed":"搜索索引加载失败，请重新打开搜索重试","search.no_result":"没有找到与 \"%s\" 相关的文章","search.close":"关闭搜索","code.copy":"复制代码","code.collapse":"折叠代码","code.expand":"展开代码","heading.anchor":"链接到此节: %s","head.tag":"标签：%s","head.category":"分类：%s","head.archive":"归档","head.archive_with_date":"归档：%s","head.page_number":"第 %d 页","navigation.primary":"主导航","navigation.mobile":"移动端导航","navigation.brand_home":"FlatPaper 首页","navigation.brand_menu":"打开站点导航","navigation.open_sidebar":"打开侧边栏","navigation.close_sidebar":"关闭侧边栏","navigation.sidebar":"侧边栏","navigation.sidebar_tools":"侧边栏工具","navigation.site_links":"站点链接","navigation.site_info":"站点信息","colors.choose_theme_color":"选择主题色","colors.theme_color":"主题色","colors.toggle_color_mode":"切换颜色模式","colors.green":"绿色","colors.purple":"紫色","colors.pink":"粉色","colors.sakura":"樱花粉","colors.blue":"蓝色","colors.orange":"橙色","colors.black":"黑色","profile.default_bio":"热爱生活，热爱代码，喜欢分享技术与生活中的点滴。","welcome.cta":"开始阅读","welcome.title":"欢迎来到 FlatPaper","welcome.text":"一个专注于内容与阅读体验的博客主题。","home_hero.label":"首页开屏","home_hero.enter":"进入首页","home_hero.note":"今日","home_hero.default_subtitle":"日常记录","home_hero.nav_links":"开屏导航","home_hero.profile_links":"个人链接","home_hero.tools":"开屏工具","home_hero.shuffle_stickers":"打乱贴纸位置","home_hero.link":"链接","home_hero.sticker_image":"贴纸图片","home_hero.visit_confirm":"要访问 %s 吗？","home_hero.visit":"访问","home_hero.cancel":"取消","toc.title":"文章目录","toc.empty":"目录会根据文章标题自动生成。","toc.expand_all":"展开全部目录","toc.collapse_all":"收起全部目录","sidebar.hot_tags":"热门标签","sidebar.latest_posts":"最新文章"};
+  </script>
+  
+<script src="/js/main.js"></script>
+
+  
+</body>
+</html>

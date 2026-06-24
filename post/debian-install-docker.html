@@ -1,0 +1,851 @@
+<!doctype html>
+
+<html lang="zh-CN" data-fancybox-enabled="1">
+<head>
+  
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FM1N1NHQ90"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-FM1N1NHQ90');
+</script>
+
+
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f7f3e9">
+
+<title>在 Debian 12 中安装 Docker 以及 Docker Compose | O&#39;s World</title>
+<meta name="description" content="现在越来越多的应用可以使用 Docker 一键部署，本文将介绍如何在 Debian 12 中安装 Docker 与 Docker Compose。 验证环境 123456root@debian:~# lsb_release -aNo LSB modules are available.Distributor ID: DebianDescription: De...">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在 Debian 12 中安装 Docker 以及 Docker Compose | O&#39;s World">
+<meta property="og:url" content="https://ooo.run/post/debian-install-docker.html">
+<meta property="og:site_name" content="O&#39;s World">
+<meta property="og:description" content="现在越来越多的应用可以使用 Docker 一键部署，本文将介绍如何在 Debian 12 中安装 Docker 与 Docker Compose。 验证环境 123456root@debian:~# lsb_release -aNo LSB modules are available.Distributor ID: DebianDescription: De...">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img.nep.me/i/2025/08/04/cover-debian-install-docker-and-compose.webp">
+<meta property="article:published_time" content="2024-12-14T09:04:34.000Z">
+<meta property="article:modified_time" content="2026-06-24T11:35:25.076Z">
+<meta property="article:author" content="Mr. O">
+<meta property="article:tag" content="Debian">
+<meta property="article:tag" content="Docker">
+<meta property="article:tag" content="Docker Compose">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img.nep.me/i/2025/08/04/cover-debian-install-docker-and-compose.webp">
+<link rel="canonical" href="https://ooo.run/post/debian-install-docker.html">
+
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"在 Debian 12 中安装 Docker 以及 Docker Compose","name":"在 Debian 12 中安装 Docker 以及 Docker Compose | O's World","description":"现在越来越多的应用可以使用 Docker 一键部署，本文将介绍如何在 Debian 12 中安装 Docker 与 Docker Compose。 验证环境 123456root@debian:~# lsb_release -aNo LSB modules are available.Distributor ID: DebianDescription: De...","url":"https://ooo.run/post/debian-install-docker.html","inLanguage":"zh-CN","isPartOf":{"@type":"WebSite","name":"O's World","url":"https://ooo.run/"},"image":["https://img.nep.me/i/2025/08/04/cover-debian-install-docker-and-compose.webp"],"mainEntityOfPage":"https://ooo.run/post/debian-install-docker.html","datePublished":"2024-12-14T09:04:34.000Z","dateModified":"2026-06-24T11:35:25.076Z","author":{"@type":"Person","name":"Mr. O"},"publisher":{"@type":"Organization","name":"O's World"},"keywords":"Docker, Docker Compose, Debian, Linux"}</script>
+
+<script>
+  (function () {
+    var accents = { orange: 1, purple: 1, sakura: 1, blue: 1, pink: 1, green: 1, black: 1 };
+    var match = document.cookie.match(/(?:^|;\s*)flatpaper-accent=([^;]+)/);
+    var accent = 'blue';
+    if (match) {
+      try { accent = decodeURIComponent(match[1]); } catch (e) {}
+    }
+    if (!accents[accent]) accent = 'blue';
+    document.documentElement.setAttribute('data-accent', accent);
+    try {
+      if (localStorage.getItem('flatpaper-mode') === 'dark') {
+        document.documentElement.classList.add('dark-mode');
+      }
+    } catch (e) {}
+  })();
+</script>
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+
+
+
+  
+<script defer src="https://u.nep.me/script.js" data-website-id="768b68c3-d4ed-429e-aa11-f5099ea5adbf" data-domains="ooo.run"></script>
+
+
+  
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8052638941019443" crossorigin="anonymous"></script>
+
+
+  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/artalk@2.9.1/dist/Artalk.css">
+
+<script defer src="https://cdn.jsdelivr.net/npm/artalk@2.9.1/dist/Artalk.js"></script>
+
+
+  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css">
+<script defer src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+
+
+  
+<meta name="generator" content="Hexo 8.1.2"><link rel="alternate" href="/atom.xml" title="O's World" type="application/atom+xml">
+</head>
+
+<body
+  class="is-post tag-style-tape"
+  data-default-accent="blue"
+  data-code-theme="simple"
+  data-note-style="sticky"
+  data-note-icons="on"
+  data-button-style="tape"
+  data-strong-accent="on"
+>
+  <div class="page-grain"></div>
+  <svg width="0" height="0" style="position:absolute;z-index:-1;" aria-hidden="true">
+    <defs>
+      <filter id="paper-edge" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" result="noise" />
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G" />
+      </filter>
+    </defs>
+  </svg>
+  
+  <header class="site-header">
+  
+  <button class="icon-button js-sidebar-toggle sidebar-toggle" type="button" aria-label="打开侧边栏" aria-controls="paper-sidebar-drawer" aria-expanded="false">
+    
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu" aria-hidden="true"><path d="M4 12h16"/><path d="M4 6h16"/><path d="M4 18h16"/></svg>
+
+  </button>
+
+  <div class="brand">
+    <div class="brand-mark-wrapper">
+      
+        <button class="brand-mark" type="button" aria-label="打开站点导航" aria-haspopup="true" aria-expanded="false" aria-controls="brand-nav-menu">
+          
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-grid" aria-hidden="true"><rect width="7" height="7" x="3" y="3" rx="1" /><rect width="7" height="7" x="14" y="3" rx="1" /><rect width="7" height="7" x="14" y="14" rx="1" /><rect width="7" height="7" x="3" y="14" rx="1" /></svg>
+
+        </button>
+        <div class="brand-nav-menu" id="brand-nav-menu" role="menu">
+          
+            <div class="brand-nav-group">
+              <div class="brand-nav-title">Blog</div>
+              
+                <a role="menuitem" href="https://ooo.run/" target="_blank" rel="noopener noreferrer">
+                  
+                    <img src="https://ooo.run/favicon.ico" alt="" class="nav-img-icon" aria-hidden="true" />
+                  
+                  <span>O‘s World</span>
+                </a>
+              
+            </div>
+          
+            <div class="brand-nav-group">
+              <div class="brand-nav-title">Project</div>
+              
+                <a role="menuitem" href="https://tools.ooo.run" target="_blank" rel="noopener noreferrer">
+                  
+                    <img src="https://tools.ooo.run/favicon.png" alt="" class="nav-img-icon" aria-hidden="true" />
+                  
+                  <span>简易工具</span>
+                </a>
+              
+                <a role="menuitem" href="https://ooo.run/games" target="_blank" rel="noopener noreferrer">
+                  
+                    <img src="https://img.nep.me/ooo/game.webp" alt="" class="nav-img-icon" aria-hidden="true" />
+                  
+                  <span>简单游戏</span>
+                </a>
+              
+            </div>
+          
+        </div>
+      
+    </div>
+    <a class="brand-text" href="/">O&#39;s World</a>
+  </div>
+
+  <nav class="site-nav" aria-label="主导航">
+    
+      
+        <a class="site-nav-link " href="/">
+          
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-home" aria-hidden="true"><path d="m3 10 9-7 9 7"/><path d="M5 10v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V10"/><path d="M9 21v-6h6v6"/></svg>
+
+          <span>首页</span>
+        </a>
+      
+    
+      
+        <a class="site-nav-link " href="/links/">
+          
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+
+          <span>友链</span>
+        </a>
+      
+    
+      
+        <div class="site-nav-item has-children">
+          <button class="site-nav-link site-nav-parent" type="button" aria-haspopup="true" aria-expanded="false">
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder" aria-hidden="true"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg>
+
+            <span>文章</span>
+          </button>
+          <div class="site-nav-menu" role="menu">
+            
+              <a role="menuitem" class="" href="/archives/">
+                
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-archive" aria-hidden="true"><rect width="20" height="5" x="2" y="3" rx="1"/><path d="M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8"/><path d="M10 12h4"/></svg>
+
+                <span>归档</span>
+              </a>
+            
+              <a role="menuitem" class="" href="/categories/">
+                
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder" aria-hidden="true"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg>
+
+                <span>分类</span>
+              </a>
+            
+              <a role="menuitem" class="" href="/tags/">
+                
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tag" aria-hidden="true"><path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"/><circle cx="7.5" cy="7.5" r=".5" fill="currentColor"/></svg>
+
+                <span>标签</span>
+              </a>
+            
+          </div>
+        </div>
+      
+    
+  </nav>
+
+  <div class="header-tools">
+    <button class="icon-button js-search-open" type="button" aria-label="搜索文章">
+      
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+
+    </button>
+    <div class="accent-picker">
+      <button class="icon-button accent-toggle" type="button" aria-label="选择主题色" title="选择主题色" aria-haspopup="true" aria-expanded="false" aria-controls="accent-menu">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-palette" aria-hidden="true"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 5.9 2 10.8c0 3.3 2.7 6 6 6h1.2c.8 0 1.4.6 1.4 1.4 0 .4-.2.8-.2 1.2 0 .8.6 1.6 1.6 1.6 5.5 0 10-4.2 10-9.4C22 6.3 17.5 2 12 2Z"/></svg>
+
+      </button>
+      <div class="accent-menu" id="accent-menu" role="menu" aria-label="主题色">
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="橙色" aria-checked="false" data-accent-option="orange">
+          <span class="accent-swatch accent-swatch--orange" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="紫色" aria-checked="false" data-accent-option="purple">
+          <span class="accent-swatch accent-swatch--purple" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="樱花粉" aria-checked="false" data-accent-option="sakura">
+          <span class="accent-swatch accent-swatch--sakura" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="蓝色" aria-checked="false" data-accent-option="blue">
+          <span class="accent-swatch accent-swatch--blue" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="粉色" aria-checked="false" data-accent-option="pink">
+          <span class="accent-swatch accent-swatch--pink" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="绿色" aria-checked="false" data-accent-option="green">
+          <span class="accent-swatch accent-swatch--green" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="黑色" aria-checked="false" data-accent-option="black">
+          <span class="accent-swatch accent-swatch--black" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
+    <button class="theme-toggle" type="button" aria-label="切换颜色模式">
+      <span class="theme-icon theme-icon--sun">
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sun" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+</span>
+      <span class="theme-icon theme-icon--moon">
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-moon" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+</span>
+    </button>
+  </div>
+</header>
+
+
+  
+  <main class="paper-shell paper-shell--article">
+    
+
+<aside id="paper-sidebar-drawer" class="paper-sidebar paper-sidebar--right" aria-label="侧边栏">
+  <div class="drawer-toolbar" aria-label="侧边栏工具">
+    <div class="drawer-accent-options" role="group" aria-label="主题色">
+      <button type="button" class="accent-option" aria-label="橙色" aria-pressed="false" data-accent-option="orange">
+        <span class="accent-swatch accent-swatch--orange" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="accent-option" aria-label="紫色" aria-pressed="false" data-accent-option="purple">
+        <span class="accent-swatch accent-swatch--purple" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="accent-option" aria-label="樱花粉" aria-pressed="false" data-accent-option="sakura">
+        <span class="accent-swatch accent-swatch--sakura" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="accent-option" aria-label="蓝色" aria-pressed="false" data-accent-option="blue">
+        <span class="accent-swatch accent-swatch--blue" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="accent-option" aria-label="粉色" aria-pressed="false" data-accent-option="pink">
+        <span class="accent-swatch accent-swatch--pink" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="accent-option" aria-label="绿色" aria-pressed="false" data-accent-option="green">
+        <span class="accent-swatch accent-swatch--green" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="accent-option" aria-label="黑色" aria-pressed="false" data-accent-option="black">
+        <span class="accent-swatch accent-swatch--black" aria-hidden="true"></span>
+      </button>
+    </div>
+    <button class="icon-button drawer-close js-sidebar-close" type="button" aria-label="关闭侧边栏">
+      
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+
+    </button>
+  </div>
+
+  <section class="side-card nav-card">
+    <nav class="site-nav-drawer" aria-label="移动端导航">
+      
+        
+          <a class="" href="/">
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-home" aria-hidden="true"><path d="m3 10 9-7 9 7"/><path d="M5 10v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V10"/><path d="M9 21v-6h6v6"/></svg>
+
+            <span>首页</span>
+          </a>
+        
+      
+        
+          <a class="" href="/links/">
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+
+            <span>友链</span>
+          </a>
+        
+      
+        
+          <div class="drawer-nav-group">
+            <button class="drawer-nav-parent" type="button" aria-expanded="false">
+              
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder" aria-hidden="true"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg>
+
+              <span>文章</span>
+            </button>
+            <div class="drawer-nav-children">
+              
+                <a class="" href="/archives/">
+                  
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-archive" aria-hidden="true"><rect width="20" height="5" x="2" y="3" rx="1"/><path d="M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8"/><path d="M10 12h4"/></svg>
+
+                  <span>归档</span>
+                </a>
+              
+                <a class="" href="/categories/">
+                  
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder" aria-hidden="true"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg>
+
+                  <span>分类</span>
+                </a>
+              
+                <a class="" href="/tags/">
+                  
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tag" aria-hidden="true"><path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"/><circle cx="7.5" cy="7.5" r=".5" fill="currentColor"/></svg>
+
+                  <span>标签</span>
+                </a>
+              
+            </div>
+          </div>
+        
+      
+    </nav>
+  </section>
+
+  <section class="side-card profile-card">
+    
+      <div class="avatar" aria-hidden="true">
+        <span></span><i></i><em></em><b></b>
+      </div>
+    
+    <h3>Mr. O</h3>
+    <p class="profile-role">独立开发者</p>
+    <p>探索互联网世界，分享实用教程与精彩内容，发现更多有趣之处。</p>
+    
+      <div class="site-info" aria-label="站点信息">
+        
+          
+            <a class="site-info__item" href="/archives/">
+              <strong>63</strong>
+              <span>文章</span>
+            </a>
+          
+        
+          
+            <a class="site-info__item" href="/categories/">
+              <strong>6</strong>
+              <span>分类</span>
+            </a>
+          
+        
+          
+            <a class="site-info__item" href="/tags/">
+              <strong>100</strong>
+              <span>标签</span>
+            </a>
+          
+        
+      </div>
+    
+    <div class="socials">
+      
+        <a href="https://t.me/fortewave" target="_blank" rel="noopener" aria-label="Telegram">
+          
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="currentColor" class="lucide lucide-telegram" aria-hidden="true"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+
+          
+        </a>
+      
+      
+        <a href="/atom.xml" aria-label="RSS feed" title="RSS">
+          
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-rss" aria-hidden="true"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg>
+
+        </a>
+      
+    </div>
+  </section>
+
+  
+    <section class="side-card brand-link-card" aria-label="站点链接">
+      
+        <div class="brand-link-group">
+          <div class="brand-link-title">Blog</div>
+          <div class="brand-link-list">
+            
+              <a href="https://ooo.run/" target="_blank" rel="noopener noreferrer">
+                
+                  <img src="https://ooo.run/favicon.ico" alt="" class="nav-img-icon" aria-hidden="true" />
+                
+                <span>O‘s World</span>
+              </a>
+            
+          </div>
+        </div>
+      
+        <div class="brand-link-group">
+          <div class="brand-link-title">Project</div>
+          <div class="brand-link-list">
+            
+              <a href="https://tools.ooo.run" target="_blank" rel="noopener noreferrer">
+                
+                  <img src="https://tools.ooo.run/favicon.png" alt="" class="nav-img-icon" aria-hidden="true" />
+                
+                <span>简易工具</span>
+              </a>
+            
+              <a href="https://ooo.run/games" target="_blank" rel="noopener noreferrer">
+                
+                  <img src="https://img.nep.me/ooo/game.webp" alt="" class="nav-img-icon" aria-hidden="true" />
+                
+                <span>简单游戏</span>
+              </a>
+            
+          </div>
+        </div>
+      
+    </section>
+  
+
+  
+    <div class="post-sticky-stack">
+      <section class="side-card toc-card">
+        <header class="toc-card__head">
+          <h2>
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-table-of-contents" aria-hidden="true"><path d="M16 12H3"/><path d="M16 18H3"/><path d="M16 6H3"/><path d="M21 12h.01"/><path d="M21 18h.01"/><path d="M21 6h.01"/></svg>
+文章目录</h2>
+          <button type="button" class="toc-toggle-all" data-action="toggle-toc" aria-pressed="false" aria-label="展开全部目录" title="展开全部目录">
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+
+          </button>
+        </header>
+        <div class="toc-content">
+          
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker-%E4%BB%8B%E7%BB%8D"><span class="toc-text">Docker 介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker-Compose-%E4%BB%8B%E7%BB%8D"><span class="toc-text">Docker Compose 介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E5%AE%98%E6%96%B9%E6%BA%90%E5%AE%89%E8%A3%85"><span class="toc-text">使用官方源安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker-Compose-V2"><span class="toc-text">Docker Compose V2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9-Docker-%E9%85%8D%E7%BD%AE"><span class="toc-text">修改 Docker 配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8%E4%BB%8B%E7%BB%8D"><span class="toc-text">Docker 常用命令使用介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker-Compose-%E4%BD%BF%E7%94%A8%E4%BB%8B%E7%BB%8D"><span class="toc-text">Docker Compose 使用介绍</span></a></li></ol>
+          
+        </div>
+      </section>
+      
+
+  <section class="side-card recent-card latest-posts-card">
+    <h2>
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-history" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l4 2"/></svg>
+最新文章</h2>
+    <ul class="recent-list">
+      
+        <li>
+          <a class="recent-item" href="/post/docker-run-fizzy-kanban.html">
+            <strong>使用 Docker 部署 Fizzy ： 一个轻量、漂亮、可自托管的看板工具</strong>
+            <em>2026-06-23</em>
+          </a>
+        </li>
+      
+        <li>
+          <a class="recent-item" href="/post/codex-is-buring-your-ssd.html">
+            <strong>Codex 的日志记录消耗 SSD 寿命？OpenAI 已修复</strong>
+            <em>2026-06-23</em>
+          </a>
+        </li>
+      
+        <li>
+          <a class="recent-item" href="/post/how-much-can-you-save-with-subscription-vs-api.html">
+            <strong>榨干 AI 订阅额度：使用 Claude Pro 与 ChatGPT 订阅到底能省多少钱？</strong>
+            <em>2026-06-21</em>
+          </a>
+        </li>
+      
+        <li>
+          <a class="recent-item" href="/post/darkbloom-nodes-macbook-ai-mining-earnings.html">
+            <strong>新时代挖矿：看看你的 Mac 一个月能赚多少钱</strong>
+            <em>2026-06-19</em>
+          </a>
+        </li>
+      
+        <li>
+          <a class="recent-item" href="/post/project-tiny-world-builder.html">
+            <strong>宝藏开源项目： Tiny World Builder - 在浏览器里创建迷你世界</strong>
+            <em>2026-06-16</em>
+          </a>
+        </li>
+      
+    </ul>
+  </section>
+
+
+    </div>
+  
+
+  
+
+</aside>
+
+    <section class="paper-main">
+      
+
+<div class="article-tape-wrap">
+<span class="tape tape--top-right" aria-hidden="true"></span>
+<article class="article-paper">
+  <header class="article-header">
+    
+      <a class="label-pill" href="/categories/%E6%95%99%E7%A8%8B/">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder" aria-hidden="true"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg>
+
+        教程
+      </a>
+    
+    <h1>在 Debian 12 中安装 Docker 以及 Docker Compose</h1>
+    <div class="meta-line meta-line--article">
+      <span class="meta-date">
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar" aria-hidden="true"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>
+2024-12-14</span>
+      
+        <span class="meta-tags">
+          
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tag" aria-hidden="true"><path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"/><circle cx="7.5" cy="7.5" r=".5" fill="currentColor"/></svg>
+
+          <a class="meta-tag-link" href="/tags/Docker/">#Docker</a><a class="meta-tag-link" href="/tags/Docker-Compose/">#Docker Compose</a><a class="meta-tag-link" href="/tags/Debian/">#Debian</a><a class="meta-tag-link" href="/tags/Linux/">#Linux</a>
+        </span>
+      
+    </div>
+  </header>
+
+  
+
+
+  <div class="article-content">
+    <p>现在越来越多的应用可以使用 Docker 一键部署，本文将介绍如何在 Debian 12 中安装 Docker 与 Docker Compose。</p>
+<p>验证环境</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">root@debian:~# lsb_release -a</span><br><span class="line">No LSB modules are available.</span><br><span class="line">Distributor ID:	Debian</span><br><span class="line">Description:	Debian GNU/Linux 12 (bookworm)</span><br><span class="line">Release:	12</span><br><span class="line">Codename:	bookworm</span><br></pre></td></tr></table></figure>
+<p>安装同样适用于 Debian 11 以及 Ubuntu 24.04</p>
+<h2 id="Docker-介绍"><a href="#Docker-介绍" class="headerlink" title="Docker 介绍"></a>Docker 介绍</h2><p>Docker 是一个开源的容器化平台，它可以将应用程序及其依赖打包到一个轻量级、可移植的容器中，使其能够在任何环境中一致地运行。</p>
+<ul>
+<li><strong>轻量</strong>：容器共享宿主机的操作系统内核，启动速度快，占用资源少。</li>
+<li><strong>可移植</strong>：容器可以在开发、测试和生产环境中一致运行，解决“环境不一致”的问题。</li>
+<li><strong>隔离性</strong>：每个容器都是独立运行的，互不影响。</li>
+<li><strong>快速部署</strong>：通过镜像技术，实现应用的快速打包、发布和部署。</li>
+</ul>
+<h2 id="Docker-Compose-介绍"><a href="#Docker-Compose-介绍" class="headerlink" title="Docker Compose 介绍"></a>Docker Compose 介绍</h2><p>Docker Compose 是 Docker 提供的用于定义和管理多容器应用的工具。通过一个简单的 YAML 文件<code>docker-compose.yml</code>，你可以定义和启动多个服务容器，使得应用的部署和管理更加便捷，可以不必使用 Docker run 命令。 </p>
+<p>特点：</p>
+<ul>
+<li><strong>多容器管理</strong>：同时启动、停止和管理多个容器。</li>
+<li><strong>通过 YAML 配置</strong>：通过 docker-compose.yml 定义服务、网络、存储等。</li>
+<li><strong>简化命令</strong>：使用单一命令 docker compose 管理容器</li>
+</ul>
+<p>本文将介绍安装 V2 版本，对应的命令是 <code>docker compose</code> </p>
+<h2 id="使用官方源安装"><a href="#使用官方源安装" class="headerlink" title="使用官方源安装"></a>使用官方源安装</h2><p>以下操作需要在 root 用户下完成，请使用 <code>sudo -i</code> 或 <code>su root</code> 切换到 root 用户进行操作。</p>
+<p>首先，安装一些必要的软件包： </p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">apt update</span><br><span class="line">apt upgrade -y</span><br><span class="line">apt install curl vim wget gnupg dpkg apt-transport-https lsb-release ca-certificates</span><br></pre></td></tr></table></figure>
+
+<p>然后加入 Docker 的 GPG 公钥和 apt 源：</p>
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-1-tab-0" aria-controls="tabs-1-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">Debian</button><button type="button" role="tab" id="tabs-1-tab-1" aria-controls="tabs-1-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">Ubuntu</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-1-panel-0" aria-labelledby="tabs-1-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl -sSL https://download.docker.com/linux/debian/gpg | gpg --dearmor &gt; /usr/share/keyrings/docker-ce.gpg</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;deb [arch=<span class="subst">$(dpkg --print-architecture)</span> signed-by=/usr/share/keyrings/docker-ce.gpg] https://download.docker.com/linux/debian <span class="subst">$(lsb_release -sc)</span> stable&quot;</span> &gt; /etc/apt/sources.list.d/docker.list</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-1-panel-1" aria-labelledby="tabs-1-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl -sSL https://download.docker.com/linux/debian/gpg | gpg --dearmor &gt; /usr/share/keyrings/docker-ce.gpg</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;deb [arch=<span class="subst">$(dpkg --print-architecture)</span> signed-by=/usr/share/keyrings/docker-ce.gpg] https://download.docker.com/linux/ubuntu <span class="subst">$(lsb_release -sc)</span> stable&quot;</span> &gt; /etc/apt/sources.list.d/docker.list</span><br></pre></td></tr></table></figure></section></div></div>
+
+<p>国内机器可以用 <a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/">清华 TUNA</a> 的国内源：</p>
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-2-tab-0" aria-controls="tabs-2-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">Debian</button><button type="button" role="tab" id="tabs-2-tab-1" aria-controls="tabs-2-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">Ubuntu</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-2-panel-0" aria-labelledby="tabs-2-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl -sS https://download.docker.com/linux/debian/gpg | gpg --dearmor &gt; /usr/share/keyrings/docker-ce.gpg</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;deb [arch=<span class="subst">$(dpkg --print-architecture)</span> signed-by=/usr/share/keyrings/docker-ce.gpg] https://mirrors.tuna.tsinghua.edu.cn/docker-ce/linux/debian <span class="subst">$(lsb_release -sc)</span> stable&quot;</span> &gt; /etc/apt/sources.list.d/docker.list</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-2-panel-1" aria-labelledby="tabs-2-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl -sS https://download.docker.com/linux/debian/gpg | gpg --dearmor &gt; /usr/share/keyrings/docker-ce.gpg</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;deb [arch=<span class="subst">$(dpkg --print-architecture)</span> signed-by=/usr/share/keyrings/docker-ce.gpg] https://mirrors.tuna.tsinghua.edu.cn/docker-ce/linux/ubuntu <span class="subst">$(lsb_release -sc)</span> stable&quot;</span> &gt; /etc/apt/sources.list.d/docker.list</span><br></pre></td></tr></table></figure></section></div></div>
+
+<p>然后更新系统后即可安装 Docker CE 和 Docker Compose 插件：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">apt update</span><br><span class="line">apt install docker-ce docker-ce-cli containerd.io docker-compose-plugin</span><br></pre></td></tr></table></figure>
+
+<p>此时可以使用 <code>docker version</code> 命令检查是否安装成功：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">root@debian:~# docker version</span><br><span class="line">Client: Docker Engine - Community</span><br><span class="line"> Version:           27.4.0</span><br><span class="line"> API version:       1.47</span><br><span class="line"> Go version:        go1.22.10</span><br><span class="line"> Git commit:        bde2b89</span><br><span class="line"> Built:             Sat Dec  7 10:38:57 2024</span><br><span class="line"> OS/Arch:           linux/amd64</span><br><span class="line"> Context:           default</span><br><span class="line"></span><br><span class="line">Server: Docker Engine - Community</span><br><span class="line"> Engine:</span><br><span class="line">  Version:          27.4.0</span><br><span class="line">  API version:      1.47 (minimum version 1.24)</span><br><span class="line">  Go version:       go1.22.10</span><br><span class="line">  Git commit:       92a8393</span><br><span class="line">  Built:            Sat Dec  7 10:38:57 2024</span><br><span class="line">  OS/Arch:          linux/amd64</span><br><span class="line">  Experimental:     <span class="literal">false</span></span><br><span class="line"> containerd:</span><br><span class="line">  Version:          1.7.24</span><br><span class="line">  GitCommit:        88bf19b2105c8b17560993bee28a01ddc2f97182</span><br><span class="line"> runc:</span><br><span class="line">  Version:          1.2.2</span><br><span class="line">  GitCommit:        v1.2.2-0-g7cb3632</span><br><span class="line"> docker-init:</span><br><span class="line">  Version:          0.19.0</span><br><span class="line">  GitCommit:        de40ad0</span><br></pre></td></tr></table></figure>
+
+<p>如果需要以非 root 模式运行 Docker，那么可以把特定用户也加入 docker 组，比如我们把 www-data 用户加进去：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">apt install docker-ce-rootless-extras</span><br><span class="line"><span class="built_in">sudo</span> usermod -aG docker www-data</span><br></pre></td></tr></table></figure>
+
+<h2 id="Docker-Compose-V2"><a href="#Docker-Compose-V2" class="headerlink" title="Docker Compose V2"></a>Docker Compose V2</h2><p>我们已安装 <code>docker-compose-plugin</code>，这会为 Docker 添加 <code>docker compose</code> 命令</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@debian:~# docker compose version </span><br><span class="line">Docker Compose version v2.31.0</span><br></pre></td></tr></table></figure>
+
+<h2 id="修改-Docker-配置"><a href="#修改-Docker-配置" class="headerlink" title="修改 Docker 配置"></a>修改 Docker 配置</h2><p>以下配置会增加一段自定义内网 IPv6 地址，开启容器的 IPv6 功能，以及限制日志文件大小，防止 Docker 日志塞满硬盘：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> &gt; /etc/docker/daemon.json &lt;&lt; <span class="string">EOF</span></span><br><span class="line"><span class="string">&#123;</span></span><br><span class="line"><span class="string">    &quot;log-driver&quot;: &quot;json-file&quot;,</span></span><br><span class="line"><span class="string">    &quot;log-opts&quot;: &#123;</span></span><br><span class="line"><span class="string">        &quot;max-size&quot;: &quot;20m&quot;,</span></span><br><span class="line"><span class="string">        &quot;max-file&quot;: &quot;3&quot;</span></span><br><span class="line"><span class="string">    &#125;,</span></span><br><span class="line"><span class="string">    &quot;ipv6&quot;: true,</span></span><br><span class="line"><span class="string">    &quot;fixed-cidr-v6&quot;: &quot;fd00:dead:beef:c0::/80&quot;,</span></span><br><span class="line"><span class="string">    &quot;experimental&quot;:true,</span></span><br><span class="line"><span class="string">    &quot;ip6tables&quot;:true</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string">EOF</span></span><br></pre></td></tr></table></figure>
+
+<p>然后重启 Docker 服务：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart docker</span><br></pre></td></tr></table></figure>
+
+<h2 id="Docker-常用命令使用介绍"><a href="#Docker-常用命令使用介绍" class="headerlink" title="Docker 常用命令使用介绍"></a>Docker 常用命令使用介绍</h2><ul>
+<li>可以查看 <a target="_blank" rel="noopener" href="https://ref.ooo.run/docs/docker">Docker 备忘清单</a></li>
+</ul>
+<p>快速了解一下 docker 常见命令，使用 <code>docker compose</code> 进行管理会更方便。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 拉取镜像</span></span><br><span class="line">docker pull &lt;镜像名&gt;:&lt;标签&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看当前正在运行的容器</span></span><br><span class="line">docker ps</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看所有容器（包括已停止的）</span></span><br><span class="line">docker ps -a</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看本地镜像</span></span><br><span class="line">docker images</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除镜像</span></span><br><span class="line">docker rmi &lt;镜像ID或名称&gt;</span><br><span class="line">docker rmi ubuntu:latest</span><br><span class="line"></span><br><span class="line"><span class="comment"># 运行容器 </span></span><br><span class="line">docker run -d -p &lt;宿主端口&gt;:&lt;容器端口&gt; --name &lt;容器名&gt; &lt;镜像名&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动，停止，重启，删除</span></span><br><span class="line">docker start / stop / restart / <span class="built_in">rm</span> &lt;容器名或ID&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 进入容器执行交互式命令</span></span><br><span class="line">docker <span class="built_in">exec</span> -it &lt;容器名或ID&gt; /bin/bash</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看容器日志</span></span><br><span class="line">docker logs &lt;容器名或ID&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查询 Docker 使用的磁盘空间：</span></span><br><span class="line">docker system <span class="built_in">df</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除所有未被使用的镜像</span></span><br><span class="line">docker image prune -a</span><br></pre></td></tr></table></figure>
+
+<h2 id="Docker-Compose-使用介绍"><a href="#Docker-Compose-使用介绍" class="headerlink" title="Docker Compose 使用介绍"></a>Docker Compose 使用介绍</h2><ul>
+<li>可以查看 <a target="_blank" rel="noopener" href="https://ref.ooo.run/docs/docker-compose">Docker Compose 备忘清单</a></li>
+</ul>
+<p><code>docker compose</code> 需要在 <code>docker-compose.yml</code> 文件所在的工作目录执行，这里推荐创建一个工作目录，在其中统一存放配置文件，比如： </p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">docker/</span><br><span class="line">├── nginx/                         </span><br><span class="line">│   └── docker-compose.yml            </span><br><span class="line">├── mysql/                          </span><br><span class="line">│   └── docker-compose.yml          </span><br><span class="line">└── redis/                           </span><br><span class="line">    └── docker-compose.yml   </span><br></pre></td></tr></table></figure>
+
+<p><code>docker compose</code> 常用命令：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 拉取，更新镜像</span></span><br><span class="line">docker compose pull</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动容器</span></span><br><span class="line">docker compose up</span><br><span class="line"></span><br><span class="line"><span class="comment"># 后台启动</span></span><br><span class="line">docker compose up -d</span><br><span class="line"></span><br><span class="line"><span class="comment"># 停止容器</span></span><br><span class="line">docker compose stop</span><br><span class="line"></span><br><span class="line"><span class="comment"># 停止容器，并移除创建的网络、卷和镜像</span></span><br><span class="line">docker compose down</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重启容器</span></span><br><span class="line">docker compose restart</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看正在运行的服务</span></span><br><span class="line">docker compose ps</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看日志</span></span><br><span class="line">docker compose logs</span><br><span class="line"><span class="comment"># 查看实时日志</span></span><br><span class="line">docker compose logs -f</span><br><span class="line"></span><br><span class="line"><span class="comment"># 进入容器。执行交互命令</span></span><br><span class="line">docker compose <span class="built_in">exec</span> &lt;服务名&gt; &lt;命令&gt;</span><br><span class="line">docker compose <span class="built_in">exec</span> nginx /bin/bash</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看服务统计信息，实时显示 CPU、内存等资源使用情况。</span></span><br><span class="line">docker compose stats</span><br></pre></td></tr></table></figure>
+
+<p><code>docker compose</code> 还是太长？ 执行下面的命令后就可以使用 <code>dc</code> 作为替代：</p>
+<details class="flatpaper-note flatpaper-note--info"><summary class="flatpaper-note__title"><span class="flatpaper-note__icon" aria-hidden="true"></span><span class="flatpaper-note__label">modern</span><span class="flatpaper-note__chevron" aria-hidden="true"></span></summary><div class="flatpaper-note__body"><p>执行前，先运行一下 <code>dc</code> 确认命令当前没有在使用，执行后运行 <code>dc version</code> 确认</p></div></details>
+
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-3-tab-0" aria-controls="tabs-3-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">bash</button><button type="button" role="tab" id="tabs-3-tab-1" aria-controls="tabs-3-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">zsh</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-3-panel-0" aria-labelledby="tabs-3-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;alias dc=&quot;docker compose&quot;&#x27;</span> &gt;&gt; ~/.bashrc </span><br><span class="line"><span class="built_in">source</span> ~/.bashrc </span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-3-panel-1" aria-labelledby="tabs-3-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;alias dc=&quot;docker compose&quot;&#x27;</span> &gt;&gt; ~/.zshrc </span><br><span class="line"><span class="built_in">source</span> ~/.zshrc </span><br></pre></td></tr></table></figure></section></div></div>
+
+<p>效果:</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">root@debian:~# dc</span><br><span class="line">-bash: dc: <span class="built_in">command</span> not found</span><br><span class="line"></span><br><span class="line">root@debian:~# dc version</span><br><span class="line">Docker Compose version v2.31.0</span><br></pre></td></tr></table></figure>
+
+<p>之后，当我们创建了 <code>docker-compose.yml</code> 文件后，启动或是更新服务只需要执行：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dc pull </span><br><span class="line">dc up -d </span><br></pre></td></tr></table></figure>
+
+<p>现在前往 GitHub 或是 <a target="_blank" rel="noopener" href="https://hub.docker.com/">Docker Hub</a> 寻找有趣的项目吧！</p>
+<p>参考： <a target="_blank" rel="noopener" href="https://u.sb/debian-install-docker/">Debian 12 &#x2F; Ubuntu 24.04 安装 Docker 以及 Docker Compose 教程</a></p>
+
+  </div>
+
+  <footer class="article-reactions">
+    <div class="reaction-group">
+      <button type="button" class="reaction reaction--comment" aria-label="跳转到评论区" data-action="scroll-to-comments">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
+
+      </button>
+      <span class="reaction-label">评论</span>
+      
+    </div>
+    <div class="reaction-group reaction-group--right">
+      
+      <button type="button" class="reaction reaction--share" aria-label="分享" data-action="share">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-share-2" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" x2="15.42" y1="13.51" y2="17.49"/><line x1="15.41" x2="8.59" y1="6.51" y2="10.49"/></svg>
+
+      </button>
+      <span class="reaction-label">分享</span>
+    </div>
+  </footer>
+
+  
+
+
+  <nav class="article-actions">
+    
+      <a class="article-action article-action--prev" href="/post/use-nginx-proxy-manager.html">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left" aria-hidden="true"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+
+        <span class="action-label">上一篇</span>
+        <span class="action-title">Nginx Proxy Manager 使用教程</span>
+      </a>
+    
+    
+      <a class="article-action article-action--next" href="/post/how-to-add-comment-system-for-static-blog.html">
+        <span class="action-label">下一篇</span>
+        <span class="action-title">为 Hexo 博客添加评论系统，Giscus or Twikoo or Arttalk or Disqus</span>
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+
+      </a>
+    
+  </nav>
+</article>
+</div>
+
+<button type="button" class="back-to-top" data-action="scroll-to-top" aria-label="返回顶部" hidden>
+  
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up" aria-hidden="true"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg>
+
+</button>
+
+
+  <section class="related-paper">
+    <header class="related-paper__head">
+      <h2>
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+相关文章</h2>
+      <a class="related-paper__more" href="/archives/">
+        <span>查看更多</span>
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+
+      </a>
+    </header>
+    <div class="related-paper__grid">
+      
+        <a class="related-card" href="/post/use-docker-run-wallos.html">
+          <span class="related-card__thumb">
+            
+<div class="paper-thumb paper-thumb-0 paper-thumb--cover">
+  
+    <img class="paper-thumb__img" src="https://img.nep.me/ooo/cover-wallos.webp" alt="使用 Docker 与 Wallos 快速搭建个人订阅管理系统" loading="lazy" referrerpolicy="no-referrer">
+  
+</div>
+
+          </span>
+          <span class="related-card__body">
+            <strong class="related-card__title">使用 Docker 与 Wallos 快速搭建个人订阅管理系统</strong>
+            <em class="related-card__date">2025-09-12</em>
+          </span>
+        </a>
+      
+        <a class="related-card" href="/post/use-docker-run-ezbookkeeping.html">
+          <span class="related-card__thumb">
+            
+<div class="paper-thumb paper-thumb-1 paper-thumb--cover">
+  
+    <img class="paper-thumb__img" src="https://img.nep.me/i/2026/01/21/cover-ezbookkeeping.webp" alt="使用 Docker 与 ezBookkeeping 快速搭建美观的个人记账系统" loading="lazy" referrerpolicy="no-referrer">
+  
+</div>
+
+          </span>
+          <span class="related-card__body">
+            <strong class="related-card__title">使用 Docker 与 ezBookkeeping 快速搭建美观的个人记账系统</strong>
+            <em class="related-card__date">2025-09-02</em>
+          </span>
+        </a>
+      
+        <a class="related-card" href="/post/use-docker-run-memeos.html">
+          <span class="related-card__thumb">
+            
+<div class="paper-thumb paper-thumb-2 paper-thumb--cover">
+  
+    <img class="paper-thumb__img" src="https://img.nep.me/i/2025/08/18/cover-docker-memos-v2.webp" alt="使用 Docker 快速部署 Memos 个人笔记系统" loading="lazy" referrerpolicy="no-referrer">
+  
+</div>
+
+          </span>
+          <span class="related-card__body">
+            <strong class="related-card__title">使用 Docker 快速部署 Memos 个人笔记系统</strong>
+            <em class="related-card__date">2025-08-18</em>
+          </span>
+        </a>
+      
+        <a class="related-card" href="/post/use-docker-run-gitea.html">
+          <span class="related-card__thumb">
+            
+<div class="paper-thumb paper-thumb-0 paper-thumb--cover">
+  
+    <img class="paper-thumb__img" src="https://img.nep.me/i/2025/08/10/cover-docker-gitea.webp" alt="使用 Gitea 与 Docker Compose 轻松自建你的私人 Git 服务器" loading="lazy" referrerpolicy="no-referrer">
+  
+</div>
+
+          </span>
+          <span class="related-card__body">
+            <strong class="related-card__title">使用 Gitea 与 Docker Compose 轻松自建你的私人 Git 服务器</strong>
+            <em class="related-card__date">2025-08-10</em>
+          </span>
+        </a>
+      
+    </div>
+  </section>
+
+
+      
+
+<section class="comments-section" aria-label="评论">
+  <header class="comments-section__head">
+    <h2>
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
+评论</h2>
+  </header>
+  <div id="artalk-comments"></div>
+</section>
+<script>
+window.addEventListener('load', function () {
+  if (typeof Artalk === 'undefined' || typeof Artalk.init !== 'function') return;
+  Artalk.init({
+    el: '#artalk-comments',
+    pageKey: "https://ooo.run/post/debian-install-docker.html",
+    pageTitle: "在 Debian 12 中安装 Docker 以及 Docker Compose",
+    server: "https://artalk.ooo.run",
+    site: "Mr. O 的博客"
+  });
+});
+</script>
+
+
+    </section>
+    
+  </main>
+
+  <div class="sidebar-backdrop js-sidebar-close" aria-hidden="true"></div>
+
+  
+<footer class="site-footer">
+  <span class="site-footer__left">© 2026 By Mr. O · Theme FramedInfra Based on <a href="https://github.com/Homulilly/hexo-theme-flatpaper" target="_blank">FlatPaper</a></span>
+  <span class="site-footer__right"><a href="/terms">服务条款</a> · <a href="/privacy">隐私政策</a> <br /> <a href="https://tools.ooo.run" target="_blank">简易工具</a></span>
+</footer>
+
+  
+<div class="search-panel" aria-hidden="true" data-index-url="/flatpaper-search.json">
+  <div class="search-backdrop js-search-close"></div>
+  <section class="search-dialog" role="dialog" aria-modal="true" aria-label="搜索文章">
+    <span class="tape tape--top-left" aria-hidden="true"></span>
+    <header class="search-head">
+      <h2><span class="green-dot"></span>搜索文章</h2>
+      <button class="icon-button js-search-close" type="button" aria-label="关闭搜索">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+
+      </button>
+    </header>
+    <label class="search-field">
+      
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+
+      <input id="flatpaper-search" class="search-input" type="search" placeholder="输入关键词，按 Esc 关闭" autocomplete="off">
+    </label>
+    <div class="search-results" data-empty="输入关键词后显示匹配的文章">
+      <p class="search-empty">输入关键词后显示匹配的文章</p>
+    </div>
+  </section>
+</div>
+
+  <script>
+  window.FLATPAPER_I18N = {"language":"zh-CN","common.posts":"文章","common.categories":"分类","common.tags":"标签","common.comments":"评论","common.share":"分享","common.page":"页面","common.archive":"归档","common.post_list":"文章列表","common.search_posts":"搜索文章","common.random_posts":"随机文章","common.reward":"赞赏","common.view_all":"查看全部","pagination.prev":"上一页","pagination.next":"下一页","pagination.post_pager":"文章分页","pagination.archive_pager":"归档分页","index.featured":"精选文章","index.pinned":"置顶","index.read_more":"阅读全文","index.previous_slide":"上一张","index.next_slide":"下一张","index.carousel_pagination":"轮播页码","index.carousel_slide":"第 %d 张","index.latest_posts":"最新文章","index.empty_posts":"还没有文章。创建第一篇文章后，这里会显示最新内容。","archive.title":"归档","archive.post_list":"文章列表","taxonomy.category_count":"%d 篇","taxonomy.empty_categories":"暂时还没有分类。","taxonomy.empty_tags":"暂时还没有标签。","links.label":"友链","links.title":"友情链接","links.empty_data":"暂未加载到友链数据。请确认 source/_data/links.yml 存在并已 hexo clean。","links.rss_label":"%s 的 RSS","friends_feed.label":"朋友圈","friends_feed.title":"友链朋友圈","friends_feed.loading":"正在加载友链动态…","friends_feed.missing_url":"暂未配置 all.json 地址。","friends_feed.load_failed":"友链动态加载失败，请稍后再试。","friends_feed.empty":"暂时没有抓取到友链文章。","friends_feed.load_more":"加载更多","friends_feed.updated_at":"更新于 %s","friends_feed.friend_count":"%d 位友邻","friends_feed.active_count":"%d 位活跃","friends_feed.article_count":"%d 篇文章","friends_feed.unknown_author":"未知站点","friends_feed.date_unknown":"时间未知","post.scroll_to_comments":"跳转到评论区","post.previous":"上一篇","post.next":"下一篇","post.no_previous":"没有更早的文章了","post.no_next":"已经是最新的一篇","post.back_to_top":"返回顶部","post.related_posts":"相关文章","post.view_more":"查看更多","not_found.label":"页面走丢了","not_found.title":"找不到这个页面","not_found.text":"这个地址可能已经移动、删除，或者从未存在。","not_found.home":"返回首页","not_found.search":"搜索文章","search.placeholder":"输入关键词，按 Esc 关闭","search.empty":"输入关键词后显示匹配的文章","search.loading":"正在加载搜索索引…","search.load_failed":"搜索索引加载失败，请重新打开搜索重试","search.no_result":"没有找到与 \"%s\" 相关的文章","search.close":"关闭搜索","code.copy":"复制代码","code.collapse":"折叠代码","code.expand":"展开代码","heading.anchor":"链接到此节: %s","head.tag":"标签：%s","head.category":"分类：%s","head.archive":"归档","head.archive_with_date":"归档：%s","head.page_number":"第 %d 页","navigation.primary":"主导航","navigation.mobile":"移动端导航","navigation.brand_home":"FlatPaper 首页","navigation.brand_menu":"打开站点导航","navigation.open_sidebar":"打开侧边栏","navigation.close_sidebar":"关闭侧边栏","navigation.sidebar":"侧边栏","navigation.sidebar_tools":"侧边栏工具","navigation.site_links":"站点链接","navigation.site_info":"站点信息","colors.choose_theme_color":"选择主题色","colors.theme_color":"主题色","colors.toggle_color_mode":"切换颜色模式","colors.green":"绿色","colors.purple":"紫色","colors.pink":"粉色","colors.sakura":"樱花粉","colors.blue":"蓝色","colors.orange":"橙色","colors.black":"黑色","profile.default_bio":"热爱生活，热爱代码，喜欢分享技术与生活中的点滴。","welcome.cta":"开始阅读","welcome.title":"欢迎来到 FlatPaper","welcome.text":"一个专注于内容与阅读体验的博客主题。","home_hero.label":"首页开屏","home_hero.enter":"进入首页","home_hero.note":"今日","home_hero.default_subtitle":"日常记录","home_hero.nav_links":"开屏导航","home_hero.profile_links":"个人链接","home_hero.tools":"开屏工具","home_hero.shuffle_stickers":"打乱贴纸位置","home_hero.link":"链接","home_hero.sticker_image":"贴纸图片","home_hero.visit_confirm":"要访问 %s 吗？","home_hero.visit":"访问","home_hero.cancel":"取消","toc.title":"文章目录","toc.empty":"目录会根据文章标题自动生成。","toc.expand_all":"展开全部目录","toc.collapse_all":"收起全部目录","sidebar.hot_tags":"热门标签","sidebar.latest_posts":"最新文章"};
+  </script>
+  
+<script src="/js/main.js"></script>
+
+  
+</body>
+</html>
