@@ -27,7 +27,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://img.nep.me/i/2025/08/10/cover-docker-gitea.webp">
 <meta property="article:published_time" content="2025-08-10T02:57:40.000Z">
-<meta property="article:modified_time" content="2026-06-24T11:35:25.076Z">
+<meta property="article:modified_time" content="2026-06-24T21:18:15.652Z">
 <meta property="article:author" content="Mr. O">
 <meta property="article:tag" content="Docker">
 <meta property="article:tag" content="Docker Compose">
@@ -36,7 +36,7 @@
 <meta name="twitter:image" content="https://img.nep.me/i/2025/08/10/cover-docker-gitea.webp">
 <link rel="canonical" href="https://ooo.run/post/use-docker-run-gitea.html">
 
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"使用 Gitea 与 Docker Compose 轻松自建你的私人 Git 服务器","name":"使用 Gitea 与 Docker Compose 轻松自建你的私人 Git 服务器 | O's World","description":"简介想要一个完全由你掌控的私人代码仓库吗？Gitea 是一个轻量级、高性能的自托管 Git 服务，功能强大且资源占用极低，甚至可以在树莓派上流畅运行。 本教程将指导你如何使用 Docker Compose 快速部署一个安全、私有的 Gitea 实例，让你在几分钟内拥有媲美 GitHub 的代码管理体验。 一、环境准备在开始之前，需要拥有一个自己的 VPS 或...","url":"https://ooo.run/post/use-docker-run-gitea.html","inLanguage":"zh-CN","isPartOf":{"@type":"WebSite","name":"O's World","url":"https://ooo.run/"},"image":["https://img.nep.me/i/2025/08/10/cover-docker-gitea.webp"],"mainEntityOfPage":"https://ooo.run/post/use-docker-run-gitea.html","datePublished":"2025-08-10T02:57:40.000Z","dateModified":"2026-06-24T11:35:25.076Z","author":{"@type":"Person","name":"Mr. O"},"publisher":{"@type":"Organization","name":"O's World"},"keywords":"Docker, Docker Compose, Self-hosted"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"使用 Gitea 与 Docker Compose 轻松自建你的私人 Git 服务器","name":"使用 Gitea 与 Docker Compose 轻松自建你的私人 Git 服务器 | O's World","description":"简介想要一个完全由你掌控的私人代码仓库吗？Gitea 是一个轻量级、高性能的自托管 Git 服务，功能强大且资源占用极低，甚至可以在树莓派上流畅运行。 本教程将指导你如何使用 Docker Compose 快速部署一个安全、私有的 Gitea 实例，让你在几分钟内拥有媲美 GitHub 的代码管理体验。 一、环境准备在开始之前，需要拥有一个自己的 VPS 或...","url":"https://ooo.run/post/use-docker-run-gitea.html","inLanguage":"zh-CN","isPartOf":{"@type":"WebSite","name":"O's World","url":"https://ooo.run/"},"image":["https://img.nep.me/i/2025/08/10/cover-docker-gitea.webp"],"mainEntityOfPage":"https://ooo.run/post/use-docker-run-gitea.html","datePublished":"2025-08-10T02:57:40.000Z","dateModified":"2026-06-24T21:18:15.652Z","author":{"@type":"Person","name":"Mr. O"},"publisher":{"@type":"Organization","name":"O's World"},"keywords":"Docker, Docker Compose, Self-hosted"}</script>
 
 <script>
   (function () {
@@ -568,7 +568,7 @@
 <p>本教程将指导你如何使用 Docker Compose 快速部署一个安全、私有的 Gitea 实例，让你在几分钟内拥有媲美 GitHub 的代码管理体验。</p>
 <h2 id="一、环境准备"><a href="#一、环境准备" class="headerlink" title="一、环境准备"></a>一、环境准备</h2><p>在开始之前，需要拥有一个自己的 VPS 或是支持 Docker 容器的 NAS 系统。</p>
 <h3 id="1-安装-Docker-和-Docker-Compose"><a href="#1-安装-Docker-和-Docker-Compose" class="headerlink" title="1. 安装 Docker 和 Docker Compose"></a>1. 安装 Docker 和 Docker Compose</h3><p>这是我们容器化部署的基础。如果你的服务器尚未安装，可以参考以下教程。</p>
-<details class="flatpaper-note flatpaper-note--info"><summary class="flatpaper-note__title"><span class="flatpaper-note__icon" aria-hidden="true"></span><span class="flatpaper-note__label">modern</span><span class="flatpaper-note__chevron" aria-hidden="true"></span></summary><div class="flatpaper-note__body"><p><strong>延伸阅读:</strong> <a href="https://ooo.run/post/debian-install-docker.html">在 Debian 12 中安装 Docker 以及 Docker Compose</a></p></div></details>
+<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p><strong>延伸阅读:</strong> <a href="https://ooo.run/post/debian-install-docker.html">在 Debian 12 中安装 Docker 以及 Docker Compose</a></p></div></div>
 
 <h3 id="2-（可选）调整服务器-SSH-端口S"><a href="#2-（可选）调整服务器-SSH-端口S" class="headerlink" title="2. （可选）调整服务器 SSH 端口S"></a>2. （可选）调整服务器 SSH 端口S</h3><p>Gitea 需要使用 22 端口来处理 Git 的 SSH 操作 (如 <code>git clone git@...</code>)。为了避免与服务器自身的 SSH 服务端口冲突，建议将服务器的 SSH 端口修改为一个非标准端口（例如 <code>2222</code>）。</p>
 <ul>

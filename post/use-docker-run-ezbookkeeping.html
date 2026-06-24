@@ -27,7 +27,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://img.nep.me/i/2026/01/21/cover-ezbookkeeping.webp">
 <meta property="article:published_time" content="2025-09-02T00:29:21.000Z">
-<meta property="article:modified_time" content="2026-06-24T11:35:25.076Z">
+<meta property="article:modified_time" content="2026-06-24T21:18:15.652Z">
 <meta property="article:author" content="Mr. O">
 <meta property="article:tag" content="Docker">
 <meta property="article:tag" content="Docker Compose">
@@ -37,7 +37,7 @@
 <meta name="twitter:image" content="https://img.nep.me/i/2026/01/21/cover-ezbookkeeping.webp">
 <link rel="canonical" href="https://ooo.run/post/use-docker-run-ezbookkeeping.html">
 
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"使用 Docker 与 ezBookkeeping 快速搭建美观的个人记账系统","name":"使用 Docker 与 ezBookkeeping 快速搭建美观的个人记账系统 | O's World","description":"简介个人记账应用多如牛毛，但许多应用都只兼容单一平台，如果你同时使用安卓和 iOS 设备，管理财务就会变得非常麻烦。 今天介绍的 ezBookkeeping 可以解决这一痛点，它是一款轻量、自托管（self-hosted） 的个人记账应用，界面友好，功能强大。 而且部署起来非常简单！只要你有 Docker，一行命令就能搞定。而且它对硬件要求极低，无论是树莓派...","url":"https://ooo.run/post/use-docker-run-ezbookkeeping.html","inLanguage":"zh-CN","isPartOf":{"@type":"WebSite","name":"O's World","url":"https://ooo.run/"},"image":["https://img.nep.me/i/2026/01/21/cover-ezbookkeeping.webp"],"mainEntityOfPage":"https://ooo.run/post/use-docker-run-ezbookkeeping.html","datePublished":"2025-09-02T00:29:21.000Z","dateModified":"2026-06-24T11:35:25.076Z","author":{"@type":"Person","name":"Mr. O"},"publisher":{"@type":"Organization","name":"O's World"},"keywords":"Docker, Docker Compose, Self-hosted, 记账"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"使用 Docker 与 ezBookkeeping 快速搭建美观的个人记账系统","name":"使用 Docker 与 ezBookkeeping 快速搭建美观的个人记账系统 | O's World","description":"简介个人记账应用多如牛毛，但许多应用都只兼容单一平台，如果你同时使用安卓和 iOS 设备，管理财务就会变得非常麻烦。 今天介绍的 ezBookkeeping 可以解决这一痛点，它是一款轻量、自托管（self-hosted） 的个人记账应用，界面友好，功能强大。 而且部署起来非常简单！只要你有 Docker，一行命令就能搞定。而且它对硬件要求极低，无论是树莓派...","url":"https://ooo.run/post/use-docker-run-ezbookkeeping.html","inLanguage":"zh-CN","isPartOf":{"@type":"WebSite","name":"O's World","url":"https://ooo.run/"},"image":["https://img.nep.me/i/2026/01/21/cover-ezbookkeeping.webp"],"mainEntityOfPage":"https://ooo.run/post/use-docker-run-ezbookkeeping.html","datePublished":"2025-09-02T00:29:21.000Z","dateModified":"2026-06-24T21:18:15.652Z","author":{"@type":"Person","name":"Mr. O"},"publisher":{"@type":"Organization","name":"O's World"},"keywords":"Docker, Docker Compose, Self-hosted, 记账"}</script>
 
 <script>
   (function () {
@@ -593,7 +593,7 @@
 <p>我们将使用 <strong>Docker</strong> 与 <strong>Docker Compose</strong> 来快速搭建 ezBookkeeping。</p>
 <h2 id="一、环境准备"><a href="#一、环境准备" class="headerlink" title="一、环境准备"></a>一、环境准备</h2><p>在开始之前，需要拥有一个自己的 VPS 或是支持 Docker 容器的 NAS 系统。</p>
 <h3 id="1-安装-Docker-和-Docker-Compose"><a href="#1-安装-Docker-和-Docker-Compose" class="headerlink" title="1. 安装 Docker 和 Docker Compose"></a>1. 安装 Docker 和 Docker Compose</h3><p>这是我们容器化部署的基础。如果你的服务器尚未安装，可以参考以下教程。</p>
-<details class="flatpaper-note flatpaper-note--info"><summary class="flatpaper-note__title"><span class="flatpaper-note__icon" aria-hidden="true"></span><span class="flatpaper-note__label">modern</span><span class="flatpaper-note__chevron" aria-hidden="true"></span></summary><div class="flatpaper-note__body"><p><strong>延伸阅读:</strong> <a href="https://ooo.run/post/debian-install-docker.html" target="_blank">在 Debian 12 中安装 Docker 以及 Docker Compose</a></p></div></details>
+<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p><strong>延伸阅读:</strong> <a href="https://ooo.run/post/debian-install-docker.html" target="_blank">在 Debian 12 中安装 Docker 以及 Docker Compose</a></p></div></div>
 
 <h3 id="2-准备域名"><a href="#2-准备域名" class="headerlink" title="2. 准备域名"></a>2. 准备域名</h3><p>为了通过 HTTPS 安全地访问你的记账应用，你需要一个域名，并将其解析到你的服务器 IP。</p>
 <h3 id="3-创建项目目录"><a href="#3-创建项目目录" class="headerlink" title="3. 创建项目目录"></a>3. 创建项目目录</h3><p>为 ezBookkeeping 创建一个专用的目录，用于存放配置文件和数据。</p>
