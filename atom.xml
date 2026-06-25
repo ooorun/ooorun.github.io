@@ -6,7 +6,7 @@
   <link href="https://ooo.run/atom.xml" rel="self"/>
   
   <link href="https://ooo.run/"/>
-  <updated>2026-06-24T12:28:48.000Z</updated>
+  <updated>2026-06-25T04:08:37.705Z</updated>
   <id>https://ooo.run/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Google 全量开放邮箱修改：终于可以告别 8 岁注册的黑历史邮箱了</title>
+    <link href="https://ooo.run/post/google-finally-lets-you-change-gmail-address.html"/>
+    <id>https://ooo.run/post/google-finally-lets-you-change-gmail-address.html</id>
+    <published>2026-06-25T03:30:04.000Z</published>
+    <updated>2026-06-25T04:08:37.705Z</updated>
+    
+    <content type="html"><![CDATA[<p>一个著名的互联网梗图，8 岁的用户坐在电脑前，注册伴随一生的账户邮箱。</p><p>8 岁的我们还不知道什么叫 <strong>数字身份</strong> ，也不知道这个邮箱未来会被用来注册 GitHub、绑定银行卡、投简历、收验证码、登录一切服务。我们只是单纯地觉得：在邮箱前缀里加上生日、QQ 昵称、喜欢的动漫角色、几串看起来很酷的数字，应该会很帅。</p><p><img src="https://img.nep.me/ooo/change-gmail-meme.webp" alt="change-gmail-meme.png"></p><p>然后二十年过去了。</p><p>你长大了，头像换了，网名换了，手机换了，连审美都换了好几轮，但那个邮箱地址还在。每次需要在正式场合填邮箱时，你都要假装它很合理。</p><p>好消息是：Google 终于开始允许用户修改自己的 Gmail 地址了。</p><h2 id="以前为什么这件事这么痛苦？"><a href="#以前为什么这件事这么痛苦？" class="headerlink" title="以前为什么这件事这么痛苦？"></a>以前为什么这件事这么痛苦？</h2><p>过去，如果你注册的是 Gmail 地址，基本就意味着这个地址会跟着你的 Google 账号走很久。</p><p>你可以改用户名，可以改头像，可以改辅助邮箱，可以改各种个人资料，但邮箱地址本身通常很难改。对于很多人来说，想换一个更正式、更好记、没那么羞耻的 Gmail 地址，最现实的做法往往是：</p><p><strong>重新注册一个 Google 账号。</strong></p><p>但问题也随之而来。</p><p>旧账号里可能有 Gmail 邮件、Google Drive 文件、Google Photos 照片、YouTube 数据、Google Play 记录、各种第三方网站登录记录。重新注册一个账号并不只是换一个邮箱，而是几乎等于重新整理一遍自己的互联网生活。</p><p>所以很多人最后都选择了忍。</p><p>忍受那个 8 岁时注册的邮箱继续出现在简历、合同、项目后台和登录页面里。</p><h2 id="现在可以怎么改？"><a href="#现在可以怎么改？" class="headerlink" title="现在可以怎么改？"></a>现在可以怎么改？</h2><p>根据 Google 的说明，用户现在可以将原本以 @gmail.com 结尾的 Google 账号邮箱，修改为另一个新的 @gmail.com 地址。</p><p>在 Gmail 页面，点击右上角的头像，再点击 <strong>管理您的Google 账号</strong>，打开 Google 账号设置页面，点击左侧的个人信息，在右侧的邮箱部分可以进行修改。</p><p><img src="https://img.nep.me/blog/change-gmail.webp" alt="change-gmail.png"></p><p><img src="https://img.nep.me/blog/change-gmail-2.webp" alt="change-gmail-2.png"></p><p>修改后，原来的 Gmail 地址不会直接消失，而是会变成账号的备用邮箱。你仍然可以收到发往旧地址的邮件，账号里的数据也不会因为改邮箱而丢失，包括历史邮件、照片、文件等内容。</p><p>简单理解就是：</p><p>你终于可以换一个新的 Gmail 门牌号，但原来的门牌号仍然能帮你收信。</p><p>这对老用户来说非常重要。因为它不是让你抛弃旧账号、重新开始，而是在保留账号资产的前提下，给你一次重新命名自己的机会。</p><h2 id="改之前需要注意什么？"><a href="#改之前需要注意什么？" class="headerlink" title="改之前需要注意什么？"></a>改之前需要注意什么？</h2><p>虽然这件事听起来很爽，但我并不建议大家看到入口后马上冲进去改。</p><p>邮箱地址本质上已经不只是“收邮件的地址”，而是很多网站识别你的重要身份信息。尤其是你用了十几年 Google 账号后，很多服务可能都已经绑定了这个 Gmail 地址。</p><h3 id="检查列表"><a href="#检查列表" class="headerlink" title="检查列表"></a>检查列表</h3><p>所以修改前，建议至少检查这几类地方：</p><ul><li><strong>1. 常用的第三方登录服务：</strong><br>比如 GitHub、Notion、Figma、Cloudflare、Vercel、各类论坛、博客后台、开发者平台等。</li><li><strong>2. 金融、支付和账单类服务：</strong><br>比如银行通知、订阅服务、云服务账单、域名注册商、服务器厂商等。</li><li><strong>3. 重要的账号恢复渠道：</strong><br>有些网站会把邮箱当作找回密码、验证身份、接收安全通知的核心渠道。</li><li><strong>4.工作和公开资料：</strong><br>比如简历、个人网站、名片、Git 提交信息、项目 README、博客 About 页面等。</li></ul><p>虽然 Google 会让旧邮箱继续收信，但第三方网站是否能正确识别 “这是同一个人” ，就不一定了。</p><h3 id="真正需要警惕的是第三方一键登录"><a href="#真正需要警惕的是第三方一键登录" class="headerlink" title="真正需要警惕的是第三方一键登录"></a>真正需要警惕的是第三方一键登录</h3><p>这次 Gmail 地址可修改后，最值得注意的问题并不是 Google 自己，而是第三方网站的一键登录。</p><p>理论上，使用 Google 账号登录时，Google 会返回一组用户信息。其中真正稳定、适合用来识别账号身份的，应该是 Google 账号的 <code>Provider ID</code>，也就是这个 Google 用户在 Google 身份系统里的唯一标识。</p><p><strong>Email 只是邮箱地址。</strong></p><p>但现实里，有些网站开发者为了方便，可能直接把 Email 当成用户的唯一 ID 来用。这样做在邮箱永远不能改的时代，看起来似乎问题不大；但一旦邮箱可以修改，问题就会暴露出来。</p><p>举个例子：</p><p>你原来用 <code>oldname@gmail.com</code> 通过 Google 登录了某个网站。<br>后来你把 Gmail 地址改成了 <code>newname@gmail.com</code>。<br>如果这个网站使用 Google 返回的 <code>Provider ID</code> 来识别你，那么你下次登录时，它依然知道你是原来的那个账号。</p><p>但如果这个网站偷懒，直接用 Email 来识别用户，那么它可能会认为：</p><p><mark>“这是一个新邮箱，所以这是一个新用户。”</mark></p><p>结果就是，你明明用的是同一个 Google 账号，却可能登录进一个全新的空账号，甚至出现账号丢失、数据无法关联、订阅状态异常等问题。</p><p>更糟糕的情况是，如果某些系统对旧邮箱释放、复用、绑定逻辑处理不当，还可能引出更复杂的安全问题。</p><p>目前已知会遇到问题的知名网站包括 <strong>V2EX</strong> 、 <strong>Spotify</strong> 。</p><h2 id="给普通用户的建议"><a href="#给普通用户的建议" class="headerlink" title="给普通用户的建议"></a>给普通用户的建议</h2><p>如果你准备修改 Gmail 地址，可以先整理一下自己最常用、最重要的网站，确认自己在哪些网站使用了了 <strong>使用 Google 登录</strong> 的服务。修改邮箱后，优先测试这些服务是否还能正常登录，账号数据是否还在。 </p><p>对于特别重要的服务，最好提前确认它们是否支持修改登录邮箱，或者是否能绑定备用登录方式，比如 <strong>密码、通行密钥、备用邮箱、手机号</strong> 等。</p><p>如果修改后遇到某个网站把你识别成新用户，可以尝试联系客服或开发者，说明你使用的是同一个 Google 账号，只是 Gmail 地址发生了变化。</p><h2 id="给开发者的建议"><a href="#给开发者的建议" class="headerlink" title="给开发者的建议"></a>给开发者的建议</h2><p>如果你的网站支持 Google 一键登录，请不要用 Email 作为用户的唯一身份标识。</p><p>应该使用 Google OAuth &#x2F; OpenID Connect 返回的稳定用户 ID 来绑定用户账号，而不是把 Email 当作主键。</p><p>Email 可以作为展示信息、联系信息、通知地址，但不应该作为第三方登录账号的唯一身份依据。</p><p>正确的做法应该是：</p><ul><li>使用 <code>Provider ID</code> 识别用户身份</li><li>Email 只作为 <strong>可变属性</strong> 保存</li><li>当用户邮箱变化时，更新邮箱字段，而不是创建新账号</li><li>对历史账号绑定逻辑做好兼容</li><li>对邮箱变更、账号合并、登录异常提供清晰提示</li></ul><p>以前很多开发者把 Email 当唯一 ID，是因为邮箱看起来不会变。但现在这个前提正在消失。</p><h2 id="使用密码管理器"><a href="#使用密码管理器" class="headerlink" title="使用密码管理器"></a>使用密码管理器</h2><p>很多人早年注册账号时，不只是邮箱随便起，密码也可能是同一套：一个常用密码，加上网站名、生日、几个符号，稍微变形一下就到处复用。以前看起来很省事，但只要其中一个网站泄露，其他账号就可能一起遭殃。</p><p>所以如果你还没有使用密码管理器，现在就是一个很好的整理节点。</p><p>密码管理器的核心价值不是“帮你记密码”这么简单，而是：</p><ul><li>每个网站都使用 <strong>独立随机密码</strong></li><li>不需要自己记 <strong>几十上百个</strong> 密码</li><li>可以 <strong>自动填充</strong> ，减少输错和钓鱼风险</li><li>可以 <strong>统一检查弱密码、重复密码和泄露密码</strong></li><li>可以更方便地保存恢复码、密钥、银行卡、服务器信息等敏感内容</li></ul><p>比较常见的选择包括 1Password、Bitwarden、KeePassXC、iCloud 钥匙串等。</p><p>如果只是普通用户，并且主要使用 Apple 设备，iCloud 钥匙串已经够用；如果希望跨平台体验更完整，可以考虑 1Password 或 Bitwarden；如果更在意开源、自托管和数据掌控权，我会更推荐 Bitwarden。</p><div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>查看： <a href="https://ooo.run/post/use-docker-run-bitwarden.html">使用 Docker 轻松部署 Bitwarden 服务端，搭建你自己的密码管理器</a></p></div></div><p>如果你只是普通用户，不想维护服务器，直接使用 1Password 或是 Bitwarden 官方服务就很好，Bitwarden 的价格较为友好，Premium 年费仅需 <strong>$19.80</strong> 美元。<br>如果你有自己的服务器、NAS、Homelab，或者已经在使用 Docker 部署服务，那么自部署 Bitwarden 很值得尝试。</p><p>无论选择哪一种，最重要的是这几件事：</p><ul><li>主密码一定要足够长，最好使用一句只有你知道的 passphrase</li><li>开启两步验证，优先使用 <strong>Passkey、硬件安全密钥或 TOTP</strong></li><li><strong>定期导出加密备份</strong>，并确认自己真的能恢复</li><li>不要把密码库、备份文件和二次验证全部放在同一个地方</li><li>修改 Gmail 地址前，先把重要网站的登录方式和恢复方式整理清楚</li></ul><p>邮箱地址可以改，密码也可以重置，但如果你的密码库和二次验证一起丢了，那才是真的麻烦。</p><h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>Google 开放 Gmail 地址修改，对很多老用户来说是一件非常值得高兴的事。</p><p>它给了我们一次和童年黑历史和解的机会，也让那些早年随手注册的邮箱终于有机会变得更正式、更好记、更适合长期使用。</p><p>开始修改之前要先检查重要账号，尤其是第三方一键登录，减少遇到问题的情况。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;一个著名的互联网梗图，8 岁的用户坐在电脑前，注册伴随一生的账户邮箱。&lt;/p&gt;
+&lt;p&gt;8 岁的我们还不知道什么叫 &lt;strong&gt;数字身份&lt;/strong&gt; ，也不知道这个邮箱未来会被用来注册 GitHub、绑定银行卡、投简历、收验证码、登录一切服务。我们只是单纯地觉得：在</summary>
+      
+    
+    
+    
+    <category term="咨询" scheme="https://ooo.run/categories/%E5%92%A8%E8%AF%A2/"/>
+    
+    
+    <category term="Google" scheme="https://ooo.run/tags/Google/"/>
+    
+    <category term="Gmail" scheme="https://ooo.run/tags/Gmail/"/>
+    
+  </entry>
   
   <entry>
     <title>使用 Docker 部署 Fizzy ： 一个轻量、漂亮、可自托管的看板工具</title>
@@ -62,9 +89,9 @@
     <category term="笔记" scheme="https://ooo.run/categories/%E7%AC%94%E8%AE%B0/"/>
     
     
-    <category term="Codex" scheme="https://ooo.run/tags/Codex/"/>
-    
     <category term="OpenAI" scheme="https://ooo.run/tags/OpenAI/"/>
+    
+    <category term="Codex" scheme="https://ooo.run/tags/Codex/"/>
     
   </entry>
   
@@ -412,9 +439,9 @@
     <category term="资讯" scheme="https://ooo.run/categories/%E8%B5%84%E8%AE%AF/"/>
     
     
-    <category term="Antigravity" scheme="https://ooo.run/tags/Antigravity/"/>
-    
     <category term="AI" scheme="https://ooo.run/tags/AI/"/>
+    
+    <category term="Antigravity" scheme="https://ooo.run/tags/Antigravity/"/>
     
     <category term="Antigravity IDE" scheme="https://ooo.run/tags/Antigravity-IDE/"/>
     
@@ -531,35 +558,6 @@
     <category term="ChatGPT" scheme="https://ooo.run/tags/ChatGPT/"/>
     
     <category term="Codex" scheme="https://ooo.run/tags/Codex/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Anthropic 发布 Claude Mythos Preview，但不会向普通用户开放</title>
-    <link href="https://ooo.run/post/anthropic-announced-claude-mythos-preview.html"/>
-    <id>https://ooo.run/post/anthropic-announced-claude-mythos-preview.html</id>
-    <published>2026-04-08T01:29:19.000Z</published>
-    <updated>2026-06-24T11:35:25.080Z</updated>
-    
-    <content type="html"><![CDATA[<p>2026 年 4 月 8 日，Anthropic 正式发布了有关新的模型 Claude Mythos Preview，并表示基于安全原因不会向普通用户开放该模型。</p><p>Anthropic 表示这是一个全新的通用语言模型，该模型在各个方面都表现出色，尤其在计算机安全任务方面更是卓越非凡。</p><p>在 Anthropic 的测试中，新的模型在网络安全领域展现了超凡能力，能够在用户指示下，识别并利用所有主流操作系统和主流浏览器中的零日漏洞。</p><p>以下是 Anthropic 提供的应用示例：</p><ul><li>发现了一个在 OpenBSD 中存在了 27 年的漏洞 (OpenBSD 是一个以其安全性著称的操作系统) 。</li><li>编写了一个 Web 浏览器漏洞利用程序，将四个漏洞串联起来，绕过了浏览器的沙箱保护。</li><li>Mythos Preview 自主识别出 FFmpeg 最流行的编解码器之一 H.264 中一个存在了 16 年的漏洞。</li><li>Mythos Preview 完全自主地识别并利用了 FreeBSD 中一个存在了 17 年的远程代码执行漏洞，该漏洞允许任何人获取运行NFS 的机器的 root 权限。</li><li>Mythos Preview 发现了一些 Linux 内核漏洞，这些漏洞允许攻击者进行越界写入（例如，通过缓冲区溢出、释放后使用或双重释放漏洞）。</li></ul><p>具体内容可以查看原文链接：<a href="https://red.anthropic.com/2026/mythos-preview/">Assessing Claude Mythos Preview’s cybersecurity capabilities</a></p><p>根据 Mythos Preview 在测试中表现的能力，Anthropic 表示这揭示了一个严峻的事实：人工智能模型的编码能力已经达到了极高的水平，在发现和利用软件漏洞方面，它们几乎可以超越除最熟练的人类之外的所有人。</p><p>因此 Anthropic 启动了 <a href="https://www.anthropic.com/glasswing">Glasswing</a> 项目，汇集所有顶尖企业包含 Amazon、Anthropic、苹果、博通、思科、CrowdStrike、谷歌、摩根大通、Linux 基金会、微软、英伟达等企业，旨在保护世界上最关键的软件。</p><p>如果事实真如 Anthropic 所言，这将标志着 AI 正在重写网络安全的底层规则，我们构建了几十年的数字防线正面临前所未有的危机，“识别漏洞” 将从从人类专家的漫长审计变为 AI 模型的本能。</p><p>而我们普通用户在短期内将无法接触到这一模型，这不免也是一种遗憾。</p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;2026 年 4 月 8 日，Anthropic 正式发布了有关新的模型 Claude Mythos Preview，并表示基于安全原因不会向普通用户开放该模型。&lt;/p&gt;
-&lt;p&gt;Anthropic 表示这是一个全新的通用语言模型，该模型在各个方面都表现出色，尤其在计算机安全</summary>
-      
-    
-    
-    
-    <category term="资讯" scheme="https://ooo.run/categories/%E8%B5%84%E8%AE%AF/"/>
-    
-    
-    <category term="AI" scheme="https://ooo.run/tags/AI/"/>
-    
-    <category term="Claude Mythos" scheme="https://ooo.run/tags/Claude-Mythos/"/>
-    
-    <category term="Anthropic" scheme="https://ooo.run/tags/Anthropic/"/>
     
   </entry>
   
