@@ -89,9 +89,9 @@
     <category term="笔记" scheme="https://ooo.run/categories/%E7%AC%94%E8%AE%B0/"/>
     
     
-    <category term="OpenAI" scheme="https://ooo.run/tags/OpenAI/"/>
-    
     <category term="Codex" scheme="https://ooo.run/tags/Codex/"/>
+    
+    <category term="OpenAI" scheme="https://ooo.run/tags/OpenAI/"/>
     
   </entry>
   
@@ -439,13 +439,13 @@
     <category term="资讯" scheme="https://ooo.run/categories/%E8%B5%84%E8%AE%AF/"/>
     
     
-    <category term="AI" scheme="https://ooo.run/tags/AI/"/>
-    
     <category term="Antigravity" scheme="https://ooo.run/tags/Antigravity/"/>
     
-    <category term="Google" scheme="https://ooo.run/tags/Google/"/>
+    <category term="AI" scheme="https://ooo.run/tags/AI/"/>
     
     <category term="Antigravity IDE" scheme="https://ooo.run/tags/Antigravity-IDE/"/>
+    
+    <category term="Google" scheme="https://ooo.run/tags/Google/"/>
     
   </entry>
   
