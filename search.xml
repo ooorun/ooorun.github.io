@@ -1016,6 +1016,84 @@
       </tags>
   </entry>
   <entry>
+    <title>AI 大模型集中发布：DeepSeek 3.2、Claude Sonnet 4.5、OpenAI Sora 2、GLM-4.6 亮点速览</title>
+    <url>/post/2025-oct-new-models-coming.html</url>
+    <content><![CDATA[<p>9月29日，AI 领域迎来了一波重磅更新。DeepSeek、Anthropic、OpenAI 和智谱 AI 四家公司不约而同地发布了各自的最新模型，为开发者和用户带来了更强大的 AI 能力。</p>
+<h2 id="DeepSeek-V3-2：开源大模型再突破，成本下降超-50"><a href="#DeepSeek-V3-2：开源大模型再突破，成本下降超-50" class="headerlink" title="DeepSeek-V3.2：开源大模型再突破，成本下降超 50%"></a>DeepSeek-V3.2：开源大模型再突破，成本下降超 50%</h2><p>9月29日，DeepSeek 正式在 Hugging Face 平台发布并开源了 DeepSeek-V3.2-Exp 模型。</p>
+<p><strong>模型地址</strong>：<a href="https://huggingface.co/deepseek-ai/DeepSeek-V3.2-Exp">https://huggingface.co/deepseek-ai/DeepSeek-V3.2-Exp</a></p>
+<h3 id="API-价格大幅下调超-50"><a href="#API-价格大幅下调超-50" class="headerlink" title="API 价格大幅下调超 50%"></a>API 价格大幅下调超 50%</h3><p>新模型主要特点是服务成本的显著降低，DeepSeek 随即下调 API 调用费用：官方 API 价格下调超过 50%，新价格已即刻生效。这一举措将大幅降低开发者的使用成本。</p>
+<img src="https://img.nep.me/i/2025/10/01/oct-deepseek-price.webp" style="width:50%;" alt="DeepSeek 价格调整" />
+
+<h2 id="Anthropic-Claude-Sonnet-4-5：自主编程能力跃升"><a href="#Anthropic-Claude-Sonnet-4-5：自主编程能力跃升" class="headerlink" title="Anthropic Claude Sonnet 4.5：自主编程能力跃升"></a>Anthropic Claude Sonnet 4.5：自主编程能力跃升</h2><p>9月29日，Anthropic 发布了全新的 Claude Sonnet 4.5 模型。</p>
+<p><strong>官方介绍</strong>：<a href="https://www.anthropic.com/news/claude-sonnet-4-5">https://www.anthropic.com/news/claude-sonnet-4-5</a></p>
+<h3 id="核心亮点"><a href="#核心亮点" class="headerlink" title="核心亮点"></a>核心亮点</h3><ul>
+<li><strong>指令遵循能力显著提升</strong>：模型对复杂指令的理解和执行更加精准</li>
+<li><strong>长时间自主编程</strong>：可连续自主编程长达 30 小时，相比 Claude Opus 4 的 7 小时提升了 4 倍以上</li>
+<li><strong>立即可用</strong>：已在 Claude Code 中上线，开发者可直接使用</li>
+</ul>
+<p><img src="https://img.nep.me/i/2025/10/01/oct-claude-sonnet.webp" alt="Claude Sonnet 4.5"></p>
+<h2 id="OpenAI-Sora-2：视频生成的-ChatGPT-时刻"><a href="#OpenAI-Sora-2：视频生成的-ChatGPT-时刻" class="headerlink" title="OpenAI Sora 2：视频生成的 ChatGPT 时刻"></a>OpenAI Sora 2：视频生成的 ChatGPT 时刻</h2><p>9月29日，OpenAI 推出了其迄今最先进的视频生成模型 Sora 2.0，并同步上线独立 iOS 应用（目前采用邀请机制）。</p>
+<h3 id="主要特性"><a href="#主要特性" class="headerlink" title="主要特性"></a>主要特性</h3><ul>
+<li><strong>物理真实感大幅提升</strong>：生成视频的物理表现更加逼真</li>
+<li><strong>音视频同步优化</strong>：声音与画面的匹配度显著提高</li>
+<li><strong>多镜头叙事能力</strong>：支持更复杂的故事叙述方式</li>
+<li><strong>社交互动功能</strong>：用户可生成、浏览和分享 AI 视频，甚至以虚拟形象”客串”他人作品</li>
+</ul>
+<p>OpenAI 将此次更新称为”视频生成的 ChatGPT 时刻”，意味着视频生成技术正在迎来质的飞跃。</p>
+<p><strong>官方介绍与 Demo 预览</strong>：<a href="https://openai.com/index/sora-2/">https://openai.com/index/sora-2/</a><br><strong>可以在官方 Discord 获取其他用户分享的邀请码（加入社群需要连接 OpenAI 账户）</strong>： <a href="https://discord.gg/openai">https://discord.gg/openai</a> </p>
+<h3 id="Sora-by-OpenAI-iOS-APP-介绍"><a href="#Sora-by-OpenAI-iOS-APP-介绍" class="headerlink" title="Sora by OpenAI (iOS APP) 介绍"></a>Sora by OpenAI (iOS APP) 介绍</h3><p><strong>下载地址</strong>：<a href="https://apps.apple.com/us/app/sora-by-openai/id6744034028">https://apps.apple.com/us/app/sora-by-openai/id6744034028</a></p>
+<p>目前支持美国、加拿大、日本地区的 Apple ID 下载。</p>
+<h4 id="获取方式"><a href="#获取方式" class="headerlink" title="获取方式"></a>获取方式</h4><p>OpenAI 采用邀请码裂变机制推广 Sora APP：每个账户加入后可生成一个邀请码，每个邀请码可以使用 4 次。</p>
+<p>使用流程：下载 APP → 使用 OpenAI 账户登录 → 输入邀请码即可开始使用。</p>
+<h4 id="产品定位"><a href="#产品定位" class="headerlink" title="产品定位"></a>产品定位</h4><p>Sora by OpenAI 是一款短视频社交平台，定位类似 TikTok，核心区别在于所有内容均由 AI 生成。用户可以创作、浏览和分享 AI 视频，打造全新的社交体验。</p>
+<h4 id="核心功能"><a href="#核心功能" class="headerlink" title="核心功能"></a>核心功能</h4><ul>
+<li><strong>文本生成视频</strong>：通过一句话描述即可生成 10 秒视频</li>
+<li><strong>草稿管理</strong>：生成的视频会自动保存为草稿，用户可选择下载到本地或公开发布到平台</li>
+<li><strong>Cameo 功能</strong>：扫描 3D 人脸并克隆音色，创建个人数字分身，供 AI 在视频生成时使用</li>
+<li><strong>权限控制</strong>：Cameo 支持灵活的权限设置，保护用户隐私</li>
+<li><strong>社交互动</strong>：生成视频时，通过 @ 可引用其他用户的 Cameo。例如 <code>@sama</code> 可让 OpenAI CEO 直接出现在你的视频中，实现创意联动</li>
+</ul>
+<h2 id="智谱-GLM-4-6：对齐-Claude-Sonnet-4"><a href="#智谱-GLM-4-6：对齐-Claude-Sonnet-4" class="headerlink" title="智谱 GLM-4.6：对齐 Claude Sonnet 4"></a>智谱 GLM-4.6：对齐 Claude Sonnet 4</h2><p>智谱 AI 更新了旗舰模型 GLM-4.6，在多个维度实现了显著提升。</p>
+<h3 id="核心亮点-1"><a href="#核心亮点-1" class="headerlink" title="核心亮点"></a>核心亮点</h3><p><strong>代码能力大幅提升</strong></p>
+<ul>
+<li>较 GLM-4.5 提升了 27%</li>
+<li>在公开基准与真实编程任务中，代码能力对齐 Claude Sonnet 4</li>
+</ul>
+<p><strong>上下文窗口扩展</strong></p>
+<ul>
+<li>从 128K 提升到 200K</li>
+<li>能更好地处理复杂代码项目和需要长程记忆的智能体任务</li>
+</ul>
+<p><strong>推理能力增强</strong></p>
+<ul>
+<li>支持在推理过程中调用工具</li>
+<li>多步骤推理更加稳定可靠</li>
+</ul>
+<p><strong>写作与交互优化</strong></p>
+<ul>
+<li>搜索能力、写作能力增强</li>
+<li>写作风格和可读性更贴近人类偏好</li>
+<li>在角色扮演等场景下表现更自然</li>
+</ul>
+<h3 id="Benchmark-对比"><a href="#Benchmark-对比" class="headerlink" title="Benchmark 对比"></a>Benchmark 对比</h3><p><img src="https://img.nep.me/i/2025/10/01/oct-glm.webp" alt="GLM-4.6 性能对比"></p>
+<p><strong>官方文档</strong>：<a href="https://docs.bigmodel.cn/cn/guide/models/text/glm-4.6">https://docs.bigmodel.cn/cn/guide/models/text/glm-4.6</a><br><strong>在线体验</strong>：<a href="https://z.ai/">https://z.ai</a></p>
+<hr>
+<p>这次四家公司的集中发布，展现了 AI 大模型领域的激烈竞争与快速进步。从降价到性能提升，从代码生成到视频创作，AI 技术正在加速渗透到各个应用场景中。</p>
+]]></content>
+      <categories>
+        <category>资讯</category>
+      </categories>
+      <tags>
+        <tag>AI</tag>
+        <tag>大模型</tag>
+        <tag>DeepSeek</tag>
+        <tag>Claude</tag>
+        <tag>Claude Code</tag>
+        <tag>OpenAI</tag>
+        <tag>智谱AI</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>使用 VitePress 轻松搭建一个简单的导航站</title>
     <url>/post/build-nav-site-with-vitepress.html</url>
     <content><![CDATA[<p>在日常工作和学习中，我们经常会收集各种有用的网站链接，从开发工具、技术文档到实用的在线服务。随着收藏的网站越来越多，如何高效地管理和快速访问这些资源成了一个问题。</p>
@@ -1129,116 +1207,6 @@
         <tag>导航</tag>
         <tag>VitePress</tag>
         <tag>Self-hosted</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>将博客主题更换为安知鱼</title>
-    <url>/post/change-hexo-theme-to-anzhiyu.html</url>
-    <content><![CDATA[<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>Hexo 的 Butteryfly 主题用的久了，感觉有些不够精致，之前有看见别人用过安知鱼的主题，是在 Butteryfly 基础上修改的，看起来感觉非常的不错的。</p>
-<p>如果之前使用的是 Butteryfly 主题，更换起来也是非常的简单的。</p>
-<p><a href="https://github.com/anzhiyu-c/hexo-theme-anzhiyu.git">GitHub - 安知鱼主题</a></p>
-<h2 id="使用主题"><a href="#使用主题" class="headerlink" title="使用主题"></a>使用主题</h2><p>使用 Git 可以很方便的下载，在 Hexo 博客的主题根目录下执行下面的命令：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> -b main https://github.com/anzhiyu-c/hexo-theme-anzhiyu.git themes/anzhiyu</span><br></pre></td></tr></table></figure>
-
-<p>修改 hexo 配置文件 <code>_config.yml</code>，把主题改为 <code>anzhiyu</code>: </p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">theme:</span> <span class="string">anzhiyu</span></span><br></pre></td></tr></table></figure>
-
-<p>使主题生效，复制默认配置文件至主题根目录</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cp</span> -rf ./themes/anzhiyu/_config.yml ./_config.anzhiyu.yml</span><br></pre></td></tr></table></figure>
-
-<p>Windows 用户可以手动复制。</p>
-<p>此时执行 <code>hexo s</code> 既可以访问 <code>http://localhost:4000</code> 查看预览。</p>
-<h2 id="修改配置"><a href="#修改配置" class="headerlink" title="修改配置"></a>修改配置</h2><p>主题有一些默认的配置需要修改，下面记录我修改的部分：</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Local search ，打开本地搜索，false to true</span></span><br><span class="line"><span class="attr">local_search:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改头像链接</span></span><br><span class="line"><span class="comment"># Avatar (头像)</span></span><br><span class="line"><span class="attr">avatar:</span></span><br><span class="line">  <span class="attr">img:</span> <span class="string">https://</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加自己的访问分析务服</span></span><br><span class="line"><span class="comment"># Analysis </span></span><br><span class="line"><span class="attr">google_analytics:</span> </span><br><span class="line"></span><br><span class="line"><span class="comment"># 关闭打赏</span></span><br><span class="line"><span class="comment"># Sponsor/reward </span></span><br><span class="line"><span class="attr">reward:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 关闭首次访问时的 Loading，直接载入网页 L:786</span></span><br><span class="line"><span class="comment"># Loading Animation (加载动画)</span></span><br><span class="line"><span class="attr">preloader:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改顶部导航 L:1049</span></span><br><span class="line"><span class="comment"># 首页顶部相关配置</span></span><br><span class="line"><span class="attr">home_top:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span> <span class="comment"># 开关</span></span><br><span class="line">  <span class="attr">timemode:</span> <span class="string">date</span> <span class="comment">#date/updated</span></span><br><span class="line">  <span class="attr">title:</span> <span class="string">生活明朗</span></span><br><span class="line">  <span class="attr">subTitle:</span> <span class="string">万物可爱。</span></span><br><span class="line">  <span class="attr">siteText:</span> <span class="string">anheyu.com</span></span><br><span class="line">  <span class="attr">category:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">前端</span></span><br><span class="line">      <span class="attr">path:</span> <span class="string">/categories/前端开发/</span></span><br><span class="line">      <span class="attr">shadow:</span> <span class="string">var(--anzhiyu-shadow-blue)</span></span><br><span class="line">      <span class="attr">class:</span> <span class="string">blue</span></span><br><span class="line">      <span class="attr">icon:</span> <span class="string">anzhiyu-icon-dove</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">大学</span></span><br><span class="line">      <span class="attr">path:</span> <span class="string">/categories/大学生涯/</span></span><br><span class="line">      <span class="attr">shadow:</span> <span class="string">var(--anzhiyu-shadow-red)</span></span><br><span class="line">      <span class="attr">class:</span> <span class="string">red</span></span><br><span class="line">      <span class="attr">icon:</span> <span class="string">anzhiyu-icon-fire</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">生活</span></span><br><span class="line">      <span class="attr">path:</span> <span class="string">/categories/生活日常/</span></span><br><span class="line">      <span class="attr">shadow:</span> <span class="string">var(--anzhiyu-shadow-green)</span></span><br><span class="line">      <span class="attr">class:</span> <span class="string">green</span></span><br><span class="line">      <span class="attr">icon:</span> <span class="string">anzhiyu-icon-book</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 可以开启自定义右键菜单 L:1221</span></span><br><span class="line"><span class="attr">rightClickMenu:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 该图片 404 了，进行替换 L:1225</span></span><br><span class="line"><span class="comment"># 首页随便逛逛people模式 而非技能点模式，关闭后为技能点模式需要配置 creativity.yml </span></span><br><span class="line"><span class="attr">peoplecanvas:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">img:</span> <span class="string">https://upload-bbs.miyoushe.com/upload/2024/07/27/125766904/ba62475f396df9de3316a08ed9e65d86_5680958632268053399..png</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="一些问题"><a href="#一些问题" class="headerlink" title="一些问题"></a>一些问题</h2><ul>
-<li>Artalk 兼容存在问题，还未适配新版</li>
-<li>窄屏模式下，标题部分样式存在问题，开启主色调即可</li>
-</ul>
-]]></content>
-      <categories>
-        <category>笔记</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>AI 大模型集中发布：DeepSeek 3.2、Claude Sonnet 4.5、OpenAI Sora 2、GLM-4.6 亮点速览</title>
-    <url>/post/2025-oct-new-models-coming.html</url>
-    <content><![CDATA[<p>9月29日，AI 领域迎来了一波重磅更新。DeepSeek、Anthropic、OpenAI 和智谱 AI 四家公司不约而同地发布了各自的最新模型，为开发者和用户带来了更强大的 AI 能力。</p>
-<h2 id="DeepSeek-V3-2：开源大模型再突破，成本下降超-50"><a href="#DeepSeek-V3-2：开源大模型再突破，成本下降超-50" class="headerlink" title="DeepSeek-V3.2：开源大模型再突破，成本下降超 50%"></a>DeepSeek-V3.2：开源大模型再突破，成本下降超 50%</h2><p>9月29日，DeepSeek 正式在 Hugging Face 平台发布并开源了 DeepSeek-V3.2-Exp 模型。</p>
-<p><strong>模型地址</strong>：<a href="https://huggingface.co/deepseek-ai/DeepSeek-V3.2-Exp">https://huggingface.co/deepseek-ai/DeepSeek-V3.2-Exp</a></p>
-<h3 id="API-价格大幅下调超-50"><a href="#API-价格大幅下调超-50" class="headerlink" title="API 价格大幅下调超 50%"></a>API 价格大幅下调超 50%</h3><p>新模型主要特点是服务成本的显著降低，DeepSeek 随即下调 API 调用费用：官方 API 价格下调超过 50%，新价格已即刻生效。这一举措将大幅降低开发者的使用成本。</p>
-<img src="https://img.nep.me/i/2025/10/01/oct-deepseek-price.webp" style="width:50%;" alt="DeepSeek 价格调整" />
-
-<h2 id="Anthropic-Claude-Sonnet-4-5：自主编程能力跃升"><a href="#Anthropic-Claude-Sonnet-4-5：自主编程能力跃升" class="headerlink" title="Anthropic Claude Sonnet 4.5：自主编程能力跃升"></a>Anthropic Claude Sonnet 4.5：自主编程能力跃升</h2><p>9月29日，Anthropic 发布了全新的 Claude Sonnet 4.5 模型。</p>
-<p><strong>官方介绍</strong>：<a href="https://www.anthropic.com/news/claude-sonnet-4-5">https://www.anthropic.com/news/claude-sonnet-4-5</a></p>
-<h3 id="核心亮点"><a href="#核心亮点" class="headerlink" title="核心亮点"></a>核心亮点</h3><ul>
-<li><strong>指令遵循能力显著提升</strong>：模型对复杂指令的理解和执行更加精准</li>
-<li><strong>长时间自主编程</strong>：可连续自主编程长达 30 小时，相比 Claude Opus 4 的 7 小时提升了 4 倍以上</li>
-<li><strong>立即可用</strong>：已在 Claude Code 中上线，开发者可直接使用</li>
-</ul>
-<p><img src="https://img.nep.me/i/2025/10/01/oct-claude-sonnet.webp" alt="Claude Sonnet 4.5"></p>
-<h2 id="OpenAI-Sora-2：视频生成的-ChatGPT-时刻"><a href="#OpenAI-Sora-2：视频生成的-ChatGPT-时刻" class="headerlink" title="OpenAI Sora 2：视频生成的 ChatGPT 时刻"></a>OpenAI Sora 2：视频生成的 ChatGPT 时刻</h2><p>9月29日，OpenAI 推出了其迄今最先进的视频生成模型 Sora 2.0，并同步上线独立 iOS 应用（目前采用邀请机制）。</p>
-<h3 id="主要特性"><a href="#主要特性" class="headerlink" title="主要特性"></a>主要特性</h3><ul>
-<li><strong>物理真实感大幅提升</strong>：生成视频的物理表现更加逼真</li>
-<li><strong>音视频同步优化</strong>：声音与画面的匹配度显著提高</li>
-<li><strong>多镜头叙事能力</strong>：支持更复杂的故事叙述方式</li>
-<li><strong>社交互动功能</strong>：用户可生成、浏览和分享 AI 视频，甚至以虚拟形象”客串”他人作品</li>
-</ul>
-<p>OpenAI 将此次更新称为”视频生成的 ChatGPT 时刻”，意味着视频生成技术正在迎来质的飞跃。</p>
-<p><strong>官方介绍与 Demo 预览</strong>：<a href="https://openai.com/index/sora-2/">https://openai.com/index/sora-2/</a><br><strong>可以在官方 Discord 获取其他用户分享的邀请码（加入社群需要连接 OpenAI 账户）</strong>： <a href="https://discord.gg/openai">https://discord.gg/openai</a> </p>
-<h3 id="Sora-by-OpenAI-iOS-APP-介绍"><a href="#Sora-by-OpenAI-iOS-APP-介绍" class="headerlink" title="Sora by OpenAI (iOS APP) 介绍"></a>Sora by OpenAI (iOS APP) 介绍</h3><p><strong>下载地址</strong>：<a href="https://apps.apple.com/us/app/sora-by-openai/id6744034028">https://apps.apple.com/us/app/sora-by-openai/id6744034028</a></p>
-<p>目前支持美国、加拿大、日本地区的 Apple ID 下载。</p>
-<h4 id="获取方式"><a href="#获取方式" class="headerlink" title="获取方式"></a>获取方式</h4><p>OpenAI 采用邀请码裂变机制推广 Sora APP：每个账户加入后可生成一个邀请码，每个邀请码可以使用 4 次。</p>
-<p>使用流程：下载 APP → 使用 OpenAI 账户登录 → 输入邀请码即可开始使用。</p>
-<h4 id="产品定位"><a href="#产品定位" class="headerlink" title="产品定位"></a>产品定位</h4><p>Sora by OpenAI 是一款短视频社交平台，定位类似 TikTok，核心区别在于所有内容均由 AI 生成。用户可以创作、浏览和分享 AI 视频，打造全新的社交体验。</p>
-<h4 id="核心功能"><a href="#核心功能" class="headerlink" title="核心功能"></a>核心功能</h4><ul>
-<li><strong>文本生成视频</strong>：通过一句话描述即可生成 10 秒视频</li>
-<li><strong>草稿管理</strong>：生成的视频会自动保存为草稿，用户可选择下载到本地或公开发布到平台</li>
-<li><strong>Cameo 功能</strong>：扫描 3D 人脸并克隆音色，创建个人数字分身，供 AI 在视频生成时使用</li>
-<li><strong>权限控制</strong>：Cameo 支持灵活的权限设置，保护用户隐私</li>
-<li><strong>社交互动</strong>：生成视频时，通过 @ 可引用其他用户的 Cameo。例如 <code>@sama</code> 可让 OpenAI CEO 直接出现在你的视频中，实现创意联动</li>
-</ul>
-<h2 id="智谱-GLM-4-6：对齐-Claude-Sonnet-4"><a href="#智谱-GLM-4-6：对齐-Claude-Sonnet-4" class="headerlink" title="智谱 GLM-4.6：对齐 Claude Sonnet 4"></a>智谱 GLM-4.6：对齐 Claude Sonnet 4</h2><p>智谱 AI 更新了旗舰模型 GLM-4.6，在多个维度实现了显著提升。</p>
-<h3 id="核心亮点-1"><a href="#核心亮点-1" class="headerlink" title="核心亮点"></a>核心亮点</h3><p><strong>代码能力大幅提升</strong></p>
-<ul>
-<li>较 GLM-4.5 提升了 27%</li>
-<li>在公开基准与真实编程任务中，代码能力对齐 Claude Sonnet 4</li>
-</ul>
-<p><strong>上下文窗口扩展</strong></p>
-<ul>
-<li>从 128K 提升到 200K</li>
-<li>能更好地处理复杂代码项目和需要长程记忆的智能体任务</li>
-</ul>
-<p><strong>推理能力增强</strong></p>
-<ul>
-<li>支持在推理过程中调用工具</li>
-<li>多步骤推理更加稳定可靠</li>
-</ul>
-<p><strong>写作与交互优化</strong></p>
-<ul>
-<li>搜索能力、写作能力增强</li>
-<li>写作风格和可读性更贴近人类偏好</li>
-<li>在角色扮演等场景下表现更自然</li>
-</ul>
-<h3 id="Benchmark-对比"><a href="#Benchmark-对比" class="headerlink" title="Benchmark 对比"></a>Benchmark 对比</h3><p><img src="https://img.nep.me/i/2025/10/01/oct-glm.webp" alt="GLM-4.6 性能对比"></p>
-<p><strong>官方文档</strong>：<a href="https://docs.bigmodel.cn/cn/guide/models/text/glm-4.6">https://docs.bigmodel.cn/cn/guide/models/text/glm-4.6</a><br><strong>在线体验</strong>：<a href="https://z.ai/">https://z.ai</a></p>
-<hr>
-<p>这次四家公司的集中发布，展现了 AI 大模型领域的激烈竞争与快速进步。从降价到性能提升，从代码生成到视频创作，AI 技术正在加速渗透到各个应用场景中。</p>
-]]></content>
-      <categories>
-        <category>资讯</category>
-      </categories>
-      <tags>
-        <tag>AI</tag>
-        <tag>大模型</tag>
-        <tag>DeepSeek</tag>
-        <tag>Claude</tag>
-        <tag>Claude Code</tag>
-        <tag>OpenAI</tag>
-        <tag>智谱AI</tag>
       </tags>
   </entry>
   <entry>
@@ -1589,6 +1557,38 @@
         <tag>独立开发</tag>
         <tag>个人项目</tag>
         <tag>副业</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>将博客主题更换为安知鱼</title>
+    <url>/post/change-hexo-theme-to-anzhiyu.html</url>
+    <content><![CDATA[<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>Hexo 的 Butteryfly 主题用的久了，感觉有些不够精致，之前有看见别人用过安知鱼的主题，是在 Butteryfly 基础上修改的，看起来感觉非常的不错的。</p>
+<p>如果之前使用的是 Butteryfly 主题，更换起来也是非常的简单的。</p>
+<p><a href="https://github.com/anzhiyu-c/hexo-theme-anzhiyu.git">GitHub - 安知鱼主题</a></p>
+<h2 id="使用主题"><a href="#使用主题" class="headerlink" title="使用主题"></a>使用主题</h2><p>使用 Git 可以很方便的下载，在 Hexo 博客的主题根目录下执行下面的命令：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> -b main https://github.com/anzhiyu-c/hexo-theme-anzhiyu.git themes/anzhiyu</span><br></pre></td></tr></table></figure>
+
+<p>修改 hexo 配置文件 <code>_config.yml</code>，把主题改为 <code>anzhiyu</code>: </p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">theme:</span> <span class="string">anzhiyu</span></span><br></pre></td></tr></table></figure>
+
+<p>使主题生效，复制默认配置文件至主题根目录</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cp</span> -rf ./themes/anzhiyu/_config.yml ./_config.anzhiyu.yml</span><br></pre></td></tr></table></figure>
+
+<p>Windows 用户可以手动复制。</p>
+<p>此时执行 <code>hexo s</code> 既可以访问 <code>http://localhost:4000</code> 查看预览。</p>
+<h2 id="修改配置"><a href="#修改配置" class="headerlink" title="修改配置"></a>修改配置</h2><p>主题有一些默认的配置需要修改，下面记录我修改的部分：</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Local search ，打开本地搜索，false to true</span></span><br><span class="line"><span class="attr">local_search:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改头像链接</span></span><br><span class="line"><span class="comment"># Avatar (头像)</span></span><br><span class="line"><span class="attr">avatar:</span></span><br><span class="line">  <span class="attr">img:</span> <span class="string">https://</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加自己的访问分析务服</span></span><br><span class="line"><span class="comment"># Analysis </span></span><br><span class="line"><span class="attr">google_analytics:</span> </span><br><span class="line"></span><br><span class="line"><span class="comment"># 关闭打赏</span></span><br><span class="line"><span class="comment"># Sponsor/reward </span></span><br><span class="line"><span class="attr">reward:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 关闭首次访问时的 Loading，直接载入网页 L:786</span></span><br><span class="line"><span class="comment"># Loading Animation (加载动画)</span></span><br><span class="line"><span class="attr">preloader:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改顶部导航 L:1049</span></span><br><span class="line"><span class="comment"># 首页顶部相关配置</span></span><br><span class="line"><span class="attr">home_top:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span> <span class="comment"># 开关</span></span><br><span class="line">  <span class="attr">timemode:</span> <span class="string">date</span> <span class="comment">#date/updated</span></span><br><span class="line">  <span class="attr">title:</span> <span class="string">生活明朗</span></span><br><span class="line">  <span class="attr">subTitle:</span> <span class="string">万物可爱。</span></span><br><span class="line">  <span class="attr">siteText:</span> <span class="string">anheyu.com</span></span><br><span class="line">  <span class="attr">category:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">前端</span></span><br><span class="line">      <span class="attr">path:</span> <span class="string">/categories/前端开发/</span></span><br><span class="line">      <span class="attr">shadow:</span> <span class="string">var(--anzhiyu-shadow-blue)</span></span><br><span class="line">      <span class="attr">class:</span> <span class="string">blue</span></span><br><span class="line">      <span class="attr">icon:</span> <span class="string">anzhiyu-icon-dove</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">大学</span></span><br><span class="line">      <span class="attr">path:</span> <span class="string">/categories/大学生涯/</span></span><br><span class="line">      <span class="attr">shadow:</span> <span class="string">var(--anzhiyu-shadow-red)</span></span><br><span class="line">      <span class="attr">class:</span> <span class="string">red</span></span><br><span class="line">      <span class="attr">icon:</span> <span class="string">anzhiyu-icon-fire</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">生活</span></span><br><span class="line">      <span class="attr">path:</span> <span class="string">/categories/生活日常/</span></span><br><span class="line">      <span class="attr">shadow:</span> <span class="string">var(--anzhiyu-shadow-green)</span></span><br><span class="line">      <span class="attr">class:</span> <span class="string">green</span></span><br><span class="line">      <span class="attr">icon:</span> <span class="string">anzhiyu-icon-book</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 可以开启自定义右键菜单 L:1221</span></span><br><span class="line"><span class="attr">rightClickMenu:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 该图片 404 了，进行替换 L:1225</span></span><br><span class="line"><span class="comment"># 首页随便逛逛people模式 而非技能点模式，关闭后为技能点模式需要配置 creativity.yml </span></span><br><span class="line"><span class="attr">peoplecanvas:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">img:</span> <span class="string">https://upload-bbs.miyoushe.com/upload/2024/07/27/125766904/ba62475f396df9de3316a08ed9e65d86_5680958632268053399..png</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="一些问题"><a href="#一些问题" class="headerlink" title="一些问题"></a>一些问题</h2><ul>
+<li>Artalk 兼容存在问题，还未适配新版</li>
+<li>窄屏模式下，标题部分样式存在问题，开启主色调即可</li>
+</ul>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
       </tags>
   </entry>
   <entry>
@@ -2423,6 +2423,91 @@
       </tags>
   </entry>
   <entry>
+    <title>Git 技巧：为不同项目配置专属用户信息与 SSH 密钥</title>
+    <url>/post/use-specific-git-user.html</url>
+    <content><![CDATA[<p>在日常开发中，我们可能需要同时维护个人项目和工作项目，它们需要使用不同的 Git 用户信息（用户名、邮箱）和 SSH 密钥进行提交与推送。本文将介绍两种核心方法，帮你优雅地管理多个 Git 身份。</p>
+<p>首先，我们需要了解 Git 的全局配置，这是所有仓库的默认设置。</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 设置全局默认的用户名和邮箱</span></span><br><span class="line">git config --global user.name <span class="string">&quot;Your Name&quot;</span></span><br><span class="line">git config --global user.email <span class="string">&quot;your-email@example.com&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>查看信息</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">git config user.name</span><br><span class="line">git config user.email</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="配置不同的提交作者-Commit-Author"><a href="#配置不同的提交作者-Commit-Author" class="headerlink" title="配置不同的提交作者 (Commit Author)"></a>配置不同的提交作者 (Commit Author)</h2><p>这部分设置仅影响 <code>git commit</code> 时记录的作者信息。</p>
+<h3 id="场景-A：为单个项目设置（简单直接）"><a href="#场景-A：为单个项目设置（简单直接）" class="headerlink" title="场景 A：为单个项目设置（简单直接）"></a>场景 A：为单个项目设置（简单直接）</h3><p>如果你只是偶尔需要为某个特定项目使用不同的用户信息，最简单的方法是在该项目目录下执行 <code>git config</code> 命令，它会创建或修改项目内的 <code>.git/config</code> 文件，且优先级高于全局配置。</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 进入你的项目目录</span></span><br><span class="line"><span class="built_in">cd</span> /path/to/your/project</span><br><span class="line"></span><br><span class="line"><span class="comment"># 为此项目单独设置用户名和邮箱</span></span><br><span class="line">git config user.name <span class="string">&quot;Work Name&quot;</span></span><br><span class="line">git config user.email <span class="string">&quot;work-email@example.com&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="场景-B：为特定目录自动切换（一劳永逸）"><a href="#场景-B：为特定目录自动切换（一劳永逸）" class="headerlink" title="场景 B：为特定目录自动切换（一劳永逸）"></a>场景 B：为特定目录自动切换（一劳永逸）</h3><p>如果你希望某个目录（如 <code>~/work/</code>）下的所有 Git 仓库都自动使用同一套用户信息，可以使用 Git 2.13 版本引入的 <code>includeIf</code> 功能，实现智能切换。</p>
+<p><strong>第一步：创建专属配置文件</strong></p>
+<p>为你的工作身份创建一个独立的配置文件，例如 <code>~/.gitconfig-work</code>。</p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="comment"># ~/.gitconfig-work 文件内容</span></span><br><span class="line"><span class="section">[user]</span></span><br><span class="line">    <span class="attr">name</span> = Work Name</span><br><span class="line">    <span class="attr">email</span> = work-email@example.com</span><br></pre></td></tr></table></figure>
+
+<p><strong>第二步：修改主配置文件</strong></p>
+<p>编辑你的全局 Git 配置文件 <code>~/.gitconfig</code>，添加 <code>includeIf</code> 指令。它会判断当前仓库是否在你指定的目录下，如果是，则加载对应的配置文件。</p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="comment"># ~/.gitconfig 文件末尾添加</span></span><br><span class="line"><span class="section">[includeIf &quot;gitdir:~/work/&quot;]</span></span><br><span class="line">    <span class="attr">path</span> = ~/.gitconfig-work</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>gitdir:~/work/</code>：表示该规则适用于 <code>~/work/</code> 目录及其所有子目录。路径末尾的 <code>/</code> 很重要。</li>
+<li><code>path = ~/.gitconfig-work</code>：指定需要加载的配置文件路径。</li>
+</ul>
+<p>设置完成后，所有位于 <code>~/work/</code> 目录下的项目都会自动使用 <code>Work Name</code> 作为提交者。</p>
+<h2 id="使用不同的-SSH-密钥-Push-Authentication"><a href="#使用不同的-SSH-密钥-Push-Authentication" class="headerlink" title="使用不同的 SSH 密钥 (Push Authentication)"></a>使用不同的 SSH 密钥 (Push Authentication)</h2><p><code>user.name</code> 和 <code>user.email</code> 只影响提交记录，而推送到远程仓库（如 GitHub、GitLab）的身份验证则依赖于 SSH 密钥。如果你需要向不同账号下的仓库推送代码，就需要配置多个 SSH 密钥。</p>
+<p><strong>第一步：编辑 SSH 配置文件</strong></p>
+<p>打开或创建 <code>~/.ssh/config</code> 文件，为不同的 Git 服务账号设置别名：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 默认 GitHub 个人账号</span><br><span class="line">Host github.com</span><br><span class="line">  HostName github.com</span><br><span class="line">  User git</span><br><span class="line">  IdentityFile ~/.ssh/id_rsa</span><br><span class="line"></span><br><span class="line"># 工作用 GitHub 账号</span><br><span class="line">Host github.com-work</span><br><span class="line">  HostName github.com</span><br><span class="line">  User git</span><br><span class="line">  IdentityFile ~/.ssh/id_rsa_work</span><br><span class="line">  IdentitiesOnly yes</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>Host github.com-work</code>：定义一个别名，后续在 Git 远程地址中使用。</li>
+<li><code>IdentityFile ~/.ssh/id_rsa_work</code>：指定该别名使用的私钥文件。</li>
+</ul>
+<p><strong>第二步：测试 SSH 连接</strong></p>
+<p>执行以下命令，测试新配置的 SSH 连接是否成功。</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">ssh -T git@github.com-work</span><br><span class="line"><span class="comment"># 如果成功，你会看到类似信息：</span></span><br><span class="line"><span class="comment"># Hi work-username! You&#x27;ve successfully authenticated...</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>第三步：修改项目远程仓库地址</strong></p>
+<p>进入需要使用工作密钥的项目，修改其远程仓库（origin）的 URL，将 <code>github.com</code> 替换为刚才设置的别名 <code>github.com-work</code>。</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查看当前的远程地址</span></span><br><span class="line">git remote -v</span><br><span class="line"><span class="comment"># origin  git@github.com:work-org/project.git (fetch)</span></span><br><span class="line"><span class="comment"># origin  git@github.com:work-org/project.git (push)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改远程地址</span></span><br><span class="line">git remote set-url origin git@github.com-work:work-org/project.git</span><br></pre></td></tr></table></figure>
+
+<h2 id="如何验证配置"><a href="#如何验证配置" class="headerlink" title="如何验证配置"></a>如何验证配置</h2><p>如果你不确定当前项目最终生效的配置是什么，可以使用以下命令查看，它会清晰地展示配置项的来源。</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查看所有生效的配置及其来源文件</span></span><br><span class="line">git config --list --show-origin</span><br><span class="line"></span><br><span class="line"><span class="comment"># 按 &#x27;q&#x27; 键退出</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li><strong><code>git config user.name/email</code><strong>：决定了</strong>谁</strong>提交了代码（作者信息）。</li>
+<li><strong><code>~/.ssh/config</code> 与 <code>git remote</code><strong>：决定了你</strong>以什么身份</strong>推送到远程仓库（认证信息）。</li>
+</ul>
+<p>通过组合使用 <code>includeIf</code> 和 SSH <code>config</code>，你可以轻松实现个人与工作环境的无缝隔离，让 Git 管理更加高效和专业。</p>
+]]></content>
+      <categories>
+        <category>教程</category>
+      </categories>
+      <tags>
+        <tag>Git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>实用网站：使用 Dashboard Icons 便捷获取各种服务的图标</title>
+    <url>/post/website-dashboard-icons.html</url>
+    <content><![CDATA[<p>有时我们会需要获取一些服务的图标，用在一些面板或是需要的地方，这里推荐一个开源的项目 <strong>Dashboard Icons</strong> ：</p>
+<ul>
+<li><a href="https://github.com/homarr-labs/dashboard-icons">GitHub</a> </li>
+<li><a href="https://dashboardicons.com/">官网</a></li>
+</ul>
+<p>目前已经支持 2021 种服务了，而且完全免费！</p>
+<p>图标的列表可以在这里查看： <a href="https://dashboardicons.com/icons">https://dashboardicons.com/icons</a></p>
+<p><img src="https://img.nep.me/ooo/dashboard-icons-list.webp" alt="dashboard icons list"></p>
+<p>支持直接下载 <code>svg</code> 、 <code>png</code> 、 <code>webp</code> 格式的图标文件，也可以直接复制 <code>cdn.jsdelivr.net</code> CDN 的图标链接，非常的方便。</p>
+<p>部分服务还提供暗黑主题模式的图标。  </p>
+<p><img src="https://img.nep.me/ooo/dashboard-icons-details.webp" alt="dasboard icons get icons"></p>
+<p>这是一个开源的项目，如果觉得有帮助可以给项目点点 Star 支持一下！</p>
+]]></content>
+      <categories>
+        <category>工具资源</category>
+      </categories>
+      <tags>
+        <tag>Icons</tag>
+        <tag>Dashboard Icons</tag>
+        <tag>实用网站</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>使用 DPanel 优雅地管理 Docker 容器</title>
     <url>/post/use-dpanel-manager-docker-container.html</url>
     <content><![CDATA[<p>对于每一位 Self-hosted 爱好者而言，Docker 是简化应用部署的神器。但当服务器上运行的容器越来越多，散落在各处的 <code>docker-compose.yaml</code> 文件就成了新的问题。<br>如果你也为此烦恼，那么是时候认识一下 <code>DPanel</code> 了 —— 一个轻量化的容器管理面板。</p>
@@ -2598,91 +2683,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Git 技巧：为不同项目配置专属用户信息与 SSH 密钥</title>
-    <url>/post/use-specific-git-user.html</url>
-    <content><![CDATA[<p>在日常开发中，我们可能需要同时维护个人项目和工作项目，它们需要使用不同的 Git 用户信息（用户名、邮箱）和 SSH 密钥进行提交与推送。本文将介绍两种核心方法，帮你优雅地管理多个 Git 身份。</p>
-<p>首先，我们需要了解 Git 的全局配置，这是所有仓库的默认设置。</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 设置全局默认的用户名和邮箱</span></span><br><span class="line">git config --global user.name <span class="string">&quot;Your Name&quot;</span></span><br><span class="line">git config --global user.email <span class="string">&quot;your-email@example.com&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>查看信息</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">git config user.name</span><br><span class="line">git config user.email</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="配置不同的提交作者-Commit-Author"><a href="#配置不同的提交作者-Commit-Author" class="headerlink" title="配置不同的提交作者 (Commit Author)"></a>配置不同的提交作者 (Commit Author)</h2><p>这部分设置仅影响 <code>git commit</code> 时记录的作者信息。</p>
-<h3 id="场景-A：为单个项目设置（简单直接）"><a href="#场景-A：为单个项目设置（简单直接）" class="headerlink" title="场景 A：为单个项目设置（简单直接）"></a>场景 A：为单个项目设置（简单直接）</h3><p>如果你只是偶尔需要为某个特定项目使用不同的用户信息，最简单的方法是在该项目目录下执行 <code>git config</code> 命令，它会创建或修改项目内的 <code>.git/config</code> 文件，且优先级高于全局配置。</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 进入你的项目目录</span></span><br><span class="line"><span class="built_in">cd</span> /path/to/your/project</span><br><span class="line"></span><br><span class="line"><span class="comment"># 为此项目单独设置用户名和邮箱</span></span><br><span class="line">git config user.name <span class="string">&quot;Work Name&quot;</span></span><br><span class="line">git config user.email <span class="string">&quot;work-email@example.com&quot;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="场景-B：为特定目录自动切换（一劳永逸）"><a href="#场景-B：为特定目录自动切换（一劳永逸）" class="headerlink" title="场景 B：为特定目录自动切换（一劳永逸）"></a>场景 B：为特定目录自动切换（一劳永逸）</h3><p>如果你希望某个目录（如 <code>~/work/</code>）下的所有 Git 仓库都自动使用同一套用户信息，可以使用 Git 2.13 版本引入的 <code>includeIf</code> 功能，实现智能切换。</p>
-<p><strong>第一步：创建专属配置文件</strong></p>
-<p>为你的工作身份创建一个独立的配置文件，例如 <code>~/.gitconfig-work</code>。</p>
-<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="comment"># ~/.gitconfig-work 文件内容</span></span><br><span class="line"><span class="section">[user]</span></span><br><span class="line">    <span class="attr">name</span> = Work Name</span><br><span class="line">    <span class="attr">email</span> = work-email@example.com</span><br></pre></td></tr></table></figure>
-
-<p><strong>第二步：修改主配置文件</strong></p>
-<p>编辑你的全局 Git 配置文件 <code>~/.gitconfig</code>，添加 <code>includeIf</code> 指令。它会判断当前仓库是否在你指定的目录下，如果是，则加载对应的配置文件。</p>
-<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="comment"># ~/.gitconfig 文件末尾添加</span></span><br><span class="line"><span class="section">[includeIf &quot;gitdir:~/work/&quot;]</span></span><br><span class="line">    <span class="attr">path</span> = ~/.gitconfig-work</span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>gitdir:~/work/</code>：表示该规则适用于 <code>~/work/</code> 目录及其所有子目录。路径末尾的 <code>/</code> 很重要。</li>
-<li><code>path = ~/.gitconfig-work</code>：指定需要加载的配置文件路径。</li>
-</ul>
-<p>设置完成后，所有位于 <code>~/work/</code> 目录下的项目都会自动使用 <code>Work Name</code> 作为提交者。</p>
-<h2 id="使用不同的-SSH-密钥-Push-Authentication"><a href="#使用不同的-SSH-密钥-Push-Authentication" class="headerlink" title="使用不同的 SSH 密钥 (Push Authentication)"></a>使用不同的 SSH 密钥 (Push Authentication)</h2><p><code>user.name</code> 和 <code>user.email</code> 只影响提交记录，而推送到远程仓库（如 GitHub、GitLab）的身份验证则依赖于 SSH 密钥。如果你需要向不同账号下的仓库推送代码，就需要配置多个 SSH 密钥。</p>
-<p><strong>第一步：编辑 SSH 配置文件</strong></p>
-<p>打开或创建 <code>~/.ssh/config</code> 文件，为不同的 Git 服务账号设置别名：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 默认 GitHub 个人账号</span><br><span class="line">Host github.com</span><br><span class="line">  HostName github.com</span><br><span class="line">  User git</span><br><span class="line">  IdentityFile ~/.ssh/id_rsa</span><br><span class="line"></span><br><span class="line"># 工作用 GitHub 账号</span><br><span class="line">Host github.com-work</span><br><span class="line">  HostName github.com</span><br><span class="line">  User git</span><br><span class="line">  IdentityFile ~/.ssh/id_rsa_work</span><br><span class="line">  IdentitiesOnly yes</span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>Host github.com-work</code>：定义一个别名，后续在 Git 远程地址中使用。</li>
-<li><code>IdentityFile ~/.ssh/id_rsa_work</code>：指定该别名使用的私钥文件。</li>
-</ul>
-<p><strong>第二步：测试 SSH 连接</strong></p>
-<p>执行以下命令，测试新配置的 SSH 连接是否成功。</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">ssh -T git@github.com-work</span><br><span class="line"><span class="comment"># 如果成功，你会看到类似信息：</span></span><br><span class="line"><span class="comment"># Hi work-username! You&#x27;ve successfully authenticated...</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>第三步：修改项目远程仓库地址</strong></p>
-<p>进入需要使用工作密钥的项目，修改其远程仓库（origin）的 URL，将 <code>github.com</code> 替换为刚才设置的别名 <code>github.com-work</code>。</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查看当前的远程地址</span></span><br><span class="line">git remote -v</span><br><span class="line"><span class="comment"># origin  git@github.com:work-org/project.git (fetch)</span></span><br><span class="line"><span class="comment"># origin  git@github.com:work-org/project.git (push)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改远程地址</span></span><br><span class="line">git remote set-url origin git@github.com-work:work-org/project.git</span><br></pre></td></tr></table></figure>
-
-<h2 id="如何验证配置"><a href="#如何验证配置" class="headerlink" title="如何验证配置"></a>如何验证配置</h2><p>如果你不确定当前项目最终生效的配置是什么，可以使用以下命令查看，它会清晰地展示配置项的来源。</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查看所有生效的配置及其来源文件</span></span><br><span class="line">git config --list --show-origin</span><br><span class="line"></span><br><span class="line"><span class="comment"># 按 &#x27;q&#x27; 键退出</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
-<li><strong><code>git config user.name/email</code><strong>：决定了</strong>谁</strong>提交了代码（作者信息）。</li>
-<li><strong><code>~/.ssh/config</code> 与 <code>git remote</code><strong>：决定了你</strong>以什么身份</strong>推送到远程仓库（认证信息）。</li>
-</ul>
-<p>通过组合使用 <code>includeIf</code> 和 SSH <code>config</code>，你可以轻松实现个人与工作环境的无缝隔离，让 Git 管理更加高效和专业。</p>
-]]></content>
-      <categories>
-        <category>教程</category>
-      </categories>
-      <tags>
-        <tag>Git</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>实用网站：使用 Dashboard Icons 便捷获取各种服务的图标</title>
-    <url>/post/website-dashboard-icons.html</url>
-    <content><![CDATA[<p>有时我们会需要获取一些服务的图标，用在一些面板或是需要的地方，这里推荐一个开源的项目 <strong>Dashboard Icons</strong> ：</p>
-<ul>
-<li><a href="https://github.com/homarr-labs/dashboard-icons">GitHub</a> </li>
-<li><a href="https://dashboardicons.com/">官网</a></li>
-</ul>
-<p>目前已经支持 2021 种服务了，而且完全免费！</p>
-<p>图标的列表可以在这里查看： <a href="https://dashboardicons.com/icons">https://dashboardicons.com/icons</a></p>
-<p><img src="https://img.nep.me/ooo/dashboard-icons-list.webp" alt="dashboard icons list"></p>
-<p>支持直接下载 <code>svg</code> 、 <code>png</code> 、 <code>webp</code> 格式的图标文件，也可以直接复制 <code>cdn.jsdelivr.net</code> CDN 的图标链接，非常的方便。</p>
-<p>部分服务还提供暗黑主题模式的图标。  </p>
-<p><img src="https://img.nep.me/ooo/dashboard-icons-details.webp" alt="dasboard icons get icons"></p>
-<p>这是一个开源的项目，如果觉得有帮助可以给项目点点 Star 支持一下！</p>
-]]></content>
-      <categories>
-        <category>工具资源</category>
-      </categories>
-      <tags>
-        <tag>Icons</tag>
-        <tag>Dashboard Icons</tag>
-        <tag>实用网站</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>趣站分享：Flolife.me —— 基于 AI 的人生旅程模拟器</title>
     <url>/post/website-flolife.html</url>
     <content><![CDATA[<p>还记得曾经风靡一时的人生重开模拟器吗？现在，Flowith 带来了一款更进一步的 AI 人生旅程模拟器 —— Flolife.me。它利用当前热门的 Nano Banana 图片模型，能够根据你上传的头像，生成贯穿角色一生的、具有惊人一致性的事件照片。</p>
@@ -2847,6 +2847,25 @@
       </tags>
   </entry>
   <entry>
+    <title>什么是 BYOK ？</title>
+    <url>/post/what-is-byok.html</url>
+    <content><![CDATA[<h2 id="什么是-BYOK-？"><a href="#什么是-BYOK-？" class="headerlink" title="什么是 BYOK ？"></a>什么是 BYOK ？</h2><p><code>BYOK</code> 是英文 <strong>Bring Your Own Key</strong> 的缩写，就是字面上的意思 <strong>自带密钥</strong> 。在云计算和软件服务领域，这是一种安全模型，允许客户使用自己的加密密钥来加密他们在服务商那里的数据，而不是使用由服务商提供的默认密钥。</p>
+<h2 id="在大模型应用中"><a href="#在大模型应用中" class="headerlink" title="在大模型应用中"></a>在大模型应用中</h2><p>最近，BYOK 这个概念在各类大模型（LLM）应用中变得越来越流行。通常使用 AI 应用需要消耗开发者提供的 Token，但有些应用采取了 BYOK 模式，它们允许用户直接填入自己从 OpenAI、Google、Anthropic 等官方或是其他渠道渠道获取的 API Key。</p>
+<p>对于用户而言，这意味着：</p>
+<ul>
+<li><strong>成本透明</strong>：你可以直接通过自己的 API 账户支付消耗的 Token，清楚地知道每一分钱花在了哪里。</li>
+<li><strong>使用灵活</strong>：不受应用开发者 Token 配额的限制，只要自己的 API Key 有效且有余额，就能持续使用。</li>
+</ul>
+<p>对于开发者而言，BYOK 模式也降低了他们的运营负担。他们无需预先购买和管理大量的 API Token，也简化了复杂的计费和分发流程，可以更专注于核心功能的开发。</p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>BYOK</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>什么是 “服务器奶牛化” ？</title>
     <url>/post/what-is-turing-a-server-into-cash-cow.html</url>
     <content><![CDATA[<p><strong>服务器奶牛化</strong> 是一个网络流行语，形象地描述了将服务器当作“奶牛”，通过持续压榨其资源以获取最大化收益的行为。这个词的核心在于“榨取价值”，类似于不断从奶牛身上挤奶。</p>
@@ -2866,25 +2885,6 @@
       </categories>
       <tags>
         <tag>服务器</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>什么是 BYOK ？</title>
-    <url>/post/what-is-byok.html</url>
-    <content><![CDATA[<h2 id="什么是-BYOK-？"><a href="#什么是-BYOK-？" class="headerlink" title="什么是 BYOK ？"></a>什么是 BYOK ？</h2><p><code>BYOK</code> 是英文 <strong>Bring Your Own Key</strong> 的缩写，就是字面上的意思 <strong>自带密钥</strong> 。在云计算和软件服务领域，这是一种安全模型，允许客户使用自己的加密密钥来加密他们在服务商那里的数据，而不是使用由服务商提供的默认密钥。</p>
-<h2 id="在大模型应用中"><a href="#在大模型应用中" class="headerlink" title="在大模型应用中"></a>在大模型应用中</h2><p>最近，BYOK 这个概念在各类大模型（LLM）应用中变得越来越流行。通常使用 AI 应用需要消耗开发者提供的 Token，但有些应用采取了 BYOK 模式，它们允许用户直接填入自己从 OpenAI、Google、Anthropic 等官方或是其他渠道渠道获取的 API Key。</p>
-<p>对于用户而言，这意味着：</p>
-<ul>
-<li><strong>成本透明</strong>：你可以直接通过自己的 API 账户支付消耗的 Token，清楚地知道每一分钱花在了哪里。</li>
-<li><strong>使用灵活</strong>：不受应用开发者 Token 配额的限制，只要自己的 API Key 有效且有余额，就能持续使用。</li>
-</ul>
-<p>对于开发者而言，BYOK 模式也降低了他们的运营负担。他们无需预先购买和管理大量的 API Token，也简化了复杂的计费和分发流程，可以更专注于核心功能的开发。</p>
-]]></content>
-      <categories>
-        <category>笔记</category>
-      </categories>
-      <tags>
-        <tag>BYOK</tag>
       </tags>
   </entry>
   <entry>
@@ -3779,35 +3779,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Anthropic 发布 Claude Opus 4.6 模型，赠送付费用户 50 美元余额</title>
-    <url>/post/claude-subscription-user-can-get-50-usd-extra-credit.html</url>
-    <content><![CDATA[<h2 id="Claude-Opus-4-6-发布"><a href="#Claude-Opus-4-6-发布" class="headerlink" title="Claude Opus 4.6 发布"></a>Claude Opus 4.6 发布</h2><p>今天 Anthropic 发布了最新的 <a href="https://www.anthropic.com/news/claude-opus-4-6">Claude Opus 4.6</a> ，官方表示 Claude Opus 4.6 在编码能力上超越了前代产品。它规划更周密，能够更长时间地执行代理任务，在大规模代码库中运行更可靠，并且拥有更强大的代码审查和调试能力，可以更有效地发现自身错误。</p>
-<p>并且在 Beta 版本中 Opus 模型首次支持 1M tokens 上下文，API 价格方面保持不变。</p>
-<p>Claude Opus 4.6 目前已在 API、Claude Code 中可用。</p>
-<h2 id="更新-Claude-Code"><a href="#更新-Claude-Code" class="headerlink" title="更新 Claude Code"></a>更新 Claude Code</h2><p>运行下面命令即可：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm install -g @anthropic-ai/claude-code</span><br></pre></td></tr></table></figure>
-
-<h2 id="Anthropic-赠送付费用户-50-美元"><a href="#Anthropic-赠送付费用户-50-美元" class="headerlink" title="Anthropic 赠送付费用户 50 美元"></a>Anthropic 赠送付费用户 50 美元</h2><p>在推出新模型的同时，Anthropic 还提供给已订阅 Claude Pro &#x2F; MAX 的用户 50 美元的 <a href="https://support.claude.com/en/articles/13613973-claude-opus-4-6-extra-usage-promo#h_bf8366a5e9">福利</a>，用于体验最新的模型。 </p>
-<p>需要手动领取，只需访问 <a href="https://claude.ai/settings/usage">https://claude.ai/settings/usage</a> 点击 <strong>Claim</strong> 即可。</p>
-<p><img src="https://img.nep.me/i/2026/02/claude-50-usd-credit.jpeg" alt="claude-50-usd-credit.jpeg"></p>
-<h3 id="领取条件"><a href="#领取条件" class="headerlink" title="领取条件"></a>领取条件</h3><p>领取 50 美元满足下面的条件：</p>
-<ul>
-<li>在 2 月 4 日之前开通了 Claude Pro &#x2F; MAX 订阅套餐</li>
-<li>在 2 月 16 日之前开启 <strong>extra usage</strong></li>
-</ul>
-<p>所以如果你 在 2 月 4 日之前没有订阅 Claude Pro，无法领取优惠。</p>
-<h3 id="有效期"><a href="#有效期" class="headerlink" title="有效期"></a>有效期</h3><p>领取的 50 美元余额有效期为 60 天。</p>
-<h3 id="截止日期"><a href="#截止日期" class="headerlink" title="截止日期"></a>截止日期</h3><p>在 2 月 16 日之前都可以领取，如果你正在订阅 Claude Pro &#x2F; MAX，领取你的优惠吧。</p>
-]]></content>
-      <categories>
-        <category>优惠活动</category>
-      </categories>
-      <tags>
-        <tag>Anthropic</tag>
-        <tag>Opus</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>赛博菩萨：Cloudflare 免费账户可用服务详情</title>
     <url>/post/cloudflare-free-tier.html</url>
     <content><![CDATA[<h3 id="Cloudflare-免费级别服务全景：从-DNS-CDN-到-Workers-全栈边缘平台"><a href="#Cloudflare-免费级别服务全景：从-DNS-CDN-到-Workers-全栈边缘平台" class="headerlink" title="Cloudflare 免费级别服务全景：从 DNS&#x2F;CDN 到 Workers 全栈边缘平台"></a>Cloudflare 免费级别服务全景：从 DNS&#x2F;CDN 到 Workers 全栈边缘平台</h3><blockquote>
@@ -4528,6 +4499,35 @@
       </tags>
   </entry>
   <entry>
+    <title>Anthropic 发布 Claude Opus 4.6 模型，赠送付费用户 50 美元余额</title>
+    <url>/post/claude-subscription-user-can-get-50-usd-extra-credit.html</url>
+    <content><![CDATA[<h2 id="Claude-Opus-4-6-发布"><a href="#Claude-Opus-4-6-发布" class="headerlink" title="Claude Opus 4.6 发布"></a>Claude Opus 4.6 发布</h2><p>今天 Anthropic 发布了最新的 <a href="https://www.anthropic.com/news/claude-opus-4-6">Claude Opus 4.6</a> ，官方表示 Claude Opus 4.6 在编码能力上超越了前代产品。它规划更周密，能够更长时间地执行代理任务，在大规模代码库中运行更可靠，并且拥有更强大的代码审查和调试能力，可以更有效地发现自身错误。</p>
+<p>并且在 Beta 版本中 Opus 模型首次支持 1M tokens 上下文，API 价格方面保持不变。</p>
+<p>Claude Opus 4.6 目前已在 API、Claude Code 中可用。</p>
+<h2 id="更新-Claude-Code"><a href="#更新-Claude-Code" class="headerlink" title="更新 Claude Code"></a>更新 Claude Code</h2><p>运行下面命令即可：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm install -g @anthropic-ai/claude-code</span><br></pre></td></tr></table></figure>
+
+<h2 id="Anthropic-赠送付费用户-50-美元"><a href="#Anthropic-赠送付费用户-50-美元" class="headerlink" title="Anthropic 赠送付费用户 50 美元"></a>Anthropic 赠送付费用户 50 美元</h2><p>在推出新模型的同时，Anthropic 还提供给已订阅 Claude Pro &#x2F; MAX 的用户 50 美元的 <a href="https://support.claude.com/en/articles/13613973-claude-opus-4-6-extra-usage-promo#h_bf8366a5e9">福利</a>，用于体验最新的模型。 </p>
+<p>需要手动领取，只需访问 <a href="https://claude.ai/settings/usage">https://claude.ai/settings/usage</a> 点击 <strong>Claim</strong> 即可。</p>
+<p><img src="https://img.nep.me/i/2026/02/claude-50-usd-credit.jpeg" alt="claude-50-usd-credit.jpeg"></p>
+<h3 id="领取条件"><a href="#领取条件" class="headerlink" title="领取条件"></a>领取条件</h3><p>领取 50 美元满足下面的条件：</p>
+<ul>
+<li>在 2 月 4 日之前开通了 Claude Pro &#x2F; MAX 订阅套餐</li>
+<li>在 2 月 16 日之前开启 <strong>extra usage</strong></li>
+</ul>
+<p>所以如果你 在 2 月 4 日之前没有订阅 Claude Pro，无法领取优惠。</p>
+<h3 id="有效期"><a href="#有效期" class="headerlink" title="有效期"></a>有效期</h3><p>领取的 50 美元余额有效期为 60 天。</p>
+<h3 id="截止日期"><a href="#截止日期" class="headerlink" title="截止日期"></a>截止日期</h3><p>在 2 月 16 日之前都可以领取，如果你正在订阅 Claude Pro &#x2F; MAX，领取你的优惠吧。</p>
+]]></content>
+      <categories>
+        <category>优惠活动</category>
+      </categories>
+      <tags>
+        <tag>Anthropic</tag>
+        <tag>Opus</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Codex 的日志记录消耗 SSD 寿命？OpenAI 已修复</title>
     <url>/post/codex-is-buring-your-ssd.html</url>
     <content><![CDATA[<h2 id="Bug-信息"><a href="#Bug-信息" class="headerlink" title="Bug 信息"></a>Bug 信息</h2><div class="flatpaper-note flatpaper-note--primary"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>好消息，OpenAI 已在 Codex 0.142.0 版本中修复了这个问题，可以放心使用。</p></div></div>
@@ -5047,62 +5047,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Google 发布 Antigravity 2.0 ，以及 Antigravity-CLI</title>
-    <url>/post/google-launch-antigravity-cli.html</url>
-    <content><![CDATA[<p>在 2026 年 5 月 20 日的 Google I&#x2F;O 大会上，Google 正式宣布推出 Antigravity 2.0，以 Agents 驱动为核心作为独立的桌面应用。原 Antigravity 更名为 <strong>Antigravity IDE</strong>，并同时推出 <strong>Antigravity CLI</strong> 取代 <strong>Gemini CLI</strong>。</p>
-<p>Antigravity 2.0 与 IDE 下载页面：<a href="https://antigravity.google/download">Download Google Antigravity</a></p>
-<h2 id="Antigravity-CLI-安装方法"><a href="#Antigravity-CLI-安装方法" class="headerlink" title="Antigravity CLI 安装方法"></a>Antigravity CLI 安装方法</h2><h3 id="macOS-Linux"><a href="#macOS-Linux" class="headerlink" title="macOS &#x2F; Linux"></a>macOS &#x2F; Linux</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl -fsSL https://antigravity.google/cli/install.sh | bash</span><br></pre></td></tr></table></figure>
-
-<h3 id="Windows-PowerShell"><a href="#Windows-PowerShell" class="headerlink" title="Windows PowerShell"></a>Windows PowerShell</h3><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">irm</span> https://antigravity.google/<span class="built_in">cli</span>/install.ps1 | <span class="built_in">iex</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="Windows-CMD"><a href="#Windows-CMD" class="headerlink" title="Windows CMD"></a>Windows CMD</h3><figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">curl -fsSL https://antigravity.google/cli/install.<span class="built_in">cmd</span> -o install.<span class="built_in">cmd</span> &amp;&amp; install.<span class="built_in">cmd</span> &amp;&amp; <span class="built_in">del</span> install.<span class="built_in">cmd</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="启动与登录方法"><a href="#启动与登录方法" class="headerlink" title="启动与登录方法"></a>启动与登录方法</h2><h3 id="启动-Antigravity-CLI"><a href="#启动-Antigravity-CLI" class="headerlink" title="启动 Antigravity CLI"></a>启动 Antigravity CLI</h3><p>在终端中运行 <code>agy</code> 即可启动 Antigravity CLI。</p>
-<h3 id="登录方法"><a href="#登录方法" class="headerlink" title="登录方法"></a>登录方法</h3><p>使用 Antigravity CLI 之前，如果已在 Antigravity 或 Antigravity IDE 中登录了 Google 账户，系统将自动进行认证。</p>
-<p>初次启动需要选择代码主题，同意用户协议后即可打开 CLI 界面：</p>
-<p><img src="https://img.nep.me/ooo/antigravity-cli-theme-select.webp" alt="antigravity-cli-theme-select.png"></p>
-<p>界面预览：<br><img src="https://img.nep.me/2026/05/antigravity-cli-tui-hello.webp" alt="antigravity-cli-tui.png"></p>
-<p>或者，您也可以选择以下认证方法手动登录：</p>
-<ul>
-<li><strong>Google OAuth</strong></li>
-<li><strong>Use a Google Cloud project</strong></li>
-</ul>
-<p><img src="https://img.nep.me/ooo/antigravity-cli-login-method.webp" alt="antigravity-cli-login-method.png"></p>
-<p>选择 Google OAuth 后，如果没有自动跳转，可以通过粘贴认证代码的方法进行确认，因此也可以在其他设备上使用。</p>
-<h3 id="可选模型"><a href="#可选模型" class="headerlink" title="可选模型"></a>可选模型</h3><p>Google AI Pro 用户在 Antigravity CLI 中可选的模型与 Antigravity IDE 一致：</p>
-<ul>
-<li>Gemini 3.5 Flash (High)      (current)</li>
-<li>Gemini 3.5 Flash (Medium)</li>
-<li>Gemini 3.1 Pro (High)</li>
-<li>Gemini 3.1 Pro (Low)</li>
-<li>Claude Sonnet 4.6 (Thinking)</li>
-<li>Claude Opus 4.6 (Thinking)</li>
-<li>GPT-OSS 120B (Medium)</li>
-</ul>
-<p><img src="https://img.nep.me/ooo/antigravity-cli-model-select.webp" alt="antigravity-cli-model-select.png"></p>
-<h2 id="Antigravity-CLI-介绍"><a href="#Antigravity-CLI-介绍" class="headerlink" title="Antigravity CLI 介绍"></a>Antigravity CLI 介绍</h2><p>Google 表示为了性能表现，使用 Go 语言完成了 Antigravity 的构建，同时 Google 也强调了 Antigravity CLI 的三个演进方向：更快执行、异步工作流，以及与 Antigravity 2.0 共用统一的 agent harness。</p>
-<p>Antigravity CLI 优势：</p>
-<ul>
-<li><strong>执行速度更快</strong>：Antigravity CLI 使用 Go 语言编写，速度更快，响应更迅速。</li>
-<li><strong>异步工作流</strong>：Antigravity CLI 在后台协调多个代理来执行复杂任务，让您可以运行大规模重构或研究多个主题，而不会锁定您的终端会话。</li>
-<li><strong>统一架构</strong>：Antigravity CLI 与 Antigravity 2.0（新的 Antigravity 桌面应用程序）共享相同的代理框架，确保核心代理的所有未来改进都会自动应用到您使用它们的任何地方。</li>
-</ul>
-<h2 id="Gemini-CLI-将终止服务"><a href="#Gemini-CLI-将终止服务" class="headerlink" title="Gemini CLI 将终止服务"></a>Gemini CLI 将终止服务</h2><p>在推出了 Antigravity CLI 后，Google <a href="https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/">表示</a>，自 2026 年 6 月 18 日起，Gemini CLI 和 Gemini Code Assist IDE 扩展程序将停止为 Google AI Pro 和 Ultra 用户提供服务。</p>
-<p>企业用户仍可继续使用。</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Antigravity 2.0 的发布，说明 Google 并没有把 AI 编程工具只当作 Gemini 模型的附属功能，而是在重新争夺“下一代代码编辑入口”。这次更新的重点，不是给传统 IDE 再加一个聊天侧边栏，而是把 Antigravity 从 agent-first IDE 升级成更完整的 agentic development platform：桌面端、CLI、SDK 和 API 一起构成新的开发者工作台。</p>
-<p>对用户来说，这种竞争无疑是好事。无论是 Google、OpenAI、Anthropic 还是 Cursor，都在推动代码工具从“补全助手”走向“开发伙伴”。竞争越激烈，开发者能获得的选择越多，价格、体验、模型能力和工作流整合也会被不断拉高。最终受益的，还是每天真正写代码、调试和交付产品的用户。</p>
-]]></content>
-      <categories>
-        <category>资讯</category>
-      </categories>
-      <tags>
-        <tag>AI</tag>
-        <tag>Antigravity</tag>
-        <tag>Antigravity IDE</tag>
-        <tag>Google</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Google 为 AI Pro 用户提供每月 10 美元 GCP 额度，获取教程</title>
     <url>/post/google-offer-10usd-gcp-credit-for-ai-pro-user.html</url>
     <content><![CDATA[<p>Google AI Pro 订阅用户每月可获得 10 美元的 Google Cloud 抵用金，Google AI Ultra 订阅用户每月可获得 100 美元的 Google Cloud 抵用金。</p>
@@ -5164,6 +5108,89 @@
       </tags>
   </entry>
   <entry>
+    <title>榨干 AI 订阅额度：使用 Claude Pro 与 ChatGPT 订阅到底能省多少钱？</title>
+    <url>/post/how-much-can-you-save-with-subscription-vs-api.html</url>
+    <content><![CDATA[<p>Anthropic（Claude）与 OpenAI（ChatGPT）的 API 按量计费对于高频使用者而言通常“贵出天际”，一般只有企业级用户才能负担。因此，它们推出的按月订阅套餐，才是绝大多数普通用户的性价比首选。</p>
+<p>目前，这两家平台都推出了三档订阅套餐：基础版（20 美元）、5x（100 美元）以及 20x（200美元）版本。不过，为了防止滥用，这些套餐在实际使用中均受到时间窗口（每 5 小时）和每周总使用量的限制。</p>
+<p>你可能很好奇：<strong>如果我们把 20 美元订阅账号的额度彻底“榨干”，到底等价于消耗了多少 API 费用？</strong></p>
+<h2 id="Claude-与-ChatGPT-订阅等同于多少-API-费用"><a href="#Claude-与-ChatGPT-订阅等同于多少-API-费用" class="headerlink" title="Claude 与 ChatGPT 订阅等同于多少 API 费用"></a>Claude 与 ChatGPT 订阅等同于多少 API 费用</h2><h3 id="核心结论"><a href="#核心结论" class="headerlink" title="核心结论"></a>核心结论</h3><p>先说结论：<strong>20 美元的 Claude Pro 每周额度约等于 100 美元的 API 价值，而 ChatGPT Plus 则为 140 美元。</strong></p>
+<h3 id="价格对比图表"><a href="#价格对比图表" class="headerlink" title="价格对比图表"></a>价格对比图表</h3><p>近期在 X（原 Twitter）上广为流传的一份图表数据，直观地展示了 Anthropic 与 OpenAI 的订阅套餐与 API 按量计费之间的巨大价格差异：</p>
+<p><img src="https://img.nep.me/ooo/ai-sub-vs-api.webp" alt="price"></p>
+<p>Claude 订阅与 API 价值对比表：</p>
+<table>
+<thead>
+<tr>
+<th align="left">订阅类型</th>
+<th align="center">每月订阅费</th>
+<th align="right">等价 API 费用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">claude-pro</td>
+<td align="center">$20</td>
+<td align="right"><strong>$400 &#x2F; 月</strong></td>
+</tr>
+<tr>
+<td align="left">claude-max-5x</td>
+<td align="center">$100</td>
+<td align="right"><strong>$2,000 &#x2F; 月</strong></td>
+</tr>
+<tr>
+<td align="left">claude-max-20x</td>
+<td align="center">$200</td>
+<td align="right"><strong>$8,000 &#x2F; 月</strong></td>
+</tr>
+</tbody></table>
+<h3 id="ChatGPT-Codex-订阅与-API-价值对比表"><a href="#ChatGPT-Codex-订阅与-API-价值对比表" class="headerlink" title="ChatGPT &#x2F; Codex 订阅与 API 价值对比表"></a>ChatGPT &#x2F; Codex 订阅与 API 价值对比表</h3><table>
+<thead>
+<tr>
+<th align="left">订阅类型</th>
+<th align="center">每月订阅费</th>
+<th align="right">等价 API 费用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">chatgpt-pro-5x</td>
+<td align="center">$20</td>
+<td align="right">$700 &#x2F; 月</td>
+</tr>
+<tr>
+<td align="left">chatgpt-pro-5x</td>
+<td align="center">$100</td>
+<td align="right">$3,500 &#x2F; 月</td>
+</tr>
+<tr>
+<td align="left">chatgpt-pro-20x</td>
+<td align="center">$200</td>
+<td align="right">$14,000 &#x2F; 月</td>
+</tr>
+</tbody></table>
+<h3 id="理论数据-vs-实测数据"><a href="#理论数据-vs-实测数据" class="headerlink" title="理论数据 vs 实测数据"></a>理论数据 vs 实测数据</h3><p>图表中的理论数据虽然惊人，这里的 API 等价价值，是指按官方 API 单价估算，在订阅账号达到实际使用上限时，等价消耗的推理成本，并不代表平台实际成本或用户可稳定复现的收益。</p>
+<p>根据 Linux.do 社区用户的 实际测试 统计，ChatGPT Plus 20 美元套餐 <strong>每周消耗的额度约为 $140，换算下来每月约 $560</strong> 。图表中之所以给出了更夸张的 $700 理论值，很大程度上是因为部分 Plus 账号有概率被官方分配到更高的额度。</p>
+<p>相比之下，Claude 的数据则得到了多方印证。根据大量个人开发者以及 API 中转站的真实反馈，高阶的 $200 套餐确实能够扎扎实实地跑出约 $7,000 的 API 等价价值。</p>
+<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p><strong>注：</strong> Anthropic 在与 xAI 合作后，将 Claude 的周额度临时上调 50%，持续到 7 月 13 日。</p></div></div>
+
+<hr>
+<h2 id="额外探讨：ChatGPT-Teams-值得买吗？"><a href="#额外探讨：ChatGPT-Teams-值得买吗？" class="headerlink" title="额外探讨：ChatGPT Teams 值得买吗？"></a>额外探讨：ChatGPT Teams 值得买吗？</h2><p>OpenAI 除了面向个人用户的 ChatGPT Plus，还有面向团队的 ChatGPT Teams 版本。近期 ChatGPT Teams 也在持续推出 <strong>买一送一</strong> 活动：即两个 Teams 席位的团队只需支付一个席位的费用，折算下来总花费与单人购买 Plus 几乎持平，甚至根据不同地区的汇率结算最终费用可能还要低于 20 美元。</p>
+<p>在额度方面，官方宣称 Teams 账号的对话额度与 Plus 相同，但从用户实测来看，存在一些 <strong>潜规则</strong> ：</p>
+<ol>
+<li><strong>日常额度略有缩水：</strong> 一般正常的 Team 账号，每周等价 API 额度约为 <strong>105 美元</strong>（低于满血 Plus 的 140 美元&#x2F;周）。不过，如果参与了买一送一活动，两个账号加起来的总体可用量依然是多于单个 Plus 的。  </li>
+<li><strong>5H 窗口额度不如 Plus：</strong> 根据 Linux.do 用户反馈，Teams 的周总额度目前存在一定争议；但从单个 5 小时窗口来看，Plus 的可用额度通常高于 Teams。社区实测中，Teams 单个 5H 窗口的等价 API 消耗约为 16 美元。</li>
+<li><strong>警惕“残血版”风控：</strong>  部分 Team 账号由于触发了风控机制，会被降级为 <strong>残血版</strong> 。这类账号的周限制（Codex）大约只相当于 Plus 账号的 0.5 倍。相比之下，普通的 Plus 账号在额度上反而更加稳定。<br>与 Plus 对比，Teams 自身的优势是可以在网页版使用 GPT 5.5 Pro 模型，按月提供少量的访问次数，且数据默认 <a href="https://chatgpt.com/zh-Hans-CN/pricing/?type=team">不会用于</a> 模型训练。</li>
+</ol>
+<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>我自己购买的是 Teams 1+1，一个账户的 5H 额度余额为 16-18 美元，一轮 5H 占周额度的 16% ，所以周额度约为 100-110 美元。</p></div></div>
+
+<h3 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h3><p>如果一个高频用户能持续用满订阅额度，20 美元级别的 AI 订阅套餐，通常可以获得数百美元 API 调用价值。Claude Pro 的月度等价 API 价值大约在 400 美元量级，而 ChatGPT Plus 在不同账号、模型和风控状态下，可能落在 560–700 美元左右。</p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>Claude</tag>
+        <tag>ChatGPT</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>如何查看 Antigravity 模型额度与 Google AI Credits 剩余情况</title>
     <url>/post/how-to-check-google-ai-credits.html</url>
     <content><![CDATA[<div class="flatpaper-note flatpaper-note--danger"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>重大更新： 2026 年 5 月 20 日， Google I&#x2F;O 2026 后， 套餐内不再赠送 AI 点数。</p></div></div>
@@ -5198,6 +5225,62 @@
         <category>笔记</category>
       </categories>
       <tags>
+        <tag>Google</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Google 发布 Antigravity 2.0 ，以及 Antigravity-CLI</title>
+    <url>/post/google-launch-antigravity-cli.html</url>
+    <content><![CDATA[<p>在 2026 年 5 月 20 日的 Google I&#x2F;O 大会上，Google 正式宣布推出 Antigravity 2.0，以 Agents 驱动为核心作为独立的桌面应用。原 Antigravity 更名为 <strong>Antigravity IDE</strong>，并同时推出 <strong>Antigravity CLI</strong> 取代 <strong>Gemini CLI</strong>。</p>
+<p>Antigravity 2.0 与 IDE 下载页面：<a href="https://antigravity.google/download">Download Google Antigravity</a></p>
+<h2 id="Antigravity-CLI-安装方法"><a href="#Antigravity-CLI-安装方法" class="headerlink" title="Antigravity CLI 安装方法"></a>Antigravity CLI 安装方法</h2><h3 id="macOS-Linux"><a href="#macOS-Linux" class="headerlink" title="macOS &#x2F; Linux"></a>macOS &#x2F; Linux</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl -fsSL https://antigravity.google/cli/install.sh | bash</span><br></pre></td></tr></table></figure>
+
+<h3 id="Windows-PowerShell"><a href="#Windows-PowerShell" class="headerlink" title="Windows PowerShell"></a>Windows PowerShell</h3><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">irm</span> https://antigravity.google/<span class="built_in">cli</span>/install.ps1 | <span class="built_in">iex</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Windows-CMD"><a href="#Windows-CMD" class="headerlink" title="Windows CMD"></a>Windows CMD</h3><figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">curl -fsSL https://antigravity.google/cli/install.<span class="built_in">cmd</span> -o install.<span class="built_in">cmd</span> &amp;&amp; install.<span class="built_in">cmd</span> &amp;&amp; <span class="built_in">del</span> install.<span class="built_in">cmd</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="启动与登录方法"><a href="#启动与登录方法" class="headerlink" title="启动与登录方法"></a>启动与登录方法</h2><h3 id="启动-Antigravity-CLI"><a href="#启动-Antigravity-CLI" class="headerlink" title="启动 Antigravity CLI"></a>启动 Antigravity CLI</h3><p>在终端中运行 <code>agy</code> 即可启动 Antigravity CLI。</p>
+<h3 id="登录方法"><a href="#登录方法" class="headerlink" title="登录方法"></a>登录方法</h3><p>使用 Antigravity CLI 之前，如果已在 Antigravity 或 Antigravity IDE 中登录了 Google 账户，系统将自动进行认证。</p>
+<p>初次启动需要选择代码主题，同意用户协议后即可打开 CLI 界面：</p>
+<p><img src="https://img.nep.me/ooo/antigravity-cli-theme-select.webp" alt="antigravity-cli-theme-select.png"></p>
+<p>界面预览：<br><img src="https://img.nep.me/2026/05/antigravity-cli-tui-hello.webp" alt="antigravity-cli-tui.png"></p>
+<p>或者，您也可以选择以下认证方法手动登录：</p>
+<ul>
+<li><strong>Google OAuth</strong></li>
+<li><strong>Use a Google Cloud project</strong></li>
+</ul>
+<p><img src="https://img.nep.me/ooo/antigravity-cli-login-method.webp" alt="antigravity-cli-login-method.png"></p>
+<p>选择 Google OAuth 后，如果没有自动跳转，可以通过粘贴认证代码的方法进行确认，因此也可以在其他设备上使用。</p>
+<h3 id="可选模型"><a href="#可选模型" class="headerlink" title="可选模型"></a>可选模型</h3><p>Google AI Pro 用户在 Antigravity CLI 中可选的模型与 Antigravity IDE 一致：</p>
+<ul>
+<li>Gemini 3.5 Flash (High)      (current)</li>
+<li>Gemini 3.5 Flash (Medium)</li>
+<li>Gemini 3.1 Pro (High)</li>
+<li>Gemini 3.1 Pro (Low)</li>
+<li>Claude Sonnet 4.6 (Thinking)</li>
+<li>Claude Opus 4.6 (Thinking)</li>
+<li>GPT-OSS 120B (Medium)</li>
+</ul>
+<p><img src="https://img.nep.me/ooo/antigravity-cli-model-select.webp" alt="antigravity-cli-model-select.png"></p>
+<h2 id="Antigravity-CLI-介绍"><a href="#Antigravity-CLI-介绍" class="headerlink" title="Antigravity CLI 介绍"></a>Antigravity CLI 介绍</h2><p>Google 表示为了性能表现，使用 Go 语言完成了 Antigravity 的构建，同时 Google 也强调了 Antigravity CLI 的三个演进方向：更快执行、异步工作流，以及与 Antigravity 2.0 共用统一的 agent harness。</p>
+<p>Antigravity CLI 优势：</p>
+<ul>
+<li><strong>执行速度更快</strong>：Antigravity CLI 使用 Go 语言编写，速度更快，响应更迅速。</li>
+<li><strong>异步工作流</strong>：Antigravity CLI 在后台协调多个代理来执行复杂任务，让您可以运行大规模重构或研究多个主题，而不会锁定您的终端会话。</li>
+<li><strong>统一架构</strong>：Antigravity CLI 与 Antigravity 2.0（新的 Antigravity 桌面应用程序）共享相同的代理框架，确保核心代理的所有未来改进都会自动应用到您使用它们的任何地方。</li>
+</ul>
+<h2 id="Gemini-CLI-将终止服务"><a href="#Gemini-CLI-将终止服务" class="headerlink" title="Gemini CLI 将终止服务"></a>Gemini CLI 将终止服务</h2><p>在推出了 Antigravity CLI 后，Google <a href="https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/">表示</a>，自 2026 年 6 月 18 日起，Gemini CLI 和 Gemini Code Assist IDE 扩展程序将停止为 Google AI Pro 和 Ultra 用户提供服务。</p>
+<p>企业用户仍可继续使用。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Antigravity 2.0 的发布，说明 Google 并没有把 AI 编程工具只当作 Gemini 模型的附属功能，而是在重新争夺“下一代代码编辑入口”。这次更新的重点，不是给传统 IDE 再加一个聊天侧边栏，而是把 Antigravity 从 agent-first IDE 升级成更完整的 agentic development platform：桌面端、CLI、SDK 和 API 一起构成新的开发者工作台。</p>
+<p>对用户来说，这种竞争无疑是好事。无论是 Google、OpenAI、Anthropic 还是 Cursor，都在推动代码工具从“补全助手”走向“开发伙伴”。竞争越激烈，开发者能获得的选择越多，价格、体验、模型能力和工作流整合也会被不断拉高。最终受益的，还是每天真正写代码、调试和交付产品的用户。</p>
+]]></content>
+      <categories>
+        <category>资讯</category>
+      </categories>
+      <tags>
+        <tag>AI</tag>
+        <tag>Antigravity</tag>
+        <tag>Antigravity IDE</tag>
         <tag>Google</tag>
       </tags>
   </entry>
@@ -6104,89 +6187,6 @@
       </tags>
   </entry>
   <entry>
-    <title>榨干 AI 订阅额度：使用 Claude Pro 与 ChatGPT 订阅到底能省多少钱？</title>
-    <url>/post/how-much-can-you-save-with-subscription-vs-api.html</url>
-    <content><![CDATA[<p>Anthropic（Claude）与 OpenAI（ChatGPT）的 API 按量计费对于高频使用者而言通常“贵出天际”，一般只有企业级用户才能负担。因此，它们推出的按月订阅套餐，才是绝大多数普通用户的性价比首选。</p>
-<p>目前，这两家平台都推出了三档订阅套餐：基础版（20 美元）、5x（100 美元）以及 20x（200美元）版本。不过，为了防止滥用，这些套餐在实际使用中均受到时间窗口（每 5 小时）和每周总使用量的限制。</p>
-<p>你可能很好奇：<strong>如果我们把 20 美元订阅账号的额度彻底“榨干”，到底等价于消耗了多少 API 费用？</strong></p>
-<h2 id="Claude-与-ChatGPT-订阅等同于多少-API-费用"><a href="#Claude-与-ChatGPT-订阅等同于多少-API-费用" class="headerlink" title="Claude 与 ChatGPT 订阅等同于多少 API 费用"></a>Claude 与 ChatGPT 订阅等同于多少 API 费用</h2><h3 id="核心结论"><a href="#核心结论" class="headerlink" title="核心结论"></a>核心结论</h3><p>先说结论：<strong>20 美元的 Claude Pro 每周额度约等于 100 美元的 API 价值，而 ChatGPT Plus 则为 140 美元。</strong></p>
-<h3 id="价格对比图表"><a href="#价格对比图表" class="headerlink" title="价格对比图表"></a>价格对比图表</h3><p>近期在 X（原 Twitter）上广为流传的一份图表数据，直观地展示了 Anthropic 与 OpenAI 的订阅套餐与 API 按量计费之间的巨大价格差异：</p>
-<p><img src="https://img.nep.me/ooo/ai-sub-vs-api.webp" alt="price"></p>
-<p>Claude 订阅与 API 价值对比表：</p>
-<table>
-<thead>
-<tr>
-<th align="left">订阅类型</th>
-<th align="center">每月订阅费</th>
-<th align="right">等价 API 费用</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">claude-pro</td>
-<td align="center">$20</td>
-<td align="right"><strong>$400 &#x2F; 月</strong></td>
-</tr>
-<tr>
-<td align="left">claude-max-5x</td>
-<td align="center">$100</td>
-<td align="right"><strong>$2,000 &#x2F; 月</strong></td>
-</tr>
-<tr>
-<td align="left">claude-max-20x</td>
-<td align="center">$200</td>
-<td align="right"><strong>$8,000 &#x2F; 月</strong></td>
-</tr>
-</tbody></table>
-<h3 id="ChatGPT-Codex-订阅与-API-价值对比表"><a href="#ChatGPT-Codex-订阅与-API-价值对比表" class="headerlink" title="ChatGPT &#x2F; Codex 订阅与 API 价值对比表"></a>ChatGPT &#x2F; Codex 订阅与 API 价值对比表</h3><table>
-<thead>
-<tr>
-<th align="left">订阅类型</th>
-<th align="center">每月订阅费</th>
-<th align="right">等价 API 费用</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">chatgpt-pro-5x</td>
-<td align="center">$20</td>
-<td align="right">$700 &#x2F; 月</td>
-</tr>
-<tr>
-<td align="left">chatgpt-pro-5x</td>
-<td align="center">$100</td>
-<td align="right">$3,500 &#x2F; 月</td>
-</tr>
-<tr>
-<td align="left">chatgpt-pro-20x</td>
-<td align="center">$200</td>
-<td align="right">$14,000 &#x2F; 月</td>
-</tr>
-</tbody></table>
-<h3 id="理论数据-vs-实测数据"><a href="#理论数据-vs-实测数据" class="headerlink" title="理论数据 vs 实测数据"></a>理论数据 vs 实测数据</h3><p>图表中的理论数据虽然惊人，这里的 API 等价价值，是指按官方 API 单价估算，在订阅账号达到实际使用上限时，等价消耗的推理成本，并不代表平台实际成本或用户可稳定复现的收益。</p>
-<p>根据 Linux.do 社区用户的 实际测试 统计，ChatGPT Plus 20 美元套餐 <strong>每周消耗的额度约为 $140，换算下来每月约 $560</strong> 。图表中之所以给出了更夸张的 $700 理论值，很大程度上是因为部分 Plus 账号有概率被官方分配到更高的额度。</p>
-<p>相比之下，Claude 的数据则得到了多方印证。根据大量个人开发者以及 API 中转站的真实反馈，高阶的 $200 套餐确实能够扎扎实实地跑出约 $7,000 的 API 等价价值。</p>
-<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p><strong>注：</strong> Anthropic 在与 xAI 合作后，将 Claude 的周额度临时上调 50%，持续到 7 月 13 日。</p></div></div>
-
-<hr>
-<h2 id="额外探讨：ChatGPT-Teams-值得买吗？"><a href="#额外探讨：ChatGPT-Teams-值得买吗？" class="headerlink" title="额外探讨：ChatGPT Teams 值得买吗？"></a>额外探讨：ChatGPT Teams 值得买吗？</h2><p>OpenAI 除了面向个人用户的 ChatGPT Plus，还有面向团队的 ChatGPT Teams 版本。近期 ChatGPT Teams 也在持续推出 <strong>买一送一</strong> 活动：即两个 Teams 席位的团队只需支付一个席位的费用，折算下来总花费与单人购买 Plus 几乎持平，甚至根据不同地区的汇率结算最终费用可能还要低于 20 美元。</p>
-<p>在额度方面，官方宣称 Teams 账号的对话额度与 Plus 相同，但从用户实测来看，存在一些 <strong>潜规则</strong> ：</p>
-<ol>
-<li><strong>日常额度略有缩水：</strong> 一般正常的 Team 账号，每周等价 API 额度约为 <strong>105 美元</strong>（低于满血 Plus 的 140 美元&#x2F;周）。不过，如果参与了买一送一活动，两个账号加起来的总体可用量依然是多于单个 Plus 的。  </li>
-<li><strong>5H 窗口额度不如 Plus：</strong> 根据 Linux.do 用户反馈，Teams 的周总额度目前存在一定争议；但从单个 5 小时窗口来看，Plus 的可用额度通常高于 Teams。社区实测中，Teams 单个 5H 窗口的等价 API 消耗约为 16 美元。</li>
-<li><strong>警惕“残血版”风控：</strong>  部分 Team 账号由于触发了风控机制，会被降级为 <strong>残血版</strong> 。这类账号的周限制（Codex）大约只相当于 Plus 账号的 0.5 倍。相比之下，普通的 Plus 账号在额度上反而更加稳定。<br>与 Plus 对比，Teams 自身的优势是可以在网页版使用 GPT 5.5 Pro 模型，按月提供少量的访问次数，且数据默认 <a href="https://chatgpt.com/zh-Hans-CN/pricing/?type=team">不会用于</a> 模型训练。</li>
-</ol>
-<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>我自己购买的是 Teams 1+1，一个账户的 5H 额度余额为 16-18 美元，一轮 5H 占周额度的 16% ，所以周额度约为 100-110 美元。</p></div></div>
-
-<h3 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h3><p>如果一个高频用户能持续用满订阅额度，20 美元级别的 AI 订阅套餐，通常可以获得数百美元 API 调用价值。Claude Pro 的月度等价 API 价值大约在 400 美元量级，而 ChatGPT Plus 在不同账号、模型和风控状态下，可能落在 560–700 美元左右。</p>
-]]></content>
-      <categories>
-        <category>笔记</category>
-      </categories>
-      <tags>
-        <tag>Claude</tag>
-        <tag>ChatGPT</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Nginx 还是 Caddy？一篇写给实际运维者的对比指南</title>
     <url>/post/nginx-vs-caddy.html</url>
     <content><![CDATA[<p>如果你要给一个网站、API 或者一堆容器选一个反向代理 &#x2F; Web 服务器，2026 年的今天你大概率会在 Nginx 和 Caddy 之间犹豫。这篇文章不站队，而是从配置体验、HTTPS、性能、生态、扩展性几个维度把两者掰开讲清楚，最后给出明确的选型建议。</p>
@@ -6460,129 +6460,6 @@
       </tags>
   </entry>
   <entry>
-    <title>在 OpenCode 中免费体验 Kimi K2.5 模型</title>
-    <url>/post/try-kimi-k25-free-in-opencode.html</url>
-    <content><![CDATA[<h2 id="有关-Kimi-K2-5"><a href="#有关-Kimi-K2-5" class="headerlink" title="有关 Kimi K2.5"></a>有关 Kimi K2.5</h2><p>Kimi 是 <strong>月之暗面</strong> (<a href="https://www.moonshot.ai/">Moonshot AI</a>) 推出的系列模型，最新版本是 Kimi K2.5，点击这里查看 <a href="https://platform.moonshot.cn/docs/guide/kimi-k2-5-quickstart">Kimi K2.5 模型介绍</a></p>
-<p>Kimi K2.5 版本是原生的多模态架构设计，同时支持视觉与文本输入、思考与非思考模式、对话与 Agent 任务。最新版本主要特色：</p>
-<ul>
-<li>代码能力跨越式提升</li>
-<li>超长上下文支持</li>
-<li>长思考能力</li>
-</ul>
-<p>Kimi K2.5 版本获得了广泛的好评，尤其是在代码编辑方面，在付费使用之前，我们可以在 OpenCode 中 <del>免费</del> 使用 Kimi K2.5 版本。</p>
-<blockquote>
-<p>Update: 2025.03 OpenCode Kimi 2.5 的免费体验已经结束，现在可以免费使用的是 <strong>MiniMax 2.5</strong></p>
-</blockquote>
-<h2 id="什么是-OpenCode"><a href="#什么是-OpenCode" class="headerlink" title="什么是 OpenCode"></a>什么是 OpenCode</h2><p><a href="https://opencode.ai/">OpenCode</a> 是一款开源的代码助理软件，终端版本类似 Claude Code，可帮助您使用任何 AI 模型编写和运行代码。它提供基于终端的界面(TUI)、桌面应用程序或 IDE 扩展三种形式。</p>
-<h2 id="安装更新-OpenCode"><a href="#安装更新-OpenCode" class="headerlink" title="安装更新 OpenCode"></a>安装更新 OpenCode</h2><p>如果你尚未安装 OpenCode 或是没有更新到最新的版本，执行下面的命令</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm i -g opencode-ai</span><br></pre></td></tr></table></figure>
-
-<p>然后运行 <code>opencode</code> 即可打开 TUI 界面 </p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">opencode</span><br></pre></td></tr></table></figure>
-
-<h2 id="切换模型为-Kimi-K2-5"><a href="#切换模型为-Kimi-K2-5" class="headerlink" title="切换模型为 Kimi K2.5"></a>切换模型为 Kimi K2.5</h2><p>在 OpenCode 的 TUI 界面，执行 <code>/models</code> ，即可打开模型选择列表</p>
-<p><img src="https://img.nep.me/i/2026/02/opencode-models.png" alt="opencode-models.png"></p>
-<p>然后选择 <code>Kimi K2.5 Free</code>  即可开始体验。</p>
-<p><img src="https://img.nep.me/i/2026/02/open-code-models-select.png" alt="open-code-models-select.png"></p>
-<p>然后就可以开始对话了！<br><img src="https://img.nep.me/i/2026/02/opencode-ask-kimi.png" alt="opencode-ask-kimi.png"></p>
-<p>不过毕竟是免费，使用时可能会遇到 <code>rate limit...</code> 的提示，通常等一下会自动重新尝试，因此只能作为免费体验。</p>
-<h2 id="价格"><a href="#价格" class="headerlink" title="价格"></a>价格</h2><p>如果使用 API ，每 100 万(1M) tokens 价格为：</p>
-<table>
-<thead>
-<tr>
-<th align="left">模型名称</th>
-<th align="left">输入价格</th>
-<th align="left">缓存命中价格</th>
-<th align="left">输出价格</th>
-<th align="left">上下文长度</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left"><strong>Kimi K2.5</strong></td>
-<td align="left">￥4.00</td>
-<td align="left">￥0.70</td>
-<td align="left">￥21.00</td>
-<td align="left">256k</td>
-</tr>
-<tr>
-<td align="left"><strong>Gemini 3</strong> (&lt;200k)</td>
-<td align="left">$2.00</td>
-<td align="left">$0.20</td>
-<td align="left">$12.00</td>
-<td align="left">-</td>
-</tr>
-<tr>
-<td align="left"><strong>Gemini 3 Flash</strong></td>
-<td align="left">$0.50</td>
-<td align="left">-</td>
-<td align="left">$3.00</td>
-<td align="left">-</td>
-</tr>
-<tr>
-<td align="left"><strong>GPT 5.2</strong></td>
-<td align="left">$1.75</td>
-<td align="left">$0.175</td>
-<td align="left">$14.00</td>
-<td align="left">-</td>
-</tr>
-</tbody></table>
-<p>汇率按照 7 计算，Kimi K2.5 的价格与 Gemini 3 Flash 接近。</p>
-<h3 id="Kimi-Code-Plan"><a href="#Kimi-Code-Plan" class="headerlink" title="Kimi Code Plan"></a>Kimi Code Plan</h3><p>Moonshot 提供 Kimi Code Plan 包月套餐，价格可以看这里 <a href="https://www.kimi.com/user/agreement/zh/membershipBenefits">会员权益说明</a>。 </p>
-<table>
-<thead>
-<tr>
-<th align="left">会员权益项目</th>
-<th align="left">Andante</th>
-<th align="left">Moderato</th>
-<th align="left">Allegretto</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left"><strong>包月价格</strong></td>
-<td align="left">¥49&#x2F;月</td>
-<td align="left">¥99&#x2F;月</td>
-<td align="left">¥199&#x2F;月</td>
-</tr>
-<tr>
-<td align="left"><strong>包年价格</strong></td>
-<td align="left">¥468&#x2F;年</td>
-<td align="left">¥948&#x2F;年</td>
-<td align="left">¥1908&#x2F;年</td>
-</tr>
-</tbody></table>
-<div class="flatpaper-note flatpaper-note--warning"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>AI 模型日新月异，谨慎年付。</p></div></div>
-
-<p><img src="https://img.nep.me/i/2026/02/kimi-code-price-cny.png" alt="kimi-code-price-cny.png"></p>
-<p>如果访问的是国际版，价格贵了非常多，看描述额度多一些。</p>
-<table>
-<thead>
-<tr>
-<th align="left">会员权益项目</th>
-<th align="left">Moderato</th>
-<th align="left">Allegretto</th>
-<th align="left">Vivace</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left"><strong>包月价格</strong></td>
-<td align="left">$19&#x2F;月</td>
-<td align="left">$39&#x2F;月</td>
-<td align="left">$199&#x2F;月</td>
-</tr>
-</tbody></table>
-<p><img src="https://img.nep.me/i/2026/02/kimi-code-price-usd.png" alt="kimi-code-price-usd.png"></p>
-<p>在付款前可以看看 <a href="https://juejin.cn/post/7599920572840509449">我花了4.99元，测了一把Kimi新出的「代码神器」</a></p>
-<h3 id="Claude-Code-相关"><a href="#Claude-Code-相关" class="headerlink" title="Claude Code 相关"></a>Claude Code 相关</h3><p>开通 KimiCode 后是可以直接在 <a href="https://www.kimi.com/code/console">控制台</a> 获取 API Key ，用于在 Claude Code 中使用，官方明确 <a href="https://www.kimi.com/code/docs/benefits.html#%E4%BD%BF%E7%94%A8%E8%8C%83%E5%9B%B4">说明</a> 不禁止在 Claude Code 中使用，但不支持其他产品。</p>
-]]></content>
-      <categories>
-        <category>优惠活动</category>
-      </categories>
-      <tags>
-        <tag>OpenCode</tag>
-        <tag>Kimi</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>快讯：美国政府对 Claude Fable 5 发布禁令</title>
     <url>/post/us-government-ban-claude-fable-5.html</url>
     <content><![CDATA[<h2 id="AI-的“数字铁幕”落下：Claude-Fable-5-遭出口管制限制"><a href="#AI-的“数字铁幕”落下：Claude-Fable-5-遭出口管制限制" class="headerlink" title="AI 的“数字铁幕”落下：Claude Fable 5 遭出口管制限制"></a>AI 的“数字铁幕”落下：Claude Fable 5 遭出口管制限制</h2><p>北京时间 2026 年 6 月 13 日，在 Claude Fable 5 仅仅上线三天后，Anthropic 在社交平台上发布了一则令人震惊的 <a href="https://x.com/AnthropicAI/status/2065597531644743999">声明</a>： <strong>因美国政府援引国家安全授权下达出口管制指令，要求禁止任何外国公民访问 Fable 5 和 Mythos 5</strong> ，公司为确保合规，不得不紧急对所有客户全面停用这两款模型。</p>
@@ -6772,21 +6649,126 @@
       </tags>
   </entry>
   <entry>
-    <title>Vercel 上线 Agents Skills 大全网站：skills.sh</title>
-    <url>/post/vercel-launch-agent-skills-directory.html</url>
-    <content><![CDATA[<p>Vercel 上线的 Agent Skill 大全网站 <a href="skills.sh">https://skills.sh</a> ，可以方便查找和快速安装 Skills 。</p>
-<p>访问网站即可查看热门的 Skills，还可以进行搜索。</p>
-<p>可以直接使用下面的命令将 skills 安装到项目目录：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npx skills add &lt;owner/repo&gt; </span><br></pre></td></tr></table></figure>
+    <title>在 OpenCode 中免费体验 Kimi K2.5 模型</title>
+    <url>/post/try-kimi-k25-free-in-opencode.html</url>
+    <content><![CDATA[<h2 id="有关-Kimi-K2-5"><a href="#有关-Kimi-K2-5" class="headerlink" title="有关 Kimi K2.5"></a>有关 Kimi K2.5</h2><p>Kimi 是 <strong>月之暗面</strong> (<a href="https://www.moonshot.ai/">Moonshot AI</a>) 推出的系列模型，最新版本是 Kimi K2.5，点击这里查看 <a href="https://platform.moonshot.cn/docs/guide/kimi-k2-5-quickstart">Kimi K2.5 模型介绍</a></p>
+<p>Kimi K2.5 版本是原生的多模态架构设计，同时支持视觉与文本输入、思考与非思考模式、对话与 Agent 任务。最新版本主要特色：</p>
+<ul>
+<li>代码能力跨越式提升</li>
+<li>超长上下文支持</li>
+<li>长思考能力</li>
+</ul>
+<p>Kimi K2.5 版本获得了广泛的好评，尤其是在代码编辑方面，在付费使用之前，我们可以在 OpenCode 中 <del>免费</del> 使用 Kimi K2.5 版本。</p>
+<blockquote>
+<p>Update: 2025.03 OpenCode Kimi 2.5 的免费体验已经结束，现在可以免费使用的是 <strong>MiniMax 2.5</strong></p>
+</blockquote>
+<h2 id="什么是-OpenCode"><a href="#什么是-OpenCode" class="headerlink" title="什么是 OpenCode"></a>什么是 OpenCode</h2><p><a href="https://opencode.ai/">OpenCode</a> 是一款开源的代码助理软件，终端版本类似 Claude Code，可帮助您使用任何 AI 模型编写和运行代码。它提供基于终端的界面(TUI)、桌面应用程序或 IDE 扩展三种形式。</p>
+<h2 id="安装更新-OpenCode"><a href="#安装更新-OpenCode" class="headerlink" title="安装更新 OpenCode"></a>安装更新 OpenCode</h2><p>如果你尚未安装 OpenCode 或是没有更新到最新的版本，执行下面的命令</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm i -g opencode-ai</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://img.nep.me/ooo/skills-sh.webp" alt="skills-sh"></p>
+<p>然后运行 <code>opencode</code> 即可打开 TUI 界面 </p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">opencode</span><br></pre></td></tr></table></figure>
+
+<h2 id="切换模型为-Kimi-K2-5"><a href="#切换模型为-Kimi-K2-5" class="headerlink" title="切换模型为 Kimi K2.5"></a>切换模型为 Kimi K2.5</h2><p>在 OpenCode 的 TUI 界面，执行 <code>/models</code> ，即可打开模型选择列表</p>
+<p><img src="https://img.nep.me/i/2026/02/opencode-models.png" alt="opencode-models.png"></p>
+<p>然后选择 <code>Kimi K2.5 Free</code>  即可开始体验。</p>
+<p><img src="https://img.nep.me/i/2026/02/open-code-models-select.png" alt="open-code-models-select.png"></p>
+<p>然后就可以开始对话了！<br><img src="https://img.nep.me/i/2026/02/opencode-ask-kimi.png" alt="opencode-ask-kimi.png"></p>
+<p>不过毕竟是免费，使用时可能会遇到 <code>rate limit...</code> 的提示，通常等一下会自动重新尝试，因此只能作为免费体验。</p>
+<h2 id="价格"><a href="#价格" class="headerlink" title="价格"></a>价格</h2><p>如果使用 API ，每 100 万(1M) tokens 价格为：</p>
+<table>
+<thead>
+<tr>
+<th align="left">模型名称</th>
+<th align="left">输入价格</th>
+<th align="left">缓存命中价格</th>
+<th align="left">输出价格</th>
+<th align="left">上下文长度</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>Kimi K2.5</strong></td>
+<td align="left">￥4.00</td>
+<td align="left">￥0.70</td>
+<td align="left">￥21.00</td>
+<td align="left">256k</td>
+</tr>
+<tr>
+<td align="left"><strong>Gemini 3</strong> (&lt;200k)</td>
+<td align="left">$2.00</td>
+<td align="left">$0.20</td>
+<td align="left">$12.00</td>
+<td align="left">-</td>
+</tr>
+<tr>
+<td align="left"><strong>Gemini 3 Flash</strong></td>
+<td align="left">$0.50</td>
+<td align="left">-</td>
+<td align="left">$3.00</td>
+<td align="left">-</td>
+</tr>
+<tr>
+<td align="left"><strong>GPT 5.2</strong></td>
+<td align="left">$1.75</td>
+<td align="left">$0.175</td>
+<td align="left">$14.00</td>
+<td align="left">-</td>
+</tr>
+</tbody></table>
+<p>汇率按照 7 计算，Kimi K2.5 的价格与 Gemini 3 Flash 接近。</p>
+<h3 id="Kimi-Code-Plan"><a href="#Kimi-Code-Plan" class="headerlink" title="Kimi Code Plan"></a>Kimi Code Plan</h3><p>Moonshot 提供 Kimi Code Plan 包月套餐，价格可以看这里 <a href="https://www.kimi.com/user/agreement/zh/membershipBenefits">会员权益说明</a>。 </p>
+<table>
+<thead>
+<tr>
+<th align="left">会员权益项目</th>
+<th align="left">Andante</th>
+<th align="left">Moderato</th>
+<th align="left">Allegretto</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>包月价格</strong></td>
+<td align="left">¥49&#x2F;月</td>
+<td align="left">¥99&#x2F;月</td>
+<td align="left">¥199&#x2F;月</td>
+</tr>
+<tr>
+<td align="left"><strong>包年价格</strong></td>
+<td align="left">¥468&#x2F;年</td>
+<td align="left">¥948&#x2F;年</td>
+<td align="left">¥1908&#x2F;年</td>
+</tr>
+</tbody></table>
+<div class="flatpaper-note flatpaper-note--warning"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>AI 模型日新月异，谨慎年付。</p></div></div>
+
+<p><img src="https://img.nep.me/i/2026/02/kimi-code-price-cny.png" alt="kimi-code-price-cny.png"></p>
+<p>如果访问的是国际版，价格贵了非常多，看描述额度多一些。</p>
+<table>
+<thead>
+<tr>
+<th align="left">会员权益项目</th>
+<th align="left">Moderato</th>
+<th align="left">Allegretto</th>
+<th align="left">Vivace</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>包月价格</strong></td>
+<td align="left">$19&#x2F;月</td>
+<td align="left">$39&#x2F;月</td>
+<td align="left">$199&#x2F;月</td>
+</tr>
+</tbody></table>
+<p><img src="https://img.nep.me/i/2026/02/kimi-code-price-usd.png" alt="kimi-code-price-usd.png"></p>
+<p>在付款前可以看看 <a href="https://juejin.cn/post/7599920572840509449">我花了4.99元，测了一把Kimi新出的「代码神器」</a></p>
+<h3 id="Claude-Code-相关"><a href="#Claude-Code-相关" class="headerlink" title="Claude Code 相关"></a>Claude Code 相关</h3><p>开通 KimiCode 后是可以直接在 <a href="https://www.kimi.com/code/console">控制台</a> 获取 API Key ，用于在 Claude Code 中使用，官方明确 <a href="https://www.kimi.com/code/docs/benefits.html#%E4%BD%BF%E7%94%A8%E8%8C%83%E5%9B%B4">说明</a> 不禁止在 Claude Code 中使用，但不支持其他产品。</p>
 ]]></content>
       <categories>
-        <category>资讯</category>
+        <category>优惠活动</category>
       </categories>
       <tags>
-        <tag>Agent Skills</tag>
-        <tag>Vercel</tag>
+        <tag>OpenCode</tag>
+        <tag>Kimi</tag>
       </tags>
   </entry>
   <entry>
@@ -6827,6 +6809,24 @@
         <tag>OpenClaw</tag>
         <tag>Clawdbot</tag>
         <tag>moltbook</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Vercel 上线 Agents Skills 大全网站：skills.sh</title>
+    <url>/post/vercel-launch-agent-skills-directory.html</url>
+    <content><![CDATA[<p>Vercel 上线的 Agent Skill 大全网站 <a href="skills.sh">https://skills.sh</a> ，可以方便查找和快速安装 Skills 。</p>
+<p>访问网站即可查看热门的 Skills，还可以进行搜索。</p>
+<p>可以直接使用下面的命令将 skills 安装到项目目录：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npx skills add &lt;owner/repo&gt; </span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img.nep.me/ooo/skills-sh.webp" alt="skills-sh"></p>
+]]></content>
+      <categories>
+        <category>资讯</category>
+      </categories>
+      <tags>
+        <tag>Agent Skills</tag>
+        <tag>Vercel</tag>
       </tags>
   </entry>
 </search>
