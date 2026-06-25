@@ -326,6 +326,91 @@
       </tags>
   </entry>
   <entry>
+    <title>如何使用 SSH key 连接 GitHub</title>
+    <url>/post/how-to-add-ssh-key-to-github.html</url>
+    <content><![CDATA[<p>如果需要频繁的进行 GitHub pull&#x2F;push 操作，使用 SSH key 绑定到 GitHub 会更加方便，绑定后将使用公钥加密来验证用户身份，比传统的用户名和密码方式更安全。  </p>
+<p>本文命令与截图对应下面的系统版本，需要先安装 <a href="https://git-scm.com/downloads">Git</a></p>
+<ul>
+<li><strong>Windows 11</strong> : 一般安装 <code>64-bit Git for Windows Setup</code>, 安装选项全部<strong>默认</strong>即可</li>
+<li><strong>macOS 15.1</strong> : 更推荐通过安装 <a href="https://brew.sh/">Homebrew</a> 获取 Git 程序，查看 <a href="https://ooo.run/post/how-to-install-homebrew-on-macos.html">如何在 macOS 中安装 Homebrew </a></li>
+</ul>
+<h2 id="打开终端程序"><a href="#打开终端程序" class="headerlink" title="打开终端程序"></a>打开终端程序</h2><h3 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h3><ul>
+<li>右键点击开始菜单，选择终端</li>
+<li>或是按 <code>Windows + R</code> 快捷键打开 <strong>运行</strong> 窗口，输入 <code>cmd</code> ，回车打开</li>
+</ul>
+<h3 id="macOS"><a href="#macOS" class="headerlink" title="macOS"></a>macOS</h3><ul>
+<li>启动台 &gt; 其他 &gt; 终端</li>
+<li><strong>启动台</strong> 或是　<code>Commond⌘ + 空格</code> 打开聚焦搜索，搜索 <strong>终端</strong> 或是 <strong>Terminal</strong></li>
+</ul>
+<p>安装 Git 后，使用 <code>git -v</code> 测试，如果安装成功会显示版本号</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt; git -v</span><br><span class="line">git version 2.47.1</span><br></pre></td></tr></table></figure>
+<p>然后设置 Git 的个人信息</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;yourname&quot;</span></span><br><span class="line">git config --global user.email <span class="string">&quot;your_email@example.com&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="测试一下-github-com"><a href="#测试一下-github-com" class="headerlink" title="测试一下 github.com"></a>测试一下 github.com</h2><div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>Windows 10 用户可以使用 Git Bash</p></div></div>
+<div class="flatpaper-note flatpaper-note--warning"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>测试时会自动创建 <code>.ssh</code> 文件夹，因此你也需要测试一下</p></div></div>
+
+<p>打开终端程序，运行测试命令，如果是第一次运行，需要输入 <code>yes</code> 确认</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure>
+
+<p>我们没有添加过 SSH key，会提示 <code>Permission denied (publickey).</code></p>
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-7-tab-0" aria-controls="tabs-7-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">Windows</button><button type="button" role="tab" id="tabs-7-tab-1" aria-controls="tabs-7-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">macOS</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-7-panel-0" aria-labelledby="tabs-7-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><p><img src="https://img.nep.me/i/2024/12/13/122owl6-2.webp"></p></section><section role="tabpanel" id="tabs-7-panel-1" aria-labelledby="tabs-7-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><p><img src="https://img.nep.me/i/2024/12/13/124oz3l-2.webp"></p></section></div></div>
+
+<h2 id="创建-SSH-Key"><a href="#创建-SSH-Key" class="headerlink" title="创建 SSH Key"></a>创建 SSH Key</h2><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> .ssh</span><br><span class="line"></span><br><span class="line">ssh-keygen -t rsa -C <span class="string">&quot;your_email@example.com&quot;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">C:\Users\ME\.ssh&gt;ssh-keygen -t rsa</span><br><span class="line"></span><br><span class="line">Generating public/private rsa key pair.</span><br><span class="line"><span class="comment"># 设置保存文件名，留空则为 id_rsa</span></span><br><span class="line">Enter file <span class="keyword">in</span> <span class="built_in">which</span> to save the key (C:\Users\ME/.ssh/id_rsa):</span><br><span class="line"><span class="comment"># 设置密码，留空则是没有密码</span></span><br><span class="line">Enter passphrase (empty <span class="keyword">for</span> no passphrase):</span><br><span class="line"><span class="comment"># 确认密码</span></span><br><span class="line">Enter same passphrase again:</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成的私钥</span></span><br><span class="line">Your identification has been saved <span class="keyword">in</span> C:\Users\ME/.ssh/id_rsa</span><br><span class="line"><span class="comment"># 生成的公钥</span></span><br><span class="line">Your public key has been saved <span class="keyword">in</span> C:\Users\ME/.ssh/id_rsa.pub</span><br></pre></td></tr></table></figure>
+<div class="flatpaper-note flatpaper-note--warning"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p><code>.pub</code> 后缀的是公钥，可以公开，<strong>私钥相当于个人密码，要小心保存</strong></p></div></div>
+
+<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>git 默认会查找名称为 <code>id_rsa</code> 的 SSH key </p></div></div>
+
+<div class="flatpaper-note flatpaper-note--primary"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>如果设置了文件名称，或是生成其他格式的 SSH key 可以查看后文的配合 <code>SSH config</code> 的部分</p></div></div>
+
+<div class="flatpaper-note flatpaper-note--default"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>rsa 格式的 key 内容很长，使用 <code>ssh-keygen -t ed25519</code> 生成 <code>ed25519</code> 格式的 key，更简洁，更安全</p></div></div>
+
+<h2 id="添加公钥到-GitHub"><a href="#添加公钥到-GitHub" class="headerlink" title="添加公钥到 GitHub"></a>添加公钥到 GitHub</h2><p>使用命令或是文本编辑器查看公钥的内容</p>
+<ul>
+<li>Windows 使用 <code>type id_rsa.pub</code> </li>
+<li>macOS &#x2F; Linux 使用 <code>cat id_rsa.pub</code></li>
+</ul>
+<p>访问 <a href="https://github.com/settings/keys">Github - SSH Keys</a>，点击右上角 <strong>New SSH key</strong>。<br>手动访问路径：右上角点击 <strong>头像</strong> &gt; <strong>Settings</strong> &gt; <strong>SSH and GPG keys</strong> &gt; <strong>New SSH key</strong></p>
+<p><img src="https://img.nep.me/i/2024/12/13/12s8co0-2.webp" alt="github-add-ssh-key"></p>
+<ul>
+<li><strong>Title</strong>：取个备注名字</li>
+<li><strong>Key type</strong>：不需要修改，保持默认 <strong>Authentication Key</strong></li>
+<li><strong>Key</strong>：粘贴 <code>id_rsa.pub</code> 对应的文本内容</li>
+<li>点击 <code>Add SSH key</code> 保存</li>
+</ul>
+<p><img src="https://img.nep.me/i/2024/12/13/12sain9-2.webp" alt="github-add-ssh-key-details"></p>
+<p>添加成功会在列表显示<br><img src="https://img.nep.me/i/2024/12/13/12vf7u0-2.webp" alt="github-add-ssh-key-done"></p>
+<p>此时我们再执行测试命令，就会获得成功的欢迎提示。 </p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt;ssh -T git@github.com</span><br><span class="line">Hi &lt;Your username&gt;! You<span class="string">&#x27;ve successfully authenticated, but GitHub does not provide shell access.</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="配合-SSH-config-使用"><a href="#配合-SSH-config-使用" class="headerlink" title="配合 SSH config 使用"></a>配合 SSH config 使用</h2><p>如果我们的私钥的名称不是 <code>id_rsa</code> ，我们将仍然无法成功连接 GitHub ，你可以将私钥修改文件名后再试试 </p>
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-8-tab-0" aria-controls="tabs-8-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">Windows</button><button type="button" role="tab" id="tabs-8-tab-1" aria-controls="tabs-8-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">macOS&amp;Linux</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-8-panel-0" aria-labelledby="tabs-8-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt; rename id_rsa id_mysshkey</span><br><span class="line"></span><br><span class="line">&gt; ssh -T git@github.com</span><br><span class="line">git@github.com: Permission denied (publickey).</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-8-panel-1" aria-labelledby="tabs-8-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt; <span class="built_in">mv</span> id_rsa id_mysshkey</span><br><span class="line"></span><br><span class="line">&gt; ssh -T git@github.com</span><br><span class="line">git@github.com: Permission denied (publickey).</span><br></pre></td></tr></table></figure></section></div></div>
+
+<p>这时我们可以通过在 <code>.ssh</code> 文件夹中创建一个 <code>config</code> 文件，填入下面的内容来告诉 git 程序在哪里找到密钥</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Host github.com</span><br><span class="line">    HostName github.com</span><br><span class="line">    User git</span><br><span class="line">    IdentityFile ~/.ssh/id_mysshkey</span><br></pre></td></tr></table></figure>
+
+<p>其中 <code>IdentityFile</code> 部分填写私钥的路径， <code>~</code> 代表用户 Home 目录</p>
+<ul>
+<li>Windows 相当于 <code>C:\Users\&lt;username&gt;\</code></li>
+<li>macOS 相当于 <code>/Users/&lt;username&gt;/</code></li>
+<li>Linux 相当于 <code>/root/</code> 或是 <code>/home/&lt;username&gt;/</code></li>
+</ul>
+<p>再进行测试，发现又能显示成功的欢迎消息。  </p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt;ssh -T git@github.com</span><br><span class="line">Hi &lt;Your username&gt;! You<span class="string">&#x27;ve successfully authenticated, but GitHub does not provide shell access.</span></span><br></pre></td></tr></table></figure>
+
+<p>以后就可以很方便的使用 Git 了！</p>
+]]></content>
+      <categories>
+        <category>教程</category>
+      </categories>
+      <tags>
+        <tag>GitHub</tag>
+        <tag>SSH</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>如何在 macOS 中安装 Homebrew</title>
     <url>/post/how-to-install-homebrew-on-macos.html</url>
     <content><![CDATA[<p>有时我们在网络上看到别人使用 macOS 安装软件是使用的下面的命令，非常的方便。  </p>
@@ -365,7 +450,7 @@
 
 <p>或是查看下面的内容</p>
 <p>替换使用 <a href="https://developer.aliyun.com/mirror/homebrew/">阿里镜像源</a></p>
-<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-7-tab-0" aria-controls="tabs-7-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">zsh</button><button type="button" role="tab" id="tabs-7-tab-1" aria-controls="tabs-7-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">bash</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-7-panel-0" aria-labelledby="tabs-7-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo &#x27;export HOMEBREW_API_DOMAIN=&quot;https://mirrors.aliyun.com/homebrew-bottles/api&quot;&#x27; &gt;&gt; ~/.zshrc</span><br><span class="line">echo &#x27;export HOMEBREW_BREW_GIT_REMOTE=&quot;https://mirrors.aliyun.com/homebrew/brew.git&quot;&#x27; &gt;&gt; ~/.zshrc</span><br><span class="line">echo &#x27;export HOMEBREW_CORE_GIT_REMOTE=&quot;https://mirrors.aliyun.com/homebrew/homebrew-core.git&quot;&#x27; &gt;&gt; ~/.zshrc</span><br><span class="line">echo &#x27;export HOMEBREW_BOTTLE_DOMAIN=&quot;https://mirrors.aliyun.com/homebrew/homebrew-bottles&quot;&#x27; &gt;&gt; ~/.zshrc</span><br><span class="line">source ~/.zshrc</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-7-panel-1" aria-labelledby="tabs-7-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export HOMEBREW_API_DOMAIN=&quot;https://mirrors.aliyun.com/homebrew-bottles/api&quot;&#x27;</span> &gt;&gt; ~/.bash_profile</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export HOMEBREW_BREW_GIT_REMOTE=&quot;https://mirrors.aliyun.com/homebrew/brew.git&quot;&#x27;</span> &gt;&gt; ~/.bash_profile</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export HOMEBREW_CORE_GIT_REMOTE=&quot;https://mirrors.aliyun.com/homebrew/homebrew-core.git&quot;&#x27;</span> &gt;&gt; ~/.bash_profile</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export HOMEBREW_BOTTLE_DOMAIN=&quot;https://mirrors.aliyun.com/homebrew/homebrew-bottles&quot;&#x27;</span> &gt;&gt; ~/.bash_profile</span><br><span class="line"><span class="built_in">source</span> ~/.bash_profile</span><br></pre></td></tr></table></figure></section></div></div>
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-9-tab-0" aria-controls="tabs-9-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">zsh</button><button type="button" role="tab" id="tabs-9-tab-1" aria-controls="tabs-9-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">bash</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-9-panel-0" aria-labelledby="tabs-9-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo &#x27;export HOMEBREW_API_DOMAIN=&quot;https://mirrors.aliyun.com/homebrew-bottles/api&quot;&#x27; &gt;&gt; ~/.zshrc</span><br><span class="line">echo &#x27;export HOMEBREW_BREW_GIT_REMOTE=&quot;https://mirrors.aliyun.com/homebrew/brew.git&quot;&#x27; &gt;&gt; ~/.zshrc</span><br><span class="line">echo &#x27;export HOMEBREW_CORE_GIT_REMOTE=&quot;https://mirrors.aliyun.com/homebrew/homebrew-core.git&quot;&#x27; &gt;&gt; ~/.zshrc</span><br><span class="line">echo &#x27;export HOMEBREW_BOTTLE_DOMAIN=&quot;https://mirrors.aliyun.com/homebrew/homebrew-bottles&quot;&#x27; &gt;&gt; ~/.zshrc</span><br><span class="line">source ~/.zshrc</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-9-panel-1" aria-labelledby="tabs-9-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export HOMEBREW_API_DOMAIN=&quot;https://mirrors.aliyun.com/homebrew-bottles/api&quot;&#x27;</span> &gt;&gt; ~/.bash_profile</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export HOMEBREW_BREW_GIT_REMOTE=&quot;https://mirrors.aliyun.com/homebrew/brew.git&quot;&#x27;</span> &gt;&gt; ~/.bash_profile</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export HOMEBREW_CORE_GIT_REMOTE=&quot;https://mirrors.aliyun.com/homebrew/homebrew-core.git&quot;&#x27;</span> &gt;&gt; ~/.bash_profile</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export HOMEBREW_BOTTLE_DOMAIN=&quot;https://mirrors.aliyun.com/homebrew/homebrew-bottles&quot;&#x27;</span> &gt;&gt; ~/.bash_profile</span><br><span class="line"><span class="built_in">source</span> ~/.bash_profile</span><br></pre></td></tr></table></figure></section></div></div>
 
 <p>然后执行安装命令，从阿里云下载安装脚本并安装 Homebrew</p>
 <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://mirrors.aliyun.com/homebrew/install.git brew-install</span><br><span class="line">/bin/bash brew-install/install.sh</span><br><span class="line"><span class="built_in">rm</span> -rf brew-install</span><br></pre></td></tr></table></figure>
@@ -395,103 +480,6 @@
       <tags>
         <tag>Homebrew</tag>
         <tag>macOS</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>如何安装 Node.js</title>
-    <url>/post/how-to-install-nodejs.html</url>
-    <content><![CDATA[<p>本文将带介绍如何在电脑上安装 Node.js 运行环境，从而可以使用丰富的应用 Nodejs 程序。 </p>
-<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-8-tab-0" aria-controls="tabs-8-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">Windows</button><button type="button" role="tab" id="tabs-8-tab-1" aria-controls="tabs-8-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">macOS</button><button type="button" role="tab" id="tabs-8-tab-2" aria-controls="tabs-8-panel-2" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="2">Linux</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-8-panel-0" aria-labelledby="tabs-8-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><h2 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h2><p>测试安装环境为 <code>Windows 11</code></p>
-<h3 id="下载-Node-js"><a href="#下载-Node-js" class="headerlink" title="下载 Node.js"></a>下载 Node.js</h3><p>访问 Node.js 的官方网站的 <a href="https://nodejs.org/zh-cn/download/prebuilt-installer">下载页面</a> 下载安装包。 </p>
-<p>我们选择 <strong>预构建安装程序</strong> ，选择一下自己的系统与 CPU 架构类型， Windows 一般选择 <strong>x64</strong>，再选择 Node.js 版本。</p>
-<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>推荐选择版本号为偶数的 LTS 版本</p></div></div>  
-
-<p><img src="https://img.nep.me/i/2024/12/13/7fzq5m-2.webp" alt="nodejs-home-page"></p>
-<h3 id="安装-Node-js"><a href="#安装-Node-js" class="headerlink" title="安装 Node.js"></a>安装 Node.js</h3><p>然后打开安装程序 <code>node-v22.12.0-x64.msi</code>，安装过程没有陷阱，我们 <strong>同意</strong> 协议后，一路点击 Next 即可。  </p>
-<p><img src="https://img.nep.me/i/2024/12/13/7hc7pi-2.webp" alt="nodejs-setup"></p>
-<p>安装完成后，打开终端程序：</p>
-<ul>
-<li>右键点击开始菜单，选择终端</li>
-<li>或是按 <code>Windows + R</code> 快捷键打开 <strong>运行</strong> 窗口，输入 <code>cmd</code> ，回车打开</li>
-<li>或是在资源管理器的地址栏中输入 <code>cmd</code> 回车打开（终端的运行目录将是资源管理器所在的目录）</li>
-</ul>
-<p>运行下面的命令测试安装结果。</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">node -v</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm -v</span><br></pre></td></tr></table></figure>
-
-<p>如果可以成功输出版本号，表示安装成功。  </p>
-<p><img src="https://img.nep.me/i/2024/12/13/7ilvge-2.webp" alt="nodejs-install-done"></p></section><section role="tabpanel" id="tabs-8-panel-1" aria-labelledby="tabs-8-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><h2 id="macOS"><a href="#macOS" class="headerlink" title="macOS"></a>macOS</h2><p>测试安装环境为 <code>macOS 15.1</code> ，macOS 更推荐使用 <strong>包管理器</strong> <code>Homebrew</code> 进行安装。</p>
-<blockquote>
-<p><a href="https://brew.sh/zh-cn/">Homebrew</a> 是 macOS 和 Linux 缺失软件包的管理器，用于安装 Apple没有预装但你需要的东西。</p>
-</blockquote>
-<p>安装需要使用终端，<a href="https://support.apple.com/zh-cn/guide/terminal/apd5265185d-f365-44cb-8b09-71a064a42125/mac">在 Mac 上打开或退出“终端”</a>：</p>
-<ul>
-<li>启动台 &gt; 其他 &gt; 终端</li>
-<li><strong>启动台</strong> 或是　<code>Commond⌘ + 空格</code> 打开聚焦搜索，搜索 <strong>终端</strong> 或是 <strong>Terminal</strong></li>
-</ul>
-<h3 id="安装-Homebrew"><a href="#安装-Homebrew" class="headerlink" title="安装 Homebrew"></a>安装 Homebrew</h3><p>中国大陆地区或是更详细步骤请查看：<a href="https://ooo.run/post/how-to-install-homebrew-on-macos.html" target="_blank">如何在 macOS 中安装 Homebrew</a></p>
-<p>首先复制安装命令  </p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">/bin/bash -c <span class="string">&quot;<span class="subst">$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)</span>&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>在终端内执行安装命令，安装时需要输入你的电脑密码进行授权：  </p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">==&gt; Checking <span class="keyword">for</span> `<span class="built_in">sudo</span>` access (<span class="built_in">which</span> may request your password)...</span><br><span class="line">Password:</span><br></pre></td></tr></table></figure>
-<p>brew 会提示将安装的软件以及创建的文件夹，按回车继续，等待下载和安装完成。</p>
-<p>命令执行结束后按照提示复制执行下面的三条命令添加 PATH :</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> &gt;&gt; /Users/me/.zprofile</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;eval &quot;$(/opt/homebrew/bin/brew shellenv)&quot;&#x27;</span> &gt;&gt; /Users/me/.zprofile</span><br><span class="line"><span class="built_in">eval</span> <span class="string">&quot;<span class="subst">$(/opt/homebrew/bin/brew shellenv)</span>&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>如果使用了 <code>oh-my-zsh</code> ，需要执行下面的命令:</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export PATH=&quot;/opt/homebrew/bin:$PATH&quot;&#x27;</span> &gt;&gt; ~/.zshrc   </span><br><span class="line"><span class="built_in">source</span> ~/.zshrc</span><br></pre></td></tr></table></figure>
-
-<p>然后可以执行 <code>brew -v</code> 测试安装结果，成功会显示 Hombrew 的版本号。   </p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt;brew -v</span><br><span class="line">Homebrew 4.4.11</span><br></pre></td></tr></table></figure>
-
-<h3 id="安装-Nodejs"><a href="#安装-Nodejs" class="headerlink" title="安装 Nodejs"></a>安装 Nodejs</h3><p>打开终端，执行</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">brew install node</span><br></pre></td></tr></table></figure>
-
-<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt;node -v</span><br><span class="line">v23.4.0</span><br><span class="line"></span><br><span class="line">&gt;npm -v</span><br><span class="line">10.9.2</span><br></pre></td></tr></table></figure>
-
-<h3 id="brew-常用命令"><a href="#brew-常用命令" class="headerlink" title="brew 常用命令"></a>brew 常用命令</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 安装指定版本</span></span><br><span class="line">brew install node@22</span><br><span class="line"></span><br><span class="line"><span class="comment"># 卸载</span></span><br><span class="line">brew remove node</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看已安装软件</span></span><br><span class="line">brew list </span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查更新</span></span><br><span class="line">brew update</span><br><span class="line"></span><br><span class="line"><span class="comment"># 下载更新</span></span><br><span class="line">brew upgrade</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-8-panel-2" aria-labelledby="tabs-8-tab-2" class="flatpaper-tabs__panel" data-index="2" hidden><h2 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h2><p>Linux 使用 nvm 包管理器可以很方便的安装 Node.js</p>
-<h3 id="首先安装-nvm"><a href="#首先安装-nvm" class="headerlink" title="首先安装 nvm"></a>首先安装 nvm</h3><h1 id="安装-nvm-Node-版本管理器"><a href="#安装-nvm-Node-版本管理器" class="headerlink" title="安装 nvm (Node 版本管理器)"></a>安装 nvm (Node 版本管理器)</h1><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash</span><br></pre></td></tr></table></figure>
-
-<p>更新一下 PATH</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># bash</span></span><br><span class="line"><span class="built_in">source</span> ~/.bashrc</span><br><span class="line"></span><br><span class="line"><span class="comment"># zsh</span></span><br><span class="line"><span class="built_in">source</span> ~/.zshrc</span><br></pre></td></tr></table></figure>
-
-<p>验证</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">root@debian:~# nvm -v</span><br><span class="line">0.40.1</span><br></pre></td></tr></table></figure>
-
-<h3 id="安装-Node-js"><a href="#安装-Node-js" class="headerlink" title="安装 Node.js"></a>安装 Node.js</h3><p>下载并安装 Node.js 22 LTS 版本</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">nvm install 22</span><br></pre></td></tr></table></figure>
-
-<p>验证</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">root@debian:~# node -v</span><br><span class="line">v22.12.0</span><br><span class="line">root@debian:~# npm -v</span><br><span class="line">10.9.0</span><br></pre></td></tr></table></figure></section></div></div>
-
-<h2 id="npm-常用命令"><a href="#npm-常用命令" class="headerlink" title="npm 常用命令"></a>npm 常用命令</h2><p><code>npm</code> 是 Node.js 自带的包管理器是 ，我们可以很方便的安装 Node.js 应用，常用命令介绍：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 初始化项目，创建 package.json 文件</span></span><br><span class="line">npm init</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看版本</span></span><br><span class="line">npm -v</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看当前 npm 的配</span></span><br><span class="line">npm config list	</span><br><span class="line"></span><br><span class="line"><span class="comment"># 更新 npm 到最新版本</span></span><br><span class="line">npm update -g npm</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装项目中的所有依赖项（基于 package.json）</span></span><br><span class="line">npm i</span><br><span class="line">npm install </span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装指定包，并添加到项目依赖</span></span><br><span class="line">npm install &lt;package&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装指定版本的包，例如：npm i lodash@4.17.20</span></span><br><span class="line">npm install &lt;package&gt;@&lt;version&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 全局安装指定的包（通常为 CLI 工具） </span></span><br><span class="line">npm install &lt;package&gt; -g</span><br><span class="line"></span><br><span class="line"><span class="comment"># 卸载指定包</span></span><br><span class="line">npm uninstall &lt;package&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 更新指定的包到最新版本</span></span><br><span class="line">npm update &lt;package&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看当前项目已安装的依赖包</span></span><br><span class="line">npm list</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看全局已安装的依赖包</span></span><br><span class="line">npm list -g</span><br><span class="line"></span><br><span class="line"><span class="comment"># 移除未在 package.json 中声明的多余依赖包</span></span><br><span class="line">npm prune</span><br></pre></td></tr></table></figure>
-
-<h2 id="使用-pnpm"><a href="#使用-pnpm" class="headerlink" title="使用 pnpm"></a>使用 pnpm</h2><p>如果你需要经常使用 Node.js 应用，更推荐安装 <code>pnpm</code> 包管理，它的性能更好，安装速度速度更快，默认开启严格模式，确保项目中的依赖版本一致，避免了某些隐藏的版本冲突问题，并且对保持对 npm 的兼容。</p>
-<p>pnpm 的版本锁定文件是 <code>pnpm-lock.yaml</code></p>
-<h3 id="安装-pnpm"><a href="#安装-pnpm" class="headerlink" title="安装 pnpm"></a>安装 pnpm</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm install -g pnpm</span><br></pre></td></tr></table></figure>
-
-<h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><p><code>pnpm</code> 使用命令与 <code>npm</code> 类似，比如：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 基于 pnpm-lock.yaml 安装依赖</span></span><br><span class="line">pnpm i</span><br><span class="line">pnpm install </span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看自身版本</span></span><br><span class="line">pnpm -v</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装单个依赖，使用 pnpm install 也是可以的</span></span><br><span class="line">pnpm add &lt;package&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 全局安装</span></span><br><span class="line">pnpm add -g &lt;package&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 指定版本</span></span><br><span class="line">pnpm add &lt;package&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除软件包</span></span><br><span class="line">pnpm remove &lt;package&gt; </span><br><span class="line"></span><br><span class="line"><span class="comment"># 更新自身</span></span><br><span class="line">pnpm self-update</span><br><span class="line">pnpm add -g pnpm</span><br></pre></td></tr></table></figure>
-
-<h2 id="其他操作"><a href="#其他操作" class="headerlink" title="其他操作"></a>其他操作</h2><h3 id="更换镜像源"><a href="#更换镜像源" class="headerlink" title="更换镜像源"></a>更换镜像源</h3><div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>中国大陆用户可以使用下面的命令切换使用淘宝的镜像源，加速下载</p></div></div>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm config <span class="built_in">set</span> registry https://registry.npm.taobao.org</span><br></pre></td></tr></table></figure>
-
-<p>查看当前的镜像源</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm config get registry</span><br></pre></td></tr></table></figure>
-
-
-]]></content>
-      <categories>
-        <category>教程</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-        <tag>macOS</tag>
-        <tag>Nodejs</tag>
-        <tag>Windows</tag>
       </tags>
   </entry>
   <entry>
@@ -560,7 +548,7 @@
 <p>编辑后可以重新执行 <code>hexo s</code> 进行预览。 </p>
 <h3 id="添加主题-Butterfly"><a href="#添加主题-Butterfly" class="headerlink" title="添加主题(Butterfly)"></a>添加主题(Butterfly)</h3><p>Hexo 支持很多主题，下面将使用并设置的是 <a href="https://butterfly.js.org/">Butterfly</a> 主题。</p>
 <p>先安装一下所需的依赖</p>
-<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-9-tab-0" aria-controls="tabs-9-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">npm</button><button type="button" role="tab" id="tabs-9-tab-1" aria-controls="tabs-9-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">pnpm</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-9-panel-0" aria-labelledby="tabs-9-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm install hexo-util moment-timezone hexo-renderer-pug hexo-renderer-stylus --save</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-9-panel-1" aria-labelledby="tabs-9-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pnpm install hexo-util moment-timezone hexo-renderer-pug hexo-renderer-stylus</span><br></pre></td></tr></table></figure></section></div></div>
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-10-tab-0" aria-controls="tabs-10-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">npm</button><button type="button" role="tab" id="tabs-10-tab-1" aria-controls="tabs-10-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">pnpm</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-10-panel-0" aria-labelledby="tabs-10-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm install hexo-util moment-timezone hexo-renderer-pug hexo-renderer-stylus --save</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-10-panel-1" aria-labelledby="tabs-10-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pnpm install hexo-util moment-timezone hexo-renderer-pug hexo-renderer-stylus</span><br></pre></td></tr></table></figure></section></div></div>
 
 <p>打开终端，在博客目录下执行下面的命令下载主题</p>
 <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> -b master https://github.com/jerryc127/hexo-theme-butterfly.git themes/butterfly</span><br></pre></td></tr></table></figure>
@@ -612,7 +600,7 @@
 <h2 id="部署到-GitHub"><a href="#部署到-GitHub" class="headerlink" title="部署到 GitHub"></a>部署到 GitHub</h2><p>我们已经完成了主设置，并创建了新的文章，现在我们将把博客托管到 GitHub Pages 上，从而从网络上访问。</p>
 <p>访问 <a href="https://github.com/new">https://github.com/new</a> 创建一个新的仓库，<code>Repository name</code> 必须是 <code>&lt;username&gt;.github.io</code>，否则不会生效。</p>
 <p>然后打开终端，安装 <code>hexo-deployer-git</code> </p>
-<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-10-tab-0" aria-controls="tabs-10-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">npm</button><button type="button" role="tab" id="tabs-10-tab-1" aria-controls="tabs-10-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">pnpm</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-10-panel-0" aria-labelledby="tabs-10-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-10-panel-1" aria-labelledby="tabs-10-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pnpm install hexo-deployer-git</span><br></pre></td></tr></table></figure></section></div></div>
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-11-tab-0" aria-controls="tabs-11-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">npm</button><button type="button" role="tab" id="tabs-11-tab-1" aria-controls="tabs-11-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">pnpm</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-11-panel-0" aria-labelledby="tabs-11-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-11-panel-1" aria-labelledby="tabs-11-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pnpm install hexo-deployer-git</span><br></pre></td></tr></table></figure></section></div></div>
 
 <p>然后编辑博客目录下的 <code>_config.yml</code> 文件，设置底部的 deploy 部分。</p>
 <figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="comment"># 仓库地址</span></span><br><span class="line">  <span class="attr">repo:</span> <span class="string">https://github.com/&lt;username&gt;/&lt;username&gt;.github.io</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">gh-pages</span></span><br></pre></td></tr></table></figure>
@@ -713,7 +701,7 @@
 <li>当本地比服务器更新时，显示为 <code>Push origin</code> 表示可以推送更新到 GitHub<br> 本地更新后，可以在左下角 <strong>Summary</strong> 中填写注释，点击 <code>Commit to main</code>，就可以推送更新了</li>
 </ul>
 <h2 id="其他操作"><a href="#其他操作" class="headerlink" title="其他操作"></a>其他操作</h2><h3 id="给站点添加搜索功能"><a href="#给站点添加搜索功能" class="headerlink" title="给站点添加搜索功能"></a>给站点添加搜索功能</h3><p>在 Hexo 根目录运行</p>
-<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-11-tab-0" aria-controls="tabs-11-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">npm</button><button type="button" role="tab" id="tabs-11-tab-1" aria-controls="tabs-11-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">pnpm</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-11-panel-0" aria-labelledby="tabs-11-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm install hexo-generator-searchdb --save</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-11-panel-1" aria-labelledby="tabs-11-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pnpm install hexo-generator-searchdb</span><br></pre></td></tr></table></figure></section></div></div>
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-12-tab-0" aria-controls="tabs-12-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">npm</button><button type="button" role="tab" id="tabs-12-tab-1" aria-controls="tabs-12-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">pnpm</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-12-panel-0" aria-labelledby="tabs-12-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm install hexo-generator-searchdb --save</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-12-panel-1" aria-labelledby="tabs-12-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pnpm install hexo-generator-searchdb</span><br></pre></td></tr></table></figure></section></div></div>
 
 <p>修改站点配置文件 <code>_config.yml</code>，在最后新增</p>
 <figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">search:</span></span><br><span class="line">  <span class="attr">path:</span> <span class="string">search.xml</span></span><br><span class="line">  <span class="attr">field:</span> <span class="string">post</span></span><br><span class="line">  <span class="attr">content:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">format:</span> <span class="string">html</span></span><br></pre></td></tr></table></figure>
@@ -725,11 +713,11 @@
 <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 生成站点文件</span></span><br><span class="line">hexo clean </span><br><span class="line">hexo g </span><br><span class="line"></span><br><span class="line"><span class="comment"># 开启预览</span></span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
 
 <h3 id="添加站点地图"><a href="#添加站点地图" class="headerlink" title="添加站点地图"></a>添加站点地图</h3><p>在 Hexo 根目录下执行</p>
-<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-12-tab-0" aria-controls="tabs-12-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">npm</button><button type="button" role="tab" id="tabs-12-tab-1" aria-controls="tabs-12-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">pnpm</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-12-panel-0" aria-labelledby="tabs-12-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm install hexo-generator-sitemap --save</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-12-panel-1" aria-labelledby="tabs-12-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pnpm install hexo-generator-sitemap </span><br></pre></td></tr></table></figure></section></div></div>
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-13-tab-0" aria-controls="tabs-13-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">npm</button><button type="button" role="tab" id="tabs-13-tab-1" aria-controls="tabs-13-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">pnpm</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-13-panel-0" aria-labelledby="tabs-13-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm install hexo-generator-sitemap --save</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-13-panel-1" aria-labelledby="tabs-13-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pnpm install hexo-generator-sitemap </span><br></pre></td></tr></table></figure></section></div></div>
 
 <p>以后生成站点信息时会自动生成 <code>sitemap.xml</code> 文件，本地 <code>hexo s</code> 预览可以通过 <code>http://localhost:4000/sitemap.xml</code> 访问</p>
 <h3 id="添加-RSS-支持"><a href="#添加-RSS-支持" class="headerlink" title="添加 RSS 支持"></a>添加 RSS 支持</h3><p>在 Hexo 根目录下执行</p>
-<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-13-tab-0" aria-controls="tabs-13-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">npm</button><button type="button" role="tab" id="tabs-13-tab-1" aria-controls="tabs-13-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">pnpm</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-13-panel-0" aria-labelledby="tabs-13-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm install hexo-generator-feed --save</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-13-panel-1" aria-labelledby="tabs-13-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pnpm install hexo-generator-feed</span><br></pre></td></tr></table></figure></section></div></div>
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-14-tab-0" aria-controls="tabs-14-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">npm</button><button type="button" role="tab" id="tabs-14-tab-1" aria-controls="tabs-14-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">pnpm</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-14-panel-0" aria-labelledby="tabs-14-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm install hexo-generator-feed --save</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-14-panel-1" aria-labelledby="tabs-14-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pnpm install hexo-generator-feed</span><br></pre></td></tr></table></figure></section></div></div>
 
 <p>然后编辑 Hexo 根目录下的 <code>_config.yml</code> 文件，在最后添加</p>
 <figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># RSS</span></span><br><span class="line"><span class="attr">feed:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">atom</span></span><br><span class="line">  <span class="attr">path:</span> <span class="string">atom.xml</span></span><br><span class="line">  <span class="comment"># 限制输出文章数量</span></span><br><span class="line">  <span class="attr">limit:</span> <span class="number">20</span></span><br></pre></td></tr></table></figure>
@@ -754,88 +742,100 @@
       </tags>
   </entry>
   <entry>
-    <title>如何使用 SSH key 连接 GitHub</title>
-    <url>/post/how-to-add-ssh-key-to-github.html</url>
-    <content><![CDATA[<p>如果需要频繁的进行 GitHub pull&#x2F;push 操作，使用 SSH key 绑定到 GitHub 会更加方便，绑定后将使用公钥加密来验证用户身份，比传统的用户名和密码方式更安全。  </p>
-<p>本文命令与截图对应下面的系统版本，需要先安装 <a href="https://git-scm.com/downloads">Git</a></p>
+    <title>如何安装 Node.js</title>
+    <url>/post/how-to-install-nodejs.html</url>
+    <content><![CDATA[<p>本文将带介绍如何在电脑上安装 Node.js 运行环境，从而可以使用丰富的应用 Nodejs 程序。 </p>
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-15-tab-0" aria-controls="tabs-15-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">Windows</button><button type="button" role="tab" id="tabs-15-tab-1" aria-controls="tabs-15-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">macOS</button><button type="button" role="tab" id="tabs-15-tab-2" aria-controls="tabs-15-panel-2" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="2">Linux</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-15-panel-0" aria-labelledby="tabs-15-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><h2 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h2><p>测试安装环境为 <code>Windows 11</code></p>
+<h3 id="下载-Node-js"><a href="#下载-Node-js" class="headerlink" title="下载 Node.js"></a>下载 Node.js</h3><p>访问 Node.js 的官方网站的 <a href="https://nodejs.org/zh-cn/download/prebuilt-installer">下载页面</a> 下载安装包。 </p>
+<p>我们选择 <strong>预构建安装程序</strong> ，选择一下自己的系统与 CPU 架构类型， Windows 一般选择 <strong>x64</strong>，再选择 Node.js 版本。</p>
+<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>推荐选择版本号为偶数的 LTS 版本</p></div></div>  
+
+<p><img src="https://img.nep.me/i/2024/12/13/7fzq5m-2.webp" alt="nodejs-home-page"></p>
+<h3 id="安装-Node-js"><a href="#安装-Node-js" class="headerlink" title="安装 Node.js"></a>安装 Node.js</h3><p>然后打开安装程序 <code>node-v22.12.0-x64.msi</code>，安装过程没有陷阱，我们 <strong>同意</strong> 协议后，一路点击 Next 即可。  </p>
+<p><img src="https://img.nep.me/i/2024/12/13/7hc7pi-2.webp" alt="nodejs-setup"></p>
+<p>安装完成后，打开终端程序：</p>
 <ul>
-<li><strong>Windows 11</strong> : 一般安装 <code>64-bit Git for Windows Setup</code>, 安装选项全部<strong>默认</strong>即可</li>
-<li><strong>macOS 15.1</strong> : 更推荐通过安装 <a href="https://brew.sh/">Homebrew</a> 获取 Git 程序，查看 <a href="https://ooo.run/post/how-to-install-homebrew-on-macos.html">如何在 macOS 中安装 Homebrew </a></li>
-</ul>
-<h2 id="打开终端程序"><a href="#打开终端程序" class="headerlink" title="打开终端程序"></a>打开终端程序</h2><h3 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h3><ul>
 <li>右键点击开始菜单，选择终端</li>
 <li>或是按 <code>Windows + R</code> 快捷键打开 <strong>运行</strong> 窗口，输入 <code>cmd</code> ，回车打开</li>
+<li>或是在资源管理器的地址栏中输入 <code>cmd</code> 回车打开（终端的运行目录将是资源管理器所在的目录）</li>
 </ul>
-<h3 id="macOS"><a href="#macOS" class="headerlink" title="macOS"></a>macOS</h3><ul>
+<p>运行下面的命令测试安装结果。</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">node -v</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm -v</span><br></pre></td></tr></table></figure>
+
+<p>如果可以成功输出版本号，表示安装成功。  </p>
+<p><img src="https://img.nep.me/i/2024/12/13/7ilvge-2.webp" alt="nodejs-install-done"></p></section><section role="tabpanel" id="tabs-15-panel-1" aria-labelledby="tabs-15-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><h2 id="macOS"><a href="#macOS" class="headerlink" title="macOS"></a>macOS</h2><p>测试安装环境为 <code>macOS 15.1</code> ，macOS 更推荐使用 <strong>包管理器</strong> <code>Homebrew</code> 进行安装。</p>
+<blockquote>
+<p><a href="https://brew.sh/zh-cn/">Homebrew</a> 是 macOS 和 Linux 缺失软件包的管理器，用于安装 Apple没有预装但你需要的东西。</p>
+</blockquote>
+<p>安装需要使用终端，<a href="https://support.apple.com/zh-cn/guide/terminal/apd5265185d-f365-44cb-8b09-71a064a42125/mac">在 Mac 上打开或退出“终端”</a>：</p>
+<ul>
 <li>启动台 &gt; 其他 &gt; 终端</li>
 <li><strong>启动台</strong> 或是　<code>Commond⌘ + 空格</code> 打开聚焦搜索，搜索 <strong>终端</strong> 或是 <strong>Terminal</strong></li>
 </ul>
-<p>安装 Git 后，使用 <code>git -v</code> 测试，如果安装成功会显示版本号</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt; git -v</span><br><span class="line">git version 2.47.1</span><br></pre></td></tr></table></figure>
-<p>然后设置 Git 的个人信息</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;yourname&quot;</span></span><br><span class="line">git config --global user.email <span class="string">&quot;your_email@example.com&quot;</span></span><br></pre></td></tr></table></figure>
+<h3 id="安装-Homebrew"><a href="#安装-Homebrew" class="headerlink" title="安装 Homebrew"></a>安装 Homebrew</h3><p>中国大陆地区或是更详细步骤请查看：<a href="https://ooo.run/post/how-to-install-homebrew-on-macos.html" target="_blank">如何在 macOS 中安装 Homebrew</a></p>
+<p>首先复制安装命令  </p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">/bin/bash -c <span class="string">&quot;<span class="subst">$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)</span>&quot;</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="测试一下-github-com"><a href="#测试一下-github-com" class="headerlink" title="测试一下 github.com"></a>测试一下 github.com</h2><div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>Windows 10 用户可以使用 Git Bash</p></div></div>
-<div class="flatpaper-note flatpaper-note--warning"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>测试时会自动创建 <code>.ssh</code> 文件夹，因此你也需要测试一下</p></div></div>
+<p>在终端内执行安装命令，安装时需要输入你的电脑密码进行授权：  </p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">==&gt; Checking <span class="keyword">for</span> `<span class="built_in">sudo</span>` access (<span class="built_in">which</span> may request your password)...</span><br><span class="line">Password:</span><br></pre></td></tr></table></figure>
+<p>brew 会提示将安装的软件以及创建的文件夹，按回车继续，等待下载和安装完成。</p>
+<p>命令执行结束后按照提示复制执行下面的三条命令添加 PATH :</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> &gt;&gt; /Users/me/.zprofile</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;eval &quot;$(/opt/homebrew/bin/brew shellenv)&quot;&#x27;</span> &gt;&gt; /Users/me/.zprofile</span><br><span class="line"><span class="built_in">eval</span> <span class="string">&quot;<span class="subst">$(/opt/homebrew/bin/brew shellenv)</span>&quot;</span></span><br></pre></td></tr></table></figure>
 
-<p>打开终端程序，运行测试命令，如果是第一次运行，需要输入 <code>yes</code> 确认</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure>
+<p>如果使用了 <code>oh-my-zsh</code> ，需要执行下面的命令:</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export PATH=&quot;/opt/homebrew/bin:$PATH&quot;&#x27;</span> &gt;&gt; ~/.zshrc   </span><br><span class="line"><span class="built_in">source</span> ~/.zshrc</span><br></pre></td></tr></table></figure>
 
-<p>我们没有添加过 SSH key，会提示 <code>Permission denied (publickey).</code></p>
-<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-14-tab-0" aria-controls="tabs-14-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">Windows</button><button type="button" role="tab" id="tabs-14-tab-1" aria-controls="tabs-14-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">macOS</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-14-panel-0" aria-labelledby="tabs-14-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><p><img src="https://img.nep.me/i/2024/12/13/122owl6-2.webp"></p></section><section role="tabpanel" id="tabs-14-panel-1" aria-labelledby="tabs-14-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><p><img src="https://img.nep.me/i/2024/12/13/124oz3l-2.webp"></p></section></div></div>
+<p>然后可以执行 <code>brew -v</code> 测试安装结果，成功会显示 Hombrew 的版本号。   </p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt;brew -v</span><br><span class="line">Homebrew 4.4.11</span><br></pre></td></tr></table></figure>
 
-<h2 id="创建-SSH-Key"><a href="#创建-SSH-Key" class="headerlink" title="创建 SSH Key"></a>创建 SSH Key</h2><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> .ssh</span><br><span class="line"></span><br><span class="line">ssh-keygen -t rsa -C <span class="string">&quot;your_email@example.com&quot;</span></span><br></pre></td></tr></table></figure>
+<h3 id="安装-Nodejs"><a href="#安装-Nodejs" class="headerlink" title="安装 Nodejs"></a>安装 Nodejs</h3><p>打开终端，执行</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">brew install node</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">C:\Users\ME\.ssh&gt;ssh-keygen -t rsa</span><br><span class="line"></span><br><span class="line">Generating public/private rsa key pair.</span><br><span class="line"><span class="comment"># 设置保存文件名，留空则为 id_rsa</span></span><br><span class="line">Enter file <span class="keyword">in</span> <span class="built_in">which</span> to save the key (C:\Users\ME/.ssh/id_rsa):</span><br><span class="line"><span class="comment"># 设置密码，留空则是没有密码</span></span><br><span class="line">Enter passphrase (empty <span class="keyword">for</span> no passphrase):</span><br><span class="line"><span class="comment"># 确认密码</span></span><br><span class="line">Enter same passphrase again:</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成的私钥</span></span><br><span class="line">Your identification has been saved <span class="keyword">in</span> C:\Users\ME/.ssh/id_rsa</span><br><span class="line"><span class="comment"># 生成的公钥</span></span><br><span class="line">Your public key has been saved <span class="keyword">in</span> C:\Users\ME/.ssh/id_rsa.pub</span><br></pre></td></tr></table></figure>
-<div class="flatpaper-note flatpaper-note--warning"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p><code>.pub</code> 后缀的是公钥，可以公开，<strong>私钥相当于个人密码，要小心保存</strong></p></div></div>
+<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt;node -v</span><br><span class="line">v23.4.0</span><br><span class="line"></span><br><span class="line">&gt;npm -v</span><br><span class="line">10.9.2</span><br></pre></td></tr></table></figure>
 
-<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>git 默认会查找名称为 <code>id_rsa</code> 的 SSH key </p></div></div>
+<h3 id="brew-常用命令"><a href="#brew-常用命令" class="headerlink" title="brew 常用命令"></a>brew 常用命令</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 安装指定版本</span></span><br><span class="line">brew install node@22</span><br><span class="line"></span><br><span class="line"><span class="comment"># 卸载</span></span><br><span class="line">brew remove node</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看已安装软件</span></span><br><span class="line">brew list </span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查更新</span></span><br><span class="line">brew update</span><br><span class="line"></span><br><span class="line"><span class="comment"># 下载更新</span></span><br><span class="line">brew upgrade</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-15-panel-2" aria-labelledby="tabs-15-tab-2" class="flatpaper-tabs__panel" data-index="2" hidden><h2 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h2><p>Linux 使用 nvm 包管理器可以很方便的安装 Node.js</p>
+<h3 id="首先安装-nvm"><a href="#首先安装-nvm" class="headerlink" title="首先安装 nvm"></a>首先安装 nvm</h3><h1 id="安装-nvm-Node-版本管理器"><a href="#安装-nvm-Node-版本管理器" class="headerlink" title="安装 nvm (Node 版本管理器)"></a>安装 nvm (Node 版本管理器)</h1><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash</span><br></pre></td></tr></table></figure>
 
-<div class="flatpaper-note flatpaper-note--primary"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>如果设置了文件名称，或是生成其他格式的 SSH key 可以查看后文的配合 <code>SSH config</code> 的部分</p></div></div>
+<p>更新一下 PATH</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># bash</span></span><br><span class="line"><span class="built_in">source</span> ~/.bashrc</span><br><span class="line"></span><br><span class="line"><span class="comment"># zsh</span></span><br><span class="line"><span class="built_in">source</span> ~/.zshrc</span><br></pre></td></tr></table></figure>
 
-<div class="flatpaper-note flatpaper-note--default"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>rsa 格式的 key 内容很长，使用 <code>ssh-keygen -t ed25519</code> 生成 <code>ed25519</code> 格式的 key，更简洁，更安全</p></div></div>
+<p>验证</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">root@debian:~# nvm -v</span><br><span class="line">0.40.1</span><br></pre></td></tr></table></figure>
 
-<h2 id="添加公钥到-GitHub"><a href="#添加公钥到-GitHub" class="headerlink" title="添加公钥到 GitHub"></a>添加公钥到 GitHub</h2><p>使用命令或是文本编辑器查看公钥的内容</p>
-<ul>
-<li>Windows 使用 <code>type id_rsa.pub</code> </li>
-<li>macOS &#x2F; Linux 使用 <code>cat id_rsa.pub</code></li>
-</ul>
-<p>访问 <a href="https://github.com/settings/keys">Github - SSH Keys</a>，点击右上角 <strong>New SSH key</strong>。<br>手动访问路径：右上角点击 <strong>头像</strong> &gt; <strong>Settings</strong> &gt; <strong>SSH and GPG keys</strong> &gt; <strong>New SSH key</strong></p>
-<p><img src="https://img.nep.me/i/2024/12/13/12s8co0-2.webp" alt="github-add-ssh-key"></p>
-<ul>
-<li><strong>Title</strong>：取个备注名字</li>
-<li><strong>Key type</strong>：不需要修改，保持默认 <strong>Authentication Key</strong></li>
-<li><strong>Key</strong>：粘贴 <code>id_rsa.pub</code> 对应的文本内容</li>
-<li>点击 <code>Add SSH key</code> 保存</li>
-</ul>
-<p><img src="https://img.nep.me/i/2024/12/13/12sain9-2.webp" alt="github-add-ssh-key-details"></p>
-<p>添加成功会在列表显示<br><img src="https://img.nep.me/i/2024/12/13/12vf7u0-2.webp" alt="github-add-ssh-key-done"></p>
-<p>此时我们再执行测试命令，就会获得成功的欢迎提示。 </p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt;ssh -T git@github.com</span><br><span class="line">Hi &lt;Your username&gt;! You<span class="string">&#x27;ve successfully authenticated, but GitHub does not provide shell access.</span></span><br></pre></td></tr></table></figure>
+<h3 id="安装-Node-js"><a href="#安装-Node-js" class="headerlink" title="安装 Node.js"></a>安装 Node.js</h3><p>下载并安装 Node.js 22 LTS 版本</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">nvm install 22</span><br></pre></td></tr></table></figure>
 
-<h2 id="配合-SSH-config-使用"><a href="#配合-SSH-config-使用" class="headerlink" title="配合 SSH config 使用"></a>配合 SSH config 使用</h2><p>如果我们的私钥的名称不是 <code>id_rsa</code> ，我们将仍然无法成功连接 GitHub ，你可以将私钥修改文件名后再试试 </p>
-<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-15-tab-0" aria-controls="tabs-15-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">Windows</button><button type="button" role="tab" id="tabs-15-tab-1" aria-controls="tabs-15-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">macOS&amp;Linux</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-15-panel-0" aria-labelledby="tabs-15-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt; rename id_rsa id_mysshkey</span><br><span class="line"></span><br><span class="line">&gt; ssh -T git@github.com</span><br><span class="line">git@github.com: Permission denied (publickey).</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-15-panel-1" aria-labelledby="tabs-15-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt; <span class="built_in">mv</span> id_rsa id_mysshkey</span><br><span class="line"></span><br><span class="line">&gt; ssh -T git@github.com</span><br><span class="line">git@github.com: Permission denied (publickey).</span><br></pre></td></tr></table></figure></section></div></div>
+<p>验证</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">root@debian:~# node -v</span><br><span class="line">v22.12.0</span><br><span class="line">root@debian:~# npm -v</span><br><span class="line">10.9.0</span><br></pre></td></tr></table></figure></section></div></div>
 
-<p>这时我们可以通过在 <code>.ssh</code> 文件夹中创建一个 <code>config</code> 文件，填入下面的内容来告诉 git 程序在哪里找到密钥</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Host github.com</span><br><span class="line">    HostName github.com</span><br><span class="line">    User git</span><br><span class="line">    IdentityFile ~/.ssh/id_mysshkey</span><br></pre></td></tr></table></figure>
+<h2 id="npm-常用命令"><a href="#npm-常用命令" class="headerlink" title="npm 常用命令"></a>npm 常用命令</h2><p><code>npm</code> 是 Node.js 自带的包管理器是 ，我们可以很方便的安装 Node.js 应用，常用命令介绍：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 初始化项目，创建 package.json 文件</span></span><br><span class="line">npm init</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看版本</span></span><br><span class="line">npm -v</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看当前 npm 的配</span></span><br><span class="line">npm config list	</span><br><span class="line"></span><br><span class="line"><span class="comment"># 更新 npm 到最新版本</span></span><br><span class="line">npm update -g npm</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装项目中的所有依赖项（基于 package.json）</span></span><br><span class="line">npm i</span><br><span class="line">npm install </span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装指定包，并添加到项目依赖</span></span><br><span class="line">npm install &lt;package&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装指定版本的包，例如：npm i lodash@4.17.20</span></span><br><span class="line">npm install &lt;package&gt;@&lt;version&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 全局安装指定的包（通常为 CLI 工具） </span></span><br><span class="line">npm install &lt;package&gt; -g</span><br><span class="line"></span><br><span class="line"><span class="comment"># 卸载指定包</span></span><br><span class="line">npm uninstall &lt;package&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 更新指定的包到最新版本</span></span><br><span class="line">npm update &lt;package&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看当前项目已安装的依赖包</span></span><br><span class="line">npm list</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看全局已安装的依赖包</span></span><br><span class="line">npm list -g</span><br><span class="line"></span><br><span class="line"><span class="comment"># 移除未在 package.json 中声明的多余依赖包</span></span><br><span class="line">npm prune</span><br></pre></td></tr></table></figure>
 
-<p>其中 <code>IdentityFile</code> 部分填写私钥的路径， <code>~</code> 代表用户 Home 目录</p>
-<ul>
-<li>Windows 相当于 <code>C:\Users\&lt;username&gt;\</code></li>
-<li>macOS 相当于 <code>/Users/&lt;username&gt;/</code></li>
-<li>Linux 相当于 <code>/root/</code> 或是 <code>/home/&lt;username&gt;/</code></li>
-</ul>
-<p>再进行测试，发现又能显示成功的欢迎消息。  </p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt;ssh -T git@github.com</span><br><span class="line">Hi &lt;Your username&gt;! You<span class="string">&#x27;ve successfully authenticated, but GitHub does not provide shell access.</span></span><br></pre></td></tr></table></figure>
+<h2 id="使用-pnpm"><a href="#使用-pnpm" class="headerlink" title="使用 pnpm"></a>使用 pnpm</h2><p>如果你需要经常使用 Node.js 应用，更推荐安装 <code>pnpm</code> 包管理，它的性能更好，安装速度速度更快，默认开启严格模式，确保项目中的依赖版本一致，避免了某些隐藏的版本冲突问题，并且对保持对 npm 的兼容。</p>
+<p>pnpm 的版本锁定文件是 <code>pnpm-lock.yaml</code></p>
+<h3 id="安装-pnpm"><a href="#安装-pnpm" class="headerlink" title="安装 pnpm"></a>安装 pnpm</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm install -g pnpm</span><br></pre></td></tr></table></figure>
 
-<p>以后就可以很方便的使用 Git 了！</p>
+<h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><p><code>pnpm</code> 使用命令与 <code>npm</code> 类似，比如：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 基于 pnpm-lock.yaml 安装依赖</span></span><br><span class="line">pnpm i</span><br><span class="line">pnpm install </span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看自身版本</span></span><br><span class="line">pnpm -v</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装单个依赖，使用 pnpm install 也是可以的</span></span><br><span class="line">pnpm add &lt;package&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 全局安装</span></span><br><span class="line">pnpm add -g &lt;package&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 指定版本</span></span><br><span class="line">pnpm add &lt;package&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除软件包</span></span><br><span class="line">pnpm remove &lt;package&gt; </span><br><span class="line"></span><br><span class="line"><span class="comment"># 更新自身</span></span><br><span class="line">pnpm self-update</span><br><span class="line">pnpm add -g pnpm</span><br></pre></td></tr></table></figure>
+
+<h2 id="其他操作"><a href="#其他操作" class="headerlink" title="其他操作"></a>其他操作</h2><h3 id="更换镜像源"><a href="#更换镜像源" class="headerlink" title="更换镜像源"></a>更换镜像源</h3><div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>中国大陆用户可以使用下面的命令切换使用淘宝的镜像源，加速下载</p></div></div>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm config <span class="built_in">set</span> registry https://registry.npm.taobao.org</span><br></pre></td></tr></table></figure>
+
+<p>查看当前的镜像源</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm config get registry</span><br></pre></td></tr></table></figure>
+
+
 ]]></content>
       <categories>
         <category>教程</category>
       </categories>
       <tags>
-        <tag>GitHub</tag>
-        <tag>SSH</tag>
+        <tag>Linux</tag>
+        <tag>macOS</tag>
+        <tag>Nodejs</tag>
+        <tag>Windows</tag>
       </tags>
   </entry>
   <entry>
@@ -1456,6 +1456,38 @@
       </tags>
   </entry>
   <entry>
+    <title>OpenAI 发布两款高性能开源人工智能模型 GPT-OSS-20B 与 GPT-OSS-120B</title>
+    <url>/post/news-openai-releae-gpt-oss-model.html</url>
+    <content><![CDATA[<p><strong>旧金山 – 2025年8月6日</strong> – OpenAI今日宣布推出两款采用混合专家（MoE）架构的开源推理模型：<strong>GPT-OSS-120B</strong> 和 <strong>GPT-OSS-20B</strong> 。 </p>
+<p>这两款模型使用  Apache 2.0 开源许可证发布，允许开发者和研究人员免费使用、修改和分发。</p>
+<p>新模型专注于思维链（Chain-of-Thought）推理，旨在通过将复杂任务分解为更小的步骤来提升结果的准确性。根据 OpenAI 的基准测试，<strong>GPT-OSS-20B</strong> 的性能可与 <code>o4-mini</code> 相媲美，而 <strong>GPT-OSS-120B</strong> 的性能则与 <code>o3-mini</code> 相当。</p>
+<p>OpenAI CEO 萨姆·奥尔特曼表示：</p>
+<blockquote>
+<p>“我们很高兴能将这些模型交到全世界更多人的手中。它们不会取代现有的GPT模型，而是作为一种补充，推动人工智能领域的创新与协作。”</p>
+</blockquote>
+<p>此次发布的一大亮点是其在本地设备上的运行能力。GPT-OSS-20B 等较小尺寸的模型经过优化，可在笔记本电脑甚至智能手机上高效运行。在 M4 芯片的 MacBook 上，20B 模型的推理速度可达每秒30-40个token。</p>
+<p><strong>相关链接:</strong></p>
+<ul>
+<li><strong>模型信息:</strong> <a href="https://openai.com/zh-Hans-CN/open-models/">https://openai.com/zh-Hans-CN/open-models/</a></li>
+<li><strong>模型下载:</strong> <a href="https://huggingface.co/openai">https://huggingface.co/openai</a></li>
+</ul>
+<p><strong>本地运行 GPT-OSS-20B</strong><br><a href="https://ollama.com/download">ollama</a> 上 GPT-OSS-20B 模型大小为 14GB ，一键运行命令如下：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">ollama run gpt-oss:20b </span><br></pre></td></tr></table></figure>
+
+<p>图形界面则可以使用 <a href="https://lmstudio.ai/">LM Studio</a></p>
+<p><img src="https://img.nep.me/i/2025/08/06/lmstudio-run-gpt-oss-20b.webp" alt="LM Studio run GPT-OSS-20B"></p>
+]]></content>
+      <categories>
+        <category>资讯</category>
+      </categories>
+      <tags>
+        <tag>AI</tag>
+        <tag>大模型</tag>
+        <tag>OpenAI</tag>
+        <tag>开源</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>普通人掘金互联网：独立开发起步指南</title>
     <url>/post/how-to-make-money-from-internet.html</url>
     <content><![CDATA[<p>你是否也曾羡慕那些在社交媒体上“透明化”分享收入、靠个人项目实现财务自由的独立开发者？看到他们动辄上千美金的月收入，你或许会觉得那是一个难以达成的目标。</p>
@@ -1589,38 +1621,6 @@
         <tag>独立开发</tag>
         <tag>个人项目</tag>
         <tag>副业</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>OpenAI 发布两款高性能开源人工智能模型 GPT-OSS-20B 与 GPT-OSS-120B</title>
-    <url>/post/news-openai-releae-gpt-oss-model.html</url>
-    <content><![CDATA[<p><strong>旧金山 – 2025年8月6日</strong> – OpenAI今日宣布推出两款采用混合专家（MoE）架构的开源推理模型：<strong>GPT-OSS-120B</strong> 和 <strong>GPT-OSS-20B</strong> 。 </p>
-<p>这两款模型使用  Apache 2.0 开源许可证发布，允许开发者和研究人员免费使用、修改和分发。</p>
-<p>新模型专注于思维链（Chain-of-Thought）推理，旨在通过将复杂任务分解为更小的步骤来提升结果的准确性。根据 OpenAI 的基准测试，<strong>GPT-OSS-20B</strong> 的性能可与 <code>o4-mini</code> 相媲美，而 <strong>GPT-OSS-120B</strong> 的性能则与 <code>o3-mini</code> 相当。</p>
-<p>OpenAI CEO 萨姆·奥尔特曼表示：</p>
-<blockquote>
-<p>“我们很高兴能将这些模型交到全世界更多人的手中。它们不会取代现有的GPT模型，而是作为一种补充，推动人工智能领域的创新与协作。”</p>
-</blockquote>
-<p>此次发布的一大亮点是其在本地设备上的运行能力。GPT-OSS-20B 等较小尺寸的模型经过优化，可在笔记本电脑甚至智能手机上高效运行。在 M4 芯片的 MacBook 上，20B 模型的推理速度可达每秒30-40个token。</p>
-<p><strong>相关链接:</strong></p>
-<ul>
-<li><strong>模型信息:</strong> <a href="https://openai.com/zh-Hans-CN/open-models/">https://openai.com/zh-Hans-CN/open-models/</a></li>
-<li><strong>模型下载:</strong> <a href="https://huggingface.co/openai">https://huggingface.co/openai</a></li>
-</ul>
-<p><strong>本地运行 GPT-OSS-20B</strong><br><a href="https://ollama.com/download">ollama</a> 上 GPT-OSS-20B 模型大小为 14GB ，一键运行命令如下：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">ollama run gpt-oss:20b </span><br></pre></td></tr></table></figure>
-
-<p>图形界面则可以使用 <a href="https://lmstudio.ai/">LM Studio</a></p>
-<p><img src="https://img.nep.me/i/2025/08/06/lmstudio-run-gpt-oss-20b.webp" alt="LM Studio run GPT-OSS-20B"></p>
-]]></content>
-      <categories>
-        <category>资讯</category>
-      </categories>
-      <tags>
-        <tag>AI</tag>
-        <tag>大模型</tag>
-        <tag>OpenAI</tag>
-        <tag>开源</tag>
       </tags>
   </entry>
   <entry>
@@ -2129,82 +2129,6 @@
       </tags>
   </entry>
   <entry>
-    <title>使用 Docker 快速部署 Memos 个人笔记系统</title>
-    <url>/post/use-docker-run-memeos.html</url>
-    <content><![CDATA[<h2 id="Memos-简介"><a href="#Memos-简介" class="headerlink" title="Memos 简介"></a>Memos 简介</h2><p>Memos 是一款开源的轻量级笔记服务，它允许你像发微博或推特一样，轻松记录每一个灵感和想法。由于其开源、支持 Docker 部署的特性，我们可以用它来搭建一个完全由自己掌控的私有化笔记系统。</p>
-<p>Memos 的核心功能包括：</p>
-<ul>
-<li><strong>Markdown</strong> 语法支持</li>
-<li><strong>标签 (Tag)</strong> 管理</li>
-<li><strong>任务列表 (Task)</strong> 支持</li>
-<li><strong>公开&#x2F;私密</strong> 笔记权限设置</li>
-<li><strong>多用户</strong> 协同使用</li>
-</ul>
-<p>在开始部署之前，你可以访问官方的 <a href="https://demo.usememos.com/">Memos Live Demo</a> 来快速体验一下。</p>
-<p>本教程将指导你如何使用 Docker Compose 快速部署一个安全、私有的 Memos 实例，让你在快速拥有属于自己的笔记管理系统。</p>
-<h2 id="一、环境准备"><a href="#一、环境准备" class="headerlink" title="一、环境准备"></a>一、环境准备</h2><p>在开始前，需要我们有一个自己的 VPS 或是支持 Docker 容器的 NAS 系统。</p>
-<h3 id="1-安装-Docker-和-Docker-Compose"><a href="#1-安装-Docker-和-Docker-Compose" class="headerlink" title="1. 安装 Docker 和 Docker Compose"></a>1. 安装 Docker 和 Docker Compose</h3><p>如果你的服务器尚未安装 Docker 和 Docker Compose ，可以参考以下教程：</p>
-<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p><strong>延伸阅读:</strong> <a href="https://ooo.run/post/debian-install-docker.html">在 Debian 12 中安装 Docker 以及 Docker Compose</a></p></div></div>
-
-<h3 id="2-创建项目目录"><a href="#2-创建项目目录" class="headerlink" title="2. 创建项目目录"></a>2. 创建项目目录</h3><p>为 Memos 创建一个专用的目录，用于存放配置文件和数据。</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p /opt/memos &amp;&amp; <span class="built_in">cd</span> /opt/memos</span><br></pre></td></tr></table></figure>
-
-<h2 id="二、使用-Docker-Compose-部署-Memos"><a href="#二、使用-Docker-Compose-部署-Memos" class="headerlink" title="二、使用 Docker Compose 部署 Memos"></a>二、使用 Docker Compose 部署 Memos</h2><h3 id="创建-docker-compose-yml-文件"><a href="#创建-docker-compose-yml-文件" class="headerlink" title="创建 docker-compose.yml 文件"></a>创建 <code>docker-compose.yml</code> 文件</h3><p>在项目目录 (<code>/opt/memos</code>) 中，创建一个名为 <code>docker-compose.yml</code> 的文件。</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">vim docker-compose.yml</span><br></pre></td></tr></table></figure>
-
-<p>将以下内容粘贴到文件中：</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">memos:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">neosmemo/memos:latest</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">memos</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">5230</span><span class="string">:5230</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./data:/var/opt/memos</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">MEMOS_MODE=prod</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">MEMOS_PORT=5230</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>配置解析:</strong></p>
-<ul>
-<li><code>ports</code>: 将 Memos 的 Web 界面映射到主机的 5230 端口</li>
-<li><code>volumes</code>: 将 Memos 的数据存储在 <code>docker-compose.yml</code> 相同目录下的 <code>data</code> 文件夹中，确保容器重建后数据不丢失</li>
-</ul>
-<blockquote>
-<p>未来如果需要备份或是迁移，直接打包复制 <code>/opt/data</code> 文件夹即可。</p>
-</blockquote>
-<h3 id="启动-Memos-服务"><a href="#启动-Memos-服务" class="headerlink" title="启动 Memos 服务"></a>启动 Memos 服务</h3><p>在 <code>docker-compose.yml</code> 文件所在目录中，执行以下命令来拉取镜像并启动服务：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">docker compose up -d</span><br></pre></td></tr></table></figure>
-
-<p>然后打开浏览器，访问 <code>http://&lt;你的服务器IP&gt;:5230</code> 即可访问 Memos 的 Web 界面，第一次打开会让我们注册管理员账户（网页默认显示英文，可以在底部切换语言）。</p>
-<p><img src="https://img.nep.me/i/2025/08/18/memos-signup.webp" alt="memos-signup"></p>
-<h2 id="三、安全设置"><a href="#三、安全设置" class="headerlink" title="三、安全设置"></a>三、安全设置</h2><p>对于一个私有笔记系统，安全同样重要，如果我们只是个人使用，可以关闭注册。</p>
-<h3 id="1-禁用用户注册"><a href="#1-禁用用户注册" class="headerlink" title="1. 禁用用户注册"></a>1. 禁用用户注册</h3><p>登录到 Memos 后，进入管理员设置：</p>
-<ul>
-<li>点击左侧边栏的设置按钮</li>
-<li>选择 <strong>系统</strong></li>
-<li>打开 <code>Disallow user registration</code> 的选项</li>
-</ul>
-<h3 id="2-（强烈推荐）使用反向代理"><a href="#2-（强烈推荐）使用反向代理" class="headerlink" title="2. （强烈推荐）使用反向代理"></a>2. （强烈推荐）使用反向代理</h3><p>直接暴露 Web 端口到公网是不安全的。推荐使用 Nginx 或其他反向代理工具来提供 Web 服务，并且使用 HTTPS 访问。</p>
-<p><code>1</code> <strong>修改端口映射</strong>: 将 Memos 的 Web 端口限制为仅限本机访问。<br>修改 <code>docker-compose.yml</code> 文件中的 <code>ports</code> 部分：</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">ports:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">&quot;127.0.0.1:5230:5230&quot;</span> <span class="comment"># 仅允许本地访问</span></span><br></pre></td></tr></table></figure>
-
-<p><code>2</code> <strong>重启服务</strong>:</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">docker compose down</span><br><span class="line">docker compose up -d</span><br></pre></td></tr></table></figure>
-
-<p><code>3</code> <strong>配置反向代理</strong>: 在你的反向代理工具中，设置一个代理规则，将 <code>memos.yourdomain.com</code> 的流量转发到 <code>http://127.0.0.1:5230</code>。</p>
-<p><strong>Nginx 示例（仅反代部分）</strong></p>
-<p>以下示例将域名 <code>memos.example.com</code> 的 HTTP 流量反代到本机的 <code>127.0.0.1:5230</code>。</p>
-<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="section">location</span> / &#123;</span><br><span class="line">    <span class="attribute">proxy_pass</span> http://127.0.0.1:5230/;</span><br><span class="line">    </span><br><span class="line">    <span class="attribute">rewrite</span><span class="regexp"> ^/(.*)$</span> /<span class="variable">$1</span> <span class="literal">break</span>;</span><br><span class="line">    <span class="attribute">proxy_redirect</span> <span class="literal">off</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> Host <span class="variable">$host</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> X-Forwarded-Proto <span class="variable">$scheme</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> X-Real-IP <span class="variable">$remote_addr</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> Upgrade-Insecure-Requests <span class="number">1</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> X-Forwarded-Proto https;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>测试并重载 Nginx 配置：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">nginx -t</span><br><span class="line">nginx -s reload </span><br></pre></td></tr></table></figure>
-
-<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>恭喜！通过本教程，你已经成功地为自己搭建了一个功能强大且完全私有的个人笔记系统。Memos 以其轻量级的设计和对 Markdown 的良好支持，成为了记录想法、管理任务和构建个人知识库的绝佳工具。</p>
-<p>现在，你可以开始自由地记录你的每一个灵感，而无需担心数据隐私问题。由于我们使用了 Docker Compose，未来的维护和升级也将变得异常简单。</p>
-<p>希望这个全新的笔记系统能为你的学习和工作带来便利。</p>
-]]></content>
-      <categories>
-        <category>教程</category>
-      </categories>
-      <tags>
-        <tag>Docker</tag>
-        <tag>Docker Compose</tag>
-        <tag>Self-hosted</tag>
-        <tag>Memos</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>使用 Gitea 与 Docker Compose 轻松自建你的私人 Git 服务器</title>
     <url>/post/use-docker-run-gitea.html</url>
     <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>想要一个完全由你掌控的私人代码仓库吗？Gitea 是一个轻量级、高性能的自托管 Git 服务，功能强大且资源占用极低，甚至可以在树莓派上流畅运行。</p>
@@ -2294,6 +2218,257 @@
         <tag>Docker</tag>
         <tag>Docker Compose</tag>
         <tag>Self-hosted</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用 Docker 快速部署 Memos 个人笔记系统</title>
+    <url>/post/use-docker-run-memeos.html</url>
+    <content><![CDATA[<h2 id="Memos-简介"><a href="#Memos-简介" class="headerlink" title="Memos 简介"></a>Memos 简介</h2><p>Memos 是一款开源的轻量级笔记服务，它允许你像发微博或推特一样，轻松记录每一个灵感和想法。由于其开源、支持 Docker 部署的特性，我们可以用它来搭建一个完全由自己掌控的私有化笔记系统。</p>
+<p>Memos 的核心功能包括：</p>
+<ul>
+<li><strong>Markdown</strong> 语法支持</li>
+<li><strong>标签 (Tag)</strong> 管理</li>
+<li><strong>任务列表 (Task)</strong> 支持</li>
+<li><strong>公开&#x2F;私密</strong> 笔记权限设置</li>
+<li><strong>多用户</strong> 协同使用</li>
+</ul>
+<p>在开始部署之前，你可以访问官方的 <a href="https://demo.usememos.com/">Memos Live Demo</a> 来快速体验一下。</p>
+<p>本教程将指导你如何使用 Docker Compose 快速部署一个安全、私有的 Memos 实例，让你在快速拥有属于自己的笔记管理系统。</p>
+<h2 id="一、环境准备"><a href="#一、环境准备" class="headerlink" title="一、环境准备"></a>一、环境准备</h2><p>在开始前，需要我们有一个自己的 VPS 或是支持 Docker 容器的 NAS 系统。</p>
+<h3 id="1-安装-Docker-和-Docker-Compose"><a href="#1-安装-Docker-和-Docker-Compose" class="headerlink" title="1. 安装 Docker 和 Docker Compose"></a>1. 安装 Docker 和 Docker Compose</h3><p>如果你的服务器尚未安装 Docker 和 Docker Compose ，可以参考以下教程：</p>
+<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p><strong>延伸阅读:</strong> <a href="https://ooo.run/post/debian-install-docker.html">在 Debian 12 中安装 Docker 以及 Docker Compose</a></p></div></div>
+
+<h3 id="2-创建项目目录"><a href="#2-创建项目目录" class="headerlink" title="2. 创建项目目录"></a>2. 创建项目目录</h3><p>为 Memos 创建一个专用的目录，用于存放配置文件和数据。</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p /opt/memos &amp;&amp; <span class="built_in">cd</span> /opt/memos</span><br></pre></td></tr></table></figure>
+
+<h2 id="二、使用-Docker-Compose-部署-Memos"><a href="#二、使用-Docker-Compose-部署-Memos" class="headerlink" title="二、使用 Docker Compose 部署 Memos"></a>二、使用 Docker Compose 部署 Memos</h2><h3 id="创建-docker-compose-yml-文件"><a href="#创建-docker-compose-yml-文件" class="headerlink" title="创建 docker-compose.yml 文件"></a>创建 <code>docker-compose.yml</code> 文件</h3><p>在项目目录 (<code>/opt/memos</code>) 中，创建一个名为 <code>docker-compose.yml</code> 的文件。</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">vim docker-compose.yml</span><br></pre></td></tr></table></figure>
+
+<p>将以下内容粘贴到文件中：</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">memos:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">neosmemo/memos:latest</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">memos</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">5230</span><span class="string">:5230</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./data:/var/opt/memos</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">MEMOS_MODE=prod</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">MEMOS_PORT=5230</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>配置解析:</strong></p>
+<ul>
+<li><code>ports</code>: 将 Memos 的 Web 界面映射到主机的 5230 端口</li>
+<li><code>volumes</code>: 将 Memos 的数据存储在 <code>docker-compose.yml</code> 相同目录下的 <code>data</code> 文件夹中，确保容器重建后数据不丢失</li>
+</ul>
+<blockquote>
+<p>未来如果需要备份或是迁移，直接打包复制 <code>/opt/data</code> 文件夹即可。</p>
+</blockquote>
+<h3 id="启动-Memos-服务"><a href="#启动-Memos-服务" class="headerlink" title="启动 Memos 服务"></a>启动 Memos 服务</h3><p>在 <code>docker-compose.yml</code> 文件所在目录中，执行以下命令来拉取镜像并启动服务：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">docker compose up -d</span><br></pre></td></tr></table></figure>
+
+<p>然后打开浏览器，访问 <code>http://&lt;你的服务器IP&gt;:5230</code> 即可访问 Memos 的 Web 界面，第一次打开会让我们注册管理员账户（网页默认显示英文，可以在底部切换语言）。</p>
+<p><img src="https://img.nep.me/i/2025/08/18/memos-signup.webp" alt="memos-signup"></p>
+<h2 id="三、安全设置"><a href="#三、安全设置" class="headerlink" title="三、安全设置"></a>三、安全设置</h2><p>对于一个私有笔记系统，安全同样重要，如果我们只是个人使用，可以关闭注册。</p>
+<h3 id="1-禁用用户注册"><a href="#1-禁用用户注册" class="headerlink" title="1. 禁用用户注册"></a>1. 禁用用户注册</h3><p>登录到 Memos 后，进入管理员设置：</p>
+<ul>
+<li>点击左侧边栏的设置按钮</li>
+<li>选择 <strong>系统</strong></li>
+<li>打开 <code>Disallow user registration</code> 的选项</li>
+</ul>
+<h3 id="2-（强烈推荐）使用反向代理"><a href="#2-（强烈推荐）使用反向代理" class="headerlink" title="2. （强烈推荐）使用反向代理"></a>2. （强烈推荐）使用反向代理</h3><p>直接暴露 Web 端口到公网是不安全的。推荐使用 Nginx 或其他反向代理工具来提供 Web 服务，并且使用 HTTPS 访问。</p>
+<p><code>1</code> <strong>修改端口映射</strong>: 将 Memos 的 Web 端口限制为仅限本机访问。<br>修改 <code>docker-compose.yml</code> 文件中的 <code>ports</code> 部分：</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">ports:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">&quot;127.0.0.1:5230:5230&quot;</span> <span class="comment"># 仅允许本地访问</span></span><br></pre></td></tr></table></figure>
+
+<p><code>2</code> <strong>重启服务</strong>:</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">docker compose down</span><br><span class="line">docker compose up -d</span><br></pre></td></tr></table></figure>
+
+<p><code>3</code> <strong>配置反向代理</strong>: 在你的反向代理工具中，设置一个代理规则，将 <code>memos.yourdomain.com</code> 的流量转发到 <code>http://127.0.0.1:5230</code>。</p>
+<p><strong>Nginx 示例（仅反代部分）</strong></p>
+<p>以下示例将域名 <code>memos.example.com</code> 的 HTTP 流量反代到本机的 <code>127.0.0.1:5230</code>。</p>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="section">location</span> / &#123;</span><br><span class="line">    <span class="attribute">proxy_pass</span> http://127.0.0.1:5230/;</span><br><span class="line">    </span><br><span class="line">    <span class="attribute">rewrite</span><span class="regexp"> ^/(.*)$</span> /<span class="variable">$1</span> <span class="literal">break</span>;</span><br><span class="line">    <span class="attribute">proxy_redirect</span> <span class="literal">off</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> Host <span class="variable">$host</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> X-Forwarded-Proto <span class="variable">$scheme</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> X-Real-IP <span class="variable">$remote_addr</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> Upgrade-Insecure-Requests <span class="number">1</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> X-Forwarded-Proto https;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>测试并重载 Nginx 配置：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">nginx -t</span><br><span class="line">nginx -s reload </span><br></pre></td></tr></table></figure>
+
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>恭喜！通过本教程，你已经成功地为自己搭建了一个功能强大且完全私有的个人笔记系统。Memos 以其轻量级的设计和对 Markdown 的良好支持，成为了记录想法、管理任务和构建个人知识库的绝佳工具。</p>
+<p>现在，你可以开始自由地记录你的每一个灵感，而无需担心数据隐私问题。由于我们使用了 Docker Compose，未来的维护和升级也将变得异常简单。</p>
+<p>希望这个全新的笔记系统能为你的学习和工作带来便利。</p>
+]]></content>
+      <categories>
+        <category>教程</category>
+      </categories>
+      <tags>
+        <tag>Docker</tag>
+        <tag>Docker Compose</tag>
+        <tag>Self-hosted</tag>
+        <tag>Memos</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用 DPanel 优雅地管理 Docker 容器</title>
+    <url>/post/use-dpanel-manager-docker-container.html</url>
+    <content><![CDATA[<p>对于每一位 Self-hosted 爱好者而言，Docker 是简化应用部署的神器。但当服务器上运行的容器越来越多，散落在各处的 <code>docker-compose.yaml</code> 文件就成了新的问题。<br>如果你也为此烦恼，那么是时候认识一下 <code>DPanel</code> 了 —— 一个轻量化的容器管理面板。</p>
+<h3 id="为什么需要一个-Docker-管理面板？"><a href="#为什么需要一个-Docker-管理面板？" class="headerlink" title="为什么需要一个 Docker 管理面板？"></a>为什么需要一个 Docker 管理面板？</h3><p>使用 Docker 和 Docker Compose 部署项目无疑是高效且愉快的。我们可以为每个项目创建一个独立的目录和 <code>docker-compose.yaml</code> 文件，实现轻松部署与环境隔离。</p>
+<p>但随着时间的推移，你可能会遇到这些问题：</p>
+<ul>
+<li><strong>管理混乱</strong>：几十个项目的配置文件散落在不同目录，想找某一个配置需要先 <code>cd</code> 到对应的目录。</li>
+<li><strong>维护困难</strong>：更新一个服务的镜像版本，或是修改某个端口映射，都需要先找到对应的 <code>yaml</code> 文件，再手动执行命令。</li>
+<li><strong>状态不明</strong>：无法直观地看到所有容器的运行状态、资源占用和日志信息。</li>
+</ul>
+<p>为了解决这些痛点， <a href="https://dpanel.cc/">DPanel</a>应运而生。</p>
+<h2 id="DPanel-是什么？"><a href="#DPanel-是什么？" class="headerlink" title="DPanel 是什么？"></a>DPanel 是什么？</h2><p>DPanel 是一个开源、轻量化的容器管理面板。它专注于提供核心的容器管理功能，同时保持极低的资源占用（镜像约 150MB，内存占用约 20MB），可以通过容器部署，对宿主机零侵入，安全可靠。</p>
+<p><strong>核心亮点：</strong></p>
+<ul>
+<li><strong>轻量高效</strong>：资源占用极低，不给你的服务器增加额外负担。</li>
+<li><strong>安全可靠</strong>：通过容器运行，无需特权，不侵入宿主机系统。</li>
+<li><strong>Compose 管理</strong>：支持多种方式添加、管理 Compose 项目</li>
+<li><strong>功能全面</strong>：支持容器管理、日志查看、文件浏览器、快捷访问容器内终端等实用功能。</li>
+<li><strong>多主机管理</strong>：可以通过 API (TLS) 或 SSH 方式，在一个面板中管理多台服务器的 Docker。</li>
+<li><strong>多语言支持</strong>：原生支持中、英、日多国语言，无需额外配置。</li>
+</ul>
+<h2 id="如何部署-DPanel"><a href="#如何部署-DPanel" class="headerlink" title="如何部署 DPanel"></a>如何部署 DPanel</h2><p>部署 DPanel 非常简单，推荐直接使用 Docker Compose 进行部署。</p>
+<p>如果你的服务器尚未安装 Docker 和 Docker Compose ，可以参考以下教程：</p>
+<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p><strong>延伸阅读:</strong> <a href="https://ooo.run/post/debian-install-docker.html">在 Debian 12 中安装 Docker 以及 Docker Compose</a></p></div></div>
+
+
+<p><strong>第一步：选择版本</strong></p>
+<p>DPanel 提供两个版本：</p>
+<ul>
+<li><code>dpanel/dpanel:lite</code> (轻量版): 不包含 Nginx，适合宿主机上已经安装了反向代理（如 Nginx ）的用户。</li>
+<li><code>dpanel/dpanel:latest</code> (标准版): 内置 Nginx，可以为你自动处理域名绑定和 SSL 证书，适合全新环境。</li>
+</ul>
+<p>本文以 <code>lite</code> 版本为例，因为它能更好地与现有环境集成。</p>
+<p><strong>第二步：创建并配置 <code>compose.yaml</code></strong></p>
+<p>首先，为 DPanel 创建一个工作目录并进入：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p /opt/dpanel</span><br><span class="line"><span class="built_in">cd</span> /opt/dpanel</span><br></pre></td></tr></table></figure>
+
+<p>然后，在该目录下创建一个 <code>compose.yaml</code> 文件：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">dpanel:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">dpanel/dpanel:lite</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">dpanel</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;8807:8080&quot;</span>             </span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/var/run/docker.sock:/var/run/docker.sock</span>  <span class="comment"># 映射 Docker Socket</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./dpanel:/dpanel</span>                           <span class="comment"># 将面板数据持久化到当前目录下的 dpanel 文件夹      </span></span><br></pre></td></tr></table></figure>
+
+<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p><strong>提示</strong>：<code>docker.sock</code> 的路径通常无需修改。如果你不确定，可以通过下面命令确认</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">docker context inspect $(docker context show) --format <span class="string">&#x27;&#123;&#123;.Endpoints.docker.Host&#125;&#125;&#x27;</span></span><br></pre></td></tr></table></figure></div></div>
+
+<p><strong>配置解析:</strong></p>
+<ul>
+<li><code>ports</code>: 将容器的 <code>8080</code> 端口映射到主机的 <code>8087</code> 端口。</li>
+</ul>
+<p><strong>第三步：启动 DPanel</strong></p>
+<p>在 <code>/opt/dpanel</code> 目录下，执行以下命令启动服务：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker compose up -d</span><br></pre></td></tr></table></figure>
+
+<p><strong>第四步：初始化</strong></p>
+<p>现在，通过浏览器访问 <code>http://&lt;你的服务器IP&gt;:8807</code>。首次访问会要求你创建管理员账号和密码，设置完成后即可进入管理后台。</p>
+<img src="https://img.nep.me/i/2025/08/22/dpanel-first-login.webp" style="width:75%;" alt="dpanel-first-login" />
+
+<h2 id="核心功能"><a href="#核心功能" class="headerlink" title="核心功能"></a>核心功能</h2><p>进入面板后，你会看到一个简洁的仪表盘，展示了服务器和容器的概览信息。</p>
+<img src="https://img.nep.me/i/2025/08/22/dpanel-top-nav.webp" style="width:75%;" alt="dpanel-top-nav" />
+
+<h3 id="容器管理"><a href="#容器管理" class="headerlink" title="容器管理"></a>容器管理</h3><p>在 <strong>容器管理</strong> 页面，你可以直观地看到所有容器的运行状态、端口映射等。对于每个容器，你都可以进行快捷操作，如：</p>
+<ul>
+<li><strong>查看日志</strong>：实时追踪容器输出。</li>
+<li><strong>进入终端</strong>：直接在浏览器中打开容器的 Shell。</li>
+<li><strong>文件管理</strong>：浏览和管理容器内的文件。</li>
+</ul>
+<h3 id="Compose-文件管理"><a href="#Compose-文件管理" class="headerlink" title="Compose 文件管理"></a>Compose 文件管理</h3><p>在 <strong>Compose</strong> 页面，可以方便地管理 <code>compose.yaml</code> 文件，不过这需要我们对 <code>docker-compose.yaml</code> &#x2F; <code>compose.yaml</code> 文件进行迁移，可以查看下面 <strong>迁移现有的 Docker Compose 项目</strong> 部分</p>
+<h3 id="镜像管理"><a href="#镜像管理" class="headerlink" title="镜像管理"></a>镜像管理</h3><p>在 <strong>镜像管理</strong> 管理页面我们可以查看当前主机中的镜像文件，以及所对应的文件是否正在被使用。可以进行 清理、同步、批量删除，也可以导出镜像</p>
+<p>还可以进行 <strong>仓库管理</strong>，对于中国大陆地区非常有帮助。 </p>
+<h3 id="存储与网络管理"><a href="#存储与网络管理" class="headerlink" title="存储与网络管理"></a>存储与网络管理</h3><ul>
+<li>在存储管理页面可以直观地查看每个容器使用的匿名卷，以及是否在使用中</li>
+<li>网络管理页面可以查看 Docker 容器对应的网络</li>
+</ul>
+<h2 id="迁移现有的-Docker-Compose-项目"><a href="#迁移现有的-Docker-Compose-项目" class="headerlink" title="迁移现有的 Docker Compose 项目"></a>迁移现有的 Docker Compose 项目</h2><p>我们需要将之前的 Docker Compose 管理的项目迁移至 DPanel 目录下才可以使用 DPanel 进行管理。</p>
+<p>迁移已有的项目非常简单，只需两步：</p>
+<ol>
+<li><p><strong>移动并重命名</strong>：将你原有的项目文件夹整个移动到 DPanel 的工作目录（<code>/opt/dpanel/</code>）下的 <code>dpanel/compose</code> 目录中，并将其 <code>docker-compose.yaml</code> 文件重命名为 <code>compose.yaml</code>。</p>
+<p>例如，你有一个项目位于 <code>/root/my-project</code>：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 1. 创建目录</span></span><br><span class="line"><span class="built_in">mkdir</span> -p /opt/dpanel/dpanel/compose</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 停止正在运行的服务（如果还在运行）</span></span><br><span class="line"><span class="built_in">cd</span> /root/my-project</span><br><span class="line">docker compose down</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. 移动整个项目目录</span></span><br><span class="line"><span class="built_in">mv</span> /root/my-project /opt/dpanel/dpanel/compose</span><br><span class="line"></span><br><span class="line"><span class="comment"># 4. 复制配置文件</span></span><br><span class="line"><span class="built_in">cd</span> /opt/dpanel/dpanel/compose/my-project</span><br><span class="line"><span class="built_in">mv</span> docker-compose.yaml compose.yaml</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>在面板中管理</strong>：刷新 DPanel 页面，它会自动发现 <code>my-project</code>。<br>现在只需要点击容器名称即可在面板中对它进行启动、停止、编辑等操作了。<br><img src="https://img.nep.me/i/2025/08/22/dpanel-compose-run.webp" alt="dpanel-compose-run"></p>
+</li>
+</ol>
+<p>通过这种方式，你可以将所有零散的项目统一到 DPanel 中进行管理。</p>
+<p>迁移之前的路径示意：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/</span><br><span class="line">├─ project1/</span><br><span class="line">│  └─ docker-compose.yaml</span><br><span class="line">└─ project2/</span><br><span class="line">   └─ docker-compose.yaml</span><br></pre></td></tr></table></figure>
+
+<p>迁移之后：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/opt/dpanel/</span><br><span class="line">└─ dpanel/</span><br><span class="line">    └─ compose/</span><br><span class="line">       ├─ project1/</span><br><span class="line">       │  └─ compose.yaml</span><br><span class="line">       └─ project2/</span><br><span class="line">          └─ compose.yaml</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>与直接使用 docker compose 会自动查询目录下的 <code>compose.yaml</code> &#x2F; <code>compose.yaml</code> <code>docker-compose.yaml</code> <code>docker-compose.yaml</code> 四个文件不同，DPanel 目前仅支持 <code>compose.yaml</code> 文件</p>
+</blockquote>
+<h2 id="资源占用详情"><a href="#资源占用详情" class="headerlink" title="资源占用详情"></a>资源占用详情</h2><p>我们可以使用 <code>docker stats</code> 或是 <code>docker compose stats</code> 查看容器的运行资源占用详情</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /opt/dpanel</span><br><span class="line">docker compose stats</span><br></pre></td></tr></table></figure>
+
+<p>输出如下，可以看到只使用了  22.2MiB 的内容。</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">CONTAINER ID   NAME      CPU %     MEM USAGE / LIMIT    MEM %     NET I/O          BLOCK I/O       PIDS </span><br><span class="line">5340fef5727d   dpanel    0.00%     22.2MiB / 7.755GiB   0.28%     306kB / 2.68MB   4.1kB / 115kB   9 </span><br></pre></td></tr></table></figure>
+
+<h2 id="添加远程服务器"><a href="#添加远程服务器" class="headerlink" title="添加远程服务器"></a>添加远程服务器</h2><p>DPanel 支持在一个面板中管理多台主机上的 Docker 实例。推荐使用 SSH 方式进行连接，既安全又免去了繁琐的 Docker Api 证书配置。</p>
+<p>操作步骤如下：</p>
+<p><strong>第一步：准备远程服务器用户</strong></p>
+<p>我们应该使用一个非 root 用户进行连接。</p>
+<ol>
+<li><p><strong>创建新用户</strong><br>如果你的远程服务器上没有合适的非 root 用户，可以新建一个。例如，创建一个名为 <code>dpaneluser</code> 的用户：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> adduser dpaneluser</span><br></pre></td></tr></table></figure>
+<p>根据提示设置密码即可。</p>
+</li>
+<li><p><strong>将用户添加到 <code>docker</code> 组</strong><br>为了让新用户有权限操作 Docker，需要将其加入 <code>docker</code> 用户组：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> usermod -aG docker dpaneluser</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>提示</strong>：执行此命令后，用户需要重新登录（或新开一个 SSH会话）才能使组权限生效。</p>
+</blockquote>
+</li>
+<li><p><strong>验证权限</strong><br>切换到新用户，并尝试执行一条 Docker 命令来验证权限是否配置成功。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">su - dpaneluser</span><br></pre></td></tr></table></figure>
+<p>然后执行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker ps</span><br></pre></td></tr></table></figure>
+<p>如果命令成功返回容器列表（即使是空的），说明权限已正确配置。</p>
+</li>
+</ol>
+<p><strong>第二步：准备 SSH 密钥</strong></p>
+<ol>
+<li><p><strong>生成 SSH 密钥</strong><br>在 <strong>运行 DPanel 的服务器</strong>（或你的本地电脑）上打开终端，执行以下命令生成密钥对。如果已存在密钥，可以跳过此步。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t ed25519 </span><br></pre></td></tr></table></figure>
+<p>第一步输入保存名称后，一路按回车键接受默认设置即可，将生成以下两个文件</p>
+<ul>
+<li><code>id_ed25519</code> : 密钥文件，相当于密码，不可以公开给任何人</li>
+<li><code>id_ed25519.pub</code> : 公钥文件，保存在服务器中后表示可以使用上面的密钥进行认证。</li>
+</ul>
+</li>
+<li><p><strong>将公钥复制到远程服务器</strong><br>使用 <code>ssh-copy-id</code> 命令将公钥安装到远程服务器的目标用户上。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh-copy-id dpaneluser@&lt;远程服务器IP&gt;</span><br></pre></td></tr></table></figure>
+<p>此过程需要输入一次 <code>dpaneluser</code> 用户的密码。</p>
+<blockquote>
+<p>如果已禁用 SSH 密码登录，需要手动复制 <code>id_ed25519.pub</code> 至对应用户的 <code>~/.ssh/authorized_keys</code> 文件中</p>
+</blockquote>
+</li>
+</ol>
+<p><strong>第三步：在 DPanel 中配置连接</strong></p>
+<p>在 DPanel 界面，导航至 <strong>系统</strong> &gt; <strong>多服务端</strong>，然后点击 <strong>添加服务端</strong> ：</p>
+<ul>
+<li>首先输入 <strong>名称</strong> 与 <strong>标识</strong>。 </li>
+<li>连接方式选择 <strong>SSH</strong> 。</li>
+<li>打开 <strong>启用独立Compose目录</strong> ：以便在访问不同服务器时只查看对应的 compose 文件。</li>
+<li>填入远程服务器的 IP 地址、SSH 端口。</li>
+<li>验证方式强烈推荐使用 <strong>私钥认证</strong>，它比密码更安全、更便捷。</li>
+<li>填写 <strong>用户名</strong>，手动填写或是导入 <strong>密钥文件</strong> 。</li>
+</ul>
+<p>最后点击确定保存，保存时 DPanel 会尝试连接远程服务器，如果连接失败，配置将无法保存，需要检查修改配置。</p>
+<p>添加成功后，你就可以通过 DPanel 顶部的下拉菜单在不同的 Docker 服务端之间轻松切换了。</p>
+<h2 id="安全设置"><a href="#安全设置" class="headerlink" title="安全设置"></a>安全设置</h2><h3 id="设置-Nginx-反代"><a href="#设置-Nginx-反代" class="headerlink" title="设置 Nginx 反代"></a>设置 Nginx 反代</h3><p>为了安全地通过 HTTPS 访问你的记账应用，强烈建议使用 Nginx 等反向代理工具。</p>
+<p>以下是一个 Nginx 的配置示例。你需要为你的域名申请一个 SSL 证书（例如通过 Let’s Encrypt）。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># /etc/nginx/sites-enable/dpanel.yourdomain.com.conf</span><br><span class="line">server &#123;</span><br><span class="line">    listen 80;</span><br><span class="line">    server_name dpanel.yourdomain.com;</span><br><span class="line"></span><br><span class="line">    # 将所有 HTTP 请求重定向到 HTTPS</span><br><span class="line">    location / &#123;</span><br><span class="line">        return 301 https://$host$request_uri;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">server &#123;</span><br><span class="line">    listen 443 ssl http2;</span><br><span class="line">    server_name dpanel.yourdomain.com;</span><br><span class="line"></span><br><span class="line">    # SSL 证书路径 (请替换为你的实际路径)</span><br><span class="line">    ssl_certificate /path/to/your/fullchain.pem;</span><br><span class="line">    ssl_certificate_key /path/to/your/privkey.pem;</span><br><span class="line"></span><br><span class="line">    # 安全相关的 SSL 设置 (推荐)</span><br><span class="line">    ssl_protocols TLSv1.2 TLSv1.3;</span><br><span class="line">    ssl_ciphers &#x27;ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384&#x27;;</span><br><span class="line">    ssl_prefer_server_ciphers off;</span><br><span class="line"></span><br><span class="line">    location / &#123;</span><br><span class="line">        proxy_pass http://127.0.0.1:8807;</span><br><span class="line">        proxy_set_header Host $host;</span><br><span class="line">        proxy_set_header X-Real-IP $remote_addr;</span><br><span class="line">        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">        proxy_set_header X-Forwarded-Proto $scheme;</span><br><span class="line"></span><br><span class="line">        # WebSocket 支持</span><br><span class="line">        proxy_http_version 1.1;</span><br><span class="line">        proxy_set_header Upgrade $http_upgrade;</span><br><span class="line">        proxy_set_header Connection &quot;upgrade&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="限制容器端口访问"><a href="#限制容器端口访问" class="headerlink" title="限制容器端口访问"></a>限制容器端口访问</h3><p>在设置了 Nginx 反代后，我们可以限制 Docker 的端口仅允许本地主机访问，从而避免将端口暴漏在公网中<br>将</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">ports:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">&quot;8807:8080&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>修改为 </p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">ports:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">&quot;127.0.0.1:8807:8080&quot;</span>   </span><br></pre></td></tr></table></figure>
+
+<p>然后重新启动 Docker 容器</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">docker compose down</span><br><span class="line">docker compose up -d</span><br></pre></td></tr></table></figure>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>DPanel 以其轻量、安全和对 Docker Compose 的良好支持，为 Self-hosted 玩家提供了一个管理容器的绝佳方案。</p>
+<p>它不仅能帮你理清混乱的 <code>yaml</code> 文件，还能让你对服务器上的所有容器状态一目了然。如果你正在寻找一个简单高效的 Docker 图形化工具，DPanel 绝对值得一试。</p>
+]]></content>
+      <categories>
+        <category>教程</category>
+      </categories>
+      <tags>
+        <tag>Docker</tag>
+        <tag>Self-hosted</tag>
+        <tag>DPanel</tag>
       </tags>
   </entry>
   <entry>
@@ -2483,181 +2658,6 @@
       </tags>
   </entry>
   <entry>
-    <title>使用 DPanel 优雅地管理 Docker 容器</title>
-    <url>/post/use-dpanel-manager-docker-container.html</url>
-    <content><![CDATA[<p>对于每一位 Self-hosted 爱好者而言，Docker 是简化应用部署的神器。但当服务器上运行的容器越来越多，散落在各处的 <code>docker-compose.yaml</code> 文件就成了新的问题。<br>如果你也为此烦恼，那么是时候认识一下 <code>DPanel</code> 了 —— 一个轻量化的容器管理面板。</p>
-<h3 id="为什么需要一个-Docker-管理面板？"><a href="#为什么需要一个-Docker-管理面板？" class="headerlink" title="为什么需要一个 Docker 管理面板？"></a>为什么需要一个 Docker 管理面板？</h3><p>使用 Docker 和 Docker Compose 部署项目无疑是高效且愉快的。我们可以为每个项目创建一个独立的目录和 <code>docker-compose.yaml</code> 文件，实现轻松部署与环境隔离。</p>
-<p>但随着时间的推移，你可能会遇到这些问题：</p>
-<ul>
-<li><strong>管理混乱</strong>：几十个项目的配置文件散落在不同目录，想找某一个配置需要先 <code>cd</code> 到对应的目录。</li>
-<li><strong>维护困难</strong>：更新一个服务的镜像版本，或是修改某个端口映射，都需要先找到对应的 <code>yaml</code> 文件，再手动执行命令。</li>
-<li><strong>状态不明</strong>：无法直观地看到所有容器的运行状态、资源占用和日志信息。</li>
-</ul>
-<p>为了解决这些痛点， <a href="https://dpanel.cc/">DPanel</a>应运而生。</p>
-<h2 id="DPanel-是什么？"><a href="#DPanel-是什么？" class="headerlink" title="DPanel 是什么？"></a>DPanel 是什么？</h2><p>DPanel 是一个开源、轻量化的容器管理面板。它专注于提供核心的容器管理功能，同时保持极低的资源占用（镜像约 150MB，内存占用约 20MB），可以通过容器部署，对宿主机零侵入，安全可靠。</p>
-<p><strong>核心亮点：</strong></p>
-<ul>
-<li><strong>轻量高效</strong>：资源占用极低，不给你的服务器增加额外负担。</li>
-<li><strong>安全可靠</strong>：通过容器运行，无需特权，不侵入宿主机系统。</li>
-<li><strong>Compose 管理</strong>：支持多种方式添加、管理 Compose 项目</li>
-<li><strong>功能全面</strong>：支持容器管理、日志查看、文件浏览器、快捷访问容器内终端等实用功能。</li>
-<li><strong>多主机管理</strong>：可以通过 API (TLS) 或 SSH 方式，在一个面板中管理多台服务器的 Docker。</li>
-<li><strong>多语言支持</strong>：原生支持中、英、日多国语言，无需额外配置。</li>
-</ul>
-<h2 id="如何部署-DPanel"><a href="#如何部署-DPanel" class="headerlink" title="如何部署 DPanel"></a>如何部署 DPanel</h2><p>部署 DPanel 非常简单，推荐直接使用 Docker Compose 进行部署。</p>
-<p>如果你的服务器尚未安装 Docker 和 Docker Compose ，可以参考以下教程：</p>
-<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p><strong>延伸阅读:</strong> <a href="https://ooo.run/post/debian-install-docker.html">在 Debian 12 中安装 Docker 以及 Docker Compose</a></p></div></div>
-
-
-<p><strong>第一步：选择版本</strong></p>
-<p>DPanel 提供两个版本：</p>
-<ul>
-<li><code>dpanel/dpanel:lite</code> (轻量版): 不包含 Nginx，适合宿主机上已经安装了反向代理（如 Nginx ）的用户。</li>
-<li><code>dpanel/dpanel:latest</code> (标准版): 内置 Nginx，可以为你自动处理域名绑定和 SSL 证书，适合全新环境。</li>
-</ul>
-<p>本文以 <code>lite</code> 版本为例，因为它能更好地与现有环境集成。</p>
-<p><strong>第二步：创建并配置 <code>compose.yaml</code></strong></p>
-<p>首先，为 DPanel 创建一个工作目录并进入：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p /opt/dpanel</span><br><span class="line"><span class="built_in">cd</span> /opt/dpanel</span><br></pre></td></tr></table></figure>
-
-<p>然后，在该目录下创建一个 <code>compose.yaml</code> 文件：</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">dpanel:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">dpanel/dpanel:lite</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">dpanel</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;8807:8080&quot;</span>             </span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/var/run/docker.sock:/var/run/docker.sock</span>  <span class="comment"># 映射 Docker Socket</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./dpanel:/dpanel</span>                           <span class="comment"># 将面板数据持久化到当前目录下的 dpanel 文件夹      </span></span><br></pre></td></tr></table></figure>
-
-<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p><strong>提示</strong>：<code>docker.sock</code> 的路径通常无需修改。如果你不确定，可以通过下面命令确认</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">docker context inspect $(docker context show) --format <span class="string">&#x27;&#123;&#123;.Endpoints.docker.Host&#125;&#125;&#x27;</span></span><br></pre></td></tr></table></figure></div></div>
-
-<p><strong>配置解析:</strong></p>
-<ul>
-<li><code>ports</code>: 将容器的 <code>8080</code> 端口映射到主机的 <code>8087</code> 端口。</li>
-</ul>
-<p><strong>第三步：启动 DPanel</strong></p>
-<p>在 <code>/opt/dpanel</code> 目录下，执行以下命令启动服务：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker compose up -d</span><br></pre></td></tr></table></figure>
-
-<p><strong>第四步：初始化</strong></p>
-<p>现在，通过浏览器访问 <code>http://&lt;你的服务器IP&gt;:8807</code>。首次访问会要求你创建管理员账号和密码，设置完成后即可进入管理后台。</p>
-<img src="https://img.nep.me/i/2025/08/22/dpanel-first-login.webp" style="width:75%;" alt="dpanel-first-login" />
-
-<h2 id="核心功能"><a href="#核心功能" class="headerlink" title="核心功能"></a>核心功能</h2><p>进入面板后，你会看到一个简洁的仪表盘，展示了服务器和容器的概览信息。</p>
-<img src="https://img.nep.me/i/2025/08/22/dpanel-top-nav.webp" style="width:75%;" alt="dpanel-top-nav" />
-
-<h3 id="容器管理"><a href="#容器管理" class="headerlink" title="容器管理"></a>容器管理</h3><p>在 <strong>容器管理</strong> 页面，你可以直观地看到所有容器的运行状态、端口映射等。对于每个容器，你都可以进行快捷操作，如：</p>
-<ul>
-<li><strong>查看日志</strong>：实时追踪容器输出。</li>
-<li><strong>进入终端</strong>：直接在浏览器中打开容器的 Shell。</li>
-<li><strong>文件管理</strong>：浏览和管理容器内的文件。</li>
-</ul>
-<h3 id="Compose-文件管理"><a href="#Compose-文件管理" class="headerlink" title="Compose 文件管理"></a>Compose 文件管理</h3><p>在 <strong>Compose</strong> 页面，可以方便地管理 <code>compose.yaml</code> 文件，不过这需要我们对 <code>docker-compose.yaml</code> &#x2F; <code>compose.yaml</code> 文件进行迁移，可以查看下面 <strong>迁移现有的 Docker Compose 项目</strong> 部分</p>
-<h3 id="镜像管理"><a href="#镜像管理" class="headerlink" title="镜像管理"></a>镜像管理</h3><p>在 <strong>镜像管理</strong> 管理页面我们可以查看当前主机中的镜像文件，以及所对应的文件是否正在被使用。可以进行 清理、同步、批量删除，也可以导出镜像</p>
-<p>还可以进行 <strong>仓库管理</strong>，对于中国大陆地区非常有帮助。 </p>
-<h3 id="存储与网络管理"><a href="#存储与网络管理" class="headerlink" title="存储与网络管理"></a>存储与网络管理</h3><ul>
-<li>在存储管理页面可以直观地查看每个容器使用的匿名卷，以及是否在使用中</li>
-<li>网络管理页面可以查看 Docker 容器对应的网络</li>
-</ul>
-<h2 id="迁移现有的-Docker-Compose-项目"><a href="#迁移现有的-Docker-Compose-项目" class="headerlink" title="迁移现有的 Docker Compose 项目"></a>迁移现有的 Docker Compose 项目</h2><p>我们需要将之前的 Docker Compose 管理的项目迁移至 DPanel 目录下才可以使用 DPanel 进行管理。</p>
-<p>迁移已有的项目非常简单，只需两步：</p>
-<ol>
-<li><p><strong>移动并重命名</strong>：将你原有的项目文件夹整个移动到 DPanel 的工作目录（<code>/opt/dpanel/</code>）下的 <code>dpanel/compose</code> 目录中，并将其 <code>docker-compose.yaml</code> 文件重命名为 <code>compose.yaml</code>。</p>
-<p>例如，你有一个项目位于 <code>/root/my-project</code>：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 1. 创建目录</span></span><br><span class="line"><span class="built_in">mkdir</span> -p /opt/dpanel/dpanel/compose</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 停止正在运行的服务（如果还在运行）</span></span><br><span class="line"><span class="built_in">cd</span> /root/my-project</span><br><span class="line">docker compose down</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. 移动整个项目目录</span></span><br><span class="line"><span class="built_in">mv</span> /root/my-project /opt/dpanel/dpanel/compose</span><br><span class="line"></span><br><span class="line"><span class="comment"># 4. 复制配置文件</span></span><br><span class="line"><span class="built_in">cd</span> /opt/dpanel/dpanel/compose/my-project</span><br><span class="line"><span class="built_in">mv</span> docker-compose.yaml compose.yaml</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><strong>在面板中管理</strong>：刷新 DPanel 页面，它会自动发现 <code>my-project</code>。<br>现在只需要点击容器名称即可在面板中对它进行启动、停止、编辑等操作了。<br><img src="https://img.nep.me/i/2025/08/22/dpanel-compose-run.webp" alt="dpanel-compose-run"></p>
-</li>
-</ol>
-<p>通过这种方式，你可以将所有零散的项目统一到 DPanel 中进行管理。</p>
-<p>迁移之前的路径示意：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/</span><br><span class="line">├─ project1/</span><br><span class="line">│  └─ docker-compose.yaml</span><br><span class="line">└─ project2/</span><br><span class="line">   └─ docker-compose.yaml</span><br></pre></td></tr></table></figure>
-
-<p>迁移之后：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/opt/dpanel/</span><br><span class="line">└─ dpanel/</span><br><span class="line">    └─ compose/</span><br><span class="line">       ├─ project1/</span><br><span class="line">       │  └─ compose.yaml</span><br><span class="line">       └─ project2/</span><br><span class="line">          └─ compose.yaml</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>与直接使用 docker compose 会自动查询目录下的 <code>compose.yaml</code> &#x2F; <code>compose.yaml</code> <code>docker-compose.yaml</code> <code>docker-compose.yaml</code> 四个文件不同，DPanel 目前仅支持 <code>compose.yaml</code> 文件</p>
-</blockquote>
-<h2 id="资源占用详情"><a href="#资源占用详情" class="headerlink" title="资源占用详情"></a>资源占用详情</h2><p>我们可以使用 <code>docker stats</code> 或是 <code>docker compose stats</code> 查看容器的运行资源占用详情</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /opt/dpanel</span><br><span class="line">docker compose stats</span><br></pre></td></tr></table></figure>
-
-<p>输出如下，可以看到只使用了  22.2MiB 的内容。</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">CONTAINER ID   NAME      CPU %     MEM USAGE / LIMIT    MEM %     NET I/O          BLOCK I/O       PIDS </span><br><span class="line">5340fef5727d   dpanel    0.00%     22.2MiB / 7.755GiB   0.28%     306kB / 2.68MB   4.1kB / 115kB   9 </span><br></pre></td></tr></table></figure>
-
-<h2 id="添加远程服务器"><a href="#添加远程服务器" class="headerlink" title="添加远程服务器"></a>添加远程服务器</h2><p>DPanel 支持在一个面板中管理多台主机上的 Docker 实例。推荐使用 SSH 方式进行连接，既安全又免去了繁琐的 Docker Api 证书配置。</p>
-<p>操作步骤如下：</p>
-<p><strong>第一步：准备远程服务器用户</strong></p>
-<p>我们应该使用一个非 root 用户进行连接。</p>
-<ol>
-<li><p><strong>创建新用户</strong><br>如果你的远程服务器上没有合适的非 root 用户，可以新建一个。例如，创建一个名为 <code>dpaneluser</code> 的用户：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> adduser dpaneluser</span><br></pre></td></tr></table></figure>
-<p>根据提示设置密码即可。</p>
-</li>
-<li><p><strong>将用户添加到 <code>docker</code> 组</strong><br>为了让新用户有权限操作 Docker，需要将其加入 <code>docker</code> 用户组：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> usermod -aG docker dpaneluser</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p><strong>提示</strong>：执行此命令后，用户需要重新登录（或新开一个 SSH会话）才能使组权限生效。</p>
-</blockquote>
-</li>
-<li><p><strong>验证权限</strong><br>切换到新用户，并尝试执行一条 Docker 命令来验证权限是否配置成功。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">su - dpaneluser</span><br></pre></td></tr></table></figure>
-<p>然后执行：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker ps</span><br></pre></td></tr></table></figure>
-<p>如果命令成功返回容器列表（即使是空的），说明权限已正确配置。</p>
-</li>
-</ol>
-<p><strong>第二步：准备 SSH 密钥</strong></p>
-<ol>
-<li><p><strong>生成 SSH 密钥</strong><br>在 <strong>运行 DPanel 的服务器</strong>（或你的本地电脑）上打开终端，执行以下命令生成密钥对。如果已存在密钥，可以跳过此步。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t ed25519 </span><br></pre></td></tr></table></figure>
-<p>第一步输入保存名称后，一路按回车键接受默认设置即可，将生成以下两个文件</p>
-<ul>
-<li><code>id_ed25519</code> : 密钥文件，相当于密码，不可以公开给任何人</li>
-<li><code>id_ed25519.pub</code> : 公钥文件，保存在服务器中后表示可以使用上面的密钥进行认证。</li>
-</ul>
-</li>
-<li><p><strong>将公钥复制到远程服务器</strong><br>使用 <code>ssh-copy-id</code> 命令将公钥安装到远程服务器的目标用户上。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh-copy-id dpaneluser@&lt;远程服务器IP&gt;</span><br></pre></td></tr></table></figure>
-<p>此过程需要输入一次 <code>dpaneluser</code> 用户的密码。</p>
-<blockquote>
-<p>如果已禁用 SSH 密码登录，需要手动复制 <code>id_ed25519.pub</code> 至对应用户的 <code>~/.ssh/authorized_keys</code> 文件中</p>
-</blockquote>
-</li>
-</ol>
-<p><strong>第三步：在 DPanel 中配置连接</strong></p>
-<p>在 DPanel 界面，导航至 <strong>系统</strong> &gt; <strong>多服务端</strong>，然后点击 <strong>添加服务端</strong> ：</p>
-<ul>
-<li>首先输入 <strong>名称</strong> 与 <strong>标识</strong>。 </li>
-<li>连接方式选择 <strong>SSH</strong> 。</li>
-<li>打开 <strong>启用独立Compose目录</strong> ：以便在访问不同服务器时只查看对应的 compose 文件。</li>
-<li>填入远程服务器的 IP 地址、SSH 端口。</li>
-<li>验证方式强烈推荐使用 <strong>私钥认证</strong>，它比密码更安全、更便捷。</li>
-<li>填写 <strong>用户名</strong>，手动填写或是导入 <strong>密钥文件</strong> 。</li>
-</ul>
-<p>最后点击确定保存，保存时 DPanel 会尝试连接远程服务器，如果连接失败，配置将无法保存，需要检查修改配置。</p>
-<p>添加成功后，你就可以通过 DPanel 顶部的下拉菜单在不同的 Docker 服务端之间轻松切换了。</p>
-<h2 id="安全设置"><a href="#安全设置" class="headerlink" title="安全设置"></a>安全设置</h2><h3 id="设置-Nginx-反代"><a href="#设置-Nginx-反代" class="headerlink" title="设置 Nginx 反代"></a>设置 Nginx 反代</h3><p>为了安全地通过 HTTPS 访问你的记账应用，强烈建议使用 Nginx 等反向代理工具。</p>
-<p>以下是一个 Nginx 的配置示例。你需要为你的域名申请一个 SSL 证书（例如通过 Let’s Encrypt）。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># /etc/nginx/sites-enable/dpanel.yourdomain.com.conf</span><br><span class="line">server &#123;</span><br><span class="line">    listen 80;</span><br><span class="line">    server_name dpanel.yourdomain.com;</span><br><span class="line"></span><br><span class="line">    # 将所有 HTTP 请求重定向到 HTTPS</span><br><span class="line">    location / &#123;</span><br><span class="line">        return 301 https://$host$request_uri;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">server &#123;</span><br><span class="line">    listen 443 ssl http2;</span><br><span class="line">    server_name dpanel.yourdomain.com;</span><br><span class="line"></span><br><span class="line">    # SSL 证书路径 (请替换为你的实际路径)</span><br><span class="line">    ssl_certificate /path/to/your/fullchain.pem;</span><br><span class="line">    ssl_certificate_key /path/to/your/privkey.pem;</span><br><span class="line"></span><br><span class="line">    # 安全相关的 SSL 设置 (推荐)</span><br><span class="line">    ssl_protocols TLSv1.2 TLSv1.3;</span><br><span class="line">    ssl_ciphers &#x27;ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384&#x27;;</span><br><span class="line">    ssl_prefer_server_ciphers off;</span><br><span class="line"></span><br><span class="line">    location / &#123;</span><br><span class="line">        proxy_pass http://127.0.0.1:8807;</span><br><span class="line">        proxy_set_header Host $host;</span><br><span class="line">        proxy_set_header X-Real-IP $remote_addr;</span><br><span class="line">        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">        proxy_set_header X-Forwarded-Proto $scheme;</span><br><span class="line"></span><br><span class="line">        # WebSocket 支持</span><br><span class="line">        proxy_http_version 1.1;</span><br><span class="line">        proxy_set_header Upgrade $http_upgrade;</span><br><span class="line">        proxy_set_header Connection &quot;upgrade&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="限制容器端口访问"><a href="#限制容器端口访问" class="headerlink" title="限制容器端口访问"></a>限制容器端口访问</h3><p>在设置了 Nginx 反代后，我们可以限制 Docker 的端口仅允许本地主机访问，从而避免将端口暴漏在公网中<br>将</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">ports:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">&quot;8807:8080&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>修改为 </p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">ports:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">&quot;127.0.0.1:8807:8080&quot;</span>   </span><br></pre></td></tr></table></figure>
-
-<p>然后重新启动 Docker 容器</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">docker compose down</span><br><span class="line">docker compose up -d</span><br></pre></td></tr></table></figure>
-
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>DPanel 以其轻量、安全和对 Docker Compose 的良好支持，为 Self-hosted 玩家提供了一个管理容器的绝佳方案。</p>
-<p>它不仅能帮你理清混乱的 <code>yaml</code> 文件，还能让你对服务器上的所有容器状态一目了然。如果你正在寻找一个简单高效的 Docker 图形化工具，DPanel 绝对值得一试。</p>
-]]></content>
-      <categories>
-        <category>教程</category>
-      </categories>
-      <tags>
-        <tag>Docker</tag>
-        <tag>Self-hosted</tag>
-        <tag>DPanel</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>趣站分享：Flolife.me —— 基于 AI 的人生旅程模拟器</title>
     <url>/post/website-flolife.html</url>
     <content><![CDATA[<p>还记得曾经风靡一时的人生重开模拟器吗？现在，Flowith 带来了一款更进一步的 AI 人生旅程模拟器 —— Flolife.me。它利用当前热门的 Nano Banana 图片模型，能够根据你上传的头像，生成贯穿角色一生的、具有惊人一致性的事件照片。</p>
@@ -2775,6 +2775,37 @@
       </tags>
   </entry>
   <entry>
+    <title>实用网站：Photopea —— 浏览器中的 Photoshop</title>
+    <url>/post/website-photopea-com.html</url>
+    <content><![CDATA[<p>你是否遇到过以下情况：</p>
+<ul>
+<li>出差时需要紧急修改客户的 PSD 文件</li>
+<li>电脑上没有安装 Photoshop，但需要处理复杂图片</li>
+<li>想要体验专业图片编辑功能，但不想付费购买软件</li>
+</ul>
+<p><a href="https://www.photopea.com/">Photopea.com</a> 正是为解决这些问题而生的免费在线图片编辑器。它在浏览器中提供了接近 Photoshop 的专业编辑体验，支持 PSD、AI、Sketch 等多种专业格式。</p>
+<p><strong>快速上手：</strong> 访问网站后，将图片文件直接拖放到浏览器窗口即可开始编辑。</p>
+<p><img src="https://img.nep.me/i/2025/08/18/photopea-preview.webp" alt="photopea-preview"></p>
+<h3 id="Photopea-的主要功能"><a href="#Photopea-的主要功能" class="headerlink" title="Photopea 的主要功能"></a>Photopea 的主要功能</h3><p><strong>1. 支持多种文件格式</strong><br>Photopea 的一个主要优点是它的兼容性。除了常规的图片格式，它还支持打开和编辑 <code>.psd</code>, <code>.ai</code>, <code>.sketch</code>, <code>.raw</code> 等专业格式的文件。这对于临时处理工作文件非常方便。</p>
+<p><strong>2. 熟悉的编辑界面</strong><br>Photopea 的界面和操作方式与 Photoshop 很像，如果你用过 PS，会感觉非常熟悉。它提供了 <strong>图层</strong> 、<strong>滤镜</strong> 等核心编辑功能，可以满足大部分日常的编辑需求。</p>
+<p><strong>3. 提供免费模版</strong><br>网站还提供了一些免费的设计模版，涵盖海报、社交媒体图片等，可以帮助你快速开始创作。</p>
+<p><strong>4. 支持 AI 图片生成</strong><br>除了传统的图片编辑功能，Photopea 还支持一句话生成图片，仍然是免费功能，非常适合体验一下。 </p>
+<p><strong>5. 隐私安全</strong><br>Photopea 默认文件处理都在浏览器本地完成，不会上传到服务器，网页加载完全后，甚至可以离线使用。</p>
+<h3 id="关于广告"><a href="#关于广告" class="headerlink" title="关于广告"></a>关于广告</h3><p>作为一个免费工具，Photopea 的在界面右侧添加了 Google 广告。考虑到它提供的免费功能，这点广告通常是可以接受的。网站的访问量很大，也说明它受到了全球用户的广泛认可。</p>
+<p><img src="https://img.nep.me/i/2025/08/18/photopea-traffic.webp" alt="photopea-traffic"></p>
+<p>简单来说，Photopea 是一个非常实用的在线工具。它免费、免安装，并且支持多种文件格式。</p>
+<p>如果你偶尔需要编辑图片，或者临时需要处理 PSD 这样的文件，Photopea 是一个非常值得收藏的网站，不妨现在加个书签，以备不时之需。</p>
+]]></content>
+      <categories>
+        <category>工具资源</category>
+      </categories>
+      <tags>
+        <tag>实用网站</tag>
+        <tag>图片编辑</tag>
+        <tag>Photopea</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>实用网站：通过 traffic.cv 免费查看网站流量数据</title>
     <url>/post/website-traffic-cv.html</url>
     <content><![CDATA[<p>作为一名互联网冲浪爱好者，你是否曾对某个网站的流量数据感到好奇？或许是想了解竞争对手的表现，又或者是想发掘下一个“爆款”网站。</p>
@@ -2835,6 +2866,28 @@
       </tags>
   </entry>
   <entry>
+    <title>什么是 “服务器奶牛化” ？</title>
+    <url>/post/what-is-turing-a-server-into-cash-cow.html</url>
+    <content><![CDATA[<p><strong>服务器奶牛化</strong> 是一个网络流行语，形象地描述了将服务器当作“奶牛”，通过持续压榨其资源以获取最大化收益的行为。这个词的核心在于“榨取价值”，类似于不断从奶牛身上挤奶。</p>
+<p>用于形容将服务器的计算、存储、带宽等资源，像挤牛奶一样持续变现的过程。</p>
+<h3 id="主要特征"><a href="#主要特征" class="headerlink" title="主要特征"></a>主要特征</h3><ol>
+<li><p><strong>资源极限压榨</strong><br>让服务器长期处于高负载状态，最大限度地利用其计算、存储和网络带宽，例如运行爬虫、挖矿或批量处理任务。</p>
+</li>
+<li><p><strong>成本套利（薅羊毛）</strong><br>利用云服务商的免费试用、促销活动或漏洞，以极低的成本获取服务器资源，再通过这些资源进行挖矿、跑节点或执行广告任务来盈利。</p>
+</li>
+<li><p><strong>规模化运作</strong><br>同时部署大量服务器运行相同的脚本或服务。单台服务器的产出虽小，但规模化后总收益非常可观，如同经营一个“云上牧场”。</p>
+</li>
+</ol>
+<p><img src="https://img.nep.me/i/2025/08/13/what-is-server-cow.webp" alt="what-is-server-cow"></p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>服务器</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Google Antigravity 已支持 Agent Skills</title>
     <url>/post/agent-skills-now-available-in-antigravity.html</url>
     <content><![CDATA[<p>Google 的 Antigravity 在1.14.2 版本中正式带来了 <a href="https://antigravity.google/docs/skills">Agent Skills</a> 的支持。 </p>
@@ -2856,59 +2909,6 @@
       <tags>
         <tag>Antigravity</tag>
         <tag>Agent Skills</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>实用网站：Photopea —— 浏览器中的 Photoshop</title>
-    <url>/post/website-photopea-com.html</url>
-    <content><![CDATA[<p>你是否遇到过以下情况：</p>
-<ul>
-<li>出差时需要紧急修改客户的 PSD 文件</li>
-<li>电脑上没有安装 Photoshop，但需要处理复杂图片</li>
-<li>想要体验专业图片编辑功能，但不想付费购买软件</li>
-</ul>
-<p><a href="https://www.photopea.com/">Photopea.com</a> 正是为解决这些问题而生的免费在线图片编辑器。它在浏览器中提供了接近 Photoshop 的专业编辑体验，支持 PSD、AI、Sketch 等多种专业格式。</p>
-<p><strong>快速上手：</strong> 访问网站后，将图片文件直接拖放到浏览器窗口即可开始编辑。</p>
-<p><img src="https://img.nep.me/i/2025/08/18/photopea-preview.webp" alt="photopea-preview"></p>
-<h3 id="Photopea-的主要功能"><a href="#Photopea-的主要功能" class="headerlink" title="Photopea 的主要功能"></a>Photopea 的主要功能</h3><p><strong>1. 支持多种文件格式</strong><br>Photopea 的一个主要优点是它的兼容性。除了常规的图片格式，它还支持打开和编辑 <code>.psd</code>, <code>.ai</code>, <code>.sketch</code>, <code>.raw</code> 等专业格式的文件。这对于临时处理工作文件非常方便。</p>
-<p><strong>2. 熟悉的编辑界面</strong><br>Photopea 的界面和操作方式与 Photoshop 很像，如果你用过 PS，会感觉非常熟悉。它提供了 <strong>图层</strong> 、<strong>滤镜</strong> 等核心编辑功能，可以满足大部分日常的编辑需求。</p>
-<p><strong>3. 提供免费模版</strong><br>网站还提供了一些免费的设计模版，涵盖海报、社交媒体图片等，可以帮助你快速开始创作。</p>
-<p><strong>4. 支持 AI 图片生成</strong><br>除了传统的图片编辑功能，Photopea 还支持一句话生成图片，仍然是免费功能，非常适合体验一下。 </p>
-<p><strong>5. 隐私安全</strong><br>Photopea 默认文件处理都在浏览器本地完成，不会上传到服务器，网页加载完全后，甚至可以离线使用。</p>
-<h3 id="关于广告"><a href="#关于广告" class="headerlink" title="关于广告"></a>关于广告</h3><p>作为一个免费工具，Photopea 的在界面右侧添加了 Google 广告。考虑到它提供的免费功能，这点广告通常是可以接受的。网站的访问量很大，也说明它受到了全球用户的广泛认可。</p>
-<p><img src="https://img.nep.me/i/2025/08/18/photopea-traffic.webp" alt="photopea-traffic"></p>
-<p>简单来说，Photopea 是一个非常实用的在线工具。它免费、免安装，并且支持多种文件格式。</p>
-<p>如果你偶尔需要编辑图片，或者临时需要处理 PSD 这样的文件，Photopea 是一个非常值得收藏的网站，不妨现在加个书签，以备不时之需。</p>
-]]></content>
-      <categories>
-        <category>工具资源</category>
-      </categories>
-      <tags>
-        <tag>实用网站</tag>
-        <tag>图片编辑</tag>
-        <tag>Photopea</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>什么是 “服务器奶牛化” ？</title>
-    <url>/post/what-is-turing-a-server-into-cash-cow.html</url>
-    <content><![CDATA[<p><strong>服务器奶牛化</strong> 是一个网络流行语，形象地描述了将服务器当作“奶牛”，通过持续压榨其资源以获取最大化收益的行为。这个词的核心在于“榨取价值”，类似于不断从奶牛身上挤奶。</p>
-<p>用于形容将服务器的计算、存储、带宽等资源，像挤牛奶一样持续变现的过程。</p>
-<h3 id="主要特征"><a href="#主要特征" class="headerlink" title="主要特征"></a>主要特征</h3><ol>
-<li><p><strong>资源极限压榨</strong><br>让服务器长期处于高负载状态，最大限度地利用其计算、存储和网络带宽，例如运行爬虫、挖矿或批量处理任务。</p>
-</li>
-<li><p><strong>成本套利（薅羊毛）</strong><br>利用云服务商的免费试用、促销活动或漏洞，以极低的成本获取服务器资源，再通过这些资源进行挖矿、跑节点或执行广告任务来盈利。</p>
-</li>
-<li><p><strong>规模化运作</strong><br>同时部署大量服务器运行相同的脚本或服务。单台服务器的产出虽小，但规模化后总收益非常可观，如同经营一个“云上牧场”。</p>
-</li>
-</ol>
-<p><img src="https://img.nep.me/i/2025/08/13/what-is-server-cow.webp" alt="what-is-server-cow"></p>
-]]></content>
-      <categories>
-        <category>笔记</category>
-      </categories>
-      <tags>
-        <tag>服务器</tag>
       </tags>
   </entry>
   <entry>
@@ -3733,6 +3733,35 @@
       </tags>
   </entry>
   <entry>
+    <title>Anthropic 发布 Claude Opus 4.6 模型，赠送付费用户 50 美元余额</title>
+    <url>/post/claude-subscription-user-can-get-50-usd-extra-credit.html</url>
+    <content><![CDATA[<h2 id="Claude-Opus-4-6-发布"><a href="#Claude-Opus-4-6-发布" class="headerlink" title="Claude Opus 4.6 发布"></a>Claude Opus 4.6 发布</h2><p>今天 Anthropic 发布了最新的 <a href="https://www.anthropic.com/news/claude-opus-4-6">Claude Opus 4.6</a> ，官方表示 Claude Opus 4.6 在编码能力上超越了前代产品。它规划更周密，能够更长时间地执行代理任务，在大规模代码库中运行更可靠，并且拥有更强大的代码审查和调试能力，可以更有效地发现自身错误。</p>
+<p>并且在 Beta 版本中 Opus 模型首次支持 1M tokens 上下文，API 价格方面保持不变。</p>
+<p>Claude Opus 4.6 目前已在 API、Claude Code 中可用。</p>
+<h2 id="更新-Claude-Code"><a href="#更新-Claude-Code" class="headerlink" title="更新 Claude Code"></a>更新 Claude Code</h2><p>运行下面命令即可：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm install -g @anthropic-ai/claude-code</span><br></pre></td></tr></table></figure>
+
+<h2 id="Anthropic-赠送付费用户-50-美元"><a href="#Anthropic-赠送付费用户-50-美元" class="headerlink" title="Anthropic 赠送付费用户 50 美元"></a>Anthropic 赠送付费用户 50 美元</h2><p>在推出新模型的同时，Anthropic 还提供给已订阅 Claude Pro &#x2F; MAX 的用户 50 美元的 <a href="https://support.claude.com/en/articles/13613973-claude-opus-4-6-extra-usage-promo#h_bf8366a5e9">福利</a>，用于体验最新的模型。 </p>
+<p>需要手动领取，只需访问 <a href="https://claude.ai/settings/usage">https://claude.ai/settings/usage</a> 点击 <strong>Claim</strong> 即可。</p>
+<p><img src="https://img.nep.me/i/2026/02/claude-50-usd-credit.jpeg" alt="claude-50-usd-credit.jpeg"></p>
+<h3 id="领取条件"><a href="#领取条件" class="headerlink" title="领取条件"></a>领取条件</h3><p>领取 50 美元满足下面的条件：</p>
+<ul>
+<li>在 2 月 4 日之前开通了 Claude Pro &#x2F; MAX 订阅套餐</li>
+<li>在 2 月 16 日之前开启 <strong>extra usage</strong></li>
+</ul>
+<p>所以如果你 在 2 月 4 日之前没有订阅 Claude Pro，无法领取优惠。</p>
+<h3 id="有效期"><a href="#有效期" class="headerlink" title="有效期"></a>有效期</h3><p>领取的 50 美元余额有效期为 60 天。</p>
+<h3 id="截止日期"><a href="#截止日期" class="headerlink" title="截止日期"></a>截止日期</h3><p>在 2 月 16 日之前都可以领取，如果你正在订阅 Claude Pro &#x2F; MAX，领取你的优惠吧。</p>
+]]></content>
+      <categories>
+        <category>优惠活动</category>
+      </categories>
+      <tags>
+        <tag>Anthropic</tag>
+        <tag>Opus</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>不使用插件让 Claude Code 显示额度使用情况</title>
     <url>/post/claude-code-show-5h-quota-without-plugin.html</url>
     <content><![CDATA[<p>Claude Code 不像 Codex 那样执行 <code>/statusline</code> 命令后提供选项直接快速调整可以显示的内容，执行 <code>/statusline</code> 其实是调用模型去分析然后修改 <code>~/.claude/settings.json</code> 文件。</p>
@@ -3776,35 +3805,6 @@
       </categories>
       <tags>
         <tag>Claude Code</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Anthropic 发布 Claude Opus 4.6 模型，赠送付费用户 50 美元余额</title>
-    <url>/post/claude-subscription-user-can-get-50-usd-extra-credit.html</url>
-    <content><![CDATA[<h2 id="Claude-Opus-4-6-发布"><a href="#Claude-Opus-4-6-发布" class="headerlink" title="Claude Opus 4.6 发布"></a>Claude Opus 4.6 发布</h2><p>今天 Anthropic 发布了最新的 <a href="https://www.anthropic.com/news/claude-opus-4-6">Claude Opus 4.6</a> ，官方表示 Claude Opus 4.6 在编码能力上超越了前代产品。它规划更周密，能够更长时间地执行代理任务，在大规模代码库中运行更可靠，并且拥有更强大的代码审查和调试能力，可以更有效地发现自身错误。</p>
-<p>并且在 Beta 版本中 Opus 模型首次支持 1M tokens 上下文，API 价格方面保持不变。</p>
-<p>Claude Opus 4.6 目前已在 API、Claude Code 中可用。</p>
-<h2 id="更新-Claude-Code"><a href="#更新-Claude-Code" class="headerlink" title="更新 Claude Code"></a>更新 Claude Code</h2><p>运行下面命令即可：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm install -g @anthropic-ai/claude-code</span><br></pre></td></tr></table></figure>
-
-<h2 id="Anthropic-赠送付费用户-50-美元"><a href="#Anthropic-赠送付费用户-50-美元" class="headerlink" title="Anthropic 赠送付费用户 50 美元"></a>Anthropic 赠送付费用户 50 美元</h2><p>在推出新模型的同时，Anthropic 还提供给已订阅 Claude Pro &#x2F; MAX 的用户 50 美元的 <a href="https://support.claude.com/en/articles/13613973-claude-opus-4-6-extra-usage-promo#h_bf8366a5e9">福利</a>，用于体验最新的模型。 </p>
-<p>需要手动领取，只需访问 <a href="https://claude.ai/settings/usage">https://claude.ai/settings/usage</a> 点击 <strong>Claim</strong> 即可。</p>
-<p><img src="https://img.nep.me/i/2026/02/claude-50-usd-credit.jpeg" alt="claude-50-usd-credit.jpeg"></p>
-<h3 id="领取条件"><a href="#领取条件" class="headerlink" title="领取条件"></a>领取条件</h3><p>领取 50 美元满足下面的条件：</p>
-<ul>
-<li>在 2 月 4 日之前开通了 Claude Pro &#x2F; MAX 订阅套餐</li>
-<li>在 2 月 16 日之前开启 <strong>extra usage</strong></li>
-</ul>
-<p>所以如果你 在 2 月 4 日之前没有订阅 Claude Pro，无法领取优惠。</p>
-<h3 id="有效期"><a href="#有效期" class="headerlink" title="有效期"></a>有效期</h3><p>领取的 50 美元余额有效期为 60 天。</p>
-<h3 id="截止日期"><a href="#截止日期" class="headerlink" title="截止日期"></a>截止日期</h3><p>在 2 月 16 日之前都可以领取，如果你正在订阅 Claude Pro &#x2F; MAX，领取你的优惠吧。</p>
-]]></content>
-      <categories>
-        <category>优惠活动</category>
-      </categories>
-      <tags>
-        <tag>Anthropic</tag>
-        <tag>Opus</tag>
       </tags>
   </entry>
   <entry>
@@ -4706,23 +4706,6 @@
       </tags>
   </entry>
   <entry>
-    <title>解决 Antigravity 通过 SSH 连接远程服务器崩溃的问题</title>
-    <url>/post/fix-antigravity-ssh-remote-crash-problem.html</url>
-    <content><![CDATA[<h2 id="问题详情"><a href="#问题详情" class="headerlink" title="问题详情"></a>问题详情</h2><p>在使用 Google Antigravity 通过 SSH 连接运行在 <strong>PVE</strong> 的 <strong>Linux 虚拟机</strong> 时，会直接崩溃，报错信息如下：</p>
-<blockquote>
-<p>Antigravity server crashed unexpectedly. Please restart to fully restore AI features.</p>
-</blockquote>
-<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>在 PVE 中将 Linux 虚拟机的 <strong>CPU 类型</strong> 设置为 <code>host</code>，再尝试连接就可以了。</p>
-<p>参考： <a href="https://discuss.ai.google.dev/t/antigravity-crashes-on-linux-but-works-on-windows/110355/3">Antigravity crashes on Linux, but works on Windows</a></p>
-]]></content>
-      <categories>
-        <category>笔记</category>
-      </categories>
-      <tags>
-        <tag>Antigravity</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>找回 Antigravity 代码编辑器(Antigravity IDE)</title>
     <url>/post/get-antigravity-ide-back.html</url>
     <content><![CDATA[<p>Google 在 Google I&#x2F;O 2026 上宣布了 Antigravity 迎来 2.0 版本重大更新，喊出 Agents 驱动的口号，实际效果却堪称灾难，额度暴降、用户配置丢失，直接展现出世界就是一个巨大的草台班子。</p>
@@ -4772,6 +4755,23 @@
       </tags>
   </entry>
   <entry>
+    <title>解决 Antigravity 通过 SSH 连接远程服务器崩溃的问题</title>
+    <url>/post/fix-antigravity-ssh-remote-crash-problem.html</url>
+    <content><![CDATA[<h2 id="问题详情"><a href="#问题详情" class="headerlink" title="问题详情"></a>问题详情</h2><p>在使用 Google Antigravity 通过 SSH 连接运行在 <strong>PVE</strong> 的 <strong>Linux 虚拟机</strong> 时，会直接崩溃，报错信息如下：</p>
+<blockquote>
+<p>Antigravity server crashed unexpectedly. Please restart to fully restore AI features.</p>
+</blockquote>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>在 PVE 中将 Linux 虚拟机的 <strong>CPU 类型</strong> 设置为 <code>host</code>，再尝试连接就可以了。</p>
+<p>参考： <a href="https://discuss.ai.google.dev/t/antigravity-crashes-on-linux-but-works-on-windows/110355/3">Antigravity crashes on Linux, but works on Windows</a></p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>Antigravity</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Google 全量开放 Gmail 用户名修改：终于可以告别 8 岁注册的黑历史邮箱了</title>
     <url>/post/google-finally-lets-you-change-gmail-address.html</url>
     <content><![CDATA[<p>一个著名的互联网梗图，8 岁的用户坐在电脑前，注册伴随一生的账户邮箱。</p>
@@ -4791,22 +4791,14 @@
 <p>在 Gmail 页面，点击右上角的头像，再点击 <strong>管理您的Google 账号</strong>，打开 Google 账号设置页面，点击左侧的个人信息，在右侧的邮箱部分可以进行修改。</p>
 <p><img src="https://img.nep.me/blog/change-gmail.webp" alt="change-gmail.png"></p>
 <p><img src="https://img.nep.me/blog/change-gmail-2.webp" alt="change-gmail-2.png"></p>
-<h2 id="原来的邮箱将如何处理"><a href="#原来的邮箱将如何处理" class="headerlink" title="原来的邮箱将如何处理"></a>原来的邮箱将如何处理</h2><p>修改后，原来的 Gmail 地址不会直接消失，而是会变成账号的备用邮箱。你仍然可以收到发往旧地址的邮件，账号里的数据也不会因为改邮箱而丢失，包括历史邮件、照片、文件等内容。</p>
+<h2 id="原来的邮箱将如何处理"><a href="#原来的邮箱将如何处理" class="headerlink" title="原来的邮箱将如何处理"></a>原来的邮箱将如何处理</h2><p>修改后，<mark>原来的 Gmail 地址不会直接消失，而是会变成账号的备用邮箱。你仍然可以收到发往旧地址的邮件，账号里的数据也不会因为改邮箱而丢失</mark>，包括历史邮件、照片、文件等内容。</p>
 <p>简单理解就是：</p>
 <p>你终于可以换一个新的 Gmail 门牌号，但原来的门牌号仍然能帮你收信。</p>
 <p>这对老用户来说非常重要。因为它不是让你抛弃旧账号、重新开始，而是在保留账号资产的前提下，给你一次重新命名自己的机会。</p>
-<h2 id="改之前需要注意什么？"><a href="#改之前需要注意什么？" class="headerlink" title="改之前需要注意什么？"></a>改之前需要注意什么？</h2><p>虽然这件事听起来很爽，但我并不建议大家看到入口后马上冲进去改。</p>
-<p>邮箱地址本质上已经不只是“收邮件的地址”，而是很多网站识别你的重要身份信息。尤其是你用了十几年 Google 账号后，很多服务可能都已经绑定了这个 Gmail 地址。</p>
-<h3 id="检查列表"><a href="#检查列表" class="headerlink" title="检查列表"></a>检查列表</h3><p>所以修改前，建议至少检查这几类地方：</p>
-<ul>
-<li><strong>1. 常用的第三方登录服务：</strong><br>比如 GitHub、Notion、Figma、Cloudflare、Vercel、各类论坛、博客后台、开发者平台等。</li>
-<li><strong>2. 金融、支付和账单类服务：</strong><br>比如银行通知、订阅服务、云服务账单、域名注册商、服务器厂商等。</li>
-<li><strong>3. 重要的账号恢复渠道：</strong><br>有些网站会把邮箱当作找回密码、验证身份、接收安全通知的核心渠道。</li>
-<li><strong>4.工作和公开资料：</strong><br>比如简历、个人网站、名片、Git 提交信息、项目 README、博客 About 页面等。</li>
-</ul>
-<p>虽然 Google 会让旧邮箱继续收信，但第三方网站是否能正确识别 “这是同一个人” ，就不一定了。</p>
-<h3 id="真正需要警惕的是第三方一键登录"><a href="#真正需要警惕的是第三方一键登录" class="headerlink" title="真正需要警惕的是第三方一键登录"></a>真正需要警惕的是第三方一键登录</h3><p>这次 Gmail 地址可修改后，最值得注意的问题并不是 Google 自己，而是第三方网站的一键登录。</p>
-<p>理论上，使用 Google 账号登录时，Google 会返回一组用户信息。其中真正稳定、适合用来识别账号身份的，应该是 Google 账号的 <code>Provider ID</code>，也就是这个 Google 用户在 Google 身份系统里的唯一标识。</p>
+<h2 id="有一些网站遇到了问题"><a href="#有一些网站遇到了问题" class="headerlink" title="有一些网站遇到了问题"></a>有一些网站遇到了问题</h2><p>虽然这件事听起来很爽，但我并不建议大家看到入口后马上冲进去改。</p>
+<p>由于老的邮箱还可以正常接收邮件，所以对于在其他网站上使用该邮箱注册的账户，其实可以不做调整，继续使用。</p>
+<p>这次 Gmail 地址可修改后，最值得注意的问题并不是 Google 自己，<strong>而是第三方网站的一键登录</strong>。目前的反馈显示，在修改邮箱后，再次使用 Google 账号一键登录 V2EX、Spotify 等网站时，会直接创建新的账户。</p>
+<p>理论上，使用 Google 账号登录时，Google 会返回一组用户信息。其中适合用来识别账号身份的，应该是 Google 账号的 <code>Provider ID</code>，也就是这个 Google 用户在 Google 身份系统里的唯一标识。</p>
 <p><strong>Email 只是邮箱地址。</strong></p>
 <p>但现实里，有些网站开发者为了方便，可能直接把 Email 当成用户的唯一 ID 来用。这样做在邮箱永远不能改的时代，看起来似乎问题不大；但一旦邮箱可以修改，问题就会暴露出来。</p>
 <p>举个例子：</p>
@@ -4815,8 +4807,16 @@
 <p><mark>“这是一个新邮箱，所以这是一个新用户。”</mark></p>
 <p>结果就是，你明明用的是同一个 Google 账号，却可能登录进一个全新的空账号，甚至出现账号丢失、数据无法关联、订阅状态异常等问题。</p>
 <p>更糟糕的情况是，如果某些系统对旧邮箱释放、复用、绑定逻辑处理不当，还可能引出更复杂的安全问题。</p>
-<p>目前已知会遇到问题的知名网站包括 <strong>V2EX</strong> 、 <strong>Spotify</strong> 。</p>
-<h2 id="给普通用户的建议"><a href="#给普通用户的建议" class="headerlink" title="给普通用户的建议"></a>给普通用户的建议</h2><p>如果你准备修改 Gmail 地址，可以先整理一下自己最常用、最重要的网站，确认自己在哪些网站使用了了 <strong>使用 Google 登录</strong> 的服务。修改邮箱后，优先测试这些服务是否还能正常登录，账号数据是否还在。 </p>
+<p>目前已知会遇到此类问题的知名网站包括 <strong>V2EX</strong>、<strong>Spotify</strong> 等。</p>
+<h3 id="检查列表，确认修改范围"><a href="#检查列表，确认修改范围" class="headerlink" title="检查列表，确认修改范围"></a>检查列表，确认修改范围</h3><p>如果希望修改其他网站的绑定邮箱，在修改前，建议至少检查这几类地方，确认使用的是邮箱注册还是一键登陆的方式关联的账户：</p>
+<ul>
+<li><strong>1. 常用的第三方登录服务：</strong><br>比如 GitHub、Notion、Figma、Cloudflare、Vercel、各类论坛、博客后台、开发者平台等。</li>
+<li><strong>2. 金融、支付和账单类服务：</strong><br>比如银行通知、订阅服务、云服务账单、域名注册商、服务器厂商等。</li>
+<li><strong>3. 重要的账号恢复渠道：</strong><br>有些网站会把邮箱当作找回密码、验证身份、接收安全通知的核心渠道。</li>
+<li><strong>4.工作和公开资料：</strong><br>比如简历、个人网站、名片、Git 提交信息、项目 README、博客 About 页面等。</li>
+</ul>
+<p>虽然 Google 会让旧邮箱继续收信，但第三方网站是否能正确识别 “这是同一个人” ，就不一定了。</p>
+<h2 id="给普通用户的建议"><a href="#给普通用户的建议" class="headerlink" title="给普通用户的建议"></a>给普通用户的建议</h2><p>如果你准备修改 Gmail 地址，可以先整理一下自己最常用、最重要的网站，确认自己在哪些网站使用了 <strong>通过 Google 登录</strong> 的服务。修改邮箱后，优先测试这些服务是否还能正常登录，账号数据是否还在。</p>
 <p>对于特别重要的服务，最好提前确认它们是否支持修改登录邮箱，或者是否能绑定备用登录方式，比如 <strong>密码、通行密钥、备用邮箱、手机号</strong> 等。</p>
 <p>如果修改后遇到某个网站把你识别成新用户，可以尝试联系客服或开发者，说明你使用的是同一个 Google 账号，只是 Gmail 地址发生了变化。</p>
 <h2 id="给开发者的建议"><a href="#给开发者的建议" class="headerlink" title="给开发者的建议"></a>给开发者的建议</h2><p>如果你的网站支持 Google 一键登录，请不要用 Email 作为用户的唯一身份标识。</p>
@@ -5282,221 +5282,6 @@
       </categories>
       <tags>
         <tag>Google</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Nginx 还是 Caddy？一篇写给实际运维者的对比指南</title>
-    <url>/post/nginx-vs-caddy.html</url>
-    <content><![CDATA[<p>如果你要给一个网站、API 或者一堆容器选一个反向代理 &#x2F; Web 服务器，2026 年的今天你大概率会在 Nginx 和 Caddy 之间犹豫。这篇文章不站队，而是从配置体验、HTTPS、性能、生态、扩展性几个维度把两者掰开讲清楚，最后给出明确的选型建议。</p>
-<h2 id="一句话认识两位选手"><a href="#一句话认识两位选手" class="headerlink" title="一句话认识两位选手"></a>一句话认识两位选手</h2><ul>
-<li><strong>Nginx</strong>：2004 年诞生，C 语言编写，事件驱动架构的鼻祖级实现。占据全球 Web 服务器市场的头部份额，几乎是”反向代理”的代名词。</li>
-<li><strong>Caddy</strong>：2015 年发布，Go 语言编写，主打”默认 HTTPS”和极简配置。Caddy 2 重写后以模块化架构和 JSON 配置 API 为核心。</li>
-</ul>
-<h2 id="配置体验：最直观的差距"><a href="#配置体验：最直观的差距" class="headerlink" title="配置体验：最直观的差距"></a>配置体验：最直观的差距</h2><p>先看一个最常见的需求：把 <code>example.com</code> 反向代理到本地 8080 端口，并启用 HTTPS。</p>
-<p><strong>Caddy（Caddyfile，3 行）：</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">example.com &#123;</span><br><span class="line">    reverse_proxy localhost:8080</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>证书自动申请、自动续期、HTTP 自动跳转 HTTPS——全部默认完成。</p>
-<p><strong>Nginx（约 25 行 + certbot）：</strong></p>
-<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">80</span>;</span><br><span class="line">    <span class="attribute">server_name</span> example.com;</span><br><span class="line">    <span class="attribute">return</span> <span class="number">301</span> https://<span class="variable">$host</span><span class="variable">$request_uri</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">443</span> ssl http2;</span><br><span class="line">    <span class="attribute">server_name</span> example.com;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">ssl_certificate</span>     /etc/letsencrypt/live/example.com/fullchain.pem;</span><br><span class="line">    <span class="attribute">ssl_certificate_key</span> /etc/letsencrypt/live/example.com/privkey.pem;</span><br><span class="line"></span><br><span class="line">    <span class="section">location</span> / &#123;</span><br><span class="line">        <span class="attribute">proxy_pass</span> http://localhost:8080;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> Host <span class="variable">$host</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Real-IP <span class="variable">$remote_addr</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Forwarded-Proto <span class="variable">$scheme</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>还需要额外跑 <code>certbot</code> 申请证书并配置定时续期。</p>
-<p>但要公平地说：Nginx 的冗长换来的是<strong>显式与精细</strong>。<code>proxy_set_header</code> 每一行都看得见摸得着；而 Caddy 帮你做的事藏在默认值里，出问题时你需要知道它默认做了什么。对于配置规模庞大、需要精确控制每个 header、buffer、timeout 的场景，Nginx 的配置语言虽然啰嗦，但表达力和社区可参考的范例数量是压倒性的。</p>
-<h2 id="HTTPS-与证书管理"><a href="#HTTPS-与证书管理" class="headerlink" title="HTTPS 与证书管理"></a>HTTPS 与证书管理</h2><p>这是 Caddy 的主场：</p>
-<ul>
-<li><strong>自动 HTTPS</strong>：通过 ACME（Let’s Encrypt &#x2F; ZeroSSL）自动签发、续期、轮换证书，包括 OCSP 装订，零配置。</li>
-<li><strong>按需 TLS（On-Demand TLS）</strong>：在 TLS 握手时才为新域名签证书，是 SaaS 自定义域名（客户绑定自己的域名）场景的杀手锏。Nginx 体系要实现同样的效果通常得上 OpenResty + lua-resty-auto-ssl，复杂度完全不在一个量级。</li>
-<li><strong>内部 CA</strong>：内置本地 CA，<code>localhost</code> 开发环境也能用受信任的 HTTPS。</li>
-</ul>
-<p>Nginx 这边，证书管理依赖外部工具（certbot、acme.sh、lego），工作得也很成熟，但本质上是”胶水方案”：多一个进程、多一个 cron、多一个 reload 钩子，多一处可能坏的地方。</p>
-<h2 id="性能：差距比你想象的小"><a href="#性能：差距比你想象的小" class="headerlink" title="性能：差距比你想象的小"></a>性能：差距比你想象的小</h2><p>网络上流传”C 写的肯定比 Go 快”，实际测试中：</p>
-<ul>
-<li><strong>静态文件与常规反向代理</strong>：两者在绝大多数真实负载下吞吐量处于同一量级。Nginx 在极限 RPS 和内存占用上通常仍有优势（C + 精细的内存管理 vs Go runtime + GC），尤其是数十万并发连接的极端场景。</li>
-<li><strong>尾延迟</strong>：Go 的 GC 在高压下可能带来轻微的 P99 抖动，但对绝大多数业务无感。</li>
-<li><strong>HTTP&#x2F;3</strong>：两者都已支持 QUIC&#x2F;HTTP3，Caddy 默认启用，Nginx 需要显式配置。</li>
-</ul>
-<p>结论：<strong>除非你在做 CDN 边缘节点或单机要扛几十万并发，性能不应该是你们之间的决定因素。</strong> 瓶颈几乎总在上游应用，而不是代理层。</p>
-<h2 id="运维与生态"><a href="#运维与生态" class="headerlink" title="运维与生态"></a>运维与生态</h2><table>
-<thead>
-<tr>
-<th>维度</th>
-<th>Nginx</th>
-<th>Caddy</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>配置热加载</td>
-<td><code>nginx -s reload</code>，成熟可靠</td>
-<td>Admin API 优雅热加载，零停机</td>
-</tr>
-<tr>
-<td>动态配置</td>
-<td>原生不支持，需 reload 或商业版&#x2F;OpenResty</td>
-<td>内置 JSON Admin API，可编程修改运行时配置</td>
-</tr>
-<tr>
-<td>文档与搜索答案</td>
-<td>二十年积累，几乎任何问题都有现成答案</td>
-<td>文档质量高但社区体量小得多</td>
-</tr>
-<tr>
-<td>容器&#x2F;K8s 生态</td>
-<td>ingress-nginx 等久经考验</td>
-<td>有 Ingress Controller 但成熟度和采用率较低</td>
-</tr>
-<tr>
-<td>扩展方式</td>
-<td>C 模块（需重新编译）、OpenResty&#x2F;Lua、njs</td>
-<td>Go 插件生态，<code>xcaddy</code> 一条命令编译定制版本</td>
-</tr>
-<tr>
-<td>二进制分发</td>
-<td>包管理器，模块依赖发行版</td>
-<td>单一静态二进制，跨平台部署极其省心</td>
-</tr>
-<tr>
-<td>商业支持</td>
-<td>Nginx Plus（F5）</td>
-<td>官方赞助&#x2F;商业授权</td>
-</tr>
-</tbody></table>
-<p>几个值得展开的点：</p>
-<ul>
-<li><strong>扩展性</strong>：Caddy 的插件体验显著更好。<code>xcaddy build --with github.com/...</code> 一条命令就能编出带 Cloudflare DNS 验证、限流、安全模块的定制二进制。Nginx 编第三方 C 模块的痛苦，折腾过的人都懂（这也是 OpenResty 存在的原因）。</li>
-<li><strong>配置即 API</strong>：Caddy 的本质是一个 JSON 配置引擎，Caddyfile 只是人类友好的前端。这让它天然适合被程序驱动——平台型产品动态增删站点不需要生成配置文件再 reload。</li>
-<li><strong>久经考验</strong>：Nginx 的边缘案例处理、与各种奇怪客户端&#x2F;上游的兼容性，是二十年生产流量喂出来的。保守的大型生产环境选它，不会有人质疑。</li>
-</ul>
-<h2 id="选型建议"><a href="#选型建议" class="headerlink" title="选型建议"></a>选型建议</h2><p><strong>选 Caddy，如果你是：</strong></p>
-<ul>
-<li>个人项目、中小团队、初创公司——把省下来的证书运维时间拿去写业务</li>
-<li>SaaS 平台需要客户自定义域名（On-Demand TLS 几乎是唯一省心方案）</li>
-<li>需要通过 API 动态管理大量站点配置</li>
-<li>团队没有专职运维，希望配置文件三行能看懂</li>
-</ul>
-<p><strong>选 Nginx，如果你是：</strong></p>
-<ul>
-<li>已有大量 Nginx 配置和团队经验——迁移收益撑不起迁移成本</li>
-<li>极端高并发 &#x2F; 边缘节点 &#x2F; 对内存和尾延迟敏感的场景</li>
-<li>重度依赖 Kubernetes ingress-nginx 或 OpenResty&#x2F;Lua 生态</li>
-<li>需要 Nginx Plus 的商业特性与支持，或所在组织要求”最保守的选择”</li>
-</ul>
-<p><strong>也可以都要</strong>：不少团队用 Caddy 做边缘 TLS 终结（享受自动证书），后面挂 Nginx&#x2F;原有架构不动。架构上完全成立。</p>
-<h2 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h2><p>Nginx 和 Caddy 的关系，有点像 Vim 和 VS Code：前者无所不能但要求你懂它，后者把 90% 的常见需求做成了开箱即用。2026 年的今天，<strong>对于新项目我会默认从 Caddy 开始</strong>——直到遇到它解决不了的问题再换，而这一天对大多数项目来说不会到来。但如果你手里已经有一套运转良好的 Nginx，请记住运维界的第一定律：<strong>If it works, don’t fix it.</strong></p>
-]]></content>
-      <categories>
-        <category>教程</category>
-      </categories>
-      <tags>
-        <tag>Nginx</tag>
-        <tag>Caddy</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>台北电脑展：Nvidia 发布面向 PC 的 RTX Spark CPU，信息一览</title>
-    <url>/post/nvidia-announce-rtx-spark.html</url>
-    <content><![CDATA[<p>2026 年 6 月 1 日，之前各大科技品牌官推的 <code>A new era of PC.</code> 谜底终于揭晓：</p>
-<p>NVIDIA 在台北的 Computex 2026 正式发布了面向 PC 的 RTX Spark SoC ，定位为 AI PC 平台，面向轻薄本、AI 开发、创意工作站和高端 Windows PC。</p>
-<h2 id="RTX-Spark-最新发布重点"><a href="#RTX-Spark-最新发布重点" class="headerlink" title="RTX Spark 最新发布重点"></a>RTX Spark 最新发布重点</h2><h3 id="参数信息"><a href="#参数信息" class="headerlink" title="参数信息"></a>参数信息</h3><table>
-<thead>
-<tr>
-<th align="center">项目</th>
-<th>规格</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center"><strong>CPU</strong></td>
-<td>Grace ARM，最高 <strong>20</strong> 核心</td>
-</tr>
-<tr>
-<td align="center"><strong>GPU</strong></td>
-<td>Blackwell RTX GPU， <strong>6144</strong> 个 CUDA Core</td>
-</tr>
-<tr>
-<td align="center">内存</td>
-<td>最高 <strong>128GB</strong> 统一内存</td>
-</tr>
-<tr>
-<td align="center">AI 算力</td>
-<td>1 PFLOPS（FP4）</td>
-</tr>
-<tr>
-<td align="center">产品定位</td>
-<td>AI PC &#x2F; 创意工作站 &#x2F; 高端 Windows PC</td>
-</tr>
-<tr>
-<td align="center">上市时间</td>
-<td>2026 年秋季</td>
-</tr>
-</tbody></table>
-<p>GPU 的 6144 个 CUDA Core 规格接近桌面级 <strong>Nvidia RTX 5070</strong>，官方宣称 <code>FP4</code> AI 算力达到 <strong>1 PFLOPS</strong>， 略高于 RTX 5070 的 AI 算力指标。</p>
-<h2 id="官方卖点"><a href="#官方卖点" class="headerlink" title="官方卖点"></a>官方卖点</h2><p>NVIDIA 宣称其是“史上能效最高的 PC 芯片”，发布会并未公布功耗信息，根据 <a href="https://giznewsdaily.com/nvidia-n1x-leak-reveals-limited-availability-in-2026/">泄漏信息</a>  显示 TDP 约为 65-120W。</p>
-<p>NVIDIA 强调的卖点：  </p>
-<ul>
-<li>本地运行 AI Agent</li>
-<li>本地推理保护隐私</li>
-<li>视频编辑、3D 渲染、AI 创作加速</li>
-<li>高性能但低功耗的轻薄本体验</li>
-</ul>
-<h2 id="产品信息"><a href="#产品信息" class="headerlink" title="产品信息"></a>产品信息</h2><p>微软、Dell、HP、Lenovo、ASUS 等厂商已宣布采用 RTX Spark 平台推出新的产品。</p>
-<p><img src="https://img.nep.me/2026/06/rtx-spark-oem.webp" alt="rtx-spark-oem.jpeg"></p>
-<p>其中微软宣布 <a href="https://www.microsoft.com/en-us/surface/devices/surface-laptop-ultra/">Surface Laptop Ultra</a> 将在 2026 年秋季上市</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>RTX Spark 标志着在云端 AI 生成占据统治地位的 NVIDIA 正式进入面向个人 AI 的 PC SoC 市场。</p>
-<p>与传统 Windows PC 的 x86 + 独立显卡方案不同，RTX Spark 试图通过 ARM CPU、Blackwell GPU 与统一内存架构，打造类似 Apple Silicon 的高性能 AI PC 平台。</p>
-<p>如果 NVIDIA 能兑现其能效与 AI 性能承诺，RTX Spark 有望成为未来高端 Windows AI PC 的重要选择。</p>
-<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
-<li><a href="https://blogs.nvidia.cn/blog/nvidia-microsoft-windows-pcs-agents-rtx-spark/">NVIDIA 携手微软，在个人 AI 时代重塑 Windows PC</a></li>
-<li><a href="https://www.nvidia.cn/gtc/taipei/keynote/">NVIDIA GTC 台北 2026 主题演讲回放</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>资讯</category>
-      </categories>
-      <tags>
-        <tag>RTX</tag>
-        <tag>RTX Spark</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>OpenAI 发布桌面版 Codex App ：开启 “AI 智能体” 指挥中心时代</title>
-    <url>/post/openai-release-codex-app.html</url>
-    <content><![CDATA[<p>OpenAI 正式 <a href="https://openai.com/index/introducing-the-codex-app/">宣布</a> 推出全新的 <a href="https://openai.com/zh-Hans-CN/codex/get-started/">Codex App</a>。这不仅仅是一个简单的聊天窗口，而是一个专为构建、管理和调度 AI Agents（智能体） 设计的强力“指挥中心”。</p>
-<p>目前，该应用已率先登陆 macOS 平台，Windows 版本也正在准备中。</p>
-<h2 id="核心功能：让-AI-深度介入工作流"><a href="#核心功能：让-AI-深度介入工作流" class="headerlink" title="核心功能：让 AI 深度介入工作流"></a>核心功能：让 AI 深度介入工作流</h2><p>Codex App 的推出标志着 OpenAI 从“对话式 AI”向“协作式&#x2F;自动化 AI”的重大跨越。其核心亮点包括：</p>
-<ul>
-<li><p><strong>多任务并行（Multitask Effortlessly）</strong>：<br>用户可以同时运行多个智能体处理不同任务。通过 Worktrees（工作树） 机制，系统能确保不同智能体所做的更改相互隔离，互不干扰，像管理代码分支一样管理 AI 的产出。</p>
-</li>
-<li><p><strong>技能封装（Create &amp; Use Skills）</strong>：<br>用户可以将特定的工具组合与操作规范打包成通用的 Skills 。这些 Skill 可以被重复调用，赋予智能体更强的专业执行力，Codex APP 安装后即内置了很多 Skill，可以做到开箱即用。<br><img src="https://img.nep.me/i/2026/02/codex-app-skills.png" alt="codex-app-skills.png"></p>
-</li>
-<li><p><strong>后台自动化（Set up Automations）</strong>：<br>通过设置定时工作流（Scheduled Workflows），用户可以将重复性的繁琐工作完全委托给 Codex。即使在后台，智能体也能根据预设逻辑自主完成任务。<br><img src="https://img.nep.me/i/2026/02/codex-app-automations.png" alt="codex-app-automations.png"></p>
-</li>
-</ul>
-<h2 id="发布福利：限时免费与额度翻倍"><a href="#发布福利：限时免费与额度翻倍" class="headerlink" title="发布福利：限时免费与额度翻倍"></a>发布福利：限时免费与额度翻倍</h2><p>为了庆祝 Codex App 的上线，OpenAI 首席执行官 Sam Altman 宣布了为期 2 个月 的重磅福利政策：</p>
-<ul>
-<li><strong>门槛降低</strong>： 免费用户（Free）及入门级用户（Go）在未来两个月内也可获得使用权限，体验最新的智能体构建功能。</li>
-<li><strong>付费用户额度翻倍</strong>： 所有付费订阅用户（Plus、Pro）的 Rate Limits（速率限制&#x2F;额度）直接翻倍。</li>
-</ul>
-<blockquote>
-<p>To celebrate the launch of the Codex app, we doubled all rate limits for paid plans for 2 months!<br>And added access for free&#x2F;go.<br>— <a href="https://x.com/sama/status/2018437537103269909">@Sam Altman</a></p>
-</blockquote>
-<h2 id="下载地址"><a href="#下载地址" class="headerlink" title="下载地址"></a>下载地址</h2><p>访问 <a href="https://openai.com/zh-Hans-CN/codex/get-started/">https://openai.com/zh-Hans-CN/codex/get-started/</a> 即可获取。</p>
-<h2 id="支持模型"><a href="#支持模型" class="headerlink" title="支持模型"></a>支持模型</h2><p>目前 Codex APP 中支持 GPT 5.2 与 GPT 5.2-Codex 模型，都包含 Medium、High、Extra High 等各种模式。<br><img src="https://img.nep.me/i/2026/02/codex-app-model-lists.png" style="width:25%;" alt="codex-app-model-lists.png" /></p>
-<h2 id="与-Codex-Web-联动"><a href="#与-Codex-Web-联动" class="headerlink" title="与 Codex Web 联动"></a>与 Codex Web 联动</h2><p>如果打开 Github 的项目，Codex APP 可以与 Codex Web 联动，选择在云端执行任务。<br><img src="https://img.nep.me/i/2026/02/codex-app-runtype.png" style="width:75%;" alt="codex-app-runtype.png" /></p>
-<h2 id="Codex-生态：全场景的-AI-开发闭环"><a href="#Codex-生态：全场景的-AI-开发闭环" class="headerlink" title="Codex 生态：全场景的 AI 开发闭环"></a>Codex 生态：全场景的 AI 开发闭环</h2><p>随着桌面版的发布，OpenAI 终于补齐了最后一块拼图，构建起了一个覆盖云端、终端与桌面的全方位 AI 开发生态。无论你的工作习惯如何，Codex 都能无缝融入：</p>
-<ul>
-<li><strong>Codex Web (ChatGPT)</strong> —— 随时随地的云端协作 深度集成于 ChatGPT 网页端与 App 中。连接 GitHub 后，无需配置任何本地环境，即可直接读取仓库、审查代码或提交轻量级修改。非常适合 Code Review 或快速修复 Bug。</li>
-<li><strong>Codex CLI</strong> —— 极客的终端利器 专为开发者打造的命令行工具。将 AI 注入终端，让你无需离开熟悉的 Shell 环境，仅凭自然语言指令即可完成代码生成、文件编辑和脚本执行，完美契合现有的命令行工作流。</li>
-<li><strong>Codex App</strong> —— 终极“指挥中心” 生态的核心枢纽。作为功能最完整的桌面客户端，它不仅拥有最强的本地读写权限，更是调度多智能体（Agents）并行协作、运行后台自动化任务的“总控台”，专门应对复杂的工程级挑战。</li>
-</ul>
-<p>Codex Web 与 Codex CLI 仍然是代码编写工具，Codex App 作为易用的 GUI 客户端，凭借 Agent Skill 加持，生态不再仅仅是辅助写代码的 Copilot，而是扩展到通用领域，致力于成为能听懂意图、自动执行、全天候待命的“硅基合伙人”，并且也让更多的人可以体验使用到 AI Agents。</p>
-]]></content>
-      <categories>
-        <category>资讯</category>
-      </categories>
-      <tags>
-        <tag>AI</tag>
-        <tag>OpenAI</tag>
-        <tag>Codex</tag>
-        <tag>Codex APP</tag>
       </tags>
   </entry>
   <entry>
@@ -6402,6 +6187,178 @@
       </tags>
   </entry>
   <entry>
+    <title>Nginx 还是 Caddy？一篇写给实际运维者的对比指南</title>
+    <url>/post/nginx-vs-caddy.html</url>
+    <content><![CDATA[<p>如果你要给一个网站、API 或者一堆容器选一个反向代理 &#x2F; Web 服务器，2026 年的今天你大概率会在 Nginx 和 Caddy 之间犹豫。这篇文章不站队，而是从配置体验、HTTPS、性能、生态、扩展性几个维度把两者掰开讲清楚，最后给出明确的选型建议。</p>
+<h2 id="一句话认识两位选手"><a href="#一句话认识两位选手" class="headerlink" title="一句话认识两位选手"></a>一句话认识两位选手</h2><ul>
+<li><strong>Nginx</strong>：2004 年诞生，C 语言编写，事件驱动架构的鼻祖级实现。占据全球 Web 服务器市场的头部份额，几乎是”反向代理”的代名词。</li>
+<li><strong>Caddy</strong>：2015 年发布，Go 语言编写，主打”默认 HTTPS”和极简配置。Caddy 2 重写后以模块化架构和 JSON 配置 API 为核心。</li>
+</ul>
+<h2 id="配置体验：最直观的差距"><a href="#配置体验：最直观的差距" class="headerlink" title="配置体验：最直观的差距"></a>配置体验：最直观的差距</h2><p>先看一个最常见的需求：把 <code>example.com</code> 反向代理到本地 8080 端口，并启用 HTTPS。</p>
+<p><strong>Caddy（Caddyfile，3 行）：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">example.com &#123;</span><br><span class="line">    reverse_proxy localhost:8080</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>证书自动申请、自动续期、HTTP 自动跳转 HTTPS——全部默认完成。</p>
+<p><strong>Nginx（约 25 行 + certbot）：</strong></p>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">80</span>;</span><br><span class="line">    <span class="attribute">server_name</span> example.com;</span><br><span class="line">    <span class="attribute">return</span> <span class="number">301</span> https://<span class="variable">$host</span><span class="variable">$request_uri</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">443</span> ssl http2;</span><br><span class="line">    <span class="attribute">server_name</span> example.com;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">ssl_certificate</span>     /etc/letsencrypt/live/example.com/fullchain.pem;</span><br><span class="line">    <span class="attribute">ssl_certificate_key</span> /etc/letsencrypt/live/example.com/privkey.pem;</span><br><span class="line"></span><br><span class="line">    <span class="section">location</span> / &#123;</span><br><span class="line">        <span class="attribute">proxy_pass</span> http://localhost:8080;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> Host <span class="variable">$host</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Real-IP <span class="variable">$remote_addr</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Forwarded-Proto <span class="variable">$scheme</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>还需要额外跑 <code>certbot</code> 申请证书并配置定时续期。</p>
+<p>但要公平地说：Nginx 的冗长换来的是<strong>显式与精细</strong>。<code>proxy_set_header</code> 每一行都看得见摸得着；而 Caddy 帮你做的事藏在默认值里，出问题时你需要知道它默认做了什么。对于配置规模庞大、需要精确控制每个 header、buffer、timeout 的场景，Nginx 的配置语言虽然啰嗦，但表达力和社区可参考的范例数量是压倒性的。</p>
+<h2 id="HTTPS-与证书管理"><a href="#HTTPS-与证书管理" class="headerlink" title="HTTPS 与证书管理"></a>HTTPS 与证书管理</h2><p>这是 Caddy 的主场：</p>
+<ul>
+<li><strong>自动 HTTPS</strong>：通过 ACME（Let’s Encrypt &#x2F; ZeroSSL）自动签发、续期、轮换证书，包括 OCSP 装订，零配置。</li>
+<li><strong>按需 TLS（On-Demand TLS）</strong>：在 TLS 握手时才为新域名签证书，是 SaaS 自定义域名（客户绑定自己的域名）场景的杀手锏。Nginx 体系要实现同样的效果通常得上 OpenResty + lua-resty-auto-ssl，复杂度完全不在一个量级。</li>
+<li><strong>内部 CA</strong>：内置本地 CA，<code>localhost</code> 开发环境也能用受信任的 HTTPS。</li>
+</ul>
+<p>Nginx 这边，证书管理依赖外部工具（certbot、acme.sh、lego），工作得也很成熟，但本质上是”胶水方案”：多一个进程、多一个 cron、多一个 reload 钩子，多一处可能坏的地方。</p>
+<h2 id="性能：差距比你想象的小"><a href="#性能：差距比你想象的小" class="headerlink" title="性能：差距比你想象的小"></a>性能：差距比你想象的小</h2><p>网络上流传”C 写的肯定比 Go 快”，实际测试中：</p>
+<ul>
+<li><strong>静态文件与常规反向代理</strong>：两者在绝大多数真实负载下吞吐量处于同一量级。Nginx 在极限 RPS 和内存占用上通常仍有优势（C + 精细的内存管理 vs Go runtime + GC），尤其是数十万并发连接的极端场景。</li>
+<li><strong>尾延迟</strong>：Go 的 GC 在高压下可能带来轻微的 P99 抖动，但对绝大多数业务无感。</li>
+<li><strong>HTTP&#x2F;3</strong>：两者都已支持 QUIC&#x2F;HTTP3，Caddy 默认启用，Nginx 需要显式配置。</li>
+</ul>
+<p>结论：<strong>除非你在做 CDN 边缘节点或单机要扛几十万并发，性能不应该是你们之间的决定因素。</strong> 瓶颈几乎总在上游应用，而不是代理层。</p>
+<h2 id="运维与生态"><a href="#运维与生态" class="headerlink" title="运维与生态"></a>运维与生态</h2><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>Nginx</th>
+<th>Caddy</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>配置热加载</td>
+<td><code>nginx -s reload</code>，成熟可靠</td>
+<td>Admin API 优雅热加载，零停机</td>
+</tr>
+<tr>
+<td>动态配置</td>
+<td>原生不支持，需 reload 或商业版&#x2F;OpenResty</td>
+<td>内置 JSON Admin API，可编程修改运行时配置</td>
+</tr>
+<tr>
+<td>文档与搜索答案</td>
+<td>二十年积累，几乎任何问题都有现成答案</td>
+<td>文档质量高但社区体量小得多</td>
+</tr>
+<tr>
+<td>容器&#x2F;K8s 生态</td>
+<td>ingress-nginx 等久经考验</td>
+<td>有 Ingress Controller 但成熟度和采用率较低</td>
+</tr>
+<tr>
+<td>扩展方式</td>
+<td>C 模块（需重新编译）、OpenResty&#x2F;Lua、njs</td>
+<td>Go 插件生态，<code>xcaddy</code> 一条命令编译定制版本</td>
+</tr>
+<tr>
+<td>二进制分发</td>
+<td>包管理器，模块依赖发行版</td>
+<td>单一静态二进制，跨平台部署极其省心</td>
+</tr>
+<tr>
+<td>商业支持</td>
+<td>Nginx Plus（F5）</td>
+<td>官方赞助&#x2F;商业授权</td>
+</tr>
+</tbody></table>
+<p>几个值得展开的点：</p>
+<ul>
+<li><strong>扩展性</strong>：Caddy 的插件体验显著更好。<code>xcaddy build --with github.com/...</code> 一条命令就能编出带 Cloudflare DNS 验证、限流、安全模块的定制二进制。Nginx 编第三方 C 模块的痛苦，折腾过的人都懂（这也是 OpenResty 存在的原因）。</li>
+<li><strong>配置即 API</strong>：Caddy 的本质是一个 JSON 配置引擎，Caddyfile 只是人类友好的前端。这让它天然适合被程序驱动——平台型产品动态增删站点不需要生成配置文件再 reload。</li>
+<li><strong>久经考验</strong>：Nginx 的边缘案例处理、与各种奇怪客户端&#x2F;上游的兼容性，是二十年生产流量喂出来的。保守的大型生产环境选它，不会有人质疑。</li>
+</ul>
+<h2 id="选型建议"><a href="#选型建议" class="headerlink" title="选型建议"></a>选型建议</h2><p><strong>选 Caddy，如果你是：</strong></p>
+<ul>
+<li>个人项目、中小团队、初创公司——把省下来的证书运维时间拿去写业务</li>
+<li>SaaS 平台需要客户自定义域名（On-Demand TLS 几乎是唯一省心方案）</li>
+<li>需要通过 API 动态管理大量站点配置</li>
+<li>团队没有专职运维，希望配置文件三行能看懂</li>
+</ul>
+<p><strong>选 Nginx，如果你是：</strong></p>
+<ul>
+<li>已有大量 Nginx 配置和团队经验——迁移收益撑不起迁移成本</li>
+<li>极端高并发 &#x2F; 边缘节点 &#x2F; 对内存和尾延迟敏感的场景</li>
+<li>重度依赖 Kubernetes ingress-nginx 或 OpenResty&#x2F;Lua 生态</li>
+<li>需要 Nginx Plus 的商业特性与支持，或所在组织要求”最保守的选择”</li>
+</ul>
+<p><strong>也可以都要</strong>：不少团队用 Caddy 做边缘 TLS 终结（享受自动证书），后面挂 Nginx&#x2F;原有架构不动。架构上完全成立。</p>
+<h2 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h2><p>Nginx 和 Caddy 的关系，有点像 Vim 和 VS Code：前者无所不能但要求你懂它，后者把 90% 的常见需求做成了开箱即用。2026 年的今天，<strong>对于新项目我会默认从 Caddy 开始</strong>——直到遇到它解决不了的问题再换，而这一天对大多数项目来说不会到来。但如果你手里已经有一套运转良好的 Nginx，请记住运维界的第一定律：<strong>If it works, don’t fix it.</strong></p>
+]]></content>
+      <categories>
+        <category>教程</category>
+      </categories>
+      <tags>
+        <tag>Nginx</tag>
+        <tag>Caddy</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>台北电脑展：Nvidia 发布面向 PC 的 RTX Spark CPU，信息一览</title>
+    <url>/post/nvidia-announce-rtx-spark.html</url>
+    <content><![CDATA[<p>2026 年 6 月 1 日，之前各大科技品牌官推的 <code>A new era of PC.</code> 谜底终于揭晓：</p>
+<p>NVIDIA 在台北的 Computex 2026 正式发布了面向 PC 的 RTX Spark SoC ，定位为 AI PC 平台，面向轻薄本、AI 开发、创意工作站和高端 Windows PC。</p>
+<h2 id="RTX-Spark-最新发布重点"><a href="#RTX-Spark-最新发布重点" class="headerlink" title="RTX Spark 最新发布重点"></a>RTX Spark 最新发布重点</h2><h3 id="参数信息"><a href="#参数信息" class="headerlink" title="参数信息"></a>参数信息</h3><table>
+<thead>
+<tr>
+<th align="center">项目</th>
+<th>规格</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong>CPU</strong></td>
+<td>Grace ARM，最高 <strong>20</strong> 核心</td>
+</tr>
+<tr>
+<td align="center"><strong>GPU</strong></td>
+<td>Blackwell RTX GPU， <strong>6144</strong> 个 CUDA Core</td>
+</tr>
+<tr>
+<td align="center">内存</td>
+<td>最高 <strong>128GB</strong> 统一内存</td>
+</tr>
+<tr>
+<td align="center">AI 算力</td>
+<td>1 PFLOPS（FP4）</td>
+</tr>
+<tr>
+<td align="center">产品定位</td>
+<td>AI PC &#x2F; 创意工作站 &#x2F; 高端 Windows PC</td>
+</tr>
+<tr>
+<td align="center">上市时间</td>
+<td>2026 年秋季</td>
+</tr>
+</tbody></table>
+<p>GPU 的 6144 个 CUDA Core 规格接近桌面级 <strong>Nvidia RTX 5070</strong>，官方宣称 <code>FP4</code> AI 算力达到 <strong>1 PFLOPS</strong>， 略高于 RTX 5070 的 AI 算力指标。</p>
+<h2 id="官方卖点"><a href="#官方卖点" class="headerlink" title="官方卖点"></a>官方卖点</h2><p>NVIDIA 宣称其是“史上能效最高的 PC 芯片”，发布会并未公布功耗信息，根据 <a href="https://giznewsdaily.com/nvidia-n1x-leak-reveals-limited-availability-in-2026/">泄漏信息</a>  显示 TDP 约为 65-120W。</p>
+<p>NVIDIA 强调的卖点：  </p>
+<ul>
+<li>本地运行 AI Agent</li>
+<li>本地推理保护隐私</li>
+<li>视频编辑、3D 渲染、AI 创作加速</li>
+<li>高性能但低功耗的轻薄本体验</li>
+</ul>
+<h2 id="产品信息"><a href="#产品信息" class="headerlink" title="产品信息"></a>产品信息</h2><p>微软、Dell、HP、Lenovo、ASUS 等厂商已宣布采用 RTX Spark 平台推出新的产品。</p>
+<p><img src="https://img.nep.me/2026/06/rtx-spark-oem.webp" alt="rtx-spark-oem.jpeg"></p>
+<p>其中微软宣布 <a href="https://www.microsoft.com/en-us/surface/devices/surface-laptop-ultra/">Surface Laptop Ultra</a> 将在 2026 年秋季上市</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>RTX Spark 标志着在云端 AI 生成占据统治地位的 NVIDIA 正式进入面向个人 AI 的 PC SoC 市场。</p>
+<p>与传统 Windows PC 的 x86 + 独立显卡方案不同，RTX Spark 试图通过 ARM CPU、Blackwell GPU 与统一内存架构，打造类似 Apple Silicon 的高性能 AI PC 平台。</p>
+<p>如果 NVIDIA 能兑现其能效与 AI 性能承诺，RTX Spark 有望成为未来高端 Windows AI PC 的重要选择。</p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
+<li><a href="https://blogs.nvidia.cn/blog/nvidia-microsoft-windows-pcs-agents-rtx-spark/">NVIDIA 携手微软，在个人 AI 时代重塑 Windows PC</a></li>
+<li><a href="https://www.nvidia.cn/gtc/taipei/keynote/">NVIDIA GTC 台北 2026 主题演讲回放</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>资讯</category>
+      </categories>
+      <tags>
+        <tag>RTX</tag>
+        <tag>RTX Spark</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>宝藏开源项目： Tiny World Builder - 在浏览器里创建迷你世界</title>
     <url>/post/project-tiny-world-builder.html</url>
     <content><![CDATA[<h2 id="项目介绍"><a href="#项目介绍" class="headerlink" title="项目介绍"></a>项目介绍</h2><p>在这个万物皆可 Web 的时代，我们见过无数令人惊艳的浏览器端应用。但如果你是一个热衷于 <strong>世界构建</strong> 、喜欢 <strong>沙盒游戏</strong> ，或者对现代前端与 3D 渲染技术充满热情的开发者，今天介绍的这个开源项目绝对会让你眼前一亮 —— 它就是 <strong>Tiny World Builder</strong> 。</p>
@@ -6457,6 +6414,49 @@
         <tag>GitHub</tag>
         <tag>Three.js</tag>
         <tag>开源项目</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>OpenAI 发布桌面版 Codex App ：开启 “AI 智能体” 指挥中心时代</title>
+    <url>/post/openai-release-codex-app.html</url>
+    <content><![CDATA[<p>OpenAI 正式 <a href="https://openai.com/index/introducing-the-codex-app/">宣布</a> 推出全新的 <a href="https://openai.com/zh-Hans-CN/codex/get-started/">Codex App</a>。这不仅仅是一个简单的聊天窗口，而是一个专为构建、管理和调度 AI Agents（智能体） 设计的强力“指挥中心”。</p>
+<p>目前，该应用已率先登陆 macOS 平台，Windows 版本也正在准备中。</p>
+<h2 id="核心功能：让-AI-深度介入工作流"><a href="#核心功能：让-AI-深度介入工作流" class="headerlink" title="核心功能：让 AI 深度介入工作流"></a>核心功能：让 AI 深度介入工作流</h2><p>Codex App 的推出标志着 OpenAI 从“对话式 AI”向“协作式&#x2F;自动化 AI”的重大跨越。其核心亮点包括：</p>
+<ul>
+<li><p><strong>多任务并行（Multitask Effortlessly）</strong>：<br>用户可以同时运行多个智能体处理不同任务。通过 Worktrees（工作树） 机制，系统能确保不同智能体所做的更改相互隔离，互不干扰，像管理代码分支一样管理 AI 的产出。</p>
+</li>
+<li><p><strong>技能封装（Create &amp; Use Skills）</strong>：<br>用户可以将特定的工具组合与操作规范打包成通用的 Skills 。这些 Skill 可以被重复调用，赋予智能体更强的专业执行力，Codex APP 安装后即内置了很多 Skill，可以做到开箱即用。<br><img src="https://img.nep.me/i/2026/02/codex-app-skills.png" alt="codex-app-skills.png"></p>
+</li>
+<li><p><strong>后台自动化（Set up Automations）</strong>：<br>通过设置定时工作流（Scheduled Workflows），用户可以将重复性的繁琐工作完全委托给 Codex。即使在后台，智能体也能根据预设逻辑自主完成任务。<br><img src="https://img.nep.me/i/2026/02/codex-app-automations.png" alt="codex-app-automations.png"></p>
+</li>
+</ul>
+<h2 id="发布福利：限时免费与额度翻倍"><a href="#发布福利：限时免费与额度翻倍" class="headerlink" title="发布福利：限时免费与额度翻倍"></a>发布福利：限时免费与额度翻倍</h2><p>为了庆祝 Codex App 的上线，OpenAI 首席执行官 Sam Altman 宣布了为期 2 个月 的重磅福利政策：</p>
+<ul>
+<li><strong>门槛降低</strong>： 免费用户（Free）及入门级用户（Go）在未来两个月内也可获得使用权限，体验最新的智能体构建功能。</li>
+<li><strong>付费用户额度翻倍</strong>： 所有付费订阅用户（Plus、Pro）的 Rate Limits（速率限制&#x2F;额度）直接翻倍。</li>
+</ul>
+<blockquote>
+<p>To celebrate the launch of the Codex app, we doubled all rate limits for paid plans for 2 months!<br>And added access for free&#x2F;go.<br>— <a href="https://x.com/sama/status/2018437537103269909">@Sam Altman</a></p>
+</blockquote>
+<h2 id="下载地址"><a href="#下载地址" class="headerlink" title="下载地址"></a>下载地址</h2><p>访问 <a href="https://openai.com/zh-Hans-CN/codex/get-started/">https://openai.com/zh-Hans-CN/codex/get-started/</a> 即可获取。</p>
+<h2 id="支持模型"><a href="#支持模型" class="headerlink" title="支持模型"></a>支持模型</h2><p>目前 Codex APP 中支持 GPT 5.2 与 GPT 5.2-Codex 模型，都包含 Medium、High、Extra High 等各种模式。<br><img src="https://img.nep.me/i/2026/02/codex-app-model-lists.png" style="width:25%;" alt="codex-app-model-lists.png" /></p>
+<h2 id="与-Codex-Web-联动"><a href="#与-Codex-Web-联动" class="headerlink" title="与 Codex Web 联动"></a>与 Codex Web 联动</h2><p>如果打开 Github 的项目，Codex APP 可以与 Codex Web 联动，选择在云端执行任务。<br><img src="https://img.nep.me/i/2026/02/codex-app-runtype.png" style="width:75%;" alt="codex-app-runtype.png" /></p>
+<h2 id="Codex-生态：全场景的-AI-开发闭环"><a href="#Codex-生态：全场景的-AI-开发闭环" class="headerlink" title="Codex 生态：全场景的 AI 开发闭环"></a>Codex 生态：全场景的 AI 开发闭环</h2><p>随着桌面版的发布，OpenAI 终于补齐了最后一块拼图，构建起了一个覆盖云端、终端与桌面的全方位 AI 开发生态。无论你的工作习惯如何，Codex 都能无缝融入：</p>
+<ul>
+<li><strong>Codex Web (ChatGPT)</strong> —— 随时随地的云端协作 深度集成于 ChatGPT 网页端与 App 中。连接 GitHub 后，无需配置任何本地环境，即可直接读取仓库、审查代码或提交轻量级修改。非常适合 Code Review 或快速修复 Bug。</li>
+<li><strong>Codex CLI</strong> —— 极客的终端利器 专为开发者打造的命令行工具。将 AI 注入终端，让你无需离开熟悉的 Shell 环境，仅凭自然语言指令即可完成代码生成、文件编辑和脚本执行，完美契合现有的命令行工作流。</li>
+<li><strong>Codex App</strong> —— 终极“指挥中心” 生态的核心枢纽。作为功能最完整的桌面客户端，它不仅拥有最强的本地读写权限，更是调度多智能体（Agents）并行协作、运行后台自动化任务的“总控台”，专门应对复杂的工程级挑战。</li>
+</ul>
+<p>Codex Web 与 Codex CLI 仍然是代码编写工具，Codex App 作为易用的 GUI 客户端，凭借 Agent Skill 加持，生态不再仅仅是辅助写代码的 Copilot，而是扩展到通用领域，致力于成为能听懂意图、自动执行、全天候待命的“硅基合伙人”，并且也让更多的人可以体验使用到 AI Agents。</p>
+]]></content>
+      <categories>
+        <category>资讯</category>
+      </categories>
+      <tags>
+        <tag>AI</tag>
+        <tag>OpenAI</tag>
+        <tag>Codex</tag>
+        <tag>Codex APP</tag>
       </tags>
   </entry>
   <entry>
@@ -6637,24 +6637,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Vercel 上线 Agents Skills 大全网站：skills.sh</title>
-    <url>/post/vercel-launch-agent-skills-directory.html</url>
-    <content><![CDATA[<p>Vercel 上线的 Agent Skill 大全网站 <a href="skills.sh">https://skills.sh</a> ，可以方便查找和快速安装 Skills 。</p>
-<p>访问网站即可查看热门的 Skills，还可以进行搜索。</p>
-<p>可以直接使用下面的命令将 skills 安装到项目目录：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npx skills add &lt;owner/repo&gt; </span><br></pre></td></tr></table></figure>
-
-<p><img src="https://img.nep.me/ooo/skills-sh.webp" alt="skills-sh"></p>
-]]></content>
-      <categories>
-        <category>资讯</category>
-      </categories>
-      <tags>
-        <tag>Agent Skills</tag>
-        <tag>Vercel</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>在 pnpm 中设置 minimumReleaseAge，远离供应链攻击</title>
     <url>/post/use-miniumreleaseage-feature-in-pnpm.html</url>
     <content><![CDATA[<p>近来针对开发者的供应链攻击越来越频繁，且规模也在变大，比如最近的 <a href="https://ooo.run/post/mini-shai-hulud-check-and-defense.html">Mini Shai-Hulud 供应链攻击事件</a> 中，顶级项目的开发者也难以避免，事后攻击发起者黑客团队 TeamPCP 居然将攻击代码开源了（现已被 GitHub 下架），使得攻击更为容易。</p>
@@ -6787,6 +6769,24 @@
       <tags>
         <tag>开发者安全</tag>
         <tag>pnpm</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Vercel 上线 Agents Skills 大全网站：skills.sh</title>
+    <url>/post/vercel-launch-agent-skills-directory.html</url>
+    <content><![CDATA[<p>Vercel 上线的 Agent Skill 大全网站 <a href="skills.sh">https://skills.sh</a> ，可以方便查找和快速安装 Skills 。</p>
+<p>访问网站即可查看热门的 Skills，还可以进行搜索。</p>
+<p>可以直接使用下面的命令将 skills 安装到项目目录：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npx skills add &lt;owner/repo&gt; </span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img.nep.me/ooo/skills-sh.webp" alt="skills-sh"></p>
+]]></content>
+      <categories>
+        <category>资讯</category>
+      </categories>
+      <tags>
+        <tag>Agent Skills</tag>
+        <tag>Vercel</tag>
       </tags>
   </entry>
   <entry>
