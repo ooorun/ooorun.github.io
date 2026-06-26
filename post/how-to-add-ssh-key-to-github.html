@@ -86,7 +86,7 @@
 </head>
 
 <body
-  class="is-post tag-style-tape"
+  class="is-post tag-style-tape bg-style-default"
   data-default-accent="blue"
   data-code-theme="simple"
   data-note-style="sticky"
@@ -94,7 +94,9 @@
   data-button-style="tape"
   data-strong-accent="on"
 >
-  <div class="page-grain"></div>
+  
+    <div class="page-grain"></div>
+  
   <svg width="0" height="0" style="position:absolute;z-index:-1;" aria-hidden="true">
     <defs>
       <filter id="paper-edge" x="-5%" y="-5%" width="110%" height="110%">
@@ -373,7 +375,7 @@
         
           
             <a class="site-info__item" href="/archives/">
-              <strong>65</strong>
+              <strong>66</strong>
               <span>文章</span>
             </a>
           
@@ -387,7 +389,7 @@
         
           
             <a class="site-info__item" href="/tags/">
-              <strong>102</strong>
+              <strong>103</strong>
               <span>标签</span>
             </a>
           
@@ -483,6 +485,13 @@
     <ul class="recent-list">
       
         <li>
+          <a class="recent-item" href="/post/openai-gpt-5-6-limited-preview.html">
+            <strong>OpenAI 发布 GPT-5.6 系列模型：Sol、Terra 和 Luna 开启有限预览，受美国政府要求限制初始访问</strong>
+            <em>2026-06-27</em>
+          </a>
+        </li>
+      
+        <li>
           <a class="recent-item" href="/post/apple-products-price-increase.html">
             <strong>AI 正在影响消费者的钱包：苹果大幅上调多款产品价格</strong>
             <em>2026-06-26</em>
@@ -510,13 +519,6 @@
           </a>
         </li>
       
-        <li>
-          <a class="recent-item" href="/post/how-much-can-you-save-with-subscription-vs-api.html">
-            <strong>榨干 AI 订阅额度：使用 Claude Pro 与 ChatGPT 订阅到底能省多少钱？</strong>
-            <em>2026-06-21</em>
-          </a>
-        </li>
-      
     </ul>
   </section>
 
@@ -533,7 +535,12 @@
 
 <div class="article-tape-wrap">
 <span class="tape tape--top-right" aria-hidden="true"></span>
-<article class="article-paper">
+<article class="article-paper article-paper--with-top-img">
+  
+    <figure class="article-top-img" aria-label="如何使用 SSH key 连接 GitHub">
+      <img src="https://img.nep.me/i/2025/08/04/cover-connect-github-with-sshkey.webp" alt="" loading="eager" fetchpriority="high" referrerpolicy="no-referrer" draggable="false">
+    </figure>
+  
   <header class="article-header">
     
       <a class="label-pill" href="/categories/%E6%95%99%E7%A8%8B/">
@@ -589,7 +596,7 @@
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure>
 
 <p>我们没有添加过 SSH key，会提示 <code>Permission denied (publickey).</code></p>
-<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-7-tab-0" aria-controls="tabs-7-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">Windows</button><button type="button" role="tab" id="tabs-7-tab-1" aria-controls="tabs-7-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">macOS</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-7-panel-0" aria-labelledby="tabs-7-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><p><img src="https://img.nep.me/i/2024/12/13/122owl6-2.webp"></p></section><section role="tabpanel" id="tabs-7-panel-1" aria-labelledby="tabs-7-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><p><img src="https://img.nep.me/i/2024/12/13/124oz3l-2.webp"></p></section></div></div>
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-4-tab-0" aria-controls="tabs-4-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">Windows</button><button type="button" role="tab" id="tabs-4-tab-1" aria-controls="tabs-4-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">macOS</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-4-panel-0" aria-labelledby="tabs-4-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><p><img src="https://img.nep.me/i/2024/12/13/122owl6-2.webp"></p></section><section role="tabpanel" id="tabs-4-panel-1" aria-labelledby="tabs-4-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><p><img src="https://img.nep.me/i/2024/12/13/124oz3l-2.webp"></p></section></div></div>
 
 <h2 id="创建-SSH-Key"><a href="#创建-SSH-Key" class="headerlink" title="创建 SSH Key"></a>创建 SSH Key</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> .ssh</span><br><span class="line"></span><br><span class="line">ssh-keygen -t rsa -C <span class="string">&quot;your_email@example.com&quot;</span></span><br></pre></td></tr></table></figure>
 
@@ -621,7 +628,7 @@
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;ssh -T git@github.com</span><br><span class="line">Hi &lt;Your username&gt;! You<span class="string">&#x27;ve successfully authenticated, but GitHub does not provide shell access.</span></span><br></pre></td></tr></table></figure>
 
 <h2 id="配合-SSH-config-使用"><a href="#配合-SSH-config-使用" class="headerlink" title="配合 SSH config 使用"></a>配合 SSH config 使用</h2><p>如果我们的私钥的名称不是 <code>id_rsa</code> ，我们将仍然无法成功连接 GitHub ，你可以将私钥修改文件名后再试试 </p>
-<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-8-tab-0" aria-controls="tabs-8-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">Windows</button><button type="button" role="tab" id="tabs-8-tab-1" aria-controls="tabs-8-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">macOS&amp;Linux</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-8-panel-0" aria-labelledby="tabs-8-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; rename id_rsa id_mysshkey</span><br><span class="line"></span><br><span class="line">&gt; ssh -T git@github.com</span><br><span class="line">git@github.com: Permission denied (publickey).</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-8-panel-1" aria-labelledby="tabs-8-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="built_in">mv</span> id_rsa id_mysshkey</span><br><span class="line"></span><br><span class="line">&gt; ssh -T git@github.com</span><br><span class="line">git@github.com: Permission denied (publickey).</span><br></pre></td></tr></table></figure></section></div></div>
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-5-tab-0" aria-controls="tabs-5-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">Windows</button><button type="button" role="tab" id="tabs-5-tab-1" aria-controls="tabs-5-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">macOS&amp;Linux</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-5-panel-0" aria-labelledby="tabs-5-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; rename id_rsa id_mysshkey</span><br><span class="line"></span><br><span class="line">&gt; ssh -T git@github.com</span><br><span class="line">git@github.com: Permission denied (publickey).</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-5-panel-1" aria-labelledby="tabs-5-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="built_in">mv</span> id_rsa id_mysshkey</span><br><span class="line"></span><br><span class="line">&gt; ssh -T git@github.com</span><br><span class="line">git@github.com: Permission denied (publickey).</span><br></pre></td></tr></table></figure></section></div></div>
 
 <p>这时我们可以通过在 <code>.ssh</code> 文件夹中创建一个 <code>config</code> 文件，填入下面的内容来告诉 git 程序在哪里找到密钥</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Host github.com</span><br><span class="line">    HostName github.com</span><br><span class="line">    User git</span><br><span class="line">    IdentityFile ~/.ssh/id_mysshkey</span><br></pre></td></tr></table></figure>
@@ -808,7 +815,13 @@ window.addEventListener('load', function () {
   
 <footer class="site-footer">
   <span class="site-footer__left">© 2026 By Mr. O</span>
-  <span class="site-footer__right">Powered by Theme <a href="https://github.com/Homulilly/hexo-theme-flatpaper" target="_blank">FlatPaper</a> <br> <a href="/terms">服务条款</a> · <a href="/privacy">隐私政策</a> <br /> <a href="https://tools.ooo.run" target="_blank">简易工具</a></span>
+  
+    <span class="site-footer__right">
+      
+        <span class="site-footer__row"><span class="site-footer__powered-prefix">Powered by Theme</span> <a href="https://github.com/Homulilly/hexo-theme-flatpaper" target="_blank" rel="noopener">FlatPaper</a></span>
+      
+    </span>
+  
 </footer>
 
   

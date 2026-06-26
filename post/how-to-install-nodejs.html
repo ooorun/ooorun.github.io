@@ -88,7 +88,7 @@
 </head>
 
 <body
-  class="is-post tag-style-tape"
+  class="is-post tag-style-tape bg-style-default"
   data-default-accent="blue"
   data-code-theme="simple"
   data-note-style="sticky"
@@ -96,7 +96,9 @@
   data-button-style="tape"
   data-strong-accent="on"
 >
-  <div class="page-grain"></div>
+  
+    <div class="page-grain"></div>
+  
   <svg width="0" height="0" style="position:absolute;z-index:-1;" aria-hidden="true">
     <defs>
       <filter id="paper-edge" x="-5%" y="-5%" width="110%" height="110%">
@@ -375,7 +377,7 @@
         
           
             <a class="site-info__item" href="/archives/">
-              <strong>65</strong>
+              <strong>66</strong>
               <span>文章</span>
             </a>
           
@@ -389,7 +391,7 @@
         
           
             <a class="site-info__item" href="/tags/">
-              <strong>102</strong>
+              <strong>103</strong>
               <span>标签</span>
             </a>
           
@@ -485,6 +487,13 @@
     <ul class="recent-list">
       
         <li>
+          <a class="recent-item" href="/post/openai-gpt-5-6-limited-preview.html">
+            <strong>OpenAI 发布 GPT-5.6 系列模型：Sol、Terra 和 Luna 开启有限预览，受美国政府要求限制初始访问</strong>
+            <em>2026-06-27</em>
+          </a>
+        </li>
+      
+        <li>
           <a class="recent-item" href="/post/apple-products-price-increase.html">
             <strong>AI 正在影响消费者的钱包：苹果大幅上调多款产品价格</strong>
             <em>2026-06-26</em>
@@ -512,13 +521,6 @@
           </a>
         </li>
       
-        <li>
-          <a class="recent-item" href="/post/how-much-can-you-save-with-subscription-vs-api.html">
-            <strong>榨干 AI 订阅额度：使用 Claude Pro 与 ChatGPT 订阅到底能省多少钱？</strong>
-            <em>2026-06-21</em>
-          </a>
-        </li>
-      
     </ul>
   </section>
 
@@ -535,7 +537,12 @@
 
 <div class="article-tape-wrap">
 <span class="tape tape--top-right" aria-hidden="true"></span>
-<article class="article-paper">
+<article class="article-paper article-paper--with-top-img">
+  
+    <figure class="article-top-img" aria-label="如何安装 Node.js">
+      <img src="https://img.nep.me/i/2024/12/13/53fiz6.webp" alt="" loading="eager" fetchpriority="high" referrerpolicy="no-referrer" draggable="false">
+    </figure>
+  
   <header class="article-header">
     
       <a class="label-pill" href="/categories/%E6%95%99%E7%A8%8B/">
@@ -566,7 +573,7 @@
 
   <div class="article-content">
     <p>本文将带介绍如何在电脑上安装 Node.js 运行环境，从而可以使用丰富的应用 Nodejs 程序。 </p>
-<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-10-tab-0" aria-controls="tabs-10-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">Windows</button><button type="button" role="tab" id="tabs-10-tab-1" aria-controls="tabs-10-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">macOS</button><button type="button" role="tab" id="tabs-10-tab-2" aria-controls="tabs-10-panel-2" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="2">Linux</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-10-panel-0" aria-labelledby="tabs-10-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><h2 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h2><p>测试安装环境为 <code>Windows 11</code></p>
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-15-tab-0" aria-controls="tabs-15-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">Windows</button><button type="button" role="tab" id="tabs-15-tab-1" aria-controls="tabs-15-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">macOS</button><button type="button" role="tab" id="tabs-15-tab-2" aria-controls="tabs-15-panel-2" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="2">Linux</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-15-panel-0" aria-labelledby="tabs-15-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><h2 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h2><p>测试安装环境为 <code>Windows 11</code></p>
 <h3 id="下载-Node-js"><a href="#下载-Node-js" class="headerlink" title="下载 Node.js"></a>下载 Node.js</h3><p>访问 Node.js 的官方网站的 <a target="_blank" rel="noopener" href="https://nodejs.org/zh-cn/download/prebuilt-installer">下载页面</a> 下载安装包。 </p>
 <p>我们选择 <strong>预构建安装程序</strong> ，选择一下自己的系统与 CPU 架构类型， Windows 一般选择 <strong>x64</strong>，再选择 Node.js 版本。</p>
 <div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>推荐选择版本号为偶数的 LTS 版本</p></div></div>  
@@ -586,7 +593,7 @@
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm -v</span><br></pre></td></tr></table></figure>
 
 <p>如果可以成功输出版本号，表示安装成功。  </p>
-<p><img src="https://img.nep.me/i/2024/12/13/7ilvge-2.webp" alt="nodejs-install-done"></p></section><section role="tabpanel" id="tabs-10-panel-1" aria-labelledby="tabs-10-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><h2 id="macOS"><a href="#macOS" class="headerlink" title="macOS"></a>macOS</h2><p>测试安装环境为 <code>macOS 15.1</code> ，macOS 更推荐使用 <strong>包管理器</strong> <code>Homebrew</code> 进行安装。</p>
+<p><img src="https://img.nep.me/i/2024/12/13/7ilvge-2.webp" alt="nodejs-install-done"></p></section><section role="tabpanel" id="tabs-15-panel-1" aria-labelledby="tabs-15-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><h2 id="macOS"><a href="#macOS" class="headerlink" title="macOS"></a>macOS</h2><p>测试安装环境为 <code>macOS 15.1</code> ，macOS 更推荐使用 <strong>包管理器</strong> <code>Homebrew</code> 进行安装。</p>
 <blockquote>
 <p><a target="_blank" rel="noopener" href="https://brew.sh/zh-cn/">Homebrew</a> 是 macOS 和 Linux 缺失软件包的管理器，用于安装 Apple没有预装但你需要的东西。</p>
 </blockquote>
@@ -616,7 +623,7 @@
 
 <h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;node -v</span><br><span class="line">v23.4.0</span><br><span class="line"></span><br><span class="line">&gt;npm -v</span><br><span class="line">10.9.2</span><br></pre></td></tr></table></figure>
 
-<h3 id="brew-常用命令"><a href="#brew-常用命令" class="headerlink" title="brew 常用命令"></a>brew 常用命令</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装指定版本</span></span><br><span class="line">brew install node@22</span><br><span class="line"></span><br><span class="line"><span class="comment"># 卸载</span></span><br><span class="line">brew remove node</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看已安装软件</span></span><br><span class="line">brew list </span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查更新</span></span><br><span class="line">brew update</span><br><span class="line"></span><br><span class="line"><span class="comment"># 下载更新</span></span><br><span class="line">brew upgrade</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-10-panel-2" aria-labelledby="tabs-10-tab-2" class="flatpaper-tabs__panel" data-index="2" hidden><h2 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h2><p>Linux 使用 nvm 包管理器可以很方便的安装 Node.js</p>
+<h3 id="brew-常用命令"><a href="#brew-常用命令" class="headerlink" title="brew 常用命令"></a>brew 常用命令</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装指定版本</span></span><br><span class="line">brew install node@22</span><br><span class="line"></span><br><span class="line"><span class="comment"># 卸载</span></span><br><span class="line">brew remove node</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看已安装软件</span></span><br><span class="line">brew list </span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查更新</span></span><br><span class="line">brew update</span><br><span class="line"></span><br><span class="line"><span class="comment"># 下载更新</span></span><br><span class="line">brew upgrade</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-15-panel-2" aria-labelledby="tabs-15-tab-2" class="flatpaper-tabs__panel" data-index="2" hidden><h2 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h2><p>Linux 使用 nvm 包管理器可以很方便的安装 Node.js</p>
 <h3 id="首先安装-nvm"><a href="#首先安装-nvm" class="headerlink" title="首先安装 nvm"></a>首先安装 nvm</h3><h1 id="安装-nvm-Node-版本管理器"><a href="#安装-nvm-Node-版本管理器" class="headerlink" title="安装 nvm (Node 版本管理器)"></a>安装 nvm (Node 版本管理器)</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash</span><br></pre></td></tr></table></figure>
 
 <p>更新一下 PATH</p>
@@ -820,7 +827,13 @@ window.addEventListener('load', function () {
   
 <footer class="site-footer">
   <span class="site-footer__left">© 2026 By Mr. O</span>
-  <span class="site-footer__right">Powered by Theme <a href="https://github.com/Homulilly/hexo-theme-flatpaper" target="_blank">FlatPaper</a> <br> <a href="/terms">服务条款</a> · <a href="/privacy">隐私政策</a> <br /> <a href="https://tools.ooo.run" target="_blank">简易工具</a></span>
+  
+    <span class="site-footer__right">
+      
+        <span class="site-footer__row"><span class="site-footer__powered-prefix">Powered by Theme</span> <a href="https://github.com/Homulilly/hexo-theme-flatpaper" target="_blank" rel="noopener">FlatPaper</a></span>
+      
+    </span>
+  
 </footer>
 
   
