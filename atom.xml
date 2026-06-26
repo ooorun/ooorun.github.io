@@ -6,7 +6,7 @@
   <link href="https://ooo.run/atom.xml" rel="self"/>
   
   <link href="https://ooo.run/"/>
-  <updated>2026-06-25T10:25:30.513Z</updated>
+  <updated>2026-06-26T03:27:27.294Z</updated>
   <id>https://ooo.run/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>AI 正在影响消费者的钱包：苹果大幅上调多款产品价格</title>
+    <link href="https://ooo.run/post/apple-products-price-increase.html"/>
+    <id>https://ooo.run/post/apple-products-price-increase.html</id>
+    <published>2026-06-26T02:39:06.000Z</published>
+    <updated>2026-06-26T03:27:27.294Z</updated>
+    
+    <content type="html"><![CDATA[<p>自 2025 年 11 月以来，内存和存储芯片价格持续上涨，至今仍未出现明显放缓迹象。美国头部 AI 企业持续加码数据中心建设，大量采购内存与存储元件，也进一步挤压了消费电子厂商的供应空间。如今，苹果也开始将这部分成本压力传导到终端产品上，宣布上调 iPhone 产品线之外多款设备的售价。</p><p>在通过科技媒体 MacRumors 发布的声明中，苹果公司表示本轮涨价主要受内存 RAM 和存储 SSD 元件影响：</p><blockquote><p>消费电子行业正面临前所未有的挑战，人工智能数据中心的快速扩张导致内存和存储需求激增。我们从未见过如此大幅度、如此迅速的元器件价格上涨。</p><p>我们此前一直内部消化元件成本上涨压力，尽力避免冲击波及我们的客户。包括今天 iPad 和 Mac 等产品的涨价在内，现在我们不得不开始提高部分产品的价格。我们知道这对大家来说并非好消息，我们正在竭尽全力寻找解决方案。</p></blockquote><h2 id="价格调整详情"><a href="#价格调整详情" class="headerlink" title="价格调整详情"></a>价格调整详情</h2><p>下图是不同产品的上涨情况：</p><p><img src="https://img.nep.me/ooo/apple-price-up.webp" alt="apple-price-up.jpg"></p><table><thead><tr><th align="left">产品</th><th align="left">当前官网起售价</th><th align="left">发售时起售价</th><th align="left">变化</th></tr></thead><tbody><tr><td align="left">MacBook Neo</td><td align="left">¥5,499</td><td align="left">¥4,599</td><td align="left">+¥900</td></tr><tr><td align="left">MacBook Air M5 13 英寸</td><td align="left">¥9,999</td><td align="left">¥8,499</td><td align="left">+¥1,500</td></tr><tr><td align="left">MacBook Pro M5 系列</td><td align="left">¥15,999</td><td align="left">¥13,499</td><td align="left">+¥2,500</td></tr><tr><td align="left">Mac mini M4</td><td align="left">¥5,999</td><td align="left">¥4,499</td><td align="left">+¥1,500</td></tr><tr><td align="left">iPad Pro 11 英寸 M5</td><td align="left">¥10,799</td><td align="left">¥8,999</td><td align="left">+¥1,800</td></tr><tr><td align="left">iPad Air 11 英寸 M4</td><td align="left">¥5,999</td><td align="left">¥4,799</td><td align="left">+¥1,200</td></tr><tr><td align="left">iPad A16</td><td align="left">¥3,799</td><td align="left">¥2,999</td><td align="left">+¥800</td></tr><tr><td align="left">iPad mini A17 Pro</td><td align="left">¥4,799</td><td align="left">¥3,999</td><td align="left">+¥800</td></tr></tbody></table><p>一同上涨的还有提升存储配置的价格，以 MacBook Pro 系列为例，部分机型每增加 1TB SSD 存储，定制价格已达到 3750 元。</p><p><img src="https://img.nep.me/ooo/apple-price-up-ssd.webp" alt="apple-price-up-ssd.png"></p><h2 id="微软上调-XBOX-产品价格"><a href="#微软上调-XBOX-产品价格" class="headerlink" title="微软上调 XBOX 产品价格"></a>微软上调 XBOX 产品价格</h2><p>于此同时微软也一同上调了 XBOX 的产品线价格，在微软的声明中指出</p><blockquote><p>推动本轮涨价的主要原因是存储和内存成本大幅攀升。“游戏主机存储和内存价格已经涨超2.5倍，我们预计到2027年秋季还会再翻一番。</p></blockquote><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>成本的上涨，终归会传导到最终用户头上。</p><p>AI 的爆发让算力、内存、存储这些原本隐藏在产业链深处的资源，突然变成了全球科技公司的必争之地。数据中心在抢，云厂商在抢，消费电子厂商也在抢。当供给跟不上需求时，涨价就不再只是企业之间的博弈，而会以更高的设备售价、更贵的升级选项，最终落到每一个普通消费者的钱包里。</p><p>这件事也再次提醒我们，现代科技产品从来不是某一家公司的孤立成果。一台 Mac、一部 iPad，背后连接的是芯片设计、存储制造、软件生态、能源供应、物流运输，以及跨越多个国家和地区的协作网络。任何一个环节出现紧张，最后都会在终端市场上体现出来。</p><p>过去几年，全球科技产业在地缘政治、供应链重组和贸易壁垒中不断被切割。短期来看，这或许能带来所谓的“安全感”，但长期来看，重复建设、产能错配和合作受阻，都会推高整个行业的成本。而这些成本，最终仍然会由企业、开发者和消费者共同承担。</p><p>希望这次由 AI 带来的价格波动，能让更多人重新意识到全球合作的重要性。科技进步本该让更多人受益，而不是让资源被少数巨头争抢、让普通用户被迫为更高的成本买单。比起各自为战，我们更需要一个开放、稳定、互相信任的全球产业链，让创新回到提升效率、降低成本、改善生活的方向上。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;自 2025 年 11 月以来，内存和存储芯片价格持续上涨，至今仍未出现明显放缓迹象。美国头部 AI 企业持续加码数据中心建设，大量采购内存与存储元件，也进一步挤压了消费电子厂商的供应空间。如今，苹果也开始将这部分成本压力传导到终端产品上，宣布上调 iPhone 产品线之外</summary>
+      
+    
+    
+    
+    <category term="资讯" scheme="https://ooo.run/categories/%E8%B5%84%E8%AE%AF/"/>
+    
+    
+    <category term="APPLE" scheme="https://ooo.run/tags/APPLE/"/>
+    
+  </entry>
   
   <entry>
     <title>Google 全量开放 Gmail 用户名修改：终于可以告别 8 岁注册的黑历史邮箱了</title>
@@ -89,9 +113,9 @@
     <category term="笔记" scheme="https://ooo.run/categories/%E7%AC%94%E8%AE%B0/"/>
     
     
-    <category term="OpenAI" scheme="https://ooo.run/tags/OpenAI/"/>
-    
     <category term="Codex" scheme="https://ooo.run/tags/Codex/"/>
+    
+    <category term="OpenAI" scheme="https://ooo.run/tags/OpenAI/"/>
     
   </entry>
   
@@ -439,9 +463,9 @@
     <category term="资讯" scheme="https://ooo.run/categories/%E8%B5%84%E8%AE%AF/"/>
     
     
-    <category term="AI" scheme="https://ooo.run/tags/AI/"/>
-    
     <category term="Antigravity" scheme="https://ooo.run/tags/Antigravity/"/>
+    
+    <category term="AI" scheme="https://ooo.run/tags/AI/"/>
     
     <category term="Antigravity IDE" scheme="https://ooo.run/tags/Antigravity-IDE/"/>
     
@@ -531,33 +555,6 @@
     <category term="NPM" scheme="https://ooo.run/tags/NPM/"/>
     
     <category term="安全" scheme="https://ooo.run/tags/%E5%AE%89%E5%85%A8/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>ChatGPT Business 为成员启用设备代码身份验证</title>
-    <link href="https://ooo.run/post/chatgpt-business-enable-codex-device-code.html"/>
-    <id>https://ooo.run/post/chatgpt-business-enable-codex-device-code.html</id>
-    <published>2026-05-11T07:54:26.000Z</published>
-    <updated>2026-06-24T11:35:25.080Z</updated>
-    
-    <content type="html"><![CDATA[<p>最近 OpenAI 大促销，ChatGPT Business 免费一个席位 48 个月，应该会有小伙伴们打算同时使用两个账户，享受双倍额度。 </p><h2 id="同时使用两个-ChatGPT-账户的方法-CC-Switch"><a href="#同时使用两个-ChatGPT-账户的方法-CC-Switch" class="headerlink" title="同时使用两个 ChatGPT 账户的方法(CC-Switch)"></a>同时使用两个 ChatGPT 账户的方法(CC-Switch)</h2><p>同时使用两个账户时，我们可以使用 <a href="https://github.com/farion1231/cc-switch">CC-Switch</a> 快速切换账户，而不必重新登陆。</p><p>登录了一个账户后，在 CC-Switch 的 Codex 应用中添加一个新的 OpenAI Offical 供应商即可，不过我们启用新的供应商后，再执行 codex 可能会遇到账户错误的提示: </p><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Error: account/read failed during TUI bootstrap: account/read failed: email and plan <span class="built_in">type</span> are required <span class="keyword">for</span> chatgpt authentication (code -32600)</span><br></pre></td></tr></table></figure><p>可以直接执行下面的命令，使用设备代码为第二个账户进行登录认证。</p><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">codex login --device-auth</span><br></pre></td></tr></table></figure><p>但是基于安全原因，设备代码认证默认是关闭的，可以参考下面的方法开启。</p><h2 id="启用设备代码身份验证"><a href="#启用设备代码身份验证" class="headerlink" title="启用设备代码身份验证"></a>启用设备代码身份验证</h2><p>团队的管理员在网页上访问 <strong>工作空间设置</strong> &gt; <strong>权限与角色</strong> ，在右侧开启 <strong>为 Codex CLI 启用设备代码身份验证</strong> 的选项即可。 </p><p><a href="https://chatgpt.com/admin/permissions">https://chatgpt.com/admin/permissions</a></p><p><img src="https://img.nep.me/ooo/codex-device-code-enable.webp" alt="codex-device-code-enable.png"></p><p>然后就可以正常使用使用设备代码完成认证了。</p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;最近 OpenAI 大促销，ChatGPT Business 免费一个席位 48 个月，应该会有小伙伴们打算同时使用两个账户，享受双倍额度。 &lt;/p&gt;
-&lt;h2 id=&quot;同时使用两个-ChatGPT-账户的方法-CC-Switch&quot;&gt;&lt;a href=&quot;#同时使用两个-Chat</summary>
-      
-    
-    
-    
-    <category term="笔记" scheme="https://ooo.run/categories/%E7%AC%94%E8%AE%B0/"/>
-    
-    
-    <category term="ChatGPT" scheme="https://ooo.run/tags/ChatGPT/"/>
-    
-    <category term="Codex" scheme="https://ooo.run/tags/Codex/"/>
     
   </entry>
   
