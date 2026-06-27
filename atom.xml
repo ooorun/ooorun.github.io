@@ -6,7 +6,7 @@
   <link href="https://ooo.run/atom.xml" rel="self"/>
   
   <link href="https://ooo.run/"/>
-  <updated>2026-06-26T21:04:04.844Z</updated>
+  <updated>2026-06-27T02:39:46.710Z</updated>
   <id>https://ooo.run/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>解决 Electron 42 APP 初次运行 pnpm dev 报错的问题</title>
+    <link href="https://ooo.run/post/fix-electron-42-app-cannot-run.html"/>
+    <id>https://ooo.run/post/fix-electron-42-app-cannot-run.html</id>
+    <published>2026-06-27T02:28:34.000Z</published>
+    <updated>2026-06-27T02:39:46.710Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="问题复现"><a href="#问题复现" class="headerlink" title="问题复现"></a>问题复现</h2><p>开发或是 Clone 一个 Electron 42 APP 时，安装完依赖后第一次运行 <code>pnpm dev</code> 你可能遇到 <code>Error: Electron uninstall</code> 的错误信息：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pnpm install --frozen-lockfile</span><br><span class="line">pnpm approve-builds</span><br><span class="line"></span><br><span class="line">pnpm dev </span><br></pre></td></tr></table></figure><p>报错信息</p><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">error during start dev server and electron app:</span><br><span class="line">Error: Electron uninstall</span><br><span class="line">    at getElectronPath</span><br><span class="line">...</span><br><span class="line">...</span><br></pre></td></tr></table></figure><h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p>需要手动运行下面的命令</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx install-electron</span><br></pre></td></tr></table></figure><h2 id="问题原因"><a href="#问题原因" class="headerlink" title="问题原因"></a>问题原因</h2><p>这是由于为了应对供应链攻击， Electron 42 不再通过 <code>postinstall</code> 下载自身</p><p><a href="https://www.electronjs.org/blog/electron-42-0#electron-no-longer-downloads-itself-via-postinstall-script">Electron 42: electron no longer downloads itself via postinstall script</a></p><p>可以运行下面的命令</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install electron --save-dev --ignore-scripts</span><br><span class="line">npx install-electron</span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;问题复现&quot;&gt;&lt;a href=&quot;#问题复现&quot; class=&quot;headerlink&quot; title=&quot;问题复现&quot;&gt;&lt;/a&gt;问题复现&lt;/h2&gt;&lt;p&gt;开发或是 Clone 一个 Electron 42 APP 时，安装完依赖后第一次运行 &lt;code&gt;pnpm dev&lt;/co</summary>
+      
+    
+    
+    
+    <category term="笔记" scheme="https://ooo.run/categories/%E7%AC%94%E8%AE%B0/"/>
+    
+    
+    <category term="Electron" scheme="https://ooo.run/tags/Electron/"/>
+    
+  </entry>
   
   <entry>
     <title>OpenAI 发布 GPT-5.6 系列模型：Sol、Terra 和 Luna 开启有限预览，受美国政府要求限制初始访问</title>
@@ -37,9 +61,9 @@
     <category term="资讯" scheme="https://ooo.run/categories/%E8%B5%84%E8%AE%AF/"/>
     
     
-    <category term="OpenAI" scheme="https://ooo.run/tags/OpenAI/"/>
-    
     <category term="ChatGPT" scheme="https://ooo.run/tags/ChatGPT/"/>
+    
+    <category term="OpenAI" scheme="https://ooo.run/tags/OpenAI/"/>
     
     <category term="GPT-5.6" scheme="https://ooo.run/tags/GPT-5-6/"/>
     
@@ -142,9 +166,9 @@
     <category term="笔记" scheme="https://ooo.run/categories/%E7%AC%94%E8%AE%B0/"/>
     
     
-    <category term="OpenAI" scheme="https://ooo.run/tags/OpenAI/"/>
-    
     <category term="Codex" scheme="https://ooo.run/tags/Codex/"/>
+    
+    <category term="OpenAI" scheme="https://ooo.run/tags/OpenAI/"/>
     
   </entry>
   
@@ -492,9 +516,9 @@
     <category term="资讯" scheme="https://ooo.run/categories/%E8%B5%84%E8%AE%AF/"/>
     
     
-    <category term="AI" scheme="https://ooo.run/tags/AI/"/>
-    
     <category term="Antigravity" scheme="https://ooo.run/tags/Antigravity/"/>
+    
+    <category term="AI" scheme="https://ooo.run/tags/AI/"/>
     
     <category term="Antigravity IDE" scheme="https://ooo.run/tags/Antigravity-IDE/"/>
     
@@ -525,38 +549,6 @@
     <category term="开发者安全" scheme="https://ooo.run/tags/%E5%BC%80%E5%8F%91%E8%80%85%E5%AE%89%E5%85%A8/"/>
     
     <category term="pnpm" scheme="https://ooo.run/tags/pnpm/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>别让终端历史成为你的&quot;密码本&quot;：避免记录敏感命的实用指南</title>
-    <link href="https://ooo.run/post/avoid-leaking-secrets-in-shell-history.html"/>
-    <id>https://ooo.run/post/avoid-leaking-secrets-in-shell-history.html</id>
-    <published>2026-05-17T03:31:47.000Z</published>
-    <updated>2026-06-24T11:35:25.080Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="前言：供应链攻击之下，每一行命令都可能是入口"><a href="#前言：供应链攻击之下，每一行命令都可能是入口" class="headerlink" title="前言：供应链攻击之下，每一行命令都可能是入口"></a>前言：供应链攻击之下，每一行命令都可能是入口</h2><p>2025 年至今，针对 npm、PyPI、GitHub Actions、Docker Hub 的供应链攻击事件持续走高：被污染的依赖、被劫持的 CI Token、被钓鱼的维护者账号……攻击者越来越偏好「绕过你的代码、直接拿你的凭证」的低成本路径。</p><p>而开发者最容易忽略的一处 “凭证仓库” ，恰恰是每天都在用、却几乎从不审计的：<strong>Shell 历史记录文件</strong>。</p><ul><li>macOS &#x2F; Linux：<code>~/.zsh_history</code>、<code>~/.bash_history</code></li><li>Windows PowerShell：<code>%APPDATA%\Microsoft\Windows\PowerShell\PSReadLine\ConsoleHost_history.txt</code></li></ul><p>这些文件以 <strong>明文</strong> 保存你输入过的所有命令——包括误粘贴的 API Key、带密码的 URL、订阅链接、数据库连接串。一旦你的电脑被恶意 npm 包、伪装 VSCode 插件、或被入侵的 CLI 工具读取到这些路径，攻击者无需提权就能直接打包带走。</p><p>但是有时也的确会需要在命令中输入密钥，比如 <code>export API_KEY=</code>，本文给出两件可立刻落地的小事：</p><ol><li><strong>写命令时</strong>：让敏感命令一开始就不进历史。</li><li><strong>写完之后</strong>：定期扫一遍历史文件，看看自己是不是早就漏过。</li></ol><hr><h2 id="一、macOS-Linux：在命令前加一个空格"><a href="#一、macOS-Linux：在命令前加一个空格" class="headerlink" title="一、macOS &#x2F; Linux：在命令前加一个空格"></a>一、macOS &#x2F; Linux：在命令前加一个空格</h2><p><code>bash</code> 和 <code>zsh</code> 都支持 <code>HISTCONTROL</code> &#x2F; <code>HIST_IGNORE_SPACE</code> —— 一旦开启，<strong>以空格开头的命令不会被写入历史文件，也不会出现在 <code>↑</code> 历史回溯里</strong>。</p><p>很多发行版或 shell 框架可能已经启用启用了这个特性。验证一下：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># bash - 期望包含 ignorespace 或 ignoreboth</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$HISTCONTROL</span>&quot;</span>   </span><br><span class="line"></span><br><span class="line"><span class="comment"># zsh - 期望看到 histignorespace</span></span><br><span class="line"><span class="built_in">setopt</span> | grep histignorespace   </span><br></pre></td></tr></table></figure><p>如果没有，加入你的 <code>~/.bashrc</code> 或 <code>~/.zshrc</code>：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># bash</span></span><br><span class="line"><span class="comment"># ignorespace + ignoredups</span></span><br><span class="line"><span class="built_in">export</span> HISTCONTROL=ignoreboth   </span><br><span class="line"><span class="comment"># zsh</span></span><br><span class="line"><span class="built_in">setopt</span> HIST_IGNORE_SPACE</span><br></pre></td></tr></table></figure><p>之后，敏感命令前面<strong>加一个空格</strong>即可：</p><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"> <span class="built_in">export</span> OPENAI_API_KEY=<span class="string">&quot;sk-...&quot;</span></span><br><span class="line">curl -H <span class="string">&quot;Authorization: Bearer <span class="variable">$TOKEN</span>&quot;</span> https://api.example.com</span><br></pre></td></tr></table></figure><p>退后退出本次终端(将命令写入历史记录文件)，重新打开，使用下面的命令验证：</p><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">tail</span> -n 5 ~/.zsh_history</span><br></pre></td></tr></table></figure><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">tail</span> -n 5 ~/.bash_history</span><br></pre></td></tr></table></figure><hr><h2 id="二、Windows-PowerShell：用-AddToHistoryHandler-自己实现"><a href="#二、Windows-PowerShell：用-AddToHistoryHandler-自己实现" class="headerlink" title="二、Windows PowerShell：用 AddToHistoryHandler 自己实现"></a>二、Windows PowerShell：用 AddToHistoryHandler 自己实现</h2><p>PowerShell 没有内置「前导空格不入历史」的开关，但 PSReadLine 提供了 <code>AddToHistoryHandler</code>，可以自定义哪些命令进历史。</p><h3 id="配置步骤"><a href="#配置步骤" class="headerlink" title="配置步骤"></a>配置步骤</h3><p>打开（或创建）你的 PowerShell profile：</p><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">notepad <span class="variable">$PROFILE</span></span><br></pre></td></tr></table></figure><p>写入：</p><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Set-PSReadLineOption</span> <span class="literal">-AddToHistoryHandler</span> &#123;</span><br><span class="line">    <span class="keyword">param</span>([<span class="built_in">string</span>]<span class="variable">$Line</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="variable">$Line</span>.StartsWith(<span class="string">&#x27; &#x27;</span>)) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="variable">$false</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="variable">$true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>保存后，<strong>重启 PowerShell</strong>。之后像这样以空格开头输入的命令，不会写入当前会话历史，也不会落盘到 <code>ConsoleHost_history.txt</code>：</p><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ...</span></span><br><span class="line">  <span class="built_in">curl</span> https://example.com/secret<span class="literal">-url</span> </span><br></pre></td></tr></table></figure><blockquote><p>PSReadLine 文档明确说明：handler 返回 <code>$false</code> 等同于 <code>SkipAdding</code>，<strong>当前会话和历史文件</strong>都不会保留这条命令。</p></blockquote><blockquote><p>这只影响<strong>之后</strong>输入的新命令；已经写进 <code>ConsoleHost_history.txt</code> 的内容不会被清理。</p></blockquote><hr><h2 id="三、回头审计：你的历史里早就有什么？"><a href="#三、回头审计：你的历史里早就有什么？" class="headerlink" title="三、回头审计：你的历史里早就有什么？"></a>三、回头审计：你的历史里早就有什么？</h2><p>加了开关只是治未病。下一步是<strong>翻账</strong>——很多人第一次扫描<code>~/.zsh_history</code> 都会被吓到。</p><p>下面这一组命令面向 zsh，bash 用户把路径换成 <code>~/.bash_history</code> 即可。</p><h3 id="1-先看文件大小，心里有数"><a href="#1-先看文件大小，心里有数" class="headerlink" title="1. 先看文件大小，心里有数"></a>1. 先看文件大小，心里有数</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ls</span> -lh ~/.zsh_history</span><br></pre></td></tr></table></figure><h3 id="2-排查常见密钥-密码关键词"><a href="#2-排查常见密钥-密码关键词" class="headerlink" title="2. 排查常见密钥&#x2F;密码关键词"></a>2. 排查常见密钥&#x2F;密码关键词</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep -nEi <span class="string">&#x27;api[_-]?key|apikey|secret|token|password|passwd|pwd|authorization|bearer|credential|client_secret|access[_-]?key|private[_-]?key|OPENAI_API_KEY|ANTHROPIC_API_KEY|GITHUB_TOKEN|GH_TOKEN|NPM_TOKEN|AWS_ACCESS_KEY_ID|AWS_SECRET_ACCESS_KEY|DATABASE_URL|MONGODB_URI|REDIS_URL&#x27;</span> ~/.zsh_history</span><br></pre></td></tr></table></figure><h3 id="3-排查典型-Token-格式"><a href="#3-排查典型-Token-格式" class="headerlink" title="3. 排查典型 Token 格式"></a>3. 排查典型 Token 格式</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep -nE <span class="string">&#x27;sk-[A-Za-z0-9_-]&#123;20,&#125;|github_pat_[A-Za-z0-9_]&#123;20,&#125;|gh[pousr]_[A-Za-z0-9]&#123;20,&#125;|AKIA[0-9A-Z]&#123;16&#125;|AIza[0-9A-Za-z_-]&#123;35&#125;&#x27;</span> ~/.zsh_history</span><br></pre></td></tr></table></figure><p>覆盖：OpenAI &#x2F; Anthropic 风格 <code>sk-…</code>、GitHub Fine-grained PAT、Classic PAT、AWS Access Key、Google API Key。</p><h3 id="4-排查带账号密码的-URL"><a href="#4-排查带账号密码的-URL" class="headerlink" title="4. 排查带账号密码的 URL"></a>4. 排查带账号密码的 URL</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep -nEi <span class="string">&#x27;https?://[^[:space:]/@:]+:[^[:space:]/@]+@&#x27;</span> ~/.zsh_history</span><br></pre></td></tr></table></figure><p>形如 <code>https://user:password@host/...</code> —— 在 git clone、curl、psql 里非常常见。</p><h3 id="5-排查环境变量赋值"><a href="#5-排查环境变量赋值" class="headerlink" title="5. 排查环境变量赋值"></a>5. 排查环境变量赋值</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep -nEi <span class="string">&#x27;(\$?[A-Z0-9_]*(KEY|TOKEN|SECRET|PASSWORD|PASS|PWD|URL|URI|AUTH|CREDENTIAL)[A-Z0-9_]*=|export [A-Z0-9_]+=)&#x27;</span> ~/.zsh_history</span><br></pre></td></tr></table></figure><p>抓 <code>export FOO_TOKEN=...</code>、<code>API_KEY=...</code> 这类一行式赋值。</p><h3 id="6-排查-curl-请求头泄漏"><a href="#6-排查-curl-请求头泄漏" class="headerlink" title="6. 排查 curl &#x2F; 请求头泄漏"></a>6. 排查 curl &#x2F; 请求头泄漏</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep -nEi <span class="string">&#x27;(curl|wget|httpie|http) .*(Authorization|Bearer|X-API-Key|api-key|token)&#x27;</span> ~/.zsh_history</span><br></pre></td></tr></table></figure><h3 id="7-排查云服务-部署工具的登录与密钥命令"><a href="#7-排查云服务-部署工具的登录与密钥命令" class="headerlink" title="7. 排查云服务 &#x2F; 部署工具的登录与密钥命令"></a>7. 排查云服务 &#x2F; 部署工具的登录与密钥命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep -nEi <span class="string">&#x27;\b(aws|az|gcloud|vercel|netlify|supabase|firebase|docker|npm|pnpm|gh)\b.*\b(login|auth|token|secret|credentials|env)\b&#x27;</span> ~/.zsh_history</span><br></pre></td></tr></table></figure><h3 id="8-排查订阅-科学上网链接"><a href="#8-排查订阅-科学上网链接" class="headerlink" title="8. 排查订阅 &#x2F; 科学上网链接"></a>8. 排查订阅 &#x2F; 科学上网链接</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep -nEi <span class="string">&#x27;(subscription|shadowrocket|clash|mihomo|vless://|vmess://|trojan://|ss://|trojan|proxy)&#x27;</span> ~/.zsh_history</span><br></pre></td></tr></table></figure><h3 id="9-排查-URL-中的-UUID（常见于订阅链接）"><a href="#9-排查-URL-中的-UUID（常见于订阅链接）" class="headerlink" title="9. 排查 URL 中的 UUID（常见于订阅链接）"></a>9. 排查 URL 中的 UUID（常见于订阅链接）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep -nEi <span class="string">&#x27;https?://[^[:space:]]*[0-9a-f]&#123;8&#125;-[0-9a-f]&#123;4&#125;-[0-9a-f]&#123;4&#125;-[0-9a-f]&#123;4&#125;-[0-9a-f]&#123;12&#125;[^[:space:]]*&#x27;</span> ~/.zsh_history</span><br></pre></td></tr></table></figure><hr><h2 id="四、命中了之后怎么办？"><a href="#四、命中了之后怎么办？" class="headerlink" title="四、命中了之后怎么办？"></a>四、命中了之后怎么办？</h2><p><strong>主动审查后，可以选择删除本地的历史记录，如果担心凭证存在泄漏风险。</strong> 可以按照优先级建议排查：</p><ol><li><strong>真实的 token &#x2F; API key</strong>（OpenAI、Anthropic、GitHub PAT、NPM Token……）—— 立刻去对应平台 revoke 并重新签发。</li><li><strong>订阅 URL &#x2F; VPN 节点链接</strong> —— 重置 UUID 或 token，旧链接会一直被滥用流量。</li><li><strong>数据库连接串、Redis &#x2F; MongoDB URI</strong> —— 改密码，必要时调整网络访问白名单。</li><li><strong>带密码的 HTTP(S) URL</strong> —— 改密码，并检查 git remote、~&#x2F;.netrc 等地方是否同步残留。</li><li><strong>云服务凭证</strong>（AWS Access Key、GCP Service Account JSON 内容）—— 走云厂商的 rotate 流程，并检查 CloudTrail &#x2F; Audit Log 是否有异常调用。</li></ol><hr><h2 id="五、把好习惯固化下来"><a href="#五、把好习惯固化下来" class="headerlink" title="五、把好习惯固化下来"></a>五、把好习惯固化下来</h2><ul><li><strong>行首加空格</strong>这件事，要练成肌肉记忆：复制任何含密钥的命令，先按一下 <code>Space</code> 再粘贴。</li><li>能用文件读取的就不要写在命令行：<code>curl --header @auth.txt</code>、<code>gh auth login --with-token &lt; token.txt</code>、<code>docker login --password-stdin</code> 都是更好的形态。</li><li>真敏感的密钥，长期方案是放进 macOS Keychain &#x2F; Windows Credential Manager &#x2F; <code>pass</code> &#x2F; 1Password CLI &#x2F; <code>gh secret</code>，让命令行里只出现引用名，不出现明文。</li><li>给自己设一个每月一次的「翻历史」提醒——供应链事件大多在事发后才被披露，定期回头审计比一次性清理更重要。</li></ul><blockquote><p>终端历史不是你的备忘录，是攻击者的字典。少留一点东西在里面，下次出事的时候，你就少一份要连夜轮换的清单。</p></blockquote>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h2 id=&quot;前言：供应链攻击之下，每一行命令都可能是入口&quot;&gt;&lt;a href=&quot;#前言：供应链攻击之下，每一行命令都可能是入口&quot; class=&quot;headerlink&quot; title=&quot;前言：供应链攻击之下，每一行命令都可能是入口&quot;&gt;&lt;/a&gt;前言：供应链攻击之下，每一行命令都可能是</summary>
-      
-    
-    
-    
-    <category term="笔记" scheme="https://ooo.run/categories/%E7%AC%94%E8%AE%B0/"/>
-    
-    
-    <category term="Bash" scheme="https://ooo.run/tags/Bash/"/>
-    
-    <category term="Zsh" scheme="https://ooo.run/tags/Zsh/"/>
-    
-    <category term="Powershell" scheme="https://ooo.run/tags/Powershell/"/>
-    
-    <category term="Shell" scheme="https://ooo.run/tags/Shell/"/>
-    
-    <category term="开发者安全" scheme="https://ooo.run/tags/%E5%BC%80%E5%8F%91%E8%80%85%E5%AE%89%E5%85%A8/"/>
     
   </entry>
   
