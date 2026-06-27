@@ -411,82 +411,10 @@
       </tags>
   </entry>
   <entry>
-    <title>如何在 macOS 中安装 Homebrew</title>
-    <url>/post/how-to-install-homebrew-on-macos.html</url>
-    <content><![CDATA[<p>有时我们在网络上看到别人使用 macOS 安装软件是使用的下面的命令，非常的方便。  </p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">brew install package</span><br></pre></td></tr></table></figure>
-
-<p>本文将介绍如何在 macOS 15 中安装 <a href="https://brew.sh/zh-cn/">Homebrew</a> ，让这个命令在您的 mac 中也生效，同时 <code>Git</code> 也将会被安装。</p>
-<h2 id="什么是-Homebrew"><a href="#什么是-Homebrew" class="headerlink" title="什么是 Homebrew"></a>什么是 Homebrew</h2><p>Homebrew 是一款自由及开放源代码的软件包管理系统，用以简化 macOS 系统上的软件安装过程。它拥有安装、卸载、更新、查看、搜索等很多实用的功能，通过简单的一条指令，就可以实现软件包管理，十分方便快捷。</p>
-<h2 id="安装-Homebrew"><a href="#安装-Homebrew" class="headerlink" title="安装 Homebrew"></a>安装 Homebrew</h2><p>打开终端程序，在 Mac 上打开或退出“终端”：</p>
-<ul>
-<li><strong>启动台</strong> &gt; 其他 &gt; <strong>终端</strong></li>
-<li><strong>启动台</strong> 或是　<code>Commond⌘ + 空格</code> 打开聚焦搜索，搜索 <strong>终端</strong> 或是 <strong>Terminal</strong></li>
-</ul>
-<h3 id="官方源安装"><a href="#官方源安装" class="headerlink" title="官方源安装"></a>官方源安装</h3><div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>如果无法访问 Github 可以查看使用镜像源安装的部分</p></div></div>
-<p>复制安装命令</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">/bin/bash -c <span class="string">&quot;<span class="subst">$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)</span>&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>在终端内执行安装命令，安装时需要输入你的电脑密码进行授权：  </p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">==&gt; Checking <span class="keyword">for</span> `<span class="built_in">sudo</span>` access (<span class="built_in">which</span> may request your password)...</span><br><span class="line">Password:</span><br></pre></td></tr></table></figure>
-<p>brew 会提示将安装的软件以及创建的文件夹，按回车继续，等待下载和安装完成。</p>
-<p>结束后执行 <code>brew -v</code> 测试显示依然是错误 <code>zsh: command not found: brew</code><br><img src="https://img.nep.me/i/2024/12/13/10x6kyz-2.webp"></p>
-<p>需要照提示复制执行下面的三条命令添加 PATH ：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> &gt;&gt; /Users/me/.zprofile</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;eval &quot;$(/opt/homebrew/bin/brew shellenv)&quot;&#x27;</span> &gt;&gt; /Users/me/.zprofile</span><br><span class="line"><span class="built_in">eval</span> <span class="string">&quot;<span class="subst">$(/opt/homebrew/bin/brew shellenv)</span>&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>如果使用了 <code>oh-my-zsh</code> ，则使用下面的命令。</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export PATH=&quot;/opt/homebrew/bin:$PATH&quot;&#x27;</span> &gt;&gt; ~/.zshrc   </span><br><span class="line"><span class="built_in">source</span> ~/.zshrc</span><br></pre></td></tr></table></figure>
-
-<p>bash 用户</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export PATH=&quot;/opt/homebrew/bin:$PATH&quot;&#x27;</span> &gt;&gt; ~/.bashrc   </span><br><span class="line"><span class="built_in">source</span> ~/.bashrc</span><br></pre></td></tr></table></figure>
-
-<p>然后可以执行 <code>brew -v</code> 测试安装结果，会成功显示 Hombrew 的版本号。   </p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt;brew -v</span><br><span class="line">Homebrew 4.4.11</span><br></pre></td></tr></table></figure>
-
-<p>此时我们就可以使用 <code>brew install</code> 命令了 </p>
-<h3 id="镜像源安装-中国大陆"><a href="#镜像源安装-中国大陆" class="headerlink" title="镜像源安装(中国大陆)"></a>镜像源安装(中国大陆)</h3><div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>中国大陆用户推荐使用镜像源安装</p></div></div>
-<p>可以直接使用下面的安装脚本</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/bin/zsh -c &quot;$(curl -fsSL https://gitee.com/cunkai/HomebrewCN/raw/master/Homebrew.sh)&quot;</span><br></pre></td></tr></table></figure>
-
-<p>或是查看下面的内容</p>
-<p>替换使用 <a href="https://developer.aliyun.com/mirror/homebrew/">阿里镜像源</a></p>
-<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-9-tab-0" aria-controls="tabs-9-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">zsh</button><button type="button" role="tab" id="tabs-9-tab-1" aria-controls="tabs-9-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">bash</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-9-panel-0" aria-labelledby="tabs-9-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo &#x27;export HOMEBREW_API_DOMAIN=&quot;https://mirrors.aliyun.com/homebrew-bottles/api&quot;&#x27; &gt;&gt; ~/.zshrc</span><br><span class="line">echo &#x27;export HOMEBREW_BREW_GIT_REMOTE=&quot;https://mirrors.aliyun.com/homebrew/brew.git&quot;&#x27; &gt;&gt; ~/.zshrc</span><br><span class="line">echo &#x27;export HOMEBREW_CORE_GIT_REMOTE=&quot;https://mirrors.aliyun.com/homebrew/homebrew-core.git&quot;&#x27; &gt;&gt; ~/.zshrc</span><br><span class="line">echo &#x27;export HOMEBREW_BOTTLE_DOMAIN=&quot;https://mirrors.aliyun.com/homebrew/homebrew-bottles&quot;&#x27; &gt;&gt; ~/.zshrc</span><br><span class="line">source ~/.zshrc</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-9-panel-1" aria-labelledby="tabs-9-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export HOMEBREW_API_DOMAIN=&quot;https://mirrors.aliyun.com/homebrew-bottles/api&quot;&#x27;</span> &gt;&gt; ~/.bash_profile</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export HOMEBREW_BREW_GIT_REMOTE=&quot;https://mirrors.aliyun.com/homebrew/brew.git&quot;&#x27;</span> &gt;&gt; ~/.bash_profile</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export HOMEBREW_CORE_GIT_REMOTE=&quot;https://mirrors.aliyun.com/homebrew/homebrew-core.git&quot;&#x27;</span> &gt;&gt; ~/.bash_profile</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export HOMEBREW_BOTTLE_DOMAIN=&quot;https://mirrors.aliyun.com/homebrew/homebrew-bottles&quot;&#x27;</span> &gt;&gt; ~/.bash_profile</span><br><span class="line"><span class="built_in">source</span> ~/.bash_profile</span><br></pre></td></tr></table></figure></section></div></div>
-
-<p>然后执行安装命令，从阿里云下载安装脚本并安装 Homebrew</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://mirrors.aliyun.com/homebrew/install.git brew-install</span><br><span class="line">/bin/bash brew-install/install.sh</span><br><span class="line"><span class="built_in">rm</span> -rf brew-install</span><br></pre></td></tr></table></figure>
-
-<p>也可从 GitHub 获取官方安装脚本安装 Homebrew </p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">/bin/bash -c <span class="string">&quot;<span class="subst">$(curl -fsSL https://github.com/Homebrew/install/raw/master/install.sh)</span>&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>测试</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">brew -v</span><br></pre></td></tr></table></figure>
-
-<h2 id="Homebrew-使用介绍"><a href="#Homebrew-使用介绍" class="headerlink" title="Homebrew 使用介绍"></a>Homebrew 使用介绍</h2><h3 id="安装软件"><a href="#安装软件" class="headerlink" title="安装软件"></a>安装软件</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 搜索软件</span></span><br><span class="line">brew search mysql</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装默认版本</span></span><br><span class="line">brew install mysql</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装指定版本</span></span><br><span class="line">brew mysql mysql@5.7</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装桌面软件</span></span><br><span class="line">brew install --cask firefox</span><br></pre></td></tr></table></figure>
-
-<h3 id="软件管理"><a href="#软件管理" class="headerlink" title="软件管理"></a>软件管理</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查看已安装软件</span></span><br><span class="line">brew list</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看软件信息</span></span><br><span class="line">brew info mysql</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看软件安装路径</span></span><br><span class="line">brew list mysql</span><br><span class="line"></span><br><span class="line"><span class="comment"># 升级所有软件</span></span><br><span class="line">brew upgrade </span><br><span class="line"></span><br><span class="line"><span class="comment"># 升级指定软件</span></span><br><span class="line">brew upgrade wget </span><br><span class="line"></span><br><span class="line"><span class="comment"># 卸载软件</span></span><br><span class="line">brew uninstall wget</span><br></pre></td></tr></table></figure>
-
-
-<h3 id="服务管理"><a href="#服务管理" class="headerlink" title="服务管理"></a>服务管理</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查看所有服务</span></span><br><span class="line">brew services list </span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看指定服务</span></span><br><span class="line">brew services info mysql</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动服务</span></span><br><span class="line">brew services start mysql </span><br><span class="line"></span><br><span class="line"><span class="comment"># 重启服务</span></span><br><span class="line">brew services restart mysql </span><br><span class="line"></span><br><span class="line"><span class="comment"># 停用服务</span></span><br><span class="line">brew services stop mysql </span><br><span class="line"></span><br><span class="line"><span class="comment"># 移除服务</span></span><br><span class="line">brew services remove mysql</span><br><span class="line"></span><br><span class="line"><span class="comment"># 移除所有未使用服务</span></span><br><span class="line">brew services cleanup</span><br></pre></td></tr></table></figure>
-
-<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 检查Homebrew</span></span><br><span class="line">brew doctor</span><br><span class="line"></span><br><span class="line"><span class="comment"># 升级Homebrew</span></span><br><span class="line">brew update</span><br></pre></td></tr></table></figure>
-
-<h3 id="卸载Homebrew"><a href="#卸载Homebrew" class="headerlink" title="卸载Homebrew"></a>卸载Homebrew</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">/bin/bash -c <span class="string">&quot;<span class="subst">$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/uninstall.sh)</span>&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>参考： <a href="https://ken.io/note/macos-homebrew-install-and-configuration">在macOS上安装&amp;配置Homebrew</a></p>
-]]></content>
-      <categories>
-        <category>教程</category>
-      </categories>
-      <tags>
-        <tag>Homebrew</tag>
-        <tag>macOS</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>如何安装 Node.js</title>
     <url>/post/how-to-install-nodejs.html</url>
     <content><![CDATA[<p>本文将带介绍如何在电脑上安装 Node.js 运行环境，从而可以使用丰富的应用 Nodejs 程序。 </p>
-<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-10-tab-0" aria-controls="tabs-10-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">Windows</button><button type="button" role="tab" id="tabs-10-tab-1" aria-controls="tabs-10-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">macOS</button><button type="button" role="tab" id="tabs-10-tab-2" aria-controls="tabs-10-panel-2" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="2">Linux</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-10-panel-0" aria-labelledby="tabs-10-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><h2 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h2><p>测试安装环境为 <code>Windows 11</code></p>
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-9-tab-0" aria-controls="tabs-9-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">Windows</button><button type="button" role="tab" id="tabs-9-tab-1" aria-controls="tabs-9-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">macOS</button><button type="button" role="tab" id="tabs-9-tab-2" aria-controls="tabs-9-panel-2" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="2">Linux</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-9-panel-0" aria-labelledby="tabs-9-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><h2 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h2><p>测试安装环境为 <code>Windows 11</code></p>
 <h3 id="下载-Node-js"><a href="#下载-Node-js" class="headerlink" title="下载 Node.js"></a>下载 Node.js</h3><p>访问 Node.js 的官方网站的 <a href="https://nodejs.org/zh-cn/download/prebuilt-installer">下载页面</a> 下载安装包。 </p>
 <p>我们选择 <strong>预构建安装程序</strong> ，选择一下自己的系统与 CPU 架构类型， Windows 一般选择 <strong>x64</strong>，再选择 Node.js 版本。</p>
 <div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>推荐选择版本号为偶数的 LTS 版本</p></div></div>  
@@ -506,7 +434,7 @@
 <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm -v</span><br></pre></td></tr></table></figure>
 
 <p>如果可以成功输出版本号，表示安装成功。  </p>
-<p><img src="https://img.nep.me/i/2024/12/13/7ilvge-2.webp" alt="nodejs-install-done"></p></section><section role="tabpanel" id="tabs-10-panel-1" aria-labelledby="tabs-10-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><h2 id="macOS"><a href="#macOS" class="headerlink" title="macOS"></a>macOS</h2><p>测试安装环境为 <code>macOS 15.1</code> ，macOS 更推荐使用 <strong>包管理器</strong> <code>Homebrew</code> 进行安装。</p>
+<p><img src="https://img.nep.me/i/2024/12/13/7ilvge-2.webp" alt="nodejs-install-done"></p></section><section role="tabpanel" id="tabs-9-panel-1" aria-labelledby="tabs-9-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><h2 id="macOS"><a href="#macOS" class="headerlink" title="macOS"></a>macOS</h2><p>测试安装环境为 <code>macOS 15.1</code> ，macOS 更推荐使用 <strong>包管理器</strong> <code>Homebrew</code> 进行安装。</p>
 <blockquote>
 <p><a href="https://brew.sh/zh-cn/">Homebrew</a> 是 macOS 和 Linux 缺失软件包的管理器，用于安装 Apple没有预装但你需要的东西。</p>
 </blockquote>
@@ -536,7 +464,7 @@
 
 <h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt;node -v</span><br><span class="line">v23.4.0</span><br><span class="line"></span><br><span class="line">&gt;npm -v</span><br><span class="line">10.9.2</span><br></pre></td></tr></table></figure>
 
-<h3 id="brew-常用命令"><a href="#brew-常用命令" class="headerlink" title="brew 常用命令"></a>brew 常用命令</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 安装指定版本</span></span><br><span class="line">brew install node@22</span><br><span class="line"></span><br><span class="line"><span class="comment"># 卸载</span></span><br><span class="line">brew remove node</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看已安装软件</span></span><br><span class="line">brew list </span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查更新</span></span><br><span class="line">brew update</span><br><span class="line"></span><br><span class="line"><span class="comment"># 下载更新</span></span><br><span class="line">brew upgrade</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-10-panel-2" aria-labelledby="tabs-10-tab-2" class="flatpaper-tabs__panel" data-index="2" hidden><h2 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h2><p>Linux 使用 nvm 包管理器可以很方便的安装 Node.js</p>
+<h3 id="brew-常用命令"><a href="#brew-常用命令" class="headerlink" title="brew 常用命令"></a>brew 常用命令</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 安装指定版本</span></span><br><span class="line">brew install node@22</span><br><span class="line"></span><br><span class="line"><span class="comment"># 卸载</span></span><br><span class="line">brew remove node</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看已安装软件</span></span><br><span class="line">brew list </span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查更新</span></span><br><span class="line">brew update</span><br><span class="line"></span><br><span class="line"><span class="comment"># 下载更新</span></span><br><span class="line">brew upgrade</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-9-panel-2" aria-labelledby="tabs-9-tab-2" class="flatpaper-tabs__panel" data-index="2" hidden><h2 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h2><p>Linux 使用 nvm 包管理器可以很方便的安装 Node.js</p>
 <h3 id="首先安装-nvm"><a href="#首先安装-nvm" class="headerlink" title="首先安装 nvm"></a>首先安装 nvm</h3><h1 id="安装-nvm-Node-版本管理器"><a href="#安装-nvm-Node-版本管理器" class="headerlink" title="安装 nvm (Node 版本管理器)"></a>安装 nvm (Node 版本管理器)</h1><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash</span><br></pre></td></tr></table></figure>
 
 <p>更新一下 PATH</p>
@@ -574,8 +502,8 @@
       </categories>
       <tags>
         <tag>Linux</tag>
-        <tag>macOS</tag>
         <tag>Nodejs</tag>
+        <tag>macOS</tag>
         <tag>Windows</tag>
       </tags>
   </entry>
@@ -645,7 +573,7 @@
 <p>编辑后可以重新执行 <code>hexo s</code> 进行预览。 </p>
 <h3 id="添加主题-Butterfly"><a href="#添加主题-Butterfly" class="headerlink" title="添加主题(Butterfly)"></a>添加主题(Butterfly)</h3><p>Hexo 支持很多主题，下面将使用并设置的是 <a href="https://butterfly.js.org/">Butterfly</a> 主题。</p>
 <p>先安装一下所需的依赖</p>
-<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-11-tab-0" aria-controls="tabs-11-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">npm</button><button type="button" role="tab" id="tabs-11-tab-1" aria-controls="tabs-11-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">pnpm</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-11-panel-0" aria-labelledby="tabs-11-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm install hexo-util moment-timezone hexo-renderer-pug hexo-renderer-stylus --save</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-11-panel-1" aria-labelledby="tabs-11-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pnpm install hexo-util moment-timezone hexo-renderer-pug hexo-renderer-stylus</span><br></pre></td></tr></table></figure></section></div></div>
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-10-tab-0" aria-controls="tabs-10-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">npm</button><button type="button" role="tab" id="tabs-10-tab-1" aria-controls="tabs-10-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">pnpm</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-10-panel-0" aria-labelledby="tabs-10-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm install hexo-util moment-timezone hexo-renderer-pug hexo-renderer-stylus --save</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-10-panel-1" aria-labelledby="tabs-10-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pnpm install hexo-util moment-timezone hexo-renderer-pug hexo-renderer-stylus</span><br></pre></td></tr></table></figure></section></div></div>
 
 <p>打开终端，在博客目录下执行下面的命令下载主题</p>
 <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> -b master https://github.com/jerryc127/hexo-theme-butterfly.git themes/butterfly</span><br></pre></td></tr></table></figure>
@@ -697,7 +625,7 @@
 <h2 id="部署到-GitHub"><a href="#部署到-GitHub" class="headerlink" title="部署到 GitHub"></a>部署到 GitHub</h2><p>我们已经完成了主设置，并创建了新的文章，现在我们将把博客托管到 GitHub Pages 上，从而从网络上访问。</p>
 <p>访问 <a href="https://github.com/new">https://github.com/new</a> 创建一个新的仓库，<code>Repository name</code> 必须是 <code>&lt;username&gt;.github.io</code>，否则不会生效。</p>
 <p>然后打开终端，安装 <code>hexo-deployer-git</code> </p>
-<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-12-tab-0" aria-controls="tabs-12-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">npm</button><button type="button" role="tab" id="tabs-12-tab-1" aria-controls="tabs-12-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">pnpm</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-12-panel-0" aria-labelledby="tabs-12-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-12-panel-1" aria-labelledby="tabs-12-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pnpm install hexo-deployer-git</span><br></pre></td></tr></table></figure></section></div></div>
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-11-tab-0" aria-controls="tabs-11-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">npm</button><button type="button" role="tab" id="tabs-11-tab-1" aria-controls="tabs-11-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">pnpm</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-11-panel-0" aria-labelledby="tabs-11-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-11-panel-1" aria-labelledby="tabs-11-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pnpm install hexo-deployer-git</span><br></pre></td></tr></table></figure></section></div></div>
 
 <p>然后编辑博客目录下的 <code>_config.yml</code> 文件，设置底部的 deploy 部分。</p>
 <figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="comment"># 仓库地址</span></span><br><span class="line">  <span class="attr">repo:</span> <span class="string">https://github.com/&lt;username&gt;/&lt;username&gt;.github.io</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">gh-pages</span></span><br></pre></td></tr></table></figure>
@@ -798,7 +726,7 @@
 <li>当本地比服务器更新时，显示为 <code>Push origin</code> 表示可以推送更新到 GitHub<br> 本地更新后，可以在左下角 <strong>Summary</strong> 中填写注释，点击 <code>Commit to main</code>，就可以推送更新了</li>
 </ul>
 <h2 id="其他操作"><a href="#其他操作" class="headerlink" title="其他操作"></a>其他操作</h2><h3 id="给站点添加搜索功能"><a href="#给站点添加搜索功能" class="headerlink" title="给站点添加搜索功能"></a>给站点添加搜索功能</h3><p>在 Hexo 根目录运行</p>
-<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-13-tab-0" aria-controls="tabs-13-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">npm</button><button type="button" role="tab" id="tabs-13-tab-1" aria-controls="tabs-13-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">pnpm</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-13-panel-0" aria-labelledby="tabs-13-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm install hexo-generator-searchdb --save</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-13-panel-1" aria-labelledby="tabs-13-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pnpm install hexo-generator-searchdb</span><br></pre></td></tr></table></figure></section></div></div>
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-12-tab-0" aria-controls="tabs-12-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">npm</button><button type="button" role="tab" id="tabs-12-tab-1" aria-controls="tabs-12-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">pnpm</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-12-panel-0" aria-labelledby="tabs-12-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm install hexo-generator-searchdb --save</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-12-panel-1" aria-labelledby="tabs-12-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pnpm install hexo-generator-searchdb</span><br></pre></td></tr></table></figure></section></div></div>
 
 <p>修改站点配置文件 <code>_config.yml</code>，在最后新增</p>
 <figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">search:</span></span><br><span class="line">  <span class="attr">path:</span> <span class="string">search.xml</span></span><br><span class="line">  <span class="attr">field:</span> <span class="string">post</span></span><br><span class="line">  <span class="attr">content:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">format:</span> <span class="string">html</span></span><br></pre></td></tr></table></figure>
@@ -810,11 +738,11 @@
 <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 生成站点文件</span></span><br><span class="line">hexo clean </span><br><span class="line">hexo g </span><br><span class="line"></span><br><span class="line"><span class="comment"># 开启预览</span></span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
 
 <h3 id="添加站点地图"><a href="#添加站点地图" class="headerlink" title="添加站点地图"></a>添加站点地图</h3><p>在 Hexo 根目录下执行</p>
-<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-14-tab-0" aria-controls="tabs-14-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">npm</button><button type="button" role="tab" id="tabs-14-tab-1" aria-controls="tabs-14-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">pnpm</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-14-panel-0" aria-labelledby="tabs-14-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm install hexo-generator-sitemap --save</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-14-panel-1" aria-labelledby="tabs-14-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pnpm install hexo-generator-sitemap </span><br></pre></td></tr></table></figure></section></div></div>
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-13-tab-0" aria-controls="tabs-13-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">npm</button><button type="button" role="tab" id="tabs-13-tab-1" aria-controls="tabs-13-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">pnpm</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-13-panel-0" aria-labelledby="tabs-13-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm install hexo-generator-sitemap --save</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-13-panel-1" aria-labelledby="tabs-13-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pnpm install hexo-generator-sitemap </span><br></pre></td></tr></table></figure></section></div></div>
 
 <p>以后生成站点信息时会自动生成 <code>sitemap.xml</code> 文件，本地 <code>hexo s</code> 预览可以通过 <code>http://localhost:4000/sitemap.xml</code> 访问</p>
 <h3 id="添加-RSS-支持"><a href="#添加-RSS-支持" class="headerlink" title="添加 RSS 支持"></a>添加 RSS 支持</h3><p>在 Hexo 根目录下执行</p>
-<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-15-tab-0" aria-controls="tabs-15-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">npm</button><button type="button" role="tab" id="tabs-15-tab-1" aria-controls="tabs-15-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">pnpm</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-15-panel-0" aria-labelledby="tabs-15-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm install hexo-generator-feed --save</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-15-panel-1" aria-labelledby="tabs-15-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pnpm install hexo-generator-feed</span><br></pre></td></tr></table></figure></section></div></div>
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-14-tab-0" aria-controls="tabs-14-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">npm</button><button type="button" role="tab" id="tabs-14-tab-1" aria-controls="tabs-14-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">pnpm</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-14-panel-0" aria-labelledby="tabs-14-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm install hexo-generator-feed --save</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-14-panel-1" aria-labelledby="tabs-14-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pnpm install hexo-generator-feed</span><br></pre></td></tr></table></figure></section></div></div>
 
 <p>然后编辑 Hexo 根目录下的 <code>_config.yml</code> 文件，在最后添加</p>
 <figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># RSS</span></span><br><span class="line"><span class="attr">feed:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">atom</span></span><br><span class="line">  <span class="attr">path:</span> <span class="string">atom.xml</span></span><br><span class="line">  <span class="comment"># 限制输出文章数量</span></span><br><span class="line">  <span class="attr">limit:</span> <span class="number">20</span></span><br></pre></td></tr></table></figure>
@@ -836,6 +764,78 @@
       <tags>
         <tag>Hexo</tag>
         <tag>GitHub</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>如何在 macOS 中安装 Homebrew</title>
+    <url>/post/how-to-install-homebrew-on-macos.html</url>
+    <content><![CDATA[<p>有时我们在网络上看到别人使用 macOS 安装软件是使用的下面的命令，非常的方便。  </p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">brew install package</span><br></pre></td></tr></table></figure>
+
+<p>本文将介绍如何在 macOS 15 中安装 <a href="https://brew.sh/zh-cn/">Homebrew</a> ，让这个命令在您的 mac 中也生效，同时 <code>Git</code> 也将会被安装。</p>
+<h2 id="什么是-Homebrew"><a href="#什么是-Homebrew" class="headerlink" title="什么是 Homebrew"></a>什么是 Homebrew</h2><p>Homebrew 是一款自由及开放源代码的软件包管理系统，用以简化 macOS 系统上的软件安装过程。它拥有安装、卸载、更新、查看、搜索等很多实用的功能，通过简单的一条指令，就可以实现软件包管理，十分方便快捷。</p>
+<h2 id="安装-Homebrew"><a href="#安装-Homebrew" class="headerlink" title="安装 Homebrew"></a>安装 Homebrew</h2><p>打开终端程序，在 Mac 上打开或退出“终端”：</p>
+<ul>
+<li><strong>启动台</strong> &gt; 其他 &gt; <strong>终端</strong></li>
+<li><strong>启动台</strong> 或是　<code>Commond⌘ + 空格</code> 打开聚焦搜索，搜索 <strong>终端</strong> 或是 <strong>Terminal</strong></li>
+</ul>
+<h3 id="官方源安装"><a href="#官方源安装" class="headerlink" title="官方源安装"></a>官方源安装</h3><div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>如果无法访问 Github 可以查看使用镜像源安装的部分</p></div></div>
+<p>复制安装命令</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">/bin/bash -c <span class="string">&quot;<span class="subst">$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>在终端内执行安装命令，安装时需要输入你的电脑密码进行授权：  </p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">==&gt; Checking <span class="keyword">for</span> `<span class="built_in">sudo</span>` access (<span class="built_in">which</span> may request your password)...</span><br><span class="line">Password:</span><br></pre></td></tr></table></figure>
+<p>brew 会提示将安装的软件以及创建的文件夹，按回车继续，等待下载和安装完成。</p>
+<p>结束后执行 <code>brew -v</code> 测试显示依然是错误 <code>zsh: command not found: brew</code><br><img src="https://img.nep.me/i/2024/12/13/10x6kyz-2.webp"></p>
+<p>需要照提示复制执行下面的三条命令添加 PATH ：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> &gt;&gt; /Users/me/.zprofile</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;eval &quot;$(/opt/homebrew/bin/brew shellenv)&quot;&#x27;</span> &gt;&gt; /Users/me/.zprofile</span><br><span class="line"><span class="built_in">eval</span> <span class="string">&quot;<span class="subst">$(/opt/homebrew/bin/brew shellenv)</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>如果使用了 <code>oh-my-zsh</code> ，则使用下面的命令。</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export PATH=&quot;/opt/homebrew/bin:$PATH&quot;&#x27;</span> &gt;&gt; ~/.zshrc   </span><br><span class="line"><span class="built_in">source</span> ~/.zshrc</span><br></pre></td></tr></table></figure>
+
+<p>bash 用户</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export PATH=&quot;/opt/homebrew/bin:$PATH&quot;&#x27;</span> &gt;&gt; ~/.bashrc   </span><br><span class="line"><span class="built_in">source</span> ~/.bashrc</span><br></pre></td></tr></table></figure>
+
+<p>然后可以执行 <code>brew -v</code> 测试安装结果，会成功显示 Hombrew 的版本号。   </p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt;brew -v</span><br><span class="line">Homebrew 4.4.11</span><br></pre></td></tr></table></figure>
+
+<p>此时我们就可以使用 <code>brew install</code> 命令了 </p>
+<h3 id="镜像源安装-中国大陆"><a href="#镜像源安装-中国大陆" class="headerlink" title="镜像源安装(中国大陆)"></a>镜像源安装(中国大陆)</h3><div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>中国大陆用户推荐使用镜像源安装</p></div></div>
+<p>可以直接使用下面的安装脚本</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/bin/zsh -c &quot;$(curl -fsSL https://gitee.com/cunkai/HomebrewCN/raw/master/Homebrew.sh)&quot;</span><br></pre></td></tr></table></figure>
+
+<p>或是查看下面的内容</p>
+<p>替换使用 <a href="https://developer.aliyun.com/mirror/homebrew/">阿里镜像源</a></p>
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-15-tab-0" aria-controls="tabs-15-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">zsh</button><button type="button" role="tab" id="tabs-15-tab-1" aria-controls="tabs-15-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">bash</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-15-panel-0" aria-labelledby="tabs-15-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo &#x27;export HOMEBREW_API_DOMAIN=&quot;https://mirrors.aliyun.com/homebrew-bottles/api&quot;&#x27; &gt;&gt; ~/.zshrc</span><br><span class="line">echo &#x27;export HOMEBREW_BREW_GIT_REMOTE=&quot;https://mirrors.aliyun.com/homebrew/brew.git&quot;&#x27; &gt;&gt; ~/.zshrc</span><br><span class="line">echo &#x27;export HOMEBREW_CORE_GIT_REMOTE=&quot;https://mirrors.aliyun.com/homebrew/homebrew-core.git&quot;&#x27; &gt;&gt; ~/.zshrc</span><br><span class="line">echo &#x27;export HOMEBREW_BOTTLE_DOMAIN=&quot;https://mirrors.aliyun.com/homebrew/homebrew-bottles&quot;&#x27; &gt;&gt; ~/.zshrc</span><br><span class="line">source ~/.zshrc</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-15-panel-1" aria-labelledby="tabs-15-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export HOMEBREW_API_DOMAIN=&quot;https://mirrors.aliyun.com/homebrew-bottles/api&quot;&#x27;</span> &gt;&gt; ~/.bash_profile</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export HOMEBREW_BREW_GIT_REMOTE=&quot;https://mirrors.aliyun.com/homebrew/brew.git&quot;&#x27;</span> &gt;&gt; ~/.bash_profile</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export HOMEBREW_CORE_GIT_REMOTE=&quot;https://mirrors.aliyun.com/homebrew/homebrew-core.git&quot;&#x27;</span> &gt;&gt; ~/.bash_profile</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export HOMEBREW_BOTTLE_DOMAIN=&quot;https://mirrors.aliyun.com/homebrew/homebrew-bottles&quot;&#x27;</span> &gt;&gt; ~/.bash_profile</span><br><span class="line"><span class="built_in">source</span> ~/.bash_profile</span><br></pre></td></tr></table></figure></section></div></div>
+
+<p>然后执行安装命令，从阿里云下载安装脚本并安装 Homebrew</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://mirrors.aliyun.com/homebrew/install.git brew-install</span><br><span class="line">/bin/bash brew-install/install.sh</span><br><span class="line"><span class="built_in">rm</span> -rf brew-install</span><br></pre></td></tr></table></figure>
+
+<p>也可从 GitHub 获取官方安装脚本安装 Homebrew </p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">/bin/bash -c <span class="string">&quot;<span class="subst">$(curl -fsSL https://github.com/Homebrew/install/raw/master/install.sh)</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>测试</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">brew -v</span><br></pre></td></tr></table></figure>
+
+<h2 id="Homebrew-使用介绍"><a href="#Homebrew-使用介绍" class="headerlink" title="Homebrew 使用介绍"></a>Homebrew 使用介绍</h2><h3 id="安装软件"><a href="#安装软件" class="headerlink" title="安装软件"></a>安装软件</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 搜索软件</span></span><br><span class="line">brew search mysql</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装默认版本</span></span><br><span class="line">brew install mysql</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装指定版本</span></span><br><span class="line">brew mysql mysql@5.7</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装桌面软件</span></span><br><span class="line">brew install --cask firefox</span><br></pre></td></tr></table></figure>
+
+<h3 id="软件管理"><a href="#软件管理" class="headerlink" title="软件管理"></a>软件管理</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查看已安装软件</span></span><br><span class="line">brew list</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看软件信息</span></span><br><span class="line">brew info mysql</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看软件安装路径</span></span><br><span class="line">brew list mysql</span><br><span class="line"></span><br><span class="line"><span class="comment"># 升级所有软件</span></span><br><span class="line">brew upgrade </span><br><span class="line"></span><br><span class="line"><span class="comment"># 升级指定软件</span></span><br><span class="line">brew upgrade wget </span><br><span class="line"></span><br><span class="line"><span class="comment"># 卸载软件</span></span><br><span class="line">brew uninstall wget</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="服务管理"><a href="#服务管理" class="headerlink" title="服务管理"></a>服务管理</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查看所有服务</span></span><br><span class="line">brew services list </span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看指定服务</span></span><br><span class="line">brew services info mysql</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动服务</span></span><br><span class="line">brew services start mysql </span><br><span class="line"></span><br><span class="line"><span class="comment"># 重启服务</span></span><br><span class="line">brew services restart mysql </span><br><span class="line"></span><br><span class="line"><span class="comment"># 停用服务</span></span><br><span class="line">brew services stop mysql </span><br><span class="line"></span><br><span class="line"><span class="comment"># 移除服务</span></span><br><span class="line">brew services remove mysql</span><br><span class="line"></span><br><span class="line"><span class="comment"># 移除所有未使用服务</span></span><br><span class="line">brew services cleanup</span><br></pre></td></tr></table></figure>
+
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 检查Homebrew</span></span><br><span class="line">brew doctor</span><br><span class="line"></span><br><span class="line"><span class="comment"># 升级Homebrew</span></span><br><span class="line">brew update</span><br></pre></td></tr></table></figure>
+
+<h3 id="卸载Homebrew"><a href="#卸载Homebrew" class="headerlink" title="卸载Homebrew"></a>卸载Homebrew</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">/bin/bash -c <span class="string">&quot;<span class="subst">$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/uninstall.sh)</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>参考： <a href="https://ken.io/note/macos-homebrew-install-and-configuration">在macOS上安装&amp;配置Homebrew</a></p>
+]]></content>
+      <categories>
+        <category>教程</category>
+      </categories>
+      <tags>
+        <tag>macOS</tag>
+        <tag>Homebrew</tag>
       </tags>
   </entry>
   <entry>
@@ -1456,6 +1456,119 @@
       </tags>
   </entry>
   <entry>
+    <title>OpenAI 发布两款高性能开源人工智能模型 GPT-OSS-20B 与 GPT-OSS-120B</title>
+    <url>/post/news-openai-releae-gpt-oss-model.html</url>
+    <content><![CDATA[<p><strong>旧金山 – 2025年8月6日</strong> – OpenAI今日宣布推出两款采用混合专家（MoE）架构的开源推理模型：<strong>GPT-OSS-120B</strong> 和 <strong>GPT-OSS-20B</strong> 。 </p>
+<p>这两款模型使用  Apache 2.0 开源许可证发布，允许开发者和研究人员免费使用、修改和分发。</p>
+<p>新模型专注于思维链（Chain-of-Thought）推理，旨在通过将复杂任务分解为更小的步骤来提升结果的准确性。根据 OpenAI 的基准测试，<strong>GPT-OSS-20B</strong> 的性能可与 <code>o4-mini</code> 相媲美，而 <strong>GPT-OSS-120B</strong> 的性能则与 <code>o3-mini</code> 相当。</p>
+<p>OpenAI CEO 萨姆·奥尔特曼表示：</p>
+<blockquote>
+<p>“我们很高兴能将这些模型交到全世界更多人的手中。它们不会取代现有的GPT模型，而是作为一种补充，推动人工智能领域的创新与协作。”</p>
+</blockquote>
+<p>此次发布的一大亮点是其在本地设备上的运行能力。GPT-OSS-20B 等较小尺寸的模型经过优化，可在笔记本电脑甚至智能手机上高效运行。在 M4 芯片的 MacBook 上，20B 模型的推理速度可达每秒30-40个token。</p>
+<p><strong>相关链接:</strong></p>
+<ul>
+<li><strong>模型信息:</strong> <a href="https://openai.com/zh-Hans-CN/open-models/">https://openai.com/zh-Hans-CN/open-models/</a></li>
+<li><strong>模型下载:</strong> <a href="https://huggingface.co/openai">https://huggingface.co/openai</a></li>
+</ul>
+<p><strong>本地运行 GPT-OSS-20B</strong><br><a href="https://ollama.com/download">ollama</a> 上 GPT-OSS-20B 模型大小为 14GB ，一键运行命令如下：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">ollama run gpt-oss:20b </span><br></pre></td></tr></table></figure>
+
+<p>图形界面则可以使用 <a href="https://lmstudio.ai/">LM Studio</a></p>
+<p><img src="https://img.nep.me/i/2025/08/06/lmstudio-run-gpt-oss-20b.webp" alt="LM Studio run GPT-OSS-20B"></p>
+]]></content>
+      <categories>
+        <category>资讯</category>
+      </categories>
+      <tags>
+        <tag>AI</tag>
+        <tag>大模型</tag>
+        <tag>OpenAI</tag>
+        <tag>开源</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>OpenAI 发布 GPT-5，新一代人工智能模型正式亮相</title>
+    <url>/post/news-openai-released-gpt-5.html</url>
+    <content><![CDATA[<p><strong>2025 年 8 月 7 日</strong> — OpenAI 正式推出最新旗舰级人工智能模型 <strong>GPT-5</strong>，即日起面向 ChatGPT 用户与开发者开放。该模型在推理、编程与创意生成等方面全面升级，Open AI 称之为迄今最强的通用 AI 模型之一。</p>
+<h2 id="更新"><a href="#更新" class="headerlink" title="更新"></a>更新</h2><blockquote>
+<p>ChatGPT Plus 用户可以选择 GPT-5 Auto、Fast、或是 Thinking 模型，4o 模型重新开放给付费用户，Thinking 模型额度为每周 3000 次<br>2025.08.12 by <a href="https://x.com/sama/status/1955438916645130740">Sam Altman @ x.com</a></p>
+</blockquote>
+<blockquote>
+<p>ChatGPT Plus 中 GPT-5 Thinking 模型上下文为 196k<br>2025.08.12 by <a href="https://x.com/yanndubs/status/1955194413283737716">Yann Dubois @ x.com</a></p>
+</blockquote>
+<h2 id="亮点概览"><a href="#亮点概览" class="headerlink" title="亮点概览"></a>亮点概览</h2><ul>
+<li><p><strong>多版本可选</strong>  </p>
+<ul>
+<li><strong>GPT-5</strong>（标准版）  </li>
+<li><strong>GPT-5 mini</strong>（轻量版，成本更低）  </li>
+<li><strong>GPT-5 nano</strong>（极速低延迟）<br>自动路由系统会根据任务复杂度智能切换模型。</li>
+</ul>
+</li>
+<li><p><strong>推理与编程能力大幅提升</strong>  </p>
+<ul>
+<li>SWE-Bench 测试得分 <strong>74.9%</strong> ，Aider Polyglot 达 <strong>88%</strong> 。  </li>
+<li>一条指令可生成完整网页、游戏或应用原型。</li>
+</ul>
+</li>
+<li><p><strong>更强的多模态能力</strong><br>支持更大上下文窗口、文本与视觉输入，输出效率更高，在 API 中，所有 GPT‑5 模型最多可接受 272,000 个输入令牌，并生成最多 128,000 个推理及输出令牌，总上下文长度为 <strong>40 万</strong> 令牌。</p>
+</li>
+<li><p><strong>全面接入生态</strong><br>除了 OpenAI 自己的平台，已集成至 <strong>Microsoft 365 Copilot、GitHub Copilot、VS Code、Azure AI Foundry</strong> 等平台。<br>覆盖全球约 <strong>7 亿 ChatGPT 用户</strong>。</p>
+</li>
+</ul>
+<h2 id="API-价格"><a href="#API-价格" class="headerlink" title="API 价格"></a>API 价格</h2><p>标准（standard）模式下，每 1 百万 Token 价格为：</p>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Input</th>
+<th>Cached input</th>
+<th>Output</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>gpt-5</td>
+<td>$1.25</td>
+<td>$0.125</td>
+<td>$10.00</td>
+</tr>
+<tr>
+<td>gpt-5-mini</td>
+<td>$0.25</td>
+<td>$0.025</td>
+<td>$2.00</td>
+</tr>
+<tr>
+<td>gpt-5-nano</td>
+<td>$0.05</td>
+<td>$0.005</td>
+<td>$0.40</td>
+</tr>
+</tbody></table>
+<ul>
+<li>Priority 模式下（响应更快，优先级更高），价格 <strong>翻倍</strong></li>
+<li>Flex 模式下（延迟更高），价格 <strong>减半</strong></li>
+</ul>
+<h2 id="官方立场"><a href="#官方立场" class="headerlink" title="官方立场"></a>官方立场</h2><ul>
+<li>OpenAI CEO <strong>Sam Altman</strong> 称 GPT-5 “像与 PhD 级专家对话”，体验过后“很难回到旧模型”。</li>
+<li>虽性能显著提升，但 OpenAI 表示 GPT-5 <strong>尚非 AGI</strong>，不具备自主学习能力。</li>
+<li>持续改进安全性与一致性，减少幻觉输出。</li>
+</ul>
+<h2 id="发布意义与未来展望"><a href="#发布意义与未来展望" class="headerlink" title="发布意义与未来展望"></a>发布意义与未来展望</h2><p>对于开发者而言，其自动模型路由、多规格 API 带来更低的成本和更高的智能，意味着创新门槛被大幅降低；对于企业，它将深度赋能产品研发、客户服务和战略决策；对于普通用户，它将带来远超想象的个性化智能体验。</p>
+<p>也许 GPT-5 的问世，将是 AI 发展史上的一个重要里程碑，意味着 AI 正从“提供信息的工具”转变为“解决问题的伙伴”。</p>
+<hr>
+<p>来源 <a href="https://openai.com/index/introducing-gpt-5/">openai.com - Introducing GPT-5</a></p>
+]]></content>
+      <categories>
+        <category>资讯</category>
+      </categories>
+      <tags>
+        <tag>AI</tag>
+        <tag>大模型</tag>
+        <tag>OpenAI</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>普通人掘金互联网：独立开发起步指南</title>
     <url>/post/how-to-make-money-from-internet.html</url>
     <content><![CDATA[<p>你是否也曾羡慕那些在社交媒体上“透明化”分享收入、靠个人项目实现财务自由的独立开发者？看到他们动辄上千美金的月收入，你或许会觉得那是一个难以达成的目标。</p>
@@ -1592,119 +1705,6 @@
       </tags>
   </entry>
   <entry>
-    <title>OpenAI 发布两款高性能开源人工智能模型 GPT-OSS-20B 与 GPT-OSS-120B</title>
-    <url>/post/news-openai-releae-gpt-oss-model.html</url>
-    <content><![CDATA[<p><strong>旧金山 – 2025年8月6日</strong> – OpenAI今日宣布推出两款采用混合专家（MoE）架构的开源推理模型：<strong>GPT-OSS-120B</strong> 和 <strong>GPT-OSS-20B</strong> 。 </p>
-<p>这两款模型使用  Apache 2.0 开源许可证发布，允许开发者和研究人员免费使用、修改和分发。</p>
-<p>新模型专注于思维链（Chain-of-Thought）推理，旨在通过将复杂任务分解为更小的步骤来提升结果的准确性。根据 OpenAI 的基准测试，<strong>GPT-OSS-20B</strong> 的性能可与 <code>o4-mini</code> 相媲美，而 <strong>GPT-OSS-120B</strong> 的性能则与 <code>o3-mini</code> 相当。</p>
-<p>OpenAI CEO 萨姆·奥尔特曼表示：</p>
-<blockquote>
-<p>“我们很高兴能将这些模型交到全世界更多人的手中。它们不会取代现有的GPT模型，而是作为一种补充，推动人工智能领域的创新与协作。”</p>
-</blockquote>
-<p>此次发布的一大亮点是其在本地设备上的运行能力。GPT-OSS-20B 等较小尺寸的模型经过优化，可在笔记本电脑甚至智能手机上高效运行。在 M4 芯片的 MacBook 上，20B 模型的推理速度可达每秒30-40个token。</p>
-<p><strong>相关链接:</strong></p>
-<ul>
-<li><strong>模型信息:</strong> <a href="https://openai.com/zh-Hans-CN/open-models/">https://openai.com/zh-Hans-CN/open-models/</a></li>
-<li><strong>模型下载:</strong> <a href="https://huggingface.co/openai">https://huggingface.co/openai</a></li>
-</ul>
-<p><strong>本地运行 GPT-OSS-20B</strong><br><a href="https://ollama.com/download">ollama</a> 上 GPT-OSS-20B 模型大小为 14GB ，一键运行命令如下：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">ollama run gpt-oss:20b </span><br></pre></td></tr></table></figure>
-
-<p>图形界面则可以使用 <a href="https://lmstudio.ai/">LM Studio</a></p>
-<p><img src="https://img.nep.me/i/2025/08/06/lmstudio-run-gpt-oss-20b.webp" alt="LM Studio run GPT-OSS-20B"></p>
-]]></content>
-      <categories>
-        <category>资讯</category>
-      </categories>
-      <tags>
-        <tag>AI</tag>
-        <tag>大模型</tag>
-        <tag>OpenAI</tag>
-        <tag>开源</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>OpenAI 发布 GPT-5，新一代人工智能模型正式亮相</title>
-    <url>/post/news-openai-released-gpt-5.html</url>
-    <content><![CDATA[<p><strong>2025 年 8 月 7 日</strong> — OpenAI 正式推出最新旗舰级人工智能模型 <strong>GPT-5</strong>，即日起面向 ChatGPT 用户与开发者开放。该模型在推理、编程与创意生成等方面全面升级，Open AI 称之为迄今最强的通用 AI 模型之一。</p>
-<h2 id="更新"><a href="#更新" class="headerlink" title="更新"></a>更新</h2><blockquote>
-<p>ChatGPT Plus 用户可以选择 GPT-5 Auto、Fast、或是 Thinking 模型，4o 模型重新开放给付费用户，Thinking 模型额度为每周 3000 次<br>2025.08.12 by <a href="https://x.com/sama/status/1955438916645130740">Sam Altman @ x.com</a></p>
-</blockquote>
-<blockquote>
-<p>ChatGPT Plus 中 GPT-5 Thinking 模型上下文为 196k<br>2025.08.12 by <a href="https://x.com/yanndubs/status/1955194413283737716">Yann Dubois @ x.com</a></p>
-</blockquote>
-<h2 id="亮点概览"><a href="#亮点概览" class="headerlink" title="亮点概览"></a>亮点概览</h2><ul>
-<li><p><strong>多版本可选</strong>  </p>
-<ul>
-<li><strong>GPT-5</strong>（标准版）  </li>
-<li><strong>GPT-5 mini</strong>（轻量版，成本更低）  </li>
-<li><strong>GPT-5 nano</strong>（极速低延迟）<br>自动路由系统会根据任务复杂度智能切换模型。</li>
-</ul>
-</li>
-<li><p><strong>推理与编程能力大幅提升</strong>  </p>
-<ul>
-<li>SWE-Bench 测试得分 <strong>74.9%</strong> ，Aider Polyglot 达 <strong>88%</strong> 。  </li>
-<li>一条指令可生成完整网页、游戏或应用原型。</li>
-</ul>
-</li>
-<li><p><strong>更强的多模态能力</strong><br>支持更大上下文窗口、文本与视觉输入，输出效率更高，在 API 中，所有 GPT‑5 模型最多可接受 272,000 个输入令牌，并生成最多 128,000 个推理及输出令牌，总上下文长度为 <strong>40 万</strong> 令牌。</p>
-</li>
-<li><p><strong>全面接入生态</strong><br>除了 OpenAI 自己的平台，已集成至 <strong>Microsoft 365 Copilot、GitHub Copilot、VS Code、Azure AI Foundry</strong> 等平台。<br>覆盖全球约 <strong>7 亿 ChatGPT 用户</strong>。</p>
-</li>
-</ul>
-<h2 id="API-价格"><a href="#API-价格" class="headerlink" title="API 价格"></a>API 价格</h2><p>标准（standard）模式下，每 1 百万 Token 价格为：</p>
-<table>
-<thead>
-<tr>
-<th>Model</th>
-<th>Input</th>
-<th>Cached input</th>
-<th>Output</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>gpt-5</td>
-<td>$1.25</td>
-<td>$0.125</td>
-<td>$10.00</td>
-</tr>
-<tr>
-<td>gpt-5-mini</td>
-<td>$0.25</td>
-<td>$0.025</td>
-<td>$2.00</td>
-</tr>
-<tr>
-<td>gpt-5-nano</td>
-<td>$0.05</td>
-<td>$0.005</td>
-<td>$0.40</td>
-</tr>
-</tbody></table>
-<ul>
-<li>Priority 模式下（响应更快，优先级更高），价格 <strong>翻倍</strong></li>
-<li>Flex 模式下（延迟更高），价格 <strong>减半</strong></li>
-</ul>
-<h2 id="官方立场"><a href="#官方立场" class="headerlink" title="官方立场"></a>官方立场</h2><ul>
-<li>OpenAI CEO <strong>Sam Altman</strong> 称 GPT-5 “像与 PhD 级专家对话”，体验过后“很难回到旧模型”。</li>
-<li>虽性能显著提升，但 OpenAI 表示 GPT-5 <strong>尚非 AGI</strong>，不具备自主学习能力。</li>
-<li>持续改进安全性与一致性，减少幻觉输出。</li>
-</ul>
-<h2 id="发布意义与未来展望"><a href="#发布意义与未来展望" class="headerlink" title="发布意义与未来展望"></a>发布意义与未来展望</h2><p>对于开发者而言，其自动模型路由、多规格 API 带来更低的成本和更高的智能，意味着创新门槛被大幅降低；对于企业，它将深度赋能产品研发、客户服务和战略决策；对于普通用户，它将带来远超想象的个性化智能体验。</p>
-<p>也许 GPT-5 的问世，将是 AI 发展史上的一个重要里程碑，意味着 AI 正从“提供信息的工具”转变为“解决问题的伙伴”。</p>
-<hr>
-<p>来源 <a href="https://openai.com/index/introducing-gpt-5/">openai.com - Introducing GPT-5</a></p>
-]]></content>
-      <categories>
-        <category>资讯</category>
-      </categories>
-      <tags>
-        <tag>AI</tag>
-        <tag>大模型</tag>
-        <tag>OpenAI</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>OpenAI Codex CLI 现已支持使用 ChatGPT 账户登录，默认模型 GPT-5</title>
     <url>/post/openai-codex-support-login-by-chatgpt-plus.html</url>
     <content><![CDATA[<p>Claude 的终端编程助手 Claude Code 越来越火，Google 的 Gemini CLI 也凭借免费额度占领一定的市场份额，这种事情怎么能少了当今 AI 的领头羊 OpenAI 的身影。<br>如今，在 OpenAI 发布 GPT-5 后，Codex CLI 终于支持使用 ChatGPT 账户（Plus &#x2F; Pro）直接登录，并将默认模型切换为 GPT-5。</p>
@@ -1810,6 +1810,50 @@
         <tag>AI</tag>
         <tag>图像生成</tag>
         <tag>Nano Banana</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用 ccusage 查看 Claude Code 用量</title>
+    <url>/post/use-ccusage-check-claude-code-cost.html</url>
+    <content><![CDATA[<p>如果你是通过 Claude Pro 或是 Max 订阅使用的 Claude Code，通过 <code>/cost</code> 会得到无需关注消耗的提示   </p>
+<blockquote>
+<p>With your Claude Pro subscription, no need to monitor cost — your subscription includes Claude Code usage</p>
+</blockquote>
+<p>不过如果你好奇 Claude Code 的实际用量，比如可以确认自己有没有用回本，是否不如直接使用 API。</p>
+<p>这时就可以使用 <a href="https://github.com/ryoppippi/ccusage">ccusage</a> 这个项目。</p>
+<p><strong>ccusage</strong> 是通过读取你本地的 <code>~/.claude/projects</code>  下的文件来完成分析的，只能统计本机的使用报告，可以放心使用。</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p><code>ccusage</code> 的开发者们非常关注打包体积，因此可以不安装直接通过 <code>npx</code> 或是 <code>pnpm</code> 运行</p>
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-16-tab-0" aria-controls="tabs-16-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">npx</button><button type="button" role="tab" id="tabs-16-tab-1" aria-controls="tabs-16-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">pnpm</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-16-panel-0" aria-labelledby="tabs-16-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npx ccusage@latest</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-16-panel-1" aria-labelledby="tabs-16-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pnpm dlx ccusage</span><br></pre></td></tr></table></figure></section></div></div>
+
+
+<p>当然也是支持直接全局安装的，这样在使用时只需要运行 <code>ccusage</code> 即可</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># npm</span></span><br><span class="line">npm install -g ccusage</span><br><span class="line"></span><br><span class="line"><span class="comment"># pnpm</span></span><br><span class="line">pnpm add -g ccusage </span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h2><p>直接运行 <code>ccusage</code> 可以查看每日的使用报告<br><img src="https://img.nep.me/i/2025/08/17/ccusage-reports.webp" alt="ccusage-reports"> </p>
+<blockquote>
+<p>懈怠了，要亏本了（</p>
+</blockquote>
+<p><code>ccusage -i</code> 还可以显示不同项目的使用报告</p>
+<p>更多用法：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查看每日报告</span></span><br><span class="line">ccusage </span><br><span class="line">ccusage daily</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看每周报告</span></span><br><span class="line">ccusage weekly</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看每月报告</span></span><br><span class="line">ccusage monthly</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看不同会话的报告</span></span><br><span class="line">ccusage session</span><br><span class="line"></span><br><span class="line"><span class="comment"># 按每 5 小时计费窗口进行查看</span></span><br><span class="line">ccusage blocks</span><br><span class="line"></span><br><span class="line"><span class="comment"># 实时监控</span></span><br><span class="line">ccusage blocks --live</span><br></pre></td></tr></table></figure>
+
+<h2 id="将-ccusage-添加到-Claude-Code-的状态栏中"><a href="#将-ccusage-添加到-Claude-Code-的状态栏中" class="headerlink" title="将 ccusage 添加到 Claude Code 的状态栏中"></a>将 ccusage 添加到 Claude Code 的状态栏中</h2><p>如果希望在使用 Claude Code 时可以实时查看消耗报告，则可以直接在 Claude Code 中进行配置</p>
+<p>使用编辑器打开 <code>~/.claude/settings.json</code> ，在其中添加如下代码，即可实现在状态栏中实时展示消耗情况。</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="attr">&quot;statusLine&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;command&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;command&quot;</span><span class="punctuation">:</span> <span class="string">&quot;npx ccusage statusline&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>~/.claude/settings.json</code> 是 Claude 的全局设置，默认是没有创建的，如果没有其他配置，则完整文件如下</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;statusLine&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;command&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;command&quot;</span><span class="punctuation">:</span> <span class="string">&quot;npx ccusage statusline&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>然后重新打开 Claude Code ，显示效果如下<br><img src="https://img.nep.me/i/2025/08/17/ccusage-in-cc.webp" alt="ccusage-in-cc"></p>
+<p>如果你也对使用 Claude Code 的实际消耗比较感兴趣，现在就安装试试吧。</p>
+]]></content>
+      <categories>
+        <category>教程</category>
+      </categories>
+      <tags>
+        <tag>Claude Code</tag>
       </tags>
   </entry>
   <entry>
@@ -1925,50 +1969,6 @@
         <tag>Self-hosted</tag>
         <tag>Bitwarden</tag>
         <tag>密码管理器</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>使用 ccusage 查看 Claude Code 用量</title>
-    <url>/post/use-ccusage-check-claude-code-cost.html</url>
-    <content><![CDATA[<p>如果你是通过 Claude Pro 或是 Max 订阅使用的 Claude Code，通过 <code>/cost</code> 会得到无需关注消耗的提示   </p>
-<blockquote>
-<p>With your Claude Pro subscription, no need to monitor cost — your subscription includes Claude Code usage</p>
-</blockquote>
-<p>不过如果你好奇 Claude Code 的实际用量，比如可以确认自己有没有用回本，是否不如直接使用 API。</p>
-<p>这时就可以使用 <a href="https://github.com/ryoppippi/ccusage">ccusage</a> 这个项目。</p>
-<p><strong>ccusage</strong> 是通过读取你本地的 <code>~/.claude/projects</code>  下的文件来完成分析的，只能统计本机的使用报告，可以放心使用。</p>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p><code>ccusage</code> 的开发者们非常关注打包体积，因此可以不安装直接通过 <code>npx</code> 或是 <code>pnpm</code> 运行</p>
-<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-16-tab-0" aria-controls="tabs-16-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">npx</button><button type="button" role="tab" id="tabs-16-tab-1" aria-controls="tabs-16-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">pnpm</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-16-panel-0" aria-labelledby="tabs-16-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npx ccusage@latest</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-16-panel-1" aria-labelledby="tabs-16-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pnpm dlx ccusage</span><br></pre></td></tr></table></figure></section></div></div>
-
-
-<p>当然也是支持直接全局安装的，这样在使用时只需要运行 <code>ccusage</code> 即可</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># npm</span></span><br><span class="line">npm install -g ccusage</span><br><span class="line"></span><br><span class="line"><span class="comment"># pnpm</span></span><br><span class="line">pnpm add -g ccusage </span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h2><p>直接运行 <code>ccusage</code> 可以查看每日的使用报告<br><img src="https://img.nep.me/i/2025/08/17/ccusage-reports.webp" alt="ccusage-reports"> </p>
-<blockquote>
-<p>懈怠了，要亏本了（</p>
-</blockquote>
-<p><code>ccusage -i</code> 还可以显示不同项目的使用报告</p>
-<p>更多用法：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查看每日报告</span></span><br><span class="line">ccusage </span><br><span class="line">ccusage daily</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看每周报告</span></span><br><span class="line">ccusage weekly</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看每月报告</span></span><br><span class="line">ccusage monthly</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看不同会话的报告</span></span><br><span class="line">ccusage session</span><br><span class="line"></span><br><span class="line"><span class="comment"># 按每 5 小时计费窗口进行查看</span></span><br><span class="line">ccusage blocks</span><br><span class="line"></span><br><span class="line"><span class="comment"># 实时监控</span></span><br><span class="line">ccusage blocks --live</span><br></pre></td></tr></table></figure>
-
-<h2 id="将-ccusage-添加到-Claude-Code-的状态栏中"><a href="#将-ccusage-添加到-Claude-Code-的状态栏中" class="headerlink" title="将 ccusage 添加到 Claude Code 的状态栏中"></a>将 ccusage 添加到 Claude Code 的状态栏中</h2><p>如果希望在使用 Claude Code 时可以实时查看消耗报告，则可以直接在 Claude Code 中进行配置</p>
-<p>使用编辑器打开 <code>~/.claude/settings.json</code> ，在其中添加如下代码，即可实现在状态栏中实时展示消耗情况。</p>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="attr">&quot;statusLine&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;command&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;command&quot;</span><span class="punctuation">:</span> <span class="string">&quot;npx ccusage statusline&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
-
-<p><code>~/.claude/settings.json</code> 是 Claude 的全局设置，默认是没有创建的，如果没有其他配置，则完整文件如下</p>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;statusLine&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;command&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;command&quot;</span><span class="punctuation">:</span> <span class="string">&quot;npx ccusage statusline&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
-
-<p>然后重新打开 Claude Code ，显示效果如下<br><img src="https://img.nep.me/i/2025/08/17/ccusage-in-cc.webp" alt="ccusage-in-cc"></p>
-<p>如果你也对使用 Claude Code 的实际消耗比较感兴趣，现在就安装试试吧。</p>
-]]></content>
-      <categories>
-        <category>教程</category>
-      </categories>
-      <tags>
-        <tag>Claude Code</tag>
       </tags>
   </entry>
   <entry>
@@ -2598,6 +2598,56 @@
       </tags>
   </entry>
   <entry>
+    <title>实用网站：使用 Dashboard Icons 便捷获取各种服务的图标</title>
+    <url>/post/website-dashboard-icons.html</url>
+    <content><![CDATA[<p>有时我们会需要获取一些服务的图标，用在一些面板或是需要的地方，这里推荐一个开源的项目 <strong>Dashboard Icons</strong> ：</p>
+<ul>
+<li><a href="https://github.com/homarr-labs/dashboard-icons">GitHub</a> </li>
+<li><a href="https://dashboardicons.com/">官网</a></li>
+</ul>
+<p>目前已经支持 2021 种服务了，而且完全免费！</p>
+<p>图标的列表可以在这里查看： <a href="https://dashboardicons.com/icons">https://dashboardicons.com/icons</a></p>
+<p><img src="https://img.nep.me/ooo/dashboard-icons-list.webp" alt="dashboard icons list"></p>
+<p>支持直接下载 <code>svg</code> 、 <code>png</code> 、 <code>webp</code> 格式的图标文件，也可以直接复制 <code>cdn.jsdelivr.net</code> CDN 的图标链接，非常的方便。</p>
+<p>部分服务还提供暗黑主题模式的图标。  </p>
+<p><img src="https://img.nep.me/ooo/dashboard-icons-details.webp" alt="dasboard icons get icons"></p>
+<p>这是一个开源的项目，如果觉得有帮助可以给项目点点 Star 支持一下！</p>
+]]></content>
+      <categories>
+        <category>工具资源</category>
+      </categories>
+      <tags>
+        <tag>Icons</tag>
+        <tag>Dashboard Icons</tag>
+        <tag>实用网站</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>趣站分享：Flolife.me —— 基于 AI 的人生旅程模拟器</title>
+    <url>/post/website-flolife.html</url>
+    <content><![CDATA[<p>还记得曾经风靡一时的人生重开模拟器吗？现在，Flowith 带来了一款更进一步的 AI 人生旅程模拟器 —— Flolife.me。它利用当前热门的 Nano Banana 图片模型，能够根据你上传的头像，生成贯穿角色一生的、具有惊人一致性的事件照片。</p>
+<p>整个过程完全免费，无需注册登录，体验非常流畅。访问 <a href="https://flolife.me/">Flolife.me</a> 后，只需点击 <code>一键开始测试</code> 按钮，即可开启你的人生模拟之旅。<br><img src="https://img.nep.me/i/2025/09/03/flolife-homepage.webp" style="width:75%;" alt="flolife-homepage" /></p>
+<p>首先是角色创建环节。在这里，你需要输入角色的姓名、性别、出生地，并分配总共 24 点的初始属性。</p>
+<p>我们的 “小明”智利超群也拥有比较 “健康” 的体魄，至于其他属性就顾不上了。<br><img src="https://img.nep.me/i/2025/09/03/flolife-step-1.webp" style="width:75%;" alt="flolife-step-1" /></p>
+<p>接下来，你可以选择上传一张头像，并为你的角色添加性格和爱好的描述，以获得更具个性化的体验。当然，这两个步骤都是可选的。<br><img src="https://img.nep.me/i/2025/09/03/flolife-step-2.webp" style="width:75%;" alt="flolife-step-2" /></p>
+<p>完成设置后，点击 <strong>开始旅程</strong>，小明的人生故事就此展开！</p>
+<p>在小明的人生旅程中，AI 会在关键节点生成独特的照片，记录下那些重要瞬间。</p>
+<p>或是小明的一次选择，又或是一次意外的变故，都可能将故事引向截然不同的结局，而这都会显示旅程模拟器之中。</p>
+<img src="https://img.nep.me/i/2025/09/03/flolife-journey.webp" style="width:75%;" alt="flolife-journey" />
+
+<p>旅程结束后，你还可以点击右上角的分享按钮，挑选五个关键事件，生成一份精美的人生报告，回顾一生中的亮点。<br><img src="https://img.nep.me/i/2025/09/03/flolife-report.webp" alt="flolife-report"></p>
+<p>是不是很有趣？马上访问 <a href="https://flolife.me/">Flolife.me</a>，开启一段模拟的人生旅程吧！</p>
+]]></content>
+      <categories>
+        <category>工具资源</category>
+      </categories>
+      <tags>
+        <tag>AI</tag>
+        <tag>趣味网站</tag>
+        <tag>Flowith</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Git 技巧：为不同项目配置专属用户信息与 SSH 密钥</title>
     <url>/post/use-specific-git-user.html</url>
     <content><![CDATA[<p>在日常开发中，我们可能需要同时维护个人项目和工作项目，它们需要使用不同的 Git 用户信息（用户名、邮箱）和 SSH 密钥进行提交与推送。本文将介绍两种核心方法，帮你优雅地管理多个 Git 身份。</p>
@@ -2658,56 +2708,6 @@
       </tags>
   </entry>
   <entry>
-    <title>实用网站：使用 Dashboard Icons 便捷获取各种服务的图标</title>
-    <url>/post/website-dashboard-icons.html</url>
-    <content><![CDATA[<p>有时我们会需要获取一些服务的图标，用在一些面板或是需要的地方，这里推荐一个开源的项目 <strong>Dashboard Icons</strong> ：</p>
-<ul>
-<li><a href="https://github.com/homarr-labs/dashboard-icons">GitHub</a> </li>
-<li><a href="https://dashboardicons.com/">官网</a></li>
-</ul>
-<p>目前已经支持 2021 种服务了，而且完全免费！</p>
-<p>图标的列表可以在这里查看： <a href="https://dashboardicons.com/icons">https://dashboardicons.com/icons</a></p>
-<p><img src="https://img.nep.me/ooo/dashboard-icons-list.webp" alt="dashboard icons list"></p>
-<p>支持直接下载 <code>svg</code> 、 <code>png</code> 、 <code>webp</code> 格式的图标文件，也可以直接复制 <code>cdn.jsdelivr.net</code> CDN 的图标链接，非常的方便。</p>
-<p>部分服务还提供暗黑主题模式的图标。  </p>
-<p><img src="https://img.nep.me/ooo/dashboard-icons-details.webp" alt="dasboard icons get icons"></p>
-<p>这是一个开源的项目，如果觉得有帮助可以给项目点点 Star 支持一下！</p>
-]]></content>
-      <categories>
-        <category>工具资源</category>
-      </categories>
-      <tags>
-        <tag>Icons</tag>
-        <tag>Dashboard Icons</tag>
-        <tag>实用网站</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>趣站分享：Flolife.me —— 基于 AI 的人生旅程模拟器</title>
-    <url>/post/website-flolife.html</url>
-    <content><![CDATA[<p>还记得曾经风靡一时的人生重开模拟器吗？现在，Flowith 带来了一款更进一步的 AI 人生旅程模拟器 —— Flolife.me。它利用当前热门的 Nano Banana 图片模型，能够根据你上传的头像，生成贯穿角色一生的、具有惊人一致性的事件照片。</p>
-<p>整个过程完全免费，无需注册登录，体验非常流畅。访问 <a href="https://flolife.me/">Flolife.me</a> 后，只需点击 <code>一键开始测试</code> 按钮，即可开启你的人生模拟之旅。<br><img src="https://img.nep.me/i/2025/09/03/flolife-homepage.webp" style="width:75%;" alt="flolife-homepage" /></p>
-<p>首先是角色创建环节。在这里，你需要输入角色的姓名、性别、出生地，并分配总共 24 点的初始属性。</p>
-<p>我们的 “小明”智利超群也拥有比较 “健康” 的体魄，至于其他属性就顾不上了。<br><img src="https://img.nep.me/i/2025/09/03/flolife-step-1.webp" style="width:75%;" alt="flolife-step-1" /></p>
-<p>接下来，你可以选择上传一张头像，并为你的角色添加性格和爱好的描述，以获得更具个性化的体验。当然，这两个步骤都是可选的。<br><img src="https://img.nep.me/i/2025/09/03/flolife-step-2.webp" style="width:75%;" alt="flolife-step-2" /></p>
-<p>完成设置后，点击 <strong>开始旅程</strong>，小明的人生故事就此展开！</p>
-<p>在小明的人生旅程中，AI 会在关键节点生成独特的照片，记录下那些重要瞬间。</p>
-<p>或是小明的一次选择，又或是一次意外的变故，都可能将故事引向截然不同的结局，而这都会显示旅程模拟器之中。</p>
-<img src="https://img.nep.me/i/2025/09/03/flolife-journey.webp" style="width:75%;" alt="flolife-journey" />
-
-<p>旅程结束后，你还可以点击右上角的分享按钮，挑选五个关键事件，生成一份精美的人生报告，回顾一生中的亮点。<br><img src="https://img.nep.me/i/2025/09/03/flolife-report.webp" alt="flolife-report"></p>
-<p>是不是很有趣？马上访问 <a href="https://flolife.me/">Flolife.me</a>，开启一段模拟的人生旅程吧！</p>
-]]></content>
-      <categories>
-        <category>工具资源</category>
-      </categories>
-      <tags>
-        <tag>AI</tag>
-        <tag>趣味网站</tag>
-        <tag>Flowith</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>实用网站：Linux Journey —— 从新手到高手的 Linux 学习之路</title>
     <url>/post/website-linux-journey.html</url>
     <content><![CDATA[<p>如果你是一位 Self-Hosted 爱好者，那么掌握 Linux 知识是必备技能。然而，许多初学者常常面临不知从何学起、网上教程零散、缺乏系统性等问题。</p>
@@ -2738,6 +2738,37 @@
       <tags>
         <tag>Linux</tag>
         <tag>实用网站</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>实用网站：Photopea —— 浏览器中的 Photoshop</title>
+    <url>/post/website-photopea-com.html</url>
+    <content><![CDATA[<p>你是否遇到过以下情况：</p>
+<ul>
+<li>出差时需要紧急修改客户的 PSD 文件</li>
+<li>电脑上没有安装 Photoshop，但需要处理复杂图片</li>
+<li>想要体验专业图片编辑功能，但不想付费购买软件</li>
+</ul>
+<p><a href="https://www.photopea.com/">Photopea.com</a> 正是为解决这些问题而生的免费在线图片编辑器。它在浏览器中提供了接近 Photoshop 的专业编辑体验，支持 PSD、AI、Sketch 等多种专业格式。</p>
+<p><strong>快速上手：</strong> 访问网站后，将图片文件直接拖放到浏览器窗口即可开始编辑。</p>
+<p><img src="https://img.nep.me/i/2025/08/18/photopea-preview.webp" alt="photopea-preview"></p>
+<h3 id="Photopea-的主要功能"><a href="#Photopea-的主要功能" class="headerlink" title="Photopea 的主要功能"></a>Photopea 的主要功能</h3><p><strong>1. 支持多种文件格式</strong><br>Photopea 的一个主要优点是它的兼容性。除了常规的图片格式，它还支持打开和编辑 <code>.psd</code>, <code>.ai</code>, <code>.sketch</code>, <code>.raw</code> 等专业格式的文件。这对于临时处理工作文件非常方便。</p>
+<p><strong>2. 熟悉的编辑界面</strong><br>Photopea 的界面和操作方式与 Photoshop 很像，如果你用过 PS，会感觉非常熟悉。它提供了 <strong>图层</strong> 、<strong>滤镜</strong> 等核心编辑功能，可以满足大部分日常的编辑需求。</p>
+<p><strong>3. 提供免费模版</strong><br>网站还提供了一些免费的设计模版，涵盖海报、社交媒体图片等，可以帮助你快速开始创作。</p>
+<p><strong>4. 支持 AI 图片生成</strong><br>除了传统的图片编辑功能，Photopea 还支持一句话生成图片，仍然是免费功能，非常适合体验一下。 </p>
+<p><strong>5. 隐私安全</strong><br>Photopea 默认文件处理都在浏览器本地完成，不会上传到服务器，网页加载完全后，甚至可以离线使用。</p>
+<h3 id="关于广告"><a href="#关于广告" class="headerlink" title="关于广告"></a>关于广告</h3><p>作为一个免费工具，Photopea 的在界面右侧添加了 Google 广告。考虑到它提供的免费功能，这点广告通常是可以接受的。网站的访问量很大，也说明它受到了全球用户的广泛认可。</p>
+<p><img src="https://img.nep.me/i/2025/08/18/photopea-traffic.webp" alt="photopea-traffic"></p>
+<p>简单来说，Photopea 是一个非常实用的在线工具。它免费、免安装，并且支持多种文件格式。</p>
+<p>如果你偶尔需要编辑图片，或者临时需要处理 PSD 这样的文件，Photopea 是一个非常值得收藏的网站，不妨现在加个书签，以备不时之需。</p>
+]]></content>
+      <categories>
+        <category>工具资源</category>
+      </categories>
+      <tags>
+        <tag>实用网站</tag>
+        <tag>图片编辑</tag>
+        <tag>Photopea</tag>
       </tags>
   </entry>
   <entry>
@@ -2772,37 +2803,6 @@
         <tag>AI</tag>
         <tag>实用网站</tag>
         <tag>OpenRouter</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>实用网站：Photopea —— 浏览器中的 Photoshop</title>
-    <url>/post/website-photopea-com.html</url>
-    <content><![CDATA[<p>你是否遇到过以下情况：</p>
-<ul>
-<li>出差时需要紧急修改客户的 PSD 文件</li>
-<li>电脑上没有安装 Photoshop，但需要处理复杂图片</li>
-<li>想要体验专业图片编辑功能，但不想付费购买软件</li>
-</ul>
-<p><a href="https://www.photopea.com/">Photopea.com</a> 正是为解决这些问题而生的免费在线图片编辑器。它在浏览器中提供了接近 Photoshop 的专业编辑体验，支持 PSD、AI、Sketch 等多种专业格式。</p>
-<p><strong>快速上手：</strong> 访问网站后，将图片文件直接拖放到浏览器窗口即可开始编辑。</p>
-<p><img src="https://img.nep.me/i/2025/08/18/photopea-preview.webp" alt="photopea-preview"></p>
-<h3 id="Photopea-的主要功能"><a href="#Photopea-的主要功能" class="headerlink" title="Photopea 的主要功能"></a>Photopea 的主要功能</h3><p><strong>1. 支持多种文件格式</strong><br>Photopea 的一个主要优点是它的兼容性。除了常规的图片格式，它还支持打开和编辑 <code>.psd</code>, <code>.ai</code>, <code>.sketch</code>, <code>.raw</code> 等专业格式的文件。这对于临时处理工作文件非常方便。</p>
-<p><strong>2. 熟悉的编辑界面</strong><br>Photopea 的界面和操作方式与 Photoshop 很像，如果你用过 PS，会感觉非常熟悉。它提供了 <strong>图层</strong> 、<strong>滤镜</strong> 等核心编辑功能，可以满足大部分日常的编辑需求。</p>
-<p><strong>3. 提供免费模版</strong><br>网站还提供了一些免费的设计模版，涵盖海报、社交媒体图片等，可以帮助你快速开始创作。</p>
-<p><strong>4. 支持 AI 图片生成</strong><br>除了传统的图片编辑功能，Photopea 还支持一句话生成图片，仍然是免费功能，非常适合体验一下。 </p>
-<p><strong>5. 隐私安全</strong><br>Photopea 默认文件处理都在浏览器本地完成，不会上传到服务器，网页加载完全后，甚至可以离线使用。</p>
-<h3 id="关于广告"><a href="#关于广告" class="headerlink" title="关于广告"></a>关于广告</h3><p>作为一个免费工具，Photopea 的在界面右侧添加了 Google 广告。考虑到它提供的免费功能，这点广告通常是可以接受的。网站的访问量很大，也说明它受到了全球用户的广泛认可。</p>
-<p><img src="https://img.nep.me/i/2025/08/18/photopea-traffic.webp" alt="photopea-traffic"></p>
-<p>简单来说，Photopea 是一个非常实用的在线工具。它免费、免安装，并且支持多种文件格式。</p>
-<p>如果你偶尔需要编辑图片，或者临时需要处理 PSD 这样的文件，Photopea 是一个非常值得收藏的网站，不妨现在加个书签，以备不时之需。</p>
-]]></content>
-      <categories>
-        <category>工具资源</category>
-      </categories>
-      <tags>
-        <tag>实用网站</tag>
-        <tag>图片编辑</tag>
-        <tag>Photopea</tag>
       </tags>
   </entry>
   <entry>
@@ -2847,25 +2847,6 @@
       </tags>
   </entry>
   <entry>
-    <title>什么是 BYOK ？</title>
-    <url>/post/what-is-byok.html</url>
-    <content><![CDATA[<h2 id="什么是-BYOK-？"><a href="#什么是-BYOK-？" class="headerlink" title="什么是 BYOK ？"></a>什么是 BYOK ？</h2><p><code>BYOK</code> 是英文 <strong>Bring Your Own Key</strong> 的缩写，就是字面上的意思 <strong>自带密钥</strong> 。在云计算和软件服务领域，这是一种安全模型，允许客户使用自己的加密密钥来加密他们在服务商那里的数据，而不是使用由服务商提供的默认密钥。</p>
-<h2 id="在大模型应用中"><a href="#在大模型应用中" class="headerlink" title="在大模型应用中"></a>在大模型应用中</h2><p>最近，BYOK 这个概念在各类大模型（LLM）应用中变得越来越流行。通常使用 AI 应用需要消耗开发者提供的 Token，但有些应用采取了 BYOK 模式，它们允许用户直接填入自己从 OpenAI、Google、Anthropic 等官方或是其他渠道渠道获取的 API Key。</p>
-<p>对于用户而言，这意味着：</p>
-<ul>
-<li><strong>成本透明</strong>：你可以直接通过自己的 API 账户支付消耗的 Token，清楚地知道每一分钱花在了哪里。</li>
-<li><strong>使用灵活</strong>：不受应用开发者 Token 配额的限制，只要自己的 API Key 有效且有余额，就能持续使用。</li>
-</ul>
-<p>对于开发者而言，BYOK 模式也降低了他们的运营负担。他们无需预先购买和管理大量的 API Token，也简化了复杂的计费和分发流程，可以更专注于核心功能的开发。</p>
-]]></content>
-      <categories>
-        <category>笔记</category>
-      </categories>
-      <tags>
-        <tag>BYOK</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>什么是 “服务器奶牛化” ？</title>
     <url>/post/what-is-turing-a-server-into-cash-cow.html</url>
     <content><![CDATA[<p><strong>服务器奶牛化</strong> 是一个网络流行语，形象地描述了将服务器当作“奶牛”，通过持续压榨其资源以获取最大化收益的行为。这个词的核心在于“榨取价值”，类似于不断从奶牛身上挤奶。</p>
@@ -2885,6 +2866,25 @@
       </categories>
       <tags>
         <tag>服务器</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>什么是 BYOK ？</title>
+    <url>/post/what-is-byok.html</url>
+    <content><![CDATA[<h2 id="什么是-BYOK-？"><a href="#什么是-BYOK-？" class="headerlink" title="什么是 BYOK ？"></a>什么是 BYOK ？</h2><p><code>BYOK</code> 是英文 <strong>Bring Your Own Key</strong> 的缩写，就是字面上的意思 <strong>自带密钥</strong> 。在云计算和软件服务领域，这是一种安全模型，允许客户使用自己的加密密钥来加密他们在服务商那里的数据，而不是使用由服务商提供的默认密钥。</p>
+<h2 id="在大模型应用中"><a href="#在大模型应用中" class="headerlink" title="在大模型应用中"></a>在大模型应用中</h2><p>最近，BYOK 这个概念在各类大模型（LLM）应用中变得越来越流行。通常使用 AI 应用需要消耗开发者提供的 Token，但有些应用采取了 BYOK 模式，它们允许用户直接填入自己从 OpenAI、Google、Anthropic 等官方或是其他渠道渠道获取的 API Key。</p>
+<p>对于用户而言，这意味着：</p>
+<ul>
+<li><strong>成本透明</strong>：你可以直接通过自己的 API 账户支付消耗的 Token，清楚地知道每一分钱花在了哪里。</li>
+<li><strong>使用灵活</strong>：不受应用开发者 Token 配额的限制，只要自己的 API Key 有效且有余额，就能持续使用。</li>
+</ul>
+<p>对于开发者而言，BYOK 模式也降低了他们的运营负担。他们无需预先购买和管理大量的 API Token，也简化了复杂的计费和分发流程，可以更专注于核心功能的开发。</p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>BYOK</tag>
       </tags>
   </entry>
   <entry>
@@ -3798,19 +3798,6 @@
       </tags>
   </entry>
   <entry>
-    <title>2026 十大 Hexo 主题推荐：从经典热门到新鲜小众（界面速览）</title>
-    <url>/post/best-hexo-themes-2026.html</url>
-    <content><![CDATA[]]></content>
-      <categories>
-        <category>笔记</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
-        <tag>Blog</tag>
-        <tag>Hexo Theme</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>ChatGPT Business 为成员启用设备代码身份验证</title>
     <url>/post/chatgpt-business-enable-codex-device-code.html</url>
     <content><![CDATA[<p>最近 OpenAI 大促销，ChatGPT Business 免费一个席位 48 个月，应该会有小伙伴们打算同时使用两个账户，享受双倍额度。 </p>
@@ -3879,236 +3866,6 @@
       </categories>
       <tags>
         <tag>Claude Code</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Anthropic 发布 Claude Opus 4.6 模型，赠送付费用户 50 美元余额</title>
-    <url>/post/claude-subscription-user-can-get-50-usd-extra-credit.html</url>
-    <content><![CDATA[<h2 id="Claude-Opus-4-6-发布"><a href="#Claude-Opus-4-6-发布" class="headerlink" title="Claude Opus 4.6 发布"></a>Claude Opus 4.6 发布</h2><p>今天 Anthropic 发布了最新的 <a href="https://www.anthropic.com/news/claude-opus-4-6">Claude Opus 4.6</a> ，官方表示 Claude Opus 4.6 在编码能力上超越了前代产品。它规划更周密，能够更长时间地执行代理任务，在大规模代码库中运行更可靠，并且拥有更强大的代码审查和调试能力，可以更有效地发现自身错误。</p>
-<p>并且在 Beta 版本中 Opus 模型首次支持 1M tokens 上下文，API 价格方面保持不变。</p>
-<p>Claude Opus 4.6 目前已在 API、Claude Code 中可用。</p>
-<h2 id="更新-Claude-Code"><a href="#更新-Claude-Code" class="headerlink" title="更新 Claude Code"></a>更新 Claude Code</h2><p>运行下面命令即可：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm install -g @anthropic-ai/claude-code</span><br></pre></td></tr></table></figure>
-
-<h2 id="Anthropic-赠送付费用户-50-美元"><a href="#Anthropic-赠送付费用户-50-美元" class="headerlink" title="Anthropic 赠送付费用户 50 美元"></a>Anthropic 赠送付费用户 50 美元</h2><p>在推出新模型的同时，Anthropic 还提供给已订阅 Claude Pro &#x2F; MAX 的用户 50 美元的 <a href="https://support.claude.com/en/articles/13613973-claude-opus-4-6-extra-usage-promo#h_bf8366a5e9">福利</a>，用于体验最新的模型。 </p>
-<p>需要手动领取，只需访问 <a href="https://claude.ai/settings/usage">https://claude.ai/settings/usage</a> 点击 <strong>Claim</strong> 即可。</p>
-<p><img src="https://img.nep.me/i/2026/02/claude-50-usd-credit.jpeg" alt="claude-50-usd-credit.jpeg"></p>
-<h3 id="领取条件"><a href="#领取条件" class="headerlink" title="领取条件"></a>领取条件</h3><p>领取 50 美元满足下面的条件：</p>
-<ul>
-<li>在 2 月 4 日之前开通了 Claude Pro &#x2F; MAX 订阅套餐</li>
-<li>在 2 月 16 日之前开启 <strong>extra usage</strong></li>
-</ul>
-<p>所以如果你 在 2 月 4 日之前没有订阅 Claude Pro，无法领取优惠。</p>
-<h3 id="有效期"><a href="#有效期" class="headerlink" title="有效期"></a>有效期</h3><p>领取的 50 美元余额有效期为 60 天。</p>
-<h3 id="截止日期"><a href="#截止日期" class="headerlink" title="截止日期"></a>截止日期</h3><p>在 2 月 16 日之前都可以领取，如果你正在订阅 Claude Pro &#x2F; MAX，领取你的优惠吧。</p>
-]]></content>
-      <categories>
-        <category>优惠活动</category>
-      </categories>
-      <tags>
-        <tag>Anthropic</tag>
-        <tag>Opus</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Codex 的日志记录消耗 SSD 寿命？OpenAI 已修复</title>
-    <url>/post/codex-is-buring-your-ssd.html</url>
-    <content><![CDATA[<h2 id="Bug-信息"><a href="#Bug-信息" class="headerlink" title="Bug 信息"></a>Bug 信息</h2><div class="flatpaper-note flatpaper-note--primary"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>好消息，OpenAI 已在 Codex 0.142.0 版本中修复了这个问题，可以放心使用。</p></div></div>
-
-<p>最近，Codex 凭借其强大的功能和丝滑的体验，周活跃用户已经突破了 <strong>500 万</strong> 大关。越来越多的开发者和极客都已经把它当成了日常高频使用的得力助手。</p>
-<p>不过，随着使用人数的增加，有用户反馈，在某些流式输出或自动化任务场景下，Codex 会持续向本地磁盘写入 TRACE 级别的日志。</p>
-<p>GitHUb 的 <a href="https://github.com/openai/codex/issues/28224">ISSUE</a> 上声称该 BUG 可能会产生 <strong>640GB&#x2F;年</strong> 的写入，这对于消费级 SSD 来说是致命的。对于目前主流的 1TB 或 2TB 消费级固态硬盘（标称寿命通常在 600TBW ~ 1200TBW）来说，可以说是非常严重。</p>
-<p><strong>而且，正因为现在 AI 浪潮空前火热，全球对高带宽、高性能存储的需求集中爆发，导致现在的 SSD 固态硬盘价格一路上涨，存储成本变得相当昂贵，尤其是 mac 设备的硬盘无法更换。在这种寸土寸金的时期，我们对硬盘的每一度磨损、每一 G 空间都不得不更加精打细算。</strong></p>
-<hr>
-<h2 id="1分钟自查：你中招了吗？"><a href="#1分钟自查：你中招了吗？" class="headerlink" title="1分钟自查：你中招了吗？"></a>1分钟自查：你中招了吗？</h2><p>如果你使用的是 Linux 或 Mac 系统，可以直接通过终端跑两行命令看看情况。</p>
-<p>首先，看看日志文件的大小：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">ls</span> -lh ~/.codex/logs_2.sqlite</span><br></pre></td></tr></table></figure>
-
-<p>然后，统计一下日志的写入级别：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;SELECT level, COUNT(*) FROM logs GROUP BY level ORDER BY COUNT(*) DESC&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>如何判断：</strong><br>如果查询结果中，<code>TRACE</code> 级别的日志占了绝大多数，并且 <code>logs_2.sqlite</code> 文件体积比较大，那就说明 Codex 确实在后台认真地记录着无关紧要的追踪信息。</p>
-<p><strong>参考数据：</strong><br>我的文件大小为 <strong>468MB：</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&gt; <span class="built_in">ls</span> -lh ~/.codex/logs_2.sqlite Jun 23</span><br><span class="line">-rw-r--r--@ 1 mro  staff   468M</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&gt; sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;SELECT level, COUNT(*) FROM logs GROUP BY level ORDER BY COUNT(*) DESC&quot;</span></span><br><span class="line">TRACE|39961</span><br><span class="line">INFO|39919</span><br><span class="line">DEBUG|7307</span><br><span class="line">WARN|177</span><br></pre></td></tr></table></figure>
-
-<p>可以看到 <code>TRACE|39961</code> 占了接近一半的数据，确实存在所说的问题，主要是目前 OpenAI 官方尚未做出修复的回应。</p>
-<h2 id="一劳永逸的解决方案-：直接在数据库拦截"><a href="#一劳永逸的解决方案-：直接在数据库拦截" class="headerlink" title="一劳永逸的解决方案 ：直接在数据库拦截"></a>一劳永逸的解决方案 ：直接在数据库拦截</h2><p><mark>OpenAI 已经修复这个问题了，不需要操作了</mark></p>
-<p>这里提供比较激进、但也最直接的临时方案：给日志表加一个 SQLite 触发器，让新的日志写入被忽略，毕竟这个文件里只有诊断日志，没有对话历史。</p>
-<p>执行前建议先退出 Codex，并备份日志数据库：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cp</span> ~/.codex/logs_2.sqlite ~/.codex/logs_2.sqlite.bak</span><br></pre></td></tr></table></figure>
-<p>然后执行：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;CREATE TRIGGER IF NOT EXISTS block_log_inserts BEFORE INSERT ON logs BEGIN SELECT RAISE(IGNORE); END;&quot;</span></span><br></pre></td></tr></table></figure>
-<p>设置完成后，新的日志记录会被拦截，从而减少后续写入。</p>
-<p>需要注意的是，这个方法会影响 Codex 后续生成诊断日志。如果你之后需要向官方反馈问题，或者担心未来版本兼容性，可以先不要使用这个方案，改用定期清理的方式。</p>
-<details class="flatpaper-note flatpaper-note--info"><summary class="flatpaper-note__title"><span class="flatpaper-note__icon" aria-hidden="true"></span><span class="flatpaper-note__label">如何恢复</span><span class="flatpaper-note__chevron" aria-hidden="true"></span></summary><div class="flatpaper-note__body"><p>如果想要恢复的话就是删除这个 trigger 。先退出 Codex，再执行：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;DROP TRIGGER IF EXISTS block_log_inserts;&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>执行后可以检查是否还存在：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;.schema block_log_inserts&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>如果没有输出，说明已经删除成功。</p>
-<p>也可以用这个命令查看当前所有 trigger：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;SELECT name, tbl_name, sql FROM sqlite_master WHERE type=&#x27;trigger&#x27;;&quot;</span></span><br></pre></td></tr></table></figure></div></details>
-
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>GitHub ISSUE 中的数据是比较夸张的，Codex 的这个日志问题并没有网传的那么吓人，但也感谢 OpenAI 完成了 BUG 的修复，大家用 Codex 敲代码愉快！</p>
-]]></content>
-      <categories>
-        <category>笔记</category>
-      </categories>
-      <tags>
-        <tag>OpenAI</tag>
-        <tag>Codex</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>新时代挖矿：看看你的 Mac 一个月能赚多少钱</title>
-    <url>/post/darkbloom-nodes-macbook-ai-mining-earnings.html</url>
-    <content><![CDATA[<p>曾经，无数人为了比特币和以太坊疯狂囤积显卡，把家里变成轰鸣的矿场。随着传统加密货币 “显卡挖矿” 时代的逐渐降温，很多人以为用个人电脑赚取被动收入的日子已经结束了。然而，随着 AI 大模型时代的爆发，一种全新的 “挖矿” 模式正在悄然兴起——AI 节点推理算力共享。</p>
-<p>最近，随着本地模型的能力进步，<a href="https://www.darkbloom.dev/#nodes">Darkbloom</a> 平台的出现向我们揭示了这一前景。在这个新时代，你不需要去计算毫无意义的哈希值，而是让你的电脑成为 AI 基础设施的一部分，通过为真实用户运行大语言模型（如 <code>Gemma 4 26B</code> ）来赚取收益。而在这场新游戏里，凭借着高带宽的统一内存架构，Apple 的 Mac 电脑意外地成为了最完美的 “矿机”。</p>
-<h2 id="Darbloom-介绍"><a href="#Darbloom-介绍" class="headerlink" title="Darbloom 介绍"></a>Darbloom 介绍</h2><p><a href="https://www.darkbloom.dev/">Darkbloom.dev</a> 可以将 MacBook 变成一个可产生收益的私有硬件节点网络。用户只需在 Mac 上安装一个命令行界面 (CLI)，设备就可以在闲置时自动接收并处理 AI 推理请求。开发者则可以通过兼容 OpenAI 的 API 调用这些分布式算力。设备每生成一个代币，节点运营者就能获得相应的美元收益。 </p>
-<p>这个项目背后的技术来自 Eigen Labs，相关论文和代码已经开源。其核心卖点是：在保护用户请求隐私的前提下，让普通 Apple Silicon 设备参与 AI 推理市场。<br>链接：<a href="https://github.com/Layr-Labs/d-inference/blob/master/papers/dginf-private-inference.pdf">https://github.com/Layr-Labs/d-inference/blob/master/papers/dginf-private-inference.pdf</a></p>
-<h2 id="Mac-变身-AI-服务器：到底能赚多少？"><a href="#Mac-变身-AI-服务器：到底能赚多少？" class="headerlink" title="Mac 变身 AI 服务器：到底能赚多少？"></a>Mac 变身 AI 服务器：到底能赚多少？</h2><p>按照项目方介绍，节点运营者可以获得 95% 的推理收入，平台抽取 5%。</p>
-<p>除了硬件设备，运营唯一的成本是电费，而 Apple Silicon 的功耗极低。即使在满负荷推理的情况下，每小时也只需 0.01 到 0.03 美元。这就像点亮一个灯泡一样。</p>
-<p>我们来看看 Darkbloom 提供的收益预估数据：</p>
-<h3 id="1-顶配印钞机：MacBook-Pro-M5-Max-128GB-内存"><a href="#1-顶配印钞机：MacBook-Pro-M5-Max-128GB-内存" class="headerlink" title="1. 顶配印钞机：MacBook Pro (M5 Max, 128GB 内存)"></a>1. 顶配印钞机：MacBook Pro (M5 Max, 128GB 内存)</h3><p>如果你拥有一台搭载 M5 Max 芯片和 128GB 内存的顶级 MacBook Pro，这台机器简直是为跑大模型而生的。它庞大的内存可以轻松装下甚至并行处理巨大的模型。</p>
-<ul>
-<li><strong>运行状态</strong>：每天运行 18 小时（比如下班后的闲置时间）。</li>
-<li><strong>处理速度</strong>：批量解码速度高达惊人的 <code>1326.2</code> tok&#x2F;s。</li>
-<li><strong>每月收益</strong>：预估每月总收入约为 <strong>$425.40</strong> 。扣除电费后，每月净赚约 $423（折合人民币约 3000 多元）！</li>
-</ul>
-<p>一年下来收益可达 <strong>$5,076</strong>，而在 Apple 官网上 <strong>M5 Max + 128GB RAM + 2TB</strong> 版本现在仅售 <strong>5399</strong> 美元（大陆官网售价 43,499 元）， 可以说这笔钱不仅足够你覆盖买电脑的成本，甚至相当于电脑自己在给自己打工还贷。</p>
-<p><img src="https://img.nep.me/ooo/darkbloom-m5max.webp" alt="darkbloom-m5max"></p>
-<h3 id="2-性能中坚：MacBook-Pro-M4-Pro-48GB-内存"><a href="#2-性能中坚：MacBook-Pro-M4-Pro-48GB-内存" class="headerlink" title="2. 性能中坚：MacBook Pro (M4 Pro, 48GB 内存)"></a>2. 性能中坚：MacBook Pro (M4 Pro, 48GB 内存)</h3><p>如果你的配置是偏向主流的工作站，比如搭载 M4 Pro 芯片和 48GB 内存的版本。</p>
-<ul>
-<li><strong>运行状态</strong>：同样每天运行 18 小时。</li>
-<li><strong>处理速度</strong>：<code>589.7</code> tok&#x2F;s。</li>
-<li><strong>每月收益</strong>：依然可以获得每月约 <strong>$188</strong>（折合人民币约 1300 多元）的净收入。</li>
-</ul>
-<p>一年也有 $2,252 的进账。对于仅仅是利用电脑闲置时间的睡后收入来说，这绝对是一笔非常可观的零花钱。</p>
-<p><img src="https://img.nep.me/ooo/darkbloom-m5pro.webp" alt="darkbloom-m5pro"></p>
-<h2 id="Apple-Silicon-的恐怖能效"><a href="#Apple-Silicon-的恐怖能效" class="headerlink" title="Apple Silicon 的恐怖能效"></a>Apple Silicon 的恐怖能效</h2><p>传统挖矿最让人头疼的就是高昂的电费和机器狂转的噪音。但在这场AI 挖矿中，Apple M 系列芯片展现出了极其恐怖的能效比。</p>
-<p>以电费 $0.15&#x2F;kWh 计算，那台每月能为你赚取 425 美元的 M5 Max MacBook Pro，一整个月消耗的电费仅仅只有 $2.43；而 M4 Pro 版本的月电费更是低至 $1.46。电费成本甚至占不到总收入的 1%。没有轰鸣的风扇，没有天价电费账单，只有静悄悄地跑着大模型赚钱的优雅。</p>
-<p>AI 时代的算力需求是无穷无尽的，而去中心化的个人算力网络或许就是下一座金矿。你的 Mac 已经不再仅仅是一个昂贵的生产力工具，它完全有潜力成为你的“数字打工仔”。</p>
-<h2 id="结语与风险提示"><a href="#结语与风险提示" class="headerlink" title="结语与风险提示"></a>结语与风险提示</h2><p>当然，作为一个新兴领域，我们也要保持理性的预期。目前，Darkbloom 等平台已经在 Hacker News、Reddit 和 LinkedIn 等主流开发者社区引发了公开讨论。好消息是，目前尚未出现任何诈骗报告；但根据早期参与测试的节点用户反馈，当前网络中分配到的任务还主要是 Health Checks ，真实的商业推理需求仍然处于低位。这意味着官方计算器给出的高额预测相对较为乐观。</p>
-<p>更重要的是，如今大模型的进步速度实在是太快了。现在开源社区就已经迭代到了 Gemma 4 26B 这样庞大且高效的模型。AI 领域的算法架构、量化技术和吞吐量优化几乎每个月都在刷新。今天的配置组合可能刚好能吃满红利，但三个月后，随着更强、更大的模型诞生，整个网络对硬件门槛和带宽的要求可能会迎来彻底的洗牌。</p>
-<p>这注定是一场与技术演进赛跑的游戏。未来的实际收益，将极大地受制于真实商业请求的爆发、模型迭代的速度以及平台的后续运营。</p>
-<div class="flatpaper-note flatpaper-note--warning"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>请务必记住，以上数据只是参考，大家看看这些预估数据，把它当个有趣的参考就行。</p></div></div>
-]]></content>
-      <categories>
-        <category>工具资源</category>
-      </categories>
-      <tags>
-        <tag>AI</tag>
-        <tag>Apple</tag>
-        <tag>Darkbloom</tag>
-        <tag>MacBook</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>使用 Docker 部署 Fizzy ： 一个轻量、漂亮、可自托管的看板工具</title>
-    <url>/post/docker-run-fizzy-kanban.html</url>
-    <content><![CDATA[<h2 id="Fizzy-介绍"><a href="#Fizzy-介绍" class="headerlink" title="Fizzy 介绍"></a>Fizzy 介绍</h2><p>Fizzy (<a href="https://fizzy.do/">https://fizzy.do</a>) 是由著名软件公司 <mark>37signals</mark>（开发过 Basecamp 和 HEY 的团队）推出的一款全新 <strong>看板</strong> 任务管理工具。主打快速、简单、色彩鲜明，非常适合用来跟踪 Bug、想法、小项目和内容流程。</p>
-<p>与 Jira、ClickUp、Asana 堆叠型项目管理工具不同，Fizzy 使用的是 <strong>卡片 + 列</strong> 的 UI 界面，使用只需要创建看板、添加卡片、移动状态、分配任务、接收通知，适合小型、轻量、边界清晰的工作流。</p>
-<p>Fizzy 界面预览：</p>
-<p><img src="https://img.nep.me/ooo/fizzy-board.webp" alt="Fizzy 界面预览"></p>
-<h2 id="Fizzy-的优势"><a href="#Fizzy-的优势" class="headerlink" title="Fizzy 的优势"></a>Fizzy 的优势</h2><ul>
-<li><strong>极简与速度：</strong> 没有复杂的菜单层级、AI 总结或多余的分析图表。界面色彩丰富且直观，专注于卡片和列的 Kanban 体验。</li>
-<li><strong>人性化默认设置：</strong> 它支持自动关闭长期无人处理的卡片、Webhook、浏览器通知、公开看板链接、卡片记录等功能。保持看板的清爽，非常符合人类工作习惯。</li>
-<li><strong>支持自托管：</strong> Fizzy 的 <a href="https://github.com/basecamp/fizzy">代码</a> 完全开源，支持自己部署，官方提供预构建 <a href="https://ghcr.io/basecamp/fizzy:main">Docker 镜像</a>，适合 Selfhost 爱好者自己部署使用。</li>
-<li><strong>实惠的价格：</strong> 如果你不想自己部署，使用官方服务前 1000 张卡片免费；超出后的付费方案为 每月 20 美元买断式（包含无限用户、无限卡片），没有令人头疼的按人头计费阶梯。</li>
-</ul>
-<h2 id="使用-Docker-部署"><a href="#使用-Docker-部署" class="headerlink" title="使用 Docker 部署"></a>使用 Docker 部署</h2><p>下面将介绍使用 Docker 部署 Fizzy 应用，使用 Caddy &#x2F; Nginx 反代进行访问的方式。</p>
-<h3 id="验证-Docker-环境"><a href="#验证-Docker-环境" class="headerlink" title="验证 Docker 环境"></a>验证 Docker 环境</h3><p>Docker 环境验证命令：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker --version</span><br><span class="line">docker compose version</span><br></pre></td></tr></table></figure>
-
-<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>没有安装可以查看： <a href="https://ooo.run/post/debian-install-docker.html">在 Debian 中安装 Docker 以及 Docker Compose</a></p></div></div>
-
-<h3 id="创建-docker-compose-yaml-文件"><a href="#创建-docker-compose-yaml-文件" class="headerlink" title="创建 docker-compose.yaml 文件"></a>创建 docker-compose.yaml 文件</h3><p>本文选择将容器部署在 <code>/opt/fizzy</code> 目录下，数据目录保存在相同的目录中，便于 <mark>一键打包备份</mark> 。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">创建容器目录</span></span><br><span class="line">sudo mkdir -p /opt/fizzy</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">进入容器目录</span></span><br><span class="line">cd /opt/fizzy</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">创建数据目录</span></span><br><span class="line">sudo mkdir storage</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">调整数据目录权限</span></span><br><span class="line">sudo chown 1000:1000 storage</span><br></pre></td></tr></table></figure>
-
-<p>然后创建 <code>compose.yaml</code> 文件: </p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">fizzy:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">ghcr.io/basecamp/fizzy:main</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">fizzy</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">unless-stopped</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;127.0.0.1:3080:80&quot;</span></span><br><span class="line">      <span class="comment"># - &quot;443:443&quot;</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="comment"># 必填：Rails secret</span></span><br><span class="line">      <span class="attr">SECRET_KEY_BASE:</span> <span class="string">&quot;&lt;SECRET_KEY_BASE&gt;&quot;</span></span><br><span class="line">      <span class="comment"># 访问域名</span></span><br><span class="line">      <span class="attr">BASE_URL:</span> <span class="string">&quot;https://fizzy.example.com&quot;</span></span><br><span class="line"></span><br><span class="line">      <span class="comment"># SMTP（用于 magic link 登录邮件）</span></span><br><span class="line">      <span class="comment"># SMTP_ADDRESS: &quot;mail.example.com&quot;</span></span><br><span class="line">      <span class="comment"># SMTP_USERNAME: &quot;user&quot;</span></span><br><span class="line">      <span class="comment"># SMTP_PASSWORD: &quot;pass&quot;</span></span><br><span class="line">      <span class="comment"># MAILER_FROM_ADDRESS: &quot;Fizzy &lt;fizzy@example.com&gt;&quot;</span></span><br><span class="line"></span><br><span class="line">      <span class="comment"># 可选：Web Push（如果你想要浏览器推送通知）</span></span><br><span class="line">      <span class="comment"># VAPID_PUBLIC_KEY: &quot;...&quot;</span></span><br><span class="line">      <span class="comment"># VAPID_PRIVATE_KEY: &quot;...&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./storage:/rails/storage</span></span><br></pre></td></tr></table></figure>
-
-
-<p>需要设置的部分：</p>
-<ul>
-<li><code>SECRET_KEY_BASE:</code> 使用 <code>openssl rand -hex 32</code> 命令生成，或是通过 <a href="https://tools.ooo.run/zh/session-secret/">简易工具 - Session Secret</a> 网页生成</li>
-<li><code>BASE_URL:</code> 设置访问时的域名，Fizzy 注重安全设计，需要使用 <strong>https</strong> 访问</li>
-</ul>
-<div class="flatpaper-note flatpaper-note--default"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>Fizzy 通过邮件发送 <mark>验证码</mark> 的方式进行登陆，如果希望发送邮件需要设置 SMTP 部分，但不是必须的，如果不设置 SMTP 可以使用后文随附 <code>docker</code> 命令查询。</p></div></div>
-
-<h3 id="启动-Docker-镜像"><a href="#启动-Docker-镜像" class="headerlink" title="启动 Docker 镜像"></a>启动 Docker 镜像</h3><p>只需一行 Docker Compose 命令即可后台常驻启动</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker compose up -d</span><br></pre></td></tr></table></figure>
-
-<h2 id="访问-Fizzy"><a href="#访问-Fizzy" class="headerlink" title="访问 Fizzy"></a>访问 Fizzy</h2><p>首先我们设置 web 服务器的代理指向 <code>3080</code></p>
-<h3 id="Nginx-反向代理配置"><a href="#Nginx-反向代理配置" class="headerlink" title="Nginx 反向代理配置"></a>Nginx 反向代理配置</h3><p>如果使用 Nginx 作为反向代理，可以创建一个新的站点配置，例如：</p>
-<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">80</span>;</span><br><span class="line">    <span class="attribute">server_name</span> fizzy.example.com;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 将 HTTP 自动跳转到 HTTPS</span></span><br><span class="line">    <span class="attribute">return</span> <span class="number">301</span> https://<span class="variable">$host</span><span class="variable">$request_uri</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">443</span> ssl http2;</span><br><span class="line">    <span class="attribute">server_name</span> fizzy.example.com;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">ssl_certificate</span> /etc/nginx/ssl/fizzy.example.com/fullchain.pem;</span><br><span class="line">    <span class="attribute">ssl_certificate_key</span> /etc/nginx/ssl/fizzy.example.com/privkey.pem;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">client_max_body_size</span> <span class="number">50M</span>;</span><br><span class="line"></span><br><span class="line">    <span class="section">location</span> / &#123;</span><br><span class="line">        <span class="attribute">proxy_pass</span> http://127.0.0.1:3080;</span><br><span class="line"></span><br><span class="line">        <span class="attribute">proxy_http_version</span> <span class="number">1</span>.<span class="number">1</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> Host <span class="variable">$host</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Real-IP <span class="variable">$remote_addr</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Forwarded-Proto https;</span><br><span class="line"></span><br><span class="line">        <span class="comment"># WebSocket 支持</span></span><br><span class="line">        <span class="attribute">proxy_set_header</span> Upgrade <span class="variable">$http_upgrade</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> Connection <span class="string">&quot;upgrade&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>如果你使用的是 Certbot 申请证书，也可以先配置 HTTP 站点，再执行：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> certbot --nginx -d fizzy.example.com</span><br></pre></td></tr></table></figure>
-
-<p>证书配置完成后，访问 <code>https://fizzy.example.com</code> 即可打开 Fizzy。</p>
-<h3 id="Caddy-反向代理配置"><a href="#Caddy-反向代理配置" class="headerlink" title="Caddy 反向代理配置"></a>Caddy 反向代理配置</h3><p>如果使用 Caddy，配置会更加简单。编辑 Caddyfile：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">fizzy.example.com &#123;</span><br><span class="line">    reverse_proxy 127.0.0.1:3080</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>Caddy 会自动申请和续期 HTTPS 证书，只需要确保域名已经正确解析到服务器，并且服务器的 <code>80</code> 和 <code>443</code> 端口已经放行。</p>
-<p>修改完成后，重新加载 Caddy：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl reload caddy</span><br></pre></td></tr></table></figure>
-<p>然后访问：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">https://fizzy.example.com</span><br></pre></td></tr></table></figure>
-<p>即可进入 Fizzy 登录页面。</p>
-<h3 id="注册登录"><a href="#注册登录" class="headerlink" title="注册登录"></a>注册登录</h3><p>然后打开浏览器即可 BASE_URL 的域名即可打开登录页面</p>
-<p><img src="https://img.nep.me/ooo/fizzy-login.webp" alt="fizzy-login.png"></p>
-<p>Fizzy 只能通过邮箱接收验证码进行登陆，如果你设置了正确的 SMTP，在邮箱查看验证码即可。</p>
-<h3 id="使用-Docker-命令获取验证码"><a href="#使用-Docker-命令获取验证码" class="headerlink" title="使用 Docker 命令获取验证码"></a>使用 Docker 命令获取验证码</h3><p>如果觉得只是个人使用，不想设置 SMTP，可以通过下面的命令手动查询最后生成的验证码：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker compose <span class="built_in">exec</span> fizzy bin/rails runner <span class="string">&#x27;p MagicLink.column_names; p MagicLink.last&amp;.attributes&#x27;</span></span><br></pre></td></tr></table></figure>
-
-<p>输出内容</p>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span><span class="string">&quot;id&quot;</span> =&gt; <span class="string">&quot;abcdefg.....&quot;</span><span class="punctuation">,</span> <span class="string">&quot;code&quot;</span> =&gt; <span class="string">&quot;ABCEFG&quot;</span><span class="punctuation">,</span></span><br></pre></td></tr></table></figure>
-<p>使用 code 后面的六个字符登陆即可。</p>
-<h3 id="添加-Passkey"><a href="#添加-Passkey" class="headerlink" title="添加 Passkey"></a>添加 Passkey</h3><p>然而总不能每次登陆都打开服务器查询， Fizzy 支持添加 Passkey 。 </p>
-<p>点击顶部或是按 <code>J</code> 打开设置面板，然后点击 <code>My Profile</code>，左下角有 <code>Manage passkey</code> 的按钮，点击即可添加 Passkey。 之后就可以快捷方便的登录了。</p>
-<img src="https://img.nep.me/ooo/fizzy-add-passkey.webp" alt="fizzy-add-passkey.png" style="width:75%;max-width:100%;height:auto" />
-
-<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>推荐： <a href="https://ooo.run/post/use-docker-run-bitwarden.html">使用 Docker 轻松部署 Bitwarden 服务端，搭建你自己的密码管理器</a></p></div></div>
-
-<h2 id="使用介绍"><a href="#使用介绍" class="headerlink" title="使用介绍"></a>使用介绍</h2><p>输入验证码登陆后，即可进入 Fizzy 的 Playground 主面板，目前 Fizzy 仅支持英文界面。</p>
-<p><img src="https://img.nep.me/ooo/fizzy-playgroud.webp" alt="fizzy-playgroud.png"></p>
-<p>在 Fizzy 中，每一列是一个看板，可以用于表示任务的状态或是属性，自带的卡片会介绍 Fizzy 的使用方法。简</p>
-<p>单的来说，对于默认三个看板：</p>
-<ul>
-<li><strong>NotNow:</strong> 现在不需要处理的任务，超过 30 天没有更新卡片将自动移动到这里</li>
-<li><strong>MAYBE?:</strong> 可能需要处理的任务</li>
-<li><strong>DONE:</strong> 已完成的任务<br>可以点击 <code>DONE</code> 右侧的 <code>+</code> 可以根据需要创建自定义看板</li>
-</ul>
-<p>现在就开始规划整理你的任务吧！</p>
-<h2 id="安全提示"><a href="#安全提示" class="headerlink" title="安全提示"></a>安全提示</h2><p>::: danger<br>如果将 Fizzy 部署在云端服务器中， Docker 容器端口不要使用 <code>&quot;3080:80&quot;</code> 直接监听公网，建议使用 <code>&quot;127.0.0.1:3080:80&quot;</code>，再通过 Nginx 或 Caddy 反向代理提供 HTTPS 访问。<br>&#96;&#96;&#96;</p>
-]]></content>
-      <categories>
-        <category>教程</category>
-      </categories>
-      <tags>
-        <tag>Docker</tag>
-        <tag>Fizzy</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>解决 Antigravity 通过 SSH 连接远程服务器崩溃的问题</title>
-    <url>/post/fix-antigravity-ssh-remote-crash-problem.html</url>
-    <content><![CDATA[<h2 id="问题详情"><a href="#问题详情" class="headerlink" title="问题详情"></a>问题详情</h2><p>在使用 Google Antigravity 通过 SSH 连接运行在 <strong>PVE</strong> 的 <strong>Linux 虚拟机</strong> 时，会直接崩溃，报错信息如下：</p>
-<blockquote>
-<p>Antigravity server crashed unexpectedly. Please restart to fully restore AI features.</p>
-</blockquote>
-<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>在 PVE 中将 Linux 虚拟机的 <strong>CPU 类型</strong> 设置为 <code>host</code>，再尝试连接就可以了。</p>
-<p>参考： <a href="https://discuss.ai.google.dev/t/antigravity-crashes-on-linux-but-works-on-windows/110355/3">Antigravity crashes on Linux, but works on Windows</a></p>
-]]></content>
-      <categories>
-        <category>笔记</category>
-      </categories>
-      <tags>
-        <tag>Antigravity</tag>
       </tags>
   </entry>
   <entry>
@@ -4829,6 +4586,236 @@
       </categories>
       <tags>
         <tag>Cloudflare</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Anthropic 发布 Claude Opus 4.6 模型，赠送付费用户 50 美元余额</title>
+    <url>/post/claude-subscription-user-can-get-50-usd-extra-credit.html</url>
+    <content><![CDATA[<h2 id="Claude-Opus-4-6-发布"><a href="#Claude-Opus-4-6-发布" class="headerlink" title="Claude Opus 4.6 发布"></a>Claude Opus 4.6 发布</h2><p>今天 Anthropic 发布了最新的 <a href="https://www.anthropic.com/news/claude-opus-4-6">Claude Opus 4.6</a> ，官方表示 Claude Opus 4.6 在编码能力上超越了前代产品。它规划更周密，能够更长时间地执行代理任务，在大规模代码库中运行更可靠，并且拥有更强大的代码审查和调试能力，可以更有效地发现自身错误。</p>
+<p>并且在 Beta 版本中 Opus 模型首次支持 1M tokens 上下文，API 价格方面保持不变。</p>
+<p>Claude Opus 4.6 目前已在 API、Claude Code 中可用。</p>
+<h2 id="更新-Claude-Code"><a href="#更新-Claude-Code" class="headerlink" title="更新 Claude Code"></a>更新 Claude Code</h2><p>运行下面命令即可：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm install -g @anthropic-ai/claude-code</span><br></pre></td></tr></table></figure>
+
+<h2 id="Anthropic-赠送付费用户-50-美元"><a href="#Anthropic-赠送付费用户-50-美元" class="headerlink" title="Anthropic 赠送付费用户 50 美元"></a>Anthropic 赠送付费用户 50 美元</h2><p>在推出新模型的同时，Anthropic 还提供给已订阅 Claude Pro &#x2F; MAX 的用户 50 美元的 <a href="https://support.claude.com/en/articles/13613973-claude-opus-4-6-extra-usage-promo#h_bf8366a5e9">福利</a>，用于体验最新的模型。 </p>
+<p>需要手动领取，只需访问 <a href="https://claude.ai/settings/usage">https://claude.ai/settings/usage</a> 点击 <strong>Claim</strong> 即可。</p>
+<p><img src="https://img.nep.me/i/2026/02/claude-50-usd-credit.jpeg" alt="claude-50-usd-credit.jpeg"></p>
+<h3 id="领取条件"><a href="#领取条件" class="headerlink" title="领取条件"></a>领取条件</h3><p>领取 50 美元满足下面的条件：</p>
+<ul>
+<li>在 2 月 4 日之前开通了 Claude Pro &#x2F; MAX 订阅套餐</li>
+<li>在 2 月 16 日之前开启 <strong>extra usage</strong></li>
+</ul>
+<p>所以如果你 在 2 月 4 日之前没有订阅 Claude Pro，无法领取优惠。</p>
+<h3 id="有效期"><a href="#有效期" class="headerlink" title="有效期"></a>有效期</h3><p>领取的 50 美元余额有效期为 60 天。</p>
+<h3 id="截止日期"><a href="#截止日期" class="headerlink" title="截止日期"></a>截止日期</h3><p>在 2 月 16 日之前都可以领取，如果你正在订阅 Claude Pro &#x2F; MAX，领取你的优惠吧。</p>
+]]></content>
+      <categories>
+        <category>优惠活动</category>
+      </categories>
+      <tags>
+        <tag>Anthropic</tag>
+        <tag>Opus</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Codex 的日志记录消耗 SSD 寿命？OpenAI 已修复</title>
+    <url>/post/codex-is-buring-your-ssd.html</url>
+    <content><![CDATA[<h2 id="Bug-信息"><a href="#Bug-信息" class="headerlink" title="Bug 信息"></a>Bug 信息</h2><div class="flatpaper-note flatpaper-note--primary"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>好消息，OpenAI 已在 Codex 0.142.0 版本中修复了这个问题，可以放心使用。</p></div></div>
+
+<p>最近，Codex 凭借其强大的功能和丝滑的体验，周活跃用户已经突破了 <strong>500 万</strong> 大关。越来越多的开发者和极客都已经把它当成了日常高频使用的得力助手。</p>
+<p>不过，随着使用人数的增加，有用户反馈，在某些流式输出或自动化任务场景下，Codex 会持续向本地磁盘写入 TRACE 级别的日志。</p>
+<p>GitHUb 的 <a href="https://github.com/openai/codex/issues/28224">ISSUE</a> 上声称该 BUG 可能会产生 <strong>640GB&#x2F;年</strong> 的写入，这对于消费级 SSD 来说是致命的。对于目前主流的 1TB 或 2TB 消费级固态硬盘（标称寿命通常在 600TBW ~ 1200TBW）来说，可以说是非常严重。</p>
+<p><strong>而且，正因为现在 AI 浪潮空前火热，全球对高带宽、高性能存储的需求集中爆发，导致现在的 SSD 固态硬盘价格一路上涨，存储成本变得相当昂贵，尤其是 mac 设备的硬盘无法更换。在这种寸土寸金的时期，我们对硬盘的每一度磨损、每一 G 空间都不得不更加精打细算。</strong></p>
+<hr>
+<h2 id="1分钟自查：你中招了吗？"><a href="#1分钟自查：你中招了吗？" class="headerlink" title="1分钟自查：你中招了吗？"></a>1分钟自查：你中招了吗？</h2><p>如果你使用的是 Linux 或 Mac 系统，可以直接通过终端跑两行命令看看情况。</p>
+<p>首先，看看日志文件的大小：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">ls</span> -lh ~/.codex/logs_2.sqlite</span><br></pre></td></tr></table></figure>
+
+<p>然后，统计一下日志的写入级别：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;SELECT level, COUNT(*) FROM logs GROUP BY level ORDER BY COUNT(*) DESC&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>如何判断：</strong><br>如果查询结果中，<code>TRACE</code> 级别的日志占了绝大多数，并且 <code>logs_2.sqlite</code> 文件体积比较大，那就说明 Codex 确实在后台认真地记录着无关紧要的追踪信息。</p>
+<p><strong>参考数据：</strong><br>我的文件大小为 <strong>468MB：</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&gt; <span class="built_in">ls</span> -lh ~/.codex/logs_2.sqlite Jun 23</span><br><span class="line">-rw-r--r--@ 1 mro  staff   468M</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&gt; sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;SELECT level, COUNT(*) FROM logs GROUP BY level ORDER BY COUNT(*) DESC&quot;</span></span><br><span class="line">TRACE|39961</span><br><span class="line">INFO|39919</span><br><span class="line">DEBUG|7307</span><br><span class="line">WARN|177</span><br></pre></td></tr></table></figure>
+
+<p>可以看到 <code>TRACE|39961</code> 占了接近一半的数据，确实存在所说的问题，主要是目前 OpenAI 官方尚未做出修复的回应。</p>
+<h2 id="一劳永逸的解决方案-：直接在数据库拦截"><a href="#一劳永逸的解决方案-：直接在数据库拦截" class="headerlink" title="一劳永逸的解决方案 ：直接在数据库拦截"></a>一劳永逸的解决方案 ：直接在数据库拦截</h2><p><mark>OpenAI 已经修复这个问题了，不需要操作了</mark></p>
+<p>这里提供比较激进、但也最直接的临时方案：给日志表加一个 SQLite 触发器，让新的日志写入被忽略，毕竟这个文件里只有诊断日志，没有对话历史。</p>
+<p>执行前建议先退出 Codex，并备份日志数据库：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cp</span> ~/.codex/logs_2.sqlite ~/.codex/logs_2.sqlite.bak</span><br></pre></td></tr></table></figure>
+<p>然后执行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;CREATE TRIGGER IF NOT EXISTS block_log_inserts BEFORE INSERT ON logs BEGIN SELECT RAISE(IGNORE); END;&quot;</span></span><br></pre></td></tr></table></figure>
+<p>设置完成后，新的日志记录会被拦截，从而减少后续写入。</p>
+<p>需要注意的是，这个方法会影响 Codex 后续生成诊断日志。如果你之后需要向官方反馈问题，或者担心未来版本兼容性，可以先不要使用这个方案，改用定期清理的方式。</p>
+<details class="flatpaper-note flatpaper-note--info"><summary class="flatpaper-note__title"><span class="flatpaper-note__icon" aria-hidden="true"></span><span class="flatpaper-note__label">如何恢复</span><span class="flatpaper-note__chevron" aria-hidden="true"></span></summary><div class="flatpaper-note__body"><p>如果想要恢复的话就是删除这个 trigger 。先退出 Codex，再执行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;DROP TRIGGER IF EXISTS block_log_inserts;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>执行后可以检查是否还存在：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;.schema block_log_inserts&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>如果没有输出，说明已经删除成功。</p>
+<p>也可以用这个命令查看当前所有 trigger：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;SELECT name, tbl_name, sql FROM sqlite_master WHERE type=&#x27;trigger&#x27;;&quot;</span></span><br></pre></td></tr></table></figure></div></details>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>GitHub ISSUE 中的数据是比较夸张的，Codex 的这个日志问题并没有网传的那么吓人，但也感谢 OpenAI 完成了 BUG 的修复，大家用 Codex 敲代码愉快！</p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>OpenAI</tag>
+        <tag>Codex</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>新时代挖矿：看看你的 Mac 一个月能赚多少钱</title>
+    <url>/post/darkbloom-nodes-macbook-ai-mining-earnings.html</url>
+    <content><![CDATA[<p>曾经，无数人为了比特币和以太坊疯狂囤积显卡，把家里变成轰鸣的矿场。随着传统加密货币 “显卡挖矿” 时代的逐渐降温，很多人以为用个人电脑赚取被动收入的日子已经结束了。然而，随着 AI 大模型时代的爆发，一种全新的 “挖矿” 模式正在悄然兴起——AI 节点推理算力共享。</p>
+<p>最近，随着本地模型的能力进步，<a href="https://www.darkbloom.dev/#nodes">Darkbloom</a> 平台的出现向我们揭示了这一前景。在这个新时代，你不需要去计算毫无意义的哈希值，而是让你的电脑成为 AI 基础设施的一部分，通过为真实用户运行大语言模型（如 <code>Gemma 4 26B</code> ）来赚取收益。而在这场新游戏里，凭借着高带宽的统一内存架构，Apple 的 Mac 电脑意外地成为了最完美的 “矿机”。</p>
+<h2 id="Darbloom-介绍"><a href="#Darbloom-介绍" class="headerlink" title="Darbloom 介绍"></a>Darbloom 介绍</h2><p><a href="https://www.darkbloom.dev/">Darkbloom.dev</a> 可以将 MacBook 变成一个可产生收益的私有硬件节点网络。用户只需在 Mac 上安装一个命令行界面 (CLI)，设备就可以在闲置时自动接收并处理 AI 推理请求。开发者则可以通过兼容 OpenAI 的 API 调用这些分布式算力。设备每生成一个代币，节点运营者就能获得相应的美元收益。 </p>
+<p>这个项目背后的技术来自 Eigen Labs，相关论文和代码已经开源。其核心卖点是：在保护用户请求隐私的前提下，让普通 Apple Silicon 设备参与 AI 推理市场。<br>链接：<a href="https://github.com/Layr-Labs/d-inference/blob/master/papers/dginf-private-inference.pdf">https://github.com/Layr-Labs/d-inference/blob/master/papers/dginf-private-inference.pdf</a></p>
+<h2 id="Mac-变身-AI-服务器：到底能赚多少？"><a href="#Mac-变身-AI-服务器：到底能赚多少？" class="headerlink" title="Mac 变身 AI 服务器：到底能赚多少？"></a>Mac 变身 AI 服务器：到底能赚多少？</h2><p>按照项目方介绍，节点运营者可以获得 95% 的推理收入，平台抽取 5%。</p>
+<p>除了硬件设备，运营唯一的成本是电费，而 Apple Silicon 的功耗极低。即使在满负荷推理的情况下，每小时也只需 0.01 到 0.03 美元。这就像点亮一个灯泡一样。</p>
+<p>我们来看看 Darkbloom 提供的收益预估数据：</p>
+<h3 id="1-顶配印钞机：MacBook-Pro-M5-Max-128GB-内存"><a href="#1-顶配印钞机：MacBook-Pro-M5-Max-128GB-内存" class="headerlink" title="1. 顶配印钞机：MacBook Pro (M5 Max, 128GB 内存)"></a>1. 顶配印钞机：MacBook Pro (M5 Max, 128GB 内存)</h3><p>如果你拥有一台搭载 M5 Max 芯片和 128GB 内存的顶级 MacBook Pro，这台机器简直是为跑大模型而生的。它庞大的内存可以轻松装下甚至并行处理巨大的模型。</p>
+<ul>
+<li><strong>运行状态</strong>：每天运行 18 小时（比如下班后的闲置时间）。</li>
+<li><strong>处理速度</strong>：批量解码速度高达惊人的 <code>1326.2</code> tok&#x2F;s。</li>
+<li><strong>每月收益</strong>：预估每月总收入约为 <strong>$425.40</strong> 。扣除电费后，每月净赚约 $423（折合人民币约 3000 多元）！</li>
+</ul>
+<p>一年下来收益可达 <strong>$5,076</strong>，而在 Apple 官网上 <strong>M5 Max + 128GB RAM + 2TB</strong> 版本现在仅售 <strong>5399</strong> 美元（大陆官网售价 43,499 元）， 可以说这笔钱不仅足够你覆盖买电脑的成本，甚至相当于电脑自己在给自己打工还贷。</p>
+<p><img src="https://img.nep.me/ooo/darkbloom-m5max.webp" alt="darkbloom-m5max"></p>
+<h3 id="2-性能中坚：MacBook-Pro-M4-Pro-48GB-内存"><a href="#2-性能中坚：MacBook-Pro-M4-Pro-48GB-内存" class="headerlink" title="2. 性能中坚：MacBook Pro (M4 Pro, 48GB 内存)"></a>2. 性能中坚：MacBook Pro (M4 Pro, 48GB 内存)</h3><p>如果你的配置是偏向主流的工作站，比如搭载 M4 Pro 芯片和 48GB 内存的版本。</p>
+<ul>
+<li><strong>运行状态</strong>：同样每天运行 18 小时。</li>
+<li><strong>处理速度</strong>：<code>589.7</code> tok&#x2F;s。</li>
+<li><strong>每月收益</strong>：依然可以获得每月约 <strong>$188</strong>（折合人民币约 1300 多元）的净收入。</li>
+</ul>
+<p>一年也有 $2,252 的进账。对于仅仅是利用电脑闲置时间的睡后收入来说，这绝对是一笔非常可观的零花钱。</p>
+<p><img src="https://img.nep.me/ooo/darkbloom-m5pro.webp" alt="darkbloom-m5pro"></p>
+<h2 id="Apple-Silicon-的恐怖能效"><a href="#Apple-Silicon-的恐怖能效" class="headerlink" title="Apple Silicon 的恐怖能效"></a>Apple Silicon 的恐怖能效</h2><p>传统挖矿最让人头疼的就是高昂的电费和机器狂转的噪音。但在这场AI 挖矿中，Apple M 系列芯片展现出了极其恐怖的能效比。</p>
+<p>以电费 $0.15&#x2F;kWh 计算，那台每月能为你赚取 425 美元的 M5 Max MacBook Pro，一整个月消耗的电费仅仅只有 $2.43；而 M4 Pro 版本的月电费更是低至 $1.46。电费成本甚至占不到总收入的 1%。没有轰鸣的风扇，没有天价电费账单，只有静悄悄地跑着大模型赚钱的优雅。</p>
+<p>AI 时代的算力需求是无穷无尽的，而去中心化的个人算力网络或许就是下一座金矿。你的 Mac 已经不再仅仅是一个昂贵的生产力工具，它完全有潜力成为你的“数字打工仔”。</p>
+<h2 id="结语与风险提示"><a href="#结语与风险提示" class="headerlink" title="结语与风险提示"></a>结语与风险提示</h2><p>当然，作为一个新兴领域，我们也要保持理性的预期。目前，Darkbloom 等平台已经在 Hacker News、Reddit 和 LinkedIn 等主流开发者社区引发了公开讨论。好消息是，目前尚未出现任何诈骗报告；但根据早期参与测试的节点用户反馈，当前网络中分配到的任务还主要是 Health Checks ，真实的商业推理需求仍然处于低位。这意味着官方计算器给出的高额预测相对较为乐观。</p>
+<p>更重要的是，如今大模型的进步速度实在是太快了。现在开源社区就已经迭代到了 Gemma 4 26B 这样庞大且高效的模型。AI 领域的算法架构、量化技术和吞吐量优化几乎每个月都在刷新。今天的配置组合可能刚好能吃满红利，但三个月后，随着更强、更大的模型诞生，整个网络对硬件门槛和带宽的要求可能会迎来彻底的洗牌。</p>
+<p>这注定是一场与技术演进赛跑的游戏。未来的实际收益，将极大地受制于真实商业请求的爆发、模型迭代的速度以及平台的后续运营。</p>
+<div class="flatpaper-note flatpaper-note--warning"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>请务必记住，以上数据只是参考，大家看看这些预估数据，把它当个有趣的参考就行。</p></div></div>
+]]></content>
+      <categories>
+        <category>工具资源</category>
+      </categories>
+      <tags>
+        <tag>AI</tag>
+        <tag>Apple</tag>
+        <tag>Darkbloom</tag>
+        <tag>MacBook</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用 Docker 部署 Fizzy ： 一个轻量、漂亮、可自托管的看板工具</title>
+    <url>/post/docker-run-fizzy-kanban.html</url>
+    <content><![CDATA[<h2 id="Fizzy-介绍"><a href="#Fizzy-介绍" class="headerlink" title="Fizzy 介绍"></a>Fizzy 介绍</h2><p>Fizzy (<a href="https://fizzy.do/">https://fizzy.do</a>) 是由著名软件公司 <mark>37signals</mark>（开发过 Basecamp 和 HEY 的团队）推出的一款全新 <strong>看板</strong> 任务管理工具。主打快速、简单、色彩鲜明，非常适合用来跟踪 Bug、想法、小项目和内容流程。</p>
+<p>与 Jira、ClickUp、Asana 堆叠型项目管理工具不同，Fizzy 使用的是 <strong>卡片 + 列</strong> 的 UI 界面，使用只需要创建看板、添加卡片、移动状态、分配任务、接收通知，适合小型、轻量、边界清晰的工作流。</p>
+<p>Fizzy 界面预览：</p>
+<p><img src="https://img.nep.me/ooo/fizzy-board.webp" alt="Fizzy 界面预览"></p>
+<h2 id="Fizzy-的优势"><a href="#Fizzy-的优势" class="headerlink" title="Fizzy 的优势"></a>Fizzy 的优势</h2><ul>
+<li><strong>极简与速度：</strong> 没有复杂的菜单层级、AI 总结或多余的分析图表。界面色彩丰富且直观，专注于卡片和列的 Kanban 体验。</li>
+<li><strong>人性化默认设置：</strong> 它支持自动关闭长期无人处理的卡片、Webhook、浏览器通知、公开看板链接、卡片记录等功能。保持看板的清爽，非常符合人类工作习惯。</li>
+<li><strong>支持自托管：</strong> Fizzy 的 <a href="https://github.com/basecamp/fizzy">代码</a> 完全开源，支持自己部署，官方提供预构建 <a href="https://ghcr.io/basecamp/fizzy:main">Docker 镜像</a>，适合 Selfhost 爱好者自己部署使用。</li>
+<li><strong>实惠的价格：</strong> 如果你不想自己部署，使用官方服务前 1000 张卡片免费；超出后的付费方案为 每月 20 美元买断式（包含无限用户、无限卡片），没有令人头疼的按人头计费阶梯。</li>
+</ul>
+<h2 id="使用-Docker-部署"><a href="#使用-Docker-部署" class="headerlink" title="使用 Docker 部署"></a>使用 Docker 部署</h2><p>下面将介绍使用 Docker 部署 Fizzy 应用，使用 Caddy &#x2F; Nginx 反代进行访问的方式。</p>
+<h3 id="验证-Docker-环境"><a href="#验证-Docker-环境" class="headerlink" title="验证 Docker 环境"></a>验证 Docker 环境</h3><p>Docker 环境验证命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker --version</span><br><span class="line">docker compose version</span><br></pre></td></tr></table></figure>
+
+<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>没有安装可以查看： <a href="https://ooo.run/post/debian-install-docker.html">在 Debian 中安装 Docker 以及 Docker Compose</a></p></div></div>
+
+<h3 id="创建-docker-compose-yaml-文件"><a href="#创建-docker-compose-yaml-文件" class="headerlink" title="创建 docker-compose.yaml 文件"></a>创建 docker-compose.yaml 文件</h3><p>本文选择将容器部署在 <code>/opt/fizzy</code> 目录下，数据目录保存在相同的目录中，便于 <mark>一键打包备份</mark> 。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">创建容器目录</span></span><br><span class="line">sudo mkdir -p /opt/fizzy</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">进入容器目录</span></span><br><span class="line">cd /opt/fizzy</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">创建数据目录</span></span><br><span class="line">sudo mkdir storage</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">调整数据目录权限</span></span><br><span class="line">sudo chown 1000:1000 storage</span><br></pre></td></tr></table></figure>
+
+<p>然后创建 <code>compose.yaml</code> 文件: </p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">fizzy:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">ghcr.io/basecamp/fizzy:main</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">fizzy</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">unless-stopped</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;127.0.0.1:3080:80&quot;</span></span><br><span class="line">      <span class="comment"># - &quot;443:443&quot;</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="comment"># 必填：Rails secret</span></span><br><span class="line">      <span class="attr">SECRET_KEY_BASE:</span> <span class="string">&quot;&lt;SECRET_KEY_BASE&gt;&quot;</span></span><br><span class="line">      <span class="comment"># 访问域名</span></span><br><span class="line">      <span class="attr">BASE_URL:</span> <span class="string">&quot;https://fizzy.example.com&quot;</span></span><br><span class="line"></span><br><span class="line">      <span class="comment"># SMTP（用于 magic link 登录邮件）</span></span><br><span class="line">      <span class="comment"># SMTP_ADDRESS: &quot;mail.example.com&quot;</span></span><br><span class="line">      <span class="comment"># SMTP_USERNAME: &quot;user&quot;</span></span><br><span class="line">      <span class="comment"># SMTP_PASSWORD: &quot;pass&quot;</span></span><br><span class="line">      <span class="comment"># MAILER_FROM_ADDRESS: &quot;Fizzy &lt;fizzy@example.com&gt;&quot;</span></span><br><span class="line"></span><br><span class="line">      <span class="comment"># 可选：Web Push（如果你想要浏览器推送通知）</span></span><br><span class="line">      <span class="comment"># VAPID_PUBLIC_KEY: &quot;...&quot;</span></span><br><span class="line">      <span class="comment"># VAPID_PRIVATE_KEY: &quot;...&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./storage:/rails/storage</span></span><br></pre></td></tr></table></figure>
+
+
+<p>需要设置的部分：</p>
+<ul>
+<li><code>SECRET_KEY_BASE:</code> 使用 <code>openssl rand -hex 32</code> 命令生成，或是通过 <a href="https://tools.ooo.run/zh/session-secret/">简易工具 - Session Secret</a> 网页生成</li>
+<li><code>BASE_URL:</code> 设置访问时的域名，Fizzy 注重安全设计，需要使用 <strong>https</strong> 访问</li>
+</ul>
+<div class="flatpaper-note flatpaper-note--default"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>Fizzy 通过邮件发送 <mark>验证码</mark> 的方式进行登陆，如果希望发送邮件需要设置 SMTP 部分，但不是必须的，如果不设置 SMTP 可以使用后文随附 <code>docker</code> 命令查询。</p></div></div>
+
+<h3 id="启动-Docker-镜像"><a href="#启动-Docker-镜像" class="headerlink" title="启动 Docker 镜像"></a>启动 Docker 镜像</h3><p>只需一行 Docker Compose 命令即可后台常驻启动</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker compose up -d</span><br></pre></td></tr></table></figure>
+
+<h2 id="访问-Fizzy"><a href="#访问-Fizzy" class="headerlink" title="访问 Fizzy"></a>访问 Fizzy</h2><p>首先我们设置 web 服务器的代理指向 <code>3080</code></p>
+<h3 id="Nginx-反向代理配置"><a href="#Nginx-反向代理配置" class="headerlink" title="Nginx 反向代理配置"></a>Nginx 反向代理配置</h3><p>如果使用 Nginx 作为反向代理，可以创建一个新的站点配置，例如：</p>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">80</span>;</span><br><span class="line">    <span class="attribute">server_name</span> fizzy.example.com;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 将 HTTP 自动跳转到 HTTPS</span></span><br><span class="line">    <span class="attribute">return</span> <span class="number">301</span> https://<span class="variable">$host</span><span class="variable">$request_uri</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">443</span> ssl http2;</span><br><span class="line">    <span class="attribute">server_name</span> fizzy.example.com;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">ssl_certificate</span> /etc/nginx/ssl/fizzy.example.com/fullchain.pem;</span><br><span class="line">    <span class="attribute">ssl_certificate_key</span> /etc/nginx/ssl/fizzy.example.com/privkey.pem;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">client_max_body_size</span> <span class="number">50M</span>;</span><br><span class="line"></span><br><span class="line">    <span class="section">location</span> / &#123;</span><br><span class="line">        <span class="attribute">proxy_pass</span> http://127.0.0.1:3080;</span><br><span class="line"></span><br><span class="line">        <span class="attribute">proxy_http_version</span> <span class="number">1</span>.<span class="number">1</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> Host <span class="variable">$host</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Real-IP <span class="variable">$remote_addr</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Forwarded-Proto https;</span><br><span class="line"></span><br><span class="line">        <span class="comment"># WebSocket 支持</span></span><br><span class="line">        <span class="attribute">proxy_set_header</span> Upgrade <span class="variable">$http_upgrade</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> Connection <span class="string">&quot;upgrade&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果你使用的是 Certbot 申请证书，也可以先配置 HTTP 站点，再执行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> certbot --nginx -d fizzy.example.com</span><br></pre></td></tr></table></figure>
+
+<p>证书配置完成后，访问 <code>https://fizzy.example.com</code> 即可打开 Fizzy。</p>
+<h3 id="Caddy-反向代理配置"><a href="#Caddy-反向代理配置" class="headerlink" title="Caddy 反向代理配置"></a>Caddy 反向代理配置</h3><p>如果使用 Caddy，配置会更加简单。编辑 Caddyfile：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">fizzy.example.com &#123;</span><br><span class="line">    reverse_proxy 127.0.0.1:3080</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Caddy 会自动申请和续期 HTTPS 证书，只需要确保域名已经正确解析到服务器，并且服务器的 <code>80</code> 和 <code>443</code> 端口已经放行。</p>
+<p>修改完成后，重新加载 Caddy：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl reload caddy</span><br></pre></td></tr></table></figure>
+<p>然后访问：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">https://fizzy.example.com</span><br></pre></td></tr></table></figure>
+<p>即可进入 Fizzy 登录页面。</p>
+<h3 id="注册登录"><a href="#注册登录" class="headerlink" title="注册登录"></a>注册登录</h3><p>然后打开浏览器即可 BASE_URL 的域名即可打开登录页面</p>
+<p><img src="https://img.nep.me/ooo/fizzy-login.webp" alt="fizzy-login.png"></p>
+<p>Fizzy 只能通过邮箱接收验证码进行登陆，如果你设置了正确的 SMTP，在邮箱查看验证码即可。</p>
+<h3 id="使用-Docker-命令获取验证码"><a href="#使用-Docker-命令获取验证码" class="headerlink" title="使用 Docker 命令获取验证码"></a>使用 Docker 命令获取验证码</h3><p>如果觉得只是个人使用，不想设置 SMTP，可以通过下面的命令手动查询最后生成的验证码：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker compose <span class="built_in">exec</span> fizzy bin/rails runner <span class="string">&#x27;p MagicLink.column_names; p MagicLink.last&amp;.attributes&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>输出内容</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span><span class="string">&quot;id&quot;</span> =&gt; <span class="string">&quot;abcdefg.....&quot;</span><span class="punctuation">,</span> <span class="string">&quot;code&quot;</span> =&gt; <span class="string">&quot;ABCEFG&quot;</span><span class="punctuation">,</span></span><br></pre></td></tr></table></figure>
+<p>使用 code 后面的六个字符登陆即可。</p>
+<h3 id="添加-Passkey"><a href="#添加-Passkey" class="headerlink" title="添加 Passkey"></a>添加 Passkey</h3><p>然而总不能每次登陆都打开服务器查询， Fizzy 支持添加 Passkey 。 </p>
+<p>点击顶部或是按 <code>J</code> 打开设置面板，然后点击 <code>My Profile</code>，左下角有 <code>Manage passkey</code> 的按钮，点击即可添加 Passkey。 之后就可以快捷方便的登录了。</p>
+<img src="https://img.nep.me/ooo/fizzy-add-passkey.webp" alt="fizzy-add-passkey.png" style="width:75%;max-width:100%;height:auto" />
+
+<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>推荐： <a href="https://ooo.run/post/use-docker-run-bitwarden.html">使用 Docker 轻松部署 Bitwarden 服务端，搭建你自己的密码管理器</a></p></div></div>
+
+<h2 id="使用介绍"><a href="#使用介绍" class="headerlink" title="使用介绍"></a>使用介绍</h2><p>输入验证码登陆后，即可进入 Fizzy 的 Playground 主面板，目前 Fizzy 仅支持英文界面。</p>
+<p><img src="https://img.nep.me/ooo/fizzy-playgroud.webp" alt="fizzy-playgroud.png"></p>
+<p>在 Fizzy 中，每一列是一个看板，可以用于表示任务的状态或是属性，自带的卡片会介绍 Fizzy 的使用方法。简</p>
+<p>单的来说，对于默认三个看板：</p>
+<ul>
+<li><strong>NotNow:</strong> 现在不需要处理的任务，超过 30 天没有更新卡片将自动移动到这里</li>
+<li><strong>MAYBE?:</strong> 可能需要处理的任务</li>
+<li><strong>DONE:</strong> 已完成的任务<br>可以点击 <code>DONE</code> 右侧的 <code>+</code> 可以根据需要创建自定义看板</li>
+</ul>
+<p>现在就开始规划整理你的任务吧！</p>
+<h2 id="安全提示"><a href="#安全提示" class="headerlink" title="安全提示"></a>安全提示</h2><p>::: danger<br>如果将 Fizzy 部署在云端服务器中， Docker 容器端口不要使用 <code>&quot;3080:80&quot;</code> 直接监听公网，建议使用 <code>&quot;127.0.0.1:3080:80&quot;</code>，再通过 Nginx 或 Caddy 反向代理提供 HTTPS 访问。<br>&#96;&#96;&#96;</p>
+]]></content>
+      <categories>
+        <category>教程</category>
+      </categories>
+      <tags>
+        <tag>Docker</tag>
+        <tag>Fizzy</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>解决 Antigravity 通过 SSH 连接远程服务器崩溃的问题</title>
+    <url>/post/fix-antigravity-ssh-remote-crash-problem.html</url>
+    <content><![CDATA[<h2 id="问题详情"><a href="#问题详情" class="headerlink" title="问题详情"></a>问题详情</h2><p>在使用 Google Antigravity 通过 SSH 连接运行在 <strong>PVE</strong> 的 <strong>Linux 虚拟机</strong> 时，会直接崩溃，报错信息如下：</p>
+<blockquote>
+<p>Antigravity server crashed unexpectedly. Please restart to fully restore AI features.</p>
+</blockquote>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>在 PVE 中将 Linux 虚拟机的 <strong>CPU 类型</strong> 设置为 <code>host</code>，再尝试连接就可以了。</p>
+<p>参考： <a href="https://discuss.ai.google.dev/t/antigravity-crashes-on-linux-but-works-on-windows/110355/3">Antigravity crashes on Linux, but works on Windows</a></p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>Antigravity</tag>
       </tags>
   </entry>
   <entry>
@@ -6428,6 +6415,71 @@
       </tags>
   </entry>
   <entry>
+    <title>台北电脑展：Nvidia 发布面向 PC 的 RTX Spark CPU，信息一览</title>
+    <url>/post/nvidia-announce-rtx-spark.html</url>
+    <content><![CDATA[<p>2026 年 6 月 1 日，之前各大科技品牌官推的 <code>A new era of PC.</code> 谜底终于揭晓：</p>
+<p>NVIDIA 在台北的 Computex 2026 正式发布了面向 PC 的 RTX Spark SoC ，定位为 AI PC 平台，面向轻薄本、AI 开发、创意工作站和高端 Windows PC。</p>
+<h2 id="RTX-Spark-最新发布重点"><a href="#RTX-Spark-最新发布重点" class="headerlink" title="RTX Spark 最新发布重点"></a>RTX Spark 最新发布重点</h2><h3 id="参数信息"><a href="#参数信息" class="headerlink" title="参数信息"></a>参数信息</h3><table>
+<thead>
+<tr>
+<th align="center">项目</th>
+<th>规格</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong>CPU</strong></td>
+<td>Grace ARM，最高 <strong>20</strong> 核心</td>
+</tr>
+<tr>
+<td align="center"><strong>GPU</strong></td>
+<td>Blackwell RTX GPU， <strong>6144</strong> 个 CUDA Core</td>
+</tr>
+<tr>
+<td align="center">内存</td>
+<td>最高 <strong>128GB</strong> 统一内存</td>
+</tr>
+<tr>
+<td align="center">AI 算力</td>
+<td>1 PFLOPS（FP4）</td>
+</tr>
+<tr>
+<td align="center">产品定位</td>
+<td>AI PC &#x2F; 创意工作站 &#x2F; 高端 Windows PC</td>
+</tr>
+<tr>
+<td align="center">上市时间</td>
+<td>2026 年秋季</td>
+</tr>
+</tbody></table>
+<p>GPU 的 6144 个 CUDA Core 规格接近桌面级 <strong>Nvidia RTX 5070</strong>，官方宣称 <code>FP4</code> AI 算力达到 <strong>1 PFLOPS</strong>， 略高于 RTX 5070 的 AI 算力指标。</p>
+<h2 id="官方卖点"><a href="#官方卖点" class="headerlink" title="官方卖点"></a>官方卖点</h2><p>NVIDIA 宣称其是“史上能效最高的 PC 芯片”，发布会并未公布功耗信息，根据 <a href="https://giznewsdaily.com/nvidia-n1x-leak-reveals-limited-availability-in-2026/">泄漏信息</a>  显示 TDP 约为 65-120W。</p>
+<p>NVIDIA 强调的卖点：  </p>
+<ul>
+<li>本地运行 AI Agent</li>
+<li>本地推理保护隐私</li>
+<li>视频编辑、3D 渲染、AI 创作加速</li>
+<li>高性能但低功耗的轻薄本体验</li>
+</ul>
+<h2 id="产品信息"><a href="#产品信息" class="headerlink" title="产品信息"></a>产品信息</h2><p>微软、Dell、HP、Lenovo、ASUS 等厂商已宣布采用 RTX Spark 平台推出新的产品。</p>
+<p><img src="https://img.nep.me/2026/06/rtx-spark-oem.webp" alt="rtx-spark-oem.jpeg"></p>
+<p>其中微软宣布 <a href="https://www.microsoft.com/en-us/surface/devices/surface-laptop-ultra/">Surface Laptop Ultra</a> 将在 2026 年秋季上市</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>RTX Spark 标志着在云端 AI 生成占据统治地位的 NVIDIA 正式进入面向个人 AI 的 PC SoC 市场。</p>
+<p>与传统 Windows PC 的 x86 + 独立显卡方案不同，RTX Spark 试图通过 ARM CPU、Blackwell GPU 与统一内存架构，打造类似 Apple Silicon 的高性能 AI PC 平台。</p>
+<p>如果 NVIDIA 能兑现其能效与 AI 性能承诺，RTX Spark 有望成为未来高端 Windows AI PC 的重要选择。</p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
+<li><a href="https://blogs.nvidia.cn/blog/nvidia-microsoft-windows-pcs-agents-rtx-spark/">NVIDIA 携手微软，在个人 AI 时代重塑 Windows PC</a></li>
+<li><a href="https://www.nvidia.cn/gtc/taipei/keynote/">NVIDIA GTC 台北 2026 主题演讲回放</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>资讯</category>
+      </categories>
+      <tags>
+        <tag>RTX</tag>
+        <tag>RTX Spark</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>OpenAI 发布 GPT-5.6 系列模型：Sol、Terra 和 Luna 开启有限预览，受美国政府要求限制初始访问</title>
     <url>/post/openai-gpt-5-6-limited-preview.html</url>
     <content><![CDATA[<p><strong>日期：美国时间 2026年6月26日</strong></p>
@@ -6496,71 +6548,6 @@
         <tag>OpenAI</tag>
         <tag>Codex</tag>
         <tag>Codex APP</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>台北电脑展：Nvidia 发布面向 PC 的 RTX Spark CPU，信息一览</title>
-    <url>/post/nvidia-announce-rtx-spark.html</url>
-    <content><![CDATA[<p>2026 年 6 月 1 日，之前各大科技品牌官推的 <code>A new era of PC.</code> 谜底终于揭晓：</p>
-<p>NVIDIA 在台北的 Computex 2026 正式发布了面向 PC 的 RTX Spark SoC ，定位为 AI PC 平台，面向轻薄本、AI 开发、创意工作站和高端 Windows PC。</p>
-<h2 id="RTX-Spark-最新发布重点"><a href="#RTX-Spark-最新发布重点" class="headerlink" title="RTX Spark 最新发布重点"></a>RTX Spark 最新发布重点</h2><h3 id="参数信息"><a href="#参数信息" class="headerlink" title="参数信息"></a>参数信息</h3><table>
-<thead>
-<tr>
-<th align="center">项目</th>
-<th>规格</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center"><strong>CPU</strong></td>
-<td>Grace ARM，最高 <strong>20</strong> 核心</td>
-</tr>
-<tr>
-<td align="center"><strong>GPU</strong></td>
-<td>Blackwell RTX GPU， <strong>6144</strong> 个 CUDA Core</td>
-</tr>
-<tr>
-<td align="center">内存</td>
-<td>最高 <strong>128GB</strong> 统一内存</td>
-</tr>
-<tr>
-<td align="center">AI 算力</td>
-<td>1 PFLOPS（FP4）</td>
-</tr>
-<tr>
-<td align="center">产品定位</td>
-<td>AI PC &#x2F; 创意工作站 &#x2F; 高端 Windows PC</td>
-</tr>
-<tr>
-<td align="center">上市时间</td>
-<td>2026 年秋季</td>
-</tr>
-</tbody></table>
-<p>GPU 的 6144 个 CUDA Core 规格接近桌面级 <strong>Nvidia RTX 5070</strong>，官方宣称 <code>FP4</code> AI 算力达到 <strong>1 PFLOPS</strong>， 略高于 RTX 5070 的 AI 算力指标。</p>
-<h2 id="官方卖点"><a href="#官方卖点" class="headerlink" title="官方卖点"></a>官方卖点</h2><p>NVIDIA 宣称其是“史上能效最高的 PC 芯片”，发布会并未公布功耗信息，根据 <a href="https://giznewsdaily.com/nvidia-n1x-leak-reveals-limited-availability-in-2026/">泄漏信息</a>  显示 TDP 约为 65-120W。</p>
-<p>NVIDIA 强调的卖点：  </p>
-<ul>
-<li>本地运行 AI Agent</li>
-<li>本地推理保护隐私</li>
-<li>视频编辑、3D 渲染、AI 创作加速</li>
-<li>高性能但低功耗的轻薄本体验</li>
-</ul>
-<h2 id="产品信息"><a href="#产品信息" class="headerlink" title="产品信息"></a>产品信息</h2><p>微软、Dell、HP、Lenovo、ASUS 等厂商已宣布采用 RTX Spark 平台推出新的产品。</p>
-<p><img src="https://img.nep.me/2026/06/rtx-spark-oem.webp" alt="rtx-spark-oem.jpeg"></p>
-<p>其中微软宣布 <a href="https://www.microsoft.com/en-us/surface/devices/surface-laptop-ultra/">Surface Laptop Ultra</a> 将在 2026 年秋季上市</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>RTX Spark 标志着在云端 AI 生成占据统治地位的 NVIDIA 正式进入面向个人 AI 的 PC SoC 市场。</p>
-<p>与传统 Windows PC 的 x86 + 独立显卡方案不同，RTX Spark 试图通过 ARM CPU、Blackwell GPU 与统一内存架构，打造类似 Apple Silicon 的高性能 AI PC 平台。</p>
-<p>如果 NVIDIA 能兑现其能效与 AI 性能承诺，RTX Spark 有望成为未来高端 Windows AI PC 的重要选择。</p>
-<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
-<li><a href="https://blogs.nvidia.cn/blog/nvidia-microsoft-windows-pcs-agents-rtx-spark/">NVIDIA 携手微软，在个人 AI 时代重塑 Windows PC</a></li>
-<li><a href="https://www.nvidia.cn/gtc/taipei/keynote/">NVIDIA GTC 台北 2026 主题演讲回放</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>资讯</category>
-      </categories>
-      <tags>
-        <tag>RTX</tag>
-        <tag>RTX Spark</tag>
       </tags>
   </entry>
   <entry>
