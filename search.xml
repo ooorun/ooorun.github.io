@@ -580,265 +580,6 @@
       </tags>
   </entry>
   <entry>
-    <title>使用 Hexo + GitHub 建立个人博客</title>
-    <url>/post/start-blog-with-hexo-and-github.html</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>欢迎来到我的世界！这里是 Mr. O。你是否也有过这样的想法：拥有一个属于自己的博客，记录生活的点滴、分享自己的经验或者展示你的专业技能？</p>
-<p>其实，搭建一个个人博客并不像想象的那么复杂。借助 GitHub 提供的免费托管服务，以及功能强大、简单易用的 Hexo 静态博客框架，我么可以轻松打造一个属于自己的博客平台。而且，这个过程完全免费！</p>
-<p>在本文中，我将带你一步步了解如何利用 GitHub Pages 和 Hexo 快速部署一个美观、实用的个人博客，让你的思想在网络世界自由驰骋。</p>
-<p>让我们开始吧！</p>
-<h3 id="Hexo"><a href="#Hexo" class="headerlink" title="Hexo"></a>Hexo</h3><p><a href="(https://hexo.io">Hexo</a> 是一个快速、简洁且高效的博客框架，支持丰富的 <a href="https://hexo.io/themes/">主题</a> ，我们只需要使用 Markdown 语法编写文章，Hexo 将为我们生成网站的文件。     </p>
-<h3 id="GitHub"><a href="#GitHub" class="headerlink" title="GitHub"></a>GitHub</h3><p><a href="https://github.com/">GitHub</a> 是全球最大的代码托管网站和开源社区，我们可以使用 GitHub 免费的 <a href="https://pages.github.com/">Pages</a> 服务托管我们的博客。  </p>
-<p>如果你还没有 Github 账户，可以免费注册一个： <a href="https://github.com/signup">https://github.com/signup</a></p>
-<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>拥有了 GitHub 账户之后，我们需要在电脑上安装下面的软件</p>
-<ul>
-<li>安装 <a href="https://nodejs.org/zh-cn/download/package-manager">Node.js</a> ：查看 <a href="https://ooo.run/post/how-to-install-nodejs.html">如何安装 Node.js</a></li>
-<li>安装 <a href="https://git-scm.com/downloads">git</a><ul>
-<li>Windows 下载安装包进行安装</li>
-<li>macOS 安装 Homebrew 时会自动安装</li>
-</ul>
-</li>
-<li>一个文本编辑器，推荐安装 <a href="https://code.visualstudio.com/">Visual Studio Code</a></li>
-</ul>
-<p>VS Code 安装后可以点击左侧扩展，搜索 <strong>简体中文</strong> 安装语言包，点击 Install 后点击右下角 Change Language and Restart 重启<br><img src="https://img.nep.me/i/2024/12/15/zc1bl7-2.webp" style="width:50%;" alt="image" /></p>
-<p>安装完成后打开终端程序，可以通过查询版本命令确认是否完成安装。</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt; npm -v</span><br><span class="line">10.9.2</span><br><span class="line"></span><br><span class="line">&gt; git -v</span><br><span class="line">git version 2.47.0</span><br></pre></td></tr></table></figure>
-
-<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p><strong>如何打开终端</strong>：</p>
-<p>使用 <strong>VS Code</strong> ，可以按 Ctrl + ` (Esc 下面的按键) 快捷键在底部打开终端程序。<br>也可以使用菜单 <strong>终端</strong> &gt; <strong>打开终端</strong></p></div></div>
-
-<h3 id="VSCode-终端执行命令报错？"><a href="#VSCode-终端执行命令报错？" class="headerlink" title="VSCode 终端执行命令报错？"></a>VSCode 终端执行命令报错？</h3><p>设置默认终端为 cmd 即可</p>
-<img src="https://img.nep.me/i/2024/12/15/zg4n8w-2.webp" style="width:50%;" alt="image" />
-
-<img src="https://img.nep.me/i/2024/12/15/zg6gyd-2.webp" style="width:50%;" alt="image" />
-
-<p>然后关闭 VS Code 重新打开</p>
-<h2 id="安装-Hexo"><a href="#安装-Hexo" class="headerlink" title="安装 Hexo"></a>安装 Hexo</h2><p>我们需要在终端内使用 <code>npm</code> 命令安装我们的 Hexo 博客：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm install hexo-cli -g</span><br></pre></td></tr></table></figure>
-
-<p>执行结束后，再执行 <code>hexo -v</code>  命令，如果成功输出版本信息则表示安装成功：  </p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt; hexo -v</span><br><span class="line">hexo-cli: 4.3.2</span><br><span class="line">os: darwin 24.1.0 15.1.1</span><br><span class="line">node: 23.3.0</span><br><span class="line">acorn: 8.14.0</span><br><span class="line"><span class="comment"># ...</span></span><br></pre></td></tr></table></figure>
-
-<p>然后创建一个空文件夹用于存放博客文件，创建后使用 VS Code 选择 <code>打开文件夹</code> 打开它，再打开 VS Code 的终端，依次运行下面的命令</p>
-<h3 id="初始化博客"><a href="#初始化博客" class="headerlink" title="初始化博客"></a>初始化博客</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">hexo init</span><br></pre></td></tr></table></figure>
-
-<p>此时可以查看 VS Code 侧边栏，已自动生成了很多文件，一般我们只需要关注 <code>source</code> 中的内容，其中 <code>_posts</code> 是我们存放博客文章的地方。<br><img src="https://img.nep.me/i/2024/12/13/p5boqx-2.webp" alt="VS Code Sidebar">  </p>
-<h3 id="预览博客"><a href="#预览博客" class="headerlink" title="预览博客"></a>预览博客</h3><p>使用 <code>hexo s</code> 命令可以在电脑本地预览网站效果。</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt; hexo s</span><br><span class="line"><span class="comment"># 如果输出下面内容就表示成功了</span></span><br><span class="line">INFO  Validating config</span><br><span class="line">INFO  Start processing</span><br><span class="line">INFO  Hexo is running at http://localhost:4000/ . Press Ctrl+C to stop.</span><br></pre></td></tr></table></figure>
-<p>然后我们就可以打开浏览器，访问 <a href="http://localhost:4000/">http://localhost:4000/</a> 即可查看网站预览。  </p>
-<p><img src="https://img.nep.me/i/2024/12/13/bp3m0l-2.webp" alt="Hexo Preview"></p>
-<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p><code>hexo s</code>  是 <code>hexo server</code> 的简短形式，更加方便</p></div></div> 
-
-<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>VS Code 内 Windows 按住 <code>Ctrl</code> , macOS 按住 <code>Commond⌘</code> 点击终端内链接可以快速打开</p></div></div> 
-
-<div class="flatpaper-note flatpaper-note--warning"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>不需要时后按 <code>Ctrl + C</code> 结束进程</p></div></div> 
-
-<h3 id="设置博客信息"><a href="#设置博客信息" class="headerlink" title="设置博客信息"></a>设置博客信息</h3><p>我们需要编辑根目录下的 <code>_config.yml</code> 文件设置我们自己的站点信息</p>
-<figure class="highlight yml"><figcaption><span>_config.yml</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="comment"># Site</span></span><br><span class="line"><span class="comment">## title 是站点的名称</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">&#x27;O’s World&#x27;</span></span><br><span class="line"><span class="comment">## subtitle 副标题，一般会显示在站点名称的下面</span></span><br><span class="line"><span class="attr">subtitle:</span> <span class="string">&#x27;Mr. O 的分享小站，分享有趣的事情&#x27;</span></span><br><span class="line"><span class="comment">## description 描述站点的内容</span></span><br><span class="line"><span class="attr">description:</span> <span class="string">&#x27;探索互联网世界，分享实用教程与精彩内容，发现更多有趣之处。&#x27;</span></span><br><span class="line"><span class="comment">## keywords 是站点的关键词，用于搜索引擎的 SEO 优化，填写几个单词，告诉搜索引擎一些信息。</span></span><br><span class="line"><span class="attr">keywords:</span> </span><br><span class="line"><span class="comment">## author 是作者的名称，一般使用自己的昵称</span></span><br><span class="line"><span class="attr">author:</span> <span class="string">Mr.</span> <span class="string">O</span></span><br><span class="line"><span class="comment">## 站点的语言</span></span><br><span class="line"><span class="attr">language:</span> <span class="string">zh-CN</span></span><br><span class="line"><span class="comment">## timezone 是时区，如果只在电脑上编辑文件，不需要填写， Hexo 会根据本地电脑的时间生成</span></span><br><span class="line"><span class="attr">timezone:</span> <span class="string">&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># URL</span></span><br><span class="line"><span class="comment">## url 是设置站点的域名，可以使用 github 提供的 &#x27;https://username.github.io/project&#x27;</span></span><br><span class="line"><span class="attr">url:</span> <span class="string">http://ooo.run</span></span><br><span class="line"><span class="comment">## permalink 是网站文章的链接格式</span></span><br><span class="line"><span class="attr">permalink:</span> <span class="string">post/:title.html</span></span><br></pre></td></tr></table></figure>
-<p><code>permalink</code> 指的是文章的 url 格式，我喜欢使用 <code>post/:title.html</code> 比较简洁，其中 <code>:title</code> 指的是文件名称。 </p>
-<img src="https://img.nep.me/i/2024/12/13/8t0d4s-2.webp" style="width:50%;" alt="hexo url preview" />
-
-<p>默认的是 <code>:year/:month/:day/:title/</code> 会自动添加发布日期信息。  </p>
-<img src="https://img.nep.me/i/2024/12/13/8t2ul8-2.webp" style="width:50%;" alt="hexo url preview" />
-
-<div class="flatpaper-note flatpaper-note--warning"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>编辑 yml 格式文件时，<code>:</code> 后面需要根一个空格，否则会报错，内容可以使用单引号包裹。</p></div></div> 
-
-<p>编辑后可以重新执行 <code>hexo s</code> 进行预览。 </p>
-<h3 id="添加主题-Butterfly"><a href="#添加主题-Butterfly" class="headerlink" title="添加主题(Butterfly)"></a>添加主题(Butterfly)</h3><p>Hexo 支持很多主题，下面将使用并设置的是 <a href="https://butterfly.js.org/">Butterfly</a> 主题。</p>
-<p>先安装一下所需的依赖</p>
-<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-11-tab-0" aria-controls="tabs-11-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">npm</button><button type="button" role="tab" id="tabs-11-tab-1" aria-controls="tabs-11-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">pnpm</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-11-panel-0" aria-labelledby="tabs-11-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm install hexo-util moment-timezone hexo-renderer-pug hexo-renderer-stylus --save</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-11-panel-1" aria-labelledby="tabs-11-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pnpm install hexo-util moment-timezone hexo-renderer-pug hexo-renderer-stylus</span><br></pre></td></tr></table></figure></section></div></div>
-
-<p>打开终端，在博客目录下执行下面的命令下载主题</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> -b master https://github.com/jerryc127/hexo-theme-butterfly.git themes/butterfly</span><br></pre></td></tr></table></figure>
-
-<p>然后编辑博客目录下 <code>_config.yml</code> 文件，将底部的主题设置 <code>theme: landscape</code> 修改为 <code>butterfly</code></p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">theme:</span> <span class="string">butterfly</span></span><br></pre></td></tr></table></figure>
-<p>运行 <code>hexo s</code> 预览主题效果。</p>
-<p>为了避免主题未来更新覆盖了我们自定义的配置，可以复制一下主题的配置文件<br>Windows CMD</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">copy themes\butterfly\_config.yml _config.butterfly.yml</span><br></pre></td></tr></table></figure>
-
-<p>macOS &#x2F; Linux </p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cp</span> themes/butterfly/_config.yml _config.butterfly.yml</span><br></pre></td></tr></table></figure>
-<p>然后我们就可以在博客目录下面的 <code>_config.butterfly.yml</code> 对主题进行自定义设置，可以修改一些功能以及设置导航菜单。</p>
-<p>有关主题配置文件选项的中文标注可以查看 <a href="https://butterfly.js.org/posts/4aa8abbe/">Butterfly 文档(三) 主题配置</a></p>
-<h3 id="添加文章"><a href="#添加文章" class="headerlink" title="添加文章"></a>添加文章</h3><p>我们可以使用命令 <code>hexo n postname</code> 创建一个新的文章，这个命令等同于</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">hexo new post postname</span><br></pre></td></tr></table></figure>
-<p>这会在 <code>source/_post</code> 文件夹下面创建一个名称为 <code>postname.md</code> 的文件。  </p>
-<p>我们可以使用 VS Code 编辑这个文件，文章使用 Markdown 语法，打开这个文件后我们可以看到已自动填充了一些内容。   </p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">postname</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2024-12-11 22:30:38</span></span><br><span class="line"><span class="attr">tags:</span></span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></figure>
-
-<p><code>title</code> 是现实的文章标题名称，<code>date</code> 是发布日期，<code>tags</code> 是文章的标签，这都是可以修改的，我们还可以添加更多的信息，比如分类和主图。 </p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="comment"># 必须部分</span></span><br><span class="line"><span class="comment"># 文章名称</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">一个文章</span></span><br><span class="line"><span class="comment"># 发布日期</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2024-12-11 22:30:38</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 下面可选的</span></span><br><span class="line"><span class="comment"># 标签</span></span><br><span class="line"><span class="attr">tags:</span></span><br><span class="line"> <span class="bullet">-</span> <span class="string">标签1</span></span><br><span class="line"> <span class="bullet">-</span> <span class="string">标签2</span></span><br><span class="line"><span class="comment"># 分类</span></span><br><span class="line"><span class="attr">categories:</span> <span class="string">教程</span></span><br><span class="line"><span class="comment"># 关闭评论（默认是开启，可以不写）</span></span><br><span class="line"><span class="attr">comments:</span> <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 适用于 Butterfly 主题</span></span><br><span class="line"><span class="comment"># 缩略图</span></span><br><span class="line"><span class="attr">cover:</span> <span class="string">&#x27;https://arina.loli.net/2024/11/23/D3zqLFyGStUWQHZ.png&#x27;</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="comment"># 在 --- 下面使用 Markdown 或是 HTML 语法写文章</span></span><br><span class="line"><span class="comment"># ...</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="插入图片"><a href="#插入图片" class="headerlink" title="插入图片"></a>插入图片</h3><p>有时我们需要在图片中插入图片，我们只需要将图片放入 Hexo 目录中的 source 文件夹中，非常推荐单独建立一个文件夹比如 <code>images</code> 来存放图片。  </p>
-<p>假设我们有两张图片 1.png 与 2.png，此时文件目录是下面的样子 </p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">source/</span><br><span class="line">└── images/</span><br><span class="line">    ├── 1.png</span><br><span class="line">    └── 2.png</span><br></pre></td></tr></table></figure>
-
-<p>我们在文章中引用时，只需要使用下面的 Markdown 语法就可以了，路径以 <code>/</code> 开头，没有 <code>source</code>：</p>
-<figure class="highlight md"><table><tr><td class="code"><pre><span class="line">![](<span class="link">/images/1.png</span>)</span><br><span class="line">![<span class="string">2.png</span>](<span class="link">/images/2.png</span>)</span><br></pre></td></tr></table></figure>
-<p>虽然 VS Code 无法正常预览图片，但是通过 <code>hexo s</code> 在浏览器内预览就是正常的了。  </p>
-<h3 id="添加一些页面（Pages）"><a href="#添加一些页面（Pages）" class="headerlink" title="添加一些页面（Pages）"></a>添加一些页面（Pages）</h3><p>除了文章之外，我们还需要添加一些页面（Pages）：</p>
-<h4 id="标签页"><a href="#标签页" class="headerlink" title="标签页"></a>标签页</h4><p>在 Hexo 的根目录运行</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">hexo new page tags</span><br></pre></td></tr></table></figure>
-<p>会生成 <code>source/tags/index.md</code>，编辑这个文件</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">标签</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2024-12-13 07:55:00</span></span><br><span class="line"><span class="attr">type:</span> <span class="string">&#x27;tags&#x27;</span></span><br><span class="line"><span class="attr">orderby:</span> <span class="string">random</span></span><br><span class="line"><span class="attr">order:</span> <span class="number">1</span></span><br><span class="line"><span class="attr">comments:</span> <span class="literal">false</span></span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></figure>
-<p>就可以通过 <a href="http://localhost:4000/tags/">http://localhost:4000/tags/</a> 或是 <code>https://你的域名/tags</code> 进行访问</p>
-<h4 id="分类页"><a href="#分类页" class="headerlink" title="分类页"></a>分类页</h4><p>在 Hexo 的根目录运行</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">hexo new page categories</span><br><span class="line">```  </span><br><span class="line">会生成 `<span class="built_in">source</span>/categories/index.md`，编辑这个文件</span><br><span class="line"></span><br><span class="line">```yml</span><br><span class="line">---</span><br><span class="line">title: 分类</span><br><span class="line"><span class="built_in">date</span>: 2024-12-13 07:00:00</span><br><span class="line"><span class="built_in">type</span>: <span class="string">&#x27;categories&#x27;</span></span><br><span class="line">comments: <span class="literal">false</span></span><br><span class="line">---</span><br></pre></td></tr></table></figure>
-
-<h4 id="关于"><a href="#关于" class="headerlink" title="关于"></a>关于</h4><p>在 Hexo 的根目录运行</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">hexo new page about</span><br><span class="line">```  </span><br><span class="line">会生成 `<span class="built_in">source</span>/about/index.md`，编辑这个文件</span><br><span class="line"></span><br><span class="line">```yml</span><br><span class="line">---</span><br><span class="line">title: 分类</span><br><span class="line"><span class="built_in">date</span>: 2024-12-13 07:00:00</span><br><span class="line">---</span><br><span class="line"></span><br><span class="line"><span class="comment"># 以 Markdown 或是 HTML 格式编写内容 </span></span><br></pre></td></tr></table></figure>
-
-<p>about 不是 Hexo 内置页面类型，不需要添加 <code>types:</code> 但是需要我们自己以 Markdown 或是 HTML 格式编写一些自我介绍。  </p>
-<h4 id="将页面添加至导航"><a href="#将页面添加至导航" class="headerlink" title="将页面添加至导航"></a>将页面添加至导航</h4><p>编辑主题的配置文件 <code>_config.butterfly.yml</code>，修改 <code>menu</code> 部分</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">menu:</span><br><span class="line">  主页: / || fas fa-home</span><br><span class="line">  分类: /categories/ || fas fa-archive</span><br><span class="line">  标签: /tags/ || fas fa-tag</span><br><span class="line">  关于: /about/ || fas fa-user</span><br><span class="line">  友情链接: /link/ || fas fa-link</span><br></pre></td></tr></table></figure>
-<div class="flatpaper-note flatpaper-note--warning"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>修改主题配置文件， <code>hexo s</code> 命令无法及时刷新预览，需要 Ctrl + C 终止后重新运行</p></div></div>
-
-<p>保存后运行 <code>hexo s</code> 即可在右上角看到菜单。  </p>
-<h2 id="部署到-GitHub"><a href="#部署到-GitHub" class="headerlink" title="部署到 GitHub"></a>部署到 GitHub</h2><p>我们已经完成了主设置，并创建了新的文章，现在我们将把博客托管到 GitHub Pages 上，从而从网络上访问。</p>
-<p>访问 <a href="https://github.com/new">https://github.com/new</a> 创建一个新的仓库，<code>Repository name</code> 必须是 <code>&lt;username&gt;.github.io</code>，否则不会生效。</p>
-<p>然后打开终端，安装 <code>hexo-deployer-git</code> </p>
-<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-12-tab-0" aria-controls="tabs-12-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">npm</button><button type="button" role="tab" id="tabs-12-tab-1" aria-controls="tabs-12-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">pnpm</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-12-panel-0" aria-labelledby="tabs-12-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-12-panel-1" aria-labelledby="tabs-12-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pnpm install hexo-deployer-git</span><br></pre></td></tr></table></figure></section></div></div>
-
-<p>然后编辑博客目录下的 <code>_config.yml</code> 文件，设置底部的 deploy 部分。</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="comment"># 仓库地址</span></span><br><span class="line">  <span class="attr">repo:</span> <span class="string">https://github.com/&lt;username&gt;/&lt;username&gt;.github.io</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">gh-pages</span></span><br></pre></td></tr></table></figure>
-
-<p>首先打开终端，设置一下 Git 身份</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 设置 Git 身份</span></span><br><span class="line">git config --global user.email <span class="string">&quot;you@example.com&quot;</span></span><br><span class="line">git config --global user.name <span class="string">&quot;Your Name&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 让 Git 保存我们的登陆信息</span></span><br><span class="line">git config --global credential.helper store</span><br></pre></td></tr></table></figure>
-
-<p>然后运行</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">hexo g</span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure>
-
-<p>我们需要对 Git 程序进行授权，弹窗点击 <code>Sign in with your browser</code>  </p>
-<img src="https://img.nep.me/i/2024/12/15/10fxxim-2.webp" style="width:25%;" alt="image" />
-
-<p>下一步点击 <strong>Authorize git-ecosystem</strong><br><img src="https://img.nep.me/i/2024/12/15/10g85rg-2.webp" style="width:50%;" alt="image" /></p>
-<p>再下一步后输入密码，即可完成部署。  </p>
-<p>即可将网站推送到 GitHub 上。 </p>
-<p>成功的话会输出类似下面内容</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">Writing objects: 100% (16/16), 1.27 KiB | 1.27 MiB/s, <span class="keyword">done</span>.</span><br><span class="line">Total 16 (delta 6), reused 0 (delta 0), pack-reused 0 (from 0)</span><br><span class="line">remote: Resolving deltas: 100% (6/6), completed with 6 <span class="built_in">local</span> objects.</span><br><span class="line">To https://github.com/&lt;yourname&gt;/&lt;xxxxxxxxx&gt;.git</span><br><span class="line">   812f2f9..5ff5eac  HEAD -&gt; gh-pages</span><br><span class="line">branch <span class="string">&#x27;master&#x27;</span> <span class="built_in">set</span> up to track <span class="string">&#x27;https://github.com/&lt;yourname&gt;/&lt;xxxxxxxxx&gt;.git/gh-pages&#x27;</span>.</span><br><span class="line">INFO  Deploy <span class="keyword">done</span>: git</span><br></pre></td></tr></table></figure>
-
-<p>进阶教程：查看 <a href="https://ooo.run/post/how-to-add-ssh-key-to-github.html" target="_blank">如何使用 SSH key 连接 GitHub</a></p>
-<h3 id="设置-GitHub-Pages"><a href="#设置-GitHub-Pages" class="headerlink" title="设置 GitHub Pages"></a>设置 GitHub Pages</h3><p>在 GitHub 仓库的网页上，点击顶部 <strong>Settings</strong>，左侧找到 <strong>Pages</strong> ，编辑 <strong>Branch</strong> 部分，设置为 <code>gh-pages</code> + <code>/(root)</code> 点击 <strong>Save</strong> 保存。</p>
-<img src="https://img.nep.me/i/2024/12/13/8tl89y-2.webp" style="width:75%;" alt="gh-page-settings" />
-
-<p>然后就可以访问 <code>https://&lt;username&gt;.github.io</code> 查看网站，如果显示 404 可以稍微等几分钟。</p>
-<h3 id="绑定域名"><a href="#绑定域名" class="headerlink" title="绑定域名"></a>绑定域名</h3><h4 id="购买域名"><a href="#购买域名" class="headerlink" title="购买域名"></a>购买域名</h4><p>如果你拥有一个属于自己的域名，那么除了使用 GitHub 提供的免费二级域名之外，我们还可以设置使用自己的域名访问博客。  </p>
-<p>如果你还没有域名，推荐前往下面的两个网站购买一个 </p>
-<ul>
-<li><a href="https://www.cloudflare.com/">Cloudflare</a> 承诺以<strong>成本价</strong>销售域名，但是一般没有首年优惠</li>
-<li><a href="https://porkbun.com/">Porkbun</a> 查询结果点击 <code>Show All Extensions</code> &gt; <code>Sort by price</code> ，往往能看到不错的首年优惠<br>通常推荐选择常用的后缀比如 <code>.com</code> 、<code>.me</code> 进行注册。</li>
-</ul>
-<h4 id="绑定至-GitHub"><a href="#绑定至-GitHub" class="headerlink" title="绑定至 GitHub"></a>绑定至 GitHub</h4><p>首先第一步前往域名服务商或是 Cloudflare ，在 <strong>DNS</strong> 设置中添加一条 CNAME 域名记录</p>
-<ul>
-<li>类型为 <code>CNAME</code></li>
-<li>名称主域名填写 <code>@</code> ( 代表 <a href="https://ooo.run/">https://ooo.run</a> )，也可以是 www 或一个其他的子域名</li>
-<li>内容是 <code>username.github.io</code></li>
-</ul>
-<img src="https://img.nep.me/i/2024/12/14/r8178j-2.webp" style="width:75%;" alt="cloudflare cname" />
-
-<p>第二步访问 GitHub 网站，在仓库的 <code>Settings</code> &gt; <code>Pages</code> &gt; <code>Custon domain</code> 中，填写我们的域名。   </p>
-<img src="https://img.nep.me/i/2024/12/13/ahmi85-2.webp" style="width:50%;" alt="github-pages-custom-domain" />
-
-
-<p>第三步在 source 文件下创建一个 <code>CNAME</code> 文件，文件名是 <strong>大写字母</strong>，没有后缀，内容是我们需要使用的域名，比如 <code>example.com</code>。</p>
-<p>最后运行命令将更新推送至 GitHub 就可以了。  </p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">hexo g </span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure>
-
-<p>然后就可以通过自己的域名访问博客了。</p>
-<h2 id="添加评论系统"><a href="#添加评论系统" class="headerlink" title="添加评论系统"></a>添加评论系统</h2><p>Hexo 是不带评论系统的，需要我们自己添加，可以使用</p>
-<ul>
-<li>基于 GitHub 的 <strong>Giscus</strong> </li>
-<li>可以自己部署的 <strong>Twikoo</strong> 或 <strong>Arttalk</strong></li>
-<li>第三方评论系统 <strong>Disqus</strong> (包含广告)</li>
-</ul>
-<p>具体可以查看 <a href="https://ooo.run/post/how-to-add-comment-system-for-static-blog.html">为 Hexo 博客添加评论系统，Giscus or Twikoo or Arttalk or Disqus</a>  </p>
-<h2 id="常用的-Hexo-命令介绍"><a href="#常用的-Hexo-命令介绍" class="headerlink" title="常用的 Hexo 命令介绍"></a>常用的 Hexo 命令介绍</h2><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 本地预览</span></span><br><span class="line">hexo s</span><br><span class="line"><span class="comment"># 等同于</span></span><br><span class="line">hexo server</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成站点</span></span><br><span class="line">hexo g</span><br><span class="line"><span class="comment"># 等同于</span></span><br><span class="line">hexo generate</span><br><span class="line"></span><br><span class="line"><span class="comment"># 部署</span></span><br><span class="line">hexo d</span><br><span class="line"><span class="comment"># 等同于</span></span><br><span class="line">hexo deploy </span><br><span class="line"></span><br><span class="line"><span class="comment"># 清除缓存，有时遇到一些错误，可以先执行一下 hexo clean</span></span><br><span class="line">hexo cl</span><br><span class="line"><span class="comment"># 等同于</span></span><br><span class="line">hexo clean</span><br></pre></td></tr></table></figure>
-
-<h2 id="进阶：使用-GitHub-备份"><a href="#进阶：使用-GitHub-备份" class="headerlink" title="进阶：使用 GitHub 备份"></a>进阶：使用 GitHub 备份</h2><p>我们的博客数据源文件都保存在本地电脑上，如果更换电脑就需要手动进行备份。</p>
-<p>在源文件中我们需要关注的是：</p>
-<ul>
-<li><code>source</code> 文件夹: 保存着博客文章的源文件，如果丢失就只能重新开始了</li>
-<li><code>_config.yml</code>: 保存着站点设置信息</li>
-<li><code>_config.butterfly.yml</code>: 保存着主题设置信息</li>
-</ul>
-<p>最简单的方法是直接复制整个 Hexo 文件目录，手动拷贝到其他设备上，在新的设备上安装 Node.js 与 git 应用程序，适合只在特定设备写作需要更换设备时操作，毕竟手动复制在不同的设备上无法保持互相同步。  </p>
-<p>这里推荐使用 GitHub 备份我们整个 Hexo 文件夹。  </p>
-<div class="flatpaper-note flatpaper-note--warning"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>下面介绍的是备份至博客同一个目录下，由于仓库是公开的，请不要再配置文件内记录密码或是其他敏感个人信息。</p>
-<p>如果不想公开，可以创建一个 Private 仓库，用于存放备份</p></div></div>
-
-<p>在开始前，我们需要编辑主题目录下的 <code>.gitignore</code> ，在最后一行添加 <code>themes/</code>，忽略嵌套的 git 主题文件夹</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">themes/</span><br></pre></td></tr></table></figure>
-
-<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>如果希望连主题的文件夹一起备份<br>需要打开文件管理器删除主题目录 <code>themes/butterfly</code> 下的 <code>.git</code> 文件夹</p></div></div>
-<img src="https://img.nep.me/i/2024/12/15/10m93v4-2.webp" style="width:75%;" alt="image" />
-<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>macOS 可以按 <code>Command + Shift+ .</code> 显示隐藏文件夹 </p></div></div>
-
-<p>在 Hexo 根目录下执行下面的命令：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 初始化</span></span><br><span class="line">git init</span><br><span class="line"></span><br><span class="line"><span class="comment"># 切换分支名称为 main</span></span><br><span class="line">git branch -M main</span><br><span class="line"></span><br><span class="line"><span class="comment"># 追踪当前文件</span></span><br><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">&quot;first commit&quot;</span> --all</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加远程仓库，使用自己的仓库链接，替换 &lt;username&gt; </span></span><br><span class="line">git remote add origin https://github.com/&lt;username&gt;/&lt;username&gt;.github.io.git</span><br><span class="line"></span><br><span class="line"><span class="comment"># 推送到服务器</span></span><br><span class="line">git push -u origin main</span><br></pre></td></tr></table></figure>
-
-<h3 id="提交更新"><a href="#提交更新" class="headerlink" title="提交更新"></a>提交更新</h3><p>在本地更新了之后，在 Hexo 目录下使用 <code>git push</code> 命令同步到 GitHub。</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 如果有写新文章</span></span><br><span class="line">git add .</span><br><span class="line"></span><br><span class="line"><span class="comment"># 保存更新到本地 Git </span></span><br><span class="line"><span class="comment"># -m &quot;update&quot; 用于备注更新内容， update 可以自定义修改</span></span><br><span class="line">git commit -m <span class="string">&quot;update&quot;</span> --all</span><br><span class="line"></span><br><span class="line"><span class="comment"># 同步到 GitHub</span></span><br><span class="line">git push</span><br></pre></td></tr></table></figure>
-
-<p>此时访问 GitHub 仓库，点击顶部分支，其中 main 是存放我们备份的分支</p>
-<img src="https://img.nep.me/i/2024/12/15/10r2to3-2.webp" style="width:50%;" alt="image" />
-
-<h3 id="获取备份"><a href="#获取备份" class="headerlink" title="获取备份"></a>获取备份</h3><p>当 GitHub 文件比本地的新时（例如在别的设备更新过），在 Hexo 目录下使用 <code>git pull</code> 同步到本地</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">git pull</span><br></pre></td></tr></table></figure>
-
-<p><strong>当我们更换一个全新的设备时</strong>，需要先安装 Node.js 与 git ，再从 GitHub 服务器获取备份 </p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 将备份分支的数据下载到本地电脑</span></span><br><span class="line">git <span class="built_in">clone</span> -b main https://github.com/&lt;username&gt;/&lt;username&gt;.github.io.git </span><br><span class="line"></span><br><span class="line"><span class="comment"># 进入 Hexo 目录</span></span><br><span class="line"><span class="built_in">cd</span> &lt;username&gt;.github.io.git</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装依赖</span></span><br><span class="line">npm install</span><br><span class="line"></span><br><span class="line"><span class="comment"># 预览</span></span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
-
-<h3 id="使用-Github-Desktop"><a href="#使用-Github-Desktop" class="headerlink" title="使用 Github Desktop"></a>使用 Github Desktop</h3><p>每次都敲命令太麻烦？ 安装 <a href="https://desktop.github.com/download/">Github Desktop</a> ！ </p>
-<p><img src="https://img.nep.me/i/2024/12/13/xb5cee-2.webp"></p>
-<p>我们就可以使用图形化界面简单的进行操作，首先是顶部右侧的按钮</p>
-<p><img src="https://img.nep.me/i/2024/12/13/xeohvs-2.webp"></p>
-<ul>
-<li>默认 <code>Fetch origin</code> 是检查更新 </li>
-<li>当服务器比本地更新时，显示为 <code>Pull origin</code> 表示可以从 GiHub 获取更新 </li>
-<li>当本地比服务器更新时，显示为 <code>Push origin</code> 表示可以推送更新到 GitHub<br> 本地更新后，可以在左下角 <strong>Summary</strong> 中填写注释，点击 <code>Commit to main</code>，就可以推送更新了</li>
-</ul>
-<h2 id="其他操作"><a href="#其他操作" class="headerlink" title="其他操作"></a>其他操作</h2><h3 id="给站点添加搜索功能"><a href="#给站点添加搜索功能" class="headerlink" title="给站点添加搜索功能"></a>给站点添加搜索功能</h3><p>在 Hexo 根目录运行</p>
-<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-13-tab-0" aria-controls="tabs-13-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">npm</button><button type="button" role="tab" id="tabs-13-tab-1" aria-controls="tabs-13-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">pnpm</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-13-panel-0" aria-labelledby="tabs-13-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm install hexo-generator-searchdb --save</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-13-panel-1" aria-labelledby="tabs-13-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pnpm install hexo-generator-searchdb</span><br></pre></td></tr></table></figure></section></div></div>
-
-<p>修改站点配置文件 <code>_config.yml</code>，在最后新增</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">search:</span></span><br><span class="line">  <span class="attr">path:</span> <span class="string">search.xml</span></span><br><span class="line">  <span class="attr">field:</span> <span class="string">post</span></span><br><span class="line">  <span class="attr">content:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">format:</span> <span class="string">html</span></span><br></pre></td></tr></table></figure>
-
-<p>修改主题配置文件 <code>_config.butterfly.yml</code></p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 开启搜索</span></span><br><span class="line"><span class="attr">search:</span></span><br><span class="line">  <span class="attr">use:</span> <span class="string">local_search</span></span><br></pre></td></tr></table></figure>
-
-<p>然后就可以执行搜索了</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 生成站点文件</span></span><br><span class="line">hexo clean </span><br><span class="line">hexo g </span><br><span class="line"></span><br><span class="line"><span class="comment"># 开启预览</span></span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
-
-<h3 id="添加站点地图"><a href="#添加站点地图" class="headerlink" title="添加站点地图"></a>添加站点地图</h3><p>在 Hexo 根目录下执行</p>
-<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-14-tab-0" aria-controls="tabs-14-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">npm</button><button type="button" role="tab" id="tabs-14-tab-1" aria-controls="tabs-14-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">pnpm</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-14-panel-0" aria-labelledby="tabs-14-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm install hexo-generator-sitemap --save</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-14-panel-1" aria-labelledby="tabs-14-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pnpm install hexo-generator-sitemap </span><br></pre></td></tr></table></figure></section></div></div>
-
-<p>以后生成站点信息时会自动生成 <code>sitemap.xml</code> 文件，本地 <code>hexo s</code> 预览可以通过 <code>http://localhost:4000/sitemap.xml</code> 访问</p>
-<h3 id="添加-RSS-支持"><a href="#添加-RSS-支持" class="headerlink" title="添加 RSS 支持"></a>添加 RSS 支持</h3><p>在 Hexo 根目录下执行</p>
-<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-15-tab-0" aria-controls="tabs-15-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">npm</button><button type="button" role="tab" id="tabs-15-tab-1" aria-controls="tabs-15-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">pnpm</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-15-panel-0" aria-labelledby="tabs-15-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm install hexo-generator-feed --save</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-15-panel-1" aria-labelledby="tabs-15-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pnpm install hexo-generator-feed</span><br></pre></td></tr></table></figure></section></div></div>
-
-<p>然后编辑 Hexo 根目录下的 <code>_config.yml</code> 文件，在最后添加</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># RSS</span></span><br><span class="line"><span class="attr">feed:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">atom</span></span><br><span class="line">  <span class="attr">path:</span> <span class="string">atom.xml</span></span><br><span class="line">  <span class="comment"># 限制输出文章数量</span></span><br><span class="line">  <span class="attr">limit:</span> <span class="number">20</span></span><br></pre></td></tr></table></figure>
-
-<p>以后生成站点信息时会自动生成 <code>atom.xml</code> 文件，本地 <code>hexo s</code> 预览可以通过 <code>http://localhost:4000/atom.xml</code> 访问</p>
-<div class="flatpaper-note flatpaper-note--default"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>本地预览 atom.xml 显示乱码？ 不必担心，这是本地服务器的问题，atom.xml 文件其实是正常，推送到服务器后查看就可以了</p></div></div>
-
-<h3 id="设置友情链接"><a href="#设置友情链接" class="headerlink" title="设置友情链接"></a>设置友情链接</h3><p>除了 Hexo 内置的几个页面 Type 之外，Butterly 主题还支持设置友情链接页面：<br>在 Hexo 的根目录运行</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">hexo new page <span class="built_in">link</span></span><br></pre></td></tr></table></figure>
-<p>会生成 <code>source/link/index.md</code>，编辑这个文件</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">友情链接</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2024-12-13 07:00:05</span></span><br><span class="line"><span class="attr">type:</span> <span class="string">&#x27;link&#x27;</span></span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></figure>
-
-<p>我们还需要在 source 文件夹下创建一个 <code>_data</code> 文件夹，再创建一个 <code>link.yml</code> 文件，按照下面的格式填写链接 </p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="bullet">-</span> <span class="attr">class_name:</span> <span class="string">友情链接</span></span><br><span class="line">  <span class="attr">class_desc:</span> <span class="string">那些人，那些事</span></span><br><span class="line">  <span class="attr">link_list:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Hexo</span></span><br><span class="line">      <span class="attr">link:</span> <span class="string">https://hexo.io/zh-tw/</span></span><br><span class="line">      <span class="attr">avatar:</span> <span class="string">https://d33wubrfki0l68.cloudfront.net/6657ba50e702d84afb32fe846bed54fba1a77add/827ae/logo.svg</span></span><br><span class="line">      <span class="attr">descr:</span> <span class="string">快速、简单且强大的网志框架</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">-</span> <span class="attr">class_name:</span> <span class="string">网站</span></span><br><span class="line">  <span class="attr">class_desc:</span> <span class="string">值得推荐的网站</span></span><br><span class="line">  <span class="attr">link_list:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Youtube</span></span><br><span class="line">      <span class="attr">link:</span> <span class="string">https://www.youtube.com/</span></span><br><span class="line">      <span class="attr">avatar:</span> <span class="string">https://i.loli.net/2020/05/14/9ZkGg8v3azHJfM1.png</span></span><br><span class="line">      <span class="attr">descr:</span> <span class="string">视频网站</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Weibo</span></span><br><span class="line">      <span class="attr">link:</span> <span class="string">https://www.weibo.com/</span></span><br><span class="line">      <span class="attr">avatar:</span> <span class="string">https://i.loli.net/2020/05/14/TLJBum386vcnI1P.png</span></span><br><span class="line">      <span class="attr">descr:</span> <span class="string">中国最大社交分享平台</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Twitter</span></span><br><span class="line">      <span class="attr">link:</span> <span class="string">https://twitter.com/</span></span><br><span class="line">      <span class="attr">avatar:</span> <span class="string">https://i.loli.net/2020/05/14/5VyHPQqR6LWF39a.png</span></span><br><span class="line">      <span class="attr">descr:</span> <span class="string">社交分享平台</span></span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>教程</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
-        <tag>GitHub</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Nginx Proxy Manager 使用教程</title>
     <url>/post/use-nginx-proxy-manager.html</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>对于现在网站来说， HTTPS 证书已经必不可少，虽然我们已经可以使用 Let’s Encrypt 获取免费证书，并且可以使用 acme.sh 快速申请、自动续期，但是每次添加新域名时仍然需要编辑 Nginx 配置文件，略有麻烦。  </p>
@@ -1210,6 +951,265 @@
       </tags>
   </entry>
   <entry>
+    <title>使用 Hexo + GitHub 建立个人博客</title>
+    <url>/post/start-blog-with-hexo-and-github.html</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>欢迎来到我的世界！这里是 Mr. O。你是否也有过这样的想法：拥有一个属于自己的博客，记录生活的点滴、分享自己的经验或者展示你的专业技能？</p>
+<p>其实，搭建一个个人博客并不像想象的那么复杂。借助 GitHub 提供的免费托管服务，以及功能强大、简单易用的 Hexo 静态博客框架，我么可以轻松打造一个属于自己的博客平台。而且，这个过程完全免费！</p>
+<p>在本文中，我将带你一步步了解如何利用 GitHub Pages 和 Hexo 快速部署一个美观、实用的个人博客，让你的思想在网络世界自由驰骋。</p>
+<p>让我们开始吧！</p>
+<h3 id="Hexo"><a href="#Hexo" class="headerlink" title="Hexo"></a>Hexo</h3><p><a href="(https://hexo.io">Hexo</a> 是一个快速、简洁且高效的博客框架，支持丰富的 <a href="https://hexo.io/themes/">主题</a> ，我们只需要使用 Markdown 语法编写文章，Hexo 将为我们生成网站的文件。     </p>
+<h3 id="GitHub"><a href="#GitHub" class="headerlink" title="GitHub"></a>GitHub</h3><p><a href="https://github.com/">GitHub</a> 是全球最大的代码托管网站和开源社区，我们可以使用 GitHub 免费的 <a href="https://pages.github.com/">Pages</a> 服务托管我们的博客。  </p>
+<p>如果你还没有 Github 账户，可以免费注册一个： <a href="https://github.com/signup">https://github.com/signup</a></p>
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>拥有了 GitHub 账户之后，我们需要在电脑上安装下面的软件</p>
+<ul>
+<li>安装 <a href="https://nodejs.org/zh-cn/download/package-manager">Node.js</a> ：查看 <a href="https://ooo.run/post/how-to-install-nodejs.html">如何安装 Node.js</a></li>
+<li>安装 <a href="https://git-scm.com/downloads">git</a><ul>
+<li>Windows 下载安装包进行安装</li>
+<li>macOS 安装 Homebrew 时会自动安装</li>
+</ul>
+</li>
+<li>一个文本编辑器，推荐安装 <a href="https://code.visualstudio.com/">Visual Studio Code</a></li>
+</ul>
+<p>VS Code 安装后可以点击左侧扩展，搜索 <strong>简体中文</strong> 安装语言包，点击 Install 后点击右下角 Change Language and Restart 重启<br><img src="https://img.nep.me/i/2024/12/15/zc1bl7-2.webp" style="width:50%;" alt="image" /></p>
+<p>安装完成后打开终端程序，可以通过查询版本命令确认是否完成安装。</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt; npm -v</span><br><span class="line">10.9.2</span><br><span class="line"></span><br><span class="line">&gt; git -v</span><br><span class="line">git version 2.47.0</span><br></pre></td></tr></table></figure>
+
+<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p><strong>如何打开终端</strong>：</p>
+<p>使用 <strong>VS Code</strong> ，可以按 Ctrl + ` (Esc 下面的按键) 快捷键在底部打开终端程序。<br>也可以使用菜单 <strong>终端</strong> &gt; <strong>打开终端</strong></p></div></div>
+
+<h3 id="VSCode-终端执行命令报错？"><a href="#VSCode-终端执行命令报错？" class="headerlink" title="VSCode 终端执行命令报错？"></a>VSCode 终端执行命令报错？</h3><p>设置默认终端为 cmd 即可</p>
+<img src="https://img.nep.me/i/2024/12/15/zg4n8w-2.webp" style="width:50%;" alt="image" />
+
+<img src="https://img.nep.me/i/2024/12/15/zg6gyd-2.webp" style="width:50%;" alt="image" />
+
+<p>然后关闭 VS Code 重新打开</p>
+<h2 id="安装-Hexo"><a href="#安装-Hexo" class="headerlink" title="安装 Hexo"></a>安装 Hexo</h2><p>我们需要在终端内使用 <code>npm</code> 命令安装我们的 Hexo 博客：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm install hexo-cli -g</span><br></pre></td></tr></table></figure>
+
+<p>执行结束后，再执行 <code>hexo -v</code>  命令，如果成功输出版本信息则表示安装成功：  </p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt; hexo -v</span><br><span class="line">hexo-cli: 4.3.2</span><br><span class="line">os: darwin 24.1.0 15.1.1</span><br><span class="line">node: 23.3.0</span><br><span class="line">acorn: 8.14.0</span><br><span class="line"><span class="comment"># ...</span></span><br></pre></td></tr></table></figure>
+
+<p>然后创建一个空文件夹用于存放博客文件，创建后使用 VS Code 选择 <code>打开文件夹</code> 打开它，再打开 VS Code 的终端，依次运行下面的命令</p>
+<h3 id="初始化博客"><a href="#初始化博客" class="headerlink" title="初始化博客"></a>初始化博客</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">hexo init</span><br></pre></td></tr></table></figure>
+
+<p>此时可以查看 VS Code 侧边栏，已自动生成了很多文件，一般我们只需要关注 <code>source</code> 中的内容，其中 <code>_posts</code> 是我们存放博客文章的地方。<br><img src="https://img.nep.me/i/2024/12/13/p5boqx-2.webp" alt="VS Code Sidebar">  </p>
+<h3 id="预览博客"><a href="#预览博客" class="headerlink" title="预览博客"></a>预览博客</h3><p>使用 <code>hexo s</code> 命令可以在电脑本地预览网站效果。</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt; hexo s</span><br><span class="line"><span class="comment"># 如果输出下面内容就表示成功了</span></span><br><span class="line">INFO  Validating config</span><br><span class="line">INFO  Start processing</span><br><span class="line">INFO  Hexo is running at http://localhost:4000/ . Press Ctrl+C to stop.</span><br></pre></td></tr></table></figure>
+<p>然后我们就可以打开浏览器，访问 <a href="http://localhost:4000/">http://localhost:4000/</a> 即可查看网站预览。  </p>
+<p><img src="https://img.nep.me/i/2024/12/13/bp3m0l-2.webp" alt="Hexo Preview"></p>
+<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p><code>hexo s</code>  是 <code>hexo server</code> 的简短形式，更加方便</p></div></div> 
+
+<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>VS Code 内 Windows 按住 <code>Ctrl</code> , macOS 按住 <code>Commond⌘</code> 点击终端内链接可以快速打开</p></div></div> 
+
+<div class="flatpaper-note flatpaper-note--warning"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>不需要时后按 <code>Ctrl + C</code> 结束进程</p></div></div> 
+
+<h3 id="设置博客信息"><a href="#设置博客信息" class="headerlink" title="设置博客信息"></a>设置博客信息</h3><p>我们需要编辑根目录下的 <code>_config.yml</code> 文件设置我们自己的站点信息</p>
+<figure class="highlight yml"><figcaption><span>_config.yml</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="comment"># Site</span></span><br><span class="line"><span class="comment">## title 是站点的名称</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">&#x27;O’s World&#x27;</span></span><br><span class="line"><span class="comment">## subtitle 副标题，一般会显示在站点名称的下面</span></span><br><span class="line"><span class="attr">subtitle:</span> <span class="string">&#x27;Mr. O 的分享小站，分享有趣的事情&#x27;</span></span><br><span class="line"><span class="comment">## description 描述站点的内容</span></span><br><span class="line"><span class="attr">description:</span> <span class="string">&#x27;探索互联网世界，分享实用教程与精彩内容，发现更多有趣之处。&#x27;</span></span><br><span class="line"><span class="comment">## keywords 是站点的关键词，用于搜索引擎的 SEO 优化，填写几个单词，告诉搜索引擎一些信息。</span></span><br><span class="line"><span class="attr">keywords:</span> </span><br><span class="line"><span class="comment">## author 是作者的名称，一般使用自己的昵称</span></span><br><span class="line"><span class="attr">author:</span> <span class="string">Mr.</span> <span class="string">O</span></span><br><span class="line"><span class="comment">## 站点的语言</span></span><br><span class="line"><span class="attr">language:</span> <span class="string">zh-CN</span></span><br><span class="line"><span class="comment">## timezone 是时区，如果只在电脑上编辑文件，不需要填写， Hexo 会根据本地电脑的时间生成</span></span><br><span class="line"><span class="attr">timezone:</span> <span class="string">&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># URL</span></span><br><span class="line"><span class="comment">## url 是设置站点的域名，可以使用 github 提供的 &#x27;https://username.github.io/project&#x27;</span></span><br><span class="line"><span class="attr">url:</span> <span class="string">http://ooo.run</span></span><br><span class="line"><span class="comment">## permalink 是网站文章的链接格式</span></span><br><span class="line"><span class="attr">permalink:</span> <span class="string">post/:title.html</span></span><br></pre></td></tr></table></figure>
+<p><code>permalink</code> 指的是文章的 url 格式，我喜欢使用 <code>post/:title.html</code> 比较简洁，其中 <code>:title</code> 指的是文件名称。 </p>
+<img src="https://img.nep.me/i/2024/12/13/8t0d4s-2.webp" style="width:50%;" alt="hexo url preview" />
+
+<p>默认的是 <code>:year/:month/:day/:title/</code> 会自动添加发布日期信息。  </p>
+<img src="https://img.nep.me/i/2024/12/13/8t2ul8-2.webp" style="width:50%;" alt="hexo url preview" />
+
+<div class="flatpaper-note flatpaper-note--warning"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>编辑 yml 格式文件时，<code>:</code> 后面需要根一个空格，否则会报错，内容可以使用单引号包裹。</p></div></div> 
+
+<p>编辑后可以重新执行 <code>hexo s</code> 进行预览。 </p>
+<h3 id="添加主题-Butterfly"><a href="#添加主题-Butterfly" class="headerlink" title="添加主题(Butterfly)"></a>添加主题(Butterfly)</h3><p>Hexo 支持很多主题，下面将使用并设置的是 <a href="https://butterfly.js.org/">Butterfly</a> 主题。</p>
+<p>先安装一下所需的依赖</p>
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-11-tab-0" aria-controls="tabs-11-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">npm</button><button type="button" role="tab" id="tabs-11-tab-1" aria-controls="tabs-11-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">pnpm</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-11-panel-0" aria-labelledby="tabs-11-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm install hexo-util moment-timezone hexo-renderer-pug hexo-renderer-stylus --save</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-11-panel-1" aria-labelledby="tabs-11-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pnpm install hexo-util moment-timezone hexo-renderer-pug hexo-renderer-stylus</span><br></pre></td></tr></table></figure></section></div></div>
+
+<p>打开终端，在博客目录下执行下面的命令下载主题</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> -b master https://github.com/jerryc127/hexo-theme-butterfly.git themes/butterfly</span><br></pre></td></tr></table></figure>
+
+<p>然后编辑博客目录下 <code>_config.yml</code> 文件，将底部的主题设置 <code>theme: landscape</code> 修改为 <code>butterfly</code></p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">theme:</span> <span class="string">butterfly</span></span><br></pre></td></tr></table></figure>
+<p>运行 <code>hexo s</code> 预览主题效果。</p>
+<p>为了避免主题未来更新覆盖了我们自定义的配置，可以复制一下主题的配置文件<br>Windows CMD</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">copy themes\butterfly\_config.yml _config.butterfly.yml</span><br></pre></td></tr></table></figure>
+
+<p>macOS &#x2F; Linux </p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cp</span> themes/butterfly/_config.yml _config.butterfly.yml</span><br></pre></td></tr></table></figure>
+<p>然后我们就可以在博客目录下面的 <code>_config.butterfly.yml</code> 对主题进行自定义设置，可以修改一些功能以及设置导航菜单。</p>
+<p>有关主题配置文件选项的中文标注可以查看 <a href="https://butterfly.js.org/posts/4aa8abbe/">Butterfly 文档(三) 主题配置</a></p>
+<h3 id="添加文章"><a href="#添加文章" class="headerlink" title="添加文章"></a>添加文章</h3><p>我们可以使用命令 <code>hexo n postname</code> 创建一个新的文章，这个命令等同于</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">hexo new post postname</span><br></pre></td></tr></table></figure>
+<p>这会在 <code>source/_post</code> 文件夹下面创建一个名称为 <code>postname.md</code> 的文件。  </p>
+<p>我们可以使用 VS Code 编辑这个文件，文章使用 Markdown 语法，打开这个文件后我们可以看到已自动填充了一些内容。   </p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">postname</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2024-12-11 22:30:38</span></span><br><span class="line"><span class="attr">tags:</span></span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></figure>
+
+<p><code>title</code> 是现实的文章标题名称，<code>date</code> 是发布日期，<code>tags</code> 是文章的标签，这都是可以修改的，我们还可以添加更多的信息，比如分类和主图。 </p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="comment"># 必须部分</span></span><br><span class="line"><span class="comment"># 文章名称</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">一个文章</span></span><br><span class="line"><span class="comment"># 发布日期</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2024-12-11 22:30:38</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 下面可选的</span></span><br><span class="line"><span class="comment"># 标签</span></span><br><span class="line"><span class="attr">tags:</span></span><br><span class="line"> <span class="bullet">-</span> <span class="string">标签1</span></span><br><span class="line"> <span class="bullet">-</span> <span class="string">标签2</span></span><br><span class="line"><span class="comment"># 分类</span></span><br><span class="line"><span class="attr">categories:</span> <span class="string">教程</span></span><br><span class="line"><span class="comment"># 关闭评论（默认是开启，可以不写）</span></span><br><span class="line"><span class="attr">comments:</span> <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 适用于 Butterfly 主题</span></span><br><span class="line"><span class="comment"># 缩略图</span></span><br><span class="line"><span class="attr">cover:</span> <span class="string">&#x27;https://arina.loli.net/2024/11/23/D3zqLFyGStUWQHZ.png&#x27;</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="comment"># 在 --- 下面使用 Markdown 或是 HTML 语法写文章</span></span><br><span class="line"><span class="comment"># ...</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="插入图片"><a href="#插入图片" class="headerlink" title="插入图片"></a>插入图片</h3><p>有时我们需要在图片中插入图片，我们只需要将图片放入 Hexo 目录中的 source 文件夹中，非常推荐单独建立一个文件夹比如 <code>images</code> 来存放图片。  </p>
+<p>假设我们有两张图片 1.png 与 2.png，此时文件目录是下面的样子 </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">source/</span><br><span class="line">└── images/</span><br><span class="line">    ├── 1.png</span><br><span class="line">    └── 2.png</span><br></pre></td></tr></table></figure>
+
+<p>我们在文章中引用时，只需要使用下面的 Markdown 语法就可以了，路径以 <code>/</code> 开头，没有 <code>source</code>：</p>
+<figure class="highlight md"><table><tr><td class="code"><pre><span class="line">![](<span class="link">/images/1.png</span>)</span><br><span class="line">![<span class="string">2.png</span>](<span class="link">/images/2.png</span>)</span><br></pre></td></tr></table></figure>
+<p>虽然 VS Code 无法正常预览图片，但是通过 <code>hexo s</code> 在浏览器内预览就是正常的了。  </p>
+<h3 id="添加一些页面（Pages）"><a href="#添加一些页面（Pages）" class="headerlink" title="添加一些页面（Pages）"></a>添加一些页面（Pages）</h3><p>除了文章之外，我们还需要添加一些页面（Pages）：</p>
+<h4 id="标签页"><a href="#标签页" class="headerlink" title="标签页"></a>标签页</h4><p>在 Hexo 的根目录运行</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">hexo new page tags</span><br></pre></td></tr></table></figure>
+<p>会生成 <code>source/tags/index.md</code>，编辑这个文件</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">标签</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2024-12-13 07:55:00</span></span><br><span class="line"><span class="attr">type:</span> <span class="string">&#x27;tags&#x27;</span></span><br><span class="line"><span class="attr">orderby:</span> <span class="string">random</span></span><br><span class="line"><span class="attr">order:</span> <span class="number">1</span></span><br><span class="line"><span class="attr">comments:</span> <span class="literal">false</span></span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></figure>
+<p>就可以通过 <a href="http://localhost:4000/tags/">http://localhost:4000/tags/</a> 或是 <code>https://你的域名/tags</code> 进行访问</p>
+<h4 id="分类页"><a href="#分类页" class="headerlink" title="分类页"></a>分类页</h4><p>在 Hexo 的根目录运行</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">hexo new page categories</span><br><span class="line">```  </span><br><span class="line">会生成 `<span class="built_in">source</span>/categories/index.md`，编辑这个文件</span><br><span class="line"></span><br><span class="line">```yml</span><br><span class="line">---</span><br><span class="line">title: 分类</span><br><span class="line"><span class="built_in">date</span>: 2024-12-13 07:00:00</span><br><span class="line"><span class="built_in">type</span>: <span class="string">&#x27;categories&#x27;</span></span><br><span class="line">comments: <span class="literal">false</span></span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+
+<h4 id="关于"><a href="#关于" class="headerlink" title="关于"></a>关于</h4><p>在 Hexo 的根目录运行</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">hexo new page about</span><br><span class="line">```  </span><br><span class="line">会生成 `<span class="built_in">source</span>/about/index.md`，编辑这个文件</span><br><span class="line"></span><br><span class="line">```yml</span><br><span class="line">---</span><br><span class="line">title: 分类</span><br><span class="line"><span class="built_in">date</span>: 2024-12-13 07:00:00</span><br><span class="line">---</span><br><span class="line"></span><br><span class="line"><span class="comment"># 以 Markdown 或是 HTML 格式编写内容 </span></span><br></pre></td></tr></table></figure>
+
+<p>about 不是 Hexo 内置页面类型，不需要添加 <code>types:</code> 但是需要我们自己以 Markdown 或是 HTML 格式编写一些自我介绍。  </p>
+<h4 id="将页面添加至导航"><a href="#将页面添加至导航" class="headerlink" title="将页面添加至导航"></a>将页面添加至导航</h4><p>编辑主题的配置文件 <code>_config.butterfly.yml</code>，修改 <code>menu</code> 部分</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">menu:</span><br><span class="line">  主页: / || fas fa-home</span><br><span class="line">  分类: /categories/ || fas fa-archive</span><br><span class="line">  标签: /tags/ || fas fa-tag</span><br><span class="line">  关于: /about/ || fas fa-user</span><br><span class="line">  友情链接: /link/ || fas fa-link</span><br></pre></td></tr></table></figure>
+<div class="flatpaper-note flatpaper-note--warning"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>修改主题配置文件， <code>hexo s</code> 命令无法及时刷新预览，需要 Ctrl + C 终止后重新运行</p></div></div>
+
+<p>保存后运行 <code>hexo s</code> 即可在右上角看到菜单。  </p>
+<h2 id="部署到-GitHub"><a href="#部署到-GitHub" class="headerlink" title="部署到 GitHub"></a>部署到 GitHub</h2><p>我们已经完成了主设置，并创建了新的文章，现在我们将把博客托管到 GitHub Pages 上，从而从网络上访问。</p>
+<p>访问 <a href="https://github.com/new">https://github.com/new</a> 创建一个新的仓库，<code>Repository name</code> 必须是 <code>&lt;username&gt;.github.io</code>，否则不会生效。</p>
+<p>然后打开终端，安装 <code>hexo-deployer-git</code> </p>
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-12-tab-0" aria-controls="tabs-12-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">npm</button><button type="button" role="tab" id="tabs-12-tab-1" aria-controls="tabs-12-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">pnpm</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-12-panel-0" aria-labelledby="tabs-12-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-12-panel-1" aria-labelledby="tabs-12-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pnpm install hexo-deployer-git</span><br></pre></td></tr></table></figure></section></div></div>
+
+<p>然后编辑博客目录下的 <code>_config.yml</code> 文件，设置底部的 deploy 部分。</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="comment"># 仓库地址</span></span><br><span class="line">  <span class="attr">repo:</span> <span class="string">https://github.com/&lt;username&gt;/&lt;username&gt;.github.io</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">gh-pages</span></span><br></pre></td></tr></table></figure>
+
+<p>首先打开终端，设置一下 Git 身份</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 设置 Git 身份</span></span><br><span class="line">git config --global user.email <span class="string">&quot;you@example.com&quot;</span></span><br><span class="line">git config --global user.name <span class="string">&quot;Your Name&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 让 Git 保存我们的登陆信息</span></span><br><span class="line">git config --global credential.helper store</span><br></pre></td></tr></table></figure>
+
+<p>然后运行</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">hexo g</span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure>
+
+<p>我们需要对 Git 程序进行授权，弹窗点击 <code>Sign in with your browser</code>  </p>
+<img src="https://img.nep.me/i/2024/12/15/10fxxim-2.webp" style="width:25%;" alt="image" />
+
+<p>下一步点击 <strong>Authorize git-ecosystem</strong><br><img src="https://img.nep.me/i/2024/12/15/10g85rg-2.webp" style="width:50%;" alt="image" /></p>
+<p>再下一步后输入密码，即可完成部署。  </p>
+<p>即可将网站推送到 GitHub 上。 </p>
+<p>成功的话会输出类似下面内容</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">Writing objects: 100% (16/16), 1.27 KiB | 1.27 MiB/s, <span class="keyword">done</span>.</span><br><span class="line">Total 16 (delta 6), reused 0 (delta 0), pack-reused 0 (from 0)</span><br><span class="line">remote: Resolving deltas: 100% (6/6), completed with 6 <span class="built_in">local</span> objects.</span><br><span class="line">To https://github.com/&lt;yourname&gt;/&lt;xxxxxxxxx&gt;.git</span><br><span class="line">   812f2f9..5ff5eac  HEAD -&gt; gh-pages</span><br><span class="line">branch <span class="string">&#x27;master&#x27;</span> <span class="built_in">set</span> up to track <span class="string">&#x27;https://github.com/&lt;yourname&gt;/&lt;xxxxxxxxx&gt;.git/gh-pages&#x27;</span>.</span><br><span class="line">INFO  Deploy <span class="keyword">done</span>: git</span><br></pre></td></tr></table></figure>
+
+<p>进阶教程：查看 <a href="https://ooo.run/post/how-to-add-ssh-key-to-github.html" target="_blank">如何使用 SSH key 连接 GitHub</a></p>
+<h3 id="设置-GitHub-Pages"><a href="#设置-GitHub-Pages" class="headerlink" title="设置 GitHub Pages"></a>设置 GitHub Pages</h3><p>在 GitHub 仓库的网页上，点击顶部 <strong>Settings</strong>，左侧找到 <strong>Pages</strong> ，编辑 <strong>Branch</strong> 部分，设置为 <code>gh-pages</code> + <code>/(root)</code> 点击 <strong>Save</strong> 保存。</p>
+<img src="https://img.nep.me/i/2024/12/13/8tl89y-2.webp" style="width:75%;" alt="gh-page-settings" />
+
+<p>然后就可以访问 <code>https://&lt;username&gt;.github.io</code> 查看网站，如果显示 404 可以稍微等几分钟。</p>
+<h3 id="绑定域名"><a href="#绑定域名" class="headerlink" title="绑定域名"></a>绑定域名</h3><h4 id="购买域名"><a href="#购买域名" class="headerlink" title="购买域名"></a>购买域名</h4><p>如果你拥有一个属于自己的域名，那么除了使用 GitHub 提供的免费二级域名之外，我们还可以设置使用自己的域名访问博客。  </p>
+<p>如果你还没有域名，推荐前往下面的两个网站购买一个 </p>
+<ul>
+<li><a href="https://www.cloudflare.com/">Cloudflare</a> 承诺以<strong>成本价</strong>销售域名，但是一般没有首年优惠</li>
+<li><a href="https://porkbun.com/">Porkbun</a> 查询结果点击 <code>Show All Extensions</code> &gt; <code>Sort by price</code> ，往往能看到不错的首年优惠<br>通常推荐选择常用的后缀比如 <code>.com</code> 、<code>.me</code> 进行注册。</li>
+</ul>
+<h4 id="绑定至-GitHub"><a href="#绑定至-GitHub" class="headerlink" title="绑定至 GitHub"></a>绑定至 GitHub</h4><p>首先第一步前往域名服务商或是 Cloudflare ，在 <strong>DNS</strong> 设置中添加一条 CNAME 域名记录</p>
+<ul>
+<li>类型为 <code>CNAME</code></li>
+<li>名称主域名填写 <code>@</code> ( 代表 <a href="https://ooo.run/">https://ooo.run</a> )，也可以是 www 或一个其他的子域名</li>
+<li>内容是 <code>username.github.io</code></li>
+</ul>
+<img src="https://img.nep.me/i/2024/12/14/r8178j-2.webp" style="width:75%;" alt="cloudflare cname" />
+
+<p>第二步访问 GitHub 网站，在仓库的 <code>Settings</code> &gt; <code>Pages</code> &gt; <code>Custon domain</code> 中，填写我们的域名。   </p>
+<img src="https://img.nep.me/i/2024/12/13/ahmi85-2.webp" style="width:50%;" alt="github-pages-custom-domain" />
+
+
+<p>第三步在 source 文件下创建一个 <code>CNAME</code> 文件，文件名是 <strong>大写字母</strong>，没有后缀，内容是我们需要使用的域名，比如 <code>example.com</code>。</p>
+<p>最后运行命令将更新推送至 GitHub 就可以了。  </p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">hexo g </span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure>
+
+<p>然后就可以通过自己的域名访问博客了。</p>
+<h2 id="添加评论系统"><a href="#添加评论系统" class="headerlink" title="添加评论系统"></a>添加评论系统</h2><p>Hexo 是不带评论系统的，需要我们自己添加，可以使用</p>
+<ul>
+<li>基于 GitHub 的 <strong>Giscus</strong> </li>
+<li>可以自己部署的 <strong>Twikoo</strong> 或 <strong>Arttalk</strong></li>
+<li>第三方评论系统 <strong>Disqus</strong> (包含广告)</li>
+</ul>
+<p>具体可以查看 <a href="https://ooo.run/post/how-to-add-comment-system-for-static-blog.html">为 Hexo 博客添加评论系统，Giscus or Twikoo or Arttalk or Disqus</a>  </p>
+<h2 id="常用的-Hexo-命令介绍"><a href="#常用的-Hexo-命令介绍" class="headerlink" title="常用的 Hexo 命令介绍"></a>常用的 Hexo 命令介绍</h2><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 本地预览</span></span><br><span class="line">hexo s</span><br><span class="line"><span class="comment"># 等同于</span></span><br><span class="line">hexo server</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成站点</span></span><br><span class="line">hexo g</span><br><span class="line"><span class="comment"># 等同于</span></span><br><span class="line">hexo generate</span><br><span class="line"></span><br><span class="line"><span class="comment"># 部署</span></span><br><span class="line">hexo d</span><br><span class="line"><span class="comment"># 等同于</span></span><br><span class="line">hexo deploy </span><br><span class="line"></span><br><span class="line"><span class="comment"># 清除缓存，有时遇到一些错误，可以先执行一下 hexo clean</span></span><br><span class="line">hexo cl</span><br><span class="line"><span class="comment"># 等同于</span></span><br><span class="line">hexo clean</span><br></pre></td></tr></table></figure>
+
+<h2 id="进阶：使用-GitHub-备份"><a href="#进阶：使用-GitHub-备份" class="headerlink" title="进阶：使用 GitHub 备份"></a>进阶：使用 GitHub 备份</h2><p>我们的博客数据源文件都保存在本地电脑上，如果更换电脑就需要手动进行备份。</p>
+<p>在源文件中我们需要关注的是：</p>
+<ul>
+<li><code>source</code> 文件夹: 保存着博客文章的源文件，如果丢失就只能重新开始了</li>
+<li><code>_config.yml</code>: 保存着站点设置信息</li>
+<li><code>_config.butterfly.yml</code>: 保存着主题设置信息</li>
+</ul>
+<p>最简单的方法是直接复制整个 Hexo 文件目录，手动拷贝到其他设备上，在新的设备上安装 Node.js 与 git 应用程序，适合只在特定设备写作需要更换设备时操作，毕竟手动复制在不同的设备上无法保持互相同步。  </p>
+<p>这里推荐使用 GitHub 备份我们整个 Hexo 文件夹。  </p>
+<div class="flatpaper-note flatpaper-note--warning"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>下面介绍的是备份至博客同一个目录下，由于仓库是公开的，请不要再配置文件内记录密码或是其他敏感个人信息。</p>
+<p>如果不想公开，可以创建一个 Private 仓库，用于存放备份</p></div></div>
+
+<p>在开始前，我们需要编辑主题目录下的 <code>.gitignore</code> ，在最后一行添加 <code>themes/</code>，忽略嵌套的 git 主题文件夹</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">themes/</span><br></pre></td></tr></table></figure>
+
+<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>如果希望连主题的文件夹一起备份<br>需要打开文件管理器删除主题目录 <code>themes/butterfly</code> 下的 <code>.git</code> 文件夹</p></div></div>
+<img src="https://img.nep.me/i/2024/12/15/10m93v4-2.webp" style="width:75%;" alt="image" />
+<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>macOS 可以按 <code>Command + Shift+ .</code> 显示隐藏文件夹 </p></div></div>
+
+<p>在 Hexo 根目录下执行下面的命令：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 初始化</span></span><br><span class="line">git init</span><br><span class="line"></span><br><span class="line"><span class="comment"># 切换分支名称为 main</span></span><br><span class="line">git branch -M main</span><br><span class="line"></span><br><span class="line"><span class="comment"># 追踪当前文件</span></span><br><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">&quot;first commit&quot;</span> --all</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加远程仓库，使用自己的仓库链接，替换 &lt;username&gt; </span></span><br><span class="line">git remote add origin https://github.com/&lt;username&gt;/&lt;username&gt;.github.io.git</span><br><span class="line"></span><br><span class="line"><span class="comment"># 推送到服务器</span></span><br><span class="line">git push -u origin main</span><br></pre></td></tr></table></figure>
+
+<h3 id="提交更新"><a href="#提交更新" class="headerlink" title="提交更新"></a>提交更新</h3><p>在本地更新了之后，在 Hexo 目录下使用 <code>git push</code> 命令同步到 GitHub。</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 如果有写新文章</span></span><br><span class="line">git add .</span><br><span class="line"></span><br><span class="line"><span class="comment"># 保存更新到本地 Git </span></span><br><span class="line"><span class="comment"># -m &quot;update&quot; 用于备注更新内容， update 可以自定义修改</span></span><br><span class="line">git commit -m <span class="string">&quot;update&quot;</span> --all</span><br><span class="line"></span><br><span class="line"><span class="comment"># 同步到 GitHub</span></span><br><span class="line">git push</span><br></pre></td></tr></table></figure>
+
+<p>此时访问 GitHub 仓库，点击顶部分支，其中 main 是存放我们备份的分支</p>
+<img src="https://img.nep.me/i/2024/12/15/10r2to3-2.webp" style="width:50%;" alt="image" />
+
+<h3 id="获取备份"><a href="#获取备份" class="headerlink" title="获取备份"></a>获取备份</h3><p>当 GitHub 文件比本地的新时（例如在别的设备更新过），在 Hexo 目录下使用 <code>git pull</code> 同步到本地</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">git pull</span><br></pre></td></tr></table></figure>
+
+<p><strong>当我们更换一个全新的设备时</strong>，需要先安装 Node.js 与 git ，再从 GitHub 服务器获取备份 </p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 将备份分支的数据下载到本地电脑</span></span><br><span class="line">git <span class="built_in">clone</span> -b main https://github.com/&lt;username&gt;/&lt;username&gt;.github.io.git </span><br><span class="line"></span><br><span class="line"><span class="comment"># 进入 Hexo 目录</span></span><br><span class="line"><span class="built_in">cd</span> &lt;username&gt;.github.io.git</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装依赖</span></span><br><span class="line">npm install</span><br><span class="line"></span><br><span class="line"><span class="comment"># 预览</span></span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用-Github-Desktop"><a href="#使用-Github-Desktop" class="headerlink" title="使用 Github Desktop"></a>使用 Github Desktop</h3><p>每次都敲命令太麻烦？ 安装 <a href="https://desktop.github.com/download/">Github Desktop</a> ！ </p>
+<p><img src="https://img.nep.me/i/2024/12/13/xb5cee-2.webp"></p>
+<p>我们就可以使用图形化界面简单的进行操作，首先是顶部右侧的按钮</p>
+<p><img src="https://img.nep.me/i/2024/12/13/xeohvs-2.webp"></p>
+<ul>
+<li>默认 <code>Fetch origin</code> 是检查更新 </li>
+<li>当服务器比本地更新时，显示为 <code>Pull origin</code> 表示可以从 GiHub 获取更新 </li>
+<li>当本地比服务器更新时，显示为 <code>Push origin</code> 表示可以推送更新到 GitHub<br> 本地更新后，可以在左下角 <strong>Summary</strong> 中填写注释，点击 <code>Commit to main</code>，就可以推送更新了</li>
+</ul>
+<h2 id="其他操作"><a href="#其他操作" class="headerlink" title="其他操作"></a>其他操作</h2><h3 id="给站点添加搜索功能"><a href="#给站点添加搜索功能" class="headerlink" title="给站点添加搜索功能"></a>给站点添加搜索功能</h3><p>在 Hexo 根目录运行</p>
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-13-tab-0" aria-controls="tabs-13-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">npm</button><button type="button" role="tab" id="tabs-13-tab-1" aria-controls="tabs-13-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">pnpm</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-13-panel-0" aria-labelledby="tabs-13-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm install hexo-generator-searchdb --save</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-13-panel-1" aria-labelledby="tabs-13-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pnpm install hexo-generator-searchdb</span><br></pre></td></tr></table></figure></section></div></div>
+
+<p>修改站点配置文件 <code>_config.yml</code>，在最后新增</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">search:</span></span><br><span class="line">  <span class="attr">path:</span> <span class="string">search.xml</span></span><br><span class="line">  <span class="attr">field:</span> <span class="string">post</span></span><br><span class="line">  <span class="attr">content:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">format:</span> <span class="string">html</span></span><br></pre></td></tr></table></figure>
+
+<p>修改主题配置文件 <code>_config.butterfly.yml</code></p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 开启搜索</span></span><br><span class="line"><span class="attr">search:</span></span><br><span class="line">  <span class="attr">use:</span> <span class="string">local_search</span></span><br></pre></td></tr></table></figure>
+
+<p>然后就可以执行搜索了</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 生成站点文件</span></span><br><span class="line">hexo clean </span><br><span class="line">hexo g </span><br><span class="line"></span><br><span class="line"><span class="comment"># 开启预览</span></span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
+
+<h3 id="添加站点地图"><a href="#添加站点地图" class="headerlink" title="添加站点地图"></a>添加站点地图</h3><p>在 Hexo 根目录下执行</p>
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-14-tab-0" aria-controls="tabs-14-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">npm</button><button type="button" role="tab" id="tabs-14-tab-1" aria-controls="tabs-14-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">pnpm</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-14-panel-0" aria-labelledby="tabs-14-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm install hexo-generator-sitemap --save</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-14-panel-1" aria-labelledby="tabs-14-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pnpm install hexo-generator-sitemap </span><br></pre></td></tr></table></figure></section></div></div>
+
+<p>以后生成站点信息时会自动生成 <code>sitemap.xml</code> 文件，本地 <code>hexo s</code> 预览可以通过 <code>http://localhost:4000/sitemap.xml</code> 访问</p>
+<h3 id="添加-RSS-支持"><a href="#添加-RSS-支持" class="headerlink" title="添加 RSS 支持"></a>添加 RSS 支持</h3><p>在 Hexo 根目录下执行</p>
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-15-tab-0" aria-controls="tabs-15-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">npm</button><button type="button" role="tab" id="tabs-15-tab-1" aria-controls="tabs-15-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">pnpm</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-15-panel-0" aria-labelledby="tabs-15-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm install hexo-generator-feed --save</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-15-panel-1" aria-labelledby="tabs-15-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pnpm install hexo-generator-feed</span><br></pre></td></tr></table></figure></section></div></div>
+
+<p>然后编辑 Hexo 根目录下的 <code>_config.yml</code> 文件，在最后添加</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># RSS</span></span><br><span class="line"><span class="attr">feed:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">atom</span></span><br><span class="line">  <span class="attr">path:</span> <span class="string">atom.xml</span></span><br><span class="line">  <span class="comment"># 限制输出文章数量</span></span><br><span class="line">  <span class="attr">limit:</span> <span class="number">20</span></span><br></pre></td></tr></table></figure>
+
+<p>以后生成站点信息时会自动生成 <code>atom.xml</code> 文件，本地 <code>hexo s</code> 预览可以通过 <code>http://localhost:4000/atom.xml</code> 访问</p>
+<div class="flatpaper-note flatpaper-note--default"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>本地预览 atom.xml 显示乱码？ 不必担心，这是本地服务器的问题，atom.xml 文件其实是正常，推送到服务器后查看就可以了</p></div></div>
+
+<h3 id="设置友情链接"><a href="#设置友情链接" class="headerlink" title="设置友情链接"></a>设置友情链接</h3><p>除了 Hexo 内置的几个页面 Type 之外，Butterly 主题还支持设置友情链接页面：<br>在 Hexo 的根目录运行</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">hexo new page <span class="built_in">link</span></span><br></pre></td></tr></table></figure>
+<p>会生成 <code>source/link/index.md</code>，编辑这个文件</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">友情链接</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2024-12-13 07:00:05</span></span><br><span class="line"><span class="attr">type:</span> <span class="string">&#x27;link&#x27;</span></span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></figure>
+
+<p>我们还需要在 source 文件夹下创建一个 <code>_data</code> 文件夹，再创建一个 <code>link.yml</code> 文件，按照下面的格式填写链接 </p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="bullet">-</span> <span class="attr">class_name:</span> <span class="string">友情链接</span></span><br><span class="line">  <span class="attr">class_desc:</span> <span class="string">那些人，那些事</span></span><br><span class="line">  <span class="attr">link_list:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Hexo</span></span><br><span class="line">      <span class="attr">link:</span> <span class="string">https://hexo.io/zh-tw/</span></span><br><span class="line">      <span class="attr">avatar:</span> <span class="string">https://d33wubrfki0l68.cloudfront.net/6657ba50e702d84afb32fe846bed54fba1a77add/827ae/logo.svg</span></span><br><span class="line">      <span class="attr">descr:</span> <span class="string">快速、简单且强大的网志框架</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">-</span> <span class="attr">class_name:</span> <span class="string">网站</span></span><br><span class="line">  <span class="attr">class_desc:</span> <span class="string">值得推荐的网站</span></span><br><span class="line">  <span class="attr">link_list:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Youtube</span></span><br><span class="line">      <span class="attr">link:</span> <span class="string">https://www.youtube.com/</span></span><br><span class="line">      <span class="attr">avatar:</span> <span class="string">https://i.loli.net/2020/05/14/9ZkGg8v3azHJfM1.png</span></span><br><span class="line">      <span class="attr">descr:</span> <span class="string">视频网站</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Weibo</span></span><br><span class="line">      <span class="attr">link:</span> <span class="string">https://www.weibo.com/</span></span><br><span class="line">      <span class="attr">avatar:</span> <span class="string">https://i.loli.net/2020/05/14/TLJBum386vcnI1P.png</span></span><br><span class="line">      <span class="attr">descr:</span> <span class="string">中国最大社交分享平台</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Twitter</span></span><br><span class="line">      <span class="attr">link:</span> <span class="string">https://twitter.com/</span></span><br><span class="line">      <span class="attr">avatar:</span> <span class="string">https://i.loli.net/2020/05/14/5VyHPQqR6LWF39a.png</span></span><br><span class="line">      <span class="attr">descr:</span> <span class="string">社交分享平台</span></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>教程</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+        <tag>GitHub</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>将博客主题更换为安知鱼</title>
     <url>/post/change-hexo-theme-to-anzhiyu.html</url>
     <content><![CDATA[<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>Hexo 的 Butteryfly 主题用的久了，感觉有些不够精致，之前有看见别人用过安知鱼的主题，是在 Butteryfly 基础上修改的，看起来感觉非常的不错的。</p>
@@ -1239,6 +1239,142 @@
       </categories>
       <tags>
         <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>普通人掘金互联网：独立开发起步指南</title>
+    <url>/post/how-to-make-money-from-internet.html</url>
+    <content><![CDATA[<p>你是否也曾羡慕那些在社交媒体上“透明化”分享收入、靠个人项目实现财务自由的独立开发者？看到他们动辄上千美金的月收入，你或许会觉得那是一个难以达成的目标。</p>
+<p>但事实是，成功的独立开发并非天才的专属游戏，它背后有一套普通人也能学习和实践的方法论。成功的关键，往往不在于一个惊世骇俗的“天才想法”，而在于<strong>正确的策略和持续的行动</strong>。</p>
+<p>本文将为你铺开一张务实、低成本的独立开发路径图，旨在帮助每一个有想法的普通人，从零到一，开启自己的互联网掘金之路。</p>
+<p>即便不懂技术也没有关系，AI 的发展如火如荼，各种编程助手不断涌现，在 AI 时代，人人都可以是产品经理。</p>
+<h2 id="站在巨人的肩膀上：选择成熟的技术栈"><a href="#站在巨人的肩膀上：选择成熟的技术栈" class="headerlink" title="站在巨人的肩膀上：选择成熟的技术栈"></a>站在巨人的肩膀上：选择成熟的技术栈</h2><p>在选择开发语言和框架时，一个常见的误区是追求”未来趋势”，尝试自己不熟悉但看似前沿的新语言或框架，结果效率低、踩坑多、没人可问。</p>
+<p><strong>最佳策略是：选择当下的热门开发语言</strong> ，这意味着：</p>
+<ul>
+<li><strong>庞大的开发者社区：</strong> 以 JavaScript（Node.js）、Python、Java 等为例，这些语言的用户遍布全球，每天都有无数人面对并解决类似的技术问题。遇到 bug 时，你很可能只需搜索几分钟，就能找到解决方案。</li>
+<li><strong>成熟的生态与解决方案：</strong> 热门语言意味着有丰富的第三方库、框架和工具链——无论是数据库操作、身份验证、支付集成还是部署运维，都可能有现成的、经过验证的解决方案可以直接套用。</li>
+<li><strong>丰富的学习资源：</strong> 从官方文档到技术博客、从视频课程到社区问答，成熟语言的学习路径极其清晰，你可以用最少的时间填补知识空白，而不是陷入信息荒漠。</li>
+</ul>
+<p>比如 <strong>Web应用全栈</strong> 可以选择：</p>
+<ul>
+<li><strong>前端：</strong> React&#x2F;Vue.js + TailwindCSS</li>
+<li><strong>全栈框架：</strong> Next.js 或 Nuxt.js</li>
+<li><strong>后端服务：</strong> Supabase </li>
+<li><strong>部署：</strong> Vercel </li>
+<li><strong>支付：</strong> Stripe</li>
+</ul>
+<h2 id="第一步：成功始于微小——快速推出产品"><a href="#第一步：成功始于微小——快速推出产品" class="headerlink" title="第一步：成功始于微小——快速推出产品"></a>第一步：成功始于微小——快速推出产品</h2><p>独立开发者最大的敌人就是 “过度思考” 和 “追求完美” 。因此我们必须在起点就摆正心态。</p>
+<h3 id="1-快速行动：用“预览版”代替“完美版”"><a href="#1-快速行动：用“预览版”代替“完美版”" class="headerlink" title="1. 快速行动：用“预览版”代替“完美版”"></a>1. 快速行动：用“预览版”代替“完美版”</h3><p>许多项目胎死腹中，就是因为我们总想一步到位，一口气做出一个功能齐全的“完美产品”。</p>
+<p>推荐第一步是先构建一个 <strong>MVP (Minimum Viable Product)</strong> 最小可行产品，推向市场。</p>
+<p>MVP 不是一个简陋的半成品，它是 <strong>“能验证核心价值的最小功能集”</strong> 。只做最核心的 1-2 个功能，让用户能体验到产品的特色。例如，一个笔记软件的 MVP，也许只是一个能在线保存文本的网页，而不是一上来就支持 Markdown、多端同步和文件夹管理。</p>
+<p>推出 MVP 产品可以帮助我们获取用户反馈，根据反馈迭代功能以及调整开发方向。 </p>
+<p><strong>行动指南：</strong> 设定一个极短的开发周期（比如 1-2 周），强制自己上线一个可供访问的预览版。这会让你立刻从“思考者”转变为“行动者”。</p>
+<blockquote>
+<p><strong>案例分享：</strong> <a href="https://linktr.ee/">Linktree</a> 的创始人最初就是用简单的 HTML&#x2F;CSS 搭建了一个”链接聚合页面”，如今估值超过10亿美金。技术简单并不妨碍商业成功。</p>
+</blockquote>
+<h3 id="2-拥抱小想法：在“利基市场”里发现金矿"><a href="#2-拥抱小想法：在“利基市场”里发现金矿" class="headerlink" title="2. 拥抱小想法：在“利基市场”里发现金矿"></a>2. 拥抱小想法：在“利基市场”里发现金矿</h3><p>别让“这个想法不够宏大”扼杀你的项目。大多数成功的独立开发项目，都始于解决一个极其微小、具体的痛点。比如一个“图片压缩工具”、“简历模板生成器”或“特定领域的资讯聚合器”。</p>
+<p>小想法往往对应着一个服务不足的**利基市场 (Niche Market)**。这里竞争小，用户需求明确，你更容易获得第一批忠实用户和早期收入。</p>
+<blockquote>
+<p><strong>成功案例：</strong> <a href="https://jsonformatter.org/">JSON Formatter</a> 这个简单的在线工具，每月有超过100万访问量，仅靠广告就能获得可观收入。</p>
+</blockquote>
+<p><strong>行动指南：</strong> 建立一个你自己的”想法备忘录”，随时记录那些一闪而过的、看似不起眼的需求。它们是未来项目的宝贵种子。</p>
+<h2 id="第二步：实践出真知——零成本启动你的项目"><a href="#第二步：实践出真知——零成本启动你的项目" class="headerlink" title="第二步：实践出真知——零成本启动你的项目"></a>第二步：实践出真知——零成本启动你的项目</h2><p>在验证市场之前，每一分钱都要花在刀刃上。幸运的是，我们处在一个拥有大量免费“神级”服务的时代。</p>
+<h3 id="1-善用免费托管服务"><a href="#1-善用免费托管服务" class="headerlink" title="1. 善用免费托管服务"></a>1. 善用免费托管服务</h3><ul>
+<li><strong>前端&#x2F;全栈托管：</strong> <strong>Vercel</strong> 和 <strong>Netlify</strong> 是托管现代前端框架（如 Next.js）的绝佳选择，它们提供免费的 CI&#x2F;CD，每次代码提交都能自动部署，极大提升效率。</li>
+<li><strong>静态页面托管</strong> 纯静态的网站可以选择使用 <strong>Github Pages</strong> 或是 <strong>Cloudflare Pages</strong> 托管，Cloudflare 的 Workers 也提供了一个免费的 Serverless 计算环境，足以支撑轻量级后端。</li>
+<li><strong>后端&#x2F;数据库：</strong> <strong>Supabase</strong> 或 <strong>Firebase</strong> 这类 BaaS (后端即服务)平台，免费提供了数据库、用户认证、文件存储等功能，让不懂后端的开发者也能快速构建功能完整的应用。</li>
+</ul>
+<h3 id="2-让人工智能成为你的效率放大器"><a href="#2-让人工智能成为你的效率放大器" class="headerlink" title="2. 让人工智能成为你的效率放大器"></a>2. 让人工智能成为你的效率放大器</h3><p>AI 工具是“超级个体”的战斗力倍增器。</p>
+<ul>
+<li><strong>编码助手：</strong> <strong>Claude Code</strong> 、或 <strong>Cursor</strong> 能显著提升你的编码速度，帮你解决疑难杂症。</li>
+<li><strong>内容与设计：</strong> 使用 <strong>ChatGPT&#x2F;Gemini</strong> 生成营销文案、产品介绍；使用 <strong>Midjourney&#x2F;Canva AI</strong> 生成 Logo、图标和宣传图，轻松解决设计短板。</li>
+</ul>
+<h2 id="第三步：增长飞轮——让世界发现你的价值"><a href="#第三步：增长飞轮——让世界发现你的价值" class="headerlink" title="第三步：增长飞轮——让世界发现你的价值"></a>第三步：增长飞轮——让世界发现你的价值</h2><p>产品造出来只是第一步，如何让目标用户知道并使用它，是决定生死的关键。</p>
+<h3 id="策略一-E-人版-公开构建-Build-in-Public"><a href="#策略一-E-人版-公开构建-Build-in-Public" class="headerlink" title="策略一 (E 人版): 公开构建 (Build in Public)"></a>策略一 (E 人版): 公开构建 (Build in Public)</h3><p>这不仅是营销，更是一种产品开发哲学。你可以在社交媒体（如 X&#x2F;Twitter、即刻）或个人博客上，公开分享你的：</p>
+<ul>
+<li><strong>开发进度</strong>：“今天我解决了 XX Bug。”</li>
+<li><strong>思考过程</strong>：“我在纠结 A、B 两个功能，大家觉得哪个更重要？”</li>
+<li><strong>数据指标</strong>：“上线第一周，获得了 50 个注册用户！”</li>
+<li><strong>失败与教训</strong>：“这次营销尝试失败了，复盘一下原因……”</li>
+</ul>
+<p>这种“透明化”能帮你建立信任、打造社区、获得即时反馈，并快速建立个人品牌。</p>
+<p>在积累了一定的粉丝后，可以引流到自己私人社群，尤其推荐 Discord 的社群，这可以让消息的推送从被动的社交平台推送转变为自己的主动分享。</p>
+<blockquote>
+<p><strong>成功案例：</strong> <a href="https://x.com/indie_maker_fox">Indie Maker Fox</a> 在 Twiiter 上通过 Build in Pubilc 成功推广了自己的 mkdir 与 mksaas 品牌，并获得了超过 10 万美元的收入。</p>
+</blockquote>
+<h3 id="策略二-I-人版-内容为王-Content-is-King"><a href="#策略二-I-人版-内容为王-Content-is-King" class="headerlink" title="策略二 (I 人版): 内容为王 (Content is King)"></a>策略二 (I 人版): 内容为王 (Content is King)</h3><p>如果你不善于抛头露面，内容营销是你的最佳选择。</p>
+<ul>
+<li><strong>写博客&#x2F;文档：</strong> 围绕你的产品所解决的问题，撰写高质量的博客文章。例如，你做的是一个图片压缩工具，就可以写一篇“10个提升网站加载速度的技巧”，并在文章中自然地引流到你的产品。</li>
+<li><strong>SEO (搜索引擎优化)：</strong> 学习基础的 SEO 知识，确保你的网站和内容能被 Google 等搜索引擎收录并获得好的排名。这是获取长期、免费、稳定流量的最佳方式。</li>
+</ul>
+<blockquote>
+<p>可以查看<code>Ahref</code>的 <a href="https://ahrefs.com/zh/seo">SEO 新手指南</a> 进行学习</p>
+</blockquote>
+<h3 id="构建产品矩阵"><a href="#构建产品矩阵" class="headerlink" title="构建产品矩阵"></a>构建产品矩阵</h3><p>当你有了一个成功的项目 A 后，可以在 A 的网站上自然地推广你的新项目 B，实现流量互导，构建自己的产品生态。  </p>
+<p>又或是在自己的不同网站中进行相互链接，有时，一个小而精致的独立工具页面，也能为你的主项目带来源源不断的新用户。</p>
+<h3 id="如何零成本托管小工具网站？"><a href="#如何零成本托管小工具网站？" class="headerlink" title="如何零成本托管小工具网站？"></a>如何零成本托管小工具网站？</h3><p>对于轻量级的工具网站，完全可以实现零成本或极低成本运营：</p>
+<p><strong>免费托管方案：</strong></p>
+<ul>
+<li><strong>Vercel&#x2F;Netlify：</strong> 提供慷慨的免费配额，支持自动部署和 CDN 加速</li>
+<li><strong>Cloudflare Pages：</strong> 无限带宽，全球 CDN，构建时间充足</li>
+<li><strong>GitHub Pages：</strong> 适合静态网站，与 GitHub 无缝集成</li>
+</ul>
+<p><strong>成本分析：</strong><br>拥有一个属于自己的、专业的域名是建立品牌和信任的关键，这是唯一的硬性成本支出，通常域名的成本价格在 20 美元&#x2F;年以内，以最常见的 <code>.com</code> 域名为例，年费约 $10-12（Cloudflare 续费价 $10.44&#x2F;年）。</p>
+<p>如果选择通过 Google AdSense 变现，以保守的 $1 CPM (Cost Per Mille，千次展示成本) 计算：</p>
+<ul>
+<li>需要 20000 年访问量即可回本</li>
+<li>平均每月仅需 1700 次访问</li>
+<li>考虑到广告屏蔽率约 25-30%，实际需要月访问量约 2200 次。<blockquote>
+<p><code>.com</code> 域名仅需 1200 次月访问量</p>
+</blockquote>
+</li>
+</ul>
+<p>虽然数字已经降到 1200 次&#x2F;月，但如果没有一定的粉丝，仍然很难在起步阶段实现，这需要我们并实践 SEO 优化，持续进行内容创作，同时不断打磨工具，让它真正解决用户的需求，剩下便是交给时间，保持一些耐心。</p>
+<h2 id="第四步：从流量到收入——变现策略详解"><a href="#第四步：从流量到收入——变现策略详解" class="headerlink" title="第四步：从流量到收入——变现策略详解"></a>第四步：从流量到收入——变现策略详解</h2><p>有了用户和流量，下一步就是将其转化为实际收入。以下是几种经过验证的变现模式：</p>
+<h3 id="订阅制-SaaS"><a href="#订阅制-SaaS" class="headerlink" title="订阅制 (SaaS)"></a>订阅制 (SaaS)</h3><p><strong>适用场景：</strong> 提供持续价值的工具或服务<br><strong>定价策略：</strong> </p>
+<ul>
+<li>免费版：基础功能 + 使用限制</li>
+<li>付费版：$5-50&#x2F;月，解锁全部功能</li>
+<li>企业版：$100+&#x2F;月，支持团队协作</li>
+</ul>
+<blockquote>
+<p><strong>成功案例：</strong> <a href="https://notion.so/">Notion</a> 从$0到$100亿估值，核心就是”免费试用 + 付费订阅”模式。</p>
+</blockquote>
+<h3 id="一次性付费"><a href="#一次性付费" class="headerlink" title="一次性付费"></a>一次性付费</h3><p><strong>适用场景：</strong> 工具类软件、模板、课程<br><strong>定价策略：</strong> $10-200一次性付费<br><strong>优势：</strong> 用户心理负担小，转化率高</p>
+<h3 id="广告收入"><a href="#广告收入" class="headerlink" title="广告收入"></a>广告收入</h3><p><strong>适用场景：</strong> 高流量的免费工具<br><strong>收入预期：</strong> 使用 Google AdSense 每 <strong>1000</strong> 访问量约 $1-5 收入<br><strong>优势：</strong> 用户免费使用，门槛低</p>
+<blockquote>
+<p>想要免费查看网站的访问数据？ 查看：<a href="https://ooo.run/post/website-traffic-cv.html" target="_blank">实用网站：通过 traffic.cv 免费查看网站访客数据</a></p>
+</blockquote>
+<h3 id="联盟营销-推荐佣金"><a href="#联盟营销-推荐佣金" class="headerlink" title="联盟营销&#x2F;推荐佣金"></a>联盟营销&#x2F;推荐佣金</h3><p><strong>适用场景：</strong> 内容型网站、工具推荐<br><strong>收入方式：</strong> 推荐相关产品获得5-50%佣金<br><strong>平台：</strong> Amazon Associates、淘宝联盟等</p>
+<h3 id="混合模式"><a href="#混合模式" class="headerlink" title="混合模式"></a>混合模式</h3><p>大多数成功的独立开发者会同时使用多种变现方式：</p>
+<ul>
+<li>核心付费功能 + 广告收入</li>
+<li>免费工具引流 + 付费高级版</li>
+<li>产品销售 + 咨询服务</li>
+</ul>
+<h2 id="总结：别再等待，从今天开始创造"><a href="#总结：别再等待，从今天开始创造" class="headerlink" title="总结：别再等待，从今天开始创造"></a>总结：别再等待，从今天开始创造</h2><p>回顾一下我们的路径图：<strong>从一个微小的想法开始，利用免费工具快速构建出 MVP，然后通过公开构建或内容营销找到你的第一批用户，最后在验证成功后，考虑付费增长和产品矩阵。</strong></p>
+<p>独立开发之路，始于足下。现在就从你的”想法备忘录”里，挑出一个最简单的，设定一个为期一周的目标，立即动手，发布你的第一个”预览版”吧！</p>
+<p>你未来的故事，从今天开始书写。</p>
+<h2 id="常见问题-FAQ"><a href="#常见问题-FAQ" class="headerlink" title="常见问题 FAQ"></a>常见问题 FAQ</h2><h3 id="Q1-我完全不懂编程，真的可以做独立开发吗？"><a href="#Q1-我完全不懂编程，真的可以做独立开发吗？" class="headerlink" title="Q1: 我完全不懂编程，真的可以做独立开发吗？"></a>Q1: 我完全不懂编程，真的可以做独立开发吗？</h3><p><strong>A:</strong> 绝对可以！现在有很多无代码&#x2F;低代码平台，AI 编程助手也日新月异，技术门槛已经大大降低，非技术背景的人完全可以创建产品。</p>
+<h3 id="Q2-需要多少启动资金？"><a href="#Q2-需要多少启动资金？" class="headerlink" title="Q2: 需要多少启动资金？"></a>Q2: 需要多少启动资金？</h3><p><strong>A:</strong> 几乎为零。域名一年$10-15，其他服务（托管、数据库、支付）都有免费额度足够MVP阶段使用。真正的投入是你的时间和精力。</p>
+<h3 id="Q3-多久能看到收入？"><a href="#Q3-多久能看到收入？" class="headerlink" title="Q3: 多久能看到收入？"></a>Q3: 多久能看到收入？</h3><p><strong>A:</strong> 这因项目而异。简单的工具类产品可能几周就有第一笔收入，复杂的SaaS产品可能需要3-6个月。关键是快速验证市场需求，而不是完美的产品。</p>
+<h3 id="Q4-如果没人使用我的产品怎么办？"><a href="#Q4-如果没人使用我的产品怎么办？" class="headerlink" title="Q4: 如果没人使用我的产品怎么办？"></a>Q4: 如果没人使用我的产品怎么办？</h3><p><strong>A:</strong> 这是正常现象！大多数产品都会经历”无人问津”的阶段。关键是：</p>
+<ol>
+<li>确保你解决了真实存在的问题 </li>
+<li>找到你的目标用户聚集的地方 </li>
+<li>持续改进产品体验。</li>
+</ol>
+<h3 id="Q5-一个人真的能做出成功的产品吗？"><a href="#Q5-一个人真的能做出成功的产品吗？" class="headerlink" title="Q5: 一个人真的能做出成功的产品吗？"></a>Q5: 一个人真的能做出成功的产品吗？</h3><p><strong>A:</strong> 当然！很多知名产品都是solo开发者创造的：Nomad List（$500K年收入）、Buffer 早期版本 等。关键是专注于核心功能，不要贪多求全。</p>
+<h3 id="Q6-应该做移动App还是网站？"><a href="#Q6-应该做移动App还是网站？" class="headerlink" title="Q6: 应该做移动App还是网站？"></a>Q6: 应该做移动App还是网站？</h3><p><strong>A:</strong> 对于独立开发者，建议先做网站。Web应用开发成本低、迭代速度快、不需要应用商店审核，用户获取也更直接。等产品验证成功后再考虑移动端。</p>
+<h3 id="Q7-竞争太激烈了，还有机会吗？"><a href="#Q7-竞争太激烈了，还有机会吗？" class="headerlink" title="Q7: 竞争太激烈了，还有机会吗？"></a>Q7: 竞争太激烈了，还有机会吗？</h3><p><strong>A:</strong> 永远有机会！市场足够大，关键是找到细分需求。即使是看似饱和的市场，也总有服务不好的用户群体。专注于特定用户群体，做好用户体验，就能立足。</p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>独立开发</tag>
+        <tag>个人项目</tag>
+        <tag>副业</tag>
       </tags>
   </entry>
   <entry>
@@ -1456,142 +1592,6 @@
       </tags>
   </entry>
   <entry>
-    <title>普通人掘金互联网：独立开发起步指南</title>
-    <url>/post/how-to-make-money-from-internet.html</url>
-    <content><![CDATA[<p>你是否也曾羡慕那些在社交媒体上“透明化”分享收入、靠个人项目实现财务自由的独立开发者？看到他们动辄上千美金的月收入，你或许会觉得那是一个难以达成的目标。</p>
-<p>但事实是，成功的独立开发并非天才的专属游戏，它背后有一套普通人也能学习和实践的方法论。成功的关键，往往不在于一个惊世骇俗的“天才想法”，而在于<strong>正确的策略和持续的行动</strong>。</p>
-<p>本文将为你铺开一张务实、低成本的独立开发路径图，旨在帮助每一个有想法的普通人，从零到一，开启自己的互联网掘金之路。</p>
-<p>即便不懂技术也没有关系，AI 的发展如火如荼，各种编程助手不断涌现，在 AI 时代，人人都可以是产品经理。</p>
-<h2 id="站在巨人的肩膀上：选择成熟的技术栈"><a href="#站在巨人的肩膀上：选择成熟的技术栈" class="headerlink" title="站在巨人的肩膀上：选择成熟的技术栈"></a>站在巨人的肩膀上：选择成熟的技术栈</h2><p>在选择开发语言和框架时，一个常见的误区是追求”未来趋势”，尝试自己不熟悉但看似前沿的新语言或框架，结果效率低、踩坑多、没人可问。</p>
-<p><strong>最佳策略是：选择当下的热门开发语言</strong> ，这意味着：</p>
-<ul>
-<li><strong>庞大的开发者社区：</strong> 以 JavaScript（Node.js）、Python、Java 等为例，这些语言的用户遍布全球，每天都有无数人面对并解决类似的技术问题。遇到 bug 时，你很可能只需搜索几分钟，就能找到解决方案。</li>
-<li><strong>成熟的生态与解决方案：</strong> 热门语言意味着有丰富的第三方库、框架和工具链——无论是数据库操作、身份验证、支付集成还是部署运维，都可能有现成的、经过验证的解决方案可以直接套用。</li>
-<li><strong>丰富的学习资源：</strong> 从官方文档到技术博客、从视频课程到社区问答，成熟语言的学习路径极其清晰，你可以用最少的时间填补知识空白，而不是陷入信息荒漠。</li>
-</ul>
-<p>比如 <strong>Web应用全栈</strong> 可以选择：</p>
-<ul>
-<li><strong>前端：</strong> React&#x2F;Vue.js + TailwindCSS</li>
-<li><strong>全栈框架：</strong> Next.js 或 Nuxt.js</li>
-<li><strong>后端服务：</strong> Supabase </li>
-<li><strong>部署：</strong> Vercel </li>
-<li><strong>支付：</strong> Stripe</li>
-</ul>
-<h2 id="第一步：成功始于微小——快速推出产品"><a href="#第一步：成功始于微小——快速推出产品" class="headerlink" title="第一步：成功始于微小——快速推出产品"></a>第一步：成功始于微小——快速推出产品</h2><p>独立开发者最大的敌人就是 “过度思考” 和 “追求完美” 。因此我们必须在起点就摆正心态。</p>
-<h3 id="1-快速行动：用“预览版”代替“完美版”"><a href="#1-快速行动：用“预览版”代替“完美版”" class="headerlink" title="1. 快速行动：用“预览版”代替“完美版”"></a>1. 快速行动：用“预览版”代替“完美版”</h3><p>许多项目胎死腹中，就是因为我们总想一步到位，一口气做出一个功能齐全的“完美产品”。</p>
-<p>推荐第一步是先构建一个 <strong>MVP (Minimum Viable Product)</strong> 最小可行产品，推向市场。</p>
-<p>MVP 不是一个简陋的半成品，它是 <strong>“能验证核心价值的最小功能集”</strong> 。只做最核心的 1-2 个功能，让用户能体验到产品的特色。例如，一个笔记软件的 MVP，也许只是一个能在线保存文本的网页，而不是一上来就支持 Markdown、多端同步和文件夹管理。</p>
-<p>推出 MVP 产品可以帮助我们获取用户反馈，根据反馈迭代功能以及调整开发方向。 </p>
-<p><strong>行动指南：</strong> 设定一个极短的开发周期（比如 1-2 周），强制自己上线一个可供访问的预览版。这会让你立刻从“思考者”转变为“行动者”。</p>
-<blockquote>
-<p><strong>案例分享：</strong> <a href="https://linktr.ee/">Linktree</a> 的创始人最初就是用简单的 HTML&#x2F;CSS 搭建了一个”链接聚合页面”，如今估值超过10亿美金。技术简单并不妨碍商业成功。</p>
-</blockquote>
-<h3 id="2-拥抱小想法：在“利基市场”里发现金矿"><a href="#2-拥抱小想法：在“利基市场”里发现金矿" class="headerlink" title="2. 拥抱小想法：在“利基市场”里发现金矿"></a>2. 拥抱小想法：在“利基市场”里发现金矿</h3><p>别让“这个想法不够宏大”扼杀你的项目。大多数成功的独立开发项目，都始于解决一个极其微小、具体的痛点。比如一个“图片压缩工具”、“简历模板生成器”或“特定领域的资讯聚合器”。</p>
-<p>小想法往往对应着一个服务不足的**利基市场 (Niche Market)**。这里竞争小，用户需求明确，你更容易获得第一批忠实用户和早期收入。</p>
-<blockquote>
-<p><strong>成功案例：</strong> <a href="https://jsonformatter.org/">JSON Formatter</a> 这个简单的在线工具，每月有超过100万访问量，仅靠广告就能获得可观收入。</p>
-</blockquote>
-<p><strong>行动指南：</strong> 建立一个你自己的”想法备忘录”，随时记录那些一闪而过的、看似不起眼的需求。它们是未来项目的宝贵种子。</p>
-<h2 id="第二步：实践出真知——零成本启动你的项目"><a href="#第二步：实践出真知——零成本启动你的项目" class="headerlink" title="第二步：实践出真知——零成本启动你的项目"></a>第二步：实践出真知——零成本启动你的项目</h2><p>在验证市场之前，每一分钱都要花在刀刃上。幸运的是，我们处在一个拥有大量免费“神级”服务的时代。</p>
-<h3 id="1-善用免费托管服务"><a href="#1-善用免费托管服务" class="headerlink" title="1. 善用免费托管服务"></a>1. 善用免费托管服务</h3><ul>
-<li><strong>前端&#x2F;全栈托管：</strong> <strong>Vercel</strong> 和 <strong>Netlify</strong> 是托管现代前端框架（如 Next.js）的绝佳选择，它们提供免费的 CI&#x2F;CD，每次代码提交都能自动部署，极大提升效率。</li>
-<li><strong>静态页面托管</strong> 纯静态的网站可以选择使用 <strong>Github Pages</strong> 或是 <strong>Cloudflare Pages</strong> 托管，Cloudflare 的 Workers 也提供了一个免费的 Serverless 计算环境，足以支撑轻量级后端。</li>
-<li><strong>后端&#x2F;数据库：</strong> <strong>Supabase</strong> 或 <strong>Firebase</strong> 这类 BaaS (后端即服务)平台，免费提供了数据库、用户认证、文件存储等功能，让不懂后端的开发者也能快速构建功能完整的应用。</li>
-</ul>
-<h3 id="2-让人工智能成为你的效率放大器"><a href="#2-让人工智能成为你的效率放大器" class="headerlink" title="2. 让人工智能成为你的效率放大器"></a>2. 让人工智能成为你的效率放大器</h3><p>AI 工具是“超级个体”的战斗力倍增器。</p>
-<ul>
-<li><strong>编码助手：</strong> <strong>Claude Code</strong> 、或 <strong>Cursor</strong> 能显著提升你的编码速度，帮你解决疑难杂症。</li>
-<li><strong>内容与设计：</strong> 使用 <strong>ChatGPT&#x2F;Gemini</strong> 生成营销文案、产品介绍；使用 <strong>Midjourney&#x2F;Canva AI</strong> 生成 Logo、图标和宣传图，轻松解决设计短板。</li>
-</ul>
-<h2 id="第三步：增长飞轮——让世界发现你的价值"><a href="#第三步：增长飞轮——让世界发现你的价值" class="headerlink" title="第三步：增长飞轮——让世界发现你的价值"></a>第三步：增长飞轮——让世界发现你的价值</h2><p>产品造出来只是第一步，如何让目标用户知道并使用它，是决定生死的关键。</p>
-<h3 id="策略一-E-人版-公开构建-Build-in-Public"><a href="#策略一-E-人版-公开构建-Build-in-Public" class="headerlink" title="策略一 (E 人版): 公开构建 (Build in Public)"></a>策略一 (E 人版): 公开构建 (Build in Public)</h3><p>这不仅是营销，更是一种产品开发哲学。你可以在社交媒体（如 X&#x2F;Twitter、即刻）或个人博客上，公开分享你的：</p>
-<ul>
-<li><strong>开发进度</strong>：“今天我解决了 XX Bug。”</li>
-<li><strong>思考过程</strong>：“我在纠结 A、B 两个功能，大家觉得哪个更重要？”</li>
-<li><strong>数据指标</strong>：“上线第一周，获得了 50 个注册用户！”</li>
-<li><strong>失败与教训</strong>：“这次营销尝试失败了，复盘一下原因……”</li>
-</ul>
-<p>这种“透明化”能帮你建立信任、打造社区、获得即时反馈，并快速建立个人品牌。</p>
-<p>在积累了一定的粉丝后，可以引流到自己私人社群，尤其推荐 Discord 的社群，这可以让消息的推送从被动的社交平台推送转变为自己的主动分享。</p>
-<blockquote>
-<p><strong>成功案例：</strong> <a href="https://x.com/indie_maker_fox">Indie Maker Fox</a> 在 Twiiter 上通过 Build in Pubilc 成功推广了自己的 mkdir 与 mksaas 品牌，并获得了超过 10 万美元的收入。</p>
-</blockquote>
-<h3 id="策略二-I-人版-内容为王-Content-is-King"><a href="#策略二-I-人版-内容为王-Content-is-King" class="headerlink" title="策略二 (I 人版): 内容为王 (Content is King)"></a>策略二 (I 人版): 内容为王 (Content is King)</h3><p>如果你不善于抛头露面，内容营销是你的最佳选择。</p>
-<ul>
-<li><strong>写博客&#x2F;文档：</strong> 围绕你的产品所解决的问题，撰写高质量的博客文章。例如，你做的是一个图片压缩工具，就可以写一篇“10个提升网站加载速度的技巧”，并在文章中自然地引流到你的产品。</li>
-<li><strong>SEO (搜索引擎优化)：</strong> 学习基础的 SEO 知识，确保你的网站和内容能被 Google 等搜索引擎收录并获得好的排名。这是获取长期、免费、稳定流量的最佳方式。</li>
-</ul>
-<blockquote>
-<p>可以查看<code>Ahref</code>的 <a href="https://ahrefs.com/zh/seo">SEO 新手指南</a> 进行学习</p>
-</blockquote>
-<h3 id="构建产品矩阵"><a href="#构建产品矩阵" class="headerlink" title="构建产品矩阵"></a>构建产品矩阵</h3><p>当你有了一个成功的项目 A 后，可以在 A 的网站上自然地推广你的新项目 B，实现流量互导，构建自己的产品生态。  </p>
-<p>又或是在自己的不同网站中进行相互链接，有时，一个小而精致的独立工具页面，也能为你的主项目带来源源不断的新用户。</p>
-<h3 id="如何零成本托管小工具网站？"><a href="#如何零成本托管小工具网站？" class="headerlink" title="如何零成本托管小工具网站？"></a>如何零成本托管小工具网站？</h3><p>对于轻量级的工具网站，完全可以实现零成本或极低成本运营：</p>
-<p><strong>免费托管方案：</strong></p>
-<ul>
-<li><strong>Vercel&#x2F;Netlify：</strong> 提供慷慨的免费配额，支持自动部署和 CDN 加速</li>
-<li><strong>Cloudflare Pages：</strong> 无限带宽，全球 CDN，构建时间充足</li>
-<li><strong>GitHub Pages：</strong> 适合静态网站，与 GitHub 无缝集成</li>
-</ul>
-<p><strong>成本分析：</strong><br>拥有一个属于自己的、专业的域名是建立品牌和信任的关键，这是唯一的硬性成本支出，通常域名的成本价格在 20 美元&#x2F;年以内，以最常见的 <code>.com</code> 域名为例，年费约 $10-12（Cloudflare 续费价 $10.44&#x2F;年）。</p>
-<p>如果选择通过 Google AdSense 变现，以保守的 $1 CPM (Cost Per Mille，千次展示成本) 计算：</p>
-<ul>
-<li>需要 20000 年访问量即可回本</li>
-<li>平均每月仅需 1700 次访问</li>
-<li>考虑到广告屏蔽率约 25-30%，实际需要月访问量约 2200 次。<blockquote>
-<p><code>.com</code> 域名仅需 1200 次月访问量</p>
-</blockquote>
-</li>
-</ul>
-<p>虽然数字已经降到 1200 次&#x2F;月，但如果没有一定的粉丝，仍然很难在起步阶段实现，这需要我们并实践 SEO 优化，持续进行内容创作，同时不断打磨工具，让它真正解决用户的需求，剩下便是交给时间，保持一些耐心。</p>
-<h2 id="第四步：从流量到收入——变现策略详解"><a href="#第四步：从流量到收入——变现策略详解" class="headerlink" title="第四步：从流量到收入——变现策略详解"></a>第四步：从流量到收入——变现策略详解</h2><p>有了用户和流量，下一步就是将其转化为实际收入。以下是几种经过验证的变现模式：</p>
-<h3 id="订阅制-SaaS"><a href="#订阅制-SaaS" class="headerlink" title="订阅制 (SaaS)"></a>订阅制 (SaaS)</h3><p><strong>适用场景：</strong> 提供持续价值的工具或服务<br><strong>定价策略：</strong> </p>
-<ul>
-<li>免费版：基础功能 + 使用限制</li>
-<li>付费版：$5-50&#x2F;月，解锁全部功能</li>
-<li>企业版：$100+&#x2F;月，支持团队协作</li>
-</ul>
-<blockquote>
-<p><strong>成功案例：</strong> <a href="https://notion.so/">Notion</a> 从$0到$100亿估值，核心就是”免费试用 + 付费订阅”模式。</p>
-</blockquote>
-<h3 id="一次性付费"><a href="#一次性付费" class="headerlink" title="一次性付费"></a>一次性付费</h3><p><strong>适用场景：</strong> 工具类软件、模板、课程<br><strong>定价策略：</strong> $10-200一次性付费<br><strong>优势：</strong> 用户心理负担小，转化率高</p>
-<h3 id="广告收入"><a href="#广告收入" class="headerlink" title="广告收入"></a>广告收入</h3><p><strong>适用场景：</strong> 高流量的免费工具<br><strong>收入预期：</strong> 使用 Google AdSense 每 <strong>1000</strong> 访问量约 $1-5 收入<br><strong>优势：</strong> 用户免费使用，门槛低</p>
-<blockquote>
-<p>想要免费查看网站的访问数据？ 查看：<a href="https://ooo.run/post/website-traffic-cv.html" target="_blank">实用网站：通过 traffic.cv 免费查看网站访客数据</a></p>
-</blockquote>
-<h3 id="联盟营销-推荐佣金"><a href="#联盟营销-推荐佣金" class="headerlink" title="联盟营销&#x2F;推荐佣金"></a>联盟营销&#x2F;推荐佣金</h3><p><strong>适用场景：</strong> 内容型网站、工具推荐<br><strong>收入方式：</strong> 推荐相关产品获得5-50%佣金<br><strong>平台：</strong> Amazon Associates、淘宝联盟等</p>
-<h3 id="混合模式"><a href="#混合模式" class="headerlink" title="混合模式"></a>混合模式</h3><p>大多数成功的独立开发者会同时使用多种变现方式：</p>
-<ul>
-<li>核心付费功能 + 广告收入</li>
-<li>免费工具引流 + 付费高级版</li>
-<li>产品销售 + 咨询服务</li>
-</ul>
-<h2 id="总结：别再等待，从今天开始创造"><a href="#总结：别再等待，从今天开始创造" class="headerlink" title="总结：别再等待，从今天开始创造"></a>总结：别再等待，从今天开始创造</h2><p>回顾一下我们的路径图：<strong>从一个微小的想法开始，利用免费工具快速构建出 MVP，然后通过公开构建或内容营销找到你的第一批用户，最后在验证成功后，考虑付费增长和产品矩阵。</strong></p>
-<p>独立开发之路，始于足下。现在就从你的”想法备忘录”里，挑出一个最简单的，设定一个为期一周的目标，立即动手，发布你的第一个”预览版”吧！</p>
-<p>你未来的故事，从今天开始书写。</p>
-<h2 id="常见问题-FAQ"><a href="#常见问题-FAQ" class="headerlink" title="常见问题 FAQ"></a>常见问题 FAQ</h2><h3 id="Q1-我完全不懂编程，真的可以做独立开发吗？"><a href="#Q1-我完全不懂编程，真的可以做独立开发吗？" class="headerlink" title="Q1: 我完全不懂编程，真的可以做独立开发吗？"></a>Q1: 我完全不懂编程，真的可以做独立开发吗？</h3><p><strong>A:</strong> 绝对可以！现在有很多无代码&#x2F;低代码平台，AI 编程助手也日新月异，技术门槛已经大大降低，非技术背景的人完全可以创建产品。</p>
-<h3 id="Q2-需要多少启动资金？"><a href="#Q2-需要多少启动资金？" class="headerlink" title="Q2: 需要多少启动资金？"></a>Q2: 需要多少启动资金？</h3><p><strong>A:</strong> 几乎为零。域名一年$10-15，其他服务（托管、数据库、支付）都有免费额度足够MVP阶段使用。真正的投入是你的时间和精力。</p>
-<h3 id="Q3-多久能看到收入？"><a href="#Q3-多久能看到收入？" class="headerlink" title="Q3: 多久能看到收入？"></a>Q3: 多久能看到收入？</h3><p><strong>A:</strong> 这因项目而异。简单的工具类产品可能几周就有第一笔收入，复杂的SaaS产品可能需要3-6个月。关键是快速验证市场需求，而不是完美的产品。</p>
-<h3 id="Q4-如果没人使用我的产品怎么办？"><a href="#Q4-如果没人使用我的产品怎么办？" class="headerlink" title="Q4: 如果没人使用我的产品怎么办？"></a>Q4: 如果没人使用我的产品怎么办？</h3><p><strong>A:</strong> 这是正常现象！大多数产品都会经历”无人问津”的阶段。关键是：</p>
-<ol>
-<li>确保你解决了真实存在的问题 </li>
-<li>找到你的目标用户聚集的地方 </li>
-<li>持续改进产品体验。</li>
-</ol>
-<h3 id="Q5-一个人真的能做出成功的产品吗？"><a href="#Q5-一个人真的能做出成功的产品吗？" class="headerlink" title="Q5: 一个人真的能做出成功的产品吗？"></a>Q5: 一个人真的能做出成功的产品吗？</h3><p><strong>A:</strong> 当然！很多知名产品都是solo开发者创造的：Nomad List（$500K年收入）、Buffer 早期版本 等。关键是专注于核心功能，不要贪多求全。</p>
-<h3 id="Q6-应该做移动App还是网站？"><a href="#Q6-应该做移动App还是网站？" class="headerlink" title="Q6: 应该做移动App还是网站？"></a>Q6: 应该做移动App还是网站？</h3><p><strong>A:</strong> 对于独立开发者，建议先做网站。Web应用开发成本低、迭代速度快、不需要应用商店审核，用户获取也更直接。等产品验证成功后再考虑移动端。</p>
-<h3 id="Q7-竞争太激烈了，还有机会吗？"><a href="#Q7-竞争太激烈了，还有机会吗？" class="headerlink" title="Q7: 竞争太激烈了，还有机会吗？"></a>Q7: 竞争太激烈了，还有机会吗？</h3><p><strong>A:</strong> 永远有机会！市场足够大，关键是找到细分需求。即使是看似饱和的市场，也总有服务不好的用户群体。专注于特定用户群体，做好用户体验，就能立足。</p>
-]]></content>
-      <categories>
-        <category>笔记</category>
-      </categories>
-      <tags>
-        <tag>独立开发</tag>
-        <tag>个人项目</tag>
-        <tag>副业</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>OpenAI 发布两款高性能开源人工智能模型 GPT-OSS-20B 与 GPT-OSS-120B</title>
     <url>/post/news-openai-releae-gpt-oss-model.html</url>
     <content><![CDATA[<p><strong>旧金山 – 2025年8月6日</strong> – OpenAI今日宣布推出两款采用混合专家（MoE）架构的开源推理模型：<strong>GPT-OSS-120B</strong> 和 <strong>GPT-OSS-20B</strong> 。 </p>
@@ -1621,114 +1621,6 @@
         <tag>大模型</tag>
         <tag>OpenAI</tag>
         <tag>开源</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>OpenAI Codex CLI 现已支持使用 ChatGPT 账户登录，默认模型 GPT-5</title>
-    <url>/post/openai-codex-support-login-by-chatgpt-plus.html</url>
-    <content><![CDATA[<p>Claude 的终端编程助手 Claude Code 越来越火，Google 的 Gemini CLI 也凭借免费额度占领一定的市场份额，这种事情怎么能少了当今 AI 的领头羊 OpenAI 的身影。<br>如今，在 OpenAI 发布 GPT-5 后，Codex CLI 终于支持使用 ChatGPT 账户（Plus &#x2F; Pro）直接登录，并将默认模型切换为 GPT-5。</p>
-<p><a href="https://github.com/openai/codex">GitHub - OpenAI Codex CLI</a></p>
-<h2 id="要点速览"><a href="#要点速览" class="headerlink" title="要点速览"></a>要点速览</h2><ul>
-<li>支持 ChatGPT 登录（Plus&#x2F;Pro&#x2F;Team）：无需单独 API Key。</li>
-<li>默认模型 <code>GPT-5</code>：开箱即用的最新默认设置。</li>
-<li>支持直接使用 <code>npm</code> 安装。 </li>
-<li>用 <code>/status</code> 验证登录与模型配置。</li>
-</ul>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>优先推荐使用 npm 全局安装：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm install -g @openai/codex</span><br></pre></td></tr></table></figure>
-
-<p>macOS 用户也可通过 Homebrew：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">brew install codex</span><br></pre></td></tr></table></figure>
-
-<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>尚未安装 Node.js&#x2F;npm？查看： <a href="https://ooo.run/post/how-to-install-nodejs.html">如何安装 Node.js</a><br>Codex CLI 要求 node 最低版本为 <code>22</code></p></div></div>
-
-<h2 id="登录与认证"><a href="#登录与认证" class="headerlink" title="登录与认证"></a>登录与认证</h2><p>在终端中启动 Codex：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">codex</span><br></pre></td></tr></table></figure>
-
-<p>首次运行会提示选择认证方式，现已支持直接使用 ChatGPT 登录：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&gt; 1. Sign in with ChatGPT </span><br><span class="line">     Usage included with Plus, Pro, and Team plans</span><br><span class="line">  2. Provide your own API key （按用量计费）</span><br></pre></td></tr></table></figure>
-
-<p>选择「Sign in with ChatGPT」后，浏览器将打开以完成授权登录：</p>
-<p><img src="https://img.nep.me/i/2025/08/08/login-codex-with-chatgpt-plus.webp" alt="login-codex-with-chatgpt-plus"></p>
-<p>完成授权后，终端会显示欢迎信息与账号来源（ChatGPT）。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&gt;_ Welcome to Codex, OpenAI&#x27;s command-line coding agent</span><br><span class="line"></span><br><span class="line">✓ Signed in with your ChatGPT account       </span><br></pre></td></tr></table></figure>
-
-<h2 id="首次配置（授权模式）"><a href="#首次配置（授权模式）" class="headerlink" title="首次配置（授权模式）"></a>首次配置（授权模式）</h2><p>与 Claude Code &#x2F; Gemini CLI 不同，首次进入目录时，Codex 会询问是否在该目录内「无需逐次确认」即可编辑文件与运行命令：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&gt; 1. Yes, allow Codex to work in this folder without asking for approval</span><br><span class="line">  2. No, ask me to approve edits and commands</span><br></pre></td></tr></table></figure>
-
-<p>建议：</p>
-<ul>
-<li>个人项目且已版本管理：可选择 <code>Yes</code> 提升效率。</li>
-<li>新手或敏感仓库：选择 <code>No</code> 逐步审批 <strong>更安全</strong> 。</li>
-</ul>
-<h2 id="对话预览"><a href="#对话预览" class="headerlink" title="对话预览"></a>对话预览</h2><p><img src="https://img.nep.me/i/2025/08/08/codex-welcome.webp" alt="codex-welcome"></p>
-<h2 id="验证与常用命令"><a href="#验证与常用命令" class="headerlink" title="验证与常用命令"></a>验证与常用命令</h2><ul>
-<li><p>查看状态：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/status</span><br></pre></td></tr></table></figure>
-
-<p>你将看到授权来源（ChatGPT）与默认模型 <code>gpt-5</code> 等信息。</p>
-<p>示例状态输出（已省略无关行）：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">👤 Account</span><br><span class="line">  • Signed in with ChatGPT</span><br><span class="line">  • Plan: Plus</span><br><span class="line"></span><br><span class="line">🧠 Model</span><br><span class="line">  • Name: gpt-5</span><br><span class="line">  • Provider: OpenAI</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>初始化项目上下文：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/init</span><br></pre></td></tr></table></figure>
-
-<p>让 Codex 获取项目结构并创建 AGENTS.md 文件。</p>
-</li>
-</ul>
-<p>如果你已订购 ChatGPT Plus &#x2F; Pro，现在就动手安装试试吧！</p>
-]]></content>
-      <categories>
-        <category>资讯</category>
-      </categories>
-      <tags>
-        <tag>AI</tag>
-        <tag>OpenAI</tag>
-        <tag>Codex CLI</tag>
-        <tag>编程助手</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>在 Google AI Studio 中免费体验 Nano Banana(Gemini 2.5 Flash Image)</title>
-    <url>/post/try-gemini-flash-image-preview.html</url>
-    <content><![CDATA[<p>Google 发布了预览版本的 Gemini 2.5 Flash Image Preview，一个图像生成与编辑模型，可以进行对话式的编辑或是图像合成，现已在 Google 的各种服务中中提供。</p>
-<p>可以直接打开 <a href="https://gemini.google/">Gemini APP</a> 或是访问 <a href="https://aistudio.google.com/prompts/new_chat?model=gemini-2.5-flash-image-preview">Google AI Studio</a> 免费体验。</p>
-<blockquote>
-<p>更新：现在可以直接在 X(Twitter) 上 <a href="https://x.com/NanoBanana/with_replies">@NanoBanana</a> 来生成图片了</p>
-</blockquote>
-<p>访问 Google AI Studio 后可以看到右上角的模型为 <code>Gemini 2.5 Flash Image Preview</code>。</p>
-<blockquote>
-<p>更新：现在已经直接显示为 Nano Banana 了</p>
-</blockquote>
-<img src="https://img.nep.me/i/2025/09/01/google-ai-studio-web-nano.webp" style="width:85%;" alt="google-ai-studio-web" />
-
-<p>如果需要上传图片，只需要点击对话框右侧的 <code>+</code> 或是直接拖动图片到输入框，不如就试试现在比较火的生成手办图片的 prompts 吧：</p>
-<blockquote>
-<p>Use the nano-banana model to create a 1&#x2F;7 scale commercialized figure of thecharacter in the illustration, in a realistic style and environment. Place the figure on a computer desk, using a circular transparent acrylic base without any text.On the computer screen, display the ZBrush modeling process of the figure. Next to the computer screen, place a BANDAI-style toy packaging box printed with the original artwork.</p>
-</blockquote>
-<img src="https://img.nep.me/i/2025/08/28/gemini-flash-images-figure.webp" style="width:50%;" alt="google-ai-studio-prompts" />
-
-<p>提示词来源 <a href="https://x.com/YunFeng_cc/status/1960595391461908528">雲風Cloudwind @ x.com</a></p>
-<blockquote>
-<p>实测效果也没有那么稳定，有时需要抽卡</p>
-</blockquote>
-<p>Gemini 2.5 Flash Image Preview 主要特色：</p>
-<ul>
-<li>在多个提示和图像中 <strong>保持角色的一致性</strong>：一致性非常强，所以非常适合编辑图片。</li>
-<li>使用 <strong>自然语言</strong> 有针对性的编辑&#x2F;替换对象： 不需要写专业的提示词，一句话就能编辑图片，当然专业准确的提示器效果更好。</li>
-<li>基于前面两个特性，可以将多个图像根据提示词进行 <strong>合成</strong>。</li>
-<li>准确呈现图像中的文本： <strong>仅限英文</strong> ，中文效果不好。</li>
-<li>每 100 万个输出令牌 30 美元（1 幅图像约 0.039 美分）。</li>
-</ul>
-<p>上传或是生成的图片都会保存在 <strong>Google 云端硬盘</strong> &gt; <strong>我的云端硬盘</strong> &gt; <strong>Google AI Studio</strong> 文件夹内。</p>
-]]></content>
-      <categories>
-        <category>资讯</category>
-      </categories>
-      <tags>
-        <tag>AI</tag>
-        <tag>图像生成</tag>
-        <tag>Nano Banana</tag>
       </tags>
   </entry>
   <entry>
@@ -1813,6 +1705,71 @@
       </tags>
   </entry>
   <entry>
+    <title>OpenAI Codex CLI 现已支持使用 ChatGPT 账户登录，默认模型 GPT-5</title>
+    <url>/post/openai-codex-support-login-by-chatgpt-plus.html</url>
+    <content><![CDATA[<p>Claude 的终端编程助手 Claude Code 越来越火，Google 的 Gemini CLI 也凭借免费额度占领一定的市场份额，这种事情怎么能少了当今 AI 的领头羊 OpenAI 的身影。<br>如今，在 OpenAI 发布 GPT-5 后，Codex CLI 终于支持使用 ChatGPT 账户（Plus &#x2F; Pro）直接登录，并将默认模型切换为 GPT-5。</p>
+<p><a href="https://github.com/openai/codex">GitHub - OpenAI Codex CLI</a></p>
+<h2 id="要点速览"><a href="#要点速览" class="headerlink" title="要点速览"></a>要点速览</h2><ul>
+<li>支持 ChatGPT 登录（Plus&#x2F;Pro&#x2F;Team）：无需单独 API Key。</li>
+<li>默认模型 <code>GPT-5</code>：开箱即用的最新默认设置。</li>
+<li>支持直接使用 <code>npm</code> 安装。 </li>
+<li>用 <code>/status</code> 验证登录与模型配置。</li>
+</ul>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>优先推荐使用 npm 全局安装：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm install -g @openai/codex</span><br></pre></td></tr></table></figure>
+
+<p>macOS 用户也可通过 Homebrew：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">brew install codex</span><br></pre></td></tr></table></figure>
+
+<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>尚未安装 Node.js&#x2F;npm？查看： <a href="https://ooo.run/post/how-to-install-nodejs.html">如何安装 Node.js</a><br>Codex CLI 要求 node 最低版本为 <code>22</code></p></div></div>
+
+<h2 id="登录与认证"><a href="#登录与认证" class="headerlink" title="登录与认证"></a>登录与认证</h2><p>在终端中启动 Codex：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">codex</span><br></pre></td></tr></table></figure>
+
+<p>首次运行会提示选择认证方式，现已支持直接使用 ChatGPT 登录：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&gt; 1. Sign in with ChatGPT </span><br><span class="line">     Usage included with Plus, Pro, and Team plans</span><br><span class="line">  2. Provide your own API key （按用量计费）</span><br></pre></td></tr></table></figure>
+
+<p>选择「Sign in with ChatGPT」后，浏览器将打开以完成授权登录：</p>
+<p><img src="https://img.nep.me/i/2025/08/08/login-codex-with-chatgpt-plus.webp" alt="login-codex-with-chatgpt-plus"></p>
+<p>完成授权后，终端会显示欢迎信息与账号来源（ChatGPT）。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&gt;_ Welcome to Codex, OpenAI&#x27;s command-line coding agent</span><br><span class="line"></span><br><span class="line">✓ Signed in with your ChatGPT account       </span><br></pre></td></tr></table></figure>
+
+<h2 id="首次配置（授权模式）"><a href="#首次配置（授权模式）" class="headerlink" title="首次配置（授权模式）"></a>首次配置（授权模式）</h2><p>与 Claude Code &#x2F; Gemini CLI 不同，首次进入目录时，Codex 会询问是否在该目录内「无需逐次确认」即可编辑文件与运行命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&gt; 1. Yes, allow Codex to work in this folder without asking for approval</span><br><span class="line">  2. No, ask me to approve edits and commands</span><br></pre></td></tr></table></figure>
+
+<p>建议：</p>
+<ul>
+<li>个人项目且已版本管理：可选择 <code>Yes</code> 提升效率。</li>
+<li>新手或敏感仓库：选择 <code>No</code> 逐步审批 <strong>更安全</strong> 。</li>
+</ul>
+<h2 id="对话预览"><a href="#对话预览" class="headerlink" title="对话预览"></a>对话预览</h2><p><img src="https://img.nep.me/i/2025/08/08/codex-welcome.webp" alt="codex-welcome"></p>
+<h2 id="验证与常用命令"><a href="#验证与常用命令" class="headerlink" title="验证与常用命令"></a>验证与常用命令</h2><ul>
+<li><p>查看状态：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/status</span><br></pre></td></tr></table></figure>
+
+<p>你将看到授权来源（ChatGPT）与默认模型 <code>gpt-5</code> 等信息。</p>
+<p>示例状态输出（已省略无关行）：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">👤 Account</span><br><span class="line">  • Signed in with ChatGPT</span><br><span class="line">  • Plan: Plus</span><br><span class="line"></span><br><span class="line">🧠 Model</span><br><span class="line">  • Name: gpt-5</span><br><span class="line">  • Provider: OpenAI</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>初始化项目上下文：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/init</span><br></pre></td></tr></table></figure>
+
+<p>让 Codex 获取项目结构并创建 AGENTS.md 文件。</p>
+</li>
+</ul>
+<p>如果你已订购 ChatGPT Plus &#x2F; Pro，现在就动手安装试试吧！</p>
+]]></content>
+      <categories>
+        <category>资讯</category>
+      </categories>
+      <tags>
+        <tag>AI</tag>
+        <tag>OpenAI</tag>
+        <tag>Codex CLI</tag>
+        <tag>编程助手</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>使用 ccusage 查看 Claude Code 用量</title>
     <url>/post/use-ccusage-check-claude-code-cost.html</url>
     <content><![CDATA[<p>如果你是通过 Claude Pro 或是 Max 订阅使用的 Claude Code，通过 <code>/cost</code> 会得到无需关注消耗的提示   </p>
@@ -1854,6 +1811,49 @@
       </categories>
       <tags>
         <tag>Claude Code</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>在 Google AI Studio 中免费体验 Nano Banana(Gemini 2.5 Flash Image)</title>
+    <url>/post/try-gemini-flash-image-preview.html</url>
+    <content><![CDATA[<p>Google 发布了预览版本的 Gemini 2.5 Flash Image Preview，一个图像生成与编辑模型，可以进行对话式的编辑或是图像合成，现已在 Google 的各种服务中中提供。</p>
+<p>可以直接打开 <a href="https://gemini.google/">Gemini APP</a> 或是访问 <a href="https://aistudio.google.com/prompts/new_chat?model=gemini-2.5-flash-image-preview">Google AI Studio</a> 免费体验。</p>
+<blockquote>
+<p>更新：现在可以直接在 X(Twitter) 上 <a href="https://x.com/NanoBanana/with_replies">@NanoBanana</a> 来生成图片了</p>
+</blockquote>
+<p>访问 Google AI Studio 后可以看到右上角的模型为 <code>Gemini 2.5 Flash Image Preview</code>。</p>
+<blockquote>
+<p>更新：现在已经直接显示为 Nano Banana 了</p>
+</blockquote>
+<img src="https://img.nep.me/i/2025/09/01/google-ai-studio-web-nano.webp" style="width:85%;" alt="google-ai-studio-web" />
+
+<p>如果需要上传图片，只需要点击对话框右侧的 <code>+</code> 或是直接拖动图片到输入框，不如就试试现在比较火的生成手办图片的 prompts 吧：</p>
+<blockquote>
+<p>Use the nano-banana model to create a 1&#x2F;7 scale commercialized figure of thecharacter in the illustration, in a realistic style and environment. Place the figure on a computer desk, using a circular transparent acrylic base without any text.On the computer screen, display the ZBrush modeling process of the figure. Next to the computer screen, place a BANDAI-style toy packaging box printed with the original artwork.</p>
+</blockquote>
+<img src="https://img.nep.me/i/2025/08/28/gemini-flash-images-figure.webp" style="width:50%;" alt="google-ai-studio-prompts" />
+
+<p>提示词来源 <a href="https://x.com/YunFeng_cc/status/1960595391461908528">雲風Cloudwind @ x.com</a></p>
+<blockquote>
+<p>实测效果也没有那么稳定，有时需要抽卡</p>
+</blockquote>
+<p>Gemini 2.5 Flash Image Preview 主要特色：</p>
+<ul>
+<li>在多个提示和图像中 <strong>保持角色的一致性</strong>：一致性非常强，所以非常适合编辑图片。</li>
+<li>使用 <strong>自然语言</strong> 有针对性的编辑&#x2F;替换对象： 不需要写专业的提示词，一句话就能编辑图片，当然专业准确的提示器效果更好。</li>
+<li>基于前面两个特性，可以将多个图像根据提示词进行 <strong>合成</strong>。</li>
+<li>准确呈现图像中的文本： <strong>仅限英文</strong> ，中文效果不好。</li>
+<li>每 100 万个输出令牌 30 美元（1 幅图像约 0.039 美分）。</li>
+</ul>
+<p>上传或是生成的图片都会保存在 <strong>Google 云端硬盘</strong> &gt; <strong>我的云端硬盘</strong> &gt; <strong>Google AI Studio</strong> 文件夹内。</p>
+]]></content>
+      <categories>
+        <category>资讯</category>
+      </categories>
+      <tags>
+        <tag>AI</tag>
+        <tag>图像生成</tag>
+        <tag>Nano Banana</tag>
       </tags>
   </entry>
   <entry>
@@ -2683,6 +2683,31 @@
       </tags>
   </entry>
   <entry>
+    <title>趣站分享：Flolife.me —— 基于 AI 的人生旅程模拟器</title>
+    <url>/post/website-flolife.html</url>
+    <content><![CDATA[<p>还记得曾经风靡一时的人生重开模拟器吗？现在，Flowith 带来了一款更进一步的 AI 人生旅程模拟器 —— Flolife.me。它利用当前热门的 Nano Banana 图片模型，能够根据你上传的头像，生成贯穿角色一生的、具有惊人一致性的事件照片。</p>
+<p>整个过程完全免费，无需注册登录，体验非常流畅。访问 <a href="https://flolife.me/">Flolife.me</a> 后，只需点击 <code>一键开始测试</code> 按钮，即可开启你的人生模拟之旅。<br><img src="https://img.nep.me/i/2025/09/03/flolife-homepage.webp" style="width:75%;" alt="flolife-homepage" /></p>
+<p>首先是角色创建环节。在这里，你需要输入角色的姓名、性别、出生地，并分配总共 24 点的初始属性。</p>
+<p>我们的 “小明”智利超群也拥有比较 “健康” 的体魄，至于其他属性就顾不上了。<br><img src="https://img.nep.me/i/2025/09/03/flolife-step-1.webp" style="width:75%;" alt="flolife-step-1" /></p>
+<p>接下来，你可以选择上传一张头像，并为你的角色添加性格和爱好的描述，以获得更具个性化的体验。当然，这两个步骤都是可选的。<br><img src="https://img.nep.me/i/2025/09/03/flolife-step-2.webp" style="width:75%;" alt="flolife-step-2" /></p>
+<p>完成设置后，点击 <strong>开始旅程</strong>，小明的人生故事就此展开！</p>
+<p>在小明的人生旅程中，AI 会在关键节点生成独特的照片，记录下那些重要瞬间。</p>
+<p>或是小明的一次选择，又或是一次意外的变故，都可能将故事引向截然不同的结局，而这都会显示旅程模拟器之中。</p>
+<img src="https://img.nep.me/i/2025/09/03/flolife-journey.webp" style="width:75%;" alt="flolife-journey" />
+
+<p>旅程结束后，你还可以点击右上角的分享按钮，挑选五个关键事件，生成一份精美的人生报告，回顾一生中的亮点。<br><img src="https://img.nep.me/i/2025/09/03/flolife-report.webp" alt="flolife-report"></p>
+<p>是不是很有趣？马上访问 <a href="https://flolife.me/">Flolife.me</a>，开启一段模拟的人生旅程吧！</p>
+]]></content>
+      <categories>
+        <category>工具资源</category>
+      </categories>
+      <tags>
+        <tag>AI</tag>
+        <tag>趣味网站</tag>
+        <tag>Flowith</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>实用网站：Linux Journey —— 从新手到高手的 Linux 学习之路</title>
     <url>/post/website-linux-journey.html</url>
     <content><![CDATA[<p>如果你是一位 Self-Hosted 爱好者，那么掌握 Linux 知识是必备技能。然而，许多初学者常常面临不知从何学起、网上教程零散、缺乏系统性等问题。</p>
@@ -2713,31 +2738,6 @@
       <tags>
         <tag>Linux</tag>
         <tag>实用网站</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>趣站分享：Flolife.me —— 基于 AI 的人生旅程模拟器</title>
-    <url>/post/website-flolife.html</url>
-    <content><![CDATA[<p>还记得曾经风靡一时的人生重开模拟器吗？现在，Flowith 带来了一款更进一步的 AI 人生旅程模拟器 —— Flolife.me。它利用当前热门的 Nano Banana 图片模型，能够根据你上传的头像，生成贯穿角色一生的、具有惊人一致性的事件照片。</p>
-<p>整个过程完全免费，无需注册登录，体验非常流畅。访问 <a href="https://flolife.me/">Flolife.me</a> 后，只需点击 <code>一键开始测试</code> 按钮，即可开启你的人生模拟之旅。<br><img src="https://img.nep.me/i/2025/09/03/flolife-homepage.webp" style="width:75%;" alt="flolife-homepage" /></p>
-<p>首先是角色创建环节。在这里，你需要输入角色的姓名、性别、出生地，并分配总共 24 点的初始属性。</p>
-<p>我们的 “小明”智利超群也拥有比较 “健康” 的体魄，至于其他属性就顾不上了。<br><img src="https://img.nep.me/i/2025/09/03/flolife-step-1.webp" style="width:75%;" alt="flolife-step-1" /></p>
-<p>接下来，你可以选择上传一张头像，并为你的角色添加性格和爱好的描述，以获得更具个性化的体验。当然，这两个步骤都是可选的。<br><img src="https://img.nep.me/i/2025/09/03/flolife-step-2.webp" style="width:75%;" alt="flolife-step-2" /></p>
-<p>完成设置后，点击 <strong>开始旅程</strong>，小明的人生故事就此展开！</p>
-<p>在小明的人生旅程中，AI 会在关键节点生成独特的照片，记录下那些重要瞬间。</p>
-<p>或是小明的一次选择，又或是一次意外的变故，都可能将故事引向截然不同的结局，而这都会显示旅程模拟器之中。</p>
-<img src="https://img.nep.me/i/2025/09/03/flolife-journey.webp" style="width:75%;" alt="flolife-journey" />
-
-<p>旅程结束后，你还可以点击右上角的分享按钮，挑选五个关键事件，生成一份精美的人生报告，回顾一生中的亮点。<br><img src="https://img.nep.me/i/2025/09/03/flolife-report.webp" alt="flolife-report"></p>
-<p>是不是很有趣？马上访问 <a href="https://flolife.me/">Flolife.me</a>，开启一段模拟的人生旅程吧！</p>
-]]></content>
-      <categories>
-        <category>工具资源</category>
-      </categories>
-      <tags>
-        <tag>AI</tag>
-        <tag>趣味网站</tag>
-        <tag>Flowith</tag>
       </tags>
   </entry>
   <entry>
@@ -2863,28 +2863,6 @@
       </categories>
       <tags>
         <tag>BYOK</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>什么是 “服务器奶牛化” ？</title>
-    <url>/post/what-is-turing-a-server-into-cash-cow.html</url>
-    <content><![CDATA[<p><strong>服务器奶牛化</strong> 是一个网络流行语，形象地描述了将服务器当作“奶牛”，通过持续压榨其资源以获取最大化收益的行为。这个词的核心在于“榨取价值”，类似于不断从奶牛身上挤奶。</p>
-<p>用于形容将服务器的计算、存储、带宽等资源，像挤牛奶一样持续变现的过程。</p>
-<h3 id="主要特征"><a href="#主要特征" class="headerlink" title="主要特征"></a>主要特征</h3><ol>
-<li><p><strong>资源极限压榨</strong><br>让服务器长期处于高负载状态，最大限度地利用其计算、存储和网络带宽，例如运行爬虫、挖矿或批量处理任务。</p>
-</li>
-<li><p><strong>成本套利（薅羊毛）</strong><br>利用云服务商的免费试用、促销活动或漏洞，以极低的成本获取服务器资源，再通过这些资源进行挖矿、跑节点或执行广告任务来盈利。</p>
-</li>
-<li><p><strong>规模化运作</strong><br>同时部署大量服务器运行相同的脚本或服务。单台服务器的产出虽小，但规模化后总收益非常可观，如同经营一个“云上牧场”。</p>
-</li>
-</ol>
-<p><img src="https://img.nep.me/i/2025/08/13/what-is-server-cow.webp" alt="what-is-server-cow"></p>
-]]></content>
-      <categories>
-        <category>笔记</category>
-      </categories>
-      <tags>
-        <tag>服务器</tag>
       </tags>
   </entry>
   <entry>
@@ -3950,50 +3928,6 @@
       </tags>
   </entry>
   <entry>
-    <title>新时代挖矿：看看你的 Mac 一个月能赚多少钱</title>
-    <url>/post/darkbloom-nodes-macbook-ai-mining-earnings.html</url>
-    <content><![CDATA[<p>曾经，无数人为了比特币和以太坊疯狂囤积显卡，把家里变成轰鸣的矿场。随着传统加密货币 “显卡挖矿” 时代的逐渐降温，很多人以为用个人电脑赚取被动收入的日子已经结束了。然而，随着 AI 大模型时代的爆发，一种全新的 “挖矿” 模式正在悄然兴起——AI 节点推理算力共享。</p>
-<p>最近，随着本地模型的能力进步，<a href="https://www.darkbloom.dev/#nodes">Darkbloom</a> 平台的出现向我们揭示了这一前景。在这个新时代，你不需要去计算毫无意义的哈希值，而是让你的电脑成为 AI 基础设施的一部分，通过为真实用户运行大语言模型（如 <code>Gemma 4 26B</code> ）来赚取收益。而在这场新游戏里，凭借着高带宽的统一内存架构，Apple 的 Mac 电脑意外地成为了最完美的 “矿机”。</p>
-<h2 id="Darbloom-介绍"><a href="#Darbloom-介绍" class="headerlink" title="Darbloom 介绍"></a>Darbloom 介绍</h2><p><a href="https://www.darkbloom.dev/">Darkbloom.dev</a> 可以将 MacBook 变成一个可产生收益的私有硬件节点网络。用户只需在 Mac 上安装一个命令行界面 (CLI)，设备就可以在闲置时自动接收并处理 AI 推理请求。开发者则可以通过兼容 OpenAI 的 API 调用这些分布式算力。设备每生成一个代币，节点运营者就能获得相应的美元收益。 </p>
-<p>这个项目背后的技术来自 Eigen Labs，相关论文和代码已经开源。其核心卖点是：在保护用户请求隐私的前提下，让普通 Apple Silicon 设备参与 AI 推理市场。<br>链接：<a href="https://github.com/Layr-Labs/d-inference/blob/master/papers/dginf-private-inference.pdf">https://github.com/Layr-Labs/d-inference/blob/master/papers/dginf-private-inference.pdf</a></p>
-<h2 id="Mac-变身-AI-服务器：到底能赚多少？"><a href="#Mac-变身-AI-服务器：到底能赚多少？" class="headerlink" title="Mac 变身 AI 服务器：到底能赚多少？"></a>Mac 变身 AI 服务器：到底能赚多少？</h2><p>按照项目方介绍，节点运营者可以获得 95% 的推理收入，平台抽取 5%。</p>
-<p>除了硬件设备，运营唯一的成本是电费，而 Apple Silicon 的功耗极低。即使在满负荷推理的情况下，每小时也只需 0.01 到 0.03 美元。这就像点亮一个灯泡一样。</p>
-<p>我们来看看 Darkbloom 提供的收益预估数据：</p>
-<h3 id="1-顶配印钞机：MacBook-Pro-M5-Max-128GB-内存"><a href="#1-顶配印钞机：MacBook-Pro-M5-Max-128GB-内存" class="headerlink" title="1. 顶配印钞机：MacBook Pro (M5 Max, 128GB 内存)"></a>1. 顶配印钞机：MacBook Pro (M5 Max, 128GB 内存)</h3><p>如果你拥有一台搭载 M5 Max 芯片和 128GB 内存的顶级 MacBook Pro，这台机器简直是为跑大模型而生的。它庞大的内存可以轻松装下甚至并行处理巨大的模型。</p>
-<ul>
-<li><strong>运行状态</strong>：每天运行 18 小时（比如下班后的闲置时间）。</li>
-<li><strong>处理速度</strong>：批量解码速度高达惊人的 <code>1326.2</code> tok&#x2F;s。</li>
-<li><strong>每月收益</strong>：预估每月总收入约为 <strong>$425.40</strong> 。扣除电费后，每月净赚约 $423（折合人民币约 3000 多元）！</li>
-</ul>
-<p>一年下来收益可达 <strong>$5,076</strong>，而在 Apple 官网上 <strong>M5 Max + 128GB RAM + 2TB</strong> 版本现在仅售 <strong>5399</strong> 美元（大陆官网售价 43,499 元）， 可以说这笔钱不仅足够你覆盖买电脑的成本，甚至相当于电脑自己在给自己打工还贷。</p>
-<p><img src="https://img.nep.me/ooo/darkbloom-m5max.webp" alt="darkbloom-m5max"></p>
-<h3 id="2-性能中坚：MacBook-Pro-M4-Pro-48GB-内存"><a href="#2-性能中坚：MacBook-Pro-M4-Pro-48GB-内存" class="headerlink" title="2. 性能中坚：MacBook Pro (M4 Pro, 48GB 内存)"></a>2. 性能中坚：MacBook Pro (M4 Pro, 48GB 内存)</h3><p>如果你的配置是偏向主流的工作站，比如搭载 M4 Pro 芯片和 48GB 内存的版本。</p>
-<ul>
-<li><strong>运行状态</strong>：同样每天运行 18 小时。</li>
-<li><strong>处理速度</strong>：<code>589.7</code> tok&#x2F;s。</li>
-<li><strong>每月收益</strong>：依然可以获得每月约 <strong>$188 美元</strong>（折合人民币约 1300 多元）的净收入。</li>
-</ul>
-<p>一年也有 $2,252 的进账。对于仅仅是利用电脑闲置时间的睡后收入来说，这绝对是一笔非常可观的零花钱。</p>
-<p><img src="https://img.nep.me/ooo/darkbloom-m4pro.webp" alt="darkbloom-m4pro"></p>
-<h2 id="Apple-Silicon-的恐怖能效"><a href="#Apple-Silicon-的恐怖能效" class="headerlink" title="Apple Silicon 的恐怖能效"></a>Apple Silicon 的恐怖能效</h2><p>传统挖矿最让人头疼的就是高昂的电费和机器狂转的噪音。但在这场AI 挖矿中，Apple M 系列芯片展现出了极其恐怖的能效比。</p>
-<p>以电费 $0.15&#x2F;kWh 计算，那台每月能为你赚取 425 美元的 M5 Max MacBook Pro，一整个月消耗的电费仅仅只有 $2.43；而 M4 Pro 版本的月电费更是低至 $1.46。电费成本甚至占不到总收入的 1%。没有轰鸣的风扇，没有天价电费账单，只有静悄悄地跑着大模型赚钱的优雅。</p>
-<p>AI 时代的算力需求是无穷无尽的，而去中心化的个人算力网络或许就是下一座金矿。你的 Mac 已经不再仅仅是一个昂贵的生产力工具，它完全有潜力成为你的“数字打工仔”。</p>
-<h2 id="结语与风险提示"><a href="#结语与风险提示" class="headerlink" title="结语与风险提示"></a>结语与风险提示</h2><p>当然，作为一个新兴领域，我们也要保持理性的预期。目前，Darkbloom 等平台已经在 Hacker News、Reddit 和 LinkedIn 等主流开发者社区引发了公开讨论。好消息是，目前尚未出现任何诈骗报告；但根据早期参与测试的节点用户反馈，当前网络中分配到的任务还主要是 Health Checks ，真实的商业推理需求仍然处于低位。这意味着官方计算器给出的高额预测相对较为乐观。</p>
-<p>更重要的是，如今大模型的进步速度实在是太快了。现在开源社区就已经迭代到了 Gemma 4 26B 这样庞大且高效的模型。AI 领域的算法架构、量化技术和吞吐量优化几乎每个月都在刷新。今天的配置组合可能刚好能吃满红利，但三个月后，随着更强、更大的模型诞生，整个网络对硬件门槛和带宽的要求可能会迎来彻底的洗牌。</p>
-<p>这注定是一场与技术演进赛跑的游戏。未来的实际收益，将极大地受制于真实商业请求的爆发、模型迭代的速度以及平台的后续运营。</p>
-<div class="flatpaper-note flatpaper-note--warning"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>请务必记住，以上数据只是参考，大家看看这些预估数据，把它当个有趣的参考就行。</p></div></div>
-]]></content>
-      <categories>
-        <category>工具资源</category>
-      </categories>
-      <tags>
-        <tag>AI</tag>
-        <tag>Apple</tag>
-        <tag>Darkbloom</tag>
-        <tag>MacBook</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>赛博菩萨：Cloudflare 免费账户可用服务详情</title>
     <url>/post/cloudflare-free-tier.html</url>
     <content><![CDATA[<h3 id="Cloudflare-免费级别服务全景：从-DNS-CDN-到-Workers-全栈边缘平台"><a href="#Cloudflare-免费级别服务全景：从-DNS-CDN-到-Workers-全栈边缘平台" class="headerlink" title="Cloudflare 免费级别服务全景：从 DNS&#x2F;CDN 到 Workers 全栈边缘平台"></a>Cloudflare 免费级别服务全景：从 DNS&#x2F;CDN 到 Workers 全栈边缘平台</h3><blockquote>
@@ -4714,6 +4648,50 @@
       </tags>
   </entry>
   <entry>
+    <title>新时代挖矿：看看你的 Mac 一个月能赚多少钱</title>
+    <url>/post/darkbloom-nodes-macbook-ai-mining-earnings.html</url>
+    <content><![CDATA[<p>曾经，无数人为了比特币和以太坊疯狂囤积显卡，把家里变成轰鸣的矿场。随着传统加密货币 “显卡挖矿” 时代的逐渐降温，很多人以为用个人电脑赚取被动收入的日子已经结束了。然而，随着 AI 大模型时代的爆发，一种全新的 “挖矿” 模式正在悄然兴起——AI 节点推理算力共享。</p>
+<p>最近，随着本地模型的能力进步，<a href="https://www.darkbloom.dev/#nodes">Darkbloom</a> 平台的出现向我们揭示了这一前景。在这个新时代，你不需要去计算毫无意义的哈希值，而是让你的电脑成为 AI 基础设施的一部分，通过为真实用户运行大语言模型（如 <code>Gemma 4 26B</code> ）来赚取收益。而在这场新游戏里，凭借着高带宽的统一内存架构，Apple 的 Mac 电脑意外地成为了最完美的 “矿机”。</p>
+<h2 id="Darbloom-介绍"><a href="#Darbloom-介绍" class="headerlink" title="Darbloom 介绍"></a>Darbloom 介绍</h2><p><a href="https://www.darkbloom.dev/">Darkbloom.dev</a> 可以将 MacBook 变成一个可产生收益的私有硬件节点网络。用户只需在 Mac 上安装一个命令行界面 (CLI)，设备就可以在闲置时自动接收并处理 AI 推理请求。开发者则可以通过兼容 OpenAI 的 API 调用这些分布式算力。设备每生成一个代币，节点运营者就能获得相应的美元收益。 </p>
+<p>这个项目背后的技术来自 Eigen Labs，相关论文和代码已经开源。其核心卖点是：在保护用户请求隐私的前提下，让普通 Apple Silicon 设备参与 AI 推理市场。<br>链接：<a href="https://github.com/Layr-Labs/d-inference/blob/master/papers/dginf-private-inference.pdf">https://github.com/Layr-Labs/d-inference/blob/master/papers/dginf-private-inference.pdf</a></p>
+<h2 id="Mac-变身-AI-服务器：到底能赚多少？"><a href="#Mac-变身-AI-服务器：到底能赚多少？" class="headerlink" title="Mac 变身 AI 服务器：到底能赚多少？"></a>Mac 变身 AI 服务器：到底能赚多少？</h2><p>按照项目方介绍，节点运营者可以获得 95% 的推理收入，平台抽取 5%。</p>
+<p>除了硬件设备，运营唯一的成本是电费，而 Apple Silicon 的功耗极低。即使在满负荷推理的情况下，每小时也只需 0.01 到 0.03 美元。这就像点亮一个灯泡一样。</p>
+<p>我们来看看 Darkbloom 提供的收益预估数据：</p>
+<h3 id="1-顶配印钞机：MacBook-Pro-M5-Max-128GB-内存"><a href="#1-顶配印钞机：MacBook-Pro-M5-Max-128GB-内存" class="headerlink" title="1. 顶配印钞机：MacBook Pro (M5 Max, 128GB 内存)"></a>1. 顶配印钞机：MacBook Pro (M5 Max, 128GB 内存)</h3><p>如果你拥有一台搭载 M5 Max 芯片和 128GB 内存的顶级 MacBook Pro，这台机器简直是为跑大模型而生的。它庞大的内存可以轻松装下甚至并行处理巨大的模型。</p>
+<ul>
+<li><strong>运行状态</strong>：每天运行 18 小时（比如下班后的闲置时间）。</li>
+<li><strong>处理速度</strong>：批量解码速度高达惊人的 <code>1326.2</code> tok&#x2F;s。</li>
+<li><strong>每月收益</strong>：预估每月总收入约为 <strong>$425.40</strong> 。扣除电费后，每月净赚约 $423（折合人民币约 3000 多元）！</li>
+</ul>
+<p>一年下来收益可达 <strong>$5,076</strong>，而在 Apple 官网上 <strong>M5 Max + 128GB RAM + 2TB</strong> 版本现在仅售 <strong>5399</strong> 美元（大陆官网售价 43,499 元）， 可以说这笔钱不仅足够你覆盖买电脑的成本，甚至相当于电脑自己在给自己打工还贷。</p>
+<p><img src="https://img.nep.me/ooo/darkbloom-m5max.webp" alt="darkbloom-m5max"></p>
+<h3 id="2-性能中坚：MacBook-Pro-M4-Pro-48GB-内存"><a href="#2-性能中坚：MacBook-Pro-M4-Pro-48GB-内存" class="headerlink" title="2. 性能中坚：MacBook Pro (M4 Pro, 48GB 内存)"></a>2. 性能中坚：MacBook Pro (M4 Pro, 48GB 内存)</h3><p>如果你的配置是偏向主流的工作站，比如搭载 M4 Pro 芯片和 48GB 内存的版本。</p>
+<ul>
+<li><strong>运行状态</strong>：同样每天运行 18 小时。</li>
+<li><strong>处理速度</strong>：<code>589.7</code> tok&#x2F;s。</li>
+<li><strong>每月收益</strong>：依然可以获得每月约 <strong>$188 美元</strong>（折合人民币约 1300 多元）的净收入。</li>
+</ul>
+<p>一年也有 $2,252 的进账。对于仅仅是利用电脑闲置时间的睡后收入来说，这绝对是一笔非常可观的零花钱。</p>
+<p><img src="https://img.nep.me/ooo/darkbloom-m4pro.webp" alt="darkbloom-m4pro"></p>
+<h2 id="Apple-Silicon-的恐怖能效"><a href="#Apple-Silicon-的恐怖能效" class="headerlink" title="Apple Silicon 的恐怖能效"></a>Apple Silicon 的恐怖能效</h2><p>传统挖矿最让人头疼的就是高昂的电费和机器狂转的噪音。但在这场AI 挖矿中，Apple M 系列芯片展现出了极其恐怖的能效比。</p>
+<p>以电费 $0.15&#x2F;kWh 计算，那台每月能为你赚取 425 美元的 M5 Max MacBook Pro，一整个月消耗的电费仅仅只有 $2.43；而 M4 Pro 版本的月电费更是低至 $1.46。电费成本甚至占不到总收入的 1%。没有轰鸣的风扇，没有天价电费账单，只有静悄悄地跑着大模型赚钱的优雅。</p>
+<p>AI 时代的算力需求是无穷无尽的，而去中心化的个人算力网络或许就是下一座金矿。你的 Mac 已经不再仅仅是一个昂贵的生产力工具，它完全有潜力成为你的“数字打工仔”。</p>
+<h2 id="结语与风险提示"><a href="#结语与风险提示" class="headerlink" title="结语与风险提示"></a>结语与风险提示</h2><p>当然，作为一个新兴领域，我们也要保持理性的预期。目前，Darkbloom 等平台已经在 Hacker News、Reddit 和 LinkedIn 等主流开发者社区引发了公开讨论。好消息是，目前尚未出现任何诈骗报告；但根据早期参与测试的节点用户反馈，当前网络中分配到的任务还主要是 Health Checks ，真实的商业推理需求仍然处于低位。这意味着官方计算器给出的高额预测相对较为乐观。</p>
+<p>更重要的是，如今大模型的进步速度实在是太快了。现在开源社区就已经迭代到了 Gemma 4 26B 这样庞大且高效的模型。AI 领域的算法架构、量化技术和吞吐量优化几乎每个月都在刷新。今天的配置组合可能刚好能吃满红利，但三个月后，随着更强、更大的模型诞生，整个网络对硬件门槛和带宽的要求可能会迎来彻底的洗牌。</p>
+<p>这注定是一场与技术演进赛跑的游戏。未来的实际收益，将极大地受制于真实商业请求的爆发、模型迭代的速度以及平台的后续运营。</p>
+<div class="flatpaper-note flatpaper-note--warning"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>请务必记住，以上数据只是参考，大家看看这些预估数据，把它当个有趣的参考就行。</p></div></div>
+]]></content>
+      <categories>
+        <category>工具资源</category>
+      </categories>
+      <tags>
+        <tag>AI</tag>
+        <tag>Apple</tag>
+        <tag>Darkbloom</tag>
+        <tag>MacBook</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>使用 Docker 部署 Fizzy ： 一个轻量、漂亮、可自托管的看板工具</title>
     <url>/post/docker-run-fizzy-kanban.html</url>
     <content><![CDATA[<h2 id="Fizzy-介绍"><a href="#Fizzy-介绍" class="headerlink" title="Fizzy 介绍"></a>Fizzy 介绍</h2><p>Fizzy (<a href="https://fizzy.do/">https://fizzy.do</a>) 是由著名软件公司 <mark>37signals</mark>（开发过 Basecamp 和 HEY 的团队）推出的一款全新 <strong>看板</strong> 任务管理工具。主打快速、简单、色彩鲜明，非常适合用来跟踪 Bug、想法、小项目和内容流程。</p>
@@ -4819,7 +4797,7 @@
 <p>“我们不认为这种政府准入程序应该成为长期的默认状态。” —— 面对政府的强势介入，即便是正在筹备 IPO 的 penAI 也在其发布 GPT-5.6 Sol 限量预览时发出了无力的警告。</p>
 <p>但资本和企业的挣扎在强大的国家机器面前显得微不足道。过去，硅谷的技术精英们总认为自己可以通过代码改变世界，凌驾于地缘政治之上。但当白宫执行行政令、国防部和国安局（NSA）直接介入审查时，强如 Anthropic 也只能选择 “积极与政府合作”，甚至连自己的非美籍员工也必须被剥夺访问权限。</p>
 <p>Fable 5不再只是一个商品，它成了被国家征用的 <strong>战略军火</strong> 。</p>
-<h2 id="三、-OpenAI最初设想的彻底失败"><a href="#三、-OpenAI最初设想的彻底失败" class="headerlink" title="三、 OpenAI最初设想的彻底失败"></a>三、 OpenAI最初设想的彻底失败</h2><p>回看 Fable 5 的白名单特权、OpenAI 的 GPT-5.6 受限审查，以及 OpenAI 自身提交的IPO申请，历史在这一刻完成了一个巨大的讽刺。</p>
+<h2 id="三、-废墟中的理想：商业洪流下的破灭与向往"><a href="#三、-废墟中的理想：商业洪流下的破灭与向往" class="headerlink" title="三、 废墟中的理想：商业洪流下的破灭与向往"></a>三、 废墟中的理想：商业洪流下的破灭与向往</h2><p>回看 Fable 5 的白名单特权、OpenAI 的 GPT-5.6 受限审查，以及 OpenAI 自身提交的IPO申请，历史在这一刻完成了一个巨大的讽刺。</p>
 <p>2015年，当埃隆·马斯克、山姆·奥特曼等人创立 OpenAI 时，其核心宗旨是：</p>
 <div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>作为一个非营利组织，不受财务回报的限制，确保 AGI 的技术向所有人开放，防止技术被单一国家或巨型财阀垄断，从而造福全人类。</p></div></div>
 
@@ -4827,7 +4805,9 @@
 <p>从非营利到资本弄潮儿： OpenAI 早已转型为追求利润的实体，并为了迎合资本市场走向 IPO ，最初的非营利乌托邦理想早已被商业逻辑吞噬。</p>
 <p>从 “Open（开放）” 到 “Closed（封闭）” ： 曾经开源的承诺变成了最严密的商业机密，而如今更是在政府的指令下，演变成了 “白名单准入” 的割裂生态。</p>
 <p>从造福全人类到服务特权阶级： 顶尖大模型不再是普惠全人类的工具，而是成了强化特定国家霸权、提升少数垄断巨头生产力的私产。</p>
-<p>Fable 5 被强制下线和选择性开放，证明了技术民主化在绝对的力量与利益面前只是一场天真的幻梦。只要大模型需要消耗成千上万卡芯片、吞噬数以亿计的电力，它就天然无法摆脱资本和权力的控制。</p>
+<p><strong>然而，那道最初的微光，依然让我们充满向往</strong><br>即便现实如此冰冷，即便 OpenAI 如今已实质性转为追逐利润的盈利实体，但当我们拂去商业的喧嚣，回望它最初的设想时，那幅“技术普惠”的宏大蓝图依然散发着让人心潮澎湃的理想主义光芒。</p>
+<p>那是人类科技史上少有的、试图超越国家边界和阶级壁垒的伟大尝试。它向世界许诺过一种可能：最高维度的智慧不需要附庸于权力，最顶尖的科技可以成为每一个普通人对抗命运、跨越数字鸿沟的武器。</p>
+<p>正是因为这个最初的设想曾如此美丽，甚至一度让我们看到了赛博乌托邦的曙光，才使得今天面对Fable 5的“白名单高墙”时，全球开发者心中的失落与阵痛显得如此剧烈。人们对 OpenAI 初心的向往，并非出于对商业幼稚的幻想，而是出于人类对公平、开放与知识无界根深蒂固的渴望。这种向往，恰恰成了当下对抗技术垄断、呼唤开源力量的最强韧的精神火种。</p>
 <h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>Fable 5 的 “白名单风暴” 揭示了 AI 时代的未来图景：科技不再是平的，而是被权力筑起的高墙分割得支离破碎。</p>
 <p>OpenAI 最初那个充满人文主义情怀的设想失败了，取而代之的是一个更加冷酷、更加遵循达尔文主义的现实。在这个由政府特许、白名单构筑的赛博新秩序里，谁能拿到那张通往顶尖算力的 “特许通行证” ，谁就掌握了下一个时代改写世界的权力。而剩下的绝大多数人，正无可避免地沦为这场技术合谋下的 <strong>“数字平民”</strong> 。</p>
 <p>不过，局面并非完全没有转机。以 <strong>GLM 5.2</strong> 为代表的中国顶尖开源模型正在展现出越来越强的竞争力。如果它能在代码、推理、工具调用与长上下文等关键能力上持续追近甚至反超闭源白名单模型，那么全球开发者至少不会被迫完全依赖少数美国 API。它的强力表现，有望在一定程度上缓解这种由算力、资本与国家权力共同制造的技术阶层分化。</p>
@@ -4839,6 +4819,45 @@
         <tag>AI</tag>
         <tag>OpenAI</tag>
         <tag>Claude Fable 5</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>什么是 “服务器奶牛化” ？</title>
+    <url>/post/what-is-turing-a-server-into-cash-cow.html</url>
+    <content><![CDATA[<p><strong>服务器奶牛化</strong> 是一个网络流行语，形象地描述了将服务器当作“奶牛”，通过持续压榨其资源以获取最大化收益的行为。这个词的核心在于“榨取价值”，类似于不断从奶牛身上挤奶。</p>
+<p>用于形容将服务器的计算、存储、带宽等资源，像挤牛奶一样持续变现的过程。</p>
+<h3 id="主要特征"><a href="#主要特征" class="headerlink" title="主要特征"></a>主要特征</h3><ol>
+<li><p><strong>资源极限压榨</strong><br>让服务器长期处于高负载状态，最大限度地利用其计算、存储和网络带宽，例如运行爬虫、挖矿或批量处理任务。</p>
+</li>
+<li><p><strong>成本套利（薅羊毛）</strong><br>利用云服务商的免费试用、促销活动或漏洞，以极低的成本获取服务器资源，再通过这些资源进行挖矿、跑节点或执行广告任务来盈利。</p>
+</li>
+<li><p><strong>规模化运作</strong><br>同时部署大量服务器运行相同的脚本或服务。单台服务器的产出虽小，但规模化后总收益非常可观，如同经营一个“云上牧场”。</p>
+</li>
+</ol>
+<p><img src="https://img.nep.me/i/2025/08/13/what-is-server-cow.webp" alt="what-is-server-cow"></p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>服务器</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>解决 Antigravity 通过 SSH 连接远程服务器崩溃的问题</title>
+    <url>/post/fix-antigravity-ssh-remote-crash-problem.html</url>
+    <content><![CDATA[<h2 id="问题详情"><a href="#问题详情" class="headerlink" title="问题详情"></a>问题详情</h2><p>在使用 Google Antigravity 通过 SSH 连接运行在 <strong>PVE</strong> 的 <strong>Linux 虚拟机</strong> 时，会直接崩溃，报错信息如下：</p>
+<blockquote>
+<p>Antigravity server crashed unexpectedly. Please restart to fully restore AI features.</p>
+</blockquote>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>在 PVE 中将 Linux 虚拟机的 <strong>CPU 类型</strong> 设置为 <code>host</code>，再尝试连接就可以了。</p>
+<p>参考： <a href="https://discuss.ai.google.dev/t/antigravity-crashes-on-linux-but-works-on-windows/110355/3">Antigravity crashes on Linux, but works on Windows</a></p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>Antigravity</tag>
       </tags>
   </entry>
   <entry>
@@ -4864,55 +4883,6 @@
       </categories>
       <tags>
         <tag>Electron</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>找回 Antigravity 代码编辑器(Antigravity IDE)</title>
-    <url>/post/get-antigravity-ide-back.html</url>
-    <content><![CDATA[<p>Google 在 Google I&#x2F;O 2026 上宣布了 Antigravity 迎来 2.0 版本重大更新，喊出 Agents 驱动的口号，实际效果却堪称灾难，额度暴降、用户配置丢失，直接展现出世界就是一个巨大的草台班子。</p>
-<p>不过目前 Google 已推出一系列补救措施：</p>
-<ul>
-<li>新版本增加数据导入提醒</li>
-<li>永久提升 <strong>9 倍</strong> 每周额度</li>
-</ul>
-<h2 id="找回-Antigravity-代码编辑器"><a href="#找回-Antigravity-代码编辑器" class="headerlink" title="找回 Antigravity 代码编辑器"></a>找回 Antigravity 代码编辑器</h2><p>很多用户更新后发现，熟悉的 Antigravity 代码编辑器不见了：再次打开 Antigravity，看到的却是一个更接近 Codex 形态的独立 Agent 应用。</p>
-<p>这并不是旧编辑器被直接移除，而是 Google 将原来的 Antigravity 编辑器更名为 <strong>Antigravity IDE</strong>，并和新版 Antigravity App 做了区分。因此，如果你想继续使用原来的代码编辑器体验，需要单独下载 Antigravity IDE。</p>
-<p>下载链接：<a href="https://antigravity.google/download#antigravity-ide">Download Google Antigravity IDE</a></p>
-<h2 id="Antigravity-旧版数据丢失问题"><a href="#Antigravity-旧版数据丢失问题" class="headerlink" title="Antigravity 旧版数据丢失问题"></a>Antigravity 旧版数据丢失问题</h2><p>Antigravity IDE 不只是更新了软件名称、软件包名、配置路径也一同进行了修改，但是初版居然没有做数据导入指引，导致用户打开新的 IDE 后，像是直接丢失了全部数据。</p>
-<p>目前版本打开后已增加了数据导入提醒，更新到新的版本再打开 Antigravity IDE 即可。</p>
-<h2 id="额度大降-补偿：周额度已永久增加-9-倍"><a href="#额度大降-补偿：周额度已永久增加-9-倍" class="headerlink" title="额度大降(补偿：周额度已永久增加 9 倍)"></a>额度大降(补偿：周额度已永久增加 9 倍)</h2><p>Antigravity 刚发布时额度是非常充足，后来不断降低额度，引入五小时限制、引入周限制，甚至直接高级模型移除五小时额度，额度一度降低到无法使用的程度。</p>
-<p>后续略有恢复，没想到在 Google I&#x2F;O 2026 大型更新时，月费 20 美元的 AI Pro 用户的额度居然只有免费额度的 4 倍：</p>
-<p><img src="https://img.nep.me/ooo/ai-pro-quota-4x.webp" alt="ai-pro-quota-4x.png"></p>
-<p>甚至还取消了套餐内赠送的 AI 点数，对此 Google 解释：</p>
-<blockquote>
-<p>但在我们即将推出的新用量限额模式下，您的使用体验应该不会受到影响。</p>
-</blockquote>
-<p>然而实际情况却基本难以适应，社区反馈非常负面。</p>
-<p>对此，Google 终于也坐不住了，连续两次宣布每周额度永久增加 3 倍，重置每周限额，相比最初限制，现在每周额度已增加九倍，也说明了一开始的额度限制有多么离谱。</p>
-<p>对此 Google CEO <strong>Sundar Pichai</strong> 也不得不发 <a href="https://x.com/sundarpichai/status/2057658091831996593">推文</a> 声明。 </p>
-<blockquote>
-<p>Excited to see what you are building with Antigravity, We just 3xed the Antigravity limits again, but this time, the weekly quotas. Don’t stop building!<br>– 下午12:01 · 2026年5月22日</p>
-</blockquote>
-<p>3 x 3 &#x3D; 9 倍叠加提升已得到开发团队确认。</p>
-<img src="https://img.nep.me/ooo/agy-3x3.webp" style="width:50%;" alt="agy-3x3.png" />
-
-<blockquote>
-<p>Varun Mohan <a href="https://x.com/_mohansolo">@_mohansolo@X.com</a> building <strong>@antigravity</strong> <strong>@GoogleDeepMind</strong></p>
-</blockquote>
-<p>不过目前规则下的额度与 Gemini APP 共享。</p>
-<h2 id="新版本优势"><a href="#新版本优势" class="headerlink" title="新版本优势"></a>新版本优势</h2><p>虽然这次更新带来了不少糟糕的体验，但并不是所有变化都对用户不利，Google 也确实加入了一些值得关注的新能力和套餐权益。</p>
-<h3 id="更快的-Gemini-3-5-Flash"><a href="#更快的-Gemini-3-5-Flash" class="headerlink" title="更快的 Gemini 3.5 Flash"></a>更快的 Gemini 3.5 Flash</h3><p>超快的 Gemini 3.5 Flash，Antigravity 在 Gemini 3.5 Flash 4x 基础上进行专项优化，让输出速度提升至 12x ，不过这是 <a href="https://antigravity.google/blog/gemini-3-5-flash-in-google-antigravity">限时体验</a>。</p>
-<h3 id="YouTube-Lite-加入套餐权益"><a href="#YouTube-Lite-加入套餐权益" class="headerlink" title="YouTube Lite 加入套餐权益"></a>YouTube Lite 加入套餐权益</h3><p>每月 20 美元的 AI Pro 套餐用户将获得 YouTube Lite 会员，可以免除广告: <a href="https://support.google.com/googleone/answer/17101453">Get YouTube Premium Lite with Google AI Pro</a></p>
-<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>Antigravity 2.0 这次更新最大的问题，不是产品方向从 IDE 走向 Agent，而是迁移过程过于粗糙：旧编辑器入口突然变化、配置数据没有平滑继承、额度规则也在关键发布节点大幅收紧。</p>
-<p>好在 Google 的补救来得还算及时，Antigravity IDE 已经重新明确入口，旧数据导入也补上了提醒，每周额度更是连续提升到原来的 9 倍。对于已经被这次更新折腾到的用户来说，现在最直接的处理方式就是重新下载 Antigravity IDE，并升级到最新版。</p>
-<p>至于 Antigravity 2.0 本身能不能撑起 Google 所说的 Agents 驱动体验，还要看后续稳定性、额度政策和真实开发体验能不能跟上。至少这次事件已经说明再先进的 AI 产品，也不能把基础迁移和用户信任当成小问题。</p>
-]]></content>
-      <categories>
-        <category>教程</category>
-      </categories>
-      <tags>
-        <tag>Antigravity</tag>
-        <tag>Antigravity IDE</tag>
       </tags>
   </entry>
   <entry>
@@ -5012,20 +4982,52 @@
       </tags>
   </entry>
   <entry>
-    <title>解决 Antigravity 通过 SSH 连接远程服务器崩溃的问题</title>
-    <url>/post/fix-antigravity-ssh-remote-crash-problem.html</url>
-    <content><![CDATA[<h2 id="问题详情"><a href="#问题详情" class="headerlink" title="问题详情"></a>问题详情</h2><p>在使用 Google Antigravity 通过 SSH 连接运行在 <strong>PVE</strong> 的 <strong>Linux 虚拟机</strong> 时，会直接崩溃，报错信息如下：</p>
+    <title>找回 Antigravity 代码编辑器(Antigravity IDE)</title>
+    <url>/post/get-antigravity-ide-back.html</url>
+    <content><![CDATA[<p>Google 在 Google I&#x2F;O 2026 上宣布了 Antigravity 迎来 2.0 版本重大更新，喊出 Agents 驱动的口号，实际效果却堪称灾难，额度暴降、用户配置丢失，直接展现出世界就是一个巨大的草台班子。</p>
+<p>不过目前 Google 已推出一系列补救措施：</p>
+<ul>
+<li>新版本增加数据导入提醒</li>
+<li>永久提升 <strong>9 倍</strong> 每周额度</li>
+</ul>
+<h2 id="找回-Antigravity-代码编辑器"><a href="#找回-Antigravity-代码编辑器" class="headerlink" title="找回 Antigravity 代码编辑器"></a>找回 Antigravity 代码编辑器</h2><p>很多用户更新后发现，熟悉的 Antigravity 代码编辑器不见了：再次打开 Antigravity，看到的却是一个更接近 Codex 形态的独立 Agent 应用。</p>
+<p>这并不是旧编辑器被直接移除，而是 Google 将原来的 Antigravity 编辑器更名为 <strong>Antigravity IDE</strong>，并和新版 Antigravity App 做了区分。因此，如果你想继续使用原来的代码编辑器体验，需要单独下载 Antigravity IDE。</p>
+<p>下载链接：<a href="https://antigravity.google/download#antigravity-ide">Download Google Antigravity IDE</a></p>
+<h2 id="Antigravity-旧版数据丢失问题"><a href="#Antigravity-旧版数据丢失问题" class="headerlink" title="Antigravity 旧版数据丢失问题"></a>Antigravity 旧版数据丢失问题</h2><p>Antigravity IDE 不只是更新了软件名称、软件包名、配置路径也一同进行了修改，但是初版居然没有做数据导入指引，导致用户打开新的 IDE 后，像是直接丢失了全部数据。</p>
+<p>目前版本打开后已增加了数据导入提醒，更新到新的版本再打开 Antigravity IDE 即可。</p>
+<h2 id="额度大降-补偿：周额度已永久增加-9-倍"><a href="#额度大降-补偿：周额度已永久增加-9-倍" class="headerlink" title="额度大降(补偿：周额度已永久增加 9 倍)"></a>额度大降(补偿：周额度已永久增加 9 倍)</h2><p>Antigravity 刚发布时额度是非常充足，后来不断降低额度，引入五小时限制、引入周限制，甚至直接高级模型移除五小时额度，额度一度降低到无法使用的程度。</p>
+<p>后续略有恢复，没想到在 Google I&#x2F;O 2026 大型更新时，月费 20 美元的 AI Pro 用户的额度居然只有免费额度的 4 倍：</p>
+<p><img src="https://img.nep.me/ooo/ai-pro-quota-4x.webp" alt="ai-pro-quota-4x.png"></p>
+<p>甚至还取消了套餐内赠送的 AI 点数，对此 Google 解释：</p>
 <blockquote>
-<p>Antigravity server crashed unexpectedly. Please restart to fully restore AI features.</p>
+<p>但在我们即将推出的新用量限额模式下，您的使用体验应该不会受到影响。</p>
 </blockquote>
-<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>在 PVE 中将 Linux 虚拟机的 <strong>CPU 类型</strong> 设置为 <code>host</code>，再尝试连接就可以了。</p>
-<p>参考： <a href="https://discuss.ai.google.dev/t/antigravity-crashes-on-linux-but-works-on-windows/110355/3">Antigravity crashes on Linux, but works on Windows</a></p>
+<p>然而实际情况却基本难以适应，社区反馈非常负面。</p>
+<p>对此，Google 终于也坐不住了，连续两次宣布每周额度永久增加 3 倍，重置每周限额，相比最初限制，现在每周额度已增加九倍，也说明了一开始的额度限制有多么离谱。</p>
+<p>对此 Google CEO <strong>Sundar Pichai</strong> 也不得不发 <a href="https://x.com/sundarpichai/status/2057658091831996593">推文</a> 声明。 </p>
+<blockquote>
+<p>Excited to see what you are building with Antigravity, We just 3xed the Antigravity limits again, but this time, the weekly quotas. Don’t stop building!<br>– 下午12:01 · 2026年5月22日</p>
+</blockquote>
+<p>3 x 3 &#x3D; 9 倍叠加提升已得到开发团队确认。</p>
+<img src="https://img.nep.me/ooo/agy-3x3.webp" style="width:50%;" alt="agy-3x3.png" />
+
+<blockquote>
+<p>Varun Mohan <a href="https://x.com/_mohansolo">@_mohansolo@X.com</a> building <strong>@antigravity</strong> <strong>@GoogleDeepMind</strong></p>
+</blockquote>
+<p>不过目前规则下的额度与 Gemini APP 共享。</p>
+<h2 id="新版本优势"><a href="#新版本优势" class="headerlink" title="新版本优势"></a>新版本优势</h2><p>虽然这次更新带来了不少糟糕的体验，但并不是所有变化都对用户不利，Google 也确实加入了一些值得关注的新能力和套餐权益。</p>
+<h3 id="更快的-Gemini-3-5-Flash"><a href="#更快的-Gemini-3-5-Flash" class="headerlink" title="更快的 Gemini 3.5 Flash"></a>更快的 Gemini 3.5 Flash</h3><p>超快的 Gemini 3.5 Flash，Antigravity 在 Gemini 3.5 Flash 4x 基础上进行专项优化，让输出速度提升至 12x ，不过这是 <a href="https://antigravity.google/blog/gemini-3-5-flash-in-google-antigravity">限时体验</a>。</p>
+<h3 id="YouTube-Lite-加入套餐权益"><a href="#YouTube-Lite-加入套餐权益" class="headerlink" title="YouTube Lite 加入套餐权益"></a>YouTube Lite 加入套餐权益</h3><p>每月 20 美元的 AI Pro 套餐用户将获得 YouTube Lite 会员，可以免除广告: <a href="https://support.google.com/googleone/answer/17101453">Get YouTube Premium Lite with Google AI Pro</a></p>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>Antigravity 2.0 这次更新最大的问题，不是产品方向从 IDE 走向 Agent，而是迁移过程过于粗糙：旧编辑器入口突然变化、配置数据没有平滑继承、额度规则也在关键发布节点大幅收紧。</p>
+<p>好在 Google 的补救来得还算及时，Antigravity IDE 已经重新明确入口，旧数据导入也补上了提醒，每周额度更是连续提升到原来的 9 倍。对于已经被这次更新折腾到的用户来说，现在最直接的处理方式就是重新下载 Antigravity IDE，并升级到最新版。</p>
+<p>至于 Antigravity 2.0 本身能不能撑起 Google 所说的 Agents 驱动体验，还要看后续稳定性、额度政策和真实开发体验能不能跟上。至少这次事件已经说明再先进的 AI 产品，也不能把基础迁移和用户信任当成小问题。</p>
 ]]></content>
       <categories>
-        <category>笔记</category>
+        <category>教程</category>
       </categories>
       <tags>
         <tag>Antigravity</tag>
+        <tag>Antigravity IDE</tag>
       </tags>
   </entry>
   <entry>
@@ -5259,8 +5261,8 @@
       <tags>
         <tag>AI</tag>
         <tag>Antigravity</tag>
-        <tag>Antigravity IDE</tag>
         <tag>Google</tag>
+        <tag>Antigravity IDE</tag>
       </tags>
   </entry>
   <entry>
