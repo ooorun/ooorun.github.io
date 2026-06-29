@@ -411,6 +411,103 @@
       </tags>
   </entry>
   <entry>
+    <title>如何安装 Node.js</title>
+    <url>/post/how-to-install-nodejs.html</url>
+    <content><![CDATA[<p>本文将带介绍如何在电脑上安装 Node.js 运行环境，从而可以使用丰富的应用 Nodejs 程序。 </p>
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-9-tab-0" aria-controls="tabs-9-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">Windows</button><button type="button" role="tab" id="tabs-9-tab-1" aria-controls="tabs-9-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">macOS</button><button type="button" role="tab" id="tabs-9-tab-2" aria-controls="tabs-9-panel-2" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="2">Linux</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-9-panel-0" aria-labelledby="tabs-9-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><h2 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h2><p>测试安装环境为 <code>Windows 11</code></p>
+<h3 id="下载-Node-js"><a href="#下载-Node-js" class="headerlink" title="下载 Node.js"></a>下载 Node.js</h3><p>访问 Node.js 的官方网站的 <a href="https://nodejs.org/zh-cn/download/prebuilt-installer">下载页面</a> 下载安装包。 </p>
+<p>我们选择 <strong>预构建安装程序</strong> ，选择一下自己的系统与 CPU 架构类型， Windows 一般选择 <strong>x64</strong>，再选择 Node.js 版本。</p>
+<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>推荐选择版本号为偶数的 LTS 版本</p></div></div>  
+
+<p><img src="https://img.nep.me/i/2024/12/13/7fzq5m-2.webp" alt="nodejs-home-page"></p>
+<h3 id="安装-Node-js"><a href="#安装-Node-js" class="headerlink" title="安装 Node.js"></a>安装 Node.js</h3><p>然后打开安装程序 <code>node-v22.12.0-x64.msi</code>，安装过程没有陷阱，我们 <strong>同意</strong> 协议后，一路点击 Next 即可。  </p>
+<p><img src="https://img.nep.me/i/2024/12/13/7hc7pi-2.webp" alt="nodejs-setup"></p>
+<p>安装完成后，打开终端程序：</p>
+<ul>
+<li>右键点击开始菜单，选择终端</li>
+<li>或是按 <code>Windows + R</code> 快捷键打开 <strong>运行</strong> 窗口，输入 <code>cmd</code> ，回车打开</li>
+<li>或是在资源管理器的地址栏中输入 <code>cmd</code> 回车打开（终端的运行目录将是资源管理器所在的目录）</li>
+</ul>
+<p>运行下面的命令测试安装结果。</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">node -v</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm -v</span><br></pre></td></tr></table></figure>
+
+<p>如果可以成功输出版本号，表示安装成功。  </p>
+<p><img src="https://img.nep.me/i/2024/12/13/7ilvge-2.webp" alt="nodejs-install-done"></p></section><section role="tabpanel" id="tabs-9-panel-1" aria-labelledby="tabs-9-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><h2 id="macOS"><a href="#macOS" class="headerlink" title="macOS"></a>macOS</h2><p>测试安装环境为 <code>macOS 15.1</code> ，macOS 更推荐使用 <strong>包管理器</strong> <code>Homebrew</code> 进行安装。</p>
+<blockquote>
+<p><a href="https://brew.sh/zh-cn/">Homebrew</a> 是 macOS 和 Linux 缺失软件包的管理器，用于安装 Apple没有预装但你需要的东西。</p>
+</blockquote>
+<p>安装需要使用终端，<a href="https://support.apple.com/zh-cn/guide/terminal/apd5265185d-f365-44cb-8b09-71a064a42125/mac">在 Mac 上打开或退出“终端”</a>：</p>
+<ul>
+<li>启动台 &gt; 其他 &gt; 终端</li>
+<li><strong>启动台</strong> 或是　<code>Commond⌘ + 空格</code> 打开聚焦搜索，搜索 <strong>终端</strong> 或是 <strong>Terminal</strong></li>
+</ul>
+<h3 id="安装-Homebrew"><a href="#安装-Homebrew" class="headerlink" title="安装 Homebrew"></a>安装 Homebrew</h3><p>中国大陆地区或是更详细步骤请查看：<a href="https://ooo.run/post/how-to-install-homebrew-on-macos.html" target="_blank">如何在 macOS 中安装 Homebrew</a></p>
+<p>首先复制安装命令  </p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">/bin/bash -c <span class="string">&quot;<span class="subst">$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>在终端内执行安装命令，安装时需要输入你的电脑密码进行授权：  </p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">==&gt; Checking <span class="keyword">for</span> `<span class="built_in">sudo</span>` access (<span class="built_in">which</span> may request your password)...</span><br><span class="line">Password:</span><br></pre></td></tr></table></figure>
+<p>brew 会提示将安装的软件以及创建的文件夹，按回车继续，等待下载和安装完成。</p>
+<p>命令执行结束后按照提示复制执行下面的三条命令添加 PATH :</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> &gt;&gt; /Users/me/.zprofile</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;eval &quot;$(/opt/homebrew/bin/brew shellenv)&quot;&#x27;</span> &gt;&gt; /Users/me/.zprofile</span><br><span class="line"><span class="built_in">eval</span> <span class="string">&quot;<span class="subst">$(/opt/homebrew/bin/brew shellenv)</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>如果使用了 <code>oh-my-zsh</code> ，需要执行下面的命令:</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export PATH=&quot;/opt/homebrew/bin:$PATH&quot;&#x27;</span> &gt;&gt; ~/.zshrc   </span><br><span class="line"><span class="built_in">source</span> ~/.zshrc</span><br></pre></td></tr></table></figure>
+
+<p>然后可以执行 <code>brew -v</code> 测试安装结果，成功会显示 Hombrew 的版本号。   </p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt;brew -v</span><br><span class="line">Homebrew 4.4.11</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装-Nodejs"><a href="#安装-Nodejs" class="headerlink" title="安装 Nodejs"></a>安装 Nodejs</h3><p>打开终端，执行</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">brew install node</span><br></pre></td></tr></table></figure>
+
+<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt;node -v</span><br><span class="line">v23.4.0</span><br><span class="line"></span><br><span class="line">&gt;npm -v</span><br><span class="line">10.9.2</span><br></pre></td></tr></table></figure>
+
+<h3 id="brew-常用命令"><a href="#brew-常用命令" class="headerlink" title="brew 常用命令"></a>brew 常用命令</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 安装指定版本</span></span><br><span class="line">brew install node@22</span><br><span class="line"></span><br><span class="line"><span class="comment"># 卸载</span></span><br><span class="line">brew remove node</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看已安装软件</span></span><br><span class="line">brew list </span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查更新</span></span><br><span class="line">brew update</span><br><span class="line"></span><br><span class="line"><span class="comment"># 下载更新</span></span><br><span class="line">brew upgrade</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-9-panel-2" aria-labelledby="tabs-9-tab-2" class="flatpaper-tabs__panel" data-index="2" hidden><h2 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h2><p>Linux 使用 nvm 包管理器可以很方便的安装 Node.js</p>
+<h3 id="首先安装-nvm"><a href="#首先安装-nvm" class="headerlink" title="首先安装 nvm"></a>首先安装 nvm</h3><h1 id="安装-nvm-Node-版本管理器"><a href="#安装-nvm-Node-版本管理器" class="headerlink" title="安装 nvm (Node 版本管理器)"></a>安装 nvm (Node 版本管理器)</h1><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash</span><br></pre></td></tr></table></figure>
+
+<p>更新一下 PATH</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># bash</span></span><br><span class="line"><span class="built_in">source</span> ~/.bashrc</span><br><span class="line"></span><br><span class="line"><span class="comment"># zsh</span></span><br><span class="line"><span class="built_in">source</span> ~/.zshrc</span><br></pre></td></tr></table></figure>
+
+<p>验证</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">root@debian:~# nvm -v</span><br><span class="line">0.40.1</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装-Node-js"><a href="#安装-Node-js" class="headerlink" title="安装 Node.js"></a>安装 Node.js</h3><p>下载并安装 Node.js 22 LTS 版本</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">nvm install 22</span><br></pre></td></tr></table></figure>
+
+<p>验证</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">root@debian:~# node -v</span><br><span class="line">v22.12.0</span><br><span class="line">root@debian:~# npm -v</span><br><span class="line">10.9.0</span><br></pre></td></tr></table></figure></section></div></div>
+
+<h2 id="npm-常用命令"><a href="#npm-常用命令" class="headerlink" title="npm 常用命令"></a>npm 常用命令</h2><p><code>npm</code> 是 Node.js 自带的包管理器是 ，我们可以很方便的安装 Node.js 应用，常用命令介绍：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 初始化项目，创建 package.json 文件</span></span><br><span class="line">npm init</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看版本</span></span><br><span class="line">npm -v</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看当前 npm 的配</span></span><br><span class="line">npm config list	</span><br><span class="line"></span><br><span class="line"><span class="comment"># 更新 npm 到最新版本</span></span><br><span class="line">npm update -g npm</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装项目中的所有依赖项（基于 package.json）</span></span><br><span class="line">npm i</span><br><span class="line">npm install </span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装指定包，并添加到项目依赖</span></span><br><span class="line">npm install &lt;package&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装指定版本的包，例如：npm i lodash@4.17.20</span></span><br><span class="line">npm install &lt;package&gt;@&lt;version&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 全局安装指定的包（通常为 CLI 工具） </span></span><br><span class="line">npm install &lt;package&gt; -g</span><br><span class="line"></span><br><span class="line"><span class="comment"># 卸载指定包</span></span><br><span class="line">npm uninstall &lt;package&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 更新指定的包到最新版本</span></span><br><span class="line">npm update &lt;package&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看当前项目已安装的依赖包</span></span><br><span class="line">npm list</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看全局已安装的依赖包</span></span><br><span class="line">npm list -g</span><br><span class="line"></span><br><span class="line"><span class="comment"># 移除未在 package.json 中声明的多余依赖包</span></span><br><span class="line">npm prune</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用-pnpm"><a href="#使用-pnpm" class="headerlink" title="使用 pnpm"></a>使用 pnpm</h2><p>如果你需要经常使用 Node.js 应用，更推荐安装 <code>pnpm</code> 包管理，它的性能更好，安装速度速度更快，默认开启严格模式，确保项目中的依赖版本一致，避免了某些隐藏的版本冲突问题，并且对保持对 npm 的兼容。</p>
+<p>pnpm 的版本锁定文件是 <code>pnpm-lock.yaml</code></p>
+<h3 id="安装-pnpm"><a href="#安装-pnpm" class="headerlink" title="安装 pnpm"></a>安装 pnpm</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm install -g pnpm</span><br></pre></td></tr></table></figure>
+
+<h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><p><code>pnpm</code> 使用命令与 <code>npm</code> 类似，比如：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 基于 pnpm-lock.yaml 安装依赖</span></span><br><span class="line">pnpm i</span><br><span class="line">pnpm install </span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看自身版本</span></span><br><span class="line">pnpm -v</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装单个依赖，使用 pnpm install 也是可以的</span></span><br><span class="line">pnpm add &lt;package&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 全局安装</span></span><br><span class="line">pnpm add -g &lt;package&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 指定版本</span></span><br><span class="line">pnpm add &lt;package&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除软件包</span></span><br><span class="line">pnpm remove &lt;package&gt; </span><br><span class="line"></span><br><span class="line"><span class="comment"># 更新自身</span></span><br><span class="line">pnpm self-update</span><br><span class="line">pnpm add -g pnpm</span><br></pre></td></tr></table></figure>
+
+<h2 id="其他操作"><a href="#其他操作" class="headerlink" title="其他操作"></a>其他操作</h2><h3 id="更换镜像源"><a href="#更换镜像源" class="headerlink" title="更换镜像源"></a>更换镜像源</h3><div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>中国大陆用户可以使用下面的命令切换使用淘宝的镜像源，加速下载</p></div></div>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm config <span class="built_in">set</span> registry https://registry.npm.taobao.org</span><br></pre></td></tr></table></figure>
+
+<p>查看当前的镜像源</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm config get registry</span><br></pre></td></tr></table></figure>
+
+
+]]></content>
+      <categories>
+        <category>教程</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>Nodejs</tag>
+        <tag>macOS</tag>
+        <tag>Windows</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>如何在 macOS 中安装 Homebrew</title>
     <url>/post/how-to-install-homebrew-on-macos.html</url>
     <content><![CDATA[<p>有时我们在网络上看到别人使用 macOS 安装软件是使用的下面的命令，非常的方便。  </p>
@@ -450,7 +547,7 @@
 
 <p>或是查看下面的内容</p>
 <p>替换使用 <a href="https://developer.aliyun.com/mirror/homebrew/">阿里镜像源</a></p>
-<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-9-tab-0" aria-controls="tabs-9-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">zsh</button><button type="button" role="tab" id="tabs-9-tab-1" aria-controls="tabs-9-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">bash</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-9-panel-0" aria-labelledby="tabs-9-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo &#x27;export HOMEBREW_API_DOMAIN=&quot;https://mirrors.aliyun.com/homebrew-bottles/api&quot;&#x27; &gt;&gt; ~/.zshrc</span><br><span class="line">echo &#x27;export HOMEBREW_BREW_GIT_REMOTE=&quot;https://mirrors.aliyun.com/homebrew/brew.git&quot;&#x27; &gt;&gt; ~/.zshrc</span><br><span class="line">echo &#x27;export HOMEBREW_CORE_GIT_REMOTE=&quot;https://mirrors.aliyun.com/homebrew/homebrew-core.git&quot;&#x27; &gt;&gt; ~/.zshrc</span><br><span class="line">echo &#x27;export HOMEBREW_BOTTLE_DOMAIN=&quot;https://mirrors.aliyun.com/homebrew/homebrew-bottles&quot;&#x27; &gt;&gt; ~/.zshrc</span><br><span class="line">source ~/.zshrc</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-9-panel-1" aria-labelledby="tabs-9-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export HOMEBREW_API_DOMAIN=&quot;https://mirrors.aliyun.com/homebrew-bottles/api&quot;&#x27;</span> &gt;&gt; ~/.bash_profile</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export HOMEBREW_BREW_GIT_REMOTE=&quot;https://mirrors.aliyun.com/homebrew/brew.git&quot;&#x27;</span> &gt;&gt; ~/.bash_profile</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export HOMEBREW_CORE_GIT_REMOTE=&quot;https://mirrors.aliyun.com/homebrew/homebrew-core.git&quot;&#x27;</span> &gt;&gt; ~/.bash_profile</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export HOMEBREW_BOTTLE_DOMAIN=&quot;https://mirrors.aliyun.com/homebrew/homebrew-bottles&quot;&#x27;</span> &gt;&gt; ~/.bash_profile</span><br><span class="line"><span class="built_in">source</span> ~/.bash_profile</span><br></pre></td></tr></table></figure></section></div></div>
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-10-tab-0" aria-controls="tabs-10-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">zsh</button><button type="button" role="tab" id="tabs-10-tab-1" aria-controls="tabs-10-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">bash</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-10-panel-0" aria-labelledby="tabs-10-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo &#x27;export HOMEBREW_API_DOMAIN=&quot;https://mirrors.aliyun.com/homebrew-bottles/api&quot;&#x27; &gt;&gt; ~/.zshrc</span><br><span class="line">echo &#x27;export HOMEBREW_BREW_GIT_REMOTE=&quot;https://mirrors.aliyun.com/homebrew/brew.git&quot;&#x27; &gt;&gt; ~/.zshrc</span><br><span class="line">echo &#x27;export HOMEBREW_CORE_GIT_REMOTE=&quot;https://mirrors.aliyun.com/homebrew/homebrew-core.git&quot;&#x27; &gt;&gt; ~/.zshrc</span><br><span class="line">echo &#x27;export HOMEBREW_BOTTLE_DOMAIN=&quot;https://mirrors.aliyun.com/homebrew/homebrew-bottles&quot;&#x27; &gt;&gt; ~/.zshrc</span><br><span class="line">source ~/.zshrc</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-10-panel-1" aria-labelledby="tabs-10-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export HOMEBREW_API_DOMAIN=&quot;https://mirrors.aliyun.com/homebrew-bottles/api&quot;&#x27;</span> &gt;&gt; ~/.bash_profile</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export HOMEBREW_BREW_GIT_REMOTE=&quot;https://mirrors.aliyun.com/homebrew/brew.git&quot;&#x27;</span> &gt;&gt; ~/.bash_profile</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export HOMEBREW_CORE_GIT_REMOTE=&quot;https://mirrors.aliyun.com/homebrew/homebrew-core.git&quot;&#x27;</span> &gt;&gt; ~/.bash_profile</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export HOMEBREW_BOTTLE_DOMAIN=&quot;https://mirrors.aliyun.com/homebrew/homebrew-bottles&quot;&#x27;</span> &gt;&gt; ~/.bash_profile</span><br><span class="line"><span class="built_in">source</span> ~/.bash_profile</span><br></pre></td></tr></table></figure></section></div></div>
 
 <p>然后执行安装命令，从阿里云下载安装脚本并安装 Homebrew</p>
 <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://mirrors.aliyun.com/homebrew/install.git brew-install</span><br><span class="line">/bin/bash brew-install/install.sh</span><br><span class="line"><span class="built_in">rm</span> -rf brew-install</span><br></pre></td></tr></table></figure>
@@ -478,105 +575,8 @@
         <category>教程</category>
       </categories>
       <tags>
+        <tag>macOS</tag>
         <tag>Homebrew</tag>
-        <tag>macOS</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>如何安装 Node.js</title>
-    <url>/post/how-to-install-nodejs.html</url>
-    <content><![CDATA[<p>本文将带介绍如何在电脑上安装 Node.js 运行环境，从而可以使用丰富的应用 Nodejs 程序。 </p>
-<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-10-tab-0" aria-controls="tabs-10-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">Windows</button><button type="button" role="tab" id="tabs-10-tab-1" aria-controls="tabs-10-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">macOS</button><button type="button" role="tab" id="tabs-10-tab-2" aria-controls="tabs-10-panel-2" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="2">Linux</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-10-panel-0" aria-labelledby="tabs-10-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><h2 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h2><p>测试安装环境为 <code>Windows 11</code></p>
-<h3 id="下载-Node-js"><a href="#下载-Node-js" class="headerlink" title="下载 Node.js"></a>下载 Node.js</h3><p>访问 Node.js 的官方网站的 <a href="https://nodejs.org/zh-cn/download/prebuilt-installer">下载页面</a> 下载安装包。 </p>
-<p>我们选择 <strong>预构建安装程序</strong> ，选择一下自己的系统与 CPU 架构类型， Windows 一般选择 <strong>x64</strong>，再选择 Node.js 版本。</p>
-<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>推荐选择版本号为偶数的 LTS 版本</p></div></div>  
-
-<p><img src="https://img.nep.me/i/2024/12/13/7fzq5m-2.webp" alt="nodejs-home-page"></p>
-<h3 id="安装-Node-js"><a href="#安装-Node-js" class="headerlink" title="安装 Node.js"></a>安装 Node.js</h3><p>然后打开安装程序 <code>node-v22.12.0-x64.msi</code>，安装过程没有陷阱，我们 <strong>同意</strong> 协议后，一路点击 Next 即可。  </p>
-<p><img src="https://img.nep.me/i/2024/12/13/7hc7pi-2.webp" alt="nodejs-setup"></p>
-<p>安装完成后，打开终端程序：</p>
-<ul>
-<li>右键点击开始菜单，选择终端</li>
-<li>或是按 <code>Windows + R</code> 快捷键打开 <strong>运行</strong> 窗口，输入 <code>cmd</code> ，回车打开</li>
-<li>或是在资源管理器的地址栏中输入 <code>cmd</code> 回车打开（终端的运行目录将是资源管理器所在的目录）</li>
-</ul>
-<p>运行下面的命令测试安装结果。</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">node -v</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm -v</span><br></pre></td></tr></table></figure>
-
-<p>如果可以成功输出版本号，表示安装成功。  </p>
-<p><img src="https://img.nep.me/i/2024/12/13/7ilvge-2.webp" alt="nodejs-install-done"></p></section><section role="tabpanel" id="tabs-10-panel-1" aria-labelledby="tabs-10-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><h2 id="macOS"><a href="#macOS" class="headerlink" title="macOS"></a>macOS</h2><p>测试安装环境为 <code>macOS 15.1</code> ，macOS 更推荐使用 <strong>包管理器</strong> <code>Homebrew</code> 进行安装。</p>
-<blockquote>
-<p><a href="https://brew.sh/zh-cn/">Homebrew</a> 是 macOS 和 Linux 缺失软件包的管理器，用于安装 Apple没有预装但你需要的东西。</p>
-</blockquote>
-<p>安装需要使用终端，<a href="https://support.apple.com/zh-cn/guide/terminal/apd5265185d-f365-44cb-8b09-71a064a42125/mac">在 Mac 上打开或退出“终端”</a>：</p>
-<ul>
-<li>启动台 &gt; 其他 &gt; 终端</li>
-<li><strong>启动台</strong> 或是　<code>Commond⌘ + 空格</code> 打开聚焦搜索，搜索 <strong>终端</strong> 或是 <strong>Terminal</strong></li>
-</ul>
-<h3 id="安装-Homebrew"><a href="#安装-Homebrew" class="headerlink" title="安装 Homebrew"></a>安装 Homebrew</h3><p>中国大陆地区或是更详细步骤请查看：<a href="https://ooo.run/post/how-to-install-homebrew-on-macos.html" target="_blank">如何在 macOS 中安装 Homebrew</a></p>
-<p>首先复制安装命令  </p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">/bin/bash -c <span class="string">&quot;<span class="subst">$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)</span>&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>在终端内执行安装命令，安装时需要输入你的电脑密码进行授权：  </p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">==&gt; Checking <span class="keyword">for</span> `<span class="built_in">sudo</span>` access (<span class="built_in">which</span> may request your password)...</span><br><span class="line">Password:</span><br></pre></td></tr></table></figure>
-<p>brew 会提示将安装的软件以及创建的文件夹，按回车继续，等待下载和安装完成。</p>
-<p>命令执行结束后按照提示复制执行下面的三条命令添加 PATH :</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> &gt;&gt; /Users/me/.zprofile</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;eval &quot;$(/opt/homebrew/bin/brew shellenv)&quot;&#x27;</span> &gt;&gt; /Users/me/.zprofile</span><br><span class="line"><span class="built_in">eval</span> <span class="string">&quot;<span class="subst">$(/opt/homebrew/bin/brew shellenv)</span>&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>如果使用了 <code>oh-my-zsh</code> ，需要执行下面的命令:</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export PATH=&quot;/opt/homebrew/bin:$PATH&quot;&#x27;</span> &gt;&gt; ~/.zshrc   </span><br><span class="line"><span class="built_in">source</span> ~/.zshrc</span><br></pre></td></tr></table></figure>
-
-<p>然后可以执行 <code>brew -v</code> 测试安装结果，成功会显示 Hombrew 的版本号。   </p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt;brew -v</span><br><span class="line">Homebrew 4.4.11</span><br></pre></td></tr></table></figure>
-
-<h3 id="安装-Nodejs"><a href="#安装-Nodejs" class="headerlink" title="安装 Nodejs"></a>安装 Nodejs</h3><p>打开终端，执行</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">brew install node</span><br></pre></td></tr></table></figure>
-
-<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt;node -v</span><br><span class="line">v23.4.0</span><br><span class="line"></span><br><span class="line">&gt;npm -v</span><br><span class="line">10.9.2</span><br></pre></td></tr></table></figure>
-
-<h3 id="brew-常用命令"><a href="#brew-常用命令" class="headerlink" title="brew 常用命令"></a>brew 常用命令</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 安装指定版本</span></span><br><span class="line">brew install node@22</span><br><span class="line"></span><br><span class="line"><span class="comment"># 卸载</span></span><br><span class="line">brew remove node</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看已安装软件</span></span><br><span class="line">brew list </span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查更新</span></span><br><span class="line">brew update</span><br><span class="line"></span><br><span class="line"><span class="comment"># 下载更新</span></span><br><span class="line">brew upgrade</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-10-panel-2" aria-labelledby="tabs-10-tab-2" class="flatpaper-tabs__panel" data-index="2" hidden><h2 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h2><p>Linux 使用 nvm 包管理器可以很方便的安装 Node.js</p>
-<h3 id="首先安装-nvm"><a href="#首先安装-nvm" class="headerlink" title="首先安装 nvm"></a>首先安装 nvm</h3><h1 id="安装-nvm-Node-版本管理器"><a href="#安装-nvm-Node-版本管理器" class="headerlink" title="安装 nvm (Node 版本管理器)"></a>安装 nvm (Node 版本管理器)</h1><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash</span><br></pre></td></tr></table></figure>
-
-<p>更新一下 PATH</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># bash</span></span><br><span class="line"><span class="built_in">source</span> ~/.bashrc</span><br><span class="line"></span><br><span class="line"><span class="comment"># zsh</span></span><br><span class="line"><span class="built_in">source</span> ~/.zshrc</span><br></pre></td></tr></table></figure>
-
-<p>验证</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">root@debian:~# nvm -v</span><br><span class="line">0.40.1</span><br></pre></td></tr></table></figure>
-
-<h3 id="安装-Node-js"><a href="#安装-Node-js" class="headerlink" title="安装 Node.js"></a>安装 Node.js</h3><p>下载并安装 Node.js 22 LTS 版本</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">nvm install 22</span><br></pre></td></tr></table></figure>
-
-<p>验证</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">root@debian:~# node -v</span><br><span class="line">v22.12.0</span><br><span class="line">root@debian:~# npm -v</span><br><span class="line">10.9.0</span><br></pre></td></tr></table></figure></section></div></div>
-
-<h2 id="npm-常用命令"><a href="#npm-常用命令" class="headerlink" title="npm 常用命令"></a>npm 常用命令</h2><p><code>npm</code> 是 Node.js 自带的包管理器是 ，我们可以很方便的安装 Node.js 应用，常用命令介绍：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 初始化项目，创建 package.json 文件</span></span><br><span class="line">npm init</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看版本</span></span><br><span class="line">npm -v</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看当前 npm 的配</span></span><br><span class="line">npm config list	</span><br><span class="line"></span><br><span class="line"><span class="comment"># 更新 npm 到最新版本</span></span><br><span class="line">npm update -g npm</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装项目中的所有依赖项（基于 package.json）</span></span><br><span class="line">npm i</span><br><span class="line">npm install </span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装指定包，并添加到项目依赖</span></span><br><span class="line">npm install &lt;package&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装指定版本的包，例如：npm i lodash@4.17.20</span></span><br><span class="line">npm install &lt;package&gt;@&lt;version&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 全局安装指定的包（通常为 CLI 工具） </span></span><br><span class="line">npm install &lt;package&gt; -g</span><br><span class="line"></span><br><span class="line"><span class="comment"># 卸载指定包</span></span><br><span class="line">npm uninstall &lt;package&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 更新指定的包到最新版本</span></span><br><span class="line">npm update &lt;package&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看当前项目已安装的依赖包</span></span><br><span class="line">npm list</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看全局已安装的依赖包</span></span><br><span class="line">npm list -g</span><br><span class="line"></span><br><span class="line"><span class="comment"># 移除未在 package.json 中声明的多余依赖包</span></span><br><span class="line">npm prune</span><br></pre></td></tr></table></figure>
-
-<h2 id="使用-pnpm"><a href="#使用-pnpm" class="headerlink" title="使用 pnpm"></a>使用 pnpm</h2><p>如果你需要经常使用 Node.js 应用，更推荐安装 <code>pnpm</code> 包管理，它的性能更好，安装速度速度更快，默认开启严格模式，确保项目中的依赖版本一致，避免了某些隐藏的版本冲突问题，并且对保持对 npm 的兼容。</p>
-<p>pnpm 的版本锁定文件是 <code>pnpm-lock.yaml</code></p>
-<h3 id="安装-pnpm"><a href="#安装-pnpm" class="headerlink" title="安装 pnpm"></a>安装 pnpm</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm install -g pnpm</span><br></pre></td></tr></table></figure>
-
-<h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><p><code>pnpm</code> 使用命令与 <code>npm</code> 类似，比如：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 基于 pnpm-lock.yaml 安装依赖</span></span><br><span class="line">pnpm i</span><br><span class="line">pnpm install </span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看自身版本</span></span><br><span class="line">pnpm -v</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装单个依赖，使用 pnpm install 也是可以的</span></span><br><span class="line">pnpm add &lt;package&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 全局安装</span></span><br><span class="line">pnpm add -g &lt;package&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 指定版本</span></span><br><span class="line">pnpm add &lt;package&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除软件包</span></span><br><span class="line">pnpm remove &lt;package&gt; </span><br><span class="line"></span><br><span class="line"><span class="comment"># 更新自身</span></span><br><span class="line">pnpm self-update</span><br><span class="line">pnpm add -g pnpm</span><br></pre></td></tr></table></figure>
-
-<h2 id="其他操作"><a href="#其他操作" class="headerlink" title="其他操作"></a>其他操作</h2><h3 id="更换镜像源"><a href="#更换镜像源" class="headerlink" title="更换镜像源"></a>更换镜像源</h3><div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>中国大陆用户可以使用下面的命令切换使用淘宝的镜像源，加速下载</p></div></div>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm config <span class="built_in">set</span> registry https://registry.npm.taobao.org</span><br></pre></td></tr></table></figure>
-
-<p>查看当前的镜像源</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm config get registry</span><br></pre></td></tr></table></figure>
-
-
-]]></content>
-      <categories>
-        <category>教程</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-        <tag>macOS</tag>
-        <tag>Nodejs</tag>
-        <tag>Windows</tag>
       </tags>
   </entry>
   <entry>
@@ -754,200 +754,6 @@
         <tag>Docker</tag>
         <tag>Nginx Proxy Manager</tag>
         <tag>HTTPS</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>AI 大模型集中发布：DeepSeek 3.2、Claude Sonnet 4.5、OpenAI Sora 2、GLM-4.6 亮点速览</title>
-    <url>/post/2025-oct-new-models-coming.html</url>
-    <content><![CDATA[<p>9月29日，AI 领域迎来了一波重磅更新。DeepSeek、Anthropic、OpenAI 和智谱 AI 四家公司不约而同地发布了各自的最新模型，为开发者和用户带来了更强大的 AI 能力。</p>
-<h2 id="DeepSeek-V3-2：开源大模型再突破，成本下降超-50"><a href="#DeepSeek-V3-2：开源大模型再突破，成本下降超-50" class="headerlink" title="DeepSeek-V3.2：开源大模型再突破，成本下降超 50%"></a>DeepSeek-V3.2：开源大模型再突破，成本下降超 50%</h2><p>9月29日，DeepSeek 正式在 Hugging Face 平台发布并开源了 DeepSeek-V3.2-Exp 模型。</p>
-<p><strong>模型地址</strong>：<a href="https://huggingface.co/deepseek-ai/DeepSeek-V3.2-Exp">https://huggingface.co/deepseek-ai/DeepSeek-V3.2-Exp</a></p>
-<h3 id="API-价格大幅下调超-50"><a href="#API-价格大幅下调超-50" class="headerlink" title="API 价格大幅下调超 50%"></a>API 价格大幅下调超 50%</h3><p>新模型主要特点是服务成本的显著降低，DeepSeek 随即下调 API 调用费用：官方 API 价格下调超过 50%，新价格已即刻生效。这一举措将大幅降低开发者的使用成本。</p>
-<img src="https://img.nep.me/i/2025/10/01/oct-deepseek-price.webp" style="width:50%;" alt="DeepSeek 价格调整" />
-
-<h2 id="Anthropic-Claude-Sonnet-4-5：自主编程能力跃升"><a href="#Anthropic-Claude-Sonnet-4-5：自主编程能力跃升" class="headerlink" title="Anthropic Claude Sonnet 4.5：自主编程能力跃升"></a>Anthropic Claude Sonnet 4.5：自主编程能力跃升</h2><p>9月29日，Anthropic 发布了全新的 Claude Sonnet 4.5 模型。</p>
-<p><strong>官方介绍</strong>：<a href="https://www.anthropic.com/news/claude-sonnet-4-5">https://www.anthropic.com/news/claude-sonnet-4-5</a></p>
-<h3 id="核心亮点"><a href="#核心亮点" class="headerlink" title="核心亮点"></a>核心亮点</h3><ul>
-<li><strong>指令遵循能力显著提升</strong>：模型对复杂指令的理解和执行更加精准</li>
-<li><strong>长时间自主编程</strong>：可连续自主编程长达 30 小时，相比 Claude Opus 4 的 7 小时提升了 4 倍以上</li>
-<li><strong>立即可用</strong>：已在 Claude Code 中上线，开发者可直接使用</li>
-</ul>
-<p><img src="https://img.nep.me/i/2025/10/01/oct-claude-sonnet.webp" alt="Claude Sonnet 4.5"></p>
-<h2 id="OpenAI-Sora-2：视频生成的-ChatGPT-时刻"><a href="#OpenAI-Sora-2：视频生成的-ChatGPT-时刻" class="headerlink" title="OpenAI Sora 2：视频生成的 ChatGPT 时刻"></a>OpenAI Sora 2：视频生成的 ChatGPT 时刻</h2><p>9月29日，OpenAI 推出了其迄今最先进的视频生成模型 Sora 2.0，并同步上线独立 iOS 应用（目前采用邀请机制）。</p>
-<h3 id="主要特性"><a href="#主要特性" class="headerlink" title="主要特性"></a>主要特性</h3><ul>
-<li><strong>物理真实感大幅提升</strong>：生成视频的物理表现更加逼真</li>
-<li><strong>音视频同步优化</strong>：声音与画面的匹配度显著提高</li>
-<li><strong>多镜头叙事能力</strong>：支持更复杂的故事叙述方式</li>
-<li><strong>社交互动功能</strong>：用户可生成、浏览和分享 AI 视频，甚至以虚拟形象”客串”他人作品</li>
-</ul>
-<p>OpenAI 将此次更新称为”视频生成的 ChatGPT 时刻”，意味着视频生成技术正在迎来质的飞跃。</p>
-<p><strong>官方介绍与 Demo 预览</strong>：<a href="https://openai.com/index/sora-2/">https://openai.com/index/sora-2/</a><br><strong>可以在官方 Discord 获取其他用户分享的邀请码（加入社群需要连接 OpenAI 账户）</strong>： <a href="https://discord.gg/openai">https://discord.gg/openai</a> </p>
-<h3 id="Sora-by-OpenAI-iOS-APP-介绍"><a href="#Sora-by-OpenAI-iOS-APP-介绍" class="headerlink" title="Sora by OpenAI (iOS APP) 介绍"></a>Sora by OpenAI (iOS APP) 介绍</h3><p><strong>下载地址</strong>：<a href="https://apps.apple.com/us/app/sora-by-openai/id6744034028">https://apps.apple.com/us/app/sora-by-openai/id6744034028</a></p>
-<p>目前支持美国、加拿大、日本地区的 Apple ID 下载。</p>
-<h4 id="获取方式"><a href="#获取方式" class="headerlink" title="获取方式"></a>获取方式</h4><p>OpenAI 采用邀请码裂变机制推广 Sora APP：每个账户加入后可生成一个邀请码，每个邀请码可以使用 4 次。</p>
-<p>使用流程：下载 APP → 使用 OpenAI 账户登录 → 输入邀请码即可开始使用。</p>
-<h4 id="产品定位"><a href="#产品定位" class="headerlink" title="产品定位"></a>产品定位</h4><p>Sora by OpenAI 是一款短视频社交平台，定位类似 TikTok，核心区别在于所有内容均由 AI 生成。用户可以创作、浏览和分享 AI 视频，打造全新的社交体验。</p>
-<h4 id="核心功能"><a href="#核心功能" class="headerlink" title="核心功能"></a>核心功能</h4><ul>
-<li><strong>文本生成视频</strong>：通过一句话描述即可生成 10 秒视频</li>
-<li><strong>草稿管理</strong>：生成的视频会自动保存为草稿，用户可选择下载到本地或公开发布到平台</li>
-<li><strong>Cameo 功能</strong>：扫描 3D 人脸并克隆音色，创建个人数字分身，供 AI 在视频生成时使用</li>
-<li><strong>权限控制</strong>：Cameo 支持灵活的权限设置，保护用户隐私</li>
-<li><strong>社交互动</strong>：生成视频时，通过 @ 可引用其他用户的 Cameo。例如 <code>@sama</code> 可让 OpenAI CEO 直接出现在你的视频中，实现创意联动</li>
-</ul>
-<h2 id="智谱-GLM-4-6：对齐-Claude-Sonnet-4"><a href="#智谱-GLM-4-6：对齐-Claude-Sonnet-4" class="headerlink" title="智谱 GLM-4.6：对齐 Claude Sonnet 4"></a>智谱 GLM-4.6：对齐 Claude Sonnet 4</h2><p>智谱 AI 更新了旗舰模型 GLM-4.6，在多个维度实现了显著提升。</p>
-<h3 id="核心亮点-1"><a href="#核心亮点-1" class="headerlink" title="核心亮点"></a>核心亮点</h3><p><strong>代码能力大幅提升</strong></p>
-<ul>
-<li>较 GLM-4.5 提升了 27%</li>
-<li>在公开基准与真实编程任务中，代码能力对齐 Claude Sonnet 4</li>
-</ul>
-<p><strong>上下文窗口扩展</strong></p>
-<ul>
-<li>从 128K 提升到 200K</li>
-<li>能更好地处理复杂代码项目和需要长程记忆的智能体任务</li>
-</ul>
-<p><strong>推理能力增强</strong></p>
-<ul>
-<li>支持在推理过程中调用工具</li>
-<li>多步骤推理更加稳定可靠</li>
-</ul>
-<p><strong>写作与交互优化</strong></p>
-<ul>
-<li>搜索能力、写作能力增强</li>
-<li>写作风格和可读性更贴近人类偏好</li>
-<li>在角色扮演等场景下表现更自然</li>
-</ul>
-<h3 id="Benchmark-对比"><a href="#Benchmark-对比" class="headerlink" title="Benchmark 对比"></a>Benchmark 对比</h3><p><img src="https://img.nep.me/i/2025/10/01/oct-glm.webp" alt="GLM-4.6 性能对比"></p>
-<p><strong>官方文档</strong>：<a href="https://docs.bigmodel.cn/cn/guide/models/text/glm-4.6">https://docs.bigmodel.cn/cn/guide/models/text/glm-4.6</a><br><strong>在线体验</strong>：<a href="https://z.ai/">https://z.ai</a></p>
-<hr>
-<p>这次四家公司的集中发布，展现了 AI 大模型领域的激烈竞争与快速进步。从降价到性能提升，从代码生成到视频创作，AI 技术正在加速渗透到各个应用场景中。</p>
-]]></content>
-      <categories>
-        <category>资讯</category>
-      </categories>
-      <tags>
-        <tag>AI</tag>
-        <tag>大模型</tag>
-        <tag>DeepSeek</tag>
-        <tag>Claude</tag>
-        <tag>Claude Code</tag>
-        <tag>OpenAI</tag>
-        <tag>智谱AI</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>使用 VitePress 轻松搭建一个简单的导航站</title>
-    <url>/post/build-nav-site-with-vitepress.html</url>
-    <content><![CDATA[<p>在日常工作和学习中，我们经常会收集各种有用的网站链接，从开发工具、技术文档到实用的在线服务。随着收藏的网站越来越多，如何高效地管理和快速访问这些资源成了一个问题。</p>
-<p>今天我们就来使用 VitePress 搭建一个简洁、美观且高度可定制的个人导航站，让你的常用网站井井有条，随时可达。</p>
-<p>导航将基于 GitHub 的开源项目： <a href="https://github.com/maomao1996/vitepress-nav-template">vitepress-nav-template</a></p>
-<h2 id="预览"><a href="#预览" class="headerlink" title="预览"></a>预览</h2><p>在开始之前，可以访问下面的网站预览一下效果：</p>
-<ul>
-<li><a href="https://bookmarks.ooo.run/">O’s Bookmarks</a> </li>
-<li><a href="https://fe-nav.netlify.app/nav/">茂茂物语 - 前端导航</a></li>
-</ul>
-<h2 id="为什么选择-VitePress？"><a href="#为什么选择-VitePress？" class="headerlink" title="为什么选择 VitePress？"></a>为什么选择 VitePress？</h2><p>相比于传统的导航站解决方案，<strong>vitepress-nav-template</strong> 基于 VitePress 构建，具有以下优势：</p>
-<ul>
-<li><strong>轻量快速</strong>：基于 Vite 构建，开发体验流畅，构建速度极快</li>
-<li><strong>部署简单</strong>：静态站点，可轻松部署到 GitHub Pages、Netlify 等平台</li>
-<li><strong>响应式设计</strong>：支持移动端，随时随地访问你的导航站</li>
-</ul>
-<p>不足之处就是数据都保存在一个文件内，编辑时不太直观。</p>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>安装 <strong>vitepress-nav-template</strong> 非常的简单，我们只需要使用 <code>git clone</code> 一下这个项目即可</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/maomao1996/vitepress-nav-template.git my-nav</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>如果希望使用 GitHub (GitHub Pages) 可以在 GitHub 项目页面上直接点击 <code>Use this template</code> &gt; <code>Create a new repository</code><br>然后再 clone 自己的 Repo 到本地</p>
-</blockquote>
-<p>进入文件夹，安装依赖后，即可运行本地预览</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 进入项目文件夹</span></span><br><span class="line"><span class="built_in">cd</span> my-nav</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装依赖</span></span><br><span class="line">pnpm install </span><br><span class="line"></span><br><span class="line"><span class="comment"># 运行预览</span></span><br><span class="line">pnpm dev</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://img.nep.me/i/2025/08/23/vitepress-nav-pnpm-dev.webp" alt="vitepress-nav-pnpm-dev.png"></p>
-<p>第一次运行时会显示一些依赖报错，这并不影响我们的使用，可以忽略。</p>
-<p>然后我们访问 <a href="http://localhost:8732/">http://localhost:8732/</a> 即可进行预览，默认是首页界面，点击前端导航既可以打开导航页面 <a href="http://localhost:8732/nav/">http://localhost:8732/nav/</a></p>
-<p><img src="https://img.nep.me/i/2025/08/23/vitepress-nav-prevew.webp" alt="vitepress-nav-prevew.png"></p>
-<p>访问后可以发现网站已经自带了一些数据，我们需要自己进行修改</p>
-<h2 id="更新内容"><a href="#更新内容" class="headerlink" title="更新内容"></a>更新内容</h2><p>如果你不熟悉 VitePress ，那么需要先了解一下文件结构</p>
-<p>在 VS Code 左侧的资源管理器查看文件，我们需要关注的是 <code>docs</code> 文件夹：</p>
-<blockquote>
-<p>VitePress 会将对应的 <code>filename.md</code> 编译为 <code>filename.html</code></p>
-</blockquote>
-<ul>
-<li><strong>docs&#x2F;.vitepress&#x2F;</strong> : 站点配置文件夹</li>
-<li><strong>docs&#x2F;nav&#x2F;</strong> : 导航页的文件夹</li>
-<li><strong>docs&#x2F;public&#x2F;</strong> : 存放图标静态资源</li>
-<li><strong>docs&#x2F;index.md</strong> : 模板默认的首页内容，<strong>test.md</strong> 可以直接删除</li>
-</ul>
-<p><img src="https://img.nep.me/i/2025/08/23/vitepress-nav-files.webp" alt="vitepress-nav-files.png"></p>
-<h3 id="更改站点数据"><a href="#更改站点数据" class="headerlink" title="更改站点数据"></a>更改站点数据</h3><p>在 <code>docs/.vitepress/config.ts</code>  配置文件中包含了站点的基本配置</p>
-<figure class="highlight ts"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="title function_">defineConfig</span>(&#123; </span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="comment">// 修改站点名称</span></span><br><span class="line">    <span class="attr">title</span>: <span class="string">&#x27;站点名称&#x27;</span>,</span><br><span class="line">    <span class="comment">// 修改站点描述</span></span><br><span class="line">    <span class="attr">description</span>: <span class="string">&#x27;站点的描述&#x27;</span>,</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="comment">// 站点右上角的 Github 图标与链接</span></span><br><span class="line">    <span class="attr">socialLinks</span>: [&#123; <span class="attr">icon</span>: <span class="string">&#x27;github&#x27;</span>, <span class="attr">link</span>: <span class="string">&#x27;https://github.com/maomao1996/vitepress-nav-template&#x27;</span> &#125;],</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 修改底部的 footer 的信息</span></span><br><span class="line">    <span class="attr">footer</span>: &#123;</span><br><span class="line">      <span class="attr">message</span>: <span class="string">&#x27;如有转载或 CV 的请标注本站原文地址&#x27;</span>,</span><br><span class="line">      <span class="attr">copyright</span>: <span class="string">&#x27;Copyright © 2019-present maomao&#x27;</span>,</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*** 自定义配置 ***/</span></span><br><span class="line">    <span class="comment">// 访客统计数据，我们可以注释掉</span></span><br><span class="line">    <span class="comment">// visitor: &#123;</span></span><br><span class="line">    <span class="comment">//   badgeId: &#x27;maomao1996.vitepress-nav-template&#x27;,</span></span><br><span class="line">    <span class="comment">// &#125;,</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// giscus 评论的设置</span></span><br><span class="line">    <span class="attr">comment</span>: &#123;</span><br><span class="line">        <span class="comment">//..</span></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="修改顶部导航栏"><a href="#修改顶部导航栏" class="headerlink" title="修改顶部导航栏"></a>修改顶部导航栏</h3><p>站点顶部导航的栏的数据保存在 <strong>docs&#x2F;.vitepress&#x2F;configs&#x2F;nav.ts</strong></p>
-<figure class="highlight ts"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="keyword">type</span> &#123; <span class="title class_">DefaultTheme</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;vitepress&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="attr">nav</span>: <span class="title class_">DefaultTheme</span>.<span class="property">Config</span>[<span class="string">&#x27;nav&#x27;</span>] = [</span><br><span class="line">  &#123; <span class="attr">text</span>: <span class="string">&#x27;Bookmarks&#x27;</span>, <span class="attr">link</span>: <span class="string">&#x27;/&#x27;</span> &#125;,</span><br><span class="line">  &#123; </span><br><span class="line">    <span class="attr">text</span>: <span class="string">&#x27;O\&#x27;s World&#x27;</span>, </span><br><span class="line">    <span class="attr">link</span>: <span class="string">&#x27;https://ooo.run&#x27;</span> </span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// 按照需求修改添加</span></span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-
-<h3 id="修改导航数据"><a href="#修改导航数据" class="headerlink" title="修改导航数据"></a>修改导航数据</h3><p>导航页面的数据都保存在 <strong>docs&#x2F;nav&#x2F;</strong> 文件夹内，我们需要修改的是 <code>data.ts</code> 内的内容</p>
-<h4 id="文件结构"><a href="#文件结构" class="headerlink" title="文件结构"></a>文件结构</h4><p>导航数据采用分类结构，每个分类包含标题和导航项目列表：</p>
-<figure class="highlight ts"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="attr">NAV_DATA</span>: <span class="title class_">NavData</span>[] = [</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">title</span>: <span class="string">&#x27;分类标题&#x27;</span>,</span><br><span class="line">    <span class="attr">items</span>: [</span><br><span class="line">      <span class="comment">// 导航项目列表</span></span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-
-<h4 id="添加新分类"><a href="#添加新分类" class="headerlink" title="添加新分类"></a>添加新分类</h4><p>在 <code>NAV_DATA</code> 中添加新的分类对象：</p>
-<figure class="highlight ts"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">title</span>: <span class="string">&#x27;新分类名称&#x27;</span>,</span><br><span class="line">  <span class="attr">items</span>: [</span><br><span class="line">    &#123; </span><br><span class="line">        <span class="comment">/** 导航 item 1 **/</span> </span><br><span class="line">    &#125;,</span><br><span class="line">    &#123; </span><br><span class="line">        <span class="comment">/** 导航 item 2 **/</span> </span><br><span class="line">    &#125;,</span><br><span class="line">  ],</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="添加导航项目"><a href="#添加导航项目" class="headerlink" title="添加导航项目"></a>添加导航项目</h4><p>在现有分类的 <code>items</code> 中添加新项目：</p>
-<figure class="highlight ts"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">icon</span>: <span class="string">&#x27;https://example.com/favicon.ico&#x27;</span>,  <span class="comment">// 外部图标链接</span></span><br><span class="line">  <span class="attr">title</span>: <span class="string">&#x27;网站标题&#x27;</span>,</span><br><span class="line">  <span class="attr">desc</span>: <span class="string">&#x27;网站描述（可选）&#x27;</span>,</span><br><span class="line">  <span class="attr">link</span>: <span class="string">&#x27;https://example.com&#x27;</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="图标设置"><a href="#图标设置" class="headerlink" title="图标设置"></a>图标设置</h4><ol>
-<li><p>使用外部图标链接</p>
-<figure class="highlight ts"><table><tr><td class="code"><pre><span class="line"><span class="attr">icon</span>: <span class="string">&#x27;https://example.com/favicon.ico&#x27;</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>使用本地图标文件</p>
-<figure class="highlight ts"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 放置在 public/icons/ 目录下</span></span><br><span class="line"><span class="attr">icon</span>: <span class="string">&#x27;/icons/filename.svg&#x27;</span>  </span><br></pre></td></tr></table></figure></li>
-</ol>
-<h3 id="访问时直接打开导航页面"><a href="#访问时直接打开导航页面" class="headerlink" title="访问时直接打开导航页面"></a>访问时直接打开导航页面</h3><p>我们只需要把 <strong>docs&#x2F;nav&#x2F;</strong> 中文三个文件复制到 <strong>docs&#x2F;</strong> 下面即可</p>
-<p>移动文件后，我们需要更新一些导入文件的路径，在 <code>data.ts</code> 将第一行</p>
-<figure class="highlight ts"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="keyword">type</span> &#123; <span class="title class_">NavLink</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;../.vitepress/theme/types&#x27;</span></span><br></pre></td></tr></table></figure>
-<p>修改为</p>
-<figure class="highlight ts"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="keyword">type</span> &#123; <span class="title class_">NavLink</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./.vitepress/theme/types&#x27;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="关闭评论"><a href="#关闭评论" class="headerlink" title="关闭评论"></a>关闭评论</h3><p>目前评论是使用作者的 giscus 数据，可以在 <code>docs/.vitepress/config.ts</code> 中更换为自己的部分，如何不需要评论可以直接注释掉 comment 部分</p>
-<figure class="highlight ts"><table><tr><td class="code"><pre><span class="line"><span class="comment">// comment: &#123;</span></span><br><span class="line"><span class="comment">//   repo: &#x27;maomao1996/vitepress-nav-template&#x27;,</span></span><br><span class="line"><span class="comment">//   repoId: &#x27;R_kgDOJC09Jg&#x27;,</span></span><br><span class="line"><span class="comment">//   category: &#x27;Announcements&#x27;,</span></span><br><span class="line"><span class="comment">//   categoryId: &#x27;DIC_kwDOJC09Js4Cekn0&#x27;,</span></span><br><span class="line"><span class="comment">// &#125;,</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="部署至网络"><a href="#部署至网络" class="headerlink" title="部署至网络"></a>部署至网络</h2><h3 id="GitHub-Pages"><a href="#GitHub-Pages" class="headerlink" title="GitHub Pages"></a>GitHub Pages</h3><p>项目已经自带了 github pages 部署脚本 <code>.github/workflows/deploy.yml</code>，推送到 Github 时将自动部署，推送静态站点文件至 <code>gh-pages</code> 分支。</p>
-<blockquote>
-<p>如果你的 GitHub Pages 的域名绑定名额已经被其他项目使用，那么可以使用 <code>https://your-project.github.io/project</code> 访问另外的项目的 <code>gh-pages</code></p>
-</blockquote>
-<h3 id="Cloudflare-Pages"><a href="#Cloudflare-Pages" class="headerlink" title="Cloudflare Pages"></a>Cloudflare Pages</h3><p>如果你不想使用 GitHub 或是更喜欢使用 Cloudflare 的服务，也可以选择部署至 Cloudflare Pages。</p>
-<p>下面将介绍使用命令或是手动上传文件进行部署的方式。</p>
-<h4 id="创建-Pages-项目"><a href="#创建-Pages-项目" class="headerlink" title="创建 Pages 项目"></a>创建 Pages 项目</h4><p>访问 Cloudflare 的 <a href="https://dash.cloudflare.com/">Dashboard</a>，按照下面的步骤操作</p>
-<ul>
-<li>首先点击左侧的 <strong>计算 (Workers)</strong> &gt; <strong>Workers 和 Pages</strong></li>
-<li>点击 <strong>创建</strong> 按钮后，选择 <strong>Pages</strong>，再选择 <strong>手动上传</strong> </li>
-<li>在新的页面设置 <strong>项目名称</strong></li>
-</ul>
-<h4 id="生成静态资源"><a href="#生成静态资源" class="headerlink" title="生成静态资源"></a>生成静态资源</h4><p>在上传资源之前，我们需要先生成导航网站的静态资源，运行下面命令即可</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pnpm build</span><br></pre></td></tr></table></figure>
-
-<p>网站的静态资源将生成在 <code>dist/</code> 目录下面，最简单就是手动打包为 zip 然后在部署界面上传，当然这太不优雅了。</p>
-<h4 id="部署至-Pages"><a href="#部署至-Pages" class="headerlink" title="部署至 Pages"></a>部署至 Pages</h4><p>我们可以使用 Cloudflare 的 wrangler ，只需要执行下面的命令</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pnpm add -D wrangler@latest</span><br></pre></td></tr></table></figure>
-
-<p>创建部署配置文件，在根文件夹下创建 <code>wrangler.toml</code>，填入下面的内容 </p>
-<figure class="highlight toml"><table><tr><td class="code"><pre><span class="line"><span class="attr">name</span> = <span class="string">&quot;your-project-name&quot;</span></span><br><span class="line"><span class="attr">pages_build_output_dir</span> = <span class="string">&quot;./dist&quot;</span></span><br><span class="line"><span class="attr">compatibility_date</span> = <span class="string">&quot;2025-08-01&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>然后运行</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npx wrangler pages deploy</span><br></pre></td></tr></table></figure>
-
-<p>第一次运行时需要进行认证授权，在浏览器内访问链接后点击授权即可。</p>
-<p>然后即可完成部署。</p>
-<p>根据命令提示，访问 <code>pages.dev</code> 域名即可查看网站。</p>
-<h4 id="绑定自定义域名"><a href="#绑定自定义域名" class="headerlink" title="绑定自定义域名"></a>绑定自定义域名</h4><p>在 Cloudflare <strong>Dashboard</strong> 打开 <strong>Workers 和 Pages</strong>，再点击 <strong>自定义域</strong> 即可进行添加。</p>
-<p>如果你的域名托管在 Cloudflare ，只需要输入对应的域名即可。 </p>
-]]></content>
-      <categories>
-        <category>教程</category>
-      </categories>
-      <tags>
-        <tag>导航</tag>
-        <tag>VitePress</tag>
-        <tag>Self-hosted</tag>
       </tags>
   </entry>
   <entry>
@@ -1210,6 +1016,84 @@
       </tags>
   </entry>
   <entry>
+    <title>AI 大模型集中发布：DeepSeek 3.2、Claude Sonnet 4.5、OpenAI Sora 2、GLM-4.6 亮点速览</title>
+    <url>/post/2025-oct-new-models-coming.html</url>
+    <content><![CDATA[<p>9月29日，AI 领域迎来了一波重磅更新。DeepSeek、Anthropic、OpenAI 和智谱 AI 四家公司不约而同地发布了各自的最新模型，为开发者和用户带来了更强大的 AI 能力。</p>
+<h2 id="DeepSeek-V3-2：开源大模型再突破，成本下降超-50"><a href="#DeepSeek-V3-2：开源大模型再突破，成本下降超-50" class="headerlink" title="DeepSeek-V3.2：开源大模型再突破，成本下降超 50%"></a>DeepSeek-V3.2：开源大模型再突破，成本下降超 50%</h2><p>9月29日，DeepSeek 正式在 Hugging Face 平台发布并开源了 DeepSeek-V3.2-Exp 模型。</p>
+<p><strong>模型地址</strong>：<a href="https://huggingface.co/deepseek-ai/DeepSeek-V3.2-Exp">https://huggingface.co/deepseek-ai/DeepSeek-V3.2-Exp</a></p>
+<h3 id="API-价格大幅下调超-50"><a href="#API-价格大幅下调超-50" class="headerlink" title="API 价格大幅下调超 50%"></a>API 价格大幅下调超 50%</h3><p>新模型主要特点是服务成本的显著降低，DeepSeek 随即下调 API 调用费用：官方 API 价格下调超过 50%，新价格已即刻生效。这一举措将大幅降低开发者的使用成本。</p>
+<img src="https://img.nep.me/i/2025/10/01/oct-deepseek-price.webp" style="width:50%;" alt="DeepSeek 价格调整" />
+
+<h2 id="Anthropic-Claude-Sonnet-4-5：自主编程能力跃升"><a href="#Anthropic-Claude-Sonnet-4-5：自主编程能力跃升" class="headerlink" title="Anthropic Claude Sonnet 4.5：自主编程能力跃升"></a>Anthropic Claude Sonnet 4.5：自主编程能力跃升</h2><p>9月29日，Anthropic 发布了全新的 Claude Sonnet 4.5 模型。</p>
+<p><strong>官方介绍</strong>：<a href="https://www.anthropic.com/news/claude-sonnet-4-5">https://www.anthropic.com/news/claude-sonnet-4-5</a></p>
+<h3 id="核心亮点"><a href="#核心亮点" class="headerlink" title="核心亮点"></a>核心亮点</h3><ul>
+<li><strong>指令遵循能力显著提升</strong>：模型对复杂指令的理解和执行更加精准</li>
+<li><strong>长时间自主编程</strong>：可连续自主编程长达 30 小时，相比 Claude Opus 4 的 7 小时提升了 4 倍以上</li>
+<li><strong>立即可用</strong>：已在 Claude Code 中上线，开发者可直接使用</li>
+</ul>
+<p><img src="https://img.nep.me/i/2025/10/01/oct-claude-sonnet.webp" alt="Claude Sonnet 4.5"></p>
+<h2 id="OpenAI-Sora-2：视频生成的-ChatGPT-时刻"><a href="#OpenAI-Sora-2：视频生成的-ChatGPT-时刻" class="headerlink" title="OpenAI Sora 2：视频生成的 ChatGPT 时刻"></a>OpenAI Sora 2：视频生成的 ChatGPT 时刻</h2><p>9月29日，OpenAI 推出了其迄今最先进的视频生成模型 Sora 2.0，并同步上线独立 iOS 应用（目前采用邀请机制）。</p>
+<h3 id="主要特性"><a href="#主要特性" class="headerlink" title="主要特性"></a>主要特性</h3><ul>
+<li><strong>物理真实感大幅提升</strong>：生成视频的物理表现更加逼真</li>
+<li><strong>音视频同步优化</strong>：声音与画面的匹配度显著提高</li>
+<li><strong>多镜头叙事能力</strong>：支持更复杂的故事叙述方式</li>
+<li><strong>社交互动功能</strong>：用户可生成、浏览和分享 AI 视频，甚至以虚拟形象”客串”他人作品</li>
+</ul>
+<p>OpenAI 将此次更新称为”视频生成的 ChatGPT 时刻”，意味着视频生成技术正在迎来质的飞跃。</p>
+<p><strong>官方介绍与 Demo 预览</strong>：<a href="https://openai.com/index/sora-2/">https://openai.com/index/sora-2/</a><br><strong>可以在官方 Discord 获取其他用户分享的邀请码（加入社群需要连接 OpenAI 账户）</strong>： <a href="https://discord.gg/openai">https://discord.gg/openai</a> </p>
+<h3 id="Sora-by-OpenAI-iOS-APP-介绍"><a href="#Sora-by-OpenAI-iOS-APP-介绍" class="headerlink" title="Sora by OpenAI (iOS APP) 介绍"></a>Sora by OpenAI (iOS APP) 介绍</h3><p><strong>下载地址</strong>：<a href="https://apps.apple.com/us/app/sora-by-openai/id6744034028">https://apps.apple.com/us/app/sora-by-openai/id6744034028</a></p>
+<p>目前支持美国、加拿大、日本地区的 Apple ID 下载。</p>
+<h4 id="获取方式"><a href="#获取方式" class="headerlink" title="获取方式"></a>获取方式</h4><p>OpenAI 采用邀请码裂变机制推广 Sora APP：每个账户加入后可生成一个邀请码，每个邀请码可以使用 4 次。</p>
+<p>使用流程：下载 APP → 使用 OpenAI 账户登录 → 输入邀请码即可开始使用。</p>
+<h4 id="产品定位"><a href="#产品定位" class="headerlink" title="产品定位"></a>产品定位</h4><p>Sora by OpenAI 是一款短视频社交平台，定位类似 TikTok，核心区别在于所有内容均由 AI 生成。用户可以创作、浏览和分享 AI 视频，打造全新的社交体验。</p>
+<h4 id="核心功能"><a href="#核心功能" class="headerlink" title="核心功能"></a>核心功能</h4><ul>
+<li><strong>文本生成视频</strong>：通过一句话描述即可生成 10 秒视频</li>
+<li><strong>草稿管理</strong>：生成的视频会自动保存为草稿，用户可选择下载到本地或公开发布到平台</li>
+<li><strong>Cameo 功能</strong>：扫描 3D 人脸并克隆音色，创建个人数字分身，供 AI 在视频生成时使用</li>
+<li><strong>权限控制</strong>：Cameo 支持灵活的权限设置，保护用户隐私</li>
+<li><strong>社交互动</strong>：生成视频时，通过 @ 可引用其他用户的 Cameo。例如 <code>@sama</code> 可让 OpenAI CEO 直接出现在你的视频中，实现创意联动</li>
+</ul>
+<h2 id="智谱-GLM-4-6：对齐-Claude-Sonnet-4"><a href="#智谱-GLM-4-6：对齐-Claude-Sonnet-4" class="headerlink" title="智谱 GLM-4.6：对齐 Claude Sonnet 4"></a>智谱 GLM-4.6：对齐 Claude Sonnet 4</h2><p>智谱 AI 更新了旗舰模型 GLM-4.6，在多个维度实现了显著提升。</p>
+<h3 id="核心亮点-1"><a href="#核心亮点-1" class="headerlink" title="核心亮点"></a>核心亮点</h3><p><strong>代码能力大幅提升</strong></p>
+<ul>
+<li>较 GLM-4.5 提升了 27%</li>
+<li>在公开基准与真实编程任务中，代码能力对齐 Claude Sonnet 4</li>
+</ul>
+<p><strong>上下文窗口扩展</strong></p>
+<ul>
+<li>从 128K 提升到 200K</li>
+<li>能更好地处理复杂代码项目和需要长程记忆的智能体任务</li>
+</ul>
+<p><strong>推理能力增强</strong></p>
+<ul>
+<li>支持在推理过程中调用工具</li>
+<li>多步骤推理更加稳定可靠</li>
+</ul>
+<p><strong>写作与交互优化</strong></p>
+<ul>
+<li>搜索能力、写作能力增强</li>
+<li>写作风格和可读性更贴近人类偏好</li>
+<li>在角色扮演等场景下表现更自然</li>
+</ul>
+<h3 id="Benchmark-对比"><a href="#Benchmark-对比" class="headerlink" title="Benchmark 对比"></a>Benchmark 对比</h3><p><img src="https://img.nep.me/i/2025/10/01/oct-glm.webp" alt="GLM-4.6 性能对比"></p>
+<p><strong>官方文档</strong>：<a href="https://docs.bigmodel.cn/cn/guide/models/text/glm-4.6">https://docs.bigmodel.cn/cn/guide/models/text/glm-4.6</a><br><strong>在线体验</strong>：<a href="https://z.ai/">https://z.ai</a></p>
+<hr>
+<p>这次四家公司的集中发布，展现了 AI 大模型领域的激烈竞争与快速进步。从降价到性能提升，从代码生成到视频创作，AI 技术正在加速渗透到各个应用场景中。</p>
+]]></content>
+      <categories>
+        <category>资讯</category>
+      </categories>
+      <tags>
+        <tag>AI</tag>
+        <tag>大模型</tag>
+        <tag>DeepSeek</tag>
+        <tag>Claude</tag>
+        <tag>Claude Code</tag>
+        <tag>OpenAI</tag>
+        <tag>智谱AI</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>将博客主题更换为安知鱼</title>
     <url>/post/change-hexo-theme-to-anzhiyu.html</url>
     <content><![CDATA[<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>Hexo 的 Butteryfly 主题用的久了，感觉有些不够精致，之前有看见别人用过安知鱼的主题，是在 Butteryfly 基础上修改的，看起来感觉非常的不错的。</p>
@@ -1242,139 +1126,119 @@
       </tags>
   </entry>
   <entry>
-    <title>普通人掘金互联网：独立开发起步指南</title>
-    <url>/post/how-to-make-money-from-internet.html</url>
-    <content><![CDATA[<p>你是否也曾羡慕那些在社交媒体上“透明化”分享收入、靠个人项目实现财务自由的独立开发者？看到他们动辄上千美金的月收入，你或许会觉得那是一个难以达成的目标。</p>
-<p>但事实是，成功的独立开发并非天才的专属游戏，它背后有一套普通人也能学习和实践的方法论。成功的关键，往往不在于一个惊世骇俗的“天才想法”，而在于<strong>正确的策略和持续的行动</strong>。</p>
-<p>本文将为你铺开一张务实、低成本的独立开发路径图，旨在帮助每一个有想法的普通人，从零到一，开启自己的互联网掘金之路。</p>
-<p>即便不懂技术也没有关系，AI 的发展如火如荼，各种编程助手不断涌现，在 AI 时代，人人都可以是产品经理。</p>
-<h2 id="站在巨人的肩膀上：选择成熟的技术栈"><a href="#站在巨人的肩膀上：选择成熟的技术栈" class="headerlink" title="站在巨人的肩膀上：选择成熟的技术栈"></a>站在巨人的肩膀上：选择成熟的技术栈</h2><p>在选择开发语言和框架时，一个常见的误区是追求”未来趋势”，尝试自己不熟悉但看似前沿的新语言或框架，结果效率低、踩坑多、没人可问。</p>
-<p><strong>最佳策略是：选择当下的热门开发语言</strong> ，这意味着：</p>
+    <title>使用 VitePress 轻松搭建一个简单的导航站</title>
+    <url>/post/build-nav-site-with-vitepress.html</url>
+    <content><![CDATA[<p>在日常工作和学习中，我们经常会收集各种有用的网站链接，从开发工具、技术文档到实用的在线服务。随着收藏的网站越来越多，如何高效地管理和快速访问这些资源成了一个问题。</p>
+<p>今天我们就来使用 VitePress 搭建一个简洁、美观且高度可定制的个人导航站，让你的常用网站井井有条，随时可达。</p>
+<p>导航将基于 GitHub 的开源项目： <a href="https://github.com/maomao1996/vitepress-nav-template">vitepress-nav-template</a></p>
+<h2 id="预览"><a href="#预览" class="headerlink" title="预览"></a>预览</h2><p>在开始之前，可以访问下面的网站预览一下效果：</p>
 <ul>
-<li><strong>庞大的开发者社区：</strong> 以 JavaScript（Node.js）、Python、Java 等为例，这些语言的用户遍布全球，每天都有无数人面对并解决类似的技术问题。遇到 bug 时，你很可能只需搜索几分钟，就能找到解决方案。</li>
-<li><strong>成熟的生态与解决方案：</strong> 热门语言意味着有丰富的第三方库、框架和工具链——无论是数据库操作、身份验证、支付集成还是部署运维，都可能有现成的、经过验证的解决方案可以直接套用。</li>
-<li><strong>丰富的学习资源：</strong> 从官方文档到技术博客、从视频课程到社区问答，成熟语言的学习路径极其清晰，你可以用最少的时间填补知识空白，而不是陷入信息荒漠。</li>
+<li><a href="https://bookmarks.ooo.run/">O’s Bookmarks</a> </li>
+<li><a href="https://fe-nav.netlify.app/nav/">茂茂物语 - 前端导航</a></li>
 </ul>
-<p>比如 <strong>Web应用全栈</strong> 可以选择：</p>
+<h2 id="为什么选择-VitePress？"><a href="#为什么选择-VitePress？" class="headerlink" title="为什么选择 VitePress？"></a>为什么选择 VitePress？</h2><p>相比于传统的导航站解决方案，<strong>vitepress-nav-template</strong> 基于 VitePress 构建，具有以下优势：</p>
 <ul>
-<li><strong>前端：</strong> React&#x2F;Vue.js + TailwindCSS</li>
-<li><strong>全栈框架：</strong> Next.js 或 Nuxt.js</li>
-<li><strong>后端服务：</strong> Supabase </li>
-<li><strong>部署：</strong> Vercel </li>
-<li><strong>支付：</strong> Stripe</li>
+<li><strong>轻量快速</strong>：基于 Vite 构建，开发体验流畅，构建速度极快</li>
+<li><strong>部署简单</strong>：静态站点，可轻松部署到 GitHub Pages、Netlify 等平台</li>
+<li><strong>响应式设计</strong>：支持移动端，随时随地访问你的导航站</li>
 </ul>
-<h2 id="第一步：成功始于微小——快速推出产品"><a href="#第一步：成功始于微小——快速推出产品" class="headerlink" title="第一步：成功始于微小——快速推出产品"></a>第一步：成功始于微小——快速推出产品</h2><p>独立开发者最大的敌人就是 “过度思考” 和 “追求完美” 。因此我们必须在起点就摆正心态。</p>
-<h3 id="1-快速行动：用“预览版”代替“完美版”"><a href="#1-快速行动：用“预览版”代替“完美版”" class="headerlink" title="1. 快速行动：用“预览版”代替“完美版”"></a>1. 快速行动：用“预览版”代替“完美版”</h3><p>许多项目胎死腹中，就是因为我们总想一步到位，一口气做出一个功能齐全的“完美产品”。</p>
-<p>推荐第一步是先构建一个 <strong>MVP (Minimum Viable Product)</strong> 最小可行产品，推向市场。</p>
-<p>MVP 不是一个简陋的半成品，它是 <strong>“能验证核心价值的最小功能集”</strong> 。只做最核心的 1-2 个功能，让用户能体验到产品的特色。例如，一个笔记软件的 MVP，也许只是一个能在线保存文本的网页，而不是一上来就支持 Markdown、多端同步和文件夹管理。</p>
-<p>推出 MVP 产品可以帮助我们获取用户反馈，根据反馈迭代功能以及调整开发方向。 </p>
-<p><strong>行动指南：</strong> 设定一个极短的开发周期（比如 1-2 周），强制自己上线一个可供访问的预览版。这会让你立刻从“思考者”转变为“行动者”。</p>
+<p>不足之处就是数据都保存在一个文件内，编辑时不太直观。</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>安装 <strong>vitepress-nav-template</strong> 非常的简单，我们只需要使用 <code>git clone</code> 一下这个项目即可</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/maomao1996/vitepress-nav-template.git my-nav</span><br></pre></td></tr></table></figure>
+
 <blockquote>
-<p><strong>案例分享：</strong> <a href="https://linktr.ee/">Linktree</a> 的创始人最初就是用简单的 HTML&#x2F;CSS 搭建了一个”链接聚合页面”，如今估值超过10亿美金。技术简单并不妨碍商业成功。</p>
+<p>如果希望使用 GitHub (GitHub Pages) 可以在 GitHub 项目页面上直接点击 <code>Use this template</code> &gt; <code>Create a new repository</code><br>然后再 clone 自己的 Repo 到本地</p>
 </blockquote>
-<h3 id="2-拥抱小想法：在“利基市场”里发现金矿"><a href="#2-拥抱小想法：在“利基市场”里发现金矿" class="headerlink" title="2. 拥抱小想法：在“利基市场”里发现金矿"></a>2. 拥抱小想法：在“利基市场”里发现金矿</h3><p>别让“这个想法不够宏大”扼杀你的项目。大多数成功的独立开发项目，都始于解决一个极其微小、具体的痛点。比如一个“图片压缩工具”、“简历模板生成器”或“特定领域的资讯聚合器”。</p>
-<p>小想法往往对应着一个服务不足的**利基市场 (Niche Market)**。这里竞争小，用户需求明确，你更容易获得第一批忠实用户和早期收入。</p>
+<p>进入文件夹，安装依赖后，即可运行本地预览</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 进入项目文件夹</span></span><br><span class="line"><span class="built_in">cd</span> my-nav</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装依赖</span></span><br><span class="line">pnpm install </span><br><span class="line"></span><br><span class="line"><span class="comment"># 运行预览</span></span><br><span class="line">pnpm dev</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img.nep.me/i/2025/08/23/vitepress-nav-pnpm-dev.webp" alt="vitepress-nav-pnpm-dev.png"></p>
+<p>第一次运行时会显示一些依赖报错，这并不影响我们的使用，可以忽略。</p>
+<p>然后我们访问 <a href="http://localhost:8732/">http://localhost:8732/</a> 即可进行预览，默认是首页界面，点击前端导航既可以打开导航页面 <a href="http://localhost:8732/nav/">http://localhost:8732/nav/</a></p>
+<p><img src="https://img.nep.me/i/2025/08/23/vitepress-nav-prevew.webp" alt="vitepress-nav-prevew.png"></p>
+<p>访问后可以发现网站已经自带了一些数据，我们需要自己进行修改</p>
+<h2 id="更新内容"><a href="#更新内容" class="headerlink" title="更新内容"></a>更新内容</h2><p>如果你不熟悉 VitePress ，那么需要先了解一下文件结构</p>
+<p>在 VS Code 左侧的资源管理器查看文件，我们需要关注的是 <code>docs</code> 文件夹：</p>
 <blockquote>
-<p><strong>成功案例：</strong> <a href="https://jsonformatter.org/">JSON Formatter</a> 这个简单的在线工具，每月有超过100万访问量，仅靠广告就能获得可观收入。</p>
+<p>VitePress 会将对应的 <code>filename.md</code> 编译为 <code>filename.html</code></p>
 </blockquote>
-<p><strong>行动指南：</strong> 建立一个你自己的”想法备忘录”，随时记录那些一闪而过的、看似不起眼的需求。它们是未来项目的宝贵种子。</p>
-<h2 id="第二步：实践出真知——零成本启动你的项目"><a href="#第二步：实践出真知——零成本启动你的项目" class="headerlink" title="第二步：实践出真知——零成本启动你的项目"></a>第二步：实践出真知——零成本启动你的项目</h2><p>在验证市场之前，每一分钱都要花在刀刃上。幸运的是，我们处在一个拥有大量免费“神级”服务的时代。</p>
-<h3 id="1-善用免费托管服务"><a href="#1-善用免费托管服务" class="headerlink" title="1. 善用免费托管服务"></a>1. 善用免费托管服务</h3><ul>
-<li><strong>前端&#x2F;全栈托管：</strong> <strong>Vercel</strong> 和 <strong>Netlify</strong> 是托管现代前端框架（如 Next.js）的绝佳选择，它们提供免费的 CI&#x2F;CD，每次代码提交都能自动部署，极大提升效率。</li>
-<li><strong>静态页面托管</strong> 纯静态的网站可以选择使用 <strong>Github Pages</strong> 或是 <strong>Cloudflare Pages</strong> 托管，Cloudflare 的 Workers 也提供了一个免费的 Serverless 计算环境，足以支撑轻量级后端。</li>
-<li><strong>后端&#x2F;数据库：</strong> <strong>Supabase</strong> 或 <strong>Firebase</strong> 这类 BaaS (后端即服务)平台，免费提供了数据库、用户认证、文件存储等功能，让不懂后端的开发者也能快速构建功能完整的应用。</li>
-</ul>
-<h3 id="2-让人工智能成为你的效率放大器"><a href="#2-让人工智能成为你的效率放大器" class="headerlink" title="2. 让人工智能成为你的效率放大器"></a>2. 让人工智能成为你的效率放大器</h3><p>AI 工具是“超级个体”的战斗力倍增器。</p>
 <ul>
-<li><strong>编码助手：</strong> <strong>Claude Code</strong> 、或 <strong>Cursor</strong> 能显著提升你的编码速度，帮你解决疑难杂症。</li>
-<li><strong>内容与设计：</strong> 使用 <strong>ChatGPT&#x2F;Gemini</strong> 生成营销文案、产品介绍；使用 <strong>Midjourney&#x2F;Canva AI</strong> 生成 Logo、图标和宣传图，轻松解决设计短板。</li>
+<li><strong>docs&#x2F;.vitepress&#x2F;</strong> : 站点配置文件夹</li>
+<li><strong>docs&#x2F;nav&#x2F;</strong> : 导航页的文件夹</li>
+<li><strong>docs&#x2F;public&#x2F;</strong> : 存放图标静态资源</li>
+<li><strong>docs&#x2F;index.md</strong> : 模板默认的首页内容，<strong>test.md</strong> 可以直接删除</li>
 </ul>
-<h2 id="第三步：增长飞轮——让世界发现你的价值"><a href="#第三步：增长飞轮——让世界发现你的价值" class="headerlink" title="第三步：增长飞轮——让世界发现你的价值"></a>第三步：增长飞轮——让世界发现你的价值</h2><p>产品造出来只是第一步，如何让目标用户知道并使用它，是决定生死的关键。</p>
-<h3 id="策略一-E-人版-公开构建-Build-in-Public"><a href="#策略一-E-人版-公开构建-Build-in-Public" class="headerlink" title="策略一 (E 人版): 公开构建 (Build in Public)"></a>策略一 (E 人版): 公开构建 (Build in Public)</h3><p>这不仅是营销，更是一种产品开发哲学。你可以在社交媒体（如 X&#x2F;Twitter、即刻）或个人博客上，公开分享你的：</p>
-<ul>
-<li><strong>开发进度</strong>：“今天我解决了 XX Bug。”</li>
-<li><strong>思考过程</strong>：“我在纠结 A、B 两个功能，大家觉得哪个更重要？”</li>
-<li><strong>数据指标</strong>：“上线第一周，获得了 50 个注册用户！”</li>
-<li><strong>失败与教训</strong>：“这次营销尝试失败了，复盘一下原因……”</li>
-</ul>
-<p>这种“透明化”能帮你建立信任、打造社区、获得即时反馈，并快速建立个人品牌。</p>
-<p>在积累了一定的粉丝后，可以引流到自己私人社群，尤其推荐 Discord 的社群，这可以让消息的推送从被动的社交平台推送转变为自己的主动分享。</p>
-<blockquote>
-<p><strong>成功案例：</strong> <a href="https://x.com/indie_maker_fox">Indie Maker Fox</a> 在 Twiiter 上通过 Build in Pubilc 成功推广了自己的 mkdir 与 mksaas 品牌，并获得了超过 10 万美元的收入。</p>
-</blockquote>
-<h3 id="策略二-I-人版-内容为王-Content-is-King"><a href="#策略二-I-人版-内容为王-Content-is-King" class="headerlink" title="策略二 (I 人版): 内容为王 (Content is King)"></a>策略二 (I 人版): 内容为王 (Content is King)</h3><p>如果你不善于抛头露面，内容营销是你的最佳选择。</p>
-<ul>
-<li><strong>写博客&#x2F;文档：</strong> 围绕你的产品所解决的问题，撰写高质量的博客文章。例如，你做的是一个图片压缩工具，就可以写一篇“10个提升网站加载速度的技巧”，并在文章中自然地引流到你的产品。</li>
-<li><strong>SEO (搜索引擎优化)：</strong> 学习基础的 SEO 知识，确保你的网站和内容能被 Google 等搜索引擎收录并获得好的排名。这是获取长期、免费、稳定流量的最佳方式。</li>
-</ul>
-<blockquote>
-<p>可以查看<code>Ahref</code>的 <a href="https://ahrefs.com/zh/seo">SEO 新手指南</a> 进行学习</p>
-</blockquote>
-<h3 id="构建产品矩阵"><a href="#构建产品矩阵" class="headerlink" title="构建产品矩阵"></a>构建产品矩阵</h3><p>当你有了一个成功的项目 A 后，可以在 A 的网站上自然地推广你的新项目 B，实现流量互导，构建自己的产品生态。  </p>
-<p>又或是在自己的不同网站中进行相互链接，有时，一个小而精致的独立工具页面，也能为你的主项目带来源源不断的新用户。</p>
-<h3 id="如何零成本托管小工具网站？"><a href="#如何零成本托管小工具网站？" class="headerlink" title="如何零成本托管小工具网站？"></a>如何零成本托管小工具网站？</h3><p>对于轻量级的工具网站，完全可以实现零成本或极低成本运营：</p>
-<p><strong>免费托管方案：</strong></p>
-<ul>
-<li><strong>Vercel&#x2F;Netlify：</strong> 提供慷慨的免费配额，支持自动部署和 CDN 加速</li>
-<li><strong>Cloudflare Pages：</strong> 无限带宽，全球 CDN，构建时间充足</li>
-<li><strong>GitHub Pages：</strong> 适合静态网站，与 GitHub 无缝集成</li>
-</ul>
-<p><strong>成本分析：</strong><br>拥有一个属于自己的、专业的域名是建立品牌和信任的关键，这是唯一的硬性成本支出，通常域名的成本价格在 20 美元&#x2F;年以内，以最常见的 <code>.com</code> 域名为例，年费约 $10-12（Cloudflare 续费价 $10.44&#x2F;年）。</p>
-<p>如果选择通过 Google AdSense 变现，以保守的 $1 CPM (Cost Per Mille，千次展示成本) 计算：</p>
-<ul>
-<li>需要 20000 年访问量即可回本</li>
-<li>平均每月仅需 1700 次访问</li>
-<li>考虑到广告屏蔽率约 25-30%，实际需要月访问量约 2200 次。<blockquote>
-<p><code>.com</code> 域名仅需 1200 次月访问量</p>
-</blockquote>
+<p><img src="https://img.nep.me/i/2025/08/23/vitepress-nav-files.webp" alt="vitepress-nav-files.png"></p>
+<h3 id="更改站点数据"><a href="#更改站点数据" class="headerlink" title="更改站点数据"></a>更改站点数据</h3><p>在 <code>docs/.vitepress/config.ts</code>  配置文件中包含了站点的基本配置</p>
+<figure class="highlight ts"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="title function_">defineConfig</span>(&#123; </span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="comment">// 修改站点名称</span></span><br><span class="line">    <span class="attr">title</span>: <span class="string">&#x27;站点名称&#x27;</span>,</span><br><span class="line">    <span class="comment">// 修改站点描述</span></span><br><span class="line">    <span class="attr">description</span>: <span class="string">&#x27;站点的描述&#x27;</span>,</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="comment">// 站点右上角的 Github 图标与链接</span></span><br><span class="line">    <span class="attr">socialLinks</span>: [&#123; <span class="attr">icon</span>: <span class="string">&#x27;github&#x27;</span>, <span class="attr">link</span>: <span class="string">&#x27;https://github.com/maomao1996/vitepress-nav-template&#x27;</span> &#125;],</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 修改底部的 footer 的信息</span></span><br><span class="line">    <span class="attr">footer</span>: &#123;</span><br><span class="line">      <span class="attr">message</span>: <span class="string">&#x27;如有转载或 CV 的请标注本站原文地址&#x27;</span>,</span><br><span class="line">      <span class="attr">copyright</span>: <span class="string">&#x27;Copyright © 2019-present maomao&#x27;</span>,</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*** 自定义配置 ***/</span></span><br><span class="line">    <span class="comment">// 访客统计数据，我们可以注释掉</span></span><br><span class="line">    <span class="comment">// visitor: &#123;</span></span><br><span class="line">    <span class="comment">//   badgeId: &#x27;maomao1996.vitepress-nav-template&#x27;,</span></span><br><span class="line">    <span class="comment">// &#125;,</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// giscus 评论的设置</span></span><br><span class="line">    <span class="attr">comment</span>: &#123;</span><br><span class="line">        <span class="comment">//..</span></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="修改顶部导航栏"><a href="#修改顶部导航栏" class="headerlink" title="修改顶部导航栏"></a>修改顶部导航栏</h3><p>站点顶部导航的栏的数据保存在 <strong>docs&#x2F;.vitepress&#x2F;configs&#x2F;nav.ts</strong></p>
+<figure class="highlight ts"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="keyword">type</span> &#123; <span class="title class_">DefaultTheme</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;vitepress&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="attr">nav</span>: <span class="title class_">DefaultTheme</span>.<span class="property">Config</span>[<span class="string">&#x27;nav&#x27;</span>] = [</span><br><span class="line">  &#123; <span class="attr">text</span>: <span class="string">&#x27;Bookmarks&#x27;</span>, <span class="attr">link</span>: <span class="string">&#x27;/&#x27;</span> &#125;,</span><br><span class="line">  &#123; </span><br><span class="line">    <span class="attr">text</span>: <span class="string">&#x27;O\&#x27;s World&#x27;</span>, </span><br><span class="line">    <span class="attr">link</span>: <span class="string">&#x27;https://ooo.run&#x27;</span> </span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// 按照需求修改添加</span></span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<h3 id="修改导航数据"><a href="#修改导航数据" class="headerlink" title="修改导航数据"></a>修改导航数据</h3><p>导航页面的数据都保存在 <strong>docs&#x2F;nav&#x2F;</strong> 文件夹内，我们需要修改的是 <code>data.ts</code> 内的内容</p>
+<h4 id="文件结构"><a href="#文件结构" class="headerlink" title="文件结构"></a>文件结构</h4><p>导航数据采用分类结构，每个分类包含标题和导航项目列表：</p>
+<figure class="highlight ts"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="attr">NAV_DATA</span>: <span class="title class_">NavData</span>[] = [</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">title</span>: <span class="string">&#x27;分类标题&#x27;</span>,</span><br><span class="line">    <span class="attr">items</span>: [</span><br><span class="line">      <span class="comment">// 导航项目列表</span></span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<h4 id="添加新分类"><a href="#添加新分类" class="headerlink" title="添加新分类"></a>添加新分类</h4><p>在 <code>NAV_DATA</code> 中添加新的分类对象：</p>
+<figure class="highlight ts"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">title</span>: <span class="string">&#x27;新分类名称&#x27;</span>,</span><br><span class="line">  <span class="attr">items</span>: [</span><br><span class="line">    &#123; </span><br><span class="line">        <span class="comment">/** 导航 item 1 **/</span> </span><br><span class="line">    &#125;,</span><br><span class="line">    &#123; </span><br><span class="line">        <span class="comment">/** 导航 item 2 **/</span> </span><br><span class="line">    &#125;,</span><br><span class="line">  ],</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="添加导航项目"><a href="#添加导航项目" class="headerlink" title="添加导航项目"></a>添加导航项目</h4><p>在现有分类的 <code>items</code> 中添加新项目：</p>
+<figure class="highlight ts"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">icon</span>: <span class="string">&#x27;https://example.com/favicon.ico&#x27;</span>,  <span class="comment">// 外部图标链接</span></span><br><span class="line">  <span class="attr">title</span>: <span class="string">&#x27;网站标题&#x27;</span>,</span><br><span class="line">  <span class="attr">desc</span>: <span class="string">&#x27;网站描述（可选）&#x27;</span>,</span><br><span class="line">  <span class="attr">link</span>: <span class="string">&#x27;https://example.com&#x27;</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="图标设置"><a href="#图标设置" class="headerlink" title="图标设置"></a>图标设置</h4><ol>
+<li><p>使用外部图标链接</p>
+<figure class="highlight ts"><table><tr><td class="code"><pre><span class="line"><span class="attr">icon</span>: <span class="string">&#x27;https://example.com/favicon.ico&#x27;</span></span><br></pre></td></tr></table></figure>
 </li>
-</ul>
-<p>虽然数字已经降到 1200 次&#x2F;月，但如果没有一定的粉丝，仍然很难在起步阶段实现，这需要我们并实践 SEO 优化，持续进行内容创作，同时不断打磨工具，让它真正解决用户的需求，剩下便是交给时间，保持一些耐心。</p>
-<h2 id="第四步：从流量到收入——变现策略详解"><a href="#第四步：从流量到收入——变现策略详解" class="headerlink" title="第四步：从流量到收入——变现策略详解"></a>第四步：从流量到收入——变现策略详解</h2><p>有了用户和流量，下一步就是将其转化为实际收入。以下是几种经过验证的变现模式：</p>
-<h3 id="订阅制-SaaS"><a href="#订阅制-SaaS" class="headerlink" title="订阅制 (SaaS)"></a>订阅制 (SaaS)</h3><p><strong>适用场景：</strong> 提供持续价值的工具或服务<br><strong>定价策略：</strong> </p>
-<ul>
-<li>免费版：基础功能 + 使用限制</li>
-<li>付费版：$5-50&#x2F;月，解锁全部功能</li>
-<li>企业版：$100+&#x2F;月，支持团队协作</li>
-</ul>
-<blockquote>
-<p><strong>成功案例：</strong> <a href="https://notion.so/">Notion</a> 从$0到$100亿估值，核心就是”免费试用 + 付费订阅”模式。</p>
-</blockquote>
-<h3 id="一次性付费"><a href="#一次性付费" class="headerlink" title="一次性付费"></a>一次性付费</h3><p><strong>适用场景：</strong> 工具类软件、模板、课程<br><strong>定价策略：</strong> $10-200一次性付费<br><strong>优势：</strong> 用户心理负担小，转化率高</p>
-<h3 id="广告收入"><a href="#广告收入" class="headerlink" title="广告收入"></a>广告收入</h3><p><strong>适用场景：</strong> 高流量的免费工具<br><strong>收入预期：</strong> 使用 Google AdSense 每 <strong>1000</strong> 访问量约 $1-5 收入<br><strong>优势：</strong> 用户免费使用，门槛低</p>
-<blockquote>
-<p>想要免费查看网站的访问数据？ 查看：<a href="https://ooo.run/post/website-traffic-cv.html" target="_blank">实用网站：通过 traffic.cv 免费查看网站访客数据</a></p>
-</blockquote>
-<h3 id="联盟营销-推荐佣金"><a href="#联盟营销-推荐佣金" class="headerlink" title="联盟营销&#x2F;推荐佣金"></a>联盟营销&#x2F;推荐佣金</h3><p><strong>适用场景：</strong> 内容型网站、工具推荐<br><strong>收入方式：</strong> 推荐相关产品获得5-50%佣金<br><strong>平台：</strong> Amazon Associates、淘宝联盟等</p>
-<h3 id="混合模式"><a href="#混合模式" class="headerlink" title="混合模式"></a>混合模式</h3><p>大多数成功的独立开发者会同时使用多种变现方式：</p>
-<ul>
-<li>核心付费功能 + 广告收入</li>
-<li>免费工具引流 + 付费高级版</li>
-<li>产品销售 + 咨询服务</li>
-</ul>
-<h2 id="总结：别再等待，从今天开始创造"><a href="#总结：别再等待，从今天开始创造" class="headerlink" title="总结：别再等待，从今天开始创造"></a>总结：别再等待，从今天开始创造</h2><p>回顾一下我们的路径图：<strong>从一个微小的想法开始，利用免费工具快速构建出 MVP，然后通过公开构建或内容营销找到你的第一批用户，最后在验证成功后，考虑付费增长和产品矩阵。</strong></p>
-<p>独立开发之路，始于足下。现在就从你的”想法备忘录”里，挑出一个最简单的，设定一个为期一周的目标，立即动手，发布你的第一个”预览版”吧！</p>
-<p>你未来的故事，从今天开始书写。</p>
-<h2 id="常见问题-FAQ"><a href="#常见问题-FAQ" class="headerlink" title="常见问题 FAQ"></a>常见问题 FAQ</h2><h3 id="Q1-我完全不懂编程，真的可以做独立开发吗？"><a href="#Q1-我完全不懂编程，真的可以做独立开发吗？" class="headerlink" title="Q1: 我完全不懂编程，真的可以做独立开发吗？"></a>Q1: 我完全不懂编程，真的可以做独立开发吗？</h3><p><strong>A:</strong> 绝对可以！现在有很多无代码&#x2F;低代码平台，AI 编程助手也日新月异，技术门槛已经大大降低，非技术背景的人完全可以创建产品。</p>
-<h3 id="Q2-需要多少启动资金？"><a href="#Q2-需要多少启动资金？" class="headerlink" title="Q2: 需要多少启动资金？"></a>Q2: 需要多少启动资金？</h3><p><strong>A:</strong> 几乎为零。域名一年$10-15，其他服务（托管、数据库、支付）都有免费额度足够MVP阶段使用。真正的投入是你的时间和精力。</p>
-<h3 id="Q3-多久能看到收入？"><a href="#Q3-多久能看到收入？" class="headerlink" title="Q3: 多久能看到收入？"></a>Q3: 多久能看到收入？</h3><p><strong>A:</strong> 这因项目而异。简单的工具类产品可能几周就有第一笔收入，复杂的SaaS产品可能需要3-6个月。关键是快速验证市场需求，而不是完美的产品。</p>
-<h3 id="Q4-如果没人使用我的产品怎么办？"><a href="#Q4-如果没人使用我的产品怎么办？" class="headerlink" title="Q4: 如果没人使用我的产品怎么办？"></a>Q4: 如果没人使用我的产品怎么办？</h3><p><strong>A:</strong> 这是正常现象！大多数产品都会经历”无人问津”的阶段。关键是：</p>
-<ol>
-<li>确保你解决了真实存在的问题 </li>
-<li>找到你的目标用户聚集的地方 </li>
-<li>持续改进产品体验。</li>
+<li><p>使用本地图标文件</p>
+<figure class="highlight ts"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 放置在 public/icons/ 目录下</span></span><br><span class="line"><span class="attr">icon</span>: <span class="string">&#x27;/icons/filename.svg&#x27;</span>  </span><br></pre></td></tr></table></figure></li>
 </ol>
-<h3 id="Q5-一个人真的能做出成功的产品吗？"><a href="#Q5-一个人真的能做出成功的产品吗？" class="headerlink" title="Q5: 一个人真的能做出成功的产品吗？"></a>Q5: 一个人真的能做出成功的产品吗？</h3><p><strong>A:</strong> 当然！很多知名产品都是solo开发者创造的：Nomad List（$500K年收入）、Buffer 早期版本 等。关键是专注于核心功能，不要贪多求全。</p>
-<h3 id="Q6-应该做移动App还是网站？"><a href="#Q6-应该做移动App还是网站？" class="headerlink" title="Q6: 应该做移动App还是网站？"></a>Q6: 应该做移动App还是网站？</h3><p><strong>A:</strong> 对于独立开发者，建议先做网站。Web应用开发成本低、迭代速度快、不需要应用商店审核，用户获取也更直接。等产品验证成功后再考虑移动端。</p>
-<h3 id="Q7-竞争太激烈了，还有机会吗？"><a href="#Q7-竞争太激烈了，还有机会吗？" class="headerlink" title="Q7: 竞争太激烈了，还有机会吗？"></a>Q7: 竞争太激烈了，还有机会吗？</h3><p><strong>A:</strong> 永远有机会！市场足够大，关键是找到细分需求。即使是看似饱和的市场，也总有服务不好的用户群体。专注于特定用户群体，做好用户体验，就能立足。</p>
+<h3 id="访问时直接打开导航页面"><a href="#访问时直接打开导航页面" class="headerlink" title="访问时直接打开导航页面"></a>访问时直接打开导航页面</h3><p>我们只需要把 <strong>docs&#x2F;nav&#x2F;</strong> 中文三个文件复制到 <strong>docs&#x2F;</strong> 下面即可</p>
+<p>移动文件后，我们需要更新一些导入文件的路径，在 <code>data.ts</code> 将第一行</p>
+<figure class="highlight ts"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="keyword">type</span> &#123; <span class="title class_">NavLink</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;../.vitepress/theme/types&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>修改为</p>
+<figure class="highlight ts"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="keyword">type</span> &#123; <span class="title class_">NavLink</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./.vitepress/theme/types&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="关闭评论"><a href="#关闭评论" class="headerlink" title="关闭评论"></a>关闭评论</h3><p>目前评论是使用作者的 giscus 数据，可以在 <code>docs/.vitepress/config.ts</code> 中更换为自己的部分，如何不需要评论可以直接注释掉 comment 部分</p>
+<figure class="highlight ts"><table><tr><td class="code"><pre><span class="line"><span class="comment">// comment: &#123;</span></span><br><span class="line"><span class="comment">//   repo: &#x27;maomao1996/vitepress-nav-template&#x27;,</span></span><br><span class="line"><span class="comment">//   repoId: &#x27;R_kgDOJC09Jg&#x27;,</span></span><br><span class="line"><span class="comment">//   category: &#x27;Announcements&#x27;,</span></span><br><span class="line"><span class="comment">//   categoryId: &#x27;DIC_kwDOJC09Js4Cekn0&#x27;,</span></span><br><span class="line"><span class="comment">// &#125;,</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="部署至网络"><a href="#部署至网络" class="headerlink" title="部署至网络"></a>部署至网络</h2><h3 id="GitHub-Pages"><a href="#GitHub-Pages" class="headerlink" title="GitHub Pages"></a>GitHub Pages</h3><p>项目已经自带了 github pages 部署脚本 <code>.github/workflows/deploy.yml</code>，推送到 Github 时将自动部署，推送静态站点文件至 <code>gh-pages</code> 分支。</p>
+<blockquote>
+<p>如果你的 GitHub Pages 的域名绑定名额已经被其他项目使用，那么可以使用 <code>https://your-project.github.io/project</code> 访问另外的项目的 <code>gh-pages</code></p>
+</blockquote>
+<h3 id="Cloudflare-Pages"><a href="#Cloudflare-Pages" class="headerlink" title="Cloudflare Pages"></a>Cloudflare Pages</h3><p>如果你不想使用 GitHub 或是更喜欢使用 Cloudflare 的服务，也可以选择部署至 Cloudflare Pages。</p>
+<p>下面将介绍使用命令或是手动上传文件进行部署的方式。</p>
+<h4 id="创建-Pages-项目"><a href="#创建-Pages-项目" class="headerlink" title="创建 Pages 项目"></a>创建 Pages 项目</h4><p>访问 Cloudflare 的 <a href="https://dash.cloudflare.com/">Dashboard</a>，按照下面的步骤操作</p>
+<ul>
+<li>首先点击左侧的 <strong>计算 (Workers)</strong> &gt; <strong>Workers 和 Pages</strong></li>
+<li>点击 <strong>创建</strong> 按钮后，选择 <strong>Pages</strong>，再选择 <strong>手动上传</strong> </li>
+<li>在新的页面设置 <strong>项目名称</strong></li>
+</ul>
+<h4 id="生成静态资源"><a href="#生成静态资源" class="headerlink" title="生成静态资源"></a>生成静态资源</h4><p>在上传资源之前，我们需要先生成导航网站的静态资源，运行下面命令即可</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pnpm build</span><br></pre></td></tr></table></figure>
+
+<p>网站的静态资源将生成在 <code>dist/</code> 目录下面，最简单就是手动打包为 zip 然后在部署界面上传，当然这太不优雅了。</p>
+<h4 id="部署至-Pages"><a href="#部署至-Pages" class="headerlink" title="部署至 Pages"></a>部署至 Pages</h4><p>我们可以使用 Cloudflare 的 wrangler ，只需要执行下面的命令</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pnpm add -D wrangler@latest</span><br></pre></td></tr></table></figure>
+
+<p>创建部署配置文件，在根文件夹下创建 <code>wrangler.toml</code>，填入下面的内容 </p>
+<figure class="highlight toml"><table><tr><td class="code"><pre><span class="line"><span class="attr">name</span> = <span class="string">&quot;your-project-name&quot;</span></span><br><span class="line"><span class="attr">pages_build_output_dir</span> = <span class="string">&quot;./dist&quot;</span></span><br><span class="line"><span class="attr">compatibility_date</span> = <span class="string">&quot;2025-08-01&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>然后运行</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npx wrangler pages deploy</span><br></pre></td></tr></table></figure>
+
+<p>第一次运行时需要进行认证授权，在浏览器内访问链接后点击授权即可。</p>
+<p>然后即可完成部署。</p>
+<p>根据命令提示，访问 <code>pages.dev</code> 域名即可查看网站。</p>
+<h4 id="绑定自定义域名"><a href="#绑定自定义域名" class="headerlink" title="绑定自定义域名"></a>绑定自定义域名</h4><p>在 Cloudflare <strong>Dashboard</strong> 打开 <strong>Workers 和 Pages</strong>，再点击 <strong>自定义域</strong> 即可进行添加。</p>
+<p>如果你的域名托管在 Cloudflare ，只需要输入对应的域名即可。 </p>
 ]]></content>
       <categories>
-        <category>笔记</category>
+        <category>教程</category>
       </categories>
       <tags>
-        <tag>独立开发</tag>
-        <tag>个人项目</tag>
-        <tag>副业</tag>
+        <tag>导航</tag>
+        <tag>VitePress</tag>
+        <tag>Self-hosted</tag>
       </tags>
   </entry>
   <entry>
@@ -1624,6 +1488,142 @@
       </tags>
   </entry>
   <entry>
+    <title>普通人掘金互联网：独立开发起步指南</title>
+    <url>/post/how-to-make-money-from-internet.html</url>
+    <content><![CDATA[<p>你是否也曾羡慕那些在社交媒体上“透明化”分享收入、靠个人项目实现财务自由的独立开发者？看到他们动辄上千美金的月收入，你或许会觉得那是一个难以达成的目标。</p>
+<p>但事实是，成功的独立开发并非天才的专属游戏，它背后有一套普通人也能学习和实践的方法论。成功的关键，往往不在于一个惊世骇俗的“天才想法”，而在于<strong>正确的策略和持续的行动</strong>。</p>
+<p>本文将为你铺开一张务实、低成本的独立开发路径图，旨在帮助每一个有想法的普通人，从零到一，开启自己的互联网掘金之路。</p>
+<p>即便不懂技术也没有关系，AI 的发展如火如荼，各种编程助手不断涌现，在 AI 时代，人人都可以是产品经理。</p>
+<h2 id="站在巨人的肩膀上：选择成熟的技术栈"><a href="#站在巨人的肩膀上：选择成熟的技术栈" class="headerlink" title="站在巨人的肩膀上：选择成熟的技术栈"></a>站在巨人的肩膀上：选择成熟的技术栈</h2><p>在选择开发语言和框架时，一个常见的误区是追求”未来趋势”，尝试自己不熟悉但看似前沿的新语言或框架，结果效率低、踩坑多、没人可问。</p>
+<p><strong>最佳策略是：选择当下的热门开发语言</strong> ，这意味着：</p>
+<ul>
+<li><strong>庞大的开发者社区：</strong> 以 JavaScript（Node.js）、Python、Java 等为例，这些语言的用户遍布全球，每天都有无数人面对并解决类似的技术问题。遇到 bug 时，你很可能只需搜索几分钟，就能找到解决方案。</li>
+<li><strong>成熟的生态与解决方案：</strong> 热门语言意味着有丰富的第三方库、框架和工具链——无论是数据库操作、身份验证、支付集成还是部署运维，都可能有现成的、经过验证的解决方案可以直接套用。</li>
+<li><strong>丰富的学习资源：</strong> 从官方文档到技术博客、从视频课程到社区问答，成熟语言的学习路径极其清晰，你可以用最少的时间填补知识空白，而不是陷入信息荒漠。</li>
+</ul>
+<p>比如 <strong>Web应用全栈</strong> 可以选择：</p>
+<ul>
+<li><strong>前端：</strong> React&#x2F;Vue.js + TailwindCSS</li>
+<li><strong>全栈框架：</strong> Next.js 或 Nuxt.js</li>
+<li><strong>后端服务：</strong> Supabase </li>
+<li><strong>部署：</strong> Vercel </li>
+<li><strong>支付：</strong> Stripe</li>
+</ul>
+<h2 id="第一步：成功始于微小——快速推出产品"><a href="#第一步：成功始于微小——快速推出产品" class="headerlink" title="第一步：成功始于微小——快速推出产品"></a>第一步：成功始于微小——快速推出产品</h2><p>独立开发者最大的敌人就是 “过度思考” 和 “追求完美” 。因此我们必须在起点就摆正心态。</p>
+<h3 id="1-快速行动：用“预览版”代替“完美版”"><a href="#1-快速行动：用“预览版”代替“完美版”" class="headerlink" title="1. 快速行动：用“预览版”代替“完美版”"></a>1. 快速行动：用“预览版”代替“完美版”</h3><p>许多项目胎死腹中，就是因为我们总想一步到位，一口气做出一个功能齐全的“完美产品”。</p>
+<p>推荐第一步是先构建一个 <strong>MVP (Minimum Viable Product)</strong> 最小可行产品，推向市场。</p>
+<p>MVP 不是一个简陋的半成品，它是 <strong>“能验证核心价值的最小功能集”</strong> 。只做最核心的 1-2 个功能，让用户能体验到产品的特色。例如，一个笔记软件的 MVP，也许只是一个能在线保存文本的网页，而不是一上来就支持 Markdown、多端同步和文件夹管理。</p>
+<p>推出 MVP 产品可以帮助我们获取用户反馈，根据反馈迭代功能以及调整开发方向。 </p>
+<p><strong>行动指南：</strong> 设定一个极短的开发周期（比如 1-2 周），强制自己上线一个可供访问的预览版。这会让你立刻从“思考者”转变为“行动者”。</p>
+<blockquote>
+<p><strong>案例分享：</strong> <a href="https://linktr.ee/">Linktree</a> 的创始人最初就是用简单的 HTML&#x2F;CSS 搭建了一个”链接聚合页面”，如今估值超过10亿美金。技术简单并不妨碍商业成功。</p>
+</blockquote>
+<h3 id="2-拥抱小想法：在“利基市场”里发现金矿"><a href="#2-拥抱小想法：在“利基市场”里发现金矿" class="headerlink" title="2. 拥抱小想法：在“利基市场”里发现金矿"></a>2. 拥抱小想法：在“利基市场”里发现金矿</h3><p>别让“这个想法不够宏大”扼杀你的项目。大多数成功的独立开发项目，都始于解决一个极其微小、具体的痛点。比如一个“图片压缩工具”、“简历模板生成器”或“特定领域的资讯聚合器”。</p>
+<p>小想法往往对应着一个服务不足的**利基市场 (Niche Market)**。这里竞争小，用户需求明确，你更容易获得第一批忠实用户和早期收入。</p>
+<blockquote>
+<p><strong>成功案例：</strong> <a href="https://jsonformatter.org/">JSON Formatter</a> 这个简单的在线工具，每月有超过100万访问量，仅靠广告就能获得可观收入。</p>
+</blockquote>
+<p><strong>行动指南：</strong> 建立一个你自己的”想法备忘录”，随时记录那些一闪而过的、看似不起眼的需求。它们是未来项目的宝贵种子。</p>
+<h2 id="第二步：实践出真知——零成本启动你的项目"><a href="#第二步：实践出真知——零成本启动你的项目" class="headerlink" title="第二步：实践出真知——零成本启动你的项目"></a>第二步：实践出真知——零成本启动你的项目</h2><p>在验证市场之前，每一分钱都要花在刀刃上。幸运的是，我们处在一个拥有大量免费“神级”服务的时代。</p>
+<h3 id="1-善用免费托管服务"><a href="#1-善用免费托管服务" class="headerlink" title="1. 善用免费托管服务"></a>1. 善用免费托管服务</h3><ul>
+<li><strong>前端&#x2F;全栈托管：</strong> <strong>Vercel</strong> 和 <strong>Netlify</strong> 是托管现代前端框架（如 Next.js）的绝佳选择，它们提供免费的 CI&#x2F;CD，每次代码提交都能自动部署，极大提升效率。</li>
+<li><strong>静态页面托管</strong> 纯静态的网站可以选择使用 <strong>Github Pages</strong> 或是 <strong>Cloudflare Pages</strong> 托管，Cloudflare 的 Workers 也提供了一个免费的 Serverless 计算环境，足以支撑轻量级后端。</li>
+<li><strong>后端&#x2F;数据库：</strong> <strong>Supabase</strong> 或 <strong>Firebase</strong> 这类 BaaS (后端即服务)平台，免费提供了数据库、用户认证、文件存储等功能，让不懂后端的开发者也能快速构建功能完整的应用。</li>
+</ul>
+<h3 id="2-让人工智能成为你的效率放大器"><a href="#2-让人工智能成为你的效率放大器" class="headerlink" title="2. 让人工智能成为你的效率放大器"></a>2. 让人工智能成为你的效率放大器</h3><p>AI 工具是“超级个体”的战斗力倍增器。</p>
+<ul>
+<li><strong>编码助手：</strong> <strong>Claude Code</strong> 、或 <strong>Cursor</strong> 能显著提升你的编码速度，帮你解决疑难杂症。</li>
+<li><strong>内容与设计：</strong> 使用 <strong>ChatGPT&#x2F;Gemini</strong> 生成营销文案、产品介绍；使用 <strong>Midjourney&#x2F;Canva AI</strong> 生成 Logo、图标和宣传图，轻松解决设计短板。</li>
+</ul>
+<h2 id="第三步：增长飞轮——让世界发现你的价值"><a href="#第三步：增长飞轮——让世界发现你的价值" class="headerlink" title="第三步：增长飞轮——让世界发现你的价值"></a>第三步：增长飞轮——让世界发现你的价值</h2><p>产品造出来只是第一步，如何让目标用户知道并使用它，是决定生死的关键。</p>
+<h3 id="策略一-E-人版-公开构建-Build-in-Public"><a href="#策略一-E-人版-公开构建-Build-in-Public" class="headerlink" title="策略一 (E 人版): 公开构建 (Build in Public)"></a>策略一 (E 人版): 公开构建 (Build in Public)</h3><p>这不仅是营销，更是一种产品开发哲学。你可以在社交媒体（如 X&#x2F;Twitter、即刻）或个人博客上，公开分享你的：</p>
+<ul>
+<li><strong>开发进度</strong>：“今天我解决了 XX Bug。”</li>
+<li><strong>思考过程</strong>：“我在纠结 A、B 两个功能，大家觉得哪个更重要？”</li>
+<li><strong>数据指标</strong>：“上线第一周，获得了 50 个注册用户！”</li>
+<li><strong>失败与教训</strong>：“这次营销尝试失败了，复盘一下原因……”</li>
+</ul>
+<p>这种“透明化”能帮你建立信任、打造社区、获得即时反馈，并快速建立个人品牌。</p>
+<p>在积累了一定的粉丝后，可以引流到自己私人社群，尤其推荐 Discord 的社群，这可以让消息的推送从被动的社交平台推送转变为自己的主动分享。</p>
+<blockquote>
+<p><strong>成功案例：</strong> <a href="https://x.com/indie_maker_fox">Indie Maker Fox</a> 在 Twiiter 上通过 Build in Pubilc 成功推广了自己的 mkdir 与 mksaas 品牌，并获得了超过 10 万美元的收入。</p>
+</blockquote>
+<h3 id="策略二-I-人版-内容为王-Content-is-King"><a href="#策略二-I-人版-内容为王-Content-is-King" class="headerlink" title="策略二 (I 人版): 内容为王 (Content is King)"></a>策略二 (I 人版): 内容为王 (Content is King)</h3><p>如果你不善于抛头露面，内容营销是你的最佳选择。</p>
+<ul>
+<li><strong>写博客&#x2F;文档：</strong> 围绕你的产品所解决的问题，撰写高质量的博客文章。例如，你做的是一个图片压缩工具，就可以写一篇“10个提升网站加载速度的技巧”，并在文章中自然地引流到你的产品。</li>
+<li><strong>SEO (搜索引擎优化)：</strong> 学习基础的 SEO 知识，确保你的网站和内容能被 Google 等搜索引擎收录并获得好的排名。这是获取长期、免费、稳定流量的最佳方式。</li>
+</ul>
+<blockquote>
+<p>可以查看<code>Ahref</code>的 <a href="https://ahrefs.com/zh/seo">SEO 新手指南</a> 进行学习</p>
+</blockquote>
+<h3 id="构建产品矩阵"><a href="#构建产品矩阵" class="headerlink" title="构建产品矩阵"></a>构建产品矩阵</h3><p>当你有了一个成功的项目 A 后，可以在 A 的网站上自然地推广你的新项目 B，实现流量互导，构建自己的产品生态。  </p>
+<p>又或是在自己的不同网站中进行相互链接，有时，一个小而精致的独立工具页面，也能为你的主项目带来源源不断的新用户。</p>
+<h3 id="如何零成本托管小工具网站？"><a href="#如何零成本托管小工具网站？" class="headerlink" title="如何零成本托管小工具网站？"></a>如何零成本托管小工具网站？</h3><p>对于轻量级的工具网站，完全可以实现零成本或极低成本运营：</p>
+<p><strong>免费托管方案：</strong></p>
+<ul>
+<li><strong>Vercel&#x2F;Netlify：</strong> 提供慷慨的免费配额，支持自动部署和 CDN 加速</li>
+<li><strong>Cloudflare Pages：</strong> 无限带宽，全球 CDN，构建时间充足</li>
+<li><strong>GitHub Pages：</strong> 适合静态网站，与 GitHub 无缝集成</li>
+</ul>
+<p><strong>成本分析：</strong><br>拥有一个属于自己的、专业的域名是建立品牌和信任的关键，这是唯一的硬性成本支出，通常域名的成本价格在 20 美元&#x2F;年以内，以最常见的 <code>.com</code> 域名为例，年费约 $10-12（Cloudflare 续费价 $10.44&#x2F;年）。</p>
+<p>如果选择通过 Google AdSense 变现，以保守的 $1 CPM (Cost Per Mille，千次展示成本) 计算：</p>
+<ul>
+<li>需要 20000 年访问量即可回本</li>
+<li>平均每月仅需 1700 次访问</li>
+<li>考虑到广告屏蔽率约 25-30%，实际需要月访问量约 2200 次。<blockquote>
+<p><code>.com</code> 域名仅需 1200 次月访问量</p>
+</blockquote>
+</li>
+</ul>
+<p>虽然数字已经降到 1200 次&#x2F;月，但如果没有一定的粉丝，仍然很难在起步阶段实现，这需要我们并实践 SEO 优化，持续进行内容创作，同时不断打磨工具，让它真正解决用户的需求，剩下便是交给时间，保持一些耐心。</p>
+<h2 id="第四步：从流量到收入——变现策略详解"><a href="#第四步：从流量到收入——变现策略详解" class="headerlink" title="第四步：从流量到收入——变现策略详解"></a>第四步：从流量到收入——变现策略详解</h2><p>有了用户和流量，下一步就是将其转化为实际收入。以下是几种经过验证的变现模式：</p>
+<h3 id="订阅制-SaaS"><a href="#订阅制-SaaS" class="headerlink" title="订阅制 (SaaS)"></a>订阅制 (SaaS)</h3><p><strong>适用场景：</strong> 提供持续价值的工具或服务<br><strong>定价策略：</strong> </p>
+<ul>
+<li>免费版：基础功能 + 使用限制</li>
+<li>付费版：$5-50&#x2F;月，解锁全部功能</li>
+<li>企业版：$100+&#x2F;月，支持团队协作</li>
+</ul>
+<blockquote>
+<p><strong>成功案例：</strong> <a href="https://notion.so/">Notion</a> 从$0到$100亿估值，核心就是”免费试用 + 付费订阅”模式。</p>
+</blockquote>
+<h3 id="一次性付费"><a href="#一次性付费" class="headerlink" title="一次性付费"></a>一次性付费</h3><p><strong>适用场景：</strong> 工具类软件、模板、课程<br><strong>定价策略：</strong> $10-200一次性付费<br><strong>优势：</strong> 用户心理负担小，转化率高</p>
+<h3 id="广告收入"><a href="#广告收入" class="headerlink" title="广告收入"></a>广告收入</h3><p><strong>适用场景：</strong> 高流量的免费工具<br><strong>收入预期：</strong> 使用 Google AdSense 每 <strong>1000</strong> 访问量约 $1-5 收入<br><strong>优势：</strong> 用户免费使用，门槛低</p>
+<blockquote>
+<p>想要免费查看网站的访问数据？ 查看：<a href="https://ooo.run/post/website-traffic-cv.html" target="_blank">实用网站：通过 traffic.cv 免费查看网站访客数据</a></p>
+</blockquote>
+<h3 id="联盟营销-推荐佣金"><a href="#联盟营销-推荐佣金" class="headerlink" title="联盟营销&#x2F;推荐佣金"></a>联盟营销&#x2F;推荐佣金</h3><p><strong>适用场景：</strong> 内容型网站、工具推荐<br><strong>收入方式：</strong> 推荐相关产品获得5-50%佣金<br><strong>平台：</strong> Amazon Associates、淘宝联盟等</p>
+<h3 id="混合模式"><a href="#混合模式" class="headerlink" title="混合模式"></a>混合模式</h3><p>大多数成功的独立开发者会同时使用多种变现方式：</p>
+<ul>
+<li>核心付费功能 + 广告收入</li>
+<li>免费工具引流 + 付费高级版</li>
+<li>产品销售 + 咨询服务</li>
+</ul>
+<h2 id="总结：别再等待，从今天开始创造"><a href="#总结：别再等待，从今天开始创造" class="headerlink" title="总结：别再等待，从今天开始创造"></a>总结：别再等待，从今天开始创造</h2><p>回顾一下我们的路径图：<strong>从一个微小的想法开始，利用免费工具快速构建出 MVP，然后通过公开构建或内容营销找到你的第一批用户，最后在验证成功后，考虑付费增长和产品矩阵。</strong></p>
+<p>独立开发之路，始于足下。现在就从你的”想法备忘录”里，挑出一个最简单的，设定一个为期一周的目标，立即动手，发布你的第一个”预览版”吧！</p>
+<p>你未来的故事，从今天开始书写。</p>
+<h2 id="常见问题-FAQ"><a href="#常见问题-FAQ" class="headerlink" title="常见问题 FAQ"></a>常见问题 FAQ</h2><h3 id="Q1-我完全不懂编程，真的可以做独立开发吗？"><a href="#Q1-我完全不懂编程，真的可以做独立开发吗？" class="headerlink" title="Q1: 我完全不懂编程，真的可以做独立开发吗？"></a>Q1: 我完全不懂编程，真的可以做独立开发吗？</h3><p><strong>A:</strong> 绝对可以！现在有很多无代码&#x2F;低代码平台，AI 编程助手也日新月异，技术门槛已经大大降低，非技术背景的人完全可以创建产品。</p>
+<h3 id="Q2-需要多少启动资金？"><a href="#Q2-需要多少启动资金？" class="headerlink" title="Q2: 需要多少启动资金？"></a>Q2: 需要多少启动资金？</h3><p><strong>A:</strong> 几乎为零。域名一年$10-15，其他服务（托管、数据库、支付）都有免费额度足够MVP阶段使用。真正的投入是你的时间和精力。</p>
+<h3 id="Q3-多久能看到收入？"><a href="#Q3-多久能看到收入？" class="headerlink" title="Q3: 多久能看到收入？"></a>Q3: 多久能看到收入？</h3><p><strong>A:</strong> 这因项目而异。简单的工具类产品可能几周就有第一笔收入，复杂的SaaS产品可能需要3-6个月。关键是快速验证市场需求，而不是完美的产品。</p>
+<h3 id="Q4-如果没人使用我的产品怎么办？"><a href="#Q4-如果没人使用我的产品怎么办？" class="headerlink" title="Q4: 如果没人使用我的产品怎么办？"></a>Q4: 如果没人使用我的产品怎么办？</h3><p><strong>A:</strong> 这是正常现象！大多数产品都会经历”无人问津”的阶段。关键是：</p>
+<ol>
+<li>确保你解决了真实存在的问题 </li>
+<li>找到你的目标用户聚集的地方 </li>
+<li>持续改进产品体验。</li>
+</ol>
+<h3 id="Q5-一个人真的能做出成功的产品吗？"><a href="#Q5-一个人真的能做出成功的产品吗？" class="headerlink" title="Q5: 一个人真的能做出成功的产品吗？"></a>Q5: 一个人真的能做出成功的产品吗？</h3><p><strong>A:</strong> 当然！很多知名产品都是solo开发者创造的：Nomad List（$500K年收入）、Buffer 早期版本 等。关键是专注于核心功能，不要贪多求全。</p>
+<h3 id="Q6-应该做移动App还是网站？"><a href="#Q6-应该做移动App还是网站？" class="headerlink" title="Q6: 应该做移动App还是网站？"></a>Q6: 应该做移动App还是网站？</h3><p><strong>A:</strong> 对于独立开发者，建议先做网站。Web应用开发成本低、迭代速度快、不需要应用商店审核，用户获取也更直接。等产品验证成功后再考虑移动端。</p>
+<h3 id="Q7-竞争太激烈了，还有机会吗？"><a href="#Q7-竞争太激烈了，还有机会吗？" class="headerlink" title="Q7: 竞争太激烈了，还有机会吗？"></a>Q7: 竞争太激烈了，还有机会吗？</h3><p><strong>A:</strong> 永远有机会！市场足够大，关键是找到细分需求。即使是看似饱和的市场，也总有服务不好的用户群体。专注于特定用户群体，做好用户体验，就能立足。</p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>独立开发</tag>
+        <tag>个人项目</tag>
+        <tag>副业</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>OpenAI 发布 GPT-5，新一代人工智能模型正式亮相</title>
     <url>/post/news-openai-released-gpt-5.html</url>
     <content><![CDATA[<p><strong>2025 年 8 月 7 日</strong> — OpenAI 正式推出最新旗舰级人工智能模型 <strong>GPT-5</strong>，即日起面向 ChatGPT 用户与开发者开放。该模型在推理、编程与创意生成等方面全面升级，Open AI 称之为迄今最强的通用 AI 模型之一。</p>
@@ -1770,6 +1770,49 @@
       </tags>
   </entry>
   <entry>
+    <title>在 Google AI Studio 中免费体验 Nano Banana(Gemini 2.5 Flash Image)</title>
+    <url>/post/try-gemini-flash-image-preview.html</url>
+    <content><![CDATA[<p>Google 发布了预览版本的 Gemini 2.5 Flash Image Preview，一个图像生成与编辑模型，可以进行对话式的编辑或是图像合成，现已在 Google 的各种服务中中提供。</p>
+<p>可以直接打开 <a href="https://gemini.google/">Gemini APP</a> 或是访问 <a href="https://aistudio.google.com/prompts/new_chat?model=gemini-2.5-flash-image-preview">Google AI Studio</a> 免费体验。</p>
+<blockquote>
+<p>更新：现在可以直接在 X(Twitter) 上 <a href="https://x.com/NanoBanana/with_replies">@NanoBanana</a> 来生成图片了</p>
+</blockquote>
+<p>访问 Google AI Studio 后可以看到右上角的模型为 <code>Gemini 2.5 Flash Image Preview</code>。</p>
+<blockquote>
+<p>更新：现在已经直接显示为 Nano Banana 了</p>
+</blockquote>
+<img src="https://img.nep.me/i/2025/09/01/google-ai-studio-web-nano.webp" style="width:85%;" alt="google-ai-studio-web" />
+
+<p>如果需要上传图片，只需要点击对话框右侧的 <code>+</code> 或是直接拖动图片到输入框，不如就试试现在比较火的生成手办图片的 prompts 吧：</p>
+<blockquote>
+<p>Use the nano-banana model to create a 1&#x2F;7 scale commercialized figure of thecharacter in the illustration, in a realistic style and environment. Place the figure on a computer desk, using a circular transparent acrylic base without any text.On the computer screen, display the ZBrush modeling process of the figure. Next to the computer screen, place a BANDAI-style toy packaging box printed with the original artwork.</p>
+</blockquote>
+<img src="https://img.nep.me/i/2025/08/28/gemini-flash-images-figure.webp" style="width:50%;" alt="google-ai-studio-prompts" />
+
+<p>提示词来源 <a href="https://x.com/YunFeng_cc/status/1960595391461908528">雲風Cloudwind @ x.com</a></p>
+<blockquote>
+<p>实测效果也没有那么稳定，有时需要抽卡</p>
+</blockquote>
+<p>Gemini 2.5 Flash Image Preview 主要特色：</p>
+<ul>
+<li>在多个提示和图像中 <strong>保持角色的一致性</strong>：一致性非常强，所以非常适合编辑图片。</li>
+<li>使用 <strong>自然语言</strong> 有针对性的编辑&#x2F;替换对象： 不需要写专业的提示词，一句话就能编辑图片，当然专业准确的提示器效果更好。</li>
+<li>基于前面两个特性，可以将多个图像根据提示词进行 <strong>合成</strong>。</li>
+<li>准确呈现图像中的文本： <strong>仅限英文</strong> ，中文效果不好。</li>
+<li>每 100 万个输出令牌 30 美元（1 幅图像约 0.039 美分）。</li>
+</ul>
+<p>上传或是生成的图片都会保存在 <strong>Google 云端硬盘</strong> &gt; <strong>我的云端硬盘</strong> &gt; <strong>Google AI Studio</strong> 文件夹内。</p>
+]]></content>
+      <categories>
+        <category>资讯</category>
+      </categories>
+      <tags>
+        <tag>AI</tag>
+        <tag>图像生成</tag>
+        <tag>Nano Banana</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>使用 ccusage 查看 Claude Code 用量</title>
     <url>/post/use-ccusage-check-claude-code-cost.html</url>
     <content><![CDATA[<p>如果你是通过 Claude Pro 或是 Max 订阅使用的 Claude Code，通过 <code>/cost</code> 会得到无需关注消耗的提示   </p>
@@ -1811,49 +1854,6 @@
       </categories>
       <tags>
         <tag>Claude Code</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>在 Google AI Studio 中免费体验 Nano Banana(Gemini 2.5 Flash Image)</title>
-    <url>/post/try-gemini-flash-image-preview.html</url>
-    <content><![CDATA[<p>Google 发布了预览版本的 Gemini 2.5 Flash Image Preview，一个图像生成与编辑模型，可以进行对话式的编辑或是图像合成，现已在 Google 的各种服务中中提供。</p>
-<p>可以直接打开 <a href="https://gemini.google/">Gemini APP</a> 或是访问 <a href="https://aistudio.google.com/prompts/new_chat?model=gemini-2.5-flash-image-preview">Google AI Studio</a> 免费体验。</p>
-<blockquote>
-<p>更新：现在可以直接在 X(Twitter) 上 <a href="https://x.com/NanoBanana/with_replies">@NanoBanana</a> 来生成图片了</p>
-</blockquote>
-<p>访问 Google AI Studio 后可以看到右上角的模型为 <code>Gemini 2.5 Flash Image Preview</code>。</p>
-<blockquote>
-<p>更新：现在已经直接显示为 Nano Banana 了</p>
-</blockquote>
-<img src="https://img.nep.me/i/2025/09/01/google-ai-studio-web-nano.webp" style="width:85%;" alt="google-ai-studio-web" />
-
-<p>如果需要上传图片，只需要点击对话框右侧的 <code>+</code> 或是直接拖动图片到输入框，不如就试试现在比较火的生成手办图片的 prompts 吧：</p>
-<blockquote>
-<p>Use the nano-banana model to create a 1&#x2F;7 scale commercialized figure of thecharacter in the illustration, in a realistic style and environment. Place the figure on a computer desk, using a circular transparent acrylic base without any text.On the computer screen, display the ZBrush modeling process of the figure. Next to the computer screen, place a BANDAI-style toy packaging box printed with the original artwork.</p>
-</blockquote>
-<img src="https://img.nep.me/i/2025/08/28/gemini-flash-images-figure.webp" style="width:50%;" alt="google-ai-studio-prompts" />
-
-<p>提示词来源 <a href="https://x.com/YunFeng_cc/status/1960595391461908528">雲風Cloudwind @ x.com</a></p>
-<blockquote>
-<p>实测效果也没有那么稳定，有时需要抽卡</p>
-</blockquote>
-<p>Gemini 2.5 Flash Image Preview 主要特色：</p>
-<ul>
-<li>在多个提示和图像中 <strong>保持角色的一致性</strong>：一致性非常强，所以非常适合编辑图片。</li>
-<li>使用 <strong>自然语言</strong> 有针对性的编辑&#x2F;替换对象： 不需要写专业的提示词，一句话就能编辑图片，当然专业准确的提示器效果更好。</li>
-<li>基于前面两个特性，可以将多个图像根据提示词进行 <strong>合成</strong>。</li>
-<li>准确呈现图像中的文本： <strong>仅限英文</strong> ，中文效果不好。</li>
-<li>每 100 万个输出令牌 30 美元（1 幅图像约 0.039 美分）。</li>
-</ul>
-<p>上传或是生成的图片都会保存在 <strong>Google 云端硬盘</strong> &gt; <strong>我的云端硬盘</strong> &gt; <strong>Google AI Studio</strong> 文件夹内。</p>
-]]></content>
-      <categories>
-        <category>资讯</category>
-      </categories>
-      <tags>
-        <tag>AI</tag>
-        <tag>图像生成</tag>
-        <tag>Nano Banana</tag>
       </tags>
   </entry>
   <entry>
@@ -2863,6 +2863,28 @@
       </categories>
       <tags>
         <tag>BYOK</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>什么是 “服务器奶牛化” ？</title>
+    <url>/post/what-is-turing-a-server-into-cash-cow.html</url>
+    <content><![CDATA[<p><strong>服务器奶牛化</strong> 是一个网络流行语，形象地描述了将服务器当作“奶牛”，通过持续压榨其资源以获取最大化收益的行为。这个词的核心在于“榨取价值”，类似于不断从奶牛身上挤奶。</p>
+<p>用于形容将服务器的计算、存储、带宽等资源，像挤牛奶一样持续变现的过程。</p>
+<h3 id="主要特征"><a href="#主要特征" class="headerlink" title="主要特征"></a>主要特征</h3><ol>
+<li><p><strong>资源极限压榨</strong><br>让服务器长期处于高负载状态，最大限度地利用其计算、存储和网络带宽，例如运行爬虫、挖矿或批量处理任务。</p>
+</li>
+<li><p><strong>成本套利（薅羊毛）</strong><br>利用云服务商的免费试用、促销活动或漏洞，以极低的成本获取服务器资源，再通过这些资源进行挖矿、跑节点或执行广告任务来盈利。</p>
+</li>
+<li><p><strong>规模化运作</strong><br>同时部署大量服务器运行相同的脚本或服务。单台服务器的产出虽小，但规模化后总收益非常可观，如同经营一个“云上牧场”。</p>
+</li>
+</ol>
+<p><img src="https://img.nep.me/i/2025/08/13/what-is-server-cow.webp" alt="what-is-server-cow"></p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>服务器</tag>
       </tags>
   </entry>
   <entry>
@@ -3876,58 +3898,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Codex 的日志记录消耗 SSD 寿命？OpenAI 已修复</title>
-    <url>/post/codex-is-buring-your-ssd.html</url>
-    <content><![CDATA[<h2 id="Bug-信息"><a href="#Bug-信息" class="headerlink" title="Bug 信息"></a>Bug 信息</h2><div class="flatpaper-note flatpaper-note--primary"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>好消息，OpenAI 已在 Codex 0.142.0 版本中修复了这个问题，可以放心使用。</p></div></div>
-
-<p>最近，Codex 凭借其强大的功能和丝滑的体验，周活跃用户已经突破了 <strong>500 万</strong> 大关。越来越多的开发者和极客都已经把它当成了日常高频使用的得力助手。</p>
-<p>不过，随着使用人数的增加，有用户反馈，在某些流式输出或自动化任务场景下，Codex 会持续向本地磁盘写入 TRACE 级别的日志。</p>
-<p>GitHUb 的 <a href="https://github.com/openai/codex/issues/28224">ISSUE</a> 上声称该 BUG 可能会产生 <strong>640GB&#x2F;年</strong> 的写入，这对于消费级 SSD 来说是致命的。对于目前主流的 1TB 或 2TB 消费级固态硬盘（标称寿命通常在 600TBW ~ 1200TBW）来说，可以说是非常严重。</p>
-<p><strong>而且，正因为现在 AI 浪潮空前火热，全球对高带宽、高性能存储的需求集中爆发，导致现在的 SSD 固态硬盘价格一路上涨，存储成本变得相当昂贵，尤其是 mac 设备的硬盘无法更换。在这种寸土寸金的时期，我们对硬盘的每一度磨损、每一 G 空间都不得不更加精打细算。</strong></p>
-<hr>
-<h2 id="1分钟自查：你中招了吗？"><a href="#1分钟自查：你中招了吗？" class="headerlink" title="1分钟自查：你中招了吗？"></a>1分钟自查：你中招了吗？</h2><p>如果你使用的是 Linux 或 Mac 系统，可以直接通过终端跑两行命令看看情况。</p>
-<p>首先，看看日志文件的大小：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">ls</span> -lh ~/.codex/logs_2.sqlite</span><br></pre></td></tr></table></figure>
-
-<p>然后，统计一下日志的写入级别：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;SELECT level, COUNT(*) FROM logs GROUP BY level ORDER BY COUNT(*) DESC&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>如何判断：</strong><br>如果查询结果中，<code>TRACE</code> 级别的日志占了绝大多数，并且 <code>logs_2.sqlite</code> 文件体积比较大，那就说明 Codex 确实在后台认真地记录着无关紧要的追踪信息。</p>
-<p><strong>参考数据：</strong><br>我的文件大小为 <strong>468MB：</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&gt; <span class="built_in">ls</span> -lh ~/.codex/logs_2.sqlite Jun 23</span><br><span class="line">-rw-r--r--@ 1 mro  staff   468M</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&gt; sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;SELECT level, COUNT(*) FROM logs GROUP BY level ORDER BY COUNT(*) DESC&quot;</span></span><br><span class="line">TRACE|39961</span><br><span class="line">INFO|39919</span><br><span class="line">DEBUG|7307</span><br><span class="line">WARN|177</span><br></pre></td></tr></table></figure>
-
-<p>可以看到 <code>TRACE|39961</code> 占了接近一半的数据，确实存在所说的问题，主要是目前 OpenAI 官方尚未做出修复的回应。</p>
-<h2 id="一劳永逸的解决方案-：直接在数据库拦截"><a href="#一劳永逸的解决方案-：直接在数据库拦截" class="headerlink" title="一劳永逸的解决方案 ：直接在数据库拦截"></a>一劳永逸的解决方案 ：直接在数据库拦截</h2><p><mark>OpenAI 已经修复这个问题了，不需要操作了</mark></p>
-<p>这里提供比较激进、但也最直接的临时方案：给日志表加一个 SQLite 触发器，让新的日志写入被忽略，毕竟这个文件里只有诊断日志，没有对话历史。</p>
-<p>执行前建议先退出 Codex，并备份日志数据库：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cp</span> ~/.codex/logs_2.sqlite ~/.codex/logs_2.sqlite.bak</span><br></pre></td></tr></table></figure>
-<p>然后执行：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;CREATE TRIGGER IF NOT EXISTS block_log_inserts BEFORE INSERT ON logs BEGIN SELECT RAISE(IGNORE); END;&quot;</span></span><br></pre></td></tr></table></figure>
-<p>设置完成后，新的日志记录会被拦截，从而减少后续写入。</p>
-<p>需要注意的是，这个方法会影响 Codex 后续生成诊断日志。如果你之后需要向官方反馈问题，或者担心未来版本兼容性，可以先不要使用这个方案，改用定期清理的方式。</p>
-<details class="flatpaper-note flatpaper-note--info"><summary class="flatpaper-note__title"><span class="flatpaper-note__icon" aria-hidden="true"></span><span class="flatpaper-note__label">如何恢复</span><span class="flatpaper-note__chevron" aria-hidden="true"></span></summary><div class="flatpaper-note__body"><p>如果想要恢复的话就是删除这个 trigger 。先退出 Codex，再执行：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;DROP TRIGGER IF EXISTS block_log_inserts;&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>执行后可以检查是否还存在：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;.schema block_log_inserts&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>如果没有输出，说明已经删除成功。</p>
-<p>也可以用这个命令查看当前所有 trigger：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;SELECT name, tbl_name, sql FROM sqlite_master WHERE type=&#x27;trigger&#x27;;&quot;</span></span><br></pre></td></tr></table></figure></div></details>
-
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>GitHub ISSUE 中的数据是比较夸张的，Codex 的这个日志问题并没有网传的那么吓人，但也感谢 OpenAI 完成了 BUG 的修复，大家用 Codex 敲代码愉快！</p>
-]]></content>
-      <categories>
-        <category>笔记</category>
-      </categories>
-      <tags>
-        <tag>OpenAI</tag>
-        <tag>Codex</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>赛博菩萨：Cloudflare 免费账户可用服务详情</title>
     <url>/post/cloudflare-free-tier.html</url>
     <content><![CDATA[<h3 id="Cloudflare-免费级别服务全景：从-DNS-CDN-到-Workers-全栈边缘平台"><a href="#Cloudflare-免费级别服务全景：从-DNS-CDN-到-Workers-全栈边缘平台" class="headerlink" title="Cloudflare 免费级别服务全景：从 DNS&#x2F;CDN 到 Workers 全栈边缘平台"></a>Cloudflare 免费级别服务全景：从 DNS&#x2F;CDN 到 Workers 全栈边缘平台</h3><blockquote>
@@ -4648,50 +4618,6 @@
       </tags>
   </entry>
   <entry>
-    <title>新时代挖矿：看看你的 Mac 一个月能赚多少钱</title>
-    <url>/post/darkbloom-nodes-macbook-ai-mining-earnings.html</url>
-    <content><![CDATA[<p>曾经，无数人为了比特币和以太坊疯狂囤积显卡，把家里变成轰鸣的矿场。随着传统加密货币 “显卡挖矿” 时代的逐渐降温，很多人以为用个人电脑赚取被动收入的日子已经结束了。然而，随着 AI 大模型时代的爆发，一种全新的 “挖矿” 模式正在悄然兴起——AI 节点推理算力共享。</p>
-<p>最近，随着本地模型的能力进步，<a href="https://www.darkbloom.dev/#nodes">Darkbloom</a> 平台的出现向我们揭示了这一前景。在这个新时代，你不需要去计算毫无意义的哈希值，而是让你的电脑成为 AI 基础设施的一部分，通过为真实用户运行大语言模型（如 <code>Gemma 4 26B</code> ）来赚取收益。而在这场新游戏里，凭借着高带宽的统一内存架构，Apple 的 Mac 电脑意外地成为了最完美的 “矿机”。</p>
-<h2 id="Darbloom-介绍"><a href="#Darbloom-介绍" class="headerlink" title="Darbloom 介绍"></a>Darbloom 介绍</h2><p><a href="https://www.darkbloom.dev/">Darkbloom.dev</a> 可以将 MacBook 变成一个可产生收益的私有硬件节点网络。用户只需在 Mac 上安装一个命令行界面 (CLI)，设备就可以在闲置时自动接收并处理 AI 推理请求。开发者则可以通过兼容 OpenAI 的 API 调用这些分布式算力。设备每生成一个代币，节点运营者就能获得相应的美元收益。 </p>
-<p>这个项目背后的技术来自 Eigen Labs，相关论文和代码已经开源。其核心卖点是：在保护用户请求隐私的前提下，让普通 Apple Silicon 设备参与 AI 推理市场。<br>链接：<a href="https://github.com/Layr-Labs/d-inference/blob/master/papers/dginf-private-inference.pdf">https://github.com/Layr-Labs/d-inference/blob/master/papers/dginf-private-inference.pdf</a></p>
-<h2 id="Mac-变身-AI-服务器：到底能赚多少？"><a href="#Mac-变身-AI-服务器：到底能赚多少？" class="headerlink" title="Mac 变身 AI 服务器：到底能赚多少？"></a>Mac 变身 AI 服务器：到底能赚多少？</h2><p>按照项目方介绍，节点运营者可以获得 95% 的推理收入，平台抽取 5%。</p>
-<p>除了硬件设备，运营唯一的成本是电费，而 Apple Silicon 的功耗极低。即使在满负荷推理的情况下，每小时也只需 0.01 到 0.03 美元。这就像点亮一个灯泡一样。</p>
-<p>我们来看看 Darkbloom 提供的收益预估数据：</p>
-<h3 id="1-顶配印钞机：MacBook-Pro-M5-Max-128GB-内存"><a href="#1-顶配印钞机：MacBook-Pro-M5-Max-128GB-内存" class="headerlink" title="1. 顶配印钞机：MacBook Pro (M5 Max, 128GB 内存)"></a>1. 顶配印钞机：MacBook Pro (M5 Max, 128GB 内存)</h3><p>如果你拥有一台搭载 M5 Max 芯片和 128GB 内存的顶级 MacBook Pro，这台机器简直是为跑大模型而生的。它庞大的内存可以轻松装下甚至并行处理巨大的模型。</p>
-<ul>
-<li><strong>运行状态</strong>：每天运行 18 小时（比如下班后的闲置时间）。</li>
-<li><strong>处理速度</strong>：批量解码速度高达惊人的 <code>1326.2</code> tok&#x2F;s。</li>
-<li><strong>每月收益</strong>：预估每月总收入约为 <strong>$425.40</strong> 。扣除电费后，每月净赚约 $423（折合人民币约 3000 多元）！</li>
-</ul>
-<p>一年下来收益可达 <strong>$5,076</strong>，而在 Apple 官网上 <strong>M5 Max + 128GB RAM + 2TB</strong> 版本现在仅售 <strong>5399</strong> 美元（大陆官网售价 43,499 元）， 可以说这笔钱不仅足够你覆盖买电脑的成本，甚至相当于电脑自己在给自己打工还贷。</p>
-<p><img src="https://img.nep.me/ooo/darkbloom-m5max.webp" alt="darkbloom-m5max"></p>
-<h3 id="2-性能中坚：MacBook-Pro-M4-Pro-48GB-内存"><a href="#2-性能中坚：MacBook-Pro-M4-Pro-48GB-内存" class="headerlink" title="2. 性能中坚：MacBook Pro (M4 Pro, 48GB 内存)"></a>2. 性能中坚：MacBook Pro (M4 Pro, 48GB 内存)</h3><p>如果你的配置是偏向主流的工作站，比如搭载 M4 Pro 芯片和 48GB 内存的版本。</p>
-<ul>
-<li><strong>运行状态</strong>：同样每天运行 18 小时。</li>
-<li><strong>处理速度</strong>：<code>589.7</code> tok&#x2F;s。</li>
-<li><strong>每月收益</strong>：依然可以获得每月约 <strong>$188 美元</strong>（折合人民币约 1300 多元）的净收入。</li>
-</ul>
-<p>一年也有 $2,252 的进账。对于仅仅是利用电脑闲置时间的睡后收入来说，这绝对是一笔非常可观的零花钱。</p>
-<p><img src="https://img.nep.me/ooo/darkbloom-m4pro.webp" alt="darkbloom-m4pro"></p>
-<h2 id="Apple-Silicon-的恐怖能效"><a href="#Apple-Silicon-的恐怖能效" class="headerlink" title="Apple Silicon 的恐怖能效"></a>Apple Silicon 的恐怖能效</h2><p>传统挖矿最让人头疼的就是高昂的电费和机器狂转的噪音。但在这场AI 挖矿中，Apple M 系列芯片展现出了极其恐怖的能效比。</p>
-<p>以电费 $0.15&#x2F;kWh 计算，那台每月能为你赚取 425 美元的 M5 Max MacBook Pro，一整个月消耗的电费仅仅只有 $2.43；而 M4 Pro 版本的月电费更是低至 $1.46。电费成本甚至占不到总收入的 1%。没有轰鸣的风扇，没有天价电费账单，只有静悄悄地跑着大模型赚钱的优雅。</p>
-<p>AI 时代的算力需求是无穷无尽的，而去中心化的个人算力网络或许就是下一座金矿。你的 Mac 已经不再仅仅是一个昂贵的生产力工具，它完全有潜力成为你的“数字打工仔”。</p>
-<h2 id="结语与风险提示"><a href="#结语与风险提示" class="headerlink" title="结语与风险提示"></a>结语与风险提示</h2><p>当然，作为一个新兴领域，我们也要保持理性的预期。目前，Darkbloom 等平台已经在 Hacker News、Reddit 和 LinkedIn 等主流开发者社区引发了公开讨论。好消息是，目前尚未出现任何诈骗报告；但根据早期参与测试的节点用户反馈，当前网络中分配到的任务还主要是 Health Checks ，真实的商业推理需求仍然处于低位。这意味着官方计算器给出的高额预测相对较为乐观。</p>
-<p>更重要的是，如今大模型的进步速度实在是太快了。现在开源社区就已经迭代到了 Gemma 4 26B 这样庞大且高效的模型。AI 领域的算法架构、量化技术和吞吐量优化几乎每个月都在刷新。今天的配置组合可能刚好能吃满红利，但三个月后，随着更强、更大的模型诞生，整个网络对硬件门槛和带宽的要求可能会迎来彻底的洗牌。</p>
-<p>这注定是一场与技术演进赛跑的游戏。未来的实际收益，将极大地受制于真实商业请求的爆发、模型迭代的速度以及平台的后续运营。</p>
-<div class="flatpaper-note flatpaper-note--warning"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>请务必记住，以上数据只是参考，大家看看这些预估数据，把它当个有趣的参考就行。</p></div></div>
-]]></content>
-      <categories>
-        <category>工具资源</category>
-      </categories>
-      <tags>
-        <tag>AI</tag>
-        <tag>Apple</tag>
-        <tag>Darkbloom</tag>
-        <tag>MacBook</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>使用 Docker 部署 Fizzy ： 一个轻量、漂亮、可自托管的看板工具</title>
     <url>/post/docker-run-fizzy-kanban.html</url>
     <content><![CDATA[<h2 id="Fizzy-介绍"><a href="#Fizzy-介绍" class="headerlink" title="Fizzy 介绍"></a>Fizzy 介绍</h2><p>Fizzy (<a href="https://fizzy.do/">https://fizzy.do</a>) 是由著名软件公司 <mark>37signals</mark>（开发过 Basecamp 和 HEY 的团队）推出的一款全新 <strong>看板</strong> 任务管理工具。主打快速、简单、色彩鲜明，非常适合用来跟踪 Bug、想法、小项目和内容流程。</p>
@@ -4822,25 +4748,99 @@
       </tags>
   </entry>
   <entry>
-    <title>什么是 “服务器奶牛化” ？</title>
-    <url>/post/what-is-turing-a-server-into-cash-cow.html</url>
-    <content><![CDATA[<p><strong>服务器奶牛化</strong> 是一个网络流行语，形象地描述了将服务器当作“奶牛”，通过持续压榨其资源以获取最大化收益的行为。这个词的核心在于“榨取价值”，类似于不断从奶牛身上挤奶。</p>
-<p>用于形容将服务器的计算、存储、带宽等资源，像挤牛奶一样持续变现的过程。</p>
-<h3 id="主要特征"><a href="#主要特征" class="headerlink" title="主要特征"></a>主要特征</h3><ol>
-<li><p><strong>资源极限压榨</strong><br>让服务器长期处于高负载状态，最大限度地利用其计算、存储和网络带宽，例如运行爬虫、挖矿或批量处理任务。</p>
-</li>
-<li><p><strong>成本套利（薅羊毛）</strong><br>利用云服务商的免费试用、促销活动或漏洞，以极低的成本获取服务器资源，再通过这些资源进行挖矿、跑节点或执行广告任务来盈利。</p>
-</li>
-<li><p><strong>规模化运作</strong><br>同时部署大量服务器运行相同的脚本或服务。单台服务器的产出虽小，但规模化后总收益非常可观，如同经营一个“云上牧场”。</p>
-</li>
-</ol>
-<p><img src="https://img.nep.me/i/2025/08/13/what-is-server-cow.webp" alt="what-is-server-cow"></p>
+    <title>新时代挖矿：看看你的 Mac 一个月能赚多少钱</title>
+    <url>/post/darkbloom-nodes-macbook-ai-mining-earnings.html</url>
+    <content><![CDATA[<p>曾经，无数人为了比特币和以太坊疯狂囤积显卡，把家里变成轰鸣的矿场。随着传统加密货币 “显卡挖矿” 时代的逐渐降温，很多人以为用个人电脑赚取被动收入的日子已经结束了。然而，随着 AI 大模型时代的爆发，一种全新的 “挖矿” 模式正在悄然兴起——AI 节点推理算力共享。</p>
+<p>最近，随着本地模型的能力进步，<a href="https://www.darkbloom.dev/#nodes">Darkbloom</a> 平台的出现向我们揭示了这一前景。在这个新时代，你不需要去计算毫无意义的哈希值，而是让你的电脑成为 AI 基础设施的一部分，通过为真实用户运行大语言模型（如 <code>Gemma 4 26B</code> ）来赚取收益。而在这场新游戏里，凭借着高带宽的统一内存架构，Apple 的 Mac 电脑意外地成为了最完美的 “矿机”。</p>
+<h2 id="Darbloom-介绍"><a href="#Darbloom-介绍" class="headerlink" title="Darbloom 介绍"></a>Darbloom 介绍</h2><p><a href="https://www.darkbloom.dev/">Darkbloom.dev</a> 可以将 MacBook 变成一个可产生收益的私有硬件节点网络。用户只需在 Mac 上安装一个命令行界面 (CLI)，设备就可以在闲置时自动接收并处理 AI 推理请求。开发者则可以通过兼容 OpenAI 的 API 调用这些分布式算力。设备每生成一个代币，节点运营者就能获得相应的美元收益。 </p>
+<p>这个项目背后的技术来自 Eigen Labs，相关论文和代码已经开源。其核心卖点是：在保护用户请求隐私的前提下，让普通 Apple Silicon 设备参与 AI 推理市场。<br>链接：<a href="https://github.com/Layr-Labs/d-inference/blob/master/papers/dginf-private-inference.pdf">https://github.com/Layr-Labs/d-inference/blob/master/papers/dginf-private-inference.pdf</a></p>
+<h2 id="Mac-变身-AI-服务器：到底能赚多少？"><a href="#Mac-变身-AI-服务器：到底能赚多少？" class="headerlink" title="Mac 变身 AI 服务器：到底能赚多少？"></a>Mac 变身 AI 服务器：到底能赚多少？</h2><p>按照项目方介绍，节点运营者可以获得 95% 的推理收入，平台抽取 5%。</p>
+<p>除了硬件设备，运营唯一的成本是电费，而 Apple Silicon 的功耗极低。即使在满负荷推理的情况下，每小时也只需 0.01 到 0.03 美元。这就像点亮一个灯泡一样。</p>
+<p>我们来看看 Darkbloom 提供的收益预估数据：</p>
+<h3 id="1-顶配印钞机：MacBook-Pro-M5-Max-128GB-内存"><a href="#1-顶配印钞机：MacBook-Pro-M5-Max-128GB-内存" class="headerlink" title="1. 顶配印钞机：MacBook Pro (M5 Max, 128GB 内存)"></a>1. 顶配印钞机：MacBook Pro (M5 Max, 128GB 内存)</h3><p>如果你拥有一台搭载 M5 Max 芯片和 128GB 内存的顶级 MacBook Pro，这台机器简直是为跑大模型而生的。它庞大的内存可以轻松装下甚至并行处理巨大的模型。</p>
+<ul>
+<li><strong>运行状态</strong>：每天运行 18 小时（比如下班后的闲置时间）。</li>
+<li><strong>处理速度</strong>：批量解码速度高达惊人的 <code>1326.2</code> tok&#x2F;s。</li>
+<li><strong>每月收益</strong>：预估每月总收入约为 <strong>$425.40</strong> 。扣除电费后，每月净赚约 $423（折合人民币约 3000 多元）！</li>
+</ul>
+<p>一年下来收益可达 <strong>$5,076</strong>，而在 Apple 官网上 <strong>M5 Max + 128GB RAM + 2TB</strong> 版本现在仅售 <strong>5399</strong> 美元（大陆官网售价 43,499 元）， 可以说这笔钱不仅足够你覆盖买电脑的成本，甚至相当于电脑自己在给自己打工还贷。</p>
+<p><img src="https://img.nep.me/ooo/darkbloom-m5max.webp" alt="darkbloom-m5max"></p>
+<h3 id="2-性能中坚：MacBook-Pro-M4-Pro-48GB-内存"><a href="#2-性能中坚：MacBook-Pro-M4-Pro-48GB-内存" class="headerlink" title="2. 性能中坚：MacBook Pro (M4 Pro, 48GB 内存)"></a>2. 性能中坚：MacBook Pro (M4 Pro, 48GB 内存)</h3><p>如果你的配置是偏向主流的工作站，比如搭载 M4 Pro 芯片和 48GB 内存的版本。</p>
+<ul>
+<li><strong>运行状态</strong>：同样每天运行 18 小时。</li>
+<li><strong>处理速度</strong>：<code>589.7</code> tok&#x2F;s。</li>
+<li><strong>每月收益</strong>：依然可以获得每月约 <strong>$188 美元</strong>（折合人民币约 1300 多元）的净收入。</li>
+</ul>
+<p>一年也有 $2,252 的进账。对于仅仅是利用电脑闲置时间的睡后收入来说，这绝对是一笔非常可观的零花钱。</p>
+<p><img src="https://img.nep.me/ooo/darkbloom-m4pro.webp" alt="darkbloom-m4pro"></p>
+<h2 id="Apple-Silicon-的恐怖能效"><a href="#Apple-Silicon-的恐怖能效" class="headerlink" title="Apple Silicon 的恐怖能效"></a>Apple Silicon 的恐怖能效</h2><p>传统挖矿最让人头疼的就是高昂的电费和机器狂转的噪音。但在这场AI 挖矿中，Apple M 系列芯片展现出了极其恐怖的能效比。</p>
+<p>以电费 $0.15&#x2F;kWh 计算，那台每月能为你赚取 425 美元的 M5 Max MacBook Pro，一整个月消耗的电费仅仅只有 $2.43；而 M4 Pro 版本的月电费更是低至 $1.46。电费成本甚至占不到总收入的 1%。没有轰鸣的风扇，没有天价电费账单，只有静悄悄地跑着大模型赚钱的优雅。</p>
+<p>AI 时代的算力需求是无穷无尽的，而去中心化的个人算力网络或许就是下一座金矿。你的 Mac 已经不再仅仅是一个昂贵的生产力工具，它完全有潜力成为你的“数字打工仔”。</p>
+<h2 id="结语与风险提示"><a href="#结语与风险提示" class="headerlink" title="结语与风险提示"></a>结语与风险提示</h2><p>当然，作为一个新兴领域，我们也要保持理性的预期。目前，Darkbloom 等平台已经在 Hacker News、Reddit 和 LinkedIn 等主流开发者社区引发了公开讨论。好消息是，目前尚未出现任何诈骗报告；但根据早期参与测试的节点用户反馈，当前网络中分配到的任务还主要是 Health Checks ，真实的商业推理需求仍然处于低位。这意味着官方计算器给出的高额预测相对较为乐观。</p>
+<p>更重要的是，如今大模型的进步速度实在是太快了。现在开源社区就已经迭代到了 Gemma 4 26B 这样庞大且高效的模型。AI 领域的算法架构、量化技术和吞吐量优化几乎每个月都在刷新。今天的配置组合可能刚好能吃满红利，但三个月后，随着更强、更大的模型诞生，整个网络对硬件门槛和带宽的要求可能会迎来彻底的洗牌。</p>
+<p>这注定是一场与技术演进赛跑的游戏。未来的实际收益，将极大地受制于真实商业请求的爆发、模型迭代的速度以及平台的后续运营。</p>
+<div class="flatpaper-note flatpaper-note--warning"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>请务必记住，以上数据只是参考，大家看看这些预估数据，把它当个有趣的参考就行。</p></div></div>
+]]></content>
+      <categories>
+        <category>工具资源</category>
+      </categories>
+      <tags>
+        <tag>AI</tag>
+        <tag>Apple</tag>
+        <tag>Darkbloom</tag>
+        <tag>MacBook</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Codex 的日志记录消耗 SSD 寿命？OpenAI 已修复</title>
+    <url>/post/codex-is-buring-your-ssd.html</url>
+    <content><![CDATA[<h2 id="Bug-信息"><a href="#Bug-信息" class="headerlink" title="Bug 信息"></a>Bug 信息</h2><div class="flatpaper-note flatpaper-note--primary"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>好消息，OpenAI 已在 Codex 0.142.0 版本中修复了这个问题，可以放心使用。</p></div></div>
+
+<p>最近，Codex 凭借其强大的功能和丝滑的体验，周活跃用户已经突破了 <strong>500 万</strong> 大关。越来越多的开发者和极客都已经把它当成了日常高频使用的得力助手。</p>
+<p>不过，随着使用人数的增加，有用户反馈，在某些流式输出或自动化任务场景下，Codex 会持续向本地磁盘写入 TRACE 级别的日志。</p>
+<p>GitHUb 的 <a href="https://github.com/openai/codex/issues/28224">ISSUE</a> 上声称该 BUG 可能会产生 <strong>640GB&#x2F;年</strong> 的写入，这对于消费级 SSD 来说是致命的。对于目前主流的 1TB 或 2TB 消费级固态硬盘（标称寿命通常在 600TBW ~ 1200TBW）来说，可以说是非常严重。</p>
+<p><strong>而且，正因为现在 AI 浪潮空前火热，全球对高带宽、高性能存储的需求集中爆发，导致现在的 SSD 固态硬盘价格一路上涨，存储成本变得相当昂贵，尤其是 mac 设备的硬盘无法更换。在这种寸土寸金的时期，我们对硬盘的每一度磨损、每一 G 空间都不得不更加精打细算。</strong></p>
+<hr>
+<h2 id="1分钟自查：你中招了吗？"><a href="#1分钟自查：你中招了吗？" class="headerlink" title="1分钟自查：你中招了吗？"></a>1分钟自查：你中招了吗？</h2><p>如果你使用的是 Linux 或 Mac 系统，可以直接通过终端跑两行命令看看情况。</p>
+<p>首先，看看日志文件的大小：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">ls</span> -lh ~/.codex/logs_2.sqlite</span><br></pre></td></tr></table></figure>
+
+<p>然后，统计一下日志的写入级别：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;SELECT level, COUNT(*) FROM logs GROUP BY level ORDER BY COUNT(*) DESC&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>如何判断：</strong><br>如果查询结果中，<code>TRACE</code> 级别的日志占了绝大多数，并且 <code>logs_2.sqlite</code> 文件体积比较大，那就说明 Codex 确实在后台认真地记录着无关紧要的追踪信息。</p>
+<p><strong>参考数据：</strong><br>我的文件大小为 <strong>468MB：</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&gt; <span class="built_in">ls</span> -lh ~/.codex/logs_2.sqlite Jun 23</span><br><span class="line">-rw-r--r--@ 1 mro  staff   468M</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&gt; sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;SELECT level, COUNT(*) FROM logs GROUP BY level ORDER BY COUNT(*) DESC&quot;</span></span><br><span class="line">TRACE|39961</span><br><span class="line">INFO|39919</span><br><span class="line">DEBUG|7307</span><br><span class="line">WARN|177</span><br></pre></td></tr></table></figure>
+
+<p>可以看到 <code>TRACE|39961</code> 占了接近一半的数据，确实存在所说的问题，主要是目前 OpenAI 官方尚未做出修复的回应。</p>
+<h2 id="一劳永逸的解决方案-：直接在数据库拦截"><a href="#一劳永逸的解决方案-：直接在数据库拦截" class="headerlink" title="一劳永逸的解决方案 ：直接在数据库拦截"></a>一劳永逸的解决方案 ：直接在数据库拦截</h2><p><mark>OpenAI 已经修复这个问题了，不需要操作了</mark></p>
+<p>这里提供比较激进、但也最直接的临时方案：给日志表加一个 SQLite 触发器，让新的日志写入被忽略，毕竟这个文件里只有诊断日志，没有对话历史。</p>
+<p>执行前建议先退出 Codex，并备份日志数据库：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cp</span> ~/.codex/logs_2.sqlite ~/.codex/logs_2.sqlite.bak</span><br></pre></td></tr></table></figure>
+<p>然后执行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;CREATE TRIGGER IF NOT EXISTS block_log_inserts BEFORE INSERT ON logs BEGIN SELECT RAISE(IGNORE); END;&quot;</span></span><br></pre></td></tr></table></figure>
+<p>设置完成后，新的日志记录会被拦截，从而减少后续写入。</p>
+<p>需要注意的是，这个方法会影响 Codex 后续生成诊断日志。如果你之后需要向官方反馈问题，或者担心未来版本兼容性，可以先不要使用这个方案，改用定期清理的方式。</p>
+<details class="flatpaper-note flatpaper-note--info"><summary class="flatpaper-note__title"><span class="flatpaper-note__icon" aria-hidden="true"></span><span class="flatpaper-note__label">如何恢复</span><span class="flatpaper-note__chevron" aria-hidden="true"></span></summary><div class="flatpaper-note__body"><p>如果想要恢复的话就是删除这个 trigger 。先退出 Codex，再执行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;DROP TRIGGER IF EXISTS block_log_inserts;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>执行后可以检查是否还存在：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;.schema block_log_inserts&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>如果没有输出，说明已经删除成功。</p>
+<p>也可以用这个命令查看当前所有 trigger：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;SELECT name, tbl_name, sql FROM sqlite_master WHERE type=&#x27;trigger&#x27;;&quot;</span></span><br></pre></td></tr></table></figure></div></details>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>GitHub ISSUE 中的数据是比较夸张的，Codex 的这个日志问题并没有网传的那么吓人，但也感谢 OpenAI 完成了 BUG 的修复，大家用 Codex 敲代码愉快！</p>
 ]]></content>
       <categories>
         <category>笔记</category>
       </categories>
       <tags>
-        <tag>服务器</tag>
+        <tag>OpenAI</tag>
+        <tag>Codex</tag>
       </tags>
   </entry>
   <entry>
@@ -5410,41 +5410,30 @@
       </tags>
   </entry>
   <entry>
-    <title>如何查看 Antigravity 模型额度与 Google AI Credits 剩余情况</title>
-    <url>/post/how-to-check-google-ai-credits.html</url>
-    <content><![CDATA[<div class="flatpaper-note flatpaper-note--danger"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>重大更新： 2026 年 5 月 20 日， Google I&#x2F;O 2026 后， 套餐内不再赠送 AI 点数。</p></div></div>
+    <title>如何查询 Codex 赠送的重置机会的到期日期</title>
+    <url>/post/how-to-check-codex-reset-expiration.html</url>
+    <content><![CDATA[<p>6 月份 Codex 的重置机制改为了可以存储的重置机会，并且由于一些 BUG 6 月份已经赠送了三次免费的重置机会，如通过邀请好友也可以额外获得重置机会，最多三次。但是重置次数只有 30 天的有效期，而 Codex 界面里不会显示每次重置机会的具体到期日期。</p>
+<p>下面给大家提供一个简单的查询方法</p>
+<h2 id="直接让-Codex-自己查询"><a href="#直接让-Codex-自己查询" class="headerlink" title="直接让 Codex 自己查询"></a>直接让 Codex 自己查询</h2><p>方法非常简单，只需要把下面的 <strong>提示词</strong> 发送给 Codex，让它使用本机凭证自行查询即可。思考等级使用中等即可。</p>
+<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">请使用本机 Codex 凭证查一下 rate-limit reset credits：</span><br><span class="line"></span><br><span class="line">读取 `~/.codex/auth.json` 里的 `tokens.access_token`，请求接口：</span><br><span class="line">https://chatgpt.com/backend-api/wham/rate-limit-reset-credits</span><br><span class="line"></span><br><span class="line">要求：</span><br><span class="line"></span><br><span class="line">1. 不要打印 access_token、refresh_token、cookie 或完整唯一 ID</span><br><span class="line">2. 只汇总 available_count、每个 credit 的 status/title/granted_at/expires_at</span><br><span class="line">3. 把 granted_at/expires_at 从 UTC 转成本地时间</span><br><span class="line">4. 如果状态码返回 401，说明是凭证失效或没带对 Authorization header</span><br></pre></td></tr></table></figure>
 
-<p>2026 年 3 月 12 日，Google 再一次收紧了 AI Pro 用户的 <strong>Antigravity</strong> 高级模型调用额度，给 <strong>Gemini 3.1 Pro</strong> 模型也添加了每周刷新限制，不过达到限制时可以通过消耗 Google AI Credits 继续使用，本文将介绍如何查看 Antigravity 不同模型的剩余额度与 <strong>Google AI Credits</strong> 的剩余点数。</p>
-<p>网页上访问 <a href="https://one.google.com/ai/activity">https://one.google.com/ai/activity</a> 即可查看 AI 点数的剩余情况。</p>
-<img src="https://img.nep.me/i/2026/03/check-google-ai-credits.webp" style="width:75%;" alt="check-google-ai-credits.webp" />
+<details class="flatpaper-note flatpaper-note--info"><summary class="flatpaper-note__title"><span class="flatpaper-note__icon" aria-hidden="true"></span><span class="flatpaper-note__label">回复示例</span><span class="flatpaper-note__chevron" aria-hidden="true"></span></summary><div class="flatpaper-note__body"><p>6 月份共赠送三次，我已经用掉了一次，所以显示还剩两次。</p>
+<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">请求成功，状态码 200。</span><br><span class="line">available_count: 2</span><br><span class="line">Credits:</span><br><span class="line">1. status: available</span><br><span class="line">    title: Full reset (Weekly + 5 hr)</span><br><span class="line">    granted_at: 2026-06-18 08:42:00 </span><br><span class="line">    expires_at: 2026-07-18 08:42:00 </span><br><span class="line"></span><br><span class="line">2. status: available</span><br><span class="line">    title: Full reset (Weekly + 5 hr)</span><br><span class="line">    granted_at: 2026-06-27 07:52:00 </span><br><span class="line">    expires_at: 2026-07-27 07:52:00 </span><br></pre></td></tr></table></figure></div></details>
 
-<h2 id="查看-Antigravity-IDE-剩余额度"><a href="#查看-Antigravity-IDE-剩余额度" class="headerlink" title="查看 Antigravity IDE 剩余额度"></a>查看 Antigravity IDE 剩余额度</h2><p>如果你没有安装查看额度的插件，可以在 Antigravity IDE 中的右上角点击齿轮图标，选择 <strong>Open Antigravity IDE User Settings</strong>，在打开的窗口左侧点击 <strong>Models</strong> 即可查看不同模型的当前额度剩余情况。</p>
-<p><img src="https://img.nep.me/i/2026/03/antigravity-models-quota-stats.webp" alt="antigravity-models-quota-stats.webp"></p>
-<blockquote>
-<p>Update: <del>3 月 13 日，打开 Antigravity IDE 设置页面可以看到已重新恢复高级模型的五小时刷新机制，但根据观察使用额度超出 40% 即会变为一周刷新。</del></p>
-</blockquote>
-<blockquote>
-<p>Update: 5 月 20 日，编辑器改名 Antigravity IDE 后优化了额度刷新机制，不再是 5 小时内使用过多后直接变为一周刷新。</p>
-</blockquote>
-<h2 id="查看-Google-AI-Credits-剩余额度"><a href="#查看-Google-AI-Credits-剩余额度" class="headerlink" title="查看 Google AI Credits 剩余额度"></a>查看 Google AI Credits 剩余额度</h2><p>在模型额度界面，我们可以看到有一个开关选项 <strong>Enable AI Credit Overages</strong>，开启后可以通过消耗 AI Credits 来使用模型。</p>
-<blockquote>
-<p>When toggled on, Antigravity will use your AI credits to fulfill model requests once you’re out of model quota. Antigravity will always use your model quota first before using AI credits.</p>
-</blockquote>
-<p><del>如果你是 Google AI Pro &#x2F; Ultra 会员，除了自带了额度以外，每月还可以固定获取一定的 AI 积分。</del></p>
-<p><del>其中 Pro 会员每月可以获得 <strong>1000</strong> 点， Ultra 会员则是 <strong>25000</strong> 点。</del> </p>
-<p><strong>2026 年 5 月 Google 在 Google IO 2026 宣布套餐内不再赠送 AI 点数。</strong></p>
-<p>如果你想查看点数的剩余情况，开启选项即可查看:</p>
-<img src="https://img.nep.me/i/2026/04/antigraviry-enable-ai-credit-overages.webp" style="width:75%;" alt="antigraviry-enable-ai-credit-overages.webp" />
-
-<blockquote>
-<p>如果是家庭组用户，这个点数是所有家庭成员共享的。</p>
-</blockquote>
+<h2 id="OpenAI-赠送的重置记录"><a href="#OpenAI-赠送的重置记录" class="headerlink" title="OpenAI 赠送的重置记录"></a>OpenAI 赠送的重置记录</h2><h3 id="6-月份共赠送三次"><a href="#6-月份共赠送三次" class="headerlink" title="6 月份共赠送三次"></a>6 月份共赠送三次</h3><ol>
+<li>推出重置保存机制时赠送：2026 年 6 月 12 日，到期日期为 <strong>2026 年 7 月 12 日</strong></li>
+<li>BUG 赠送：2026 年 6 月 18 日，到期日期 <strong>2026 年 7 月 18 日</strong></li>
+<li>BUG 赠送：2026 年 6 月 27 日，到期日期 <strong>2026 年 7 月 27 日</strong></li>
+</ol>
+<p>我的查询结果与记录一致。</p>
+<p>快看看你的重置机会什么时候到期吧。Plus 用户每周额度价值大约 100 美元，千万不要浪费了。</p>
 ]]></content>
       <categories>
         <category>笔记</category>
       </categories>
       <tags>
-        <tag>Google</tag>
+        <tag>OpenAI</tag>
+        <tag>Codex</tag>
       </tags>
   </entry>
   <entry>
@@ -6347,6 +6336,44 @@
       <tags>
         <tag>NPM</tag>
         <tag>安全</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>如何查看 Antigravity 模型额度与 Google AI Credits 剩余情况</title>
+    <url>/post/how-to-check-google-ai-credits.html</url>
+    <content><![CDATA[<div class="flatpaper-note flatpaper-note--danger"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>重大更新： 2026 年 5 月 20 日， Google I&#x2F;O 2026 后， 套餐内不再赠送 AI 点数。</p></div></div>
+
+<p>2026 年 3 月 12 日，Google 再一次收紧了 AI Pro 用户的 <strong>Antigravity</strong> 高级模型调用额度，给 <strong>Gemini 3.1 Pro</strong> 模型也添加了每周刷新限制，不过达到限制时可以通过消耗 Google AI Credits 继续使用，本文将介绍如何查看 Antigravity 不同模型的剩余额度与 <strong>Google AI Credits</strong> 的剩余点数。</p>
+<p>网页上访问 <a href="https://one.google.com/ai/activity">https://one.google.com/ai/activity</a> 即可查看 AI 点数的剩余情况。</p>
+<img src="https://img.nep.me/i/2026/03/check-google-ai-credits.webp" style="width:75%;" alt="check-google-ai-credits.webp" />
+
+<h2 id="查看-Antigravity-IDE-剩余额度"><a href="#查看-Antigravity-IDE-剩余额度" class="headerlink" title="查看 Antigravity IDE 剩余额度"></a>查看 Antigravity IDE 剩余额度</h2><p>如果你没有安装查看额度的插件，可以在 Antigravity IDE 中的右上角点击齿轮图标，选择 <strong>Open Antigravity IDE User Settings</strong>，在打开的窗口左侧点击 <strong>Models</strong> 即可查看不同模型的当前额度剩余情况。</p>
+<p><img src="https://img.nep.me/i/2026/03/antigravity-models-quota-stats.webp" alt="antigravity-models-quota-stats.webp"></p>
+<blockquote>
+<p>Update: <del>3 月 13 日，打开 Antigravity IDE 设置页面可以看到已重新恢复高级模型的五小时刷新机制，但根据观察使用额度超出 40% 即会变为一周刷新。</del></p>
+</blockquote>
+<blockquote>
+<p>Update: 5 月 20 日，编辑器改名 Antigravity IDE 后优化了额度刷新机制，不再是 5 小时内使用过多后直接变为一周刷新。</p>
+</blockquote>
+<h2 id="查看-Google-AI-Credits-剩余额度"><a href="#查看-Google-AI-Credits-剩余额度" class="headerlink" title="查看 Google AI Credits 剩余额度"></a>查看 Google AI Credits 剩余额度</h2><p>在模型额度界面，我们可以看到有一个开关选项 <strong>Enable AI Credit Overages</strong>，开启后可以通过消耗 AI Credits 来使用模型。</p>
+<blockquote>
+<p>When toggled on, Antigravity will use your AI credits to fulfill model requests once you’re out of model quota. Antigravity will always use your model quota first before using AI credits.</p>
+</blockquote>
+<p><del>如果你是 Google AI Pro &#x2F; Ultra 会员，除了自带了额度以外，每月还可以固定获取一定的 AI 积分。</del></p>
+<p><del>其中 Pro 会员每月可以获得 <strong>1000</strong> 点， Ultra 会员则是 <strong>25000</strong> 点。</del> </p>
+<p><strong>2026 年 5 月 Google 在 Google IO 2026 宣布套餐内不再赠送 AI 点数。</strong></p>
+<p>如果你想查看点数的剩余情况，开启选项即可查看:</p>
+<img src="https://img.nep.me/i/2026/04/antigraviry-enable-ai-credit-overages.webp" style="width:75%;" alt="antigraviry-enable-ai-credit-overages.webp" />
+
+<blockquote>
+<p>如果是家庭组用户，这个点数是所有家庭成员共享的。</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>Google</tag>
       </tags>
   </entry>
   <entry>

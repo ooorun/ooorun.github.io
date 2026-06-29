@@ -6,7 +6,7 @@
   <link href="https://ooo.run/atom.xml" rel="self"/>
   
   <link href="https://ooo.run/"/>
-  <updated>2026-06-29T07:28:02.300Z</updated>
+  <updated>2026-06-29T08:09:17.329Z</updated>
   <id>https://ooo.run/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>如何查询 Codex 赠送的重置机会的到期日期</title>
+    <link href="https://ooo.run/post/how-to-check-codex-reset-expiration.html"/>
+    <id>https://ooo.run/post/how-to-check-codex-reset-expiration.html</id>
+    <published>2026-06-29T07:48:09.000Z</published>
+    <updated>2026-06-29T08:09:17.329Z</updated>
+    
+    <content type="html"><![CDATA[<p>6 月份 Codex 的重置机制改为了可以存储的重置机会，并且由于一些 BUG 6 月份已经赠送了三次免费的重置机会，如通过邀请好友也可以额外获得重置机会，最多三次。但是重置次数只有 30 天的有效期，而 Codex 界面里不会显示每次重置机会的具体到期日期。</p><p>下面给大家提供一个简单的查询方法</p><h2 id="直接让-Codex-自己查询"><a href="#直接让-Codex-自己查询" class="headerlink" title="直接让 Codex 自己查询"></a>直接让 Codex 自己查询</h2><p>方法非常简单，只需要把下面的 <strong>提示词</strong> 发送给 Codex，让它使用本机凭证自行查询即可。思考等级使用中等即可。</p><figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">请使用本机 Codex 凭证查一下 rate-limit reset credits：</span><br><span class="line"></span><br><span class="line">读取 `~/.codex/auth.json` 里的 `tokens.access_token`，请求接口：</span><br><span class="line">https://chatgpt.com/backend-api/wham/rate-limit-reset-credits</span><br><span class="line"></span><br><span class="line">要求：</span><br><span class="line"></span><br><span class="line">1. 不要打印 access_token、refresh_token、cookie 或完整唯一 ID</span><br><span class="line">2. 只汇总 available_count、每个 credit 的 status/title/granted_at/expires_at</span><br><span class="line">3. 把 granted_at/expires_at 从 UTC 转成本地时间</span><br><span class="line">4. 如果状态码返回 401，说明是凭证失效或没带对 Authorization header</span><br></pre></td></tr></table></figure><details class="flatpaper-note flatpaper-note--info"><summary class="flatpaper-note__title"><span class="flatpaper-note__icon" aria-hidden="true"></span><span class="flatpaper-note__label">回复示例</span><span class="flatpaper-note__chevron" aria-hidden="true"></span></summary><div class="flatpaper-note__body"><p>6 月份共赠送三次，我已经用掉了一次，所以显示还剩两次。</p><figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">请求成功，状态码 200。</span><br><span class="line">available_count: 2</span><br><span class="line">Credits:</span><br><span class="line">1. status: available</span><br><span class="line">    title: Full reset (Weekly + 5 hr)</span><br><span class="line">    granted_at: 2026-06-18 08:42:00 </span><br><span class="line">    expires_at: 2026-07-18 08:42:00 </span><br><span class="line"></span><br><span class="line">2. status: available</span><br><span class="line">    title: Full reset (Weekly + 5 hr)</span><br><span class="line">    granted_at: 2026-06-27 07:52:00 </span><br><span class="line">    expires_at: 2026-07-27 07:52:00 </span><br></pre></td></tr></table></figure></div></details><h2 id="OpenAI-赠送的重置记录"><a href="#OpenAI-赠送的重置记录" class="headerlink" title="OpenAI 赠送的重置记录"></a>OpenAI 赠送的重置记录</h2><h3 id="6-月份共赠送三次"><a href="#6-月份共赠送三次" class="headerlink" title="6 月份共赠送三次"></a>6 月份共赠送三次</h3><ol><li>推出重置保存机制时赠送：2026 年 6 月 12 日，到期日期为 <strong>2026 年 7 月 12 日</strong></li><li>BUG 赠送：2026 年 6 月 18 日，到期日期 <strong>2026 年 7 月 18 日</strong></li><li>BUG 赠送：2026 年 6 月 27 日，到期日期 <strong>2026 年 7 月 27 日</strong></li></ol><p>我的查询结果与记录一致。</p><p>快看看你的重置机会什么时候到期吧。Plus 用户每周额度价值大约 100 美元，千万不要浪费了。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;6 月份 Codex 的重置机制改为了可以存储的重置机会，并且由于一些 BUG 6 月份已经赠送了三次免费的重置机会，如通过邀请好友也可以额外获得重置机会，最多三次。但是重置次数只有 30 天的有效期，而 Codex 界面里不会显示每次重置机会的具体到期日期。&lt;/p&gt;
+&lt;p</summary>
+      
+    
+    
+    
+    <category term="笔记" scheme="https://ooo.run/categories/%E7%AC%94%E8%AE%B0/"/>
+    
+    
+    <category term="OpenAI" scheme="https://ooo.run/tags/OpenAI/"/>
+    
+    <category term="Codex" scheme="https://ooo.run/tags/Codex/"/>
+    
+  </entry>
   
   <entry>
     <title>赛博特权阶级的诞生：从 Fable 5 白名单看 AI 非营利乌托邦的终结</title>
@@ -521,36 +548,6 @@
     <category term="Google IO" scheme="https://ooo.run/tags/Google-IO/"/>
     
     <category term="Angets" scheme="https://ooo.run/tags/Angets/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Google 发布 Antigravity 2.0 ，以及 Antigravity-CLI</title>
-    <link href="https://ooo.run/post/google-launch-antigravity-cli.html"/>
-    <id>https://ooo.run/post/google-launch-antigravity-cli.html</id>
-    <published>2026-05-20T01:58:40.000Z</published>
-    <updated>2026-06-27T19:35:19.878Z</updated>
-    
-    <content type="html"><![CDATA[<p>在 2026 年 5 月 20 日的 Google I&#x2F;O 大会上，Google 正式宣布推出 Antigravity 2.0，以 Agents 驱动为核心作为独立的桌面应用。原 Antigravity 更名为 <strong>Antigravity IDE</strong>，并同时推出 <strong>Antigravity CLI</strong> 取代 <strong>Gemini CLI</strong>。</p><p>Antigravity 2.0 与 IDE 下载页面：<a href="https://antigravity.google/download">Download Google Antigravity</a></p><h2 id="Antigravity-CLI-安装方法"><a href="#Antigravity-CLI-安装方法" class="headerlink" title="Antigravity CLI 安装方法"></a>Antigravity CLI 安装方法</h2><h3 id="macOS-Linux"><a href="#macOS-Linux" class="headerlink" title="macOS &#x2F; Linux"></a>macOS &#x2F; Linux</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -fsSL https://antigravity.google/cli/install.sh | bash</span><br></pre></td></tr></table></figure><h3 id="Windows-PowerShell"><a href="#Windows-PowerShell" class="headerlink" title="Windows PowerShell"></a>Windows PowerShell</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">irm</span> https://antigravity.google/<span class="built_in">cli</span>/install.ps1 | <span class="built_in">iex</span></span><br></pre></td></tr></table></figure><h3 id="Windows-CMD"><a href="#Windows-CMD" class="headerlink" title="Windows CMD"></a>Windows CMD</h3><figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -fsSL https://antigravity.google/cli/install.<span class="built_in">cmd</span> -o install.<span class="built_in">cmd</span> &amp;&amp; install.<span class="built_in">cmd</span> &amp;&amp; <span class="built_in">del</span> install.<span class="built_in">cmd</span></span><br></pre></td></tr></table></figure><h2 id="启动与登录方法"><a href="#启动与登录方法" class="headerlink" title="启动与登录方法"></a>启动与登录方法</h2><h3 id="启动-Antigravity-CLI"><a href="#启动-Antigravity-CLI" class="headerlink" title="启动 Antigravity CLI"></a>启动 Antigravity CLI</h3><p>在终端中运行 <code>agy</code> 即可启动 Antigravity CLI。</p><h3 id="登录方法"><a href="#登录方法" class="headerlink" title="登录方法"></a>登录方法</h3><p>使用 Antigravity CLI 之前，如果已在 Antigravity 或 Antigravity IDE 中登录了 Google 账户，系统将自动进行认证。</p><p>初次启动需要选择代码主题，同意用户协议后即可打开 CLI 界面：</p><p><img src="https://img.nep.me/ooo/antigravity-cli-theme-select.webp" alt="antigravity-cli-theme-select.png"></p><p>界面预览：<br><img src="https://img.nep.me/ooo/antigravity-cli-tui-hello.webp" alt="antigravity-cli-tui.png"></p><p>或者，您也可以选择以下认证方法手动登录：</p><ul><li><strong>Google OAuth</strong></li><li><strong>Use a Google Cloud project</strong></li></ul><p><img src="https://img.nep.me/ooo/antigravity-cli-login-method.webp" alt="antigravity-cli-login-method.png"></p><p>选择 Google OAuth 后，如果没有自动跳转，可以通过粘贴认证代码的方法进行确认，因此也可以在其他设备上使用。</p><h3 id="可选模型"><a href="#可选模型" class="headerlink" title="可选模型"></a>可选模型</h3><p>Google AI Pro 用户在 Antigravity CLI 中可选的模型与 Antigravity IDE 一致：</p><ul><li>Gemini 3.5 Flash (High)      (current)</li><li>Gemini 3.5 Flash (Medium)</li><li>Gemini 3.1 Pro (High)</li><li>Gemini 3.1 Pro (Low)</li><li>Claude Sonnet 4.6 (Thinking)</li><li>Claude Opus 4.6 (Thinking)</li><li>GPT-OSS 120B (Medium)</li></ul><p><img src="https://img.nep.me/ooo/antigravity-cli-model-select.webp" alt="antigravity-cli-model-select.png"></p><h2 id="Antigravity-CLI-介绍"><a href="#Antigravity-CLI-介绍" class="headerlink" title="Antigravity CLI 介绍"></a>Antigravity CLI 介绍</h2><p>Google 表示为了性能表现，使用 Go 语言完成了 Antigravity 的构建，同时 Google 也强调了 Antigravity CLI 的三个演进方向：更快执行、异步工作流，以及与 Antigravity 2.0 共用统一的 agent harness。</p><p>Antigravity CLI 优势：</p><ul><li><strong>执行速度更快</strong>：Antigravity CLI 使用 Go 语言编写，速度更快，响应更迅速。</li><li><strong>异步工作流</strong>：Antigravity CLI 在后台协调多个代理来执行复杂任务，让您可以运行大规模重构或研究多个主题，而不会锁定您的终端会话。</li><li><strong>统一架构</strong>：Antigravity CLI 与 Antigravity 2.0（新的 Antigravity 桌面应用程序）共享相同的代理框架，确保核心代理的所有未来改进都会自动应用到您使用它们的任何地方。</li></ul><h2 id="Gemini-CLI-将终止服务"><a href="#Gemini-CLI-将终止服务" class="headerlink" title="Gemini CLI 将终止服务"></a>Gemini CLI 将终止服务</h2><p>在推出了 Antigravity CLI 后，Google <a href="https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/">表示</a>，自 2026 年 6 月 18 日起，Gemini CLI 和 Gemini Code Assist IDE 扩展程序将停止为 Google AI Pro 和 Ultra 用户提供服务。</p><p>企业用户仍可继续使用。</p><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Antigravity 2.0 的发布，说明 Google 并没有把 AI 编程工具只当作 Gemini 模型的附属功能，而是在重新争夺“下一代代码编辑入口”。这次更新的重点，不是给传统 IDE 再加一个聊天侧边栏，而是把 Antigravity 从 agent-first IDE 升级成更完整的 agentic development platform：桌面端、CLI、SDK 和 API 一起构成新的开发者工作台。</p><p>对用户来说，这种竞争无疑是好事。无论是 Google、OpenAI、Anthropic 还是 Cursor，都在推动代码工具从“补全助手”走向“开发伙伴”。竞争越激烈，开发者能获得的选择越多，价格、体验、模型能力和工作流整合也会被不断拉高。最终受益的，还是每天真正写代码、调试和交付产品的用户。</p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;在 2026 年 5 月 20 日的 Google I&amp;#x2F;O 大会上，Google 正式宣布推出 Antigravity 2.0，以 Agents 驱动为核心作为独立的桌面应用。原 Antigravity 更名为 &lt;strong&gt;Antigravity IDE&lt;/s</summary>
-      
-    
-    
-    
-    <category term="资讯" scheme="https://ooo.run/categories/%E8%B5%84%E8%AE%AF/"/>
-    
-    
-    <category term="AI" scheme="https://ooo.run/tags/AI/"/>
-    
-    <category term="Antigravity" scheme="https://ooo.run/tags/Antigravity/"/>
-    
-    <category term="Google" scheme="https://ooo.run/tags/Google/"/>
-    
-    <category term="Antigravity IDE" scheme="https://ooo.run/tags/Antigravity-IDE/"/>
     
   </entry>
   
