@@ -1624,87 +1624,6 @@
       </tags>
   </entry>
   <entry>
-    <title>OpenAI 发布 GPT-5，新一代人工智能模型正式亮相</title>
-    <url>/post/news-openai-released-gpt-5.html</url>
-    <content><![CDATA[<p><strong>2025 年 8 月 7 日</strong> — OpenAI 正式推出最新旗舰级人工智能模型 <strong>GPT-5</strong>，即日起面向 ChatGPT 用户与开发者开放。该模型在推理、编程与创意生成等方面全面升级，Open AI 称之为迄今最强的通用 AI 模型之一。</p>
-<h2 id="更新"><a href="#更新" class="headerlink" title="更新"></a>更新</h2><blockquote>
-<p>ChatGPT Plus 用户可以选择 GPT-5 Auto、Fast、或是 Thinking 模型，4o 模型重新开放给付费用户，Thinking 模型额度为每周 3000 次<br>2025.08.12 by <a href="https://x.com/sama/status/1955438916645130740">Sam Altman @ x.com</a></p>
-</blockquote>
-<blockquote>
-<p>ChatGPT Plus 中 GPT-5 Thinking 模型上下文为 196k<br>2025.08.12 by <a href="https://x.com/yanndubs/status/1955194413283737716">Yann Dubois @ x.com</a></p>
-</blockquote>
-<h2 id="亮点概览"><a href="#亮点概览" class="headerlink" title="亮点概览"></a>亮点概览</h2><ul>
-<li><p><strong>多版本可选</strong>  </p>
-<ul>
-<li><strong>GPT-5</strong>（标准版）  </li>
-<li><strong>GPT-5 mini</strong>（轻量版，成本更低）  </li>
-<li><strong>GPT-5 nano</strong>（极速低延迟）<br>自动路由系统会根据任务复杂度智能切换模型。</li>
-</ul>
-</li>
-<li><p><strong>推理与编程能力大幅提升</strong>  </p>
-<ul>
-<li>SWE-Bench 测试得分 <strong>74.9%</strong> ，Aider Polyglot 达 <strong>88%</strong> 。  </li>
-<li>一条指令可生成完整网页、游戏或应用原型。</li>
-</ul>
-</li>
-<li><p><strong>更强的多模态能力</strong><br>支持更大上下文窗口、文本与视觉输入，输出效率更高，在 API 中，所有 GPT‑5 模型最多可接受 272,000 个输入令牌，并生成最多 128,000 个推理及输出令牌，总上下文长度为 <strong>40 万</strong> 令牌。</p>
-</li>
-<li><p><strong>全面接入生态</strong><br>除了 OpenAI 自己的平台，已集成至 <strong>Microsoft 365 Copilot、GitHub Copilot、VS Code、Azure AI Foundry</strong> 等平台。<br>覆盖全球约 <strong>7 亿 ChatGPT 用户</strong>。</p>
-</li>
-</ul>
-<h2 id="API-价格"><a href="#API-价格" class="headerlink" title="API 价格"></a>API 价格</h2><p>标准（standard）模式下，每 1 百万 Token 价格为：</p>
-<table>
-<thead>
-<tr>
-<th>Model</th>
-<th>Input</th>
-<th>Cached input</th>
-<th>Output</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>gpt-5</td>
-<td>$1.25</td>
-<td>$0.125</td>
-<td>$10.00</td>
-</tr>
-<tr>
-<td>gpt-5-mini</td>
-<td>$0.25</td>
-<td>$0.025</td>
-<td>$2.00</td>
-</tr>
-<tr>
-<td>gpt-5-nano</td>
-<td>$0.05</td>
-<td>$0.005</td>
-<td>$0.40</td>
-</tr>
-</tbody></table>
-<ul>
-<li>Priority 模式下（响应更快，优先级更高），价格 <strong>翻倍</strong></li>
-<li>Flex 模式下（延迟更高），价格 <strong>减半</strong></li>
-</ul>
-<h2 id="官方立场"><a href="#官方立场" class="headerlink" title="官方立场"></a>官方立场</h2><ul>
-<li>OpenAI CEO <strong>Sam Altman</strong> 称 GPT-5 “像与 PhD 级专家对话”，体验过后“很难回到旧模型”。</li>
-<li>虽性能显著提升，但 OpenAI 表示 GPT-5 <strong>尚非 AGI</strong>，不具备自主学习能力。</li>
-<li>持续改进安全性与一致性，减少幻觉输出。</li>
-</ul>
-<h2 id="发布意义与未来展望"><a href="#发布意义与未来展望" class="headerlink" title="发布意义与未来展望"></a>发布意义与未来展望</h2><p>对于开发者而言，其自动模型路由、多规格 API 带来更低的成本和更高的智能，意味着创新门槛被大幅降低；对于企业，它将深度赋能产品研发、客户服务和战略决策；对于普通用户，它将带来远超想象的个性化智能体验。</p>
-<p>也许 GPT-5 的问世，将是 AI 发展史上的一个重要里程碑，意味着 AI 正从“提供信息的工具”转变为“解决问题的伙伴”。</p>
-<hr>
-<p>来源 <a href="https://openai.com/index/introducing-gpt-5/">openai.com - Introducing GPT-5</a></p>
-]]></content>
-      <categories>
-        <category>资讯</category>
-      </categories>
-      <tags>
-        <tag>AI</tag>
-        <tag>大模型</tag>
-        <tag>OpenAI</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>OpenAI Codex CLI 现已支持使用 ChatGPT 账户登录，默认模型 GPT-5</title>
     <url>/post/openai-codex-support-login-by-chatgpt-plus.html</url>
     <content><![CDATA[<p>Claude 的终端编程助手 Claude Code 越来越火，Google 的 Gemini CLI 也凭借免费额度占领一定的市场份额，这种事情怎么能少了当今 AI 的领头羊 OpenAI 的身影。<br>如今，在 OpenAI 发布 GPT-5 后，Codex CLI 终于支持使用 ChatGPT 账户（Plus &#x2F; Pro）直接登录，并将默认模型切换为 GPT-5。</p>
@@ -1810,6 +1729,87 @@
         <tag>AI</tag>
         <tag>图像生成</tag>
         <tag>Nano Banana</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>OpenAI 发布 GPT-5，新一代人工智能模型正式亮相</title>
+    <url>/post/news-openai-released-gpt-5.html</url>
+    <content><![CDATA[<p><strong>2025 年 8 月 7 日</strong> — OpenAI 正式推出最新旗舰级人工智能模型 <strong>GPT-5</strong>，即日起面向 ChatGPT 用户与开发者开放。该模型在推理、编程与创意生成等方面全面升级，Open AI 称之为迄今最强的通用 AI 模型之一。</p>
+<h2 id="更新"><a href="#更新" class="headerlink" title="更新"></a>更新</h2><blockquote>
+<p>ChatGPT Plus 用户可以选择 GPT-5 Auto、Fast、或是 Thinking 模型，4o 模型重新开放给付费用户，Thinking 模型额度为每周 3000 次<br>2025.08.12 by <a href="https://x.com/sama/status/1955438916645130740">Sam Altman @ x.com</a></p>
+</blockquote>
+<blockquote>
+<p>ChatGPT Plus 中 GPT-5 Thinking 模型上下文为 196k<br>2025.08.12 by <a href="https://x.com/yanndubs/status/1955194413283737716">Yann Dubois @ x.com</a></p>
+</blockquote>
+<h2 id="亮点概览"><a href="#亮点概览" class="headerlink" title="亮点概览"></a>亮点概览</h2><ul>
+<li><p><strong>多版本可选</strong>  </p>
+<ul>
+<li><strong>GPT-5</strong>（标准版）  </li>
+<li><strong>GPT-5 mini</strong>（轻量版，成本更低）  </li>
+<li><strong>GPT-5 nano</strong>（极速低延迟）<br>自动路由系统会根据任务复杂度智能切换模型。</li>
+</ul>
+</li>
+<li><p><strong>推理与编程能力大幅提升</strong>  </p>
+<ul>
+<li>SWE-Bench 测试得分 <strong>74.9%</strong> ，Aider Polyglot 达 <strong>88%</strong> 。  </li>
+<li>一条指令可生成完整网页、游戏或应用原型。</li>
+</ul>
+</li>
+<li><p><strong>更强的多模态能力</strong><br>支持更大上下文窗口、文本与视觉输入，输出效率更高，在 API 中，所有 GPT‑5 模型最多可接受 272,000 个输入令牌，并生成最多 128,000 个推理及输出令牌，总上下文长度为 <strong>40 万</strong> 令牌。</p>
+</li>
+<li><p><strong>全面接入生态</strong><br>除了 OpenAI 自己的平台，已集成至 <strong>Microsoft 365 Copilot、GitHub Copilot、VS Code、Azure AI Foundry</strong> 等平台。<br>覆盖全球约 <strong>7 亿 ChatGPT 用户</strong>。</p>
+</li>
+</ul>
+<h2 id="API-价格"><a href="#API-价格" class="headerlink" title="API 价格"></a>API 价格</h2><p>标准（standard）模式下，每 1 百万 Token 价格为：</p>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Input</th>
+<th>Cached input</th>
+<th>Output</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>gpt-5</td>
+<td>$1.25</td>
+<td>$0.125</td>
+<td>$10.00</td>
+</tr>
+<tr>
+<td>gpt-5-mini</td>
+<td>$0.25</td>
+<td>$0.025</td>
+<td>$2.00</td>
+</tr>
+<tr>
+<td>gpt-5-nano</td>
+<td>$0.05</td>
+<td>$0.005</td>
+<td>$0.40</td>
+</tr>
+</tbody></table>
+<ul>
+<li>Priority 模式下（响应更快，优先级更高），价格 <strong>翻倍</strong></li>
+<li>Flex 模式下（延迟更高），价格 <strong>减半</strong></li>
+</ul>
+<h2 id="官方立场"><a href="#官方立场" class="headerlink" title="官方立场"></a>官方立场</h2><ul>
+<li>OpenAI CEO <strong>Sam Altman</strong> 称 GPT-5 “像与 PhD 级专家对话”，体验过后“很难回到旧模型”。</li>
+<li>虽性能显著提升，但 OpenAI 表示 GPT-5 <strong>尚非 AGI</strong>，不具备自主学习能力。</li>
+<li>持续改进安全性与一致性，减少幻觉输出。</li>
+</ul>
+<h2 id="发布意义与未来展望"><a href="#发布意义与未来展望" class="headerlink" title="发布意义与未来展望"></a>发布意义与未来展望</h2><p>对于开发者而言，其自动模型路由、多规格 API 带来更低的成本和更高的智能，意味着创新门槛被大幅降低；对于企业，它将深度赋能产品研发、客户服务和战略决策；对于普通用户，它将带来远超想象的个性化智能体验。</p>
+<p>也许 GPT-5 的问世，将是 AI 发展史上的一个重要里程碑，意味着 AI 正从“提供信息的工具”转变为“解决问题的伙伴”。</p>
+<hr>
+<p>来源 <a href="https://openai.com/index/introducing-gpt-5/">openai.com - Introducing GPT-5</a></p>
+]]></content>
+      <categories>
+        <category>资讯</category>
+      </categories>
+      <tags>
+        <tag>AI</tag>
+        <tag>大模型</tag>
+        <tag>OpenAI</tag>
       </tags>
   </entry>
   <entry>
@@ -2683,31 +2683,6 @@
       </tags>
   </entry>
   <entry>
-    <title>趣站分享：Flolife.me —— 基于 AI 的人生旅程模拟器</title>
-    <url>/post/website-flolife.html</url>
-    <content><![CDATA[<p>还记得曾经风靡一时的人生重开模拟器吗？现在，Flowith 带来了一款更进一步的 AI 人生旅程模拟器 —— Flolife.me。它利用当前热门的 Nano Banana 图片模型，能够根据你上传的头像，生成贯穿角色一生的、具有惊人一致性的事件照片。</p>
-<p>整个过程完全免费，无需注册登录，体验非常流畅。访问 <a href="https://flolife.me/">Flolife.me</a> 后，只需点击 <code>一键开始测试</code> 按钮，即可开启你的人生模拟之旅。<br><img src="https://img.nep.me/i/2025/09/03/flolife-homepage.webp" style="width:75%;" alt="flolife-homepage" /></p>
-<p>首先是角色创建环节。在这里，你需要输入角色的姓名、性别、出生地，并分配总共 24 点的初始属性。</p>
-<p>我们的 “小明”智利超群也拥有比较 “健康” 的体魄，至于其他属性就顾不上了。<br><img src="https://img.nep.me/i/2025/09/03/flolife-step-1.webp" style="width:75%;" alt="flolife-step-1" /></p>
-<p>接下来，你可以选择上传一张头像，并为你的角色添加性格和爱好的描述，以获得更具个性化的体验。当然，这两个步骤都是可选的。<br><img src="https://img.nep.me/i/2025/09/03/flolife-step-2.webp" style="width:75%;" alt="flolife-step-2" /></p>
-<p>完成设置后，点击 <strong>开始旅程</strong>，小明的人生故事就此展开！</p>
-<p>在小明的人生旅程中，AI 会在关键节点生成独特的照片，记录下那些重要瞬间。</p>
-<p>或是小明的一次选择，又或是一次意外的变故，都可能将故事引向截然不同的结局，而这都会显示旅程模拟器之中。</p>
-<img src="https://img.nep.me/i/2025/09/03/flolife-journey.webp" style="width:75%;" alt="flolife-journey" />
-
-<p>旅程结束后，你还可以点击右上角的分享按钮，挑选五个关键事件，生成一份精美的人生报告，回顾一生中的亮点。<br><img src="https://img.nep.me/i/2025/09/03/flolife-report.webp" alt="flolife-report"></p>
-<p>是不是很有趣？马上访问 <a href="https://flolife.me/">Flolife.me</a>，开启一段模拟的人生旅程吧！</p>
-]]></content>
-      <categories>
-        <category>工具资源</category>
-      </categories>
-      <tags>
-        <tag>AI</tag>
-        <tag>趣味网站</tag>
-        <tag>Flowith</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>实用网站：Linux Journey —— 从新手到高手的 Linux 学习之路</title>
     <url>/post/website-linux-journey.html</url>
     <content><![CDATA[<p>如果你是一位 Self-Hosted 爱好者，那么掌握 Linux 知识是必备技能。然而，许多初学者常常面临不知从何学起、网上教程零散、缺乏系统性等问题。</p>
@@ -2738,6 +2713,31 @@
       <tags>
         <tag>Linux</tag>
         <tag>实用网站</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>趣站分享：Flolife.me —— 基于 AI 的人生旅程模拟器</title>
+    <url>/post/website-flolife.html</url>
+    <content><![CDATA[<p>还记得曾经风靡一时的人生重开模拟器吗？现在，Flowith 带来了一款更进一步的 AI 人生旅程模拟器 —— Flolife.me。它利用当前热门的 Nano Banana 图片模型，能够根据你上传的头像，生成贯穿角色一生的、具有惊人一致性的事件照片。</p>
+<p>整个过程完全免费，无需注册登录，体验非常流畅。访问 <a href="https://flolife.me/">Flolife.me</a> 后，只需点击 <code>一键开始测试</code> 按钮，即可开启你的人生模拟之旅。<br><img src="https://img.nep.me/i/2025/09/03/flolife-homepage.webp" style="width:75%;" alt="flolife-homepage" /></p>
+<p>首先是角色创建环节。在这里，你需要输入角色的姓名、性别、出生地，并分配总共 24 点的初始属性。</p>
+<p>我们的 “小明”智利超群也拥有比较 “健康” 的体魄，至于其他属性就顾不上了。<br><img src="https://img.nep.me/i/2025/09/03/flolife-step-1.webp" style="width:75%;" alt="flolife-step-1" /></p>
+<p>接下来，你可以选择上传一张头像，并为你的角色添加性格和爱好的描述，以获得更具个性化的体验。当然，这两个步骤都是可选的。<br><img src="https://img.nep.me/i/2025/09/03/flolife-step-2.webp" style="width:75%;" alt="flolife-step-2" /></p>
+<p>完成设置后，点击 <strong>开始旅程</strong>，小明的人生故事就此展开！</p>
+<p>在小明的人生旅程中，AI 会在关键节点生成独特的照片，记录下那些重要瞬间。</p>
+<p>或是小明的一次选择，又或是一次意外的变故，都可能将故事引向截然不同的结局，而这都会显示旅程模拟器之中。</p>
+<img src="https://img.nep.me/i/2025/09/03/flolife-journey.webp" style="width:75%;" alt="flolife-journey" />
+
+<p>旅程结束后，你还可以点击右上角的分享按钮，挑选五个关键事件，生成一份精美的人生报告，回顾一生中的亮点。<br><img src="https://img.nep.me/i/2025/09/03/flolife-report.webp" alt="flolife-report"></p>
+<p>是不是很有趣？马上访问 <a href="https://flolife.me/">Flolife.me</a>，开启一段模拟的人生旅程吧！</p>
+]]></content>
+      <categories>
+        <category>工具资源</category>
+      </categories>
+      <tags>
+        <tag>AI</tag>
+        <tag>趣味网站</tag>
+        <tag>Flowith</tag>
       </tags>
   </entry>
   <entry>
@@ -2909,35 +2909,6 @@
       <tags>
         <tag>Antigravity</tag>
         <tag>Agent Skills</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Anthropic 发布 Claude Mythos Preview，但不会向普通用户开放</title>
-    <url>/post/anthropic-announced-claude-mythos-preview.html</url>
-    <content><![CDATA[<p>2026 年 4 月 8 日，Anthropic 正式发布了有关新的模型 Claude Mythos Preview，并表示基于安全原因不会向普通用户开放该模型。</p>
-<p>Anthropic 表示这是一个全新的通用语言模型，该模型在各个方面都表现出色，尤其在计算机安全任务方面更是卓越非凡。</p>
-<p>在 Anthropic 的测试中，新的模型在网络安全领域展现了超凡能力，能够在用户指示下，识别并利用所有主流操作系统和主流浏览器中的零日漏洞。</p>
-<p>以下是 Anthropic 提供的应用示例：</p>
-<ul>
-<li>发现了一个在 OpenBSD 中存在了 27 年的漏洞 (OpenBSD 是一个以其安全性著称的操作系统) 。</li>
-<li>编写了一个 Web 浏览器漏洞利用程序，将四个漏洞串联起来，绕过了浏览器的沙箱保护。</li>
-<li>Mythos Preview 自主识别出 FFmpeg 最流行的编解码器之一 H.264 中一个存在了 16 年的漏洞。</li>
-<li>Mythos Preview 完全自主地识别并利用了 FreeBSD 中一个存在了 17 年的远程代码执行漏洞，该漏洞允许任何人获取运行NFS 的机器的 root 权限。</li>
-<li>Mythos Preview 发现了一些 Linux 内核漏洞，这些漏洞允许攻击者进行越界写入（例如，通过缓冲区溢出、释放后使用或双重释放漏洞）。</li>
-</ul>
-<p>具体内容可以查看原文链接：<a href="https://red.anthropic.com/2026/mythos-preview/">Assessing Claude Mythos Preview’s cybersecurity capabilities</a></p>
-<p>根据 Mythos Preview 在测试中表现的能力，Anthropic 表示这揭示了一个严峻的事实：人工智能模型的编码能力已经达到了极高的水平，在发现和利用软件漏洞方面，它们几乎可以超越除最熟练的人类之外的所有人。</p>
-<p>因此 Anthropic 启动了 <a href="https://www.anthropic.com/glasswing">Glasswing</a> 项目，汇集所有顶尖企业包含 Amazon、Anthropic、苹果、博通、思科、CrowdStrike、谷歌、摩根大通、Linux 基金会、微软、英伟达等企业，旨在保护世界上最关键的软件。</p>
-<p>如果事实真如 Anthropic 所言，这将标志着 AI 正在重写网络安全的底层规则，我们构建了几十年的数字防线正面临前所未有的危机，“识别漏洞” 将从从人类专家的漫长审计变为 AI 模型的本能。</p>
-<p>而我们普通用户在短期内将无法接触到这一模型，这不免也是一种遗憾。</p>
-]]></content>
-      <categories>
-        <category>资讯</category>
-      </categories>
-      <tags>
-        <tag>AI</tag>
-        <tag>Claude Mythos</tag>
-        <tag>Anthropic</tag>
       </tags>
   </entry>
   <entry>
@@ -3541,6 +3512,35 @@
       </tags>
   </entry>
   <entry>
+    <title>Anthropic 发布 Claude Mythos Preview，但不会向普通用户开放</title>
+    <url>/post/anthropic-announced-claude-mythos-preview.html</url>
+    <content><![CDATA[<p>2026 年 4 月 8 日，Anthropic 正式发布了有关新的模型 Claude Mythos Preview，并表示基于安全原因不会向普通用户开放该模型。</p>
+<p>Anthropic 表示这是一个全新的通用语言模型，该模型在各个方面都表现出色，尤其在计算机安全任务方面更是卓越非凡。</p>
+<p>在 Anthropic 的测试中，新的模型在网络安全领域展现了超凡能力，能够在用户指示下，识别并利用所有主流操作系统和主流浏览器中的零日漏洞。</p>
+<p>以下是 Anthropic 提供的应用示例：</p>
+<ul>
+<li>发现了一个在 OpenBSD 中存在了 27 年的漏洞 (OpenBSD 是一个以其安全性著称的操作系统) 。</li>
+<li>编写了一个 Web 浏览器漏洞利用程序，将四个漏洞串联起来，绕过了浏览器的沙箱保护。</li>
+<li>Mythos Preview 自主识别出 FFmpeg 最流行的编解码器之一 H.264 中一个存在了 16 年的漏洞。</li>
+<li>Mythos Preview 完全自主地识别并利用了 FreeBSD 中一个存在了 17 年的远程代码执行漏洞，该漏洞允许任何人获取运行NFS 的机器的 root 权限。</li>
+<li>Mythos Preview 发现了一些 Linux 内核漏洞，这些漏洞允许攻击者进行越界写入（例如，通过缓冲区溢出、释放后使用或双重释放漏洞）。</li>
+</ul>
+<p>具体内容可以查看原文链接：<a href="https://red.anthropic.com/2026/mythos-preview/">Assessing Claude Mythos Preview’s cybersecurity capabilities</a></p>
+<p>根据 Mythos Preview 在测试中表现的能力，Anthropic 表示这揭示了一个严峻的事实：人工智能模型的编码能力已经达到了极高的水平，在发现和利用软件漏洞方面，它们几乎可以超越除最熟练的人类之外的所有人。</p>
+<p>因此 Anthropic 启动了 <a href="https://www.anthropic.com/glasswing">Glasswing</a> 项目，汇集所有顶尖企业包含 Amazon、Anthropic、苹果、博通、思科、CrowdStrike、谷歌、摩根大通、Linux 基金会、微软、英伟达等企业，旨在保护世界上最关键的软件。</p>
+<p>如果事实真如 Anthropic 所言，这将标志着 AI 正在重写网络安全的底层规则，我们构建了几十年的数字防线正面临前所未有的危机，“识别漏洞” 将从从人类专家的漫长审计变为 AI 模型的本能。</p>
+<p>而我们普通用户在短期内将无法接触到这一模型，这不免也是一种遗憾。</p>
+]]></content>
+      <categories>
+        <category>资讯</category>
+      </categories>
+      <tags>
+        <tag>AI</tag>
+        <tag>Claude Mythos</tag>
+        <tag>Anthropic</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Anthropic 发布 Claude Fable 5：首个公开 Mythos-class 模型亮相，但充满限制</title>
     <url>/post/anthropic-releases-claude-fable-5.html</url>
     <content><![CDATA[<h2 id="发布信息"><a href="#发布信息" class="headerlink" title="发布信息"></a>发布信息</h2><p>Anthropic 于美国时间 <strong>2026 年 6 月 9 日</strong> 宣布推出 <code>Claude Fable 5</code> 和 <code>Claude Mythos 5</code> 。其中，<strong>Claude Fable 5</strong> 被定位为 Anthropic 迄今 “最强的广泛发布模型” ，面向普通用户和开发者开放；Claude Mythos 5 则与 Fable 5 共享底层模型能力，但在部分安全限制上更少，当前仅向 Project Glasswing 中获批的网络安全防御方和基础设施合作伙伴有限开放。</p>
@@ -3602,6 +3602,96 @@
         <tag>AI</tag>
         <tag>Claude</tag>
         <tag>Claude Fable 5</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>AI 正在影响消费者的钱包：苹果大幅上调多款产品价格</title>
+    <url>/post/apple-products-price-increase.html</url>
+    <content><![CDATA[<p>自 2025 年 11 月以来，内存和存储芯片价格持续上涨，至今仍未出现明显放缓迹象。美国头部 AI 企业持续加码数据中心建设，大量采购内存与存储元件，也进一步挤压了消费电子厂商的供应空间。如今，苹果也开始将这部分成本压力传导到终端产品上，宣布上调 iPhone 产品线之外多款设备的售价。</p>
+<p>在通过科技媒体 MacRumors 发布的声明中，苹果公司表示本轮涨价主要受内存 RAM 和存储 SSD 元件影响：</p>
+<blockquote>
+<p>消费电子行业正面临前所未有的挑战，人工智能数据中心的快速扩张导致内存和存储需求激增。我们从未见过如此大幅度、如此迅速的元器件价格上涨。</p>
+<p>我们此前一直内部消化元件成本上涨压力，尽力避免冲击波及我们的客户。包括今天 iPad 和 Mac 等产品的涨价在内，现在我们不得不开始提高部分产品的价格。我们知道这对大家来说并非好消息，我们正在竭尽全力寻找解决方案。</p>
+</blockquote>
+<h2 id="价格调整详情"><a href="#价格调整详情" class="headerlink" title="价格调整详情"></a>价格调整详情</h2><p>下图是不同产品的上涨情况：</p>
+<p><img src="https://img.nep.me/ooo/apple-price-up.webp" alt="apple-price-up.jpg"></p>
+<table>
+<thead>
+<tr>
+<th align="left">产品</th>
+<th align="left">当前官网起售价</th>
+<th align="left">发售时起售价</th>
+<th align="left">变化</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">MacBook Neo</td>
+<td align="left">¥5,499</td>
+<td align="left">¥4,599</td>
+<td align="left">+¥900</td>
+</tr>
+<tr>
+<td align="left">MacBook Air M5 13 英寸</td>
+<td align="left">¥9,999</td>
+<td align="left">¥8,499</td>
+<td align="left">+¥1,500</td>
+</tr>
+<tr>
+<td align="left">MacBook Pro M5 系列</td>
+<td align="left">¥15,999</td>
+<td align="left">¥13,499</td>
+<td align="left">+¥2,500</td>
+</tr>
+<tr>
+<td align="left">Mac mini M4</td>
+<td align="left">¥5,999</td>
+<td align="left">¥4,499</td>
+<td align="left">+¥1,500</td>
+</tr>
+<tr>
+<td align="left">iPad Pro 11 英寸 M5</td>
+<td align="left">¥10,799</td>
+<td align="left">¥8,999</td>
+<td align="left">+¥1,800</td>
+</tr>
+<tr>
+<td align="left">iPad Air 11 英寸 M4</td>
+<td align="left">¥5,999</td>
+<td align="left">¥4,799</td>
+<td align="left">+¥1,200</td>
+</tr>
+<tr>
+<td align="left">iPad A16</td>
+<td align="left">¥3,799</td>
+<td align="left">¥2,999</td>
+<td align="left">+¥800</td>
+</tr>
+<tr>
+<td align="left">iPad mini A17 Pro</td>
+<td align="left">¥4,799</td>
+<td align="left">¥3,999</td>
+<td align="left">+¥800</td>
+</tr>
+</tbody></table>
+<p>一同上涨的还有提升存储配置的价格，以 MacBook Pro 系列为例，部分机型每增加 1TB SSD 存储，定制价格已达到 3750 元。</p>
+<p><img src="https://img.nep.me/ooo/apple-price-up-ssd.webp" alt="apple-price-up-ssd.png"></p>
+<h2 id="微软上调-XBOX-产品价格"><a href="#微软上调-XBOX-产品价格" class="headerlink" title="微软上调 XBOX 产品价格"></a>微软上调 XBOX 产品价格</h2><p>于此同时微软也一同上调了 XBOX 的产品线价格，在微软的声明中指出</p>
+<blockquote>
+<p>推动本轮涨价的主要原因是存储和内存成本大幅攀升。“游戏主机存储和内存价格已经涨超2.5倍，我们预计到2027年秋季还会再翻一番。</p>
+</blockquote>
+<h2 id="美光回应"><a href="#美光回应" class="headerlink" title="美光回应"></a>美光回应</h2><p>值得注意的是，围绕本轮存储芯片涨价，苹果与供应链厂商之间也出现了微妙的责任归属分歧。由于苹果方面表示，内存供应紧张、存储厂商大幅涨价，正在迫使苹果上调产品售价。但作为苹果供应商之一，美光科技首席商务官 Sumit Sadana 随后回应称，<mark>苹果此前激进的压价采购策略，才是当前存储供应紧缺的重要原因之一</mark>。</p>
+<p>这个说法的背景在于，上一轮存储行业低谷期，消费电子需求疲软，苹果等大客户利用自身议价能力持续压低采购价格，导致部分存储厂商一度陷入负毛利，生产越多亏得越多。为了止血，厂商不得不削减资本开支、放缓扩产计划，甚至缩减部分长期投资。</p>
+<p>而当 AI 数据中心需求突然爆发，内存和存储芯片重新进入供不应求周期时，过去被压下去的产能投资缺口就开始反噬整个产业链。换句话说，今天的涨价并不只是 AI 企业抢产能造成的短期波动，也和上一轮行业低谷中消费电子厂商过度压价、供应商被迫收缩投资有关。</p>
+<p>这也让这次涨价不再只是单纯的 “AI 成本上涨” 问题，而更像是消费电子供应链长期博弈的一次集中爆发。过去被压在供应链里的成本矛盾，最终还是绕了一圈，回到了消费者的钱包上。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这件事也再次提醒我们，现代科技产品从来不是某一家公司的孤立成果。一台 Mac、一部 iPad，背后连接的是芯片设计、存储制造、软件生态、能源供应、物流运输，以及跨越多个国家和地区的协作网络。任何一个环节出现紧张，最后都会在终端市场上体现出来。</p>
+<p>过去几年，全球科技产业在地缘政治、供应链重组和贸易壁垒中不断被切割。短期来看，这或许能带来所谓的“安全感”，但长期来看，重复建设、产能错配和合作受阻，都会推高整个行业的成本。而这些成本，最终仍然会由企业、开发者和消费者共同承担。</p>
+<p>希望这次由 AI 带来的价格波动，能让更多人重新意识到全球合作的重要性。科技进步本该让更多人受益，而不是让资源被少数巨头争抢、让普通用户被迫为更高的成本买单。比起各自为战，我们更需要一个开放、稳定、互相信任的全球产业链，让创新回到提升效率、降低成本、改善生活的方向上。</p>
+]]></content>
+      <categories>
+        <category>资讯</category>
+      </categories>
+      <tags>
+        <tag>APPLE</tag>
       </tags>
   </entry>
   <entry>
@@ -3733,96 +3823,6 @@
       </tags>
   </entry>
   <entry>
-    <title>AI 正在影响消费者的钱包：苹果大幅上调多款产品价格</title>
-    <url>/post/apple-products-price-increase.html</url>
-    <content><![CDATA[<p>自 2025 年 11 月以来，内存和存储芯片价格持续上涨，至今仍未出现明显放缓迹象。美国头部 AI 企业持续加码数据中心建设，大量采购内存与存储元件，也进一步挤压了消费电子厂商的供应空间。如今，苹果也开始将这部分成本压力传导到终端产品上，宣布上调 iPhone 产品线之外多款设备的售价。</p>
-<p>在通过科技媒体 MacRumors 发布的声明中，苹果公司表示本轮涨价主要受内存 RAM 和存储 SSD 元件影响：</p>
-<blockquote>
-<p>消费电子行业正面临前所未有的挑战，人工智能数据中心的快速扩张导致内存和存储需求激增。我们从未见过如此大幅度、如此迅速的元器件价格上涨。</p>
-<p>我们此前一直内部消化元件成本上涨压力，尽力避免冲击波及我们的客户。包括今天 iPad 和 Mac 等产品的涨价在内，现在我们不得不开始提高部分产品的价格。我们知道这对大家来说并非好消息，我们正在竭尽全力寻找解决方案。</p>
-</blockquote>
-<h2 id="价格调整详情"><a href="#价格调整详情" class="headerlink" title="价格调整详情"></a>价格调整详情</h2><p>下图是不同产品的上涨情况：</p>
-<p><img src="https://img.nep.me/ooo/apple-price-up.webp" alt="apple-price-up.jpg"></p>
-<table>
-<thead>
-<tr>
-<th align="left">产品</th>
-<th align="left">当前官网起售价</th>
-<th align="left">发售时起售价</th>
-<th align="left">变化</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">MacBook Neo</td>
-<td align="left">¥5,499</td>
-<td align="left">¥4,599</td>
-<td align="left">+¥900</td>
-</tr>
-<tr>
-<td align="left">MacBook Air M5 13 英寸</td>
-<td align="left">¥9,999</td>
-<td align="left">¥8,499</td>
-<td align="left">+¥1,500</td>
-</tr>
-<tr>
-<td align="left">MacBook Pro M5 系列</td>
-<td align="left">¥15,999</td>
-<td align="left">¥13,499</td>
-<td align="left">+¥2,500</td>
-</tr>
-<tr>
-<td align="left">Mac mini M4</td>
-<td align="left">¥5,999</td>
-<td align="left">¥4,499</td>
-<td align="left">+¥1,500</td>
-</tr>
-<tr>
-<td align="left">iPad Pro 11 英寸 M5</td>
-<td align="left">¥10,799</td>
-<td align="left">¥8,999</td>
-<td align="left">+¥1,800</td>
-</tr>
-<tr>
-<td align="left">iPad Air 11 英寸 M4</td>
-<td align="left">¥5,999</td>
-<td align="left">¥4,799</td>
-<td align="left">+¥1,200</td>
-</tr>
-<tr>
-<td align="left">iPad A16</td>
-<td align="left">¥3,799</td>
-<td align="left">¥2,999</td>
-<td align="left">+¥800</td>
-</tr>
-<tr>
-<td align="left">iPad mini A17 Pro</td>
-<td align="left">¥4,799</td>
-<td align="left">¥3,999</td>
-<td align="left">+¥800</td>
-</tr>
-</tbody></table>
-<p>一同上涨的还有提升存储配置的价格，以 MacBook Pro 系列为例，部分机型每增加 1TB SSD 存储，定制价格已达到 3750 元。</p>
-<p><img src="https://img.nep.me/ooo/apple-price-up-ssd.webp" alt="apple-price-up-ssd.png"></p>
-<h2 id="微软上调-XBOX-产品价格"><a href="#微软上调-XBOX-产品价格" class="headerlink" title="微软上调 XBOX 产品价格"></a>微软上调 XBOX 产品价格</h2><p>于此同时微软也一同上调了 XBOX 的产品线价格，在微软的声明中指出</p>
-<blockquote>
-<p>推动本轮涨价的主要原因是存储和内存成本大幅攀升。“游戏主机存储和内存价格已经涨超2.5倍，我们预计到2027年秋季还会再翻一番。</p>
-</blockquote>
-<h2 id="美光回应"><a href="#美光回应" class="headerlink" title="美光回应"></a>美光回应</h2><p>值得注意的是，围绕本轮存储芯片涨价，苹果与供应链厂商之间也出现了微妙的责任归属分歧。由于苹果方面表示，内存供应紧张、存储厂商大幅涨价，正在迫使苹果上调产品售价。但作为苹果供应商之一，美光科技首席商务官 Sumit Sadana 随后回应称，<mark>苹果此前激进的压价采购策略，才是当前存储供应紧缺的重要原因之一</mark>。</p>
-<p>这个说法的背景在于，上一轮存储行业低谷期，消费电子需求疲软，苹果等大客户利用自身议价能力持续压低采购价格，导致部分存储厂商一度陷入负毛利，生产越多亏得越多。为了止血，厂商不得不削减资本开支、放缓扩产计划，甚至缩减部分长期投资。</p>
-<p>而当 AI 数据中心需求突然爆发，内存和存储芯片重新进入供不应求周期时，过去被压下去的产能投资缺口就开始反噬整个产业链。换句话说，今天的涨价并不只是 AI 企业抢产能造成的短期波动，也和上一轮行业低谷中消费电子厂商过度压价、供应商被迫收缩投资有关。</p>
-<p>这也让这次涨价不再只是单纯的 “AI 成本上涨” 问题，而更像是消费电子供应链长期博弈的一次集中爆发。过去被压在供应链里的成本矛盾，最终还是绕了一圈，回到了消费者的钱包上。</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这件事也再次提醒我们，现代科技产品从来不是某一家公司的孤立成果。一台 Mac、一部 iPad，背后连接的是芯片设计、存储制造、软件生态、能源供应、物流运输，以及跨越多个国家和地区的协作网络。任何一个环节出现紧张，最后都会在终端市场上体现出来。</p>
-<p>过去几年，全球科技产业在地缘政治、供应链重组和贸易壁垒中不断被切割。短期来看，这或许能带来所谓的“安全感”，但长期来看，重复建设、产能错配和合作受阻，都会推高整个行业的成本。而这些成本，最终仍然会由企业、开发者和消费者共同承担。</p>
-<p>希望这次由 AI 带来的价格波动，能让更多人重新意识到全球合作的重要性。科技进步本该让更多人受益，而不是让资源被少数巨头争抢、让普通用户被迫为更高的成本买单。比起各自为战，我们更需要一个开放、稳定、互相信任的全球产业链，让创新回到提升效率、降低成本、改善生活的方向上。</p>
-]]></content>
-      <categories>
-        <category>资讯</category>
-      </categories>
-      <tags>
-        <tag>APPLE</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>不使用插件让 Claude Code 显示额度使用情况</title>
     <url>/post/claude-code-show-5h-quota-without-plugin.html</url>
     <content><![CDATA[<p>Claude Code 不像 Codex 那样执行 <code>/statusline</code> 命令后提供选项直接快速调整可以显示的内容，执行 <code>/statusline</code> 其实是调用模型去分析然后修改 <code>~/.claude/settings.json</code> 文件。</p>
@@ -3895,6 +3895,102 @@
       <tags>
         <tag>Anthropic</tag>
         <tag>Opus</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Codex 的日志记录消耗 SSD 寿命？OpenAI 已修复</title>
+    <url>/post/codex-is-buring-your-ssd.html</url>
+    <content><![CDATA[<h2 id="Bug-信息"><a href="#Bug-信息" class="headerlink" title="Bug 信息"></a>Bug 信息</h2><div class="flatpaper-note flatpaper-note--primary"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>好消息，OpenAI 已在 Codex 0.142.0 版本中修复了这个问题，可以放心使用。</p></div></div>
+
+<p>最近，Codex 凭借其强大的功能和丝滑的体验，周活跃用户已经突破了 <strong>500 万</strong> 大关。越来越多的开发者和极客都已经把它当成了日常高频使用的得力助手。</p>
+<p>不过，随着使用人数的增加，有用户反馈，在某些流式输出或自动化任务场景下，Codex 会持续向本地磁盘写入 TRACE 级别的日志。</p>
+<p>GitHUb 的 <a href="https://github.com/openai/codex/issues/28224">ISSUE</a> 上声称该 BUG 可能会产生 <strong>640GB&#x2F;年</strong> 的写入，这对于消费级 SSD 来说是致命的。对于目前主流的 1TB 或 2TB 消费级固态硬盘（标称寿命通常在 600TBW ~ 1200TBW）来说，可以说是非常严重。</p>
+<p><strong>而且，正因为现在 AI 浪潮空前火热，全球对高带宽、高性能存储的需求集中爆发，导致现在的 SSD 固态硬盘价格一路上涨，存储成本变得相当昂贵，尤其是 mac 设备的硬盘无法更换。在这种寸土寸金的时期，我们对硬盘的每一度磨损、每一 G 空间都不得不更加精打细算。</strong></p>
+<hr>
+<h2 id="1分钟自查：你中招了吗？"><a href="#1分钟自查：你中招了吗？" class="headerlink" title="1分钟自查：你中招了吗？"></a>1分钟自查：你中招了吗？</h2><p>如果你使用的是 Linux 或 Mac 系统，可以直接通过终端跑两行命令看看情况。</p>
+<p>首先，看看日志文件的大小：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">ls</span> -lh ~/.codex/logs_2.sqlite</span><br></pre></td></tr></table></figure>
+
+<p>然后，统计一下日志的写入级别：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;SELECT level, COUNT(*) FROM logs GROUP BY level ORDER BY COUNT(*) DESC&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>如何判断：</strong><br>如果查询结果中，<code>TRACE</code> 级别的日志占了绝大多数，并且 <code>logs_2.sqlite</code> 文件体积比较大，那就说明 Codex 确实在后台认真地记录着无关紧要的追踪信息。</p>
+<p><strong>参考数据：</strong><br>我的文件大小为 <strong>468MB：</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&gt; <span class="built_in">ls</span> -lh ~/.codex/logs_2.sqlite Jun 23</span><br><span class="line">-rw-r--r--@ 1 mro  staff   468M</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&gt; sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;SELECT level, COUNT(*) FROM logs GROUP BY level ORDER BY COUNT(*) DESC&quot;</span></span><br><span class="line">TRACE|39961</span><br><span class="line">INFO|39919</span><br><span class="line">DEBUG|7307</span><br><span class="line">WARN|177</span><br></pre></td></tr></table></figure>
+
+<p>可以看到 <code>TRACE|39961</code> 占了接近一半的数据，确实存在所说的问题，主要是目前 OpenAI 官方尚未做出修复的回应。</p>
+<h2 id="一劳永逸的解决方案-：直接在数据库拦截"><a href="#一劳永逸的解决方案-：直接在数据库拦截" class="headerlink" title="一劳永逸的解决方案 ：直接在数据库拦截"></a>一劳永逸的解决方案 ：直接在数据库拦截</h2><p><mark>OpenAI 已经修复这个问题了，不需要操作了</mark></p>
+<p>这里提供比较激进、但也最直接的临时方案：给日志表加一个 SQLite 触发器，让新的日志写入被忽略，毕竟这个文件里只有诊断日志，没有对话历史。</p>
+<p>执行前建议先退出 Codex，并备份日志数据库：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cp</span> ~/.codex/logs_2.sqlite ~/.codex/logs_2.sqlite.bak</span><br></pre></td></tr></table></figure>
+<p>然后执行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;CREATE TRIGGER IF NOT EXISTS block_log_inserts BEFORE INSERT ON logs BEGIN SELECT RAISE(IGNORE); END;&quot;</span></span><br></pre></td></tr></table></figure>
+<p>设置完成后，新的日志记录会被拦截，从而减少后续写入。</p>
+<p>需要注意的是，这个方法会影响 Codex 后续生成诊断日志。如果你之后需要向官方反馈问题，或者担心未来版本兼容性，可以先不要使用这个方案，改用定期清理的方式。</p>
+<details class="flatpaper-note flatpaper-note--info"><summary class="flatpaper-note__title"><span class="flatpaper-note__icon" aria-hidden="true"></span><span class="flatpaper-note__label">如何恢复</span><span class="flatpaper-note__chevron" aria-hidden="true"></span></summary><div class="flatpaper-note__body"><p>如果想要恢复的话就是删除这个 trigger 。先退出 Codex，再执行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;DROP TRIGGER IF EXISTS block_log_inserts;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>执行后可以检查是否还存在：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;.schema block_log_inserts&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>如果没有输出，说明已经删除成功。</p>
+<p>也可以用这个命令查看当前所有 trigger：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;SELECT name, tbl_name, sql FROM sqlite_master WHERE type=&#x27;trigger&#x27;;&quot;</span></span><br></pre></td></tr></table></figure></div></details>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>GitHub ISSUE 中的数据是比较夸张的，Codex 的这个日志问题并没有网传的那么吓人，但也感谢 OpenAI 完成了 BUG 的修复，大家用 Codex 敲代码愉快！</p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>OpenAI</tag>
+        <tag>Codex</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>新时代挖矿：看看你的 Mac 一个月能赚多少钱</title>
+    <url>/post/darkbloom-nodes-macbook-ai-mining-earnings.html</url>
+    <content><![CDATA[<p>曾经，无数人为了比特币和以太坊疯狂囤积显卡，把家里变成轰鸣的矿场。随着传统加密货币 “显卡挖矿” 时代的逐渐降温，很多人以为用个人电脑赚取被动收入的日子已经结束了。然而，随着 AI 大模型时代的爆发，一种全新的 “挖矿” 模式正在悄然兴起——AI 节点推理算力共享。</p>
+<p>最近，随着本地模型的能力进步，<a href="https://www.darkbloom.dev/#nodes">Darkbloom</a> 平台的出现向我们揭示了这一前景。在这个新时代，你不需要去计算毫无意义的哈希值，而是让你的电脑成为 AI 基础设施的一部分，通过为真实用户运行大语言模型（如 <code>Gemma 4 26B</code> ）来赚取收益。而在这场新游戏里，凭借着高带宽的统一内存架构，Apple 的 Mac 电脑意外地成为了最完美的 “矿机”。</p>
+<h2 id="Darbloom-介绍"><a href="#Darbloom-介绍" class="headerlink" title="Darbloom 介绍"></a>Darbloom 介绍</h2><p><a href="https://www.darkbloom.dev/">Darkbloom.dev</a> 可以将 MacBook 变成一个可产生收益的私有硬件节点网络。用户只需在 Mac 上安装一个命令行界面 (CLI)，设备就可以在闲置时自动接收并处理 AI 推理请求。开发者则可以通过兼容 OpenAI 的 API 调用这些分布式算力。设备每生成一个代币，节点运营者就能获得相应的美元收益。 </p>
+<p>这个项目背后的技术来自 Eigen Labs，相关论文和代码已经开源。其核心卖点是：在保护用户请求隐私的前提下，让普通 Apple Silicon 设备参与 AI 推理市场。<br>链接：<a href="https://github.com/Layr-Labs/d-inference/blob/master/papers/dginf-private-inference.pdf">https://github.com/Layr-Labs/d-inference/blob/master/papers/dginf-private-inference.pdf</a></p>
+<h2 id="Mac-变身-AI-服务器：到底能赚多少？"><a href="#Mac-变身-AI-服务器：到底能赚多少？" class="headerlink" title="Mac 变身 AI 服务器：到底能赚多少？"></a>Mac 变身 AI 服务器：到底能赚多少？</h2><p>按照项目方介绍，节点运营者可以获得 95% 的推理收入，平台抽取 5%。</p>
+<p>除了硬件设备，运营唯一的成本是电费，而 Apple Silicon 的功耗极低。即使在满负荷推理的情况下，每小时也只需 0.01 到 0.03 美元。这就像点亮一个灯泡一样。</p>
+<p>我们来看看 Darkbloom 提供的收益预估数据：</p>
+<h3 id="1-顶配印钞机：MacBook-Pro-M5-Max-128GB-内存"><a href="#1-顶配印钞机：MacBook-Pro-M5-Max-128GB-内存" class="headerlink" title="1. 顶配印钞机：MacBook Pro (M5 Max, 128GB 内存)"></a>1. 顶配印钞机：MacBook Pro (M5 Max, 128GB 内存)</h3><p>如果你拥有一台搭载 M5 Max 芯片和 128GB 内存的顶级 MacBook Pro，这台机器简直是为跑大模型而生的。它庞大的内存可以轻松装下甚至并行处理巨大的模型。</p>
+<ul>
+<li><strong>运行状态</strong>：每天运行 18 小时（比如下班后的闲置时间）。</li>
+<li><strong>处理速度</strong>：批量解码速度高达惊人的 <code>1326.2</code> tok&#x2F;s。</li>
+<li><strong>每月收益</strong>：预估每月总收入约为 <strong>$425.40</strong> 。扣除电费后，每月净赚约 $423（折合人民币约 3000 多元）！</li>
+</ul>
+<p>一年下来收益可达 <strong>$5,076</strong>，而在 Apple 官网上 <strong>M5 Max + 128GB RAM + 2TB</strong> 版本现在仅售 <strong>5399</strong> 美元（大陆官网售价 43,499 元）， 可以说这笔钱不仅足够你覆盖买电脑的成本，甚至相当于电脑自己在给自己打工还贷。</p>
+<p><img src="https://img.nep.me/ooo/darkbloom-m5max.webp" alt="darkbloom-m5max"></p>
+<h3 id="2-性能中坚：MacBook-Pro-M4-Pro-48GB-内存"><a href="#2-性能中坚：MacBook-Pro-M4-Pro-48GB-内存" class="headerlink" title="2. 性能中坚：MacBook Pro (M4 Pro, 48GB 内存)"></a>2. 性能中坚：MacBook Pro (M4 Pro, 48GB 内存)</h3><p>如果你的配置是偏向主流的工作站，比如搭载 M4 Pro 芯片和 48GB 内存的版本。</p>
+<ul>
+<li><strong>运行状态</strong>：同样每天运行 18 小时。</li>
+<li><strong>处理速度</strong>：<code>589.7</code> tok&#x2F;s。</li>
+<li><strong>每月收益</strong>：依然可以获得每月约 <strong>$188 美元</strong>（折合人民币约 1300 多元）的净收入。</li>
+</ul>
+<p>一年也有 $2,252 的进账。对于仅仅是利用电脑闲置时间的睡后收入来说，这绝对是一笔非常可观的零花钱。</p>
+<p><img src="https://img.nep.me/ooo/darkbloom-m4pro.webp" alt="darkbloom-m4pro"></p>
+<h2 id="Apple-Silicon-的恐怖能效"><a href="#Apple-Silicon-的恐怖能效" class="headerlink" title="Apple Silicon 的恐怖能效"></a>Apple Silicon 的恐怖能效</h2><p>传统挖矿最让人头疼的就是高昂的电费和机器狂转的噪音。但在这场AI 挖矿中，Apple M 系列芯片展现出了极其恐怖的能效比。</p>
+<p>以电费 $0.15&#x2F;kWh 计算，那台每月能为你赚取 425 美元的 M5 Max MacBook Pro，一整个月消耗的电费仅仅只有 $2.43；而 M4 Pro 版本的月电费更是低至 $1.46。电费成本甚至占不到总收入的 1%。没有轰鸣的风扇，没有天价电费账单，只有静悄悄地跑着大模型赚钱的优雅。</p>
+<p>AI 时代的算力需求是无穷无尽的，而去中心化的个人算力网络或许就是下一座金矿。你的 Mac 已经不再仅仅是一个昂贵的生产力工具，它完全有潜力成为你的“数字打工仔”。</p>
+<h2 id="结语与风险提示"><a href="#结语与风险提示" class="headerlink" title="结语与风险提示"></a>结语与风险提示</h2><p>当然，作为一个新兴领域，我们也要保持理性的预期。目前，Darkbloom 等平台已经在 Hacker News、Reddit 和 LinkedIn 等主流开发者社区引发了公开讨论。好消息是，目前尚未出现任何诈骗报告；但根据早期参与测试的节点用户反馈，当前网络中分配到的任务还主要是 Health Checks ，真实的商业推理需求仍然处于低位。这意味着官方计算器给出的高额预测相对较为乐观。</p>
+<p>更重要的是，如今大模型的进步速度实在是太快了。现在开源社区就已经迭代到了 Gemma 4 26B 这样庞大且高效的模型。AI 领域的算法架构、量化技术和吞吐量优化几乎每个月都在刷新。今天的配置组合可能刚好能吃满红利，但三个月后，随着更强、更大的模型诞生，整个网络对硬件门槛和带宽的要求可能会迎来彻底的洗牌。</p>
+<p>这注定是一场与技术演进赛跑的游戏。未来的实际收益，将极大地受制于真实商业请求的爆发、模型迭代的速度以及平台的后续运营。</p>
+<div class="flatpaper-note flatpaper-note--warning"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>请务必记住，以上数据只是参考，大家看看这些预估数据，把它当个有趣的参考就行。</p></div></div>
+]]></content>
+      <categories>
+        <category>工具资源</category>
+      </categories>
+      <tags>
+        <tag>AI</tag>
+        <tag>Apple</tag>
+        <tag>Darkbloom</tag>
+        <tag>MacBook</tag>
       </tags>
   </entry>
   <entry>
@@ -4618,102 +4714,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Codex 的日志记录消耗 SSD 寿命？OpenAI 已修复</title>
-    <url>/post/codex-is-buring-your-ssd.html</url>
-    <content><![CDATA[<h2 id="Bug-信息"><a href="#Bug-信息" class="headerlink" title="Bug 信息"></a>Bug 信息</h2><div class="flatpaper-note flatpaper-note--primary"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>好消息，OpenAI 已在 Codex 0.142.0 版本中修复了这个问题，可以放心使用。</p></div></div>
-
-<p>最近，Codex 凭借其强大的功能和丝滑的体验，周活跃用户已经突破了 <strong>500 万</strong> 大关。越来越多的开发者和极客都已经把它当成了日常高频使用的得力助手。</p>
-<p>不过，随着使用人数的增加，有用户反馈，在某些流式输出或自动化任务场景下，Codex 会持续向本地磁盘写入 TRACE 级别的日志。</p>
-<p>GitHUb 的 <a href="https://github.com/openai/codex/issues/28224">ISSUE</a> 上声称该 BUG 可能会产生 <strong>640GB&#x2F;年</strong> 的写入，这对于消费级 SSD 来说是致命的。对于目前主流的 1TB 或 2TB 消费级固态硬盘（标称寿命通常在 600TBW ~ 1200TBW）来说，可以说是非常严重。</p>
-<p><strong>而且，正因为现在 AI 浪潮空前火热，全球对高带宽、高性能存储的需求集中爆发，导致现在的 SSD 固态硬盘价格一路上涨，存储成本变得相当昂贵，尤其是 mac 设备的硬盘无法更换。在这种寸土寸金的时期，我们对硬盘的每一度磨损、每一 G 空间都不得不更加精打细算。</strong></p>
-<hr>
-<h2 id="1分钟自查：你中招了吗？"><a href="#1分钟自查：你中招了吗？" class="headerlink" title="1分钟自查：你中招了吗？"></a>1分钟自查：你中招了吗？</h2><p>如果你使用的是 Linux 或 Mac 系统，可以直接通过终端跑两行命令看看情况。</p>
-<p>首先，看看日志文件的大小：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">ls</span> -lh ~/.codex/logs_2.sqlite</span><br></pre></td></tr></table></figure>
-
-<p>然后，统计一下日志的写入级别：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;SELECT level, COUNT(*) FROM logs GROUP BY level ORDER BY COUNT(*) DESC&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>如何判断：</strong><br>如果查询结果中，<code>TRACE</code> 级别的日志占了绝大多数，并且 <code>logs_2.sqlite</code> 文件体积比较大，那就说明 Codex 确实在后台认真地记录着无关紧要的追踪信息。</p>
-<p><strong>参考数据：</strong><br>我的文件大小为 <strong>468MB：</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&gt; <span class="built_in">ls</span> -lh ~/.codex/logs_2.sqlite Jun 23</span><br><span class="line">-rw-r--r--@ 1 mro  staff   468M</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&gt; sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;SELECT level, COUNT(*) FROM logs GROUP BY level ORDER BY COUNT(*) DESC&quot;</span></span><br><span class="line">TRACE|39961</span><br><span class="line">INFO|39919</span><br><span class="line">DEBUG|7307</span><br><span class="line">WARN|177</span><br></pre></td></tr></table></figure>
-
-<p>可以看到 <code>TRACE|39961</code> 占了接近一半的数据，确实存在所说的问题，主要是目前 OpenAI 官方尚未做出修复的回应。</p>
-<h2 id="一劳永逸的解决方案-：直接在数据库拦截"><a href="#一劳永逸的解决方案-：直接在数据库拦截" class="headerlink" title="一劳永逸的解决方案 ：直接在数据库拦截"></a>一劳永逸的解决方案 ：直接在数据库拦截</h2><p><mark>OpenAI 已经修复这个问题了，不需要操作了</mark></p>
-<p>这里提供比较激进、但也最直接的临时方案：给日志表加一个 SQLite 触发器，让新的日志写入被忽略，毕竟这个文件里只有诊断日志，没有对话历史。</p>
-<p>执行前建议先退出 Codex，并备份日志数据库：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cp</span> ~/.codex/logs_2.sqlite ~/.codex/logs_2.sqlite.bak</span><br></pre></td></tr></table></figure>
-<p>然后执行：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;CREATE TRIGGER IF NOT EXISTS block_log_inserts BEFORE INSERT ON logs BEGIN SELECT RAISE(IGNORE); END;&quot;</span></span><br></pre></td></tr></table></figure>
-<p>设置完成后，新的日志记录会被拦截，从而减少后续写入。</p>
-<p>需要注意的是，这个方法会影响 Codex 后续生成诊断日志。如果你之后需要向官方反馈问题，或者担心未来版本兼容性，可以先不要使用这个方案，改用定期清理的方式。</p>
-<details class="flatpaper-note flatpaper-note--info"><summary class="flatpaper-note__title"><span class="flatpaper-note__icon" aria-hidden="true"></span><span class="flatpaper-note__label">如何恢复</span><span class="flatpaper-note__chevron" aria-hidden="true"></span></summary><div class="flatpaper-note__body"><p>如果想要恢复的话就是删除这个 trigger 。先退出 Codex，再执行：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;DROP TRIGGER IF EXISTS block_log_inserts;&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>执行后可以检查是否还存在：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;.schema block_log_inserts&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>如果没有输出，说明已经删除成功。</p>
-<p>也可以用这个命令查看当前所有 trigger：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;SELECT name, tbl_name, sql FROM sqlite_master WHERE type=&#x27;trigger&#x27;;&quot;</span></span><br></pre></td></tr></table></figure></div></details>
-
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>GitHub ISSUE 中的数据是比较夸张的，Codex 的这个日志问题并没有网传的那么吓人，但也感谢 OpenAI 完成了 BUG 的修复，大家用 Codex 敲代码愉快！</p>
-]]></content>
-      <categories>
-        <category>笔记</category>
-      </categories>
-      <tags>
-        <tag>OpenAI</tag>
-        <tag>Codex</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>新时代挖矿：看看你的 Mac 一个月能赚多少钱</title>
-    <url>/post/darkbloom-nodes-macbook-ai-mining-earnings.html</url>
-    <content><![CDATA[<p>曾经，无数人为了比特币和以太坊疯狂囤积显卡，把家里变成轰鸣的矿场。随着传统加密货币 “显卡挖矿” 时代的逐渐降温，很多人以为用个人电脑赚取被动收入的日子已经结束了。然而，随着 AI 大模型时代的爆发，一种全新的 “挖矿” 模式正在悄然兴起——AI 节点推理算力共享。</p>
-<p>最近，随着本地模型的能力进步，<a href="https://www.darkbloom.dev/#nodes">Darkbloom</a> 平台的出现向我们揭示了这一前景。在这个新时代，你不需要去计算毫无意义的哈希值，而是让你的电脑成为 AI 基础设施的一部分，通过为真实用户运行大语言模型（如 <code>Gemma 4 26B</code> ）来赚取收益。而在这场新游戏里，凭借着高带宽的统一内存架构，Apple 的 Mac 电脑意外地成为了最完美的 “矿机”。</p>
-<h2 id="Darbloom-介绍"><a href="#Darbloom-介绍" class="headerlink" title="Darbloom 介绍"></a>Darbloom 介绍</h2><p><a href="https://www.darkbloom.dev/">Darkbloom.dev</a> 可以将 MacBook 变成一个可产生收益的私有硬件节点网络。用户只需在 Mac 上安装一个命令行界面 (CLI)，设备就可以在闲置时自动接收并处理 AI 推理请求。开发者则可以通过兼容 OpenAI 的 API 调用这些分布式算力。设备每生成一个代币，节点运营者就能获得相应的美元收益。 </p>
-<p>这个项目背后的技术来自 Eigen Labs，相关论文和代码已经开源。其核心卖点是：在保护用户请求隐私的前提下，让普通 Apple Silicon 设备参与 AI 推理市场。<br>链接：<a href="https://github.com/Layr-Labs/d-inference/blob/master/papers/dginf-private-inference.pdf">https://github.com/Layr-Labs/d-inference/blob/master/papers/dginf-private-inference.pdf</a></p>
-<h2 id="Mac-变身-AI-服务器：到底能赚多少？"><a href="#Mac-变身-AI-服务器：到底能赚多少？" class="headerlink" title="Mac 变身 AI 服务器：到底能赚多少？"></a>Mac 变身 AI 服务器：到底能赚多少？</h2><p>按照项目方介绍，节点运营者可以获得 95% 的推理收入，平台抽取 5%。</p>
-<p>除了硬件设备，运营唯一的成本是电费，而 Apple Silicon 的功耗极低。即使在满负荷推理的情况下，每小时也只需 0.01 到 0.03 美元。这就像点亮一个灯泡一样。</p>
-<p>我们来看看 Darkbloom 提供的收益预估数据：</p>
-<h3 id="1-顶配印钞机：MacBook-Pro-M5-Max-128GB-内存"><a href="#1-顶配印钞机：MacBook-Pro-M5-Max-128GB-内存" class="headerlink" title="1. 顶配印钞机：MacBook Pro (M5 Max, 128GB 内存)"></a>1. 顶配印钞机：MacBook Pro (M5 Max, 128GB 内存)</h3><p>如果你拥有一台搭载 M5 Max 芯片和 128GB 内存的顶级 MacBook Pro，这台机器简直是为跑大模型而生的。它庞大的内存可以轻松装下甚至并行处理巨大的模型。</p>
-<ul>
-<li><strong>运行状态</strong>：每天运行 18 小时（比如下班后的闲置时间）。</li>
-<li><strong>处理速度</strong>：批量解码速度高达惊人的 <code>1326.2</code> tok&#x2F;s。</li>
-<li><strong>每月收益</strong>：预估每月总收入约为 <strong>$425.40</strong> 。扣除电费后，每月净赚约 $423（折合人民币约 3000 多元）！</li>
-</ul>
-<p>一年下来收益可达 <strong>$5,076</strong>，而在 Apple 官网上 <strong>M5 Max + 128GB RAM + 2TB</strong> 版本现在仅售 <strong>5399</strong> 美元（大陆官网售价 43,499 元）， 可以说这笔钱不仅足够你覆盖买电脑的成本，甚至相当于电脑自己在给自己打工还贷。</p>
-<p><img src="https://img.nep.me/ooo/darkbloom-m5max.webp" alt="darkbloom-m5max"></p>
-<h3 id="2-性能中坚：MacBook-Pro-M4-Pro-48GB-内存"><a href="#2-性能中坚：MacBook-Pro-M4-Pro-48GB-内存" class="headerlink" title="2. 性能中坚：MacBook Pro (M4 Pro, 48GB 内存)"></a>2. 性能中坚：MacBook Pro (M4 Pro, 48GB 内存)</h3><p>如果你的配置是偏向主流的工作站，比如搭载 M4 Pro 芯片和 48GB 内存的版本。</p>
-<ul>
-<li><strong>运行状态</strong>：同样每天运行 18 小时。</li>
-<li><strong>处理速度</strong>：<code>589.7</code> tok&#x2F;s。</li>
-<li><strong>每月收益</strong>：依然可以获得每月约 <strong>$188 美元</strong>（折合人民币约 1300 多元）的净收入。</li>
-</ul>
-<p>一年也有 $2,252 的进账。对于仅仅是利用电脑闲置时间的睡后收入来说，这绝对是一笔非常可观的零花钱。</p>
-<p><img src="https://img.nep.me/ooo/darkbloom-m4pro.webp" alt="darkbloom-m4pro"></p>
-<h2 id="Apple-Silicon-的恐怖能效"><a href="#Apple-Silicon-的恐怖能效" class="headerlink" title="Apple Silicon 的恐怖能效"></a>Apple Silicon 的恐怖能效</h2><p>传统挖矿最让人头疼的就是高昂的电费和机器狂转的噪音。但在这场AI 挖矿中，Apple M 系列芯片展现出了极其恐怖的能效比。</p>
-<p>以电费 $0.15&#x2F;kWh 计算，那台每月能为你赚取 425 美元的 M5 Max MacBook Pro，一整个月消耗的电费仅仅只有 $2.43；而 M4 Pro 版本的月电费更是低至 $1.46。电费成本甚至占不到总收入的 1%。没有轰鸣的风扇，没有天价电费账单，只有静悄悄地跑着大模型赚钱的优雅。</p>
-<p>AI 时代的算力需求是无穷无尽的，而去中心化的个人算力网络或许就是下一座金矿。你的 Mac 已经不再仅仅是一个昂贵的生产力工具，它完全有潜力成为你的“数字打工仔”。</p>
-<h2 id="结语与风险提示"><a href="#结语与风险提示" class="headerlink" title="结语与风险提示"></a>结语与风险提示</h2><p>当然，作为一个新兴领域，我们也要保持理性的预期。目前，Darkbloom 等平台已经在 Hacker News、Reddit 和 LinkedIn 等主流开发者社区引发了公开讨论。好消息是，目前尚未出现任何诈骗报告；但根据早期参与测试的节点用户反馈，当前网络中分配到的任务还主要是 Health Checks ，真实的商业推理需求仍然处于低位。这意味着官方计算器给出的高额预测相对较为乐观。</p>
-<p>更重要的是，如今大模型的进步速度实在是太快了。现在开源社区就已经迭代到了 Gemma 4 26B 这样庞大且高效的模型。AI 领域的算法架构、量化技术和吞吐量优化几乎每个月都在刷新。今天的配置组合可能刚好能吃满红利，但三个月后，随着更强、更大的模型诞生，整个网络对硬件门槛和带宽的要求可能会迎来彻底的洗牌。</p>
-<p>这注定是一场与技术演进赛跑的游戏。未来的实际收益，将极大地受制于真实商业请求的爆发、模型迭代的速度以及平台的后续运营。</p>
-<div class="flatpaper-note flatpaper-note--warning"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>请务必记住，以上数据只是参考，大家看看这些预估数据，把它当个有趣的参考就行。</p></div></div>
-]]></content>
-      <categories>
-        <category>工具资源</category>
-      </categories>
-      <tags>
-        <tag>AI</tag>
-        <tag>Apple</tag>
-        <tag>Darkbloom</tag>
-        <tag>MacBook</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>使用 Docker 部署 Fizzy ： 一个轻量、漂亮、可自托管的看板工具</title>
     <url>/post/docker-run-fizzy-kanban.html</url>
     <content><![CDATA[<h2 id="Fizzy-介绍"><a href="#Fizzy-介绍" class="headerlink" title="Fizzy 介绍"></a>Fizzy 介绍</h2><p>Fizzy (<a href="https://fizzy.do/">https://fizzy.do</a>) 是由著名软件公司 <mark>37signals</mark>（开发过 Basecamp 和 HEY 的团队）推出的一款全新 <strong>看板</strong> 任务管理工具。主打快速、简单、色彩鲜明，非常适合用来跟踪 Bug、想法、小项目和内容流程。</p>
@@ -4833,29 +4833,12 @@
 <p>不过，局面并非完全没有转机。以 <strong>GLM 5.2</strong> 为代表的中国顶尖开源模型正在展现出越来越强的竞争力。如果它能在代码、推理、工具调用与长上下文等关键能力上持续追近甚至反超闭源白名单模型，那么全球开发者至少不会被迫完全依赖少数美国 API。它的强力表现，有望在一定程度上缓解这种由算力、资本与国家权力共同制造的技术阶层分化。</p>
 ]]></content>
       <categories>
-        <category>科技评论</category>
+        <category>评论</category>
       </categories>
       <tags>
         <tag>AI</tag>
         <tag>OpenAI</tag>
         <tag>Claude Fable 5</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>解决 Antigravity 通过 SSH 连接远程服务器崩溃的问题</title>
-    <url>/post/fix-antigravity-ssh-remote-crash-problem.html</url>
-    <content><![CDATA[<h2 id="问题详情"><a href="#问题详情" class="headerlink" title="问题详情"></a>问题详情</h2><p>在使用 Google Antigravity 通过 SSH 连接运行在 <strong>PVE</strong> 的 <strong>Linux 虚拟机</strong> 时，会直接崩溃，报错信息如下：</p>
-<blockquote>
-<p>Antigravity server crashed unexpectedly. Please restart to fully restore AI features.</p>
-</blockquote>
-<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>在 PVE 中将 Linux 虚拟机的 <strong>CPU 类型</strong> 设置为 <code>host</code>，再尝试连接就可以了。</p>
-<p>参考： <a href="https://discuss.ai.google.dev/t/antigravity-crashes-on-linux-but-works-on-windows/110355/3">Antigravity crashes on Linux, but works on Windows</a></p>
-]]></content>
-      <categories>
-        <category>笔记</category>
-      </categories>
-      <tags>
-        <tag>Antigravity</tag>
       </tags>
   </entry>
   <entry>
@@ -5026,6 +5009,23 @@
       <tags>
         <tag>Google</tag>
         <tag>Gmail</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>解决 Antigravity 通过 SSH 连接远程服务器崩溃的问题</title>
+    <url>/post/fix-antigravity-ssh-remote-crash-problem.html</url>
+    <content><![CDATA[<h2 id="问题详情"><a href="#问题详情" class="headerlink" title="问题详情"></a>问题详情</h2><p>在使用 Google Antigravity 通过 SSH 连接运行在 <strong>PVE</strong> 的 <strong>Linux 虚拟机</strong> 时，会直接崩溃，报错信息如下：</p>
+<blockquote>
+<p>Antigravity server crashed unexpectedly. Please restart to fully restore AI features.</p>
+</blockquote>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>在 PVE 中将 Linux 虚拟机的 <strong>CPU 类型</strong> 设置为 <code>host</code>，再尝试连接就可以了。</p>
+<p>参考： <a href="https://discuss.ai.google.dev/t/antigravity-crashes-on-linux-but-works-on-windows/110355/3">Antigravity crashes on Linux, but works on Windows</a></p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>Antigravity</tag>
       </tags>
   </entry>
   <entry>
