@@ -18,16 +18,16 @@
 <meta name="theme-color" content="#f7f3e9">
 
 <title>在 Debian 12 中安装 Docker 以及 Docker Compose | O&#39;s World</title>
-<meta name="description" content="现在越来越多的应用可以使用 Docker 一键部署，本文将介绍如何在 Debian 12 中安装 Docker 与 Docker Compose。 验证环境 123456root@debian:~# lsb_release -aNo LSB modules are available.Distributor ID: DebianDescription: De...">
+<meta name="description" content="已更新本文环境配置可能较老。 我们已为您准备了针对更新系统环境的最新教程，请查看：在 Debian 13 中安装 Docker 以及 Docker Compose 现在越来越多的应用可以使用 Docker 一键部署，本文将介绍如何在 Debian 12 中安装 Docker 与 Docker Compose。 验证环境 123456root@debian:~...">
 <meta property="og:type" content="article">
 <meta property="og:title" content="在 Debian 12 中安装 Docker 以及 Docker Compose | O&#39;s World">
 <meta property="og:url" content="https://ooo.run/post/debian-install-docker.html">
 <meta property="og:site_name" content="O&#39;s World">
-<meta property="og:description" content="现在越来越多的应用可以使用 Docker 一键部署，本文将介绍如何在 Debian 12 中安装 Docker 与 Docker Compose。 验证环境 123456root@debian:~# lsb_release -aNo LSB modules are available.Distributor ID: DebianDescription: De...">
+<meta property="og:description" content="已更新本文环境配置可能较老。 我们已为您准备了针对更新系统环境的最新教程，请查看：在 Debian 13 中安装 Docker 以及 Docker Compose 现在越来越多的应用可以使用 Docker 一键部署，本文将介绍如何在 Debian 12 中安装 Docker 与 Docker Compose。 验证环境 123456root@debian:~...">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://img.nep.me/i/2025/08/04/cover-debian-install-docker-and-compose.webp">
 <meta property="article:published_time" content="2024-12-14T09:04:34.000Z">
-<meta property="article:modified_time" content="2026-06-24T21:18:15.648Z">
+<meta property="article:modified_time" content="2026-06-29T20:21:29.411Z">
 <meta property="article:author" content="Mr. O">
 <meta property="article:tag" content="Debian">
 <meta property="article:tag" content="Docker">
@@ -37,7 +37,7 @@
 <meta name="twitter:image" content="https://img.nep.me/i/2025/08/04/cover-debian-install-docker-and-compose.webp">
 <link rel="canonical" href="https://ooo.run/post/debian-install-docker.html">
 
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"在 Debian 12 中安装 Docker 以及 Docker Compose","name":"在 Debian 12 中安装 Docker 以及 Docker Compose | O's World","description":"现在越来越多的应用可以使用 Docker 一键部署，本文将介绍如何在 Debian 12 中安装 Docker 与 Docker Compose。 验证环境 123456root@debian:~# lsb_release -aNo LSB modules are available.Distributor ID: DebianDescription: De...","url":"https://ooo.run/post/debian-install-docker.html","inLanguage":"zh-CN","isPartOf":{"@type":"WebSite","name":"O's World","url":"https://ooo.run/"},"image":["https://img.nep.me/i/2025/08/04/cover-debian-install-docker-and-compose.webp"],"mainEntityOfPage":"https://ooo.run/post/debian-install-docker.html","datePublished":"2024-12-14T09:04:34.000Z","dateModified":"2026-06-24T21:18:15.648Z","author":{"@type":"Person","name":"Mr. O"},"publisher":{"@type":"Organization","name":"O's World"},"keywords":"Docker, Docker Compose, Debian, Linux"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"在 Debian 12 中安装 Docker 以及 Docker Compose","name":"在 Debian 12 中安装 Docker 以及 Docker Compose | O's World","description":"已更新本文环境配置可能较老。 我们已为您准备了针对更新系统环境的最新教程，请查看：在 Debian 13 中安装 Docker 以及 Docker Compose 现在越来越多的应用可以使用 Docker 一键部署，本文将介绍如何在 Debian 12 中安装 Docker 与 Docker Compose。 验证环境 123456root@debian:~...","url":"https://ooo.run/post/debian-install-docker.html","inLanguage":"zh-CN","isPartOf":{"@type":"WebSite","name":"O's World","url":"https://ooo.run/"},"image":["https://img.nep.me/i/2025/08/04/cover-debian-install-docker-and-compose.webp"],"mainEntityOfPage":"https://ooo.run/post/debian-install-docker.html","datePublished":"2024-12-14T09:04:34.000Z","dateModified":"2026-06-29T20:21:29.411Z","author":{"@type":"Person","name":"Mr. O"},"publisher":{"@type":"Organization","name":"O's World"},"keywords":"Docker, Docker Compose, Debian, Linux"}</script>
 
 <script>
   (function () {
@@ -344,7 +344,7 @@
         
           
             <a class="site-info__item" href="/archives/">
-              <strong>70</strong>
+              <strong>72</strong>
               <span>文章</span>
             </a>
           
@@ -358,7 +358,7 @@
         
           
             <a class="site-info__item" href="/tags/">
-              <strong>105</strong>
+              <strong>106</strong>
               <span>标签</span>
             </a>
           
@@ -456,6 +456,20 @@
     <ul class="recent-list">
       
         <li>
+          <a class="recent-item" href="/post/debian-13-install-docker.html">
+            <strong>2026 Debian 13 安装 Docker 以及 Docker Compose 教程</strong>
+            <em>2026-06-30</em>
+          </a>
+        </li>
+      
+        <li>
+          <a class="recent-item" href="/post/open-lovable-clone-website-to-react.html">
+            <strong>Open Lovable：一键『克隆』任意网站为 React 应用的神器</strong>
+            <em>2026-06-30</em>
+          </a>
+        </li>
+      
+        <li>
           <a class="recent-item" href="/post/learn-git-understanding-version-ontrol-via-savepoint.html">
             <strong>Git 初学者教程：用『存档点』和『多元世界线』理解版本控制</strong>
             <em>2026-06-30</em>
@@ -473,20 +487,6 @@
           <a class="recent-item" href="/post/fable-5-whitelist-new-privileged-class-ai-monopoly.html">
             <strong>赛博特权阶级的诞生：从 Fable 5 白名单看 AI 非营利乌托邦的终结</strong>
             <em>2026-06-29</em>
-          </a>
-        </li>
-      
-        <li>
-          <a class="recent-item" href="/post/fix-electron-42-app-cannot-run.html">
-            <strong>解决 Electron 42 APP 初次运行 pnpm dev 报错的问题</strong>
-            <em>2026-06-27</em>
-          </a>
-        </li>
-      
-        <li>
-          <a class="recent-item" href="/post/openai-gpt-5-6-limited-preview.html">
-            <strong>OpenAI 发布 GPT-5.6 系列模型：Sol、Terra 和 Luna 开启有限预览，受美国政府要求限制初始访问</strong>
-            <em>2026-06-27</em>
           </a>
         </li>
       
@@ -541,7 +541,9 @@
 
 
   <div class="article-content">
-    <p>现在越来越多的应用可以使用 Docker 一键部署，本文将介绍如何在 Debian 12 中安装 Docker 与 Docker Compose。</p>
+    <details class="flatpaper-note flatpaper-note--warning"><summary class="flatpaper-note__title"><span class="flatpaper-note__icon" aria-hidden="true"></span><span class="flatpaper-note__label">已更新</span><span class="flatpaper-note__chevron" aria-hidden="true"></span></summary><div class="flatpaper-note__body"><p><strong>本文环境配置可能较老。</strong> 我们已为您准备了针对更新系统环境的最新教程，请查看：<a href="/post/debian-13-install-docker/">在 Debian 13 中安装 Docker 以及 Docker Compose</a></p></div></details>
+
+<p>现在越来越多的应用可以使用 Docker 一键部署，本文将介绍如何在 Debian 12 中安装 Docker 与 Docker Compose。</p>
 <p>验证环境</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">root@debian:~# lsb_release -a</span><br><span class="line">No LSB modules are available.</span><br><span class="line">Distributor ID:	Debian</span><br><span class="line">Description:	Debian GNU/Linux 12 (bookworm)</span><br><span class="line">Release:	12</span><br><span class="line">Codename:	bookworm</span><br></pre></td></tr></table></figure>
 <p>安装同样适用于 Debian 11 以及 Ubuntu 24.04</p>
@@ -588,16 +590,10 @@
 <p>然后重启 Docker 服务：</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart docker</span><br></pre></td></tr></table></figure>
 
-<h2 id="Docker-常用命令使用介绍"><a href="#Docker-常用命令使用介绍" class="headerlink" title="Docker 常用命令使用介绍"></a>Docker 常用命令使用介绍</h2><ul>
-<li>可以查看 <a target="_blank" rel="noopener" href="https://ref.ooo.run/docs/docker">Docker 备忘清单</a></li>
-</ul>
-<p>快速了解一下 docker 常见命令，使用 <code>docker compose</code> 进行管理会更方便。</p>
+<h2 id="Docker-常用命令使用介绍"><a href="#Docker-常用命令使用介绍" class="headerlink" title="Docker 常用命令使用介绍"></a>Docker 常用命令使用介绍</h2><p>快速了解一下 docker 常见命令，使用 <code>docker compose</code> 进行管理会更方便。</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 拉取镜像</span></span><br><span class="line">docker pull &lt;镜像名&gt;:&lt;标签&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看当前正在运行的容器</span></span><br><span class="line">docker ps</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看所有容器（包括已停止的）</span></span><br><span class="line">docker ps -a</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看本地镜像</span></span><br><span class="line">docker images</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除镜像</span></span><br><span class="line">docker rmi &lt;镜像ID或名称&gt;</span><br><span class="line">docker rmi ubuntu:latest</span><br><span class="line"></span><br><span class="line"><span class="comment"># 运行容器 </span></span><br><span class="line">docker run -d -p &lt;宿主端口&gt;:&lt;容器端口&gt; --name &lt;容器名&gt; &lt;镜像名&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动，停止，重启，删除</span></span><br><span class="line">docker start / stop / restart / <span class="built_in">rm</span> &lt;容器名或ID&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 进入容器执行交互式命令</span></span><br><span class="line">docker <span class="built_in">exec</span> -it &lt;容器名或ID&gt; /bin/bash</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看容器日志</span></span><br><span class="line">docker logs &lt;容器名或ID&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查询 Docker 使用的磁盘空间：</span></span><br><span class="line">docker system <span class="built_in">df</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除所有未被使用的镜像</span></span><br><span class="line">docker image prune -a</span><br></pre></td></tr></table></figure>
 
-<h2 id="Docker-Compose-使用介绍"><a href="#Docker-Compose-使用介绍" class="headerlink" title="Docker Compose 使用介绍"></a>Docker Compose 使用介绍</h2><ul>
-<li>可以查看 <a target="_blank" rel="noopener" href="https://ref.ooo.run/docs/docker-compose">Docker Compose 备忘清单</a></li>
-</ul>
-<p><code>docker compose</code> 需要在 <code>docker-compose.yml</code> 文件所在的工作目录执行，这里推荐创建一个工作目录，在其中统一存放配置文件，比如： </p>
+<h2 id="Docker-Compose-使用介绍"><a href="#Docker-Compose-使用介绍" class="headerlink" title="Docker Compose 使用介绍"></a>Docker Compose 使用介绍</h2><p><code>docker compose</code> 需要在 <code>docker-compose.yml</code> 文件所在的工作目录执行，这里推荐创建一个工作目录，在其中统一存放配置文件，比如： </p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">docker/</span><br><span class="line">├── nginx/                         </span><br><span class="line">│   └── docker-compose.yml            </span><br><span class="line">├── mysql/                          </span><br><span class="line">│   └── docker-compose.yml          </span><br><span class="line">└── redis/                           </span><br><span class="line">    └── docker-compose.yml   </span><br></pre></td></tr></table></figure>
 
 <p><code>docker compose</code> 常用命令：</p>
@@ -687,10 +683,26 @@
     </header>
     <div class="related-paper__grid">
       
-        <a class="related-card" href="/post/use-docker-run-wallos.html">
+        <a class="related-card" href="/post/debian-13-install-docker.html">
           <span class="related-card__thumb">
             
 <div class="paper-thumb paper-thumb-0 paper-thumb--cover">
+  
+    <img class="paper-thumb__img" src="https://img.nep.me/ooo/cover-docker-2026.webp" alt="2026 Debian 13 安装 Docker 以及 Docker Compose 教程" loading="lazy" referrerpolicy="no-referrer">
+  
+</div>
+
+          </span>
+          <span class="related-card__body">
+            <strong class="related-card__title">2026 Debian 13 安装 Docker 以及 Docker Compose 教程</strong>
+            <em class="related-card__date">2026-06-30</em>
+          </span>
+        </a>
+      
+        <a class="related-card" href="/post/use-docker-run-wallos.html">
+          <span class="related-card__thumb">
+            
+<div class="paper-thumb paper-thumb-1 paper-thumb--cover">
   
     <img class="paper-thumb__img" src="https://img.nep.me/ooo/cover-wallos.webp" alt="使用 Docker 与 Wallos 快速搭建个人订阅管理系统" loading="lazy" referrerpolicy="no-referrer">
   
@@ -706,7 +718,7 @@
         <a class="related-card" href="/post/use-docker-run-ezbookkeeping.html">
           <span class="related-card__thumb">
             
-<div class="paper-thumb paper-thumb-1 paper-thumb--cover">
+<div class="paper-thumb paper-thumb-2 paper-thumb--cover">
   
     <img class="paper-thumb__img" src="https://img.nep.me/i/2026/01/21/cover-ezbookkeeping.webp" alt="使用 Docker 与 ezBookkeeping 快速搭建美观的个人记账系统" loading="lazy" referrerpolicy="no-referrer">
   
@@ -722,7 +734,7 @@
         <a class="related-card" href="/post/use-docker-run-memeos.html">
           <span class="related-card__thumb">
             
-<div class="paper-thumb paper-thumb-2 paper-thumb--cover">
+<div class="paper-thumb paper-thumb-0 paper-thumb--cover">
   
     <img class="paper-thumb__img" src="https://img.nep.me/i/2025/08/18/cover-docker-memos-v2.webp" alt="使用 Docker 快速部署 Memos 个人笔记系统" loading="lazy" referrerpolicy="no-referrer">
   
@@ -732,22 +744,6 @@
           <span class="related-card__body">
             <strong class="related-card__title">使用 Docker 快速部署 Memos 个人笔记系统</strong>
             <em class="related-card__date">2025-08-18</em>
-          </span>
-        </a>
-      
-        <a class="related-card" href="/post/use-docker-run-gitea.html">
-          <span class="related-card__thumb">
-            
-<div class="paper-thumb paper-thumb-0 paper-thumb--cover">
-  
-    <img class="paper-thumb__img" src="https://img.nep.me/i/2025/08/10/cover-docker-gitea.webp" alt="使用 Gitea 与 Docker Compose 轻松自建你的私人 Git 服务器" loading="lazy" referrerpolicy="no-referrer">
-  
-</div>
-
-          </span>
-          <span class="related-card__body">
-            <strong class="related-card__title">使用 Gitea 与 Docker Compose 轻松自建你的私人 Git 服务器</strong>
-            <em class="related-card__date">2025-08-10</em>
           </span>
         </a>
       

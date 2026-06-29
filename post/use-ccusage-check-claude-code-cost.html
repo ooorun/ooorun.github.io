@@ -341,7 +341,7 @@
         
           
             <a class="site-info__item" href="/archives/">
-              <strong>70</strong>
+              <strong>72</strong>
               <span>文章</span>
             </a>
           
@@ -355,7 +355,7 @@
         
           
             <a class="site-info__item" href="/tags/">
-              <strong>105</strong>
+              <strong>106</strong>
               <span>标签</span>
             </a>
           
@@ -453,6 +453,20 @@
     <ul class="recent-list">
       
         <li>
+          <a class="recent-item" href="/post/debian-13-install-docker.html">
+            <strong>2026 Debian 13 安装 Docker 以及 Docker Compose 教程</strong>
+            <em>2026-06-30</em>
+          </a>
+        </li>
+      
+        <li>
+          <a class="recent-item" href="/post/open-lovable-clone-website-to-react.html">
+            <strong>Open Lovable：一键『克隆』任意网站为 React 应用的神器</strong>
+            <em>2026-06-30</em>
+          </a>
+        </li>
+      
+        <li>
           <a class="recent-item" href="/post/learn-git-understanding-version-ontrol-via-savepoint.html">
             <strong>Git 初学者教程：用『存档点』和『多元世界线』理解版本控制</strong>
             <em>2026-06-30</em>
@@ -470,20 +484,6 @@
           <a class="recent-item" href="/post/fable-5-whitelist-new-privileged-class-ai-monopoly.html">
             <strong>赛博特权阶级的诞生：从 Fable 5 白名单看 AI 非营利乌托邦的终结</strong>
             <em>2026-06-29</em>
-          </a>
-        </li>
-      
-        <li>
-          <a class="recent-item" href="/post/fix-electron-42-app-cannot-run.html">
-            <strong>解决 Electron 42 APP 初次运行 pnpm dev 报错的问题</strong>
-            <em>2026-06-27</em>
-          </a>
-        </li>
-      
-        <li>
-          <a class="recent-item" href="/post/openai-gpt-5-6-limited-preview.html">
-            <strong>OpenAI 发布 GPT-5.6 系列模型：Sol、Terra 和 Luna 开启有限预览，受美国政府要求限制初始访问</strong>
-            <em>2026-06-27</em>
           </a>
         </li>
       
@@ -546,7 +546,7 @@
 <p>这时就可以使用 <a target="_blank" rel="noopener" href="https://github.com/ryoppippi/ccusage">ccusage</a> 这个项目。</p>
 <p><strong>ccusage</strong> 是通过读取你本地的 <code>~/.claude/projects</code>  下的文件来完成分析的，只能统计本机的使用报告，可以放心使用。</p>
 <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p><code>ccusage</code> 的开发者们非常关注打包体积，因此可以不安装直接通过 <code>npx</code> 或是 <code>pnpm</code> 运行</p>
-<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-18-tab-0" aria-controls="tabs-18-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">npx</button><button type="button" role="tab" id="tabs-18-tab-1" aria-controls="tabs-18-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">pnpm</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-18-panel-0" aria-labelledby="tabs-18-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx ccusage@latest</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-18-panel-1" aria-labelledby="tabs-18-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pnpm dlx ccusage</span><br></pre></td></tr></table></figure></section></div></div>
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-11-tab-0" aria-controls="tabs-11-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">npx</button><button type="button" role="tab" id="tabs-11-tab-1" aria-controls="tabs-11-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">pnpm</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-11-panel-0" aria-labelledby="tabs-11-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx ccusage@latest</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-11-panel-1" aria-labelledby="tabs-11-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pnpm dlx ccusage</span><br></pre></td></tr></table></figure></section></div></div>
 
 
 <p>当然也是支持直接全局安装的，这样在使用时只需要运行 <code>ccusage</code> 即可</p>
@@ -642,10 +642,26 @@
     </header>
     <div class="related-paper__grid">
       
-        <a class="related-card" href="/post/learn-git-understanding-version-ontrol-via-savepoint.html">
+        <a class="related-card" href="/post/debian-13-install-docker.html">
           <span class="related-card__thumb">
             
 <div class="paper-thumb paper-thumb-0 paper-thumb--cover">
+  
+    <img class="paper-thumb__img" src="https://img.nep.me/ooo/cover-docker-2026.webp" alt="2026 Debian 13 安装 Docker 以及 Docker Compose 教程" loading="lazy" referrerpolicy="no-referrer">
+  
+</div>
+
+          </span>
+          <span class="related-card__body">
+            <strong class="related-card__title">2026 Debian 13 安装 Docker 以及 Docker Compose 教程</strong>
+            <em class="related-card__date">2026-06-30</em>
+          </span>
+        </a>
+      
+        <a class="related-card" href="/post/learn-git-understanding-version-ontrol-via-savepoint.html">
+          <span class="related-card__thumb">
+            
+<div class="paper-thumb paper-thumb-1 paper-thumb--cover">
   
     <img class="paper-thumb__img" src="https://img.nep.me/ooo/cover-git-games.webp" alt="Git 初学者教程：用『存档点』和『多元世界线』理解版本控制" loading="lazy" referrerpolicy="no-referrer">
   
@@ -661,7 +677,7 @@
         <a class="related-card" href="/post/docker-run-fizzy-kanban.html">
           <span class="related-card__thumb">
             
-<div class="paper-thumb paper-thumb-1 paper-thumb--cover">
+<div class="paper-thumb paper-thumb-2 paper-thumb--cover">
   
     <img class="paper-thumb__img" src="https://img.nep.me/ooo/cover-fizzy.webp" alt="使用 Docker 部署 Fizzy ： 一个轻量、漂亮、可自托管的看板工具" loading="lazy" referrerpolicy="no-referrer">
   
@@ -677,7 +693,7 @@
         <a class="related-card" href="/post/nginx-vs-caddy.html">
           <span class="related-card__thumb">
             
-<div class="paper-thumb paper-thumb-2 paper-thumb--cover">
+<div class="paper-thumb paper-thumb-0 paper-thumb--cover">
   
     <img class="paper-thumb__img" src="https://img.nep.me/ooo/cover-nginx-vs-caddy.webp" alt="Nginx 还是 Caddy？一篇写给实际运维者的对比指南" loading="lazy" referrerpolicy="no-referrer">
   
@@ -687,22 +703,6 @@
           <span class="related-card__body">
             <strong class="related-card__title">Nginx 还是 Caddy？一篇写给实际运维者的对比指南</strong>
             <em class="related-card__date">2026-06-12</em>
-          </span>
-        </a>
-      
-        <a class="related-card" href="/post/get-antigravity-ide-back.html">
-          <span class="related-card__thumb">
-            
-<div class="paper-thumb paper-thumb-0 paper-thumb--cover">
-  
-    <img class="paper-thumb__img" src="https://img.nep.me/ooo/cover-antigravity-ide-back.webp" alt="找回 Antigravity 代码编辑器(Antigravity IDE)" loading="lazy" referrerpolicy="no-referrer">
-  
-</div>
-
-          </span>
-          <span class="related-card__body">
-            <strong class="related-card__title">找回 Antigravity 代码编辑器(Antigravity IDE)</strong>
-            <em class="related-card__date">2026-05-23</em>
           </span>
         </a>
       
