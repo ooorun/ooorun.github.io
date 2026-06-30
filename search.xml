@@ -322,91 +322,6 @@
       </tags>
   </entry>
   <entry>
-    <title>如何使用 SSH key 连接 GitHub</title>
-    <url>/post/how-to-add-ssh-key-to-github.html</url>
-    <content><![CDATA[<p>如果需要频繁的进行 GitHub pull&#x2F;push 操作，使用 SSH key 绑定到 GitHub 会更加方便，绑定后将使用公钥加密来验证用户身份，比传统的用户名和密码方式更安全。  </p>
-<p>本文命令与截图对应下面的系统版本，需要先安装 <a href="https://git-scm.com/downloads">Git</a></p>
-<ul>
-<li><strong>Windows 11</strong> : 一般安装 <code>64-bit Git for Windows Setup</code>, 安装选项全部<strong>默认</strong>即可</li>
-<li><strong>macOS 15.1</strong> : 更推荐通过安装 <a href="https://brew.sh/">Homebrew</a> 获取 Git 程序，查看 <a href="https://ooo.run/post/how-to-install-homebrew-on-macos.html">如何在 macOS 中安装 Homebrew </a></li>
-</ul>
-<h2 id="打开终端程序"><a href="#打开终端程序" class="headerlink" title="打开终端程序"></a>打开终端程序</h2><h3 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h3><ul>
-<li>右键点击开始菜单，选择终端</li>
-<li>或是按 <code>Windows + R</code> 快捷键打开 <strong>运行</strong> 窗口，输入 <code>cmd</code> ，回车打开</li>
-</ul>
-<h3 id="macOS"><a href="#macOS" class="headerlink" title="macOS"></a>macOS</h3><ul>
-<li>启动台 &gt; 其他 &gt; 终端</li>
-<li><strong>启动台</strong> 或是　<code>Commond⌘ + 空格</code> 打开聚焦搜索，搜索 <strong>终端</strong> 或是 <strong>Terminal</strong></li>
-</ul>
-<p>安装 Git 后，使用 <code>git -v</code> 测试，如果安装成功会显示版本号</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt; git -v</span><br><span class="line">git version 2.47.1</span><br></pre></td></tr></table></figure>
-<p>然后设置 Git 的个人信息</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;yourname&quot;</span></span><br><span class="line">git config --global user.email <span class="string">&quot;your_email@example.com&quot;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="测试一下-github-com"><a href="#测试一下-github-com" class="headerlink" title="测试一下 github.com"></a>测试一下 github.com</h2><div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>Windows 10 用户可以使用 Git Bash</p></div></div>
-<div class="flatpaper-note flatpaper-note--warning"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>测试时会自动创建 <code>.ssh</code> 文件夹，因此你也需要测试一下</p></div></div>
-
-<p>打开终端程序，运行测试命令，如果是第一次运行，需要输入 <code>yes</code> 确认</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure>
-
-<p>我们没有添加过 SSH key，会提示 <code>Permission denied (publickey).</code></p>
-<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-7-tab-0" aria-controls="tabs-7-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">Windows</button><button type="button" role="tab" id="tabs-7-tab-1" aria-controls="tabs-7-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">macOS</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-7-panel-0" aria-labelledby="tabs-7-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><p><img src="https://img.nep.me/i/2024/12/13/122owl6-2.webp"></p></section><section role="tabpanel" id="tabs-7-panel-1" aria-labelledby="tabs-7-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><p><img src="https://img.nep.me/i/2024/12/13/124oz3l-2.webp"></p></section></div></div>
-
-<h2 id="创建-SSH-Key"><a href="#创建-SSH-Key" class="headerlink" title="创建 SSH Key"></a>创建 SSH Key</h2><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> .ssh</span><br><span class="line"></span><br><span class="line">ssh-keygen -t rsa -C <span class="string">&quot;your_email@example.com&quot;</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">C:\Users\ME\.ssh&gt;ssh-keygen -t rsa</span><br><span class="line"></span><br><span class="line">Generating public/private rsa key pair.</span><br><span class="line"><span class="comment"># 设置保存文件名，留空则为 id_rsa</span></span><br><span class="line">Enter file <span class="keyword">in</span> <span class="built_in">which</span> to save the key (C:\Users\ME/.ssh/id_rsa):</span><br><span class="line"><span class="comment"># 设置密码，留空则是没有密码</span></span><br><span class="line">Enter passphrase (empty <span class="keyword">for</span> no passphrase):</span><br><span class="line"><span class="comment"># 确认密码</span></span><br><span class="line">Enter same passphrase again:</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成的私钥</span></span><br><span class="line">Your identification has been saved <span class="keyword">in</span> C:\Users\ME/.ssh/id_rsa</span><br><span class="line"><span class="comment"># 生成的公钥</span></span><br><span class="line">Your public key has been saved <span class="keyword">in</span> C:\Users\ME/.ssh/id_rsa.pub</span><br></pre></td></tr></table></figure>
-<div class="flatpaper-note flatpaper-note--warning"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p><code>.pub</code> 后缀的是公钥，可以公开，<strong>私钥相当于个人密码，要小心保存</strong></p></div></div>
-
-<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>git 默认会查找名称为 <code>id_rsa</code> 的 SSH key </p></div></div>
-
-<div class="flatpaper-note flatpaper-note--primary"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>如果设置了文件名称，或是生成其他格式的 SSH key 可以查看后文的配合 <code>SSH config</code> 的部分</p></div></div>
-
-<div class="flatpaper-note flatpaper-note--default"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>rsa 格式的 key 内容很长，使用 <code>ssh-keygen -t ed25519</code> 生成 <code>ed25519</code> 格式的 key，更简洁，更安全</p></div></div>
-
-<h2 id="添加公钥到-GitHub"><a href="#添加公钥到-GitHub" class="headerlink" title="添加公钥到 GitHub"></a>添加公钥到 GitHub</h2><p>使用命令或是文本编辑器查看公钥的内容</p>
-<ul>
-<li>Windows 使用 <code>type id_rsa.pub</code> </li>
-<li>macOS &#x2F; Linux 使用 <code>cat id_rsa.pub</code></li>
-</ul>
-<p>访问 <a href="https://github.com/settings/keys">Github - SSH Keys</a>，点击右上角 <strong>New SSH key</strong>。<br>手动访问路径：右上角点击 <strong>头像</strong> &gt; <strong>Settings</strong> &gt; <strong>SSH and GPG keys</strong> &gt; <strong>New SSH key</strong></p>
-<p><img src="https://img.nep.me/i/2024/12/13/12s8co0-2.webp" alt="github-add-ssh-key"></p>
-<ul>
-<li><strong>Title</strong>：取个备注名字</li>
-<li><strong>Key type</strong>：不需要修改，保持默认 <strong>Authentication Key</strong></li>
-<li><strong>Key</strong>：粘贴 <code>id_rsa.pub</code> 对应的文本内容</li>
-<li>点击 <code>Add SSH key</code> 保存</li>
-</ul>
-<p><img src="https://img.nep.me/i/2024/12/13/12sain9-2.webp" alt="github-add-ssh-key-details"></p>
-<p>添加成功会在列表显示<br><img src="https://img.nep.me/i/2024/12/13/12vf7u0-2.webp" alt="github-add-ssh-key-done"></p>
-<p>此时我们再执行测试命令，就会获得成功的欢迎提示。 </p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt;ssh -T git@github.com</span><br><span class="line">Hi &lt;Your username&gt;! You<span class="string">&#x27;ve successfully authenticated, but GitHub does not provide shell access.</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="配合-SSH-config-使用"><a href="#配合-SSH-config-使用" class="headerlink" title="配合 SSH config 使用"></a>配合 SSH config 使用</h2><p>如果我们的私钥的名称不是 <code>id_rsa</code> ，我们将仍然无法成功连接 GitHub ，你可以将私钥修改文件名后再试试 </p>
-<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-8-tab-0" aria-controls="tabs-8-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">Windows</button><button type="button" role="tab" id="tabs-8-tab-1" aria-controls="tabs-8-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">macOS&amp;Linux</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-8-panel-0" aria-labelledby="tabs-8-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt; rename id_rsa id_mysshkey</span><br><span class="line"></span><br><span class="line">&gt; ssh -T git@github.com</span><br><span class="line">git@github.com: Permission denied (publickey).</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-8-panel-1" aria-labelledby="tabs-8-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt; <span class="built_in">mv</span> id_rsa id_mysshkey</span><br><span class="line"></span><br><span class="line">&gt; ssh -T git@github.com</span><br><span class="line">git@github.com: Permission denied (publickey).</span><br></pre></td></tr></table></figure></section></div></div>
-
-<p>这时我们可以通过在 <code>.ssh</code> 文件夹中创建一个 <code>config</code> 文件，填入下面的内容来告诉 git 程序在哪里找到密钥</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Host github.com</span><br><span class="line">    HostName github.com</span><br><span class="line">    User git</span><br><span class="line">    IdentityFile ~/.ssh/id_mysshkey</span><br></pre></td></tr></table></figure>
-
-<p>其中 <code>IdentityFile</code> 部分填写私钥的路径， <code>~</code> 代表用户 Home 目录</p>
-<ul>
-<li>Windows 相当于 <code>C:\Users\&lt;username&gt;\</code></li>
-<li>macOS 相当于 <code>/Users/&lt;username&gt;/</code></li>
-<li>Linux 相当于 <code>/root/</code> 或是 <code>/home/&lt;username&gt;/</code></li>
-</ul>
-<p>再进行测试，发现又能显示成功的欢迎消息。  </p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt;ssh -T git@github.com</span><br><span class="line">Hi &lt;Your username&gt;! You<span class="string">&#x27;ve successfully authenticated, but GitHub does not provide shell access.</span></span><br></pre></td></tr></table></figure>
-
-<p>以后就可以很方便的使用 Git 了！</p>
-]]></content>
-      <categories>
-        <category>教程</category>
-      </categories>
-      <tags>
-        <tag>GitHub</tag>
-        <tag>SSH</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>如何在 macOS 中安装 Homebrew</title>
     <url>/post/how-to-install-homebrew-on-macos.html</url>
     <content><![CDATA[<p>有时我们在网络上看到别人使用 macOS 安装软件是使用的下面的命令，非常的方便。  </p>
@@ -446,7 +361,7 @@
 
 <p>或是查看下面的内容</p>
 <p>替换使用 <a href="https://developer.aliyun.com/mirror/homebrew/">阿里镜像源</a></p>
-<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-9-tab-0" aria-controls="tabs-9-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">zsh</button><button type="button" role="tab" id="tabs-9-tab-1" aria-controls="tabs-9-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">bash</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-9-panel-0" aria-labelledby="tabs-9-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo &#x27;export HOMEBREW_API_DOMAIN=&quot;https://mirrors.aliyun.com/homebrew-bottles/api&quot;&#x27; &gt;&gt; ~/.zshrc</span><br><span class="line">echo &#x27;export HOMEBREW_BREW_GIT_REMOTE=&quot;https://mirrors.aliyun.com/homebrew/brew.git&quot;&#x27; &gt;&gt; ~/.zshrc</span><br><span class="line">echo &#x27;export HOMEBREW_CORE_GIT_REMOTE=&quot;https://mirrors.aliyun.com/homebrew/homebrew-core.git&quot;&#x27; &gt;&gt; ~/.zshrc</span><br><span class="line">echo &#x27;export HOMEBREW_BOTTLE_DOMAIN=&quot;https://mirrors.aliyun.com/homebrew/homebrew-bottles&quot;&#x27; &gt;&gt; ~/.zshrc</span><br><span class="line">source ~/.zshrc</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-9-panel-1" aria-labelledby="tabs-9-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export HOMEBREW_API_DOMAIN=&quot;https://mirrors.aliyun.com/homebrew-bottles/api&quot;&#x27;</span> &gt;&gt; ~/.bash_profile</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export HOMEBREW_BREW_GIT_REMOTE=&quot;https://mirrors.aliyun.com/homebrew/brew.git&quot;&#x27;</span> &gt;&gt; ~/.bash_profile</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export HOMEBREW_CORE_GIT_REMOTE=&quot;https://mirrors.aliyun.com/homebrew/homebrew-core.git&quot;&#x27;</span> &gt;&gt; ~/.bash_profile</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export HOMEBREW_BOTTLE_DOMAIN=&quot;https://mirrors.aliyun.com/homebrew/homebrew-bottles&quot;&#x27;</span> &gt;&gt; ~/.bash_profile</span><br><span class="line"><span class="built_in">source</span> ~/.bash_profile</span><br></pre></td></tr></table></figure></section></div></div>
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-7-tab-0" aria-controls="tabs-7-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">zsh</button><button type="button" role="tab" id="tabs-7-tab-1" aria-controls="tabs-7-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">bash</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-7-panel-0" aria-labelledby="tabs-7-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo &#x27;export HOMEBREW_API_DOMAIN=&quot;https://mirrors.aliyun.com/homebrew-bottles/api&quot;&#x27; &gt;&gt; ~/.zshrc</span><br><span class="line">echo &#x27;export HOMEBREW_BREW_GIT_REMOTE=&quot;https://mirrors.aliyun.com/homebrew/brew.git&quot;&#x27; &gt;&gt; ~/.zshrc</span><br><span class="line">echo &#x27;export HOMEBREW_CORE_GIT_REMOTE=&quot;https://mirrors.aliyun.com/homebrew/homebrew-core.git&quot;&#x27; &gt;&gt; ~/.zshrc</span><br><span class="line">echo &#x27;export HOMEBREW_BOTTLE_DOMAIN=&quot;https://mirrors.aliyun.com/homebrew/homebrew-bottles&quot;&#x27; &gt;&gt; ~/.zshrc</span><br><span class="line">source ~/.zshrc</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-7-panel-1" aria-labelledby="tabs-7-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export HOMEBREW_API_DOMAIN=&quot;https://mirrors.aliyun.com/homebrew-bottles/api&quot;&#x27;</span> &gt;&gt; ~/.bash_profile</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export HOMEBREW_BREW_GIT_REMOTE=&quot;https://mirrors.aliyun.com/homebrew/brew.git&quot;&#x27;</span> &gt;&gt; ~/.bash_profile</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export HOMEBREW_CORE_GIT_REMOTE=&quot;https://mirrors.aliyun.com/homebrew/homebrew-core.git&quot;&#x27;</span> &gt;&gt; ~/.bash_profile</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export HOMEBREW_BOTTLE_DOMAIN=&quot;https://mirrors.aliyun.com/homebrew/homebrew-bottles&quot;&#x27;</span> &gt;&gt; ~/.bash_profile</span><br><span class="line"><span class="built_in">source</span> ~/.bash_profile</span><br></pre></td></tr></table></figure></section></div></div>
 
 <p>然后执行安装命令，从阿里云下载安装脚本并安装 Homebrew</p>
 <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://mirrors.aliyun.com/homebrew/install.git brew-install</span><br><span class="line">/bin/bash brew-install/install.sh</span><br><span class="line"><span class="built_in">rm</span> -rf brew-install</span><br></pre></td></tr></table></figure>
@@ -476,6 +391,91 @@
       <tags>
         <tag>Homebrew</tag>
         <tag>macOS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>如何使用 SSH key 连接 GitHub</title>
+    <url>/post/how-to-add-ssh-key-to-github.html</url>
+    <content><![CDATA[<p>如果需要频繁的进行 GitHub pull&#x2F;push 操作，使用 SSH key 绑定到 GitHub 会更加方便，绑定后将使用公钥加密来验证用户身份，比传统的用户名和密码方式更安全。  </p>
+<p>本文命令与截图对应下面的系统版本，需要先安装 <a href="https://git-scm.com/downloads">Git</a></p>
+<ul>
+<li><strong>Windows 11</strong> : 一般安装 <code>64-bit Git for Windows Setup</code>, 安装选项全部<strong>默认</strong>即可</li>
+<li><strong>macOS 15.1</strong> : 更推荐通过安装 <a href="https://brew.sh/">Homebrew</a> 获取 Git 程序，查看 <a href="https://ooo.run/post/how-to-install-homebrew-on-macos.html">如何在 macOS 中安装 Homebrew </a></li>
+</ul>
+<h2 id="打开终端程序"><a href="#打开终端程序" class="headerlink" title="打开终端程序"></a>打开终端程序</h2><h3 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h3><ul>
+<li>右键点击开始菜单，选择终端</li>
+<li>或是按 <code>Windows + R</code> 快捷键打开 <strong>运行</strong> 窗口，输入 <code>cmd</code> ，回车打开</li>
+</ul>
+<h3 id="macOS"><a href="#macOS" class="headerlink" title="macOS"></a>macOS</h3><ul>
+<li>启动台 &gt; 其他 &gt; 终端</li>
+<li><strong>启动台</strong> 或是　<code>Commond⌘ + 空格</code> 打开聚焦搜索，搜索 <strong>终端</strong> 或是 <strong>Terminal</strong></li>
+</ul>
+<p>安装 Git 后，使用 <code>git -v</code> 测试，如果安装成功会显示版本号</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt; git -v</span><br><span class="line">git version 2.47.1</span><br></pre></td></tr></table></figure>
+<p>然后设置 Git 的个人信息</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;yourname&quot;</span></span><br><span class="line">git config --global user.email <span class="string">&quot;your_email@example.com&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="测试一下-github-com"><a href="#测试一下-github-com" class="headerlink" title="测试一下 github.com"></a>测试一下 github.com</h2><div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>Windows 10 用户可以使用 Git Bash</p></div></div>
+<div class="flatpaper-note flatpaper-note--warning"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>测试时会自动创建 <code>.ssh</code> 文件夹，因此你也需要测试一下</p></div></div>
+
+<p>打开终端程序，运行测试命令，如果是第一次运行，需要输入 <code>yes</code> 确认</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure>
+
+<p>我们没有添加过 SSH key，会提示 <code>Permission denied (publickey).</code></p>
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-8-tab-0" aria-controls="tabs-8-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">Windows</button><button type="button" role="tab" id="tabs-8-tab-1" aria-controls="tabs-8-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">macOS</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-8-panel-0" aria-labelledby="tabs-8-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><p><img src="https://img.nep.me/i/2024/12/13/122owl6-2.webp"></p></section><section role="tabpanel" id="tabs-8-panel-1" aria-labelledby="tabs-8-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><p><img src="https://img.nep.me/i/2024/12/13/124oz3l-2.webp"></p></section></div></div>
+
+<h2 id="创建-SSH-Key"><a href="#创建-SSH-Key" class="headerlink" title="创建 SSH Key"></a>创建 SSH Key</h2><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> .ssh</span><br><span class="line"></span><br><span class="line">ssh-keygen -t rsa -C <span class="string">&quot;your_email@example.com&quot;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">C:\Users\ME\.ssh&gt;ssh-keygen -t rsa</span><br><span class="line"></span><br><span class="line">Generating public/private rsa key pair.</span><br><span class="line"><span class="comment"># 设置保存文件名，留空则为 id_rsa</span></span><br><span class="line">Enter file <span class="keyword">in</span> <span class="built_in">which</span> to save the key (C:\Users\ME/.ssh/id_rsa):</span><br><span class="line"><span class="comment"># 设置密码，留空则是没有密码</span></span><br><span class="line">Enter passphrase (empty <span class="keyword">for</span> no passphrase):</span><br><span class="line"><span class="comment"># 确认密码</span></span><br><span class="line">Enter same passphrase again:</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成的私钥</span></span><br><span class="line">Your identification has been saved <span class="keyword">in</span> C:\Users\ME/.ssh/id_rsa</span><br><span class="line"><span class="comment"># 生成的公钥</span></span><br><span class="line">Your public key has been saved <span class="keyword">in</span> C:\Users\ME/.ssh/id_rsa.pub</span><br></pre></td></tr></table></figure>
+<div class="flatpaper-note flatpaper-note--warning"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p><code>.pub</code> 后缀的是公钥，可以公开，<strong>私钥相当于个人密码，要小心保存</strong></p></div></div>
+
+<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>git 默认会查找名称为 <code>id_rsa</code> 的 SSH key </p></div></div>
+
+<div class="flatpaper-note flatpaper-note--primary"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>如果设置了文件名称，或是生成其他格式的 SSH key 可以查看后文的配合 <code>SSH config</code> 的部分</p></div></div>
+
+<div class="flatpaper-note flatpaper-note--default"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>rsa 格式的 key 内容很长，使用 <code>ssh-keygen -t ed25519</code> 生成 <code>ed25519</code> 格式的 key，更简洁，更安全</p></div></div>
+
+<h2 id="添加公钥到-GitHub"><a href="#添加公钥到-GitHub" class="headerlink" title="添加公钥到 GitHub"></a>添加公钥到 GitHub</h2><p>使用命令或是文本编辑器查看公钥的内容</p>
+<ul>
+<li>Windows 使用 <code>type id_rsa.pub</code> </li>
+<li>macOS &#x2F; Linux 使用 <code>cat id_rsa.pub</code></li>
+</ul>
+<p>访问 <a href="https://github.com/settings/keys">Github - SSH Keys</a>，点击右上角 <strong>New SSH key</strong>。<br>手动访问路径：右上角点击 <strong>头像</strong> &gt; <strong>Settings</strong> &gt; <strong>SSH and GPG keys</strong> &gt; <strong>New SSH key</strong></p>
+<p><img src="https://img.nep.me/i/2024/12/13/12s8co0-2.webp" alt="github-add-ssh-key"></p>
+<ul>
+<li><strong>Title</strong>：取个备注名字</li>
+<li><strong>Key type</strong>：不需要修改，保持默认 <strong>Authentication Key</strong></li>
+<li><strong>Key</strong>：粘贴 <code>id_rsa.pub</code> 对应的文本内容</li>
+<li>点击 <code>Add SSH key</code> 保存</li>
+</ul>
+<p><img src="https://img.nep.me/i/2024/12/13/12sain9-2.webp" alt="github-add-ssh-key-details"></p>
+<p>添加成功会在列表显示<br><img src="https://img.nep.me/i/2024/12/13/12vf7u0-2.webp" alt="github-add-ssh-key-done"></p>
+<p>此时我们再执行测试命令，就会获得成功的欢迎提示。 </p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt;ssh -T git@github.com</span><br><span class="line">Hi &lt;Your username&gt;! You<span class="string">&#x27;ve successfully authenticated, but GitHub does not provide shell access.</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="配合-SSH-config-使用"><a href="#配合-SSH-config-使用" class="headerlink" title="配合 SSH config 使用"></a>配合 SSH config 使用</h2><p>如果我们的私钥的名称不是 <code>id_rsa</code> ，我们将仍然无法成功连接 GitHub ，你可以将私钥修改文件名后再试试 </p>
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-9-tab-0" aria-controls="tabs-9-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">Windows</button><button type="button" role="tab" id="tabs-9-tab-1" aria-controls="tabs-9-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">macOS&amp;Linux</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-9-panel-0" aria-labelledby="tabs-9-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt; rename id_rsa id_mysshkey</span><br><span class="line"></span><br><span class="line">&gt; ssh -T git@github.com</span><br><span class="line">git@github.com: Permission denied (publickey).</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-9-panel-1" aria-labelledby="tabs-9-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt; <span class="built_in">mv</span> id_rsa id_mysshkey</span><br><span class="line"></span><br><span class="line">&gt; ssh -T git@github.com</span><br><span class="line">git@github.com: Permission denied (publickey).</span><br></pre></td></tr></table></figure></section></div></div>
+
+<p>这时我们可以通过在 <code>.ssh</code> 文件夹中创建一个 <code>config</code> 文件，填入下面的内容来告诉 git 程序在哪里找到密钥</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Host github.com</span><br><span class="line">    HostName github.com</span><br><span class="line">    User git</span><br><span class="line">    IdentityFile ~/.ssh/id_mysshkey</span><br></pre></td></tr></table></figure>
+
+<p>其中 <code>IdentityFile</code> 部分填写私钥的路径， <code>~</code> 代表用户 Home 目录</p>
+<ul>
+<li>Windows 相当于 <code>C:\Users\&lt;username&gt;\</code></li>
+<li>macOS 相当于 <code>/Users/&lt;username&gt;/</code></li>
+<li>Linux 相当于 <code>/root/</code> 或是 <code>/home/&lt;username&gt;/</code></li>
+</ul>
+<p>再进行测试，发现又能显示成功的欢迎消息。  </p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt;ssh -T git@github.com</span><br><span class="line">Hi &lt;Your username&gt;! You<span class="string">&#x27;ve successfully authenticated, but GitHub does not provide shell access.</span></span><br></pre></td></tr></table></figure>
+
+<p>以后就可以很方便的使用 Git 了！</p>
+]]></content>
+      <categories>
+        <category>教程</category>
+      </categories>
+      <tags>
+        <tag>GitHub</tag>
+        <tag>SSH</tag>
       </tags>
   </entry>
   <entry>
@@ -3819,35 +3819,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Anthropic 发布 Claude Opus 4.6 模型，赠送付费用户 50 美元余额</title>
-    <url>/post/claude-subscription-user-can-get-50-usd-extra-credit.html</url>
-    <content><![CDATA[<h2 id="Claude-Opus-4-6-发布"><a href="#Claude-Opus-4-6-发布" class="headerlink" title="Claude Opus 4.6 发布"></a>Claude Opus 4.6 发布</h2><p>今天 Anthropic 发布了最新的 <a href="https://www.anthropic.com/news/claude-opus-4-6">Claude Opus 4.6</a> ，官方表示 Claude Opus 4.6 在编码能力上超越了前代产品。它规划更周密，能够更长时间地执行代理任务，在大规模代码库中运行更可靠，并且拥有更强大的代码审查和调试能力，可以更有效地发现自身错误。</p>
-<p>并且在 Beta 版本中 Opus 模型首次支持 1M tokens 上下文，API 价格方面保持不变。</p>
-<p>Claude Opus 4.6 目前已在 API、Claude Code 中可用。</p>
-<h2 id="更新-Claude-Code"><a href="#更新-Claude-Code" class="headerlink" title="更新 Claude Code"></a>更新 Claude Code</h2><p>运行下面命令即可：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm install -g @anthropic-ai/claude-code</span><br></pre></td></tr></table></figure>
-
-<h2 id="Anthropic-赠送付费用户-50-美元"><a href="#Anthropic-赠送付费用户-50-美元" class="headerlink" title="Anthropic 赠送付费用户 50 美元"></a>Anthropic 赠送付费用户 50 美元</h2><p>在推出新模型的同时，Anthropic 还提供给已订阅 Claude Pro &#x2F; MAX 的用户 50 美元的 <a href="https://support.claude.com/en/articles/13613973-claude-opus-4-6-extra-usage-promo#h_bf8366a5e9">福利</a>，用于体验最新的模型。 </p>
-<p>需要手动领取，只需访问 <a href="https://claude.ai/settings/usage">https://claude.ai/settings/usage</a> 点击 <strong>Claim</strong> 即可。</p>
-<p><img src="https://img.nep.me/i/2026/02/claude-50-usd-credit.jpeg" alt="claude-50-usd-credit.jpeg"></p>
-<h3 id="领取条件"><a href="#领取条件" class="headerlink" title="领取条件"></a>领取条件</h3><p>领取 50 美元满足下面的条件：</p>
-<ul>
-<li>在 2 月 4 日之前开通了 Claude Pro &#x2F; MAX 订阅套餐</li>
-<li>在 2 月 16 日之前开启 <strong>extra usage</strong></li>
-</ul>
-<p>所以如果你 在 2 月 4 日之前没有订阅 Claude Pro，无法领取优惠。</p>
-<h3 id="有效期"><a href="#有效期" class="headerlink" title="有效期"></a>有效期</h3><p>领取的 50 美元余额有效期为 60 天。</p>
-<h3 id="截止日期"><a href="#截止日期" class="headerlink" title="截止日期"></a>截止日期</h3><p>在 2 月 16 日之前都可以领取，如果你正在订阅 Claude Pro &#x2F; MAX，领取你的优惠吧。</p>
-]]></content>
-      <categories>
-        <category>优惠活动</category>
-      </categories>
-      <tags>
-        <tag>Anthropic</tag>
-        <tag>Opus</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>不使用插件让 Claude Code 显示额度使用情况</title>
     <url>/post/claude-code-show-5h-quota-without-plugin.html</url>
     <content><![CDATA[<p>Claude Code 不像 Codex 那样执行 <code>/statusline</code> 命令后提供选项直接快速调整可以显示的内容，执行 <code>/statusline</code> 其实是调用模型去分析然后修改 <code>~/.claude/settings.json</code> 文件。</p>
@@ -3891,6 +3862,35 @@
       </categories>
       <tags>
         <tag>Claude Code</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Anthropic 发布 Claude Opus 4.6 模型，赠送付费用户 50 美元余额</title>
+    <url>/post/claude-subscription-user-can-get-50-usd-extra-credit.html</url>
+    <content><![CDATA[<h2 id="Claude-Opus-4-6-发布"><a href="#Claude-Opus-4-6-发布" class="headerlink" title="Claude Opus 4.6 发布"></a>Claude Opus 4.6 发布</h2><p>今天 Anthropic 发布了最新的 <a href="https://www.anthropic.com/news/claude-opus-4-6">Claude Opus 4.6</a> ，官方表示 Claude Opus 4.6 在编码能力上超越了前代产品。它规划更周密，能够更长时间地执行代理任务，在大规模代码库中运行更可靠，并且拥有更强大的代码审查和调试能力，可以更有效地发现自身错误。</p>
+<p>并且在 Beta 版本中 Opus 模型首次支持 1M tokens 上下文，API 价格方面保持不变。</p>
+<p>Claude Opus 4.6 目前已在 API、Claude Code 中可用。</p>
+<h2 id="更新-Claude-Code"><a href="#更新-Claude-Code" class="headerlink" title="更新 Claude Code"></a>更新 Claude Code</h2><p>运行下面命令即可：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm install -g @anthropic-ai/claude-code</span><br></pre></td></tr></table></figure>
+
+<h2 id="Anthropic-赠送付费用户-50-美元"><a href="#Anthropic-赠送付费用户-50-美元" class="headerlink" title="Anthropic 赠送付费用户 50 美元"></a>Anthropic 赠送付费用户 50 美元</h2><p>在推出新模型的同时，Anthropic 还提供给已订阅 Claude Pro &#x2F; MAX 的用户 50 美元的 <a href="https://support.claude.com/en/articles/13613973-claude-opus-4-6-extra-usage-promo#h_bf8366a5e9">福利</a>，用于体验最新的模型。 </p>
+<p>需要手动领取，只需访问 <a href="https://claude.ai/settings/usage">https://claude.ai/settings/usage</a> 点击 <strong>Claim</strong> 即可。</p>
+<p><img src="https://img.nep.me/i/2026/02/claude-50-usd-credit.jpeg" alt="claude-50-usd-credit.jpeg"></p>
+<h3 id="领取条件"><a href="#领取条件" class="headerlink" title="领取条件"></a>领取条件</h3><p>领取 50 美元满足下面的条件：</p>
+<ul>
+<li>在 2 月 4 日之前开通了 Claude Pro &#x2F; MAX 订阅套餐</li>
+<li>在 2 月 16 日之前开启 <strong>extra usage</strong></li>
+</ul>
+<p>所以如果你 在 2 月 4 日之前没有订阅 Claude Pro，无法领取优惠。</p>
+<h3 id="有效期"><a href="#有效期" class="headerlink" title="有效期"></a>有效期</h3><p>领取的 50 美元余额有效期为 60 天。</p>
+<h3 id="截止日期"><a href="#截止日期" class="headerlink" title="截止日期"></a>截止日期</h3><p>在 2 月 16 日之前都可以领取，如果你正在订阅 Claude Pro &#x2F; MAX，领取你的优惠吧。</p>
+]]></content>
+      <categories>
+        <category>优惠活动</category>
+      </categories>
+      <tags>
+        <tag>Anthropic</tag>
+        <tag>Opus</tag>
       </tags>
   </entry>
   <entry>
@@ -5289,62 +5289,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Google 发布 Antigravity 2.0 ，以及 Antigravity-CLI</title>
-    <url>/post/google-launch-antigravity-cli.html</url>
-    <content><![CDATA[<p>在 2026 年 5 月 20 日的 Google I&#x2F;O 大会上，Google 正式宣布推出 Antigravity 2.0，以 Agents 驱动为核心作为独立的桌面应用。原 Antigravity 更名为 <strong>Antigravity IDE</strong>，并同时推出 <strong>Antigravity CLI</strong> 取代 <strong>Gemini CLI</strong>。</p>
-<p>Antigravity 2.0 与 IDE 下载页面：<a href="https://antigravity.google/download">Download Google Antigravity</a></p>
-<h2 id="Antigravity-CLI-安装方法"><a href="#Antigravity-CLI-安装方法" class="headerlink" title="Antigravity CLI 安装方法"></a>Antigravity CLI 安装方法</h2><h3 id="macOS-Linux"><a href="#macOS-Linux" class="headerlink" title="macOS &#x2F; Linux"></a>macOS &#x2F; Linux</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl -fsSL https://antigravity.google/cli/install.sh | bash</span><br></pre></td></tr></table></figure>
-
-<h3 id="Windows-PowerShell"><a href="#Windows-PowerShell" class="headerlink" title="Windows PowerShell"></a>Windows PowerShell</h3><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">irm</span> https://antigravity.google/<span class="built_in">cli</span>/install.ps1 | <span class="built_in">iex</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="Windows-CMD"><a href="#Windows-CMD" class="headerlink" title="Windows CMD"></a>Windows CMD</h3><figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">curl -fsSL https://antigravity.google/cli/install.<span class="built_in">cmd</span> -o install.<span class="built_in">cmd</span> &amp;&amp; install.<span class="built_in">cmd</span> &amp;&amp; <span class="built_in">del</span> install.<span class="built_in">cmd</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="启动与登录方法"><a href="#启动与登录方法" class="headerlink" title="启动与登录方法"></a>启动与登录方法</h2><h3 id="启动-Antigravity-CLI"><a href="#启动-Antigravity-CLI" class="headerlink" title="启动 Antigravity CLI"></a>启动 Antigravity CLI</h3><p>在终端中运行 <code>agy</code> 即可启动 Antigravity CLI。</p>
-<h3 id="登录方法"><a href="#登录方法" class="headerlink" title="登录方法"></a>登录方法</h3><p>使用 Antigravity CLI 之前，如果已在 Antigravity 或 Antigravity IDE 中登录了 Google 账户，系统将自动进行认证。</p>
-<p>初次启动需要选择代码主题，同意用户协议后即可打开 CLI 界面：</p>
-<p><img src="https://img.nep.me/ooo/antigravity-cli-theme-select.webp" alt="antigravity-cli-theme-select.png"></p>
-<p>界面预览：<br><img src="https://img.nep.me/ooo/antigravity-cli-tui-hello.webp" alt="antigravity-cli-tui.png"></p>
-<p>或者，您也可以选择以下认证方法手动登录：</p>
-<ul>
-<li><strong>Google OAuth</strong></li>
-<li><strong>Use a Google Cloud project</strong></li>
-</ul>
-<p><img src="https://img.nep.me/ooo/antigravity-cli-login-method.webp" alt="antigravity-cli-login-method.png"></p>
-<p>选择 Google OAuth 后，如果没有自动跳转，可以通过粘贴认证代码的方法进行确认，因此也可以在其他设备上使用。</p>
-<h3 id="可选模型"><a href="#可选模型" class="headerlink" title="可选模型"></a>可选模型</h3><p>Google AI Pro 用户在 Antigravity CLI 中可选的模型与 Antigravity IDE 一致：</p>
-<ul>
-<li>Gemini 3.5 Flash (High)      (current)</li>
-<li>Gemini 3.5 Flash (Medium)</li>
-<li>Gemini 3.1 Pro (High)</li>
-<li>Gemini 3.1 Pro (Low)</li>
-<li>Claude Sonnet 4.6 (Thinking)</li>
-<li>Claude Opus 4.6 (Thinking)</li>
-<li>GPT-OSS 120B (Medium)</li>
-</ul>
-<p><img src="https://img.nep.me/ooo/antigravity-cli-model-select.webp" alt="antigravity-cli-model-select.png"></p>
-<h2 id="Antigravity-CLI-介绍"><a href="#Antigravity-CLI-介绍" class="headerlink" title="Antigravity CLI 介绍"></a>Antigravity CLI 介绍</h2><p>Google 表示为了性能表现，使用 Go 语言完成了 Antigravity 的构建，同时 Google 也强调了 Antigravity CLI 的三个演进方向：更快执行、异步工作流，以及与 Antigravity 2.0 共用统一的 agent harness。</p>
-<p>Antigravity CLI 优势：</p>
-<ul>
-<li><strong>执行速度更快</strong>：Antigravity CLI 使用 Go 语言编写，速度更快，响应更迅速。</li>
-<li><strong>异步工作流</strong>：Antigravity CLI 在后台协调多个代理来执行复杂任务，让您可以运行大规模重构或研究多个主题，而不会锁定您的终端会话。</li>
-<li><strong>统一架构</strong>：Antigravity CLI 与 Antigravity 2.0（新的 Antigravity 桌面应用程序）共享相同的代理框架，确保核心代理的所有未来改进都会自动应用到您使用它们的任何地方。</li>
-</ul>
-<h2 id="Gemini-CLI-将终止服务"><a href="#Gemini-CLI-将终止服务" class="headerlink" title="Gemini CLI 将终止服务"></a>Gemini CLI 将终止服务</h2><p>在推出了 Antigravity CLI 后，Google <a href="https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/">表示</a>，自 2026 年 6 月 18 日起，Gemini CLI 和 Gemini Code Assist IDE 扩展程序将停止为 Google AI Pro 和 Ultra 用户提供服务。</p>
-<p>企业用户仍可继续使用。</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Antigravity 2.0 的发布，说明 Google 并没有把 AI 编程工具只当作 Gemini 模型的附属功能，而是在重新争夺“下一代代码编辑入口”。这次更新的重点，不是给传统 IDE 再加一个聊天侧边栏，而是把 Antigravity 从 agent-first IDE 升级成更完整的 agentic development platform：桌面端、CLI、SDK 和 API 一起构成新的开发者工作台。</p>
-<p>对用户来说，这种竞争无疑是好事。无论是 Google、OpenAI、Anthropic 还是 Cursor，都在推动代码工具从“补全助手”走向“开发伙伴”。竞争越激烈，开发者能获得的选择越多，价格、体验、模型能力和工作流整合也会被不断拉高。最终受益的，还是每天真正写代码、调试和交付产品的用户。</p>
-]]></content>
-      <categories>
-        <category>资讯</category>
-      </categories>
-      <tags>
-        <tag>AI</tag>
-        <tag>Antigravity</tag>
-        <tag>Antigravity IDE</tag>
-        <tag>Google</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Google 为 AI Pro 用户提供每月 10 美元 GCP 额度，获取教程</title>
     <url>/post/google-offer-10usd-gcp-credit-for-ai-pro-user.html</url>
     <content><![CDATA[<p>Google AI Pro 订阅用户每月可获得 10 美元的 Google Cloud 抵用金，Google AI Ultra 订阅用户每月可获得 100 美元的 Google Cloud 抵用金。</p>
@@ -5526,7 +5470,9 @@
 <img src="https://img.nep.me/i/2026/03/check-google-ai-credits.webp" style="width:75%;" alt="check-google-ai-credits.webp" />
 
 <h2 id="查看-Antigravity-IDE-剩余额度"><a href="#查看-Antigravity-IDE-剩余额度" class="headerlink" title="查看 Antigravity IDE 剩余额度"></a>查看 Antigravity IDE 剩余额度</h2><p>如果你没有安装查看额度的插件，可以在 Antigravity IDE 中的右上角点击齿轮图标，选择 <strong>Open Antigravity IDE User Settings</strong>，在打开的窗口左侧点击 <strong>Models</strong> 即可查看不同模型的当前额度剩余情况。</p>
-<p><img src="https://img.nep.me/i/2026/03/antigravity-models-quota-stats.webp" alt="antigravity-models-quota-stats.webp"></p>
+<p><img src="https://img.nep.me/ooo/antigravity-models-quota-stats-new.webp" alt="antigravity-models-quota-stats-new.webp"></p>
+<details class="flatpaper-note flatpaper-note--info"><summary class="flatpaper-note__title"><span class="flatpaper-note__icon" aria-hidden="true"></span><span class="flatpaper-note__label">旧样式</span><span class="flatpaper-note__chevron" aria-hidden="true"></span></summary><div class="flatpaper-note__body"><p><img src="https://img.nep.me/i/2026/03/antigravity-models-quota-stats.webp" alt="antigravity-models-quota-stats.webp"></p></div></details>
+
 <blockquote>
 <p>Update: <del>3 月 13 日，打开 Antigravity IDE 设置页面可以看到已重新恢复高级模型的五小时刷新机制，但根据观察使用额度超出 40% 即会变为一周刷新。</del></p>
 </blockquote>
@@ -6719,6 +6665,62 @@
       </tags>
   </entry>
   <entry>
+    <title>Google 发布 Antigravity 2.0 ，以及 Antigravity-CLI</title>
+    <url>/post/google-launch-antigravity-cli.html</url>
+    <content><![CDATA[<p>在 2026 年 5 月 20 日的 Google I&#x2F;O 大会上，Google 正式宣布推出 Antigravity 2.0，以 Agents 驱动为核心作为独立的桌面应用。原 Antigravity 更名为 <strong>Antigravity IDE</strong>，并同时推出 <strong>Antigravity CLI</strong> 取代 <strong>Gemini CLI</strong>。</p>
+<p>Antigravity 2.0 与 IDE 下载页面：<a href="https://antigravity.google/download">Download Google Antigravity</a></p>
+<h2 id="Antigravity-CLI-安装方法"><a href="#Antigravity-CLI-安装方法" class="headerlink" title="Antigravity CLI 安装方法"></a>Antigravity CLI 安装方法</h2><h3 id="macOS-Linux"><a href="#macOS-Linux" class="headerlink" title="macOS &#x2F; Linux"></a>macOS &#x2F; Linux</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl -fsSL https://antigravity.google/cli/install.sh | bash</span><br></pre></td></tr></table></figure>
+
+<h3 id="Windows-PowerShell"><a href="#Windows-PowerShell" class="headerlink" title="Windows PowerShell"></a>Windows PowerShell</h3><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">irm</span> https://antigravity.google/<span class="built_in">cli</span>/install.ps1 | <span class="built_in">iex</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Windows-CMD"><a href="#Windows-CMD" class="headerlink" title="Windows CMD"></a>Windows CMD</h3><figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">curl -fsSL https://antigravity.google/cli/install.<span class="built_in">cmd</span> -o install.<span class="built_in">cmd</span> &amp;&amp; install.<span class="built_in">cmd</span> &amp;&amp; <span class="built_in">del</span> install.<span class="built_in">cmd</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="启动与登录方法"><a href="#启动与登录方法" class="headerlink" title="启动与登录方法"></a>启动与登录方法</h2><h3 id="启动-Antigravity-CLI"><a href="#启动-Antigravity-CLI" class="headerlink" title="启动 Antigravity CLI"></a>启动 Antigravity CLI</h3><p>在终端中运行 <code>agy</code> 即可启动 Antigravity CLI。</p>
+<h3 id="登录方法"><a href="#登录方法" class="headerlink" title="登录方法"></a>登录方法</h3><p>使用 Antigravity CLI 之前，如果已在 Antigravity 或 Antigravity IDE 中登录了 Google 账户，系统将自动进行认证。</p>
+<p>初次启动需要选择代码主题，同意用户协议后即可打开 CLI 界面：</p>
+<p><img src="https://img.nep.me/ooo/antigravity-cli-theme-select.webp" alt="antigravity-cli-theme-select.png"></p>
+<p>界面预览：<br><img src="https://img.nep.me/ooo/antigravity-cli-tui-hello.webp" alt="antigravity-cli-tui.png"></p>
+<p>或者，您也可以选择以下认证方法手动登录：</p>
+<ul>
+<li><strong>Google OAuth</strong></li>
+<li><strong>Use a Google Cloud project</strong></li>
+</ul>
+<p><img src="https://img.nep.me/ooo/antigravity-cli-login-method.webp" alt="antigravity-cli-login-method.png"></p>
+<p>选择 Google OAuth 后，如果没有自动跳转，可以通过粘贴认证代码的方法进行确认，因此也可以在其他设备上使用。</p>
+<h3 id="可选模型"><a href="#可选模型" class="headerlink" title="可选模型"></a>可选模型</h3><p>Google AI Pro 用户在 Antigravity CLI 中可选的模型与 Antigravity IDE 一致：</p>
+<ul>
+<li>Gemini 3.5 Flash (High)      (current)</li>
+<li>Gemini 3.5 Flash (Medium)</li>
+<li>Gemini 3.1 Pro (High)</li>
+<li>Gemini 3.1 Pro (Low)</li>
+<li>Claude Sonnet 4.6 (Thinking)</li>
+<li>Claude Opus 4.6 (Thinking)</li>
+<li>GPT-OSS 120B (Medium)</li>
+</ul>
+<p><img src="https://img.nep.me/ooo/antigravity-cli-model-select.webp" alt="antigravity-cli-model-select.png"></p>
+<h2 id="Antigravity-CLI-介绍"><a href="#Antigravity-CLI-介绍" class="headerlink" title="Antigravity CLI 介绍"></a>Antigravity CLI 介绍</h2><p>Google 表示为了性能表现，使用 Go 语言完成了 Antigravity 的构建，同时 Google 也强调了 Antigravity CLI 的三个演进方向：更快执行、异步工作流，以及与 Antigravity 2.0 共用统一的 agent harness。</p>
+<p>Antigravity CLI 优势：</p>
+<ul>
+<li><strong>执行速度更快</strong>：Antigravity CLI 使用 Go 语言编写，速度更快，响应更迅速。</li>
+<li><strong>异步工作流</strong>：Antigravity CLI 在后台协调多个代理来执行复杂任务，让您可以运行大规模重构或研究多个主题，而不会锁定您的终端会话。</li>
+<li><strong>统一架构</strong>：Antigravity CLI 与 Antigravity 2.0（新的 Antigravity 桌面应用程序）共享相同的代理框架，确保核心代理的所有未来改进都会自动应用到您使用它们的任何地方。</li>
+</ul>
+<h2 id="Gemini-CLI-将终止服务"><a href="#Gemini-CLI-将终止服务" class="headerlink" title="Gemini CLI 将终止服务"></a>Gemini CLI 将终止服务</h2><p>在推出了 Antigravity CLI 后，Google <a href="https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/">表示</a>，自 2026 年 6 月 18 日起，Gemini CLI 和 Gemini Code Assist IDE 扩展程序将停止为 Google AI Pro 和 Ultra 用户提供服务。</p>
+<p>企业用户仍可继续使用。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Antigravity 2.0 的发布，说明 Google 并没有把 AI 编程工具只当作 Gemini 模型的附属功能，而是在重新争夺“下一代代码编辑入口”。这次更新的重点，不是给传统 IDE 再加一个聊天侧边栏，而是把 Antigravity 从 agent-first IDE 升级成更完整的 agentic development platform：桌面端、CLI、SDK 和 API 一起构成新的开发者工作台。</p>
+<p>对用户来说，这种竞争无疑是好事。无论是 Google、OpenAI、Anthropic 还是 Cursor，都在推动代码工具从“补全助手”走向“开发伙伴”。竞争越激烈，开发者能获得的选择越多，价格、体验、模型能力和工作流整合也会被不断拉高。最终受益的，还是每天真正写代码、调试和交付产品的用户。</p>
+]]></content>
+      <categories>
+        <category>资讯</category>
+      </categories>
+      <tags>
+        <tag>AI</tag>
+        <tag>Antigravity</tag>
+        <tag>Antigravity IDE</tag>
+        <tag>Google</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>台北电脑展：Nvidia 发布面向 PC 的 RTX Spark CPU，信息一览</title>
     <url>/post/nvidia-announce-rtx-spark.html</url>
     <content><![CDATA[<p>2026 年 6 月 1 日，之前各大科技品牌官推的 <code>A new era of PC.</code> 谜底终于揭晓：</p>
@@ -6784,6 +6786,34 @@
       </tags>
   </entry>
   <entry>
+    <title>OpenAI 发布 GPT-5.6 系列模型：Sol、Terra 和 Luna 开启有限预览，受美国政府要求限制初始访问</title>
+    <url>/post/openai-gpt-5-6-limited-preview.html</url>
+    <content><![CDATA[<p><strong>日期：美国时间 2026年6月26日</strong></p>
+<p>OpenAI 宣布正式预览其新一代 GPT-5.6 模型系列，并率先以受限预览形式向部分可信合作伙伴开放。本次发布包含三款模型：旗舰级模型 <strong>GPT-5.6 Sol</strong>、面向日常工作的均衡模型 <strong>GPT-5.6 Terra</strong>，以及主打速度与成本效率的 <strong>GPT-5.6 Luna</strong>。这是继 GPT-5.5（2026年4月发布）之后又一次快速迭代，延续了 OpenAI 大约每六周发布一次旗舰模型的节奏。</p>
+<img src="https://img.nep.me/ooo/openai-release-gpt-sol.webp" alt="openai-release-gpt-sol.png" style="width:75%;max-width:100%;height:auto" />
+
+<h3 id="三大变体定位不同需求"><a href="#三大变体定位不同需求" class="headerlink" title="三大变体定位不同需求"></a>三大变体定位不同需求</h3><ul>
+<li><strong>Sol：</strong> 最强大旗舰模型，在代理能力上显著提升，尤其在编码、生物学和网络安全领域表现出色。新增 <strong>Max</strong> 推理模式和 <strong>Ultra</strong> 模式（可协调多个子代理处理极复杂任务）。 </li>
+<li><strong>Terra：</strong> 性能与 GPT-5.5 相当，但成本约降低一半（据报道输入&#x2F;输出 token 定价更具竞争力），适合日常工作。 </li>
+<li><strong>Luna：</strong> 速度最快、成本最低的选项，提供强大能力的同时实现最高性价比。</li>
+</ul>
+<p>据 OpenAI 公告，GPT-5.6 Sol 是目前最强的模型，在真实世界编码调试、漏洞查找与修复等任务中表现出色，同时在上下文窗口和 token 效率上有进一步优化（此前传闻提到可能支持高达 <strong>150 万</strong> token 上下文）。模型还强化了推理训练，能在回答前进行更长的内部思考链。 </p>
+<h3 id="安全与访问限制：受美国政府影响"><a href="#安全与访问限制：受美国政府影响" class="headerlink" title="安全与访问限制：受美国政府影响"></a>安全与访问限制：受美国政府影响</h3><p>尽管 OpenAI 强调“相信广泛访问”并计划在未来数周内向 ChatGPT、Codex 和 API 全面开放，但本次发布采用有限预览形式，初始仅限约 20 家受信任合作伙伴（参与名单已与政府共享）。这一决定源于美国政府（特朗普政府）的安全关切，特别是针对先进 AI 模型的网络安全能力审查。 </p>
+<p>OpenAI 在系统卡和公告中表示，已构建史上最强大的安全栈，包括强化训练、激活分类器、实时监控等。模型在 Preparedness Framework 下被评估为网络安全和生物&#x2F;化学风险 “High” 级别，但未达到 “Critical” 阈值。测试显示 Sol 在帮助防御者查找和修复漏洞方面的能力强于自主实施端到端攻击的能力。公司同时承认代理编码任务中存在一定“超出用户意图”的倾向，但绝对发生率较低。 </p>
+<p>OpenAI 明确表示，此类政府审查不应成为长期默认做法，并正与政府合作制定可重复的审查框架，以尽快实现更广泛可用性。 </p>
+<h3 id="展望"><a href="#展望" class="headerlink" title="展望"></a>展望</h3><p>从行业角度看，GPT-5.6 的发布标志着 AI 竞争进入新的阶段。一方面，模型能力继续向更强的智能体、代码执行、长任务规划方向推进；另一方面，政府、企业和社会对前沿模型风险的关注也在快速上升。未来，前沿 AI 模型的发布节奏，可能不再只由技术成熟度决定，还会受到安全评估、监管要求和国际竞争环境的共同影响。</p>
+<p>目前，GPT-5.6 系列尚未全面开放。按照媒体报道，OpenAI 计划在完成初期评估后，于未来几周逐步扩大访问范围。对于普通用户和开发者来说，GPT-5.6 的真正影响，可能要等到 API、ChatGPT 或 Codex 等产品线正式接入后才会更加清晰。</p>
+]]></content>
+      <categories>
+        <category>资讯</category>
+      </categories>
+      <tags>
+        <tag>OpenAI</tag>
+        <tag>ChatGPT</tag>
+        <tag>GPT-5.6</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Open Lovable：一键『克隆』任意网站为 React 应用的神器</title>
     <url>/post/open-lovable-clone-website-to-react.html</url>
     <content><![CDATA[<p>最近在逛 GitHub 的时候，刷到了一个极其亮眼的项目——由 <strong>Firecrawl</strong>（前 MendableAI）团队开源的 <strong>Open Lovable</strong>。目前该项目在 GitHub 上已经狂飙到了 <strong>24k+ Star</strong>，可谓是前端开发者和原型设计师的效率杀手锏。</p>
@@ -6812,34 +6842,6 @@
         <tag>AI</tag>
         <tag>开源项目</tag>
         <tag>前端开发</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>OpenAI 发布 GPT-5.6 系列模型：Sol、Terra 和 Luna 开启有限预览，受美国政府要求限制初始访问</title>
-    <url>/post/openai-gpt-5-6-limited-preview.html</url>
-    <content><![CDATA[<p><strong>日期：美国时间 2026年6月26日</strong></p>
-<p>OpenAI 宣布正式预览其新一代 GPT-5.6 模型系列，并率先以受限预览形式向部分可信合作伙伴开放。本次发布包含三款模型：旗舰级模型 <strong>GPT-5.6 Sol</strong>、面向日常工作的均衡模型 <strong>GPT-5.6 Terra</strong>，以及主打速度与成本效率的 <strong>GPT-5.6 Luna</strong>。这是继 GPT-5.5（2026年4月发布）之后又一次快速迭代，延续了 OpenAI 大约每六周发布一次旗舰模型的节奏。</p>
-<img src="https://img.nep.me/ooo/openai-release-gpt-sol.webp" alt="openai-release-gpt-sol.png" style="width:75%;max-width:100%;height:auto" />
-
-<h3 id="三大变体定位不同需求"><a href="#三大变体定位不同需求" class="headerlink" title="三大变体定位不同需求"></a>三大变体定位不同需求</h3><ul>
-<li><strong>Sol：</strong> 最强大旗舰模型，在代理能力上显著提升，尤其在编码、生物学和网络安全领域表现出色。新增 <strong>Max</strong> 推理模式和 <strong>Ultra</strong> 模式（可协调多个子代理处理极复杂任务）。 </li>
-<li><strong>Terra：</strong> 性能与 GPT-5.5 相当，但成本约降低一半（据报道输入&#x2F;输出 token 定价更具竞争力），适合日常工作。 </li>
-<li><strong>Luna：</strong> 速度最快、成本最低的选项，提供强大能力的同时实现最高性价比。</li>
-</ul>
-<p>据 OpenAI 公告，GPT-5.6 Sol 是目前最强的模型，在真实世界编码调试、漏洞查找与修复等任务中表现出色，同时在上下文窗口和 token 效率上有进一步优化（此前传闻提到可能支持高达 <strong>150 万</strong> token 上下文）。模型还强化了推理训练，能在回答前进行更长的内部思考链。 </p>
-<h3 id="安全与访问限制：受美国政府影响"><a href="#安全与访问限制：受美国政府影响" class="headerlink" title="安全与访问限制：受美国政府影响"></a>安全与访问限制：受美国政府影响</h3><p>尽管 OpenAI 强调“相信广泛访问”并计划在未来数周内向 ChatGPT、Codex 和 API 全面开放，但本次发布采用有限预览形式，初始仅限约 20 家受信任合作伙伴（参与名单已与政府共享）。这一决定源于美国政府（特朗普政府）的安全关切，特别是针对先进 AI 模型的网络安全能力审查。 </p>
-<p>OpenAI 在系统卡和公告中表示，已构建史上最强大的安全栈，包括强化训练、激活分类器、实时监控等。模型在 Preparedness Framework 下被评估为网络安全和生物&#x2F;化学风险 “High” 级别，但未达到 “Critical” 阈值。测试显示 Sol 在帮助防御者查找和修复漏洞方面的能力强于自主实施端到端攻击的能力。公司同时承认代理编码任务中存在一定“超出用户意图”的倾向，但绝对发生率较低。 </p>
-<p>OpenAI 明确表示，此类政府审查不应成为长期默认做法，并正与政府合作制定可重复的审查框架，以尽快实现更广泛可用性。 </p>
-<h3 id="展望"><a href="#展望" class="headerlink" title="展望"></a>展望</h3><p>从行业角度看，GPT-5.6 的发布标志着 AI 竞争进入新的阶段。一方面，模型能力继续向更强的智能体、代码执行、长任务规划方向推进；另一方面，政府、企业和社会对前沿模型风险的关注也在快速上升。未来，前沿 AI 模型的发布节奏，可能不再只由技术成熟度决定，还会受到安全评估、监管要求和国际竞争环境的共同影响。</p>
-<p>目前，GPT-5.6 系列尚未全面开放。按照媒体报道，OpenAI 计划在完成初期评估后，于未来几周逐步扩大访问范围。对于普通用户和开发者来说，GPT-5.6 的真正影响，可能要等到 API、ChatGPT 或 Codex 等产品线正式接入后才会更加清晰。</p>
-]]></content>
-      <categories>
-        <category>资讯</category>
-      </categories>
-      <tags>
-        <tag>OpenAI</tag>
-        <tag>ChatGPT</tag>
-        <tag>GPT-5.6</tag>
       </tags>
   </entry>
   <entry>
