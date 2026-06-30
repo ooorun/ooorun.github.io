@@ -27,7 +27,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://img.nep.me/ooo/cover-vercel-services.webp">
 <meta property="article:published_time" content="2026-06-30T16:09:42.000Z">
-<meta property="article:modified_time" content="2026-06-30T16:43:05.538Z">
+<meta property="article:modified_time" content="2026-06-30T16:47:09.870Z">
 <meta property="article:author" content="Mr. O">
 <meta property="article:tag" content="Cloud">
 <meta property="article:tag" content="Vercel">
@@ -36,7 +36,7 @@
 <meta name="twitter:image" content="https://img.nep.me/ooo/cover-vercel-services.webp">
 <link rel="canonical" href="https://ooo.run/post/vercel-services-multiple-frameworks-one-project.html">
 
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Vercel Services 发布：一个项目部署 Next.js、FastAPI、Go 和 Astro","name":"Vercel Services 发布：一个项目部署 Next.js、FastAPI、Go 和 Astro | O's World","description":"当你手头有一个包含 Next.js 前端、FastAPI 后端、Go 服务和 Astro 文档站的复杂项目时，是否也曾为如何在 Vercel 上部署和管理而感到头疼？ 过去，这类项目往往需要拆成多个 Vercel Project，或者把部分服务放到其他平台上运行。项目一多，域名、环境变量、Preview URL、跨服务调用、CORS、路由转发都会变复杂。 V...","url":"https://ooo.run/post/vercel-services-multiple-frameworks-one-project.html","inLanguage":"zh-CN","isPartOf":{"@type":"WebSite","name":"O's World","url":"https://ooo.run/"},"image":["https://img.nep.me/ooo/cover-vercel-services.webp"],"mainEntityOfPage":"https://ooo.run/post/vercel-services-multiple-frameworks-one-project.html","datePublished":"2026-06-30T16:09:42.000Z","dateModified":"2026-06-30T16:43:05.538Z","author":{"@type":"Person","name":"Mr. O"},"publisher":{"@type":"Organization","name":"O's World"},"keywords":"Vercel, Cloud, 前端开发"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Vercel Services 发布：一个项目部署 Next.js、FastAPI、Go 和 Astro","name":"Vercel Services 发布：一个项目部署 Next.js、FastAPI、Go 和 Astro | O's World","description":"当你手头有一个包含 Next.js 前端、FastAPI 后端、Go 服务和 Astro 文档站的复杂项目时，是否也曾为如何在 Vercel 上部署和管理而感到头疼？ 过去，这类项目往往需要拆成多个 Vercel Project，或者把部分服务放到其他平台上运行。项目一多，域名、环境变量、Preview URL、跨服务调用、CORS、路由转发都会变复杂。 V...","url":"https://ooo.run/post/vercel-services-multiple-frameworks-one-project.html","inLanguage":"zh-CN","isPartOf":{"@type":"WebSite","name":"O's World","url":"https://ooo.run/"},"image":["https://img.nep.me/ooo/cover-vercel-services.webp"],"mainEntityOfPage":"https://ooo.run/post/vercel-services-multiple-frameworks-one-project.html","datePublished":"2026-06-30T16:09:42.000Z","dateModified":"2026-06-30T16:47:09.870Z","author":{"@type":"Person","name":"Mr. O"},"publisher":{"@type":"Organization","name":"O's World"},"keywords":"Vercel, Cloud, 前端开发"}</script>
 
 <script>
   (function () {
@@ -184,12 +184,38 @@
       
     
       
-        <a class="site-nav-link " href="/fcircle/">
-          
-<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="#flatpaper-icon-lucide-users"></use></svg>
+        <div class="site-nav-item has-children">
+          <button class="site-nav-link site-nav-parent" type="button" aria-haspopup="true" aria-expanded="false">
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="#flatpaper-icon-lucide-folder"></use></svg>
 
-          <span>朋友圈</span>
-        </a>
+            <span>文章</span>
+          </button>
+          <div class="site-nav-menu" role="menu">
+            
+              <a role="menuitem" class="" href="/archives/">
+                
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-archive flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="#flatpaper-icon-lucide-archive"></use></svg>
+
+                <span>归档</span>
+              </a>
+            
+              <a role="menuitem" class="" href="/categories/">
+                
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="#flatpaper-icon-lucide-folder"></use></svg>
+
+                <span>分类</span>
+              </a>
+            
+              <a role="menuitem" class="" href="/tags/">
+                
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tag flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="#flatpaper-icon-lucide-tag"></use></svg>
+
+                <span>标签</span>
+              </a>
+            
+          </div>
+        </div>
       
     
       
@@ -309,12 +335,38 @@
         
       
         
-          <a class="" href="/fcircle/">
-            
-<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="#flatpaper-icon-lucide-users"></use></svg>
+          <div class="drawer-nav-group">
+            <button class="drawer-nav-parent" type="button" aria-expanded="false">
+              
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="#flatpaper-icon-lucide-folder"></use></svg>
 
-            <span>朋友圈</span>
-          </a>
+              <span>文章</span>
+            </button>
+            <div class="drawer-nav-children">
+              
+                <a class="" href="/archives/">
+                  
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-archive flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="#flatpaper-icon-lucide-archive"></use></svg>
+
+                  <span>归档</span>
+                </a>
+              
+                <a class="" href="/categories/">
+                  
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="#flatpaper-icon-lucide-folder"></use></svg>
+
+                  <span>分类</span>
+                </a>
+              
+                <a class="" href="/tags/">
+                  
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tag flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="#flatpaper-icon-lucide-tag"></use></svg>
+
+                  <span>标签</span>
+                </a>
+              
+            </div>
+          </div>
         
       
         
@@ -442,7 +494,7 @@
         </header>
         <div class="toc-content">
           
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Vercel-Services-%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-text">Vercel Services 是什么？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%83%E8%A7%A3%E5%86%B3%E4%BA%86%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98%EF%BC%9F"><span class="toc-text">它解决了什么问题？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%89%8D%E7%AB%AF%E5%92%8C%E5%90%8E%E7%AB%AF%E4%B8%8D%E7%94%A8%E6%8B%86%E6%88%90%E5%A4%9A%E4%B8%AA-Vercel-Project"><span class="toc-text">1. 前端和后端不用拆成多个 Vercel Project</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%9B%B4%E9%80%82%E5%90%88%E5%A4%9A%E8%AF%AD%E8%A8%80%E9%A1%B9%E7%9B%AE"><span class="toc-text">2. 更适合多语言项目</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-Preview-Deployment-%E6%9B%B4%E7%BB%9F%E4%B8%80"><span class="toc-text">3. Preview Deployment 更统一</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E9%85%8D%E7%BD%AE%E7%A4%BA%E4%BE%8B"><span class="toc-text">基础配置示例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9B%B4%E5%AE%8C%E6%95%B4%E7%9A%84%E7%A4%BA%E4%BE%8B%EF%BC%9ANext-js-FastAPI-Go-Astro"><span class="toc-text">更完整的示例：Next.js + FastAPI + Go + Astro</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E5%AD%97%E6%AE%B5%E8%AF%B4%E6%98%8E"><span class="toc-text">配置字段说明</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#services"><span class="toc-text">services</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#root"><span class="toc-text">root</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#framework"><span class="toc-text">framework</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#entrypoint"><span class="toc-text">entrypoint</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#rewrites"><span class="toc-text">rewrites</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1%E4%B9%8B%E9%97%B4%E5%A6%82%E4%BD%95%E9%80%9A%E4%BF%A1%EF%BC%9F"><span class="toc-text">服务之间如何通信？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%83%E4%B8%8D%E6%98%AF-Docker-Compose"><span class="toc-text">它不是 Docker Compose</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%82%E5%90%88%E5%93%AA%E4%BA%9B%E9%A1%B9%E7%9B%AE%EF%BC%9F"><span class="toc-text">适合哪些项目？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Monorepo-%E9%A1%B9%E7%9B%AE"><span class="toc-text">Monorepo 项目</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%8D%E5%90%8E%E7%AB%AF%E5%88%86%E7%A6%BB%E9%A1%B9%E7%9B%AE"><span class="toc-text">前后端分离项目</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E4%B8%AA%E5%90%8E%E5%8F%B0%E6%9C%8D%E5%8A%A1"><span class="toc-text">多个后台服务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E7%AB%99%E7%82%B9-%E5%90%8E%E5%8F%B0%E6%8E%A5%E5%8F%A3"><span class="toc-text">静态站点 + 后台接口</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Vercel-Services-%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-text">Vercel Services 是什么？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%83%E8%A7%A3%E5%86%B3%E4%BA%86%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98%EF%BC%9F"><span class="toc-text">它解决了什么问题？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%89%8D%E7%AB%AF%E5%92%8C%E5%90%8E%E7%AB%AF%E4%B8%8D%E7%94%A8%E6%8B%86%E6%88%90%E5%A4%9A%E4%B8%AA-Vercel-Project"><span class="toc-text">1. 前端和后端不用拆成多个 Vercel Project</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%9B%B4%E9%80%82%E5%90%88%E5%A4%9A%E8%AF%AD%E8%A8%80%E9%A1%B9%E7%9B%AE"><span class="toc-text">2. 更适合多语言项目</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-Preview-Deployment-%E6%9B%B4%E7%BB%9F%E4%B8%80"><span class="toc-text">3. Preview Deployment 更统一</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E9%85%8D%E7%BD%AE%E7%A4%BA%E4%BE%8B"><span class="toc-text">基础配置示例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9B%B4%E5%AE%8C%E6%95%B4%E7%9A%84%E7%A4%BA%E4%BE%8B%EF%BC%9ANext-js-FastAPI-Go-Astro"><span class="toc-text">更完整的示例：Next.js + FastAPI + Go + Astro</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E5%AD%97%E6%AE%B5%E8%AF%B4%E6%98%8E"><span class="toc-text">配置字段说明</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#services"><span class="toc-text">services</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#root"><span class="toc-text">root</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#framework"><span class="toc-text">framework</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#entrypoint"><span class="toc-text">entrypoint</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#rewrites"><span class="toc-text">rewrites</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1%E4%B9%8B%E9%97%B4%E5%A6%82%E4%BD%95%E9%80%9A%E4%BF%A1%EF%BC%9F"><span class="toc-text">服务之间如何通信？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%83%E4%B8%8D%E6%98%AF-Docker-Compose"><span class="toc-text">它不是 Docker Compose</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%82%E5%90%88%E5%93%AA%E4%BA%9B%E9%A1%B9%E7%9B%AE%EF%BC%9F"><span class="toc-text">适合哪些项目？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Monorepo-%E9%A1%B9%E7%9B%AE"><span class="toc-text">Monorepo 项目</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%8D%E5%90%8E%E7%AB%AF%E5%88%86%E7%A6%BB%E9%A1%B9%E7%9B%AE"><span class="toc-text">前后端分离项目</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E4%B8%AA%E5%90%8E%E5%8F%B0%E6%9C%8D%E5%8A%A1"><span class="toc-text">多个后台服务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E7%AB%99%E7%82%B9-%E5%90%8E%E5%8F%B0%E6%8E%A5%E5%8F%A3"><span class="toc-text">静态站点 + 后台接口</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E6%8E%A7"><span class="toc-text">参控</span></a></li></ol>
           
         </div>
       </section>
@@ -740,6 +792,10 @@
 </ul>
 <p>如果你一直想把一个复杂项目整理成更清晰的部署结构，Vercel Services 值得关注。</p>
 <p>它不是 Docker Compose 的替代品，也不是所有项目都必须使用的新能力。但对于已经开始变复杂的前端项目、个人工具站和轻量全栈应用来说，它确实让 Vercel 的部署模型更完整了。</p>
+<h2 id="参控"><a href="#参控" class="headerlink" title="参控"></a>参控</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://vercel.com/docs/services">Vercel - Services</a></li>
+<li><a target="_blank" rel="noopener" href="https://vercel.com/changelog/run-multiple-frameworks-in-one-project-with-vercel-services">Run multiple frameworks in one project with Vercel Services</a></li>
+</ul>
 
   </div>
 

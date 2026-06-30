@@ -183,12 +183,38 @@
       
     
       
-        <a class="site-nav-link " href="/fcircle/">
-          
-<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="#flatpaper-icon-lucide-users"></use></svg>
+        <div class="site-nav-item has-children">
+          <button class="site-nav-link site-nav-parent" type="button" aria-haspopup="true" aria-expanded="false">
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="#flatpaper-icon-lucide-folder"></use></svg>
 
-          <span>朋友圈</span>
-        </a>
+            <span>文章</span>
+          </button>
+          <div class="site-nav-menu" role="menu">
+            
+              <a role="menuitem" class="" href="/archives/">
+                
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-archive flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="#flatpaper-icon-lucide-archive"></use></svg>
+
+                <span>归档</span>
+              </a>
+            
+              <a role="menuitem" class="" href="/categories/">
+                
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="#flatpaper-icon-lucide-folder"></use></svg>
+
+                <span>分类</span>
+              </a>
+            
+              <a role="menuitem" class="" href="/tags/">
+                
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tag flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="#flatpaper-icon-lucide-tag"></use></svg>
+
+                <span>标签</span>
+              </a>
+            
+          </div>
+        </div>
       
     
       
@@ -308,12 +334,38 @@
         
       
         
-          <a class="" href="/fcircle/">
-            
-<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="#flatpaper-icon-lucide-users"></use></svg>
+          <div class="drawer-nav-group">
+            <button class="drawer-nav-parent" type="button" aria-expanded="false">
+              
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="#flatpaper-icon-lucide-folder"></use></svg>
 
-            <span>朋友圈</span>
-          </a>
+              <span>文章</span>
+            </button>
+            <div class="drawer-nav-children">
+              
+                <a class="" href="/archives/">
+                  
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-archive flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="#flatpaper-icon-lucide-archive"></use></svg>
+
+                  <span>归档</span>
+                </a>
+              
+                <a class="" href="/categories/">
+                  
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="#flatpaper-icon-lucide-folder"></use></svg>
+
+                  <span>分类</span>
+                </a>
+              
+                <a class="" href="/tags/">
+                  
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tag flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="#flatpaper-icon-lucide-tag"></use></svg>
+
+                  <span>标签</span>
+                </a>
+              
+            </div>
+          </div>
         
       
         
@@ -642,8 +694,8 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">log</span></span><br><span class="line"><span class="comment"># 或者使用更简洁的单行输出</span></span><br><span class="line">git <span class="built_in">log</span> --oneline</span><br></pre></td></tr></table></figure>
 
 <h3 id="2-查看文件变更-Git-Diff"><a href="#2-查看文件变更-Git-Diff" class="headerlink" title="2. 查看文件变更 (Git Diff)"></a>2. 查看文件变更 (Git Diff)</h3><p>在创建存档点之前，你需要确认自己到底改了哪些内容：</p>
-<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-21-tab-0" aria-controls="tabs-21-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">对比工作区</button><button type="button" role="tab" id="tabs-21-tab-1" aria-controls="tabs-21-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">对比暂存区</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-21-panel-0" aria-labelledby="tabs-21-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><p>我当前世界和上次存档相比，哪里变了？</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git diff</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-21-panel-1" aria-labelledby="tabs-21-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><p>我已经 add 到暂存区，准备写入下个存档点的内容是什么？</p>
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-20-tab-0" aria-controls="tabs-20-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">对比工作区</button><button type="button" role="tab" id="tabs-20-tab-1" aria-controls="tabs-20-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">对比暂存区</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-20-panel-0" aria-labelledby="tabs-20-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><p>我当前世界和上次存档相比，哪里变了？</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git diff</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-20-panel-1" aria-labelledby="tabs-20-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><p>我已经 add 到暂存区，准备写入下个存档点的内容是什么？</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git diff --staged</span><br></pre></td></tr></table></figure></section></div></div>
 
 <h2 id="五、分支-Branch-与合并-Merge-：多元世界线"><a href="#五、分支-Branch-与合并-Merge-：多元世界线" class="headerlink" title="五、分支 (Branch) 与合并 (Merge)：多元世界线"></a>五、分支 (Branch) 与合并 (Merge)：多元世界线</h2><p><strong>Git</strong> 最强大的功能之一就是分支。</p>
@@ -665,10 +717,10 @@
 <div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p><strong>多人协作黄金法则</strong>：在开始每天的工作或提交代码前，强烈建议先执行 <code>git pull</code> 同步服务器上的最新状态，这样可以大幅减少合并时的冲突概率。</p></div></div>
 
 <h2 id="七、撤销与临时口袋"><a href="#七、撤销与临时口袋" class="headerlink" title="七、撤销与临时口袋"></a>七、撤销与临时口袋</h2><h3 id="1-安全撤销与回滚"><a href="#1-安全撤销与回滚" class="headerlink" title="1. 安全撤销与回滚"></a>1. 安全撤销与回滚</h3><p>如果你改坏了代码或者提交错了内容，可以通过以下命令安全“读档”：</p>
-<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-22-tab-0" aria-controls="tabs-22-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">放弃工作区修改</button><button type="button" role="tab" id="tabs-22-tab-1" aria-controls="tabs-22-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">取消暂存</button><button type="button" role="tab" id="tabs-22-tab-2" aria-controls="tabs-22-panel-2" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="2">撤销已提交 (Revert)</button><button type="button" role="tab" id="tabs-22-tab-3" aria-controls="tabs-22-panel-3" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="3">强制回滚 (Reset)</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-22-panel-0" aria-labelledby="tabs-22-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><p>当前未 add 的修改不要了，回到上一个正式存档点状态：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git restore README.md</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-22-panel-1" aria-labelledby="tabs-22-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><p>后悔执行了 git add，把文件从暂存区拿出来（不会删除实际修改）：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git restore --staged README.md</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-22-panel-2" aria-labelledby="tabs-22-tab-2" class="flatpaper-tabs__panel" data-index="2" hidden><p>创建一个新的“反向提交”来撤销指定提交的影响。这是协作中最安全的做法！</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git revert a1b2c3d</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-22-panel-3" aria-labelledby="tabs-22-tab-3" class="flatpaper-tabs__panel" data-index="3" hidden><p>危险！直接把时间线强行挪回某个旧存档点，丢弃之后的所有提交：</p>
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-21-tab-0" aria-controls="tabs-21-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">放弃工作区修改</button><button type="button" role="tab" id="tabs-21-tab-1" aria-controls="tabs-21-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">取消暂存</button><button type="button" role="tab" id="tabs-21-tab-2" aria-controls="tabs-21-panel-2" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="2">撤销已提交 (Revert)</button><button type="button" role="tab" id="tabs-21-tab-3" aria-controls="tabs-21-panel-3" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="3">强制回滚 (Reset)</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-21-panel-0" aria-labelledby="tabs-21-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><p>当前未 add 的修改不要了，回到上一个正式存档点状态：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git restore README.md</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-21-panel-1" aria-labelledby="tabs-21-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><p>后悔执行了 git add，把文件从暂存区拿出来（不会删除实际修改）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git restore --staged README.md</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-21-panel-2" aria-labelledby="tabs-21-tab-2" class="flatpaper-tabs__panel" data-index="2" hidden><p>创建一个新的“反向提交”来撤销指定提交的影响。这是协作中最安全的做法！</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git revert a1b2c3d</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-21-panel-3" aria-labelledby="tabs-21-tab-3" class="flatpaper-tabs__panel" data-index="3" hidden><p>危险！直接把时间线强行挪回某个旧存档点，丢弃之后的所有提交：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard a1b2c3d</span><br></pre></td></tr></table></figure></section></div></div>
 
 <h3 id="2-Stash-临时口袋存档"><a href="#2-Stash-临时口袋存档" class="headerlink" title="2. Stash 临时口袋存档"></a>2. Stash 临时口袋存档</h3><p>有时候你在开发功能，改了一半需要临时切分支去修 Bug，但代码还不具备 commit 的条件。这时可以用临时口袋：</p>
