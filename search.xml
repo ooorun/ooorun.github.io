@@ -1,91 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>在 Debian 12 中安装 Docker 以及 Docker Compose</title>
-    <url>/post/debian-install-docker.html</url>
-    <content><![CDATA[<details class="flatpaper-note flatpaper-note--warning"><summary class="flatpaper-note__title"><span class="flatpaper-note__icon" aria-hidden="true"></span><span class="flatpaper-note__label">已更新</span><span class="flatpaper-note__chevron" aria-hidden="true"></span></summary><div class="flatpaper-note__body"><p><strong>本文环境配置可能较老。</strong> 我们已为您准备了针对更新系统环境的最新教程，请查看：<a href="/post/debian-13-install-docker/">在 Debian 13 中安装 Docker 以及 Docker Compose</a></p></div></details>
-
-<p>现在越来越多的应用可以使用 Docker 一键部署，本文将介绍如何在 Debian 12 中安装 Docker 与 Docker Compose。</p>
-<p>验证环境</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">root@debian:~# lsb_release -a</span><br><span class="line">No LSB modules are available.</span><br><span class="line">Distributor ID:	Debian</span><br><span class="line">Description:	Debian GNU/Linux 12 (bookworm)</span><br><span class="line">Release:	12</span><br><span class="line">Codename:	bookworm</span><br></pre></td></tr></table></figure>
-<p>安装同样适用于 Debian 11 以及 Ubuntu 24.04</p>
-<h2 id="Docker-介绍"><a href="#Docker-介绍" class="headerlink" title="Docker 介绍"></a>Docker 介绍</h2><p>Docker 是一个开源的容器化平台，它可以将应用程序及其依赖打包到一个轻量级、可移植的容器中，使其能够在任何环境中一致地运行。</p>
-<ul>
-<li><strong>轻量</strong>：容器共享宿主机的操作系统内核，启动速度快，占用资源少。</li>
-<li><strong>可移植</strong>：容器可以在开发、测试和生产环境中一致运行，解决“环境不一致”的问题。</li>
-<li><strong>隔离性</strong>：每个容器都是独立运行的，互不影响。</li>
-<li><strong>快速部署</strong>：通过镜像技术，实现应用的快速打包、发布和部署。</li>
-</ul>
-<h2 id="Docker-Compose-介绍"><a href="#Docker-Compose-介绍" class="headerlink" title="Docker Compose 介绍"></a>Docker Compose 介绍</h2><p>Docker Compose 是 Docker 提供的用于定义和管理多容器应用的工具。通过一个简单的 YAML 文件<code>docker-compose.yml</code>，你可以定义和启动多个服务容器，使得应用的部署和管理更加便捷，可以不必使用 Docker run 命令。 </p>
-<p>特点：</p>
-<ul>
-<li><strong>多容器管理</strong>：同时启动、停止和管理多个容器。</li>
-<li><strong>通过 YAML 配置</strong>：通过 docker-compose.yml 定义服务、网络、存储等。</li>
-<li><strong>简化命令</strong>：使用单一命令 docker compose 管理容器</li>
-</ul>
-<p>本文将介绍安装 V2 版本，对应的命令是 <code>docker compose</code> </p>
-<h2 id="使用官方源安装"><a href="#使用官方源安装" class="headerlink" title="使用官方源安装"></a>使用官方源安装</h2><p>以下操作需要在 root 用户下完成，请使用 <code>sudo -i</code> 或 <code>su root</code> 切换到 root 用户进行操作。</p>
-<p>首先，安装一些必要的软件包： </p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">apt update</span><br><span class="line">apt upgrade -y</span><br><span class="line">apt install curl vim wget gnupg dpkg apt-transport-https lsb-release ca-certificates</span><br></pre></td></tr></table></figure>
-
-<p>然后加入 Docker 的 GPG 公钥和 apt 源：</p>
-<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-1-tab-0" aria-controls="tabs-1-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">Debian</button><button type="button" role="tab" id="tabs-1-tab-1" aria-controls="tabs-1-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">Ubuntu</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-1-panel-0" aria-labelledby="tabs-1-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">curl -sSL https://download.docker.com/linux/debian/gpg | gpg --dearmor &gt; /usr/share/keyrings/docker-ce.gpg</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;deb [arch=<span class="subst">$(dpkg --print-architecture)</span> signed-by=/usr/share/keyrings/docker-ce.gpg] https://download.docker.com/linux/debian <span class="subst">$(lsb_release -sc)</span> stable&quot;</span> &gt; /etc/apt/sources.list.d/docker.list</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-1-panel-1" aria-labelledby="tabs-1-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">curl -sSL https://download.docker.com/linux/debian/gpg | gpg --dearmor &gt; /usr/share/keyrings/docker-ce.gpg</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;deb [arch=<span class="subst">$(dpkg --print-architecture)</span> signed-by=/usr/share/keyrings/docker-ce.gpg] https://download.docker.com/linux/ubuntu <span class="subst">$(lsb_release -sc)</span> stable&quot;</span> &gt; /etc/apt/sources.list.d/docker.list</span><br></pre></td></tr></table></figure></section></div></div>
-
-<p>国内机器可以用 <a href="https://mirrors.tuna.tsinghua.edu.cn/">清华 TUNA</a> 的国内源：</p>
-<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-2-tab-0" aria-controls="tabs-2-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">Debian</button><button type="button" role="tab" id="tabs-2-tab-1" aria-controls="tabs-2-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">Ubuntu</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-2-panel-0" aria-labelledby="tabs-2-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">curl -sS https://download.docker.com/linux/debian/gpg | gpg --dearmor &gt; /usr/share/keyrings/docker-ce.gpg</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;deb [arch=<span class="subst">$(dpkg --print-architecture)</span> signed-by=/usr/share/keyrings/docker-ce.gpg] https://mirrors.tuna.tsinghua.edu.cn/docker-ce/linux/debian <span class="subst">$(lsb_release -sc)</span> stable&quot;</span> &gt; /etc/apt/sources.list.d/docker.list</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-2-panel-1" aria-labelledby="tabs-2-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">curl -sS https://download.docker.com/linux/debian/gpg | gpg --dearmor &gt; /usr/share/keyrings/docker-ce.gpg</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;deb [arch=<span class="subst">$(dpkg --print-architecture)</span> signed-by=/usr/share/keyrings/docker-ce.gpg] https://mirrors.tuna.tsinghua.edu.cn/docker-ce/linux/ubuntu <span class="subst">$(lsb_release -sc)</span> stable&quot;</span> &gt; /etc/apt/sources.list.d/docker.list</span><br></pre></td></tr></table></figure></section></div></div>
-
-<p>然后更新系统后即可安装 Docker CE 和 Docker Compose 插件：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">apt update</span><br><span class="line">apt install docker-ce docker-ce-cli containerd.io docker-compose-plugin</span><br></pre></td></tr></table></figure>
-
-<p>此时可以使用 <code>docker version</code> 命令检查是否安装成功：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">root@debian:~# docker version</span><br><span class="line">Client: Docker Engine - Community</span><br><span class="line"> Version:           27.4.0</span><br><span class="line"> API version:       1.47</span><br><span class="line"> Go version:        go1.22.10</span><br><span class="line"> Git commit:        bde2b89</span><br><span class="line"> Built:             Sat Dec  7 10:38:57 2024</span><br><span class="line"> OS/Arch:           linux/amd64</span><br><span class="line"> Context:           default</span><br><span class="line"></span><br><span class="line">Server: Docker Engine - Community</span><br><span class="line"> Engine:</span><br><span class="line">  Version:          27.4.0</span><br><span class="line">  API version:      1.47 (minimum version 1.24)</span><br><span class="line">  Go version:       go1.22.10</span><br><span class="line">  Git commit:       92a8393</span><br><span class="line">  Built:            Sat Dec  7 10:38:57 2024</span><br><span class="line">  OS/Arch:          linux/amd64</span><br><span class="line">  Experimental:     <span class="literal">false</span></span><br><span class="line"> containerd:</span><br><span class="line">  Version:          1.7.24</span><br><span class="line">  GitCommit:        88bf19b2105c8b17560993bee28a01ddc2f97182</span><br><span class="line"> runc:</span><br><span class="line">  Version:          1.2.2</span><br><span class="line">  GitCommit:        v1.2.2-0-g7cb3632</span><br><span class="line"> docker-init:</span><br><span class="line">  Version:          0.19.0</span><br><span class="line">  GitCommit:        de40ad0</span><br></pre></td></tr></table></figure>
-
-<p>如果需要以非 root 模式运行 Docker，那么可以把特定用户也加入 docker 组，比如我们把 www-data 用户加进去：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">apt install docker-ce-rootless-extras</span><br><span class="line"><span class="built_in">sudo</span> usermod -aG docker www-data</span><br></pre></td></tr></table></figure>
-
-<h2 id="Docker-Compose-V2"><a href="#Docker-Compose-V2" class="headerlink" title="Docker Compose V2"></a>Docker Compose V2</h2><p>我们已安装 <code>docker-compose-plugin</code>，这会为 Docker 添加 <code>docker compose</code> 命令</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">root@debian:~# docker compose version </span><br><span class="line">Docker Compose version v2.31.0</span><br></pre></td></tr></table></figure>
-
-<h2 id="修改-Docker-配置"><a href="#修改-Docker-配置" class="headerlink" title="修改 Docker 配置"></a>修改 Docker 配置</h2><p>以下配置会增加一段自定义内网 IPv6 地址，开启容器的 IPv6 功能，以及限制日志文件大小，防止 Docker 日志塞满硬盘：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cat</span> &gt; /etc/docker/daemon.json &lt;&lt; <span class="string">EOF</span></span><br><span class="line"><span class="string">&#123;</span></span><br><span class="line"><span class="string">    &quot;log-driver&quot;: &quot;json-file&quot;,</span></span><br><span class="line"><span class="string">    &quot;log-opts&quot;: &#123;</span></span><br><span class="line"><span class="string">        &quot;max-size&quot;: &quot;20m&quot;,</span></span><br><span class="line"><span class="string">        &quot;max-file&quot;: &quot;3&quot;</span></span><br><span class="line"><span class="string">    &#125;,</span></span><br><span class="line"><span class="string">    &quot;ipv6&quot;: true,</span></span><br><span class="line"><span class="string">    &quot;fixed-cidr-v6&quot;: &quot;fd00:dead:beef:c0::/80&quot;,</span></span><br><span class="line"><span class="string">    &quot;experimental&quot;:true,</span></span><br><span class="line"><span class="string">    &quot;ip6tables&quot;:true</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string">EOF</span></span><br></pre></td></tr></table></figure>
-
-<p>然后重启 Docker 服务：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">systemctl restart docker</span><br></pre></td></tr></table></figure>
-
-<h2 id="Docker-常用命令使用介绍"><a href="#Docker-常用命令使用介绍" class="headerlink" title="Docker 常用命令使用介绍"></a>Docker 常用命令使用介绍</h2><p>快速了解一下 docker 常见命令，使用 <code>docker compose</code> 进行管理会更方便。</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 拉取镜像</span></span><br><span class="line">docker pull &lt;镜像名&gt;:&lt;标签&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看当前正在运行的容器</span></span><br><span class="line">docker ps</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看所有容器（包括已停止的）</span></span><br><span class="line">docker ps -a</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看本地镜像</span></span><br><span class="line">docker images</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除镜像</span></span><br><span class="line">docker rmi &lt;镜像ID或名称&gt;</span><br><span class="line">docker rmi ubuntu:latest</span><br><span class="line"></span><br><span class="line"><span class="comment"># 运行容器 </span></span><br><span class="line">docker run -d -p &lt;宿主端口&gt;:&lt;容器端口&gt; --name &lt;容器名&gt; &lt;镜像名&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动，停止，重启，删除</span></span><br><span class="line">docker start / stop / restart / <span class="built_in">rm</span> &lt;容器名或ID&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 进入容器执行交互式命令</span></span><br><span class="line">docker <span class="built_in">exec</span> -it &lt;容器名或ID&gt; /bin/bash</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看容器日志</span></span><br><span class="line">docker logs &lt;容器名或ID&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查询 Docker 使用的磁盘空间：</span></span><br><span class="line">docker system <span class="built_in">df</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除所有未被使用的镜像</span></span><br><span class="line">docker image prune -a</span><br></pre></td></tr></table></figure>
-
-<h2 id="Docker-Compose-使用介绍"><a href="#Docker-Compose-使用介绍" class="headerlink" title="Docker Compose 使用介绍"></a>Docker Compose 使用介绍</h2><p><code>docker compose</code> 需要在 <code>docker-compose.yml</code> 文件所在的工作目录执行，这里推荐创建一个工作目录，在其中统一存放配置文件，比如： </p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">docker/</span><br><span class="line">├── nginx/                         </span><br><span class="line">│   └── docker-compose.yml            </span><br><span class="line">├── mysql/                          </span><br><span class="line">│   └── docker-compose.yml          </span><br><span class="line">└── redis/                           </span><br><span class="line">    └── docker-compose.yml   </span><br></pre></td></tr></table></figure>
-
-<p><code>docker compose</code> 常用命令：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 拉取，更新镜像</span></span><br><span class="line">docker compose pull</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动容器</span></span><br><span class="line">docker compose up</span><br><span class="line"></span><br><span class="line"><span class="comment"># 后台启动</span></span><br><span class="line">docker compose up -d</span><br><span class="line"></span><br><span class="line"><span class="comment"># 停止容器</span></span><br><span class="line">docker compose stop</span><br><span class="line"></span><br><span class="line"><span class="comment"># 停止容器，并移除创建的网络、卷和镜像</span></span><br><span class="line">docker compose down</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重启容器</span></span><br><span class="line">docker compose restart</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看正在运行的服务</span></span><br><span class="line">docker compose ps</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看日志</span></span><br><span class="line">docker compose logs</span><br><span class="line"><span class="comment"># 查看实时日志</span></span><br><span class="line">docker compose logs -f</span><br><span class="line"></span><br><span class="line"><span class="comment"># 进入容器。执行交互命令</span></span><br><span class="line">docker compose <span class="built_in">exec</span> &lt;服务名&gt; &lt;命令&gt;</span><br><span class="line">docker compose <span class="built_in">exec</span> nginx /bin/bash</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看服务统计信息，实时显示 CPU、内存等资源使用情况。</span></span><br><span class="line">docker compose stats</span><br></pre></td></tr></table></figure>
-
-<p><code>docker compose</code> 还是太长？ 执行下面的命令后就可以使用 <code>dc</code> 作为替代：</p>
-<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>执行前，先运行一下 <code>dc</code> 确认命令当前没有在使用，执行后运行 <code>dc version</code> 确认</p></div></div>
-
-<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-3-tab-0" aria-controls="tabs-3-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">bash</button><button type="button" role="tab" id="tabs-3-tab-1" aria-controls="tabs-3-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">zsh</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-3-panel-0" aria-labelledby="tabs-3-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;alias dc=&quot;docker compose&quot;&#x27;</span> &gt;&gt; ~/.bashrc </span><br><span class="line"><span class="built_in">source</span> ~/.bashrc </span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-3-panel-1" aria-labelledby="tabs-3-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;alias dc=&quot;docker compose&quot;&#x27;</span> &gt;&gt; ~/.zshrc </span><br><span class="line"><span class="built_in">source</span> ~/.zshrc </span><br></pre></td></tr></table></figure></section></div></div>
-
-<p>效果:</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">root@debian:~# dc</span><br><span class="line">-bash: dc: <span class="built_in">command</span> not found</span><br><span class="line"></span><br><span class="line">root@debian:~# dc version</span><br><span class="line">Docker Compose version v2.31.0</span><br></pre></td></tr></table></figure>
-
-<p>之后，当我们创建了 <code>docker-compose.yml</code> 文件后，启动或是更新服务只需要执行：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">dc pull </span><br><span class="line">dc up -d </span><br></pre></td></tr></table></figure>
-
-<p>现在前往 GitHub 或是 <a href="https://hub.docker.com/">Docker Hub</a> 寻找有趣的项目吧！</p>
-<p>参考： <a href="https://u.sb/debian-install-docker/">Debian 12 &#x2F; Ubuntu 24.04 安装 Docker 以及 Docker Compose 教程</a></p>
-]]></content>
-      <categories>
-        <category>教程</category>
-      </categories>
-      <tags>
-        <tag>Docker</tag>
-        <tag>Docker Compose</tag>
-        <tag>Debian</tag>
-        <tag>Linux</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Docker 项目，使用 EasyImage 轻松搭建个人图床</title>
     <url>/post/docker-project-easy-images.html</url>
     <content><![CDATA[<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>我们有时需要上传一些图片用于个人博客，或是其他项目分享，如果你也像我一样更加希望图片存放在自己的服务器上而不是第三方平台上，那么推荐搭建一个属于自己的图床。  </p>
@@ -218,6 +133,91 @@
         <tag>Docker Compose</tag>
         <tag>EasyImage</tag>
         <tag>图床</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>在 Debian 12 中安装 Docker 以及 Docker Compose</title>
+    <url>/post/debian-install-docker.html</url>
+    <content><![CDATA[<details class="flatpaper-note flatpaper-note--warning"><summary class="flatpaper-note__title"><span class="flatpaper-note__icon" aria-hidden="true"></span><span class="flatpaper-note__label">已更新</span><span class="flatpaper-note__chevron" aria-hidden="true"></span></summary><div class="flatpaper-note__body"><p><strong>本文环境配置可能较老。</strong> 我们已为您准备了针对更新系统环境的最新教程，请查看：<a href="/post/debian-13-install-docker/">在 Debian 13 中安装 Docker 以及 Docker Compose</a></p></div></details>
+
+<p>现在越来越多的应用可以使用 Docker 一键部署，本文将介绍如何在 Debian 12 中安装 Docker 与 Docker Compose。</p>
+<p>验证环境</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">root@debian:~# lsb_release -a</span><br><span class="line">No LSB modules are available.</span><br><span class="line">Distributor ID:	Debian</span><br><span class="line">Description:	Debian GNU/Linux 12 (bookworm)</span><br><span class="line">Release:	12</span><br><span class="line">Codename:	bookworm</span><br></pre></td></tr></table></figure>
+<p>安装同样适用于 Debian 11 以及 Ubuntu 24.04</p>
+<h2 id="Docker-介绍"><a href="#Docker-介绍" class="headerlink" title="Docker 介绍"></a>Docker 介绍</h2><p>Docker 是一个开源的容器化平台，它可以将应用程序及其依赖打包到一个轻量级、可移植的容器中，使其能够在任何环境中一致地运行。</p>
+<ul>
+<li><strong>轻量</strong>：容器共享宿主机的操作系统内核，启动速度快，占用资源少。</li>
+<li><strong>可移植</strong>：容器可以在开发、测试和生产环境中一致运行，解决“环境不一致”的问题。</li>
+<li><strong>隔离性</strong>：每个容器都是独立运行的，互不影响。</li>
+<li><strong>快速部署</strong>：通过镜像技术，实现应用的快速打包、发布和部署。</li>
+</ul>
+<h2 id="Docker-Compose-介绍"><a href="#Docker-Compose-介绍" class="headerlink" title="Docker Compose 介绍"></a>Docker Compose 介绍</h2><p>Docker Compose 是 Docker 提供的用于定义和管理多容器应用的工具。通过一个简单的 YAML 文件<code>docker-compose.yml</code>，你可以定义和启动多个服务容器，使得应用的部署和管理更加便捷，可以不必使用 Docker run 命令。 </p>
+<p>特点：</p>
+<ul>
+<li><strong>多容器管理</strong>：同时启动、停止和管理多个容器。</li>
+<li><strong>通过 YAML 配置</strong>：通过 docker-compose.yml 定义服务、网络、存储等。</li>
+<li><strong>简化命令</strong>：使用单一命令 docker compose 管理容器</li>
+</ul>
+<p>本文将介绍安装 V2 版本，对应的命令是 <code>docker compose</code> </p>
+<h2 id="使用官方源安装"><a href="#使用官方源安装" class="headerlink" title="使用官方源安装"></a>使用官方源安装</h2><p>以下操作需要在 root 用户下完成，请使用 <code>sudo -i</code> 或 <code>su root</code> 切换到 root 用户进行操作。</p>
+<p>首先，安装一些必要的软件包： </p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">apt update</span><br><span class="line">apt upgrade -y</span><br><span class="line">apt install curl vim wget gnupg dpkg apt-transport-https lsb-release ca-certificates</span><br></pre></td></tr></table></figure>
+
+<p>然后加入 Docker 的 GPG 公钥和 apt 源：</p>
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-1-tab-0" aria-controls="tabs-1-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">Debian</button><button type="button" role="tab" id="tabs-1-tab-1" aria-controls="tabs-1-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">Ubuntu</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-1-panel-0" aria-labelledby="tabs-1-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">curl -sSL https://download.docker.com/linux/debian/gpg | gpg --dearmor &gt; /usr/share/keyrings/docker-ce.gpg</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;deb [arch=<span class="subst">$(dpkg --print-architecture)</span> signed-by=/usr/share/keyrings/docker-ce.gpg] https://download.docker.com/linux/debian <span class="subst">$(lsb_release -sc)</span> stable&quot;</span> &gt; /etc/apt/sources.list.d/docker.list</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-1-panel-1" aria-labelledby="tabs-1-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">curl -sSL https://download.docker.com/linux/debian/gpg | gpg --dearmor &gt; /usr/share/keyrings/docker-ce.gpg</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;deb [arch=<span class="subst">$(dpkg --print-architecture)</span> signed-by=/usr/share/keyrings/docker-ce.gpg] https://download.docker.com/linux/ubuntu <span class="subst">$(lsb_release -sc)</span> stable&quot;</span> &gt; /etc/apt/sources.list.d/docker.list</span><br></pre></td></tr></table></figure></section></div></div>
+
+<p>国内机器可以用 <a href="https://mirrors.tuna.tsinghua.edu.cn/">清华 TUNA</a> 的国内源：</p>
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-2-tab-0" aria-controls="tabs-2-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">Debian</button><button type="button" role="tab" id="tabs-2-tab-1" aria-controls="tabs-2-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">Ubuntu</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-2-panel-0" aria-labelledby="tabs-2-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">curl -sS https://download.docker.com/linux/debian/gpg | gpg --dearmor &gt; /usr/share/keyrings/docker-ce.gpg</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;deb [arch=<span class="subst">$(dpkg --print-architecture)</span> signed-by=/usr/share/keyrings/docker-ce.gpg] https://mirrors.tuna.tsinghua.edu.cn/docker-ce/linux/debian <span class="subst">$(lsb_release -sc)</span> stable&quot;</span> &gt; /etc/apt/sources.list.d/docker.list</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-2-panel-1" aria-labelledby="tabs-2-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">curl -sS https://download.docker.com/linux/debian/gpg | gpg --dearmor &gt; /usr/share/keyrings/docker-ce.gpg</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;deb [arch=<span class="subst">$(dpkg --print-architecture)</span> signed-by=/usr/share/keyrings/docker-ce.gpg] https://mirrors.tuna.tsinghua.edu.cn/docker-ce/linux/ubuntu <span class="subst">$(lsb_release -sc)</span> stable&quot;</span> &gt; /etc/apt/sources.list.d/docker.list</span><br></pre></td></tr></table></figure></section></div></div>
+
+<p>然后更新系统后即可安装 Docker CE 和 Docker Compose 插件：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">apt update</span><br><span class="line">apt install docker-ce docker-ce-cli containerd.io docker-compose-plugin</span><br></pre></td></tr></table></figure>
+
+<p>此时可以使用 <code>docker version</code> 命令检查是否安装成功：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">root@debian:~# docker version</span><br><span class="line">Client: Docker Engine - Community</span><br><span class="line"> Version:           27.4.0</span><br><span class="line"> API version:       1.47</span><br><span class="line"> Go version:        go1.22.10</span><br><span class="line"> Git commit:        bde2b89</span><br><span class="line"> Built:             Sat Dec  7 10:38:57 2024</span><br><span class="line"> OS/Arch:           linux/amd64</span><br><span class="line"> Context:           default</span><br><span class="line"></span><br><span class="line">Server: Docker Engine - Community</span><br><span class="line"> Engine:</span><br><span class="line">  Version:          27.4.0</span><br><span class="line">  API version:      1.47 (minimum version 1.24)</span><br><span class="line">  Go version:       go1.22.10</span><br><span class="line">  Git commit:       92a8393</span><br><span class="line">  Built:            Sat Dec  7 10:38:57 2024</span><br><span class="line">  OS/Arch:          linux/amd64</span><br><span class="line">  Experimental:     <span class="literal">false</span></span><br><span class="line"> containerd:</span><br><span class="line">  Version:          1.7.24</span><br><span class="line">  GitCommit:        88bf19b2105c8b17560993bee28a01ddc2f97182</span><br><span class="line"> runc:</span><br><span class="line">  Version:          1.2.2</span><br><span class="line">  GitCommit:        v1.2.2-0-g7cb3632</span><br><span class="line"> docker-init:</span><br><span class="line">  Version:          0.19.0</span><br><span class="line">  GitCommit:        de40ad0</span><br></pre></td></tr></table></figure>
+
+<p>如果需要以非 root 模式运行 Docker，那么可以把特定用户也加入 docker 组，比如我们把 www-data 用户加进去：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">apt install docker-ce-rootless-extras</span><br><span class="line"><span class="built_in">sudo</span> usermod -aG docker www-data</span><br></pre></td></tr></table></figure>
+
+<h2 id="Docker-Compose-V2"><a href="#Docker-Compose-V2" class="headerlink" title="Docker Compose V2"></a>Docker Compose V2</h2><p>我们已安装 <code>docker-compose-plugin</code>，这会为 Docker 添加 <code>docker compose</code> 命令</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">root@debian:~# docker compose version </span><br><span class="line">Docker Compose version v2.31.0</span><br></pre></td></tr></table></figure>
+
+<h2 id="修改-Docker-配置"><a href="#修改-Docker-配置" class="headerlink" title="修改 Docker 配置"></a>修改 Docker 配置</h2><p>以下配置会增加一段自定义内网 IPv6 地址，开启容器的 IPv6 功能，以及限制日志文件大小，防止 Docker 日志塞满硬盘：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cat</span> &gt; /etc/docker/daemon.json &lt;&lt; <span class="string">EOF</span></span><br><span class="line"><span class="string">&#123;</span></span><br><span class="line"><span class="string">    &quot;log-driver&quot;: &quot;json-file&quot;,</span></span><br><span class="line"><span class="string">    &quot;log-opts&quot;: &#123;</span></span><br><span class="line"><span class="string">        &quot;max-size&quot;: &quot;20m&quot;,</span></span><br><span class="line"><span class="string">        &quot;max-file&quot;: &quot;3&quot;</span></span><br><span class="line"><span class="string">    &#125;,</span></span><br><span class="line"><span class="string">    &quot;ipv6&quot;: true,</span></span><br><span class="line"><span class="string">    &quot;fixed-cidr-v6&quot;: &quot;fd00:dead:beef:c0::/80&quot;,</span></span><br><span class="line"><span class="string">    &quot;experimental&quot;:true,</span></span><br><span class="line"><span class="string">    &quot;ip6tables&quot;:true</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string">EOF</span></span><br></pre></td></tr></table></figure>
+
+<p>然后重启 Docker 服务：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">systemctl restart docker</span><br></pre></td></tr></table></figure>
+
+<h2 id="Docker-常用命令使用介绍"><a href="#Docker-常用命令使用介绍" class="headerlink" title="Docker 常用命令使用介绍"></a>Docker 常用命令使用介绍</h2><p>快速了解一下 docker 常见命令，使用 <code>docker compose</code> 进行管理会更方便。</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 拉取镜像</span></span><br><span class="line">docker pull &lt;镜像名&gt;:&lt;标签&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看当前正在运行的容器</span></span><br><span class="line">docker ps</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看所有容器（包括已停止的）</span></span><br><span class="line">docker ps -a</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看本地镜像</span></span><br><span class="line">docker images</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除镜像</span></span><br><span class="line">docker rmi &lt;镜像ID或名称&gt;</span><br><span class="line">docker rmi ubuntu:latest</span><br><span class="line"></span><br><span class="line"><span class="comment"># 运行容器 </span></span><br><span class="line">docker run -d -p &lt;宿主端口&gt;:&lt;容器端口&gt; --name &lt;容器名&gt; &lt;镜像名&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动，停止，重启，删除</span></span><br><span class="line">docker start / stop / restart / <span class="built_in">rm</span> &lt;容器名或ID&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 进入容器执行交互式命令</span></span><br><span class="line">docker <span class="built_in">exec</span> -it &lt;容器名或ID&gt; /bin/bash</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看容器日志</span></span><br><span class="line">docker logs &lt;容器名或ID&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查询 Docker 使用的磁盘空间：</span></span><br><span class="line">docker system <span class="built_in">df</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除所有未被使用的镜像</span></span><br><span class="line">docker image prune -a</span><br></pre></td></tr></table></figure>
+
+<h2 id="Docker-Compose-使用介绍"><a href="#Docker-Compose-使用介绍" class="headerlink" title="Docker Compose 使用介绍"></a>Docker Compose 使用介绍</h2><p><code>docker compose</code> 需要在 <code>docker-compose.yml</code> 文件所在的工作目录执行，这里推荐创建一个工作目录，在其中统一存放配置文件，比如： </p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">docker/</span><br><span class="line">├── nginx/                         </span><br><span class="line">│   └── docker-compose.yml            </span><br><span class="line">├── mysql/                          </span><br><span class="line">│   └── docker-compose.yml          </span><br><span class="line">└── redis/                           </span><br><span class="line">    └── docker-compose.yml   </span><br></pre></td></tr></table></figure>
+
+<p><code>docker compose</code> 常用命令：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 拉取，更新镜像</span></span><br><span class="line">docker compose pull</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动容器</span></span><br><span class="line">docker compose up</span><br><span class="line"></span><br><span class="line"><span class="comment"># 后台启动</span></span><br><span class="line">docker compose up -d</span><br><span class="line"></span><br><span class="line"><span class="comment"># 停止容器</span></span><br><span class="line">docker compose stop</span><br><span class="line"></span><br><span class="line"><span class="comment"># 停止容器，并移除创建的网络、卷和镜像</span></span><br><span class="line">docker compose down</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重启容器</span></span><br><span class="line">docker compose restart</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看正在运行的服务</span></span><br><span class="line">docker compose ps</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看日志</span></span><br><span class="line">docker compose logs</span><br><span class="line"><span class="comment"># 查看实时日志</span></span><br><span class="line">docker compose logs -f</span><br><span class="line"></span><br><span class="line"><span class="comment"># 进入容器。执行交互命令</span></span><br><span class="line">docker compose <span class="built_in">exec</span> &lt;服务名&gt; &lt;命令&gt;</span><br><span class="line">docker compose <span class="built_in">exec</span> nginx /bin/bash</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看服务统计信息，实时显示 CPU、内存等资源使用情况。</span></span><br><span class="line">docker compose stats</span><br></pre></td></tr></table></figure>
+
+<p><code>docker compose</code> 还是太长？ 执行下面的命令后就可以使用 <code>dc</code> 作为替代：</p>
+<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>执行前，先运行一下 <code>dc</code> 确认命令当前没有在使用，执行后运行 <code>dc version</code> 确认</p></div></div>
+
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-3-tab-0" aria-controls="tabs-3-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">bash</button><button type="button" role="tab" id="tabs-3-tab-1" aria-controls="tabs-3-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">zsh</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-3-panel-0" aria-labelledby="tabs-3-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;alias dc=&quot;docker compose&quot;&#x27;</span> &gt;&gt; ~/.bashrc </span><br><span class="line"><span class="built_in">source</span> ~/.bashrc </span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-3-panel-1" aria-labelledby="tabs-3-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;alias dc=&quot;docker compose&quot;&#x27;</span> &gt;&gt; ~/.zshrc </span><br><span class="line"><span class="built_in">source</span> ~/.zshrc </span><br></pre></td></tr></table></figure></section></div></div>
+
+<p>效果:</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">root@debian:~# dc</span><br><span class="line">-bash: dc: <span class="built_in">command</span> not found</span><br><span class="line"></span><br><span class="line">root@debian:~# dc version</span><br><span class="line">Docker Compose version v2.31.0</span><br></pre></td></tr></table></figure>
+
+<p>之后，当我们创建了 <code>docker-compose.yml</code> 文件后，启动或是更新服务只需要执行：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">dc pull </span><br><span class="line">dc up -d </span><br></pre></td></tr></table></figure>
+
+<p>现在前往 GitHub 或是 <a href="https://hub.docker.com/">Docker Hub</a> 寻找有趣的项目吧！</p>
+<p>参考： <a href="https://u.sb/debian-install-docker/">Debian 12 &#x2F; Ubuntu 24.04 安装 Docker 以及 Docker Compose 教程</a></p>
+]]></content>
+      <categories>
+        <category>教程</category>
+      </categories>
+      <tags>
+        <tag>Docker</tag>
+        <tag>Docker Compose</tag>
+        <tag>Debian</tag>
+        <tag>Linux</tag>
       </tags>
   </entry>
   <entry>
@@ -479,6 +479,84 @@
       </tags>
   </entry>
   <entry>
+    <title>AI 大模型集中发布：DeepSeek 3.2、Claude Sonnet 4.5、OpenAI Sora 2、GLM-4.6 亮点速览</title>
+    <url>/post/2025-oct-new-models-coming.html</url>
+    <content><![CDATA[<p>9月29日，AI 领域迎来了一波重磅更新。DeepSeek、Anthropic、OpenAI 和智谱 AI 四家公司不约而同地发布了各自的最新模型，为开发者和用户带来了更强大的 AI 能力。</p>
+<h2 id="DeepSeek-V3-2：开源大模型再突破，成本下降超-50"><a href="#DeepSeek-V3-2：开源大模型再突破，成本下降超-50" class="headerlink" title="DeepSeek-V3.2：开源大模型再突破，成本下降超 50%"></a>DeepSeek-V3.2：开源大模型再突破，成本下降超 50%</h2><p>9月29日，DeepSeek 正式在 Hugging Face 平台发布并开源了 DeepSeek-V3.2-Exp 模型。</p>
+<p><strong>模型地址</strong>：<a href="https://huggingface.co/deepseek-ai/DeepSeek-V3.2-Exp">https://huggingface.co/deepseek-ai/DeepSeek-V3.2-Exp</a></p>
+<h3 id="API-价格大幅下调超-50"><a href="#API-价格大幅下调超-50" class="headerlink" title="API 价格大幅下调超 50%"></a>API 价格大幅下调超 50%</h3><p>新模型主要特点是服务成本的显著降低，DeepSeek 随即下调 API 调用费用：官方 API 价格下调超过 50%，新价格已即刻生效。这一举措将大幅降低开发者的使用成本。</p>
+<img src="https://img.nep.me/i/2025/10/01/oct-deepseek-price.webp" style="width:50%;" alt="DeepSeek 价格调整" />
+
+<h2 id="Anthropic-Claude-Sonnet-4-5：自主编程能力跃升"><a href="#Anthropic-Claude-Sonnet-4-5：自主编程能力跃升" class="headerlink" title="Anthropic Claude Sonnet 4.5：自主编程能力跃升"></a>Anthropic Claude Sonnet 4.5：自主编程能力跃升</h2><p>9月29日，Anthropic 发布了全新的 Claude Sonnet 4.5 模型。</p>
+<p><strong>官方介绍</strong>：<a href="https://www.anthropic.com/news/claude-sonnet-4-5">https://www.anthropic.com/news/claude-sonnet-4-5</a></p>
+<h3 id="核心亮点"><a href="#核心亮点" class="headerlink" title="核心亮点"></a>核心亮点</h3><ul>
+<li><strong>指令遵循能力显著提升</strong>：模型对复杂指令的理解和执行更加精准</li>
+<li><strong>长时间自主编程</strong>：可连续自主编程长达 30 小时，相比 Claude Opus 4 的 7 小时提升了 4 倍以上</li>
+<li><strong>立即可用</strong>：已在 Claude Code 中上线，开发者可直接使用</li>
+</ul>
+<p><img src="https://img.nep.me/i/2025/10/01/oct-claude-sonnet.webp" alt="Claude Sonnet 4.5"></p>
+<h2 id="OpenAI-Sora-2：视频生成的-ChatGPT-时刻"><a href="#OpenAI-Sora-2：视频生成的-ChatGPT-时刻" class="headerlink" title="OpenAI Sora 2：视频生成的 ChatGPT 时刻"></a>OpenAI Sora 2：视频生成的 ChatGPT 时刻</h2><p>9月29日，OpenAI 推出了其迄今最先进的视频生成模型 Sora 2.0，并同步上线独立 iOS 应用（目前采用邀请机制）。</p>
+<h3 id="主要特性"><a href="#主要特性" class="headerlink" title="主要特性"></a>主要特性</h3><ul>
+<li><strong>物理真实感大幅提升</strong>：生成视频的物理表现更加逼真</li>
+<li><strong>音视频同步优化</strong>：声音与画面的匹配度显著提高</li>
+<li><strong>多镜头叙事能力</strong>：支持更复杂的故事叙述方式</li>
+<li><strong>社交互动功能</strong>：用户可生成、浏览和分享 AI 视频，甚至以虚拟形象”客串”他人作品</li>
+</ul>
+<p>OpenAI 将此次更新称为”视频生成的 ChatGPT 时刻”，意味着视频生成技术正在迎来质的飞跃。</p>
+<p><strong>官方介绍与 Demo 预览</strong>：<a href="https://openai.com/index/sora-2/">https://openai.com/index/sora-2/</a><br><strong>可以在官方 Discord 获取其他用户分享的邀请码（加入社群需要连接 OpenAI 账户）</strong>： <a href="https://discord.gg/openai">https://discord.gg/openai</a> </p>
+<h3 id="Sora-by-OpenAI-iOS-APP-介绍"><a href="#Sora-by-OpenAI-iOS-APP-介绍" class="headerlink" title="Sora by OpenAI (iOS APP) 介绍"></a>Sora by OpenAI (iOS APP) 介绍</h3><p><strong>下载地址</strong>：<a href="https://apps.apple.com/us/app/sora-by-openai/id6744034028">https://apps.apple.com/us/app/sora-by-openai/id6744034028</a></p>
+<p>目前支持美国、加拿大、日本地区的 Apple ID 下载。</p>
+<h4 id="获取方式"><a href="#获取方式" class="headerlink" title="获取方式"></a>获取方式</h4><p>OpenAI 采用邀请码裂变机制推广 Sora APP：每个账户加入后可生成一个邀请码，每个邀请码可以使用 4 次。</p>
+<p>使用流程：下载 APP → 使用 OpenAI 账户登录 → 输入邀请码即可开始使用。</p>
+<h4 id="产品定位"><a href="#产品定位" class="headerlink" title="产品定位"></a>产品定位</h4><p>Sora by OpenAI 是一款短视频社交平台，定位类似 TikTok，核心区别在于所有内容均由 AI 生成。用户可以创作、浏览和分享 AI 视频，打造全新的社交体验。</p>
+<h4 id="核心功能"><a href="#核心功能" class="headerlink" title="核心功能"></a>核心功能</h4><ul>
+<li><strong>文本生成视频</strong>：通过一句话描述即可生成 10 秒视频</li>
+<li><strong>草稿管理</strong>：生成的视频会自动保存为草稿，用户可选择下载到本地或公开发布到平台</li>
+<li><strong>Cameo 功能</strong>：扫描 3D 人脸并克隆音色，创建个人数字分身，供 AI 在视频生成时使用</li>
+<li><strong>权限控制</strong>：Cameo 支持灵活的权限设置，保护用户隐私</li>
+<li><strong>社交互动</strong>：生成视频时，通过 @ 可引用其他用户的 Cameo。例如 <code>@sama</code> 可让 OpenAI CEO 直接出现在你的视频中，实现创意联动</li>
+</ul>
+<h2 id="智谱-GLM-4-6：对齐-Claude-Sonnet-4"><a href="#智谱-GLM-4-6：对齐-Claude-Sonnet-4" class="headerlink" title="智谱 GLM-4.6：对齐 Claude Sonnet 4"></a>智谱 GLM-4.6：对齐 Claude Sonnet 4</h2><p>智谱 AI 更新了旗舰模型 GLM-4.6，在多个维度实现了显著提升。</p>
+<h3 id="核心亮点-1"><a href="#核心亮点-1" class="headerlink" title="核心亮点"></a>核心亮点</h3><p><strong>代码能力大幅提升</strong></p>
+<ul>
+<li>较 GLM-4.5 提升了 27%</li>
+<li>在公开基准与真实编程任务中，代码能力对齐 Claude Sonnet 4</li>
+</ul>
+<p><strong>上下文窗口扩展</strong></p>
+<ul>
+<li>从 128K 提升到 200K</li>
+<li>能更好地处理复杂代码项目和需要长程记忆的智能体任务</li>
+</ul>
+<p><strong>推理能力增强</strong></p>
+<ul>
+<li>支持在推理过程中调用工具</li>
+<li>多步骤推理更加稳定可靠</li>
+</ul>
+<p><strong>写作与交互优化</strong></p>
+<ul>
+<li>搜索能力、写作能力增强</li>
+<li>写作风格和可读性更贴近人类偏好</li>
+<li>在角色扮演等场景下表现更自然</li>
+</ul>
+<h3 id="Benchmark-对比"><a href="#Benchmark-对比" class="headerlink" title="Benchmark 对比"></a>Benchmark 对比</h3><p><img src="https://img.nep.me/i/2025/10/01/oct-glm.webp" alt="GLM-4.6 性能对比"></p>
+<p><strong>官方文档</strong>：<a href="https://docs.bigmodel.cn/cn/guide/models/text/glm-4.6">https://docs.bigmodel.cn/cn/guide/models/text/glm-4.6</a><br><strong>在线体验</strong>：<a href="https://z.ai/">https://z.ai</a></p>
+<hr>
+<p>这次四家公司的集中发布，展现了 AI 大模型领域的激烈竞争与快速进步。从降价到性能提升，从代码生成到视频创作，AI 技术正在加速渗透到各个应用场景中。</p>
+]]></content>
+      <categories>
+        <category>资讯</category>
+      </categories>
+      <tags>
+        <tag>AI</tag>
+        <tag>大模型</tag>
+        <tag>DeepSeek</tag>
+        <tag>Claude</tag>
+        <tag>Claude Code</tag>
+        <tag>OpenAI</tag>
+        <tag>智谱AI</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>如何安装 Node.js</title>
     <url>/post/how-to-install-nodejs.html</url>
     <content><![CDATA[<p>本文将带介绍如何在电脑上安装 Node.js 运行环境，从而可以使用丰富的应用 Nodejs 程序。 </p>
@@ -573,84 +651,6 @@
         <tag>macOS</tag>
         <tag>Nodejs</tag>
         <tag>Windows</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>AI 大模型集中发布：DeepSeek 3.2、Claude Sonnet 4.5、OpenAI Sora 2、GLM-4.6 亮点速览</title>
-    <url>/post/2025-oct-new-models-coming.html</url>
-    <content><![CDATA[<p>9月29日，AI 领域迎来了一波重磅更新。DeepSeek、Anthropic、OpenAI 和智谱 AI 四家公司不约而同地发布了各自的最新模型，为开发者和用户带来了更强大的 AI 能力。</p>
-<h2 id="DeepSeek-V3-2：开源大模型再突破，成本下降超-50"><a href="#DeepSeek-V3-2：开源大模型再突破，成本下降超-50" class="headerlink" title="DeepSeek-V3.2：开源大模型再突破，成本下降超 50%"></a>DeepSeek-V3.2：开源大模型再突破，成本下降超 50%</h2><p>9月29日，DeepSeek 正式在 Hugging Face 平台发布并开源了 DeepSeek-V3.2-Exp 模型。</p>
-<p><strong>模型地址</strong>：<a href="https://huggingface.co/deepseek-ai/DeepSeek-V3.2-Exp">https://huggingface.co/deepseek-ai/DeepSeek-V3.2-Exp</a></p>
-<h3 id="API-价格大幅下调超-50"><a href="#API-价格大幅下调超-50" class="headerlink" title="API 价格大幅下调超 50%"></a>API 价格大幅下调超 50%</h3><p>新模型主要特点是服务成本的显著降低，DeepSeek 随即下调 API 调用费用：官方 API 价格下调超过 50%，新价格已即刻生效。这一举措将大幅降低开发者的使用成本。</p>
-<img src="https://img.nep.me/i/2025/10/01/oct-deepseek-price.webp" style="width:50%;" alt="DeepSeek 价格调整" />
-
-<h2 id="Anthropic-Claude-Sonnet-4-5：自主编程能力跃升"><a href="#Anthropic-Claude-Sonnet-4-5：自主编程能力跃升" class="headerlink" title="Anthropic Claude Sonnet 4.5：自主编程能力跃升"></a>Anthropic Claude Sonnet 4.5：自主编程能力跃升</h2><p>9月29日，Anthropic 发布了全新的 Claude Sonnet 4.5 模型。</p>
-<p><strong>官方介绍</strong>：<a href="https://www.anthropic.com/news/claude-sonnet-4-5">https://www.anthropic.com/news/claude-sonnet-4-5</a></p>
-<h3 id="核心亮点"><a href="#核心亮点" class="headerlink" title="核心亮点"></a>核心亮点</h3><ul>
-<li><strong>指令遵循能力显著提升</strong>：模型对复杂指令的理解和执行更加精准</li>
-<li><strong>长时间自主编程</strong>：可连续自主编程长达 30 小时，相比 Claude Opus 4 的 7 小时提升了 4 倍以上</li>
-<li><strong>立即可用</strong>：已在 Claude Code 中上线，开发者可直接使用</li>
-</ul>
-<p><img src="https://img.nep.me/i/2025/10/01/oct-claude-sonnet.webp" alt="Claude Sonnet 4.5"></p>
-<h2 id="OpenAI-Sora-2：视频生成的-ChatGPT-时刻"><a href="#OpenAI-Sora-2：视频生成的-ChatGPT-时刻" class="headerlink" title="OpenAI Sora 2：视频生成的 ChatGPT 时刻"></a>OpenAI Sora 2：视频生成的 ChatGPT 时刻</h2><p>9月29日，OpenAI 推出了其迄今最先进的视频生成模型 Sora 2.0，并同步上线独立 iOS 应用（目前采用邀请机制）。</p>
-<h3 id="主要特性"><a href="#主要特性" class="headerlink" title="主要特性"></a>主要特性</h3><ul>
-<li><strong>物理真实感大幅提升</strong>：生成视频的物理表现更加逼真</li>
-<li><strong>音视频同步优化</strong>：声音与画面的匹配度显著提高</li>
-<li><strong>多镜头叙事能力</strong>：支持更复杂的故事叙述方式</li>
-<li><strong>社交互动功能</strong>：用户可生成、浏览和分享 AI 视频，甚至以虚拟形象”客串”他人作品</li>
-</ul>
-<p>OpenAI 将此次更新称为”视频生成的 ChatGPT 时刻”，意味着视频生成技术正在迎来质的飞跃。</p>
-<p><strong>官方介绍与 Demo 预览</strong>：<a href="https://openai.com/index/sora-2/">https://openai.com/index/sora-2/</a><br><strong>可以在官方 Discord 获取其他用户分享的邀请码（加入社群需要连接 OpenAI 账户）</strong>： <a href="https://discord.gg/openai">https://discord.gg/openai</a> </p>
-<h3 id="Sora-by-OpenAI-iOS-APP-介绍"><a href="#Sora-by-OpenAI-iOS-APP-介绍" class="headerlink" title="Sora by OpenAI (iOS APP) 介绍"></a>Sora by OpenAI (iOS APP) 介绍</h3><p><strong>下载地址</strong>：<a href="https://apps.apple.com/us/app/sora-by-openai/id6744034028">https://apps.apple.com/us/app/sora-by-openai/id6744034028</a></p>
-<p>目前支持美国、加拿大、日本地区的 Apple ID 下载。</p>
-<h4 id="获取方式"><a href="#获取方式" class="headerlink" title="获取方式"></a>获取方式</h4><p>OpenAI 采用邀请码裂变机制推广 Sora APP：每个账户加入后可生成一个邀请码，每个邀请码可以使用 4 次。</p>
-<p>使用流程：下载 APP → 使用 OpenAI 账户登录 → 输入邀请码即可开始使用。</p>
-<h4 id="产品定位"><a href="#产品定位" class="headerlink" title="产品定位"></a>产品定位</h4><p>Sora by OpenAI 是一款短视频社交平台，定位类似 TikTok，核心区别在于所有内容均由 AI 生成。用户可以创作、浏览和分享 AI 视频，打造全新的社交体验。</p>
-<h4 id="核心功能"><a href="#核心功能" class="headerlink" title="核心功能"></a>核心功能</h4><ul>
-<li><strong>文本生成视频</strong>：通过一句话描述即可生成 10 秒视频</li>
-<li><strong>草稿管理</strong>：生成的视频会自动保存为草稿，用户可选择下载到本地或公开发布到平台</li>
-<li><strong>Cameo 功能</strong>：扫描 3D 人脸并克隆音色，创建个人数字分身，供 AI 在视频生成时使用</li>
-<li><strong>权限控制</strong>：Cameo 支持灵活的权限设置，保护用户隐私</li>
-<li><strong>社交互动</strong>：生成视频时，通过 @ 可引用其他用户的 Cameo。例如 <code>@sama</code> 可让 OpenAI CEO 直接出现在你的视频中，实现创意联动</li>
-</ul>
-<h2 id="智谱-GLM-4-6：对齐-Claude-Sonnet-4"><a href="#智谱-GLM-4-6：对齐-Claude-Sonnet-4" class="headerlink" title="智谱 GLM-4.6：对齐 Claude Sonnet 4"></a>智谱 GLM-4.6：对齐 Claude Sonnet 4</h2><p>智谱 AI 更新了旗舰模型 GLM-4.6，在多个维度实现了显著提升。</p>
-<h3 id="核心亮点-1"><a href="#核心亮点-1" class="headerlink" title="核心亮点"></a>核心亮点</h3><p><strong>代码能力大幅提升</strong></p>
-<ul>
-<li>较 GLM-4.5 提升了 27%</li>
-<li>在公开基准与真实编程任务中，代码能力对齐 Claude Sonnet 4</li>
-</ul>
-<p><strong>上下文窗口扩展</strong></p>
-<ul>
-<li>从 128K 提升到 200K</li>
-<li>能更好地处理复杂代码项目和需要长程记忆的智能体任务</li>
-</ul>
-<p><strong>推理能力增强</strong></p>
-<ul>
-<li>支持在推理过程中调用工具</li>
-<li>多步骤推理更加稳定可靠</li>
-</ul>
-<p><strong>写作与交互优化</strong></p>
-<ul>
-<li>搜索能力、写作能力增强</li>
-<li>写作风格和可读性更贴近人类偏好</li>
-<li>在角色扮演等场景下表现更自然</li>
-</ul>
-<h3 id="Benchmark-对比"><a href="#Benchmark-对比" class="headerlink" title="Benchmark 对比"></a>Benchmark 对比</h3><p><img src="https://img.nep.me/i/2025/10/01/oct-glm.webp" alt="GLM-4.6 性能对比"></p>
-<p><strong>官方文档</strong>：<a href="https://docs.bigmodel.cn/cn/guide/models/text/glm-4.6">https://docs.bigmodel.cn/cn/guide/models/text/glm-4.6</a><br><strong>在线体验</strong>：<a href="https://z.ai/">https://z.ai</a></p>
-<hr>
-<p>这次四家公司的集中发布，展现了 AI 大模型领域的激烈竞争与快速进步。从降价到性能提升，从代码生成到视频创作，AI 技术正在加速渗透到各个应用场景中。</p>
-]]></content>
-      <categories>
-        <category>资讯</category>
-      </categories>
-      <tags>
-        <tag>AI</tag>
-        <tag>大模型</tag>
-        <tag>DeepSeek</tag>
-        <tag>Claude</tag>
-        <tag>Claude Code</tag>
-        <tag>OpenAI</tag>
-        <tag>智谱AI</tag>
       </tags>
   </entry>
   <entry>
@@ -1588,38 +1588,6 @@
       </tags>
   </entry>
   <entry>
-    <title>OpenAI 发布两款高性能开源人工智能模型 GPT-OSS-20B 与 GPT-OSS-120B</title>
-    <url>/post/news-openai-releae-gpt-oss-model.html</url>
-    <content><![CDATA[<p><strong>旧金山 – 2025年8月6日</strong> – OpenAI今日宣布推出两款采用混合专家（MoE）架构的开源推理模型：<strong>GPT-OSS-120B</strong> 和 <strong>GPT-OSS-20B</strong> 。 </p>
-<p>这两款模型使用  Apache 2.0 开源许可证发布，允许开发者和研究人员免费使用、修改和分发。</p>
-<p>新模型专注于思维链（Chain-of-Thought）推理，旨在通过将复杂任务分解为更小的步骤来提升结果的准确性。根据 OpenAI 的基准测试，<strong>GPT-OSS-20B</strong> 的性能可与 <code>o4-mini</code> 相媲美，而 <strong>GPT-OSS-120B</strong> 的性能则与 <code>o3-mini</code> 相当。</p>
-<p>OpenAI CEO 萨姆·奥尔特曼表示：</p>
-<blockquote>
-<p>“我们很高兴能将这些模型交到全世界更多人的手中。它们不会取代现有的GPT模型，而是作为一种补充，推动人工智能领域的创新与协作。”</p>
-</blockquote>
-<p>此次发布的一大亮点是其在本地设备上的运行能力。GPT-OSS-20B 等较小尺寸的模型经过优化，可在笔记本电脑甚至智能手机上高效运行。在 M4 芯片的 MacBook 上，20B 模型的推理速度可达每秒30-40个token。</p>
-<p><strong>相关链接:</strong></p>
-<ul>
-<li><strong>模型信息:</strong> <a href="https://openai.com/zh-Hans-CN/open-models/">https://openai.com/zh-Hans-CN/open-models/</a></li>
-<li><strong>模型下载:</strong> <a href="https://huggingface.co/openai">https://huggingface.co/openai</a></li>
-</ul>
-<p><strong>本地运行 GPT-OSS-20B</strong><br><a href="https://ollama.com/download">ollama</a> 上 GPT-OSS-20B 模型大小为 14GB ，一键运行命令如下：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">ollama run gpt-oss:20b </span><br></pre></td></tr></table></figure>
-
-<p>图形界面则可以使用 <a href="https://lmstudio.ai/">LM Studio</a></p>
-<p><img src="https://img.nep.me/i/2025/08/06/lmstudio-run-gpt-oss-20b.webp" alt="LM Studio run GPT-OSS-20B"></p>
-]]></content>
-      <categories>
-        <category>资讯</category>
-      </categories>
-      <tags>
-        <tag>AI</tag>
-        <tag>大模型</tag>
-        <tag>OpenAI</tag>
-        <tag>开源</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>OpenAI 发布 GPT-5，新一代人工智能模型正式亮相</title>
     <url>/post/news-openai-released-gpt-5.html</url>
     <content><![CDATA[<p><strong>2025 年 8 月 7 日</strong> — OpenAI 正式推出最新旗舰级人工智能模型 <strong>GPT-5</strong>，即日起面向 ChatGPT 用户与开发者开放。该模型在推理、编程与创意生成等方面全面升级，Open AI 称之为迄今最强的通用 AI 模型之一。</p>
@@ -1698,6 +1666,38 @@
         <tag>AI</tag>
         <tag>大模型</tag>
         <tag>OpenAI</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>OpenAI 发布两款高性能开源人工智能模型 GPT-OSS-20B 与 GPT-OSS-120B</title>
+    <url>/post/news-openai-releae-gpt-oss-model.html</url>
+    <content><![CDATA[<p><strong>旧金山 – 2025年8月6日</strong> – OpenAI今日宣布推出两款采用混合专家（MoE）架构的开源推理模型：<strong>GPT-OSS-120B</strong> 和 <strong>GPT-OSS-20B</strong> 。 </p>
+<p>这两款模型使用  Apache 2.0 开源许可证发布，允许开发者和研究人员免费使用、修改和分发。</p>
+<p>新模型专注于思维链（Chain-of-Thought）推理，旨在通过将复杂任务分解为更小的步骤来提升结果的准确性。根据 OpenAI 的基准测试，<strong>GPT-OSS-20B</strong> 的性能可与 <code>o4-mini</code> 相媲美，而 <strong>GPT-OSS-120B</strong> 的性能则与 <code>o3-mini</code> 相当。</p>
+<p>OpenAI CEO 萨姆·奥尔特曼表示：</p>
+<blockquote>
+<p>“我们很高兴能将这些模型交到全世界更多人的手中。它们不会取代现有的GPT模型，而是作为一种补充，推动人工智能领域的创新与协作。”</p>
+</blockquote>
+<p>此次发布的一大亮点是其在本地设备上的运行能力。GPT-OSS-20B 等较小尺寸的模型经过优化，可在笔记本电脑甚至智能手机上高效运行。在 M4 芯片的 MacBook 上，20B 模型的推理速度可达每秒30-40个token。</p>
+<p><strong>相关链接:</strong></p>
+<ul>
+<li><strong>模型信息:</strong> <a href="https://openai.com/zh-Hans-CN/open-models/">https://openai.com/zh-Hans-CN/open-models/</a></li>
+<li><strong>模型下载:</strong> <a href="https://huggingface.co/openai">https://huggingface.co/openai</a></li>
+</ul>
+<p><strong>本地运行 GPT-OSS-20B</strong><br><a href="https://ollama.com/download">ollama</a> 上 GPT-OSS-20B 模型大小为 14GB ，一键运行命令如下：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">ollama run gpt-oss:20b </span><br></pre></td></tr></table></figure>
+
+<p>图形界面则可以使用 <a href="https://lmstudio.ai/">LM Studio</a></p>
+<p><img src="https://img.nep.me/i/2025/08/06/lmstudio-run-gpt-oss-20b.webp" alt="LM Studio run GPT-OSS-20B"></p>
+]]></content>
+      <categories>
+        <category>资讯</category>
+      </categories>
+      <tags>
+        <tag>AI</tag>
+        <tag>大模型</tag>
+        <tag>OpenAI</tag>
+        <tag>开源</tag>
       </tags>
   </entry>
   <entry>
@@ -1806,50 +1806,6 @@
         <tag>AI</tag>
         <tag>图像生成</tag>
         <tag>Nano Banana</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>使用 ccusage 查看 Claude Code 用量</title>
-    <url>/post/use-ccusage-check-claude-code-cost.html</url>
-    <content><![CDATA[<p>如果你是通过 Claude Pro 或是 Max 订阅使用的 Claude Code，通过 <code>/cost</code> 会得到无需关注消耗的提示   </p>
-<blockquote>
-<p>With your Claude Pro subscription, no need to monitor cost — your subscription includes Claude Code usage</p>
-</blockquote>
-<p>不过如果你好奇 Claude Code 的实际用量，比如可以确认自己有没有用回本，是否不如直接使用 API。</p>
-<p>这时就可以使用 <a href="https://github.com/ryoppippi/ccusage">ccusage</a> 这个项目。</p>
-<p><strong>ccusage</strong> 是通过读取你本地的 <code>~/.claude/projects</code>  下的文件来完成分析的，只能统计本机的使用报告，可以放心使用。</p>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p><code>ccusage</code> 的开发者们非常关注打包体积，因此可以不安装直接通过 <code>npx</code> 或是 <code>pnpm</code> 运行</p>
-<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-16-tab-0" aria-controls="tabs-16-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">npx</button><button type="button" role="tab" id="tabs-16-tab-1" aria-controls="tabs-16-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">pnpm</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-16-panel-0" aria-labelledby="tabs-16-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npx ccusage@latest</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-16-panel-1" aria-labelledby="tabs-16-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pnpm dlx ccusage</span><br></pre></td></tr></table></figure></section></div></div>
-
-
-<p>当然也是支持直接全局安装的，这样在使用时只需要运行 <code>ccusage</code> 即可</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># npm</span></span><br><span class="line">npm install -g ccusage</span><br><span class="line"></span><br><span class="line"><span class="comment"># pnpm</span></span><br><span class="line">pnpm add -g ccusage </span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h2><p>直接运行 <code>ccusage</code> 可以查看每日的使用报告<br><img src="https://img.nep.me/i/2025/08/17/ccusage-reports.webp" alt="ccusage-reports"> </p>
-<blockquote>
-<p>懈怠了，要亏本了（</p>
-</blockquote>
-<p><code>ccusage -i</code> 还可以显示不同项目的使用报告</p>
-<p>更多用法：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查看每日报告</span></span><br><span class="line">ccusage </span><br><span class="line">ccusage daily</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看每周报告</span></span><br><span class="line">ccusage weekly</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看每月报告</span></span><br><span class="line">ccusage monthly</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看不同会话的报告</span></span><br><span class="line">ccusage session</span><br><span class="line"></span><br><span class="line"><span class="comment"># 按每 5 小时计费窗口进行查看</span></span><br><span class="line">ccusage blocks</span><br><span class="line"></span><br><span class="line"><span class="comment"># 实时监控</span></span><br><span class="line">ccusage blocks --live</span><br></pre></td></tr></table></figure>
-
-<h2 id="将-ccusage-添加到-Claude-Code-的状态栏中"><a href="#将-ccusage-添加到-Claude-Code-的状态栏中" class="headerlink" title="将 ccusage 添加到 Claude Code 的状态栏中"></a>将 ccusage 添加到 Claude Code 的状态栏中</h2><p>如果希望在使用 Claude Code 时可以实时查看消耗报告，则可以直接在 Claude Code 中进行配置</p>
-<p>使用编辑器打开 <code>~/.claude/settings.json</code> ，在其中添加如下代码，即可实现在状态栏中实时展示消耗情况。</p>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="attr">&quot;statusLine&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;command&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;command&quot;</span><span class="punctuation">:</span> <span class="string">&quot;npx ccusage statusline&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
-
-<p><code>~/.claude/settings.json</code> 是 Claude 的全局设置，默认是没有创建的，如果没有其他配置，则完整文件如下</p>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;statusLine&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;command&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;command&quot;</span><span class="punctuation">:</span> <span class="string">&quot;npx ccusage statusline&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
-
-<p>然后重新打开 Claude Code ，显示效果如下<br><img src="https://img.nep.me/i/2025/08/17/ccusage-in-cc.webp" alt="ccusage-in-cc"></p>
-<p>如果你也对使用 Claude Code 的实际消耗比较感兴趣，现在就安装试试吧。</p>
-]]></content>
-      <categories>
-        <category>教程</category>
-      </categories>
-      <tags>
-        <tag>Claude Code</tag>
       </tags>
   </entry>
   <entry>
@@ -1968,95 +1924,47 @@
       </tags>
   </entry>
   <entry>
-    <title>使用 Gitea 与 Docker Compose 轻松自建你的私人 Git 服务器</title>
-    <url>/post/use-docker-run-gitea.html</url>
-    <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>想要一个完全由你掌控的私人代码仓库吗？Gitea 是一个轻量级、高性能的自托管 Git 服务，功能强大且资源占用极低，甚至可以在树莓派上流畅运行。</p>
-<p>本教程将指导你如何使用 Docker Compose 快速部署一个安全、私有的 Gitea 实例，让你在几分钟内拥有媲美 GitHub 的代码管理体验。</p>
-<h2 id="一、环境准备"><a href="#一、环境准备" class="headerlink" title="一、环境准备"></a>一、环境准备</h2><p>在开始之前，需要拥有一个自己的 VPS 或是支持 Docker 容器的 NAS 系统。</p>
-<h3 id="1-安装-Docker-和-Docker-Compose"><a href="#1-安装-Docker-和-Docker-Compose" class="headerlink" title="1. 安装 Docker 和 Docker Compose"></a>1. 安装 Docker 和 Docker Compose</h3><p>这是我们容器化部署的基础。如果你的服务器尚未安装，可以参考以下教程。</p>
-<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p><strong>延伸阅读:</strong> <a href="https://ooo.run/post/debian-install-docker.html">在 Debian 12 中安装 Docker 以及 Docker Compose</a></p></div></div>
-
-<h3 id="2-（可选）调整服务器-SSH-端口S"><a href="#2-（可选）调整服务器-SSH-端口S" class="headerlink" title="2. （可选）调整服务器 SSH 端口S"></a>2. （可选）调整服务器 SSH 端口S</h3><p>Gitea 需要使用 22 端口来处理 Git 的 SSH 操作 (如 <code>git clone git@...</code>)。为了避免与服务器自身的 SSH 服务端口冲突，建议将服务器的 SSH 端口修改为一个非标准端口（例如 <code>2222</code>）。</p>
-<ul>
-<li><p>编辑 SSH 配置文件:</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">vim /etc/ssh/sshd_config</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>找到 <code>#Port 22</code> 这一行，取消 <code>#</code> 的注释，将 22 修改为新的端口数字。</p>
-</li>
-<li><p>重启 SSH 服务使其生效:</p>
- <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">systemctl restart sshd</span><br></pre></td></tr></table></figure>
+    <title>使用 ccusage 查看 Claude Code 用量</title>
+    <url>/post/use-ccusage-check-claude-code-cost.html</url>
+    <content><![CDATA[<p>如果你是通过 Claude Pro 或是 Max 订阅使用的 Claude Code，通过 <code>/cost</code> 会得到无需关注消耗的提示   </p>
 <blockquote>
-<p><strong>重要提示</strong>: 在断开当前连接之前，请务必打开一个新的终端窗口，尝试使用新端口号登录，确保可以成功登录。</p>
+<p>With your Claude Pro subscription, no need to monitor cost — your subscription includes Claude Code usage</p>
 </blockquote>
-</li>
-</ul>
-<h3 id="3-创建项目目录"><a href="#3-创建项目目录" class="headerlink" title="3. 创建项目目录"></a>3. 创建项目目录</h3><p>为 Gitea 创建一个专用的目录，用于存放配置文件和数据。</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p /opt/gitea &amp;&amp; <span class="built_in">cd</span> /opt/gitea</span><br></pre></td></tr></table></figure>
+<p>不过如果你好奇 Claude Code 的实际用量，比如可以确认自己有没有用回本，是否不如直接使用 API。</p>
+<p>这时就可以使用 <a href="https://github.com/ryoppippi/ccusage">ccusage</a> 这个项目。</p>
+<p><strong>ccusage</strong> 是通过读取你本地的 <code>~/.claude/projects</code>  下的文件来完成分析的，只能统计本机的使用报告，可以放心使用。</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p><code>ccusage</code> 的开发者们非常关注打包体积，因此可以不安装直接通过 <code>npx</code> 或是 <code>pnpm</code> 运行</p>
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-16-tab-0" aria-controls="tabs-16-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">npx</button><button type="button" role="tab" id="tabs-16-tab-1" aria-controls="tabs-16-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">pnpm</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-16-panel-0" aria-labelledby="tabs-16-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npx ccusage@latest</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-16-panel-1" aria-labelledby="tabs-16-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pnpm dlx ccusage</span><br></pre></td></tr></table></figure></section></div></div>
 
-<h2 id="二、使用-Docker-Compose-部署-Gitea"><a href="#二、使用-Docker-Compose-部署-Gitea" class="headerlink" title="二、使用 Docker Compose 部署 Gitea"></a>二、使用 Docker Compose 部署 Gitea</h2><h3 id="创建-docker-compose-yml-文件"><a href="#创建-docker-compose-yml-文件" class="headerlink" title="创建 docker-compose.yml 文件"></a>创建 <code>docker-compose.yml</code> 文件</h3><p>在项目目录 (<code>/opt/gitea</code>) 中，创建一个名为 <code>docker-compose.yml</code> 的文件。</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">vim docker-compose.yml</span><br></pre></td></tr></table></figure>
 
-<p>将以下内容粘贴到文件中：</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># docker-compose.yml</span></span><br><span class="line"><span class="attr">networks:</span></span><br><span class="line">  <span class="attr">gitea:</span></span><br><span class="line">    <span class="attr">external:</span> <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">gitea:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">gitea/gitea:1.24.2</span> <span class="comment"># 建议锁定版本以确保稳定性</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">gitea</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">USER_UID=1000</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">USER_GID=1000</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">GITEA__database__DB_TYPE=postgres</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">GITEA__database__HOST=db:5432</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">GITEA__database__NAME=gitea</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">GITEA__database__USER=gitea</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">GITEA__database__PASSWD=gitea</span> <span class="comment"># 请在生产环境中替换为更强的密码</span></span><br><span class="line">    <span class="attr">networks:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">gitea</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./data:/data</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/etc/timezone:/etc/timezone:ro</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/etc/localtime:/etc/localtime:ro</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;3000:3000&quot;</span> <span class="comment"># Web 界面端口</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;22:22&quot;</span>    <span class="comment"># SSH Git 操作端口 (主机端口:容器端口)</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">db</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">db:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">postgres:15</span> <span class="comment"># 建议锁定版本</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">gitea-db</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">POSTGRES_USER=gitea</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">POSTGRES_PASSWORD=gitea</span> <span class="comment"># 请在生产环境中替换为更强的密码</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">POSTGRES_DB=gitea</span></span><br><span class="line">    <span class="attr">networks:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">gitea</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./postgres:/var/lib/postgresql/data</span></span><br></pre></td></tr></table></figure>
+<p>当然也是支持直接全局安装的，这样在使用时只需要运行 <code>ccusage</code> 即可</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># npm</span></span><br><span class="line">npm install -g ccusage</span><br><span class="line"></span><br><span class="line"><span class="comment"># pnpm</span></span><br><span class="line">pnpm add -g ccusage </span><br></pre></td></tr></table></figure>
 
-<p><strong>配置解析:</strong></p>
-<ul>
-<li><code>image</code>: 我们为 Gitea 和 Postgres 数据库都指定了具体的版本，这有助于避免未来自动更新可能带来的兼容性问题。</li>
-<li><code>environment</code>: 用于配置 Gitea 和数据库之间的连接信息。<strong>请务C必将 <code>GITEA__database__PASSWD</code> 和 <code>POSTGRES_PASSWORD</code> 修改为强密码。</strong></li>
-<li><code>volumes</code>: 将 Gitea 的数据（仓库、配置等）和数据库文件持久化存储在主机当前目录下的 <code>data</code> 和 <code>postgres</code> 文件夹中，确保容器重建后数据不丢失。</li>
-<li><code>ports</code>:<ul>
-<li><code>3000:3000</code>: 将 Gitea 的 Web 界面映射到主机的 3000 端口。 </li>
-<li><code>22:22</code>: 将 Git 的 SSH 操作端口映射到主机的 22 端口。</li>
-</ul>
-</li>
-</ul>
-<h3 id="启动-Gitea-服务"><a href="#启动-Gitea-服务" class="headerlink" title="启动 Gitea 服务"></a>启动 Gitea 服务</h3><p>在 <code>docker-compose.yml</code> 文件所在目录中，执行以下命令来拉取镜像并启动服务：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">docker compose up -d</span><br></pre></td></tr></table></figure>
 
-<h2 id="三、初始化-Gitea-设置"><a href="#三、初始化-Gitea-设置" class="headerlink" title="三、初始化 Gitea 设置"></a>三、初始化 Gitea 设置</h2><ol>
-<li><strong>访问 Web 界面</strong>: 打开浏览器，访问 <code>http://&lt;你的服务器IP&gt;:3000</code>。</li>
-<li><strong>完成安装</strong>: 你会看到 Gitea 的安装页面。<ul>
-<li><strong>数据库设置</strong>: Docker Compose 已经通过环境变量自动配置好了，你无需修改。</li>
-<li><strong>通用设置</strong>: 这是你需要关注的部分。<ul>
-<li><strong>服务器域名</strong>: 填写你的域名，例如 <code>git.yourdomain.com</code>。</li>
-<li><strong>Gitea 基本 URL</strong>: 填写完整的访问地址，例如 <code>http://git.yourdomain.com/</code>。</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>点击“立即安装”，Gitea 会完成最后的设置并跳转到登录页面。请立即注册你的管理员账户。</li>
-</ol>
-<h2 id="四、安全加固"><a href="#四、安全加固" class="headerlink" title="四、安全加固"></a>四、安全加固</h2><p>对于一个私有 Git 服务器，安全至关重要。</p>
-<h3 id="关闭用户注册"><a href="#关闭用户注册" class="headerlink" title="关闭用户注册"></a>关闭用户注册</h3><p>为了防止未经授权的用户注册，我们需要修改 Gitea 的配置文件。</p>
-<p><code>1</code> 编辑 <code>app.ini</code> 文件：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">vim ./data/gitea/conf/app.ini</span><br></pre></td></tr></table></figure>
 
-<p><code>2</code> 在 <code>[service]</code> 部分，找到并修改或添加以下配置：</p>
-<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="section">[service]</span></span><br><span class="line"><span class="attr">DISABLE_REGISTRATION</span> = <span class="literal">true</span>  <span class="comment">; 禁用注册功能</span></span><br><span class="line"><span class="attr">SHOW_REGISTRATION_BUTTON</span> = <span class="literal">false</span> <span class="comment">; 从主页隐藏注册按钮</span></span><br></pre></td></tr></table></figure>
+<h2 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h2><p>直接运行 <code>ccusage</code> 可以查看每日的使用报告<br><img src="https://img.nep.me/i/2025/08/17/ccusage-reports.webp" alt="ccusage-reports"> </p>
+<blockquote>
+<p>懈怠了，要亏本了（</p>
+</blockquote>
+<p><code>ccusage -i</code> 还可以显示不同项目的使用报告</p>
+<p>更多用法：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查看每日报告</span></span><br><span class="line">ccusage </span><br><span class="line">ccusage daily</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看每周报告</span></span><br><span class="line">ccusage weekly</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看每月报告</span></span><br><span class="line">ccusage monthly</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看不同会话的报告</span></span><br><span class="line">ccusage session</span><br><span class="line"></span><br><span class="line"><span class="comment"># 按每 5 小时计费窗口进行查看</span></span><br><span class="line">ccusage blocks</span><br><span class="line"></span><br><span class="line"><span class="comment"># 实时监控</span></span><br><span class="line">ccusage blocks --live</span><br></pre></td></tr></table></figure>
 
-<p><code>3</code> 重启 Gitea 使配置生效：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">docker compose restart gitea</span><br></pre></td></tr></table></figure>
+<h2 id="将-ccusage-添加到-Claude-Code-的状态栏中"><a href="#将-ccusage-添加到-Claude-Code-的状态栏中" class="headerlink" title="将 ccusage 添加到 Claude Code 的状态栏中"></a>将 ccusage 添加到 Claude Code 的状态栏中</h2><p>如果希望在使用 Claude Code 时可以实时查看消耗报告，则可以直接在 Claude Code 中进行配置</p>
+<p>使用编辑器打开 <code>~/.claude/settings.json</code> ，在其中添加如下代码，即可实现在状态栏中实时展示消耗情况。</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="attr">&quot;statusLine&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;command&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;command&quot;</span><span class="punctuation">:</span> <span class="string">&quot;npx ccusage statusline&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
 
-<h3 id="2-（强烈推荐）使用反向代理"><a href="#2-（强烈推荐）使用反向代理" class="headerlink" title="2. （强烈推荐）使用反向代理"></a>2. （强烈推荐）使用反向代理</h3><p>直接暴露 Web 端口到公网是不安全的。推荐使用 Nginx 或其他反向代理工具来提供 Web 服务，并且使用 HTTPS 访问。</p>
-<p><code>1</code> <strong>修改端口映射</strong>: 将 Gitea 的 Web 端口限制为仅限本机访问。<br>   修改 <code>docker-compose.yml</code> 文件中的 <code>ports</code> 部分：<br>   <figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">ports:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">&quot;127.0.0.1:3000:3000&quot;</span> <span class="comment"># 仅允许本地访问</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">&quot;22:22&quot;</span></span><br></pre></td></tr></table></figure></p>
-<p><code>2</code> <strong>重启服务</strong>:<br>   <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">docker compose down</span><br><span class="line">docker compose up -d</span><br></pre></td></tr></table></figure></p>
-<p><code>3</code> <strong>配置反向代理</strong>: 在你的反向代理工具中，设置一个代理规则，将 <code>git.yourdomain.com</code> 的流量转发到 <code>http://127.0.0.1:3000</code>。</p>
-<p><strong>Nginx 示例（仅反代部分）</strong></p>
-<p>以下示例将域名 <code>git.example.com</code> 的 HTTP 流量反代到本机的 <code>127.0.0.1:3000</code>。请先确保在 compose 中使用了 <code>127.0.0.1:3000:3000</code> 的端口映射，并在 Gitea 配置中将 <code>ROOT_URL</code> 设置为 <code>http://git.example.com/</code>。</p>
-<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="section">location</span> / &#123;</span><br><span class="line">    <span class="attribute">proxy_pass</span> http://127.0.0.1:3000;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 透传必要头部，确保生成正确克隆地址与日志 IP</span></span><br><span class="line">    <span class="attribute">proxy_set_header</span> Host <span class="variable">$host</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> X-Real-IP <span class="variable">$remote_addr</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> X-Forwarded-Proto <span class="variable">$scheme</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># WebSocket 支持（如通知、终端等）</span></span><br><span class="line">    <span class="attribute">proxy_set_header</span> Upgrade <span class="variable">$http_upgrade</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> Connection <span class="string">&quot;upgrade&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 超时设置，避免大仓库推送中断</span></span><br><span class="line">    <span class="attribute">proxy_connect_timeout</span> <span class="number">60s</span>;</span><br><span class="line">    <span class="attribute">proxy_send_timeout</span> <span class="number">60s</span>;</span><br><span class="line">    <span class="attribute">proxy_read_timeout</span> <span class="number">3600s</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>~/.claude/settings.json</code> 是 Claude 的全局设置，默认是没有创建的，如果没有其他配置，则完整文件如下</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;statusLine&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;command&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;command&quot;</span><span class="punctuation">:</span> <span class="string">&quot;npx ccusage statusline&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
 
-<p>测试并重载 Nginx 配置</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">nginx -t</span><br><span class="line">nginx -s reload </span><br></pre></td></tr></table></figure>
-
-<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>恭喜！你现在拥有了一个功能全面、安全可靠的私有 Git 服务器。相比于 GitLab 等重型方案，Gitea 在提供核心功能的同时保持了极低的资源消耗，是个人开发者与小团队的理想之选。通过 Docker Compose 进行部署，更让整个过程变得简单、高效且易于维护。</p>
+<p>然后重新打开 Claude Code ，显示效果如下<br><img src="https://img.nep.me/i/2025/08/17/ccusage-in-cc.webp" alt="ccusage-in-cc"></p>
+<p>如果你也对使用 Claude Code 的实际消耗比较感兴趣，现在就安装试试吧。</p>
 ]]></content>
       <categories>
         <category>教程</category>
       </categories>
       <tags>
-        <tag>Docker</tag>
-        <tag>Docker Compose</tag>
-        <tag>Self-hosted</tag>
+        <tag>Claude Code</tag>
       </tags>
   </entry>
   <entry>
@@ -2214,6 +2122,98 @@
         <tag>Docker Compose</tag>
         <tag>Self-hosted</tag>
         <tag>记账</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用 Gitea 与 Docker Compose 轻松自建你的私人 Git 服务器</title>
+    <url>/post/use-docker-run-gitea.html</url>
+    <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>想要一个完全由你掌控的私人代码仓库吗？Gitea 是一个轻量级、高性能的自托管 Git 服务，功能强大且资源占用极低，甚至可以在树莓派上流畅运行。</p>
+<p>本教程将指导你如何使用 Docker Compose 快速部署一个安全、私有的 Gitea 实例，让你在几分钟内拥有媲美 GitHub 的代码管理体验。</p>
+<h2 id="一、环境准备"><a href="#一、环境准备" class="headerlink" title="一、环境准备"></a>一、环境准备</h2><p>在开始之前，需要拥有一个自己的 VPS 或是支持 Docker 容器的 NAS 系统。</p>
+<h3 id="1-安装-Docker-和-Docker-Compose"><a href="#1-安装-Docker-和-Docker-Compose" class="headerlink" title="1. 安装 Docker 和 Docker Compose"></a>1. 安装 Docker 和 Docker Compose</h3><p>这是我们容器化部署的基础。如果你的服务器尚未安装，可以参考以下教程。</p>
+<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p><strong>延伸阅读:</strong> <a href="https://ooo.run/post/debian-install-docker.html">在 Debian 12 中安装 Docker 以及 Docker Compose</a></p></div></div>
+
+<h3 id="2-（可选）调整服务器-SSH-端口S"><a href="#2-（可选）调整服务器-SSH-端口S" class="headerlink" title="2. （可选）调整服务器 SSH 端口S"></a>2. （可选）调整服务器 SSH 端口S</h3><p>Gitea 需要使用 22 端口来处理 Git 的 SSH 操作 (如 <code>git clone git@...</code>)。为了避免与服务器自身的 SSH 服务端口冲突，建议将服务器的 SSH 端口修改为一个非标准端口（例如 <code>2222</code>）。</p>
+<ul>
+<li><p>编辑 SSH 配置文件:</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">vim /etc/ssh/sshd_config</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>找到 <code>#Port 22</code> 这一行，取消 <code>#</code> 的注释，将 22 修改为新的端口数字。</p>
+</li>
+<li><p>重启 SSH 服务使其生效:</p>
+ <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">systemctl restart sshd</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>重要提示</strong>: 在断开当前连接之前，请务必打开一个新的终端窗口，尝试使用新端口号登录，确保可以成功登录。</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="3-创建项目目录"><a href="#3-创建项目目录" class="headerlink" title="3. 创建项目目录"></a>3. 创建项目目录</h3><p>为 Gitea 创建一个专用的目录，用于存放配置文件和数据。</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p /opt/gitea &amp;&amp; <span class="built_in">cd</span> /opt/gitea</span><br></pre></td></tr></table></figure>
+
+<h2 id="二、使用-Docker-Compose-部署-Gitea"><a href="#二、使用-Docker-Compose-部署-Gitea" class="headerlink" title="二、使用 Docker Compose 部署 Gitea"></a>二、使用 Docker Compose 部署 Gitea</h2><h3 id="创建-docker-compose-yml-文件"><a href="#创建-docker-compose-yml-文件" class="headerlink" title="创建 docker-compose.yml 文件"></a>创建 <code>docker-compose.yml</code> 文件</h3><p>在项目目录 (<code>/opt/gitea</code>) 中，创建一个名为 <code>docker-compose.yml</code> 的文件。</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">vim docker-compose.yml</span><br></pre></td></tr></table></figure>
+
+<p>将以下内容粘贴到文件中：</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># docker-compose.yml</span></span><br><span class="line"><span class="attr">networks:</span></span><br><span class="line">  <span class="attr">gitea:</span></span><br><span class="line">    <span class="attr">external:</span> <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">gitea:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">gitea/gitea:1.24.2</span> <span class="comment"># 建议锁定版本以确保稳定性</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">gitea</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">USER_UID=1000</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">USER_GID=1000</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">GITEA__database__DB_TYPE=postgres</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">GITEA__database__HOST=db:5432</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">GITEA__database__NAME=gitea</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">GITEA__database__USER=gitea</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">GITEA__database__PASSWD=gitea</span> <span class="comment"># 请在生产环境中替换为更强的密码</span></span><br><span class="line">    <span class="attr">networks:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">gitea</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./data:/data</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/etc/timezone:/etc/timezone:ro</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/etc/localtime:/etc/localtime:ro</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;3000:3000&quot;</span> <span class="comment"># Web 界面端口</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;22:22&quot;</span>    <span class="comment"># SSH Git 操作端口 (主机端口:容器端口)</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">db</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">db:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">postgres:15</span> <span class="comment"># 建议锁定版本</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">gitea-db</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">POSTGRES_USER=gitea</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">POSTGRES_PASSWORD=gitea</span> <span class="comment"># 请在生产环境中替换为更强的密码</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">POSTGRES_DB=gitea</span></span><br><span class="line">    <span class="attr">networks:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">gitea</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./postgres:/var/lib/postgresql/data</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>配置解析:</strong></p>
+<ul>
+<li><code>image</code>: 我们为 Gitea 和 Postgres 数据库都指定了具体的版本，这有助于避免未来自动更新可能带来的兼容性问题。</li>
+<li><code>environment</code>: 用于配置 Gitea 和数据库之间的连接信息。<strong>请务C必将 <code>GITEA__database__PASSWD</code> 和 <code>POSTGRES_PASSWORD</code> 修改为强密码。</strong></li>
+<li><code>volumes</code>: 将 Gitea 的数据（仓库、配置等）和数据库文件持久化存储在主机当前目录下的 <code>data</code> 和 <code>postgres</code> 文件夹中，确保容器重建后数据不丢失。</li>
+<li><code>ports</code>:<ul>
+<li><code>3000:3000</code>: 将 Gitea 的 Web 界面映射到主机的 3000 端口。 </li>
+<li><code>22:22</code>: 将 Git 的 SSH 操作端口映射到主机的 22 端口。</li>
+</ul>
+</li>
+</ul>
+<h3 id="启动-Gitea-服务"><a href="#启动-Gitea-服务" class="headerlink" title="启动 Gitea 服务"></a>启动 Gitea 服务</h3><p>在 <code>docker-compose.yml</code> 文件所在目录中，执行以下命令来拉取镜像并启动服务：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">docker compose up -d</span><br></pre></td></tr></table></figure>
+
+<h2 id="三、初始化-Gitea-设置"><a href="#三、初始化-Gitea-设置" class="headerlink" title="三、初始化 Gitea 设置"></a>三、初始化 Gitea 设置</h2><ol>
+<li><strong>访问 Web 界面</strong>: 打开浏览器，访问 <code>http://&lt;你的服务器IP&gt;:3000</code>。</li>
+<li><strong>完成安装</strong>: 你会看到 Gitea 的安装页面。<ul>
+<li><strong>数据库设置</strong>: Docker Compose 已经通过环境变量自动配置好了，你无需修改。</li>
+<li><strong>通用设置</strong>: 这是你需要关注的部分。<ul>
+<li><strong>服务器域名</strong>: 填写你的域名，例如 <code>git.yourdomain.com</code>。</li>
+<li><strong>Gitea 基本 URL</strong>: 填写完整的访问地址，例如 <code>http://git.yourdomain.com/</code>。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>点击“立即安装”，Gitea 会完成最后的设置并跳转到登录页面。请立即注册你的管理员账户。</li>
+</ol>
+<h2 id="四、安全加固"><a href="#四、安全加固" class="headerlink" title="四、安全加固"></a>四、安全加固</h2><p>对于一个私有 Git 服务器，安全至关重要。</p>
+<h3 id="关闭用户注册"><a href="#关闭用户注册" class="headerlink" title="关闭用户注册"></a>关闭用户注册</h3><p>为了防止未经授权的用户注册，我们需要修改 Gitea 的配置文件。</p>
+<p><code>1</code> 编辑 <code>app.ini</code> 文件：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">vim ./data/gitea/conf/app.ini</span><br></pre></td></tr></table></figure>
+
+<p><code>2</code> 在 <code>[service]</code> 部分，找到并修改或添加以下配置：</p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="section">[service]</span></span><br><span class="line"><span class="attr">DISABLE_REGISTRATION</span> = <span class="literal">true</span>  <span class="comment">; 禁用注册功能</span></span><br><span class="line"><span class="attr">SHOW_REGISTRATION_BUTTON</span> = <span class="literal">false</span> <span class="comment">; 从主页隐藏注册按钮</span></span><br></pre></td></tr></table></figure>
+
+<p><code>3</code> 重启 Gitea 使配置生效：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">docker compose restart gitea</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-（强烈推荐）使用反向代理"><a href="#2-（强烈推荐）使用反向代理" class="headerlink" title="2. （强烈推荐）使用反向代理"></a>2. （强烈推荐）使用反向代理</h3><p>直接暴露 Web 端口到公网是不安全的。推荐使用 Nginx 或其他反向代理工具来提供 Web 服务，并且使用 HTTPS 访问。</p>
+<p><code>1</code> <strong>修改端口映射</strong>: 将 Gitea 的 Web 端口限制为仅限本机访问。<br>   修改 <code>docker-compose.yml</code> 文件中的 <code>ports</code> 部分：<br>   <figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">ports:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">&quot;127.0.0.1:3000:3000&quot;</span> <span class="comment"># 仅允许本地访问</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">&quot;22:22&quot;</span></span><br></pre></td></tr></table></figure></p>
+<p><code>2</code> <strong>重启服务</strong>:<br>   <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">docker compose down</span><br><span class="line">docker compose up -d</span><br></pre></td></tr></table></figure></p>
+<p><code>3</code> <strong>配置反向代理</strong>: 在你的反向代理工具中，设置一个代理规则，将 <code>git.yourdomain.com</code> 的流量转发到 <code>http://127.0.0.1:3000</code>。</p>
+<p><strong>Nginx 示例（仅反代部分）</strong></p>
+<p>以下示例将域名 <code>git.example.com</code> 的 HTTP 流量反代到本机的 <code>127.0.0.1:3000</code>。请先确保在 compose 中使用了 <code>127.0.0.1:3000:3000</code> 的端口映射，并在 Gitea 配置中将 <code>ROOT_URL</code> 设置为 <code>http://git.example.com/</code>。</p>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="section">location</span> / &#123;</span><br><span class="line">    <span class="attribute">proxy_pass</span> http://127.0.0.1:3000;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 透传必要头部，确保生成正确克隆地址与日志 IP</span></span><br><span class="line">    <span class="attribute">proxy_set_header</span> Host <span class="variable">$host</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> X-Real-IP <span class="variable">$remote_addr</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> X-Forwarded-Proto <span class="variable">$scheme</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># WebSocket 支持（如通知、终端等）</span></span><br><span class="line">    <span class="attribute">proxy_set_header</span> Upgrade <span class="variable">$http_upgrade</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> Connection <span class="string">&quot;upgrade&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 超时设置，避免大仓库推送中断</span></span><br><span class="line">    <span class="attribute">proxy_connect_timeout</span> <span class="number">60s</span>;</span><br><span class="line">    <span class="attribute">proxy_send_timeout</span> <span class="number">60s</span>;</span><br><span class="line">    <span class="attribute">proxy_read_timeout</span> <span class="number">3600s</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>测试并重载 Nginx 配置</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">nginx -t</span><br><span class="line">nginx -s reload </span><br></pre></td></tr></table></figure>
+
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>恭喜！你现在拥有了一个功能全面、安全可靠的私有 Git 服务器。相比于 GitLab 等重型方案，Gitea 在提供核心功能的同时保持了极低的资源消耗，是个人开发者与小团队的理想之选。通过 Docker Compose 进行部署，更让整个过程变得简单、高效且易于维护。</p>
+]]></content>
+      <categories>
+        <category>教程</category>
+      </categories>
+      <tags>
+        <tag>Docker</tag>
+        <tag>Docker Compose</tag>
+        <tag>Self-hosted</tag>
       </tags>
   </entry>
   <entry>
@@ -2679,31 +2679,6 @@
       </tags>
   </entry>
   <entry>
-    <title>趣站分享：Flolife.me —— 基于 AI 的人生旅程模拟器</title>
-    <url>/post/website-flolife.html</url>
-    <content><![CDATA[<p>还记得曾经风靡一时的人生重开模拟器吗？现在，Flowith 带来了一款更进一步的 AI 人生旅程模拟器 —— Flolife.me。它利用当前热门的 Nano Banana 图片模型，能够根据你上传的头像，生成贯穿角色一生的、具有惊人一致性的事件照片。</p>
-<p>整个过程完全免费，无需注册登录，体验非常流畅。访问 <a href="https://flolife.me/">Flolife.me</a> 后，只需点击 <code>一键开始测试</code> 按钮，即可开启你的人生模拟之旅。<br><img src="https://img.nep.me/i/2025/09/03/flolife-homepage.webp" style="width:75%;" alt="flolife-homepage" /></p>
-<p>首先是角色创建环节。在这里，你需要输入角色的姓名、性别、出生地，并分配总共 24 点的初始属性。</p>
-<p>我们的 “小明”智利超群也拥有比较 “健康” 的体魄，至于其他属性就顾不上了。<br><img src="https://img.nep.me/i/2025/09/03/flolife-step-1.webp" style="width:75%;" alt="flolife-step-1" /></p>
-<p>接下来，你可以选择上传一张头像，并为你的角色添加性格和爱好的描述，以获得更具个性化的体验。当然，这两个步骤都是可选的。<br><img src="https://img.nep.me/i/2025/09/03/flolife-step-2.webp" style="width:75%;" alt="flolife-step-2" /></p>
-<p>完成设置后，点击 <strong>开始旅程</strong>，小明的人生故事就此展开！</p>
-<p>在小明的人生旅程中，AI 会在关键节点生成独特的照片，记录下那些重要瞬间。</p>
-<p>或是小明的一次选择，又或是一次意外的变故，都可能将故事引向截然不同的结局，而这都会显示旅程模拟器之中。</p>
-<img src="https://img.nep.me/i/2025/09/03/flolife-journey.webp" style="width:75%;" alt="flolife-journey" />
-
-<p>旅程结束后，你还可以点击右上角的分享按钮，挑选五个关键事件，生成一份精美的人生报告，回顾一生中的亮点。<br><img src="https://img.nep.me/i/2025/09/03/flolife-report.webp" alt="flolife-report"></p>
-<p>是不是很有趣？马上访问 <a href="https://flolife.me/">Flolife.me</a>，开启一段模拟的人生旅程吧！</p>
-]]></content>
-      <categories>
-        <category>工具资源</category>
-      </categories>
-      <tags>
-        <tag>AI</tag>
-        <tag>趣味网站</tag>
-        <tag>Flowith</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>实用网站：Linux Journey —— 从新手到高手的 Linux 学习之路</title>
     <url>/post/website-linux-journey.html</url>
     <content><![CDATA[<p>如果你是一位 Self-Hosted 爱好者，那么掌握 Linux 知识是必备技能。然而，许多初学者常常面临不知从何学起、网上教程零散、缺乏系统性等问题。</p>
@@ -2734,6 +2709,62 @@
       <tags>
         <tag>Linux</tag>
         <tag>实用网站</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>趣站分享：Flolife.me —— 基于 AI 的人生旅程模拟器</title>
+    <url>/post/website-flolife.html</url>
+    <content><![CDATA[<p>还记得曾经风靡一时的人生重开模拟器吗？现在，Flowith 带来了一款更进一步的 AI 人生旅程模拟器 —— Flolife.me。它利用当前热门的 Nano Banana 图片模型，能够根据你上传的头像，生成贯穿角色一生的、具有惊人一致性的事件照片。</p>
+<p>整个过程完全免费，无需注册登录，体验非常流畅。访问 <a href="https://flolife.me/">Flolife.me</a> 后，只需点击 <code>一键开始测试</code> 按钮，即可开启你的人生模拟之旅。<br><img src="https://img.nep.me/i/2025/09/03/flolife-homepage.webp" style="width:75%;" alt="flolife-homepage" /></p>
+<p>首先是角色创建环节。在这里，你需要输入角色的姓名、性别、出生地，并分配总共 24 点的初始属性。</p>
+<p>我们的 “小明”智利超群也拥有比较 “健康” 的体魄，至于其他属性就顾不上了。<br><img src="https://img.nep.me/i/2025/09/03/flolife-step-1.webp" style="width:75%;" alt="flolife-step-1" /></p>
+<p>接下来，你可以选择上传一张头像，并为你的角色添加性格和爱好的描述，以获得更具个性化的体验。当然，这两个步骤都是可选的。<br><img src="https://img.nep.me/i/2025/09/03/flolife-step-2.webp" style="width:75%;" alt="flolife-step-2" /></p>
+<p>完成设置后，点击 <strong>开始旅程</strong>，小明的人生故事就此展开！</p>
+<p>在小明的人生旅程中，AI 会在关键节点生成独特的照片，记录下那些重要瞬间。</p>
+<p>或是小明的一次选择，又或是一次意外的变故，都可能将故事引向截然不同的结局，而这都会显示旅程模拟器之中。</p>
+<img src="https://img.nep.me/i/2025/09/03/flolife-journey.webp" style="width:75%;" alt="flolife-journey" />
+
+<p>旅程结束后，你还可以点击右上角的分享按钮，挑选五个关键事件，生成一份精美的人生报告，回顾一生中的亮点。<br><img src="https://img.nep.me/i/2025/09/03/flolife-report.webp" alt="flolife-report"></p>
+<p>是不是很有趣？马上访问 <a href="https://flolife.me/">Flolife.me</a>，开启一段模拟的人生旅程吧！</p>
+]]></content>
+      <categories>
+        <category>工具资源</category>
+      </categories>
+      <tags>
+        <tag>AI</tag>
+        <tag>趣味网站</tag>
+        <tag>Flowith</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>实用网站：Photopea —— 浏览器中的 Photoshop</title>
+    <url>/post/website-photopea-com.html</url>
+    <content><![CDATA[<p>你是否遇到过以下情况：</p>
+<ul>
+<li>出差时需要紧急修改客户的 PSD 文件</li>
+<li>电脑上没有安装 Photoshop，但需要处理复杂图片</li>
+<li>想要体验专业图片编辑功能，但不想付费购买软件</li>
+</ul>
+<p><a href="https://www.photopea.com/">Photopea.com</a> 正是为解决这些问题而生的免费在线图片编辑器。它在浏览器中提供了接近 Photoshop 的专业编辑体验，支持 PSD、AI、Sketch 等多种专业格式。</p>
+<p><strong>快速上手：</strong> 访问网站后，将图片文件直接拖放到浏览器窗口即可开始编辑。</p>
+<p><img src="https://img.nep.me/i/2025/08/18/photopea-preview.webp" alt="photopea-preview"></p>
+<h3 id="Photopea-的主要功能"><a href="#Photopea-的主要功能" class="headerlink" title="Photopea 的主要功能"></a>Photopea 的主要功能</h3><p><strong>1. 支持多种文件格式</strong><br>Photopea 的一个主要优点是它的兼容性。除了常规的图片格式，它还支持打开和编辑 <code>.psd</code>, <code>.ai</code>, <code>.sketch</code>, <code>.raw</code> 等专业格式的文件。这对于临时处理工作文件非常方便。</p>
+<p><strong>2. 熟悉的编辑界面</strong><br>Photopea 的界面和操作方式与 Photoshop 很像，如果你用过 PS，会感觉非常熟悉。它提供了 <strong>图层</strong> 、<strong>滤镜</strong> 等核心编辑功能，可以满足大部分日常的编辑需求。</p>
+<p><strong>3. 提供免费模版</strong><br>网站还提供了一些免费的设计模版，涵盖海报、社交媒体图片等，可以帮助你快速开始创作。</p>
+<p><strong>4. 支持 AI 图片生成</strong><br>除了传统的图片编辑功能，Photopea 还支持一句话生成图片，仍然是免费功能，非常适合体验一下。 </p>
+<p><strong>5. 隐私安全</strong><br>Photopea 默认文件处理都在浏览器本地完成，不会上传到服务器，网页加载完全后，甚至可以离线使用。</p>
+<h3 id="关于广告"><a href="#关于广告" class="headerlink" title="关于广告"></a>关于广告</h3><p>作为一个免费工具，Photopea 的在界面右侧添加了 Google 广告。考虑到它提供的免费功能，这点广告通常是可以接受的。网站的访问量很大，也说明它受到了全球用户的广泛认可。</p>
+<p><img src="https://img.nep.me/i/2025/08/18/photopea-traffic.webp" alt="photopea-traffic"></p>
+<p>简单来说，Photopea 是一个非常实用的在线工具。它免费、免安装，并且支持多种文件格式。</p>
+<p>如果你偶尔需要编辑图片，或者临时需要处理 PSD 这样的文件，Photopea 是一个非常值得收藏的网站，不妨现在加个书签，以备不时之需。</p>
+]]></content>
+      <categories>
+        <category>工具资源</category>
+      </categories>
+      <tags>
+        <tag>实用网站</tag>
+        <tag>图片编辑</tag>
+        <tag>Photopea</tag>
       </tags>
   </entry>
   <entry>
@@ -2768,37 +2799,6 @@
         <tag>AI</tag>
         <tag>实用网站</tag>
         <tag>OpenRouter</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>实用网站：Photopea —— 浏览器中的 Photoshop</title>
-    <url>/post/website-photopea-com.html</url>
-    <content><![CDATA[<p>你是否遇到过以下情况：</p>
-<ul>
-<li>出差时需要紧急修改客户的 PSD 文件</li>
-<li>电脑上没有安装 Photoshop，但需要处理复杂图片</li>
-<li>想要体验专业图片编辑功能，但不想付费购买软件</li>
-</ul>
-<p><a href="https://www.photopea.com/">Photopea.com</a> 正是为解决这些问题而生的免费在线图片编辑器。它在浏览器中提供了接近 Photoshop 的专业编辑体验，支持 PSD、AI、Sketch 等多种专业格式。</p>
-<p><strong>快速上手：</strong> 访问网站后，将图片文件直接拖放到浏览器窗口即可开始编辑。</p>
-<p><img src="https://img.nep.me/i/2025/08/18/photopea-preview.webp" alt="photopea-preview"></p>
-<h3 id="Photopea-的主要功能"><a href="#Photopea-的主要功能" class="headerlink" title="Photopea 的主要功能"></a>Photopea 的主要功能</h3><p><strong>1. 支持多种文件格式</strong><br>Photopea 的一个主要优点是它的兼容性。除了常规的图片格式，它还支持打开和编辑 <code>.psd</code>, <code>.ai</code>, <code>.sketch</code>, <code>.raw</code> 等专业格式的文件。这对于临时处理工作文件非常方便。</p>
-<p><strong>2. 熟悉的编辑界面</strong><br>Photopea 的界面和操作方式与 Photoshop 很像，如果你用过 PS，会感觉非常熟悉。它提供了 <strong>图层</strong> 、<strong>滤镜</strong> 等核心编辑功能，可以满足大部分日常的编辑需求。</p>
-<p><strong>3. 提供免费模版</strong><br>网站还提供了一些免费的设计模版，涵盖海报、社交媒体图片等，可以帮助你快速开始创作。</p>
-<p><strong>4. 支持 AI 图片生成</strong><br>除了传统的图片编辑功能，Photopea 还支持一句话生成图片，仍然是免费功能，非常适合体验一下。 </p>
-<p><strong>5. 隐私安全</strong><br>Photopea 默认文件处理都在浏览器本地完成，不会上传到服务器，网页加载完全后，甚至可以离线使用。</p>
-<h3 id="关于广告"><a href="#关于广告" class="headerlink" title="关于广告"></a>关于广告</h3><p>作为一个免费工具，Photopea 的在界面右侧添加了 Google 广告。考虑到它提供的免费功能，这点广告通常是可以接受的。网站的访问量很大，也说明它受到了全球用户的广泛认可。</p>
-<p><img src="https://img.nep.me/i/2025/08/18/photopea-traffic.webp" alt="photopea-traffic"></p>
-<p>简单来说，Photopea 是一个非常实用的在线工具。它免费、免安装，并且支持多种文件格式。</p>
-<p>如果你偶尔需要编辑图片，或者临时需要处理 PSD 这样的文件，Photopea 是一个非常值得收藏的网站，不妨现在加个书签，以备不时之需。</p>
-]]></content>
-      <categories>
-        <category>工具资源</category>
-      </categories>
-      <tags>
-        <tag>实用网站</tag>
-        <tag>图片编辑</tag>
-        <tag>Photopea</tag>
       </tags>
   </entry>
   <entry>
@@ -3894,58 +3894,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Codex 的日志记录消耗 SSD 寿命？OpenAI 已修复</title>
-    <url>/post/codex-is-buring-your-ssd.html</url>
-    <content><![CDATA[<h2 id="Bug-信息"><a href="#Bug-信息" class="headerlink" title="Bug 信息"></a>Bug 信息</h2><div class="flatpaper-note flatpaper-note--primary"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>好消息，OpenAI 已在 Codex 0.142.0 版本中修复了这个问题，可以放心使用。</p></div></div>
-
-<p>最近，Codex 凭借其强大的功能和丝滑的体验，周活跃用户已经突破了 <strong>500 万</strong> 大关。越来越多的开发者和极客都已经把它当成了日常高频使用的得力助手。</p>
-<p>不过，随着使用人数的增加，有用户反馈，在某些流式输出或自动化任务场景下，Codex 会持续向本地磁盘写入 TRACE 级别的日志。</p>
-<p>GitHUb 的 <a href="https://github.com/openai/codex/issues/28224">ISSUE</a> 上声称该 BUG 可能会产生 <strong>640GB&#x2F;年</strong> 的写入，这对于消费级 SSD 来说是致命的。对于目前主流的 1TB 或 2TB 消费级固态硬盘（标称寿命通常在 600TBW ~ 1200TBW）来说，可以说是非常严重。</p>
-<p><strong>而且，正因为现在 AI 浪潮空前火热，全球对高带宽、高性能存储的需求集中爆发，导致现在的 SSD 固态硬盘价格一路上涨，存储成本变得相当昂贵，尤其是 mac 设备的硬盘无法更换。在这种寸土寸金的时期，我们对硬盘的每一度磨损、每一 G 空间都不得不更加精打细算。</strong></p>
-<hr>
-<h2 id="1分钟自查：你中招了吗？"><a href="#1分钟自查：你中招了吗？" class="headerlink" title="1分钟自查：你中招了吗？"></a>1分钟自查：你中招了吗？</h2><p>如果你使用的是 Linux 或 Mac 系统，可以直接通过终端跑两行命令看看情况。</p>
-<p>首先，看看日志文件的大小：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">ls</span> -lh ~/.codex/logs_2.sqlite</span><br></pre></td></tr></table></figure>
-
-<p>然后，统计一下日志的写入级别：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;SELECT level, COUNT(*) FROM logs GROUP BY level ORDER BY COUNT(*) DESC&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>如何判断：</strong><br>如果查询结果中，<code>TRACE</code> 级别的日志占了绝大多数，并且 <code>logs_2.sqlite</code> 文件体积比较大，那就说明 Codex 确实在后台认真地记录着无关紧要的追踪信息。</p>
-<p><strong>参考数据：</strong><br>我的文件大小为 <strong>468MB：</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&gt; <span class="built_in">ls</span> -lh ~/.codex/logs_2.sqlite Jun 23</span><br><span class="line">-rw-r--r--@ 1 mro  staff   468M</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&gt; sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;SELECT level, COUNT(*) FROM logs GROUP BY level ORDER BY COUNT(*) DESC&quot;</span></span><br><span class="line">TRACE|39961</span><br><span class="line">INFO|39919</span><br><span class="line">DEBUG|7307</span><br><span class="line">WARN|177</span><br></pre></td></tr></table></figure>
-
-<p>可以看到 <code>TRACE|39961</code> 占了接近一半的数据，确实存在所说的问题，主要是目前 OpenAI 官方尚未做出修复的回应。</p>
-<h2 id="一劳永逸的解决方案-：直接在数据库拦截"><a href="#一劳永逸的解决方案-：直接在数据库拦截" class="headerlink" title="一劳永逸的解决方案 ：直接在数据库拦截"></a>一劳永逸的解决方案 ：直接在数据库拦截</h2><p><mark>OpenAI 已经修复这个问题了，不需要操作了</mark></p>
-<p>这里提供比较激进、但也最直接的临时方案：给日志表加一个 SQLite 触发器，让新的日志写入被忽略，毕竟这个文件里只有诊断日志，没有对话历史。</p>
-<p>执行前建议先退出 Codex，并备份日志数据库：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cp</span> ~/.codex/logs_2.sqlite ~/.codex/logs_2.sqlite.bak</span><br></pre></td></tr></table></figure>
-<p>然后执行：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;CREATE TRIGGER IF NOT EXISTS block_log_inserts BEFORE INSERT ON logs BEGIN SELECT RAISE(IGNORE); END;&quot;</span></span><br></pre></td></tr></table></figure>
-<p>设置完成后，新的日志记录会被拦截，从而减少后续写入。</p>
-<p>需要注意的是，这个方法会影响 Codex 后续生成诊断日志。如果你之后需要向官方反馈问题，或者担心未来版本兼容性，可以先不要使用这个方案，改用定期清理的方式。</p>
-<details class="flatpaper-note flatpaper-note--info"><summary class="flatpaper-note__title"><span class="flatpaper-note__icon" aria-hidden="true"></span><span class="flatpaper-note__label">如何恢复</span><span class="flatpaper-note__chevron" aria-hidden="true"></span></summary><div class="flatpaper-note__body"><p>如果想要恢复的话就是删除这个 trigger 。先退出 Codex，再执行：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;DROP TRIGGER IF EXISTS block_log_inserts;&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>执行后可以检查是否还存在：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;.schema block_log_inserts&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>如果没有输出，说明已经删除成功。</p>
-<p>也可以用这个命令查看当前所有 trigger：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;SELECT name, tbl_name, sql FROM sqlite_master WHERE type=&#x27;trigger&#x27;;&quot;</span></span><br></pre></td></tr></table></figure></div></details>
-
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>GitHub ISSUE 中的数据是比较夸张的，Codex 的这个日志问题并没有网传的那么吓人，但也感谢 OpenAI 完成了 BUG 的修复，祝大家用 Codex 敲代码愉快！</p>
-]]></content>
-      <categories>
-        <category>笔记</category>
-      </categories>
-      <tags>
-        <tag>OpenAI</tag>
-        <tag>Codex</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>赛博菩萨：Cloudflare 免费账户可用服务详情</title>
     <url>/post/cloudflare-free-tier.html</url>
     <content><![CDATA[<h3 id="Cloudflare-免费级别服务全景：从-DNS-CDN-到-Workers-全栈边缘平台"><a href="#Cloudflare-免费级别服务全景：从-DNS-CDN-到-Workers-全栈边缘平台" class="headerlink" title="Cloudflare 免费级别服务全景：从 DNS&#x2F;CDN 到 Workers 全栈边缘平台"></a>Cloudflare 免费级别服务全景：从 DNS&#x2F;CDN 到 Workers 全栈边缘平台</h3><blockquote>
@@ -4666,6 +4614,58 @@
       </tags>
   </entry>
   <entry>
+    <title>Codex 的日志记录消耗 SSD 寿命？OpenAI 已修复</title>
+    <url>/post/codex-is-buring-your-ssd.html</url>
+    <content><![CDATA[<h2 id="Bug-信息"><a href="#Bug-信息" class="headerlink" title="Bug 信息"></a>Bug 信息</h2><div class="flatpaper-note flatpaper-note--primary"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>好消息，OpenAI 已在 Codex 0.142.0 版本中修复了这个问题，可以放心使用。</p></div></div>
+
+<p>最近，Codex 凭借其强大的功能和丝滑的体验，周活跃用户已经突破了 <strong>500 万</strong> 大关。越来越多的开发者和极客都已经把它当成了日常高频使用的得力助手。</p>
+<p>不过，随着使用人数的增加，有用户反馈，在某些流式输出或自动化任务场景下，Codex 会持续向本地磁盘写入 TRACE 级别的日志。</p>
+<p>GitHUb 的 <a href="https://github.com/openai/codex/issues/28224">ISSUE</a> 上声称该 BUG 可能会产生 <strong>640GB&#x2F;年</strong> 的写入，这对于消费级 SSD 来说是致命的。对于目前主流的 1TB 或 2TB 消费级固态硬盘（标称寿命通常在 600TBW ~ 1200TBW）来说，可以说是非常严重。</p>
+<p><strong>而且，正因为现在 AI 浪潮空前火热，全球对高带宽、高性能存储的需求集中爆发，导致现在的 SSD 固态硬盘价格一路上涨，存储成本变得相当昂贵，尤其是 mac 设备的硬盘无法更换。在这种寸土寸金的时期，我们对硬盘的每一度磨损、每一 G 空间都不得不更加精打细算。</strong></p>
+<hr>
+<h2 id="1分钟自查：你中招了吗？"><a href="#1分钟自查：你中招了吗？" class="headerlink" title="1分钟自查：你中招了吗？"></a>1分钟自查：你中招了吗？</h2><p>如果你使用的是 Linux 或 Mac 系统，可以直接通过终端跑两行命令看看情况。</p>
+<p>首先，看看日志文件的大小：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">ls</span> -lh ~/.codex/logs_2.sqlite</span><br></pre></td></tr></table></figure>
+
+<p>然后，统计一下日志的写入级别：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;SELECT level, COUNT(*) FROM logs GROUP BY level ORDER BY COUNT(*) DESC&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>如何判断：</strong><br>如果查询结果中，<code>TRACE</code> 级别的日志占了绝大多数，并且 <code>logs_2.sqlite</code> 文件体积比较大，那就说明 Codex 确实在后台认真地记录着无关紧要的追踪信息。</p>
+<p><strong>参考数据：</strong><br>我的文件大小为 <strong>468MB：</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&gt; <span class="built_in">ls</span> -lh ~/.codex/logs_2.sqlite Jun 23</span><br><span class="line">-rw-r--r--@ 1 mro  staff   468M</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&gt; sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;SELECT level, COUNT(*) FROM logs GROUP BY level ORDER BY COUNT(*) DESC&quot;</span></span><br><span class="line">TRACE|39961</span><br><span class="line">INFO|39919</span><br><span class="line">DEBUG|7307</span><br><span class="line">WARN|177</span><br></pre></td></tr></table></figure>
+
+<p>可以看到 <code>TRACE|39961</code> 占了接近一半的数据，确实存在所说的问题，主要是目前 OpenAI 官方尚未做出修复的回应。</p>
+<h2 id="一劳永逸的解决方案-：直接在数据库拦截"><a href="#一劳永逸的解决方案-：直接在数据库拦截" class="headerlink" title="一劳永逸的解决方案 ：直接在数据库拦截"></a>一劳永逸的解决方案 ：直接在数据库拦截</h2><p><mark>OpenAI 已经修复这个问题了，不需要操作了</mark></p>
+<p>这里提供比较激进、但也最直接的临时方案：给日志表加一个 SQLite 触发器，让新的日志写入被忽略，毕竟这个文件里只有诊断日志，没有对话历史。</p>
+<p>执行前建议先退出 Codex，并备份日志数据库：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cp</span> ~/.codex/logs_2.sqlite ~/.codex/logs_2.sqlite.bak</span><br></pre></td></tr></table></figure>
+<p>然后执行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;CREATE TRIGGER IF NOT EXISTS block_log_inserts BEFORE INSERT ON logs BEGIN SELECT RAISE(IGNORE); END;&quot;</span></span><br></pre></td></tr></table></figure>
+<p>设置完成后，新的日志记录会被拦截，从而减少后续写入。</p>
+<p>需要注意的是，这个方法会影响 Codex 后续生成诊断日志。如果你之后需要向官方反馈问题，或者担心未来版本兼容性，可以先不要使用这个方案，改用定期清理的方式。</p>
+<details class="flatpaper-note flatpaper-note--info"><summary class="flatpaper-note__title"><span class="flatpaper-note__icon" aria-hidden="true"></span><span class="flatpaper-note__label">如何恢复</span><span class="flatpaper-note__chevron" aria-hidden="true"></span></summary><div class="flatpaper-note__body"><p>如果想要恢复的话就是删除这个 trigger 。先退出 Codex，再执行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;DROP TRIGGER IF EXISTS block_log_inserts;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>执行后可以检查是否还存在：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;.schema block_log_inserts&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>如果没有输出，说明已经删除成功。</p>
+<p>也可以用这个命令查看当前所有 trigger：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;SELECT name, tbl_name, sql FROM sqlite_master WHERE type=&#x27;trigger&#x27;;&quot;</span></span><br></pre></td></tr></table></figure></div></details>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>GitHub ISSUE 中的数据是比较夸张的，Codex 的这个日志问题并没有网传的那么吓人，但也感谢 OpenAI 完成了 BUG 的修复，祝大家用 Codex 敲代码愉快！</p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>OpenAI</tag>
+        <tag>Codex</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>新时代挖矿：看看你的 Mac 一个月能赚多少钱</title>
     <url>/post/darkbloom-nodes-macbook-ai-mining-earnings.html</url>
     <content><![CDATA[<p>曾经，无数人为了比特币和以太坊疯狂囤积显卡，把家里变成轰鸣的矿场。随着传统加密货币 “显卡挖矿” 时代的逐渐降温，很多人以为用个人电脑赚取被动收入的日子已经结束了。然而，随着 AI 大模型时代的爆发，一种全新的 “挖矿” 模式正在悄然兴起——AI 节点推理算力共享。</p>
@@ -4880,6 +4880,23 @@
       </tags>
   </entry>
   <entry>
+    <title>解决 Antigravity 通过 SSH 连接远程服务器崩溃的问题</title>
+    <url>/post/fix-antigravity-ssh-remote-crash-problem.html</url>
+    <content><![CDATA[<h2 id="问题详情"><a href="#问题详情" class="headerlink" title="问题详情"></a>问题详情</h2><p>在使用 Google Antigravity 通过 SSH 连接运行在 <strong>PVE</strong> 的 <strong>Linux 虚拟机</strong> 时，会直接崩溃，报错信息如下：</p>
+<blockquote>
+<p>Antigravity server crashed unexpectedly. Please restart to fully restore AI features.</p>
+</blockquote>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>在 PVE 中将 Linux 虚拟机的 <strong>CPU 类型</strong> 设置为 <code>host</code>，再尝试连接就可以了。</p>
+<p>参考： <a href="https://discuss.ai.google.dev/t/antigravity-crashes-on-linux-but-works-on-windows/110355/3">Antigravity crashes on Linux, but works on Windows</a></p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>Antigravity</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>赛博特权阶级的诞生：从 Fable 5 白名单看 AI 非营利乌托邦的终结</title>
     <url>/post/fable-5-whitelist-new-privileged-class-ai-monopoly.html</url>
     <content><![CDATA[<p>2026 年夏天，科技界经历了一场 “AI大地震”。美国商务部的一纸出口管制令，让刚刚问世、霸榜各大模型基座的 Anthropic 旗舰模型 <strong>Claude Fable 5</strong> 与其底层孪生模型 Mythos 5 瞬间在全球范围内被按下了暂停键。紧接着，经过政商闭门博弈，部分 <strong>可信赖的实体</strong> 和特定白名单单位逐步重获访问特权。</p>
@@ -4923,23 +4940,6 @@
       </tags>
   </entry>
   <entry>
-    <title>解决 Antigravity 通过 SSH 连接远程服务器崩溃的问题</title>
-    <url>/post/fix-antigravity-ssh-remote-crash-problem.html</url>
-    <content><![CDATA[<h2 id="问题详情"><a href="#问题详情" class="headerlink" title="问题详情"></a>问题详情</h2><p>在使用 Google Antigravity 通过 SSH 连接运行在 <strong>PVE</strong> 的 <strong>Linux 虚拟机</strong> 时，会直接崩溃，报错信息如下：</p>
-<blockquote>
-<p>Antigravity server crashed unexpectedly. Please restart to fully restore AI features.</p>
-</blockquote>
-<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>在 PVE 中将 Linux 虚拟机的 <strong>CPU 类型</strong> 设置为 <code>host</code>，再尝试连接就可以了。</p>
-<p>参考： <a href="https://discuss.ai.google.dev/t/antigravity-crashes-on-linux-but-works-on-windows/110355/3">Antigravity crashes on Linux, but works on Windows</a></p>
-]]></content>
-      <categories>
-        <category>笔记</category>
-      </categories>
-      <tags>
-        <tag>Antigravity</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>解决 Electron 42 APP 初次运行 pnpm dev 报错的问题</title>
     <url>/post/fix-electron-42-app-cannot-run.html</url>
     <content><![CDATA[<h2 id="问题复现"><a href="#问题复现" class="headerlink" title="问题复现"></a>问题复现</h2><p>开发或是 Clone 一个 Electron 42 APP 时，安装完依赖后第一次运行 <code>pnpm dev</code> 你可能遇到 <code>Error: Electron uninstall</code> 的错误信息：</p>
@@ -4962,55 +4962,6 @@
       </categories>
       <tags>
         <tag>Electron</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>找回 Antigravity 代码编辑器(Antigravity IDE)</title>
-    <url>/post/get-antigravity-ide-back.html</url>
-    <content><![CDATA[<p>Google 在 Google I&#x2F;O 2026 上宣布了 Antigravity 迎来 2.0 版本重大更新，喊出 Agents 驱动的口号，实际效果却堪称灾难，额度暴降、用户配置丢失，直接展现出世界就是一个巨大的草台班子。</p>
-<p>不过目前 Google 已推出一系列补救措施：</p>
-<ul>
-<li>新版本增加数据导入提醒</li>
-<li>永久提升 <strong>9 倍</strong> 每周额度</li>
-</ul>
-<h2 id="找回-Antigravity-代码编辑器"><a href="#找回-Antigravity-代码编辑器" class="headerlink" title="找回 Antigravity 代码编辑器"></a>找回 Antigravity 代码编辑器</h2><p>很多用户更新后发现，熟悉的 Antigravity 代码编辑器不见了：再次打开 Antigravity，看到的却是一个更接近 Codex 形态的独立 Agent 应用。</p>
-<p>这并不是旧编辑器被直接移除，而是 Google 将原来的 Antigravity 编辑器更名为 <strong>Antigravity IDE</strong>，并和新版 Antigravity App 做了区分。因此，如果你想继续使用原来的代码编辑器体验，需要单独下载 Antigravity IDE。</p>
-<p>下载链接：<a href="https://antigravity.google/download#antigravity-ide">Download Google Antigravity IDE</a></p>
-<h2 id="Antigravity-旧版数据丢失问题"><a href="#Antigravity-旧版数据丢失问题" class="headerlink" title="Antigravity 旧版数据丢失问题"></a>Antigravity 旧版数据丢失问题</h2><p>Antigravity IDE 不只是更新了软件名称、软件包名、配置路径也一同进行了修改，但是初版居然没有做数据导入指引，导致用户打开新的 IDE 后，像是直接丢失了全部数据。</p>
-<p>目前版本打开后已增加了数据导入提醒，更新到新的版本再打开 Antigravity IDE 即可。</p>
-<h2 id="额度大降-补偿：周额度已永久增加-9-倍"><a href="#额度大降-补偿：周额度已永久增加-9-倍" class="headerlink" title="额度大降(补偿：周额度已永久增加 9 倍)"></a>额度大降(补偿：周额度已永久增加 9 倍)</h2><p>Antigravity 刚发布时额度是非常充足，后来不断降低额度，引入五小时限制、引入周限制，甚至直接高级模型移除五小时额度，额度一度降低到无法使用的程度。</p>
-<p>后续略有恢复，没想到在 Google I&#x2F;O 2026 大型更新时，月费 20 美元的 AI Pro 用户的额度居然只有免费额度的 4 倍：</p>
-<p><img src="https://img.nep.me/ooo/ai-pro-quota-4x.webp" alt="ai-pro-quota-4x.png"></p>
-<p>甚至还取消了套餐内赠送的 AI 点数，对此 Google 解释：</p>
-<blockquote>
-<p>但在我们即将推出的新用量限额模式下，您的使用体验应该不会受到影响。</p>
-</blockquote>
-<p>然而实际情况却基本难以适应，社区反馈非常负面。</p>
-<p>对此，Google 终于也坐不住了，连续两次宣布每周额度永久增加 3 倍，重置每周限额，相比最初限制，现在每周额度已增加九倍，也说明了一开始的额度限制有多么离谱。</p>
-<p>对此 Google CEO <strong>Sundar Pichai</strong> 也不得不发 <a href="https://x.com/sundarpichai/status/2057658091831996593">推文</a> 声明。 </p>
-<blockquote>
-<p>Excited to see what you are building with Antigravity, We just 3xed the Antigravity limits again, but this time, the weekly quotas. Don’t stop building!<br>– 下午12:01 · 2026年5月22日</p>
-</blockquote>
-<p>3 x 3 &#x3D; 9 倍叠加提升已得到开发团队确认。</p>
-<img src="https://img.nep.me/ooo/agy-3x3.webp" style="width:50%;" alt="agy-3x3.png" />
-
-<blockquote>
-<p>Varun Mohan <a href="https://x.com/_mohansolo">@_mohansolo@X.com</a> building <strong>@antigravity</strong> <strong>@GoogleDeepMind</strong></p>
-</blockquote>
-<p>不过目前规则下的额度与 Gemini APP 共享。</p>
-<h2 id="新版本优势"><a href="#新版本优势" class="headerlink" title="新版本优势"></a>新版本优势</h2><p>虽然这次更新带来了不少糟糕的体验，但并不是所有变化都对用户不利，Google 也确实加入了一些值得关注的新能力和套餐权益。</p>
-<h3 id="更快的-Gemini-3-5-Flash"><a href="#更快的-Gemini-3-5-Flash" class="headerlink" title="更快的 Gemini 3.5 Flash"></a>更快的 Gemini 3.5 Flash</h3><p>超快的 Gemini 3.5 Flash，Antigravity 在 Gemini 3.5 Flash 4x 基础上进行专项优化，让输出速度提升至 12x ，不过这是 <a href="https://antigravity.google/blog/gemini-3-5-flash-in-google-antigravity">限时体验</a>。</p>
-<h3 id="YouTube-Lite-加入套餐权益"><a href="#YouTube-Lite-加入套餐权益" class="headerlink" title="YouTube Lite 加入套餐权益"></a>YouTube Lite 加入套餐权益</h3><p>每月 20 美元的 AI Pro 套餐用户将获得 YouTube Lite 会员，可以免除广告: <a href="https://support.google.com/googleone/answer/17101453">Get YouTube Premium Lite with Google AI Pro</a></p>
-<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>Antigravity 2.0 这次更新最大的问题，不是产品方向从 IDE 走向 Agent，而是迁移过程过于粗糙：旧编辑器入口突然变化、配置数据没有平滑继承、额度规则也在关键发布节点大幅收紧。</p>
-<p>好在 Google 的补救来得还算及时，Antigravity IDE 已经重新明确入口，旧数据导入也补上了提醒，每周额度更是连续提升到原来的 9 倍。对于已经被这次更新折腾到的用户来说，现在最直接的处理方式就是重新下载 Antigravity IDE，并升级到最新版。</p>
-<p>至于 Antigravity 2.0 本身能不能撑起 Google 所说的 Agents 驱动体验，还要看后续稳定性、额度政策和真实开发体验能不能跟上。至少这次事件已经说明再先进的 AI 产品，也不能把基础迁移和用户信任当成小问题。</p>
-]]></content>
-      <categories>
-        <category>教程</category>
-      </categories>
-      <tags>
-        <tag>Antigravity</tag>
-        <tag>Antigravity IDE</tag>
       </tags>
   </entry>
   <entry>
@@ -5340,8 +5291,8 @@
       <tags>
         <tag>AI</tag>
         <tag>Antigravity</tag>
-        <tag>Antigravity IDE</tag>
         <tag>Google</tag>
+        <tag>Antigravity IDE</tag>
       </tags>
   </entry>
   <entry>
@@ -5403,6 +5354,55 @@
         <tag>Google</tag>
         <tag>Google Cloud</tag>
         <tag>Gemini</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>找回 Antigravity 代码编辑器(Antigravity IDE)</title>
+    <url>/post/get-antigravity-ide-back.html</url>
+    <content><![CDATA[<p>Google 在 Google I&#x2F;O 2026 上宣布了 Antigravity 迎来 2.0 版本重大更新，喊出 Agents 驱动的口号，实际效果却堪称灾难，额度暴降、用户配置丢失，直接展现出世界就是一个巨大的草台班子。</p>
+<p>不过目前 Google 已推出一系列补救措施：</p>
+<ul>
+<li>新版本增加数据导入提醒</li>
+<li>永久提升 <strong>9 倍</strong> 每周额度</li>
+</ul>
+<h2 id="找回-Antigravity-代码编辑器"><a href="#找回-Antigravity-代码编辑器" class="headerlink" title="找回 Antigravity 代码编辑器"></a>找回 Antigravity 代码编辑器</h2><p>很多用户更新后发现，熟悉的 Antigravity 代码编辑器不见了：再次打开 Antigravity，看到的却是一个更接近 Codex 形态的独立 Agent 应用。</p>
+<p>这并不是旧编辑器被直接移除，而是 Google 将原来的 Antigravity 编辑器更名为 <strong>Antigravity IDE</strong>，并和新版 Antigravity App 做了区分。因此，如果你想继续使用原来的代码编辑器体验，需要单独下载 Antigravity IDE。</p>
+<p>下载链接：<a href="https://antigravity.google/download#antigravity-ide">Download Google Antigravity IDE</a></p>
+<h2 id="Antigravity-旧版数据丢失问题"><a href="#Antigravity-旧版数据丢失问题" class="headerlink" title="Antigravity 旧版数据丢失问题"></a>Antigravity 旧版数据丢失问题</h2><p>Antigravity IDE 不只是更新了软件名称、软件包名、配置路径也一同进行了修改，但是初版居然没有做数据导入指引，导致用户打开新的 IDE 后，像是直接丢失了全部数据。</p>
+<p>目前版本打开后已增加了数据导入提醒，更新到新的版本再打开 Antigravity IDE 即可。</p>
+<h2 id="额度大降-补偿：周额度已永久增加-9-倍"><a href="#额度大降-补偿：周额度已永久增加-9-倍" class="headerlink" title="额度大降(补偿：周额度已永久增加 9 倍)"></a>额度大降(补偿：周额度已永久增加 9 倍)</h2><p>Antigravity 刚发布时额度是非常充足，后来不断降低额度，引入五小时限制、引入周限制，甚至直接高级模型移除五小时额度，额度一度降低到无法使用的程度。</p>
+<p>后续略有恢复，没想到在 Google I&#x2F;O 2026 大型更新时，月费 20 美元的 AI Pro 用户的额度居然只有免费额度的 4 倍：</p>
+<p><img src="https://img.nep.me/ooo/ai-pro-quota-4x.webp" alt="ai-pro-quota-4x.png"></p>
+<p>甚至还取消了套餐内赠送的 AI 点数，对此 Google 解释：</p>
+<blockquote>
+<p>但在我们即将推出的新用量限额模式下，您的使用体验应该不会受到影响。</p>
+</blockquote>
+<p>然而实际情况却基本难以适应，社区反馈非常负面。</p>
+<p>对此，Google 终于也坐不住了，连续两次宣布每周额度永久增加 3 倍，重置每周限额，相比最初限制，现在每周额度已增加九倍，也说明了一开始的额度限制有多么离谱。</p>
+<p>对此 Google CEO <strong>Sundar Pichai</strong> 也不得不发 <a href="https://x.com/sundarpichai/status/2057658091831996593">推文</a> 声明。 </p>
+<blockquote>
+<p>Excited to see what you are building with Antigravity, We just 3xed the Antigravity limits again, but this time, the weekly quotas. Don’t stop building!<br>– 下午12:01 · 2026年5月22日</p>
+</blockquote>
+<p>3 x 3 &#x3D; 9 倍叠加提升已得到开发团队确认。</p>
+<img src="https://img.nep.me/ooo/agy-3x3.webp" style="width:50%;" alt="agy-3x3.png" />
+
+<blockquote>
+<p>Varun Mohan <a href="https://x.com/_mohansolo">@_mohansolo@X.com</a> building <strong>@antigravity</strong> <strong>@GoogleDeepMind</strong></p>
+</blockquote>
+<p>不过目前规则下的额度与 Gemini APP 共享。</p>
+<h2 id="新版本优势"><a href="#新版本优势" class="headerlink" title="新版本优势"></a>新版本优势</h2><p>虽然这次更新带来了不少糟糕的体验，但并不是所有变化都对用户不利，Google 也确实加入了一些值得关注的新能力和套餐权益。</p>
+<h3 id="更快的-Gemini-3-5-Flash"><a href="#更快的-Gemini-3-5-Flash" class="headerlink" title="更快的 Gemini 3.5 Flash"></a>更快的 Gemini 3.5 Flash</h3><p>超快的 Gemini 3.5 Flash，Antigravity 在 Gemini 3.5 Flash 4x 基础上进行专项优化，让输出速度提升至 12x ，不过这是 <a href="https://antigravity.google/blog/gemini-3-5-flash-in-google-antigravity">限时体验</a>。</p>
+<h3 id="YouTube-Lite-加入套餐权益"><a href="#YouTube-Lite-加入套餐权益" class="headerlink" title="YouTube Lite 加入套餐权益"></a>YouTube Lite 加入套餐权益</h3><p>每月 20 美元的 AI Pro 套餐用户将获得 YouTube Lite 会员，可以免除广告: <a href="https://support.google.com/googleone/answer/17101453">Get YouTube Premium Lite with Google AI Pro</a></p>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>Antigravity 2.0 这次更新最大的问题，不是产品方向从 IDE 走向 Agent，而是迁移过程过于粗糙：旧编辑器入口突然变化、配置数据没有平滑继承、额度规则也在关键发布节点大幅收紧。</p>
+<p>好在 Google 的补救来得还算及时，Antigravity IDE 已经重新明确入口，旧数据导入也补上了提醒，每周额度更是连续提升到原来的 9 倍。对于已经被这次更新折腾到的用户来说，现在最直接的处理方式就是重新下载 Antigravity IDE，并升级到最新版。</p>
+<p>至于 Antigravity 2.0 本身能不能撑起 Google 所说的 Agents 驱动体验，还要看后续稳定性、额度政策和真实开发体验能不能跟上。至少这次事件已经说明再先进的 AI 产品，也不能把基础迁移和用户信任当成小问题。</p>
+]]></content>
+      <categories>
+        <category>教程</category>
+      </categories>
+      <tags>
+        <tag>Antigravity</tag>
+        <tag>Antigravity IDE</tag>
       </tags>
   </entry>
   <entry>
@@ -5489,34 +5489,6 @@
       </tags>
   </entry>
   <entry>
-    <title>如何查询 Codex 赠送的重置机会的到期日期</title>
-    <url>/post/how-to-check-codex-reset-expiration.html</url>
-    <content><![CDATA[<p>2026 年 6 月份 Codex 的重置机制改为了可以存储的重置机会，并且由于一些 BUG 6 月份已经赠送了三次免费的重置机会，如通过邀请好友也可以额外获得最多三次的重置机会。不过重置此物不能无限期保存，每个重置次数只有 30 天的有效期，而 Codex 界面里不会显示每次重置机会的具体到期日期。</p>
-<p>下面给大家提供一个简单的查询方法</p>
-<h2 id="直接让-Codex-自己查询"><a href="#直接让-Codex-自己查询" class="headerlink" title="直接让 Codex 自己查询"></a>直接让 Codex 自己查询</h2><p>方法非常简单，只需要把下面的 <strong>提示词</strong> 发送给 Codex，让它使用本机凭证自行查询即可。</p>
-<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">请使用本机 Codex 凭证查一下 rate-limit reset credits：</span><br><span class="line"></span><br><span class="line">读取 `~/.codex/auth.json` 里的 `tokens.access_token`，请求接口：</span><br><span class="line">https://chatgpt.com/backend-api/wham/rate-limit-reset-credits</span><br><span class="line"></span><br><span class="line">要求：</span><br><span class="line"></span><br><span class="line">1. 不要打印 access_token、refresh_token、cookie 或完整唯一 ID</span><br><span class="line">2. 只汇总 available_count、每个 credit 的 status/title/granted_at/expires_at</span><br><span class="line">3. 把 granted_at/expires_at 从 UTC 转成本地时间</span><br><span class="line">4. 如果状态码返回 401，说明是凭证失效或没带对 Authorization header</span><br></pre></td></tr></table></figure>
-
-<details class="flatpaper-note flatpaper-note--info"><summary class="flatpaper-note__title"><span class="flatpaper-note__icon" aria-hidden="true"></span><span class="flatpaper-note__label">回复示例</span><span class="flatpaper-note__chevron" aria-hidden="true"></span></summary><div class="flatpaper-note__body"><p>6 月份共赠送三次，我已经用掉了一次，所以显示还剩两次。</p>
-<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">请求成功，状态码 200。</span><br><span class="line">available_count: 2</span><br><span class="line">Credits:</span><br><span class="line">1. status: available</span><br><span class="line">    title: Full reset (Weekly + 5 hr)</span><br><span class="line">    granted_at: 2026-06-18 08:42:00 </span><br><span class="line">    expires_at: 2026-07-18 08:42:00 </span><br><span class="line"></span><br><span class="line">2. status: available</span><br><span class="line">    title: Full reset (Weekly + 5 hr)</span><br><span class="line">    granted_at: 2026-06-27 07:52:00 </span><br><span class="line">    expires_at: 2026-07-27 07:52:00 </span><br></pre></td></tr></table></figure></div></details>
-
-<h2 id="OpenAI-赠送的重置记录"><a href="#OpenAI-赠送的重置记录" class="headerlink" title="OpenAI 赠送的重置记录"></a>OpenAI 赠送的重置记录</h2><h3 id="6-月份共赠送四次"><a href="#6-月份共赠送四次" class="headerlink" title="6 月份共赠送四次"></a>6 月份共赠送四次</h3><ol>
-<li>推出重置保存机制时赠送：2026 年 6 月 12 日，到期日期为 <strong>7 月 12 日</strong></li>
-<li>BUG 赠送：2026 年 6 月 18 日，到期日期 <strong>7 月 18 日</strong></li>
-<li>BUG 赠送：2026 年 6 月 27 日，到期日期 <strong>7 月 27 日</strong></li>
-<li>BUG 赠送：2026 年 6 月 30 日，到期日期 <strong>7 月 30 日</strong></li>
-</ol>
-<p>我在 6 月 29 日的查询结果与记录一致，如果你有 X.com 账户，查看 <a href="https://x.com/thsottiaux/status/2071740419030053227">Tibo</a> 的推文获取最新 Codex 更新消息。</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>快看看你的重置机会什么时候到期吧。Plus 用户每周额度价值大约 100 美元，千万不要浪费了。</p>
-]]></content>
-      <categories>
-        <category>笔记</category>
-      </categories>
-      <tags>
-        <tag>OpenAI</tag>
-        <tag>Codex</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>如何查看 Antigravity 模型额度与 Google AI Credits 剩余情况</title>
     <url>/post/how-to-check-google-ai-credits.html</url>
     <content><![CDATA[<div class="flatpaper-note flatpaper-note--danger"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>重大更新： 2026 年 5 月 20 日， Google I&#x2F;O 2026 后， 套餐内不再赠送 AI 点数。</p></div></div>
@@ -5556,6 +5528,34 @@
       </categories>
       <tags>
         <tag>Google</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>如何查询 Codex 赠送的重置机会的到期日期</title>
+    <url>/post/how-to-check-codex-reset-expiration.html</url>
+    <content><![CDATA[<p>2026 年 6 月份 Codex 的重置机制改为了可以存储的重置机会，并且由于一些 BUG 6 月份已经赠送了三次免费的重置机会，如通过邀请好友也可以额外获得最多三次的重置机会。不过重置此物不能无限期保存，每个重置次数只有 30 天的有效期，而 Codex 界面里不会显示每次重置机会的具体到期日期。</p>
+<p>下面给大家提供一个简单的查询方法</p>
+<h2 id="直接让-Codex-自己查询"><a href="#直接让-Codex-自己查询" class="headerlink" title="直接让 Codex 自己查询"></a>直接让 Codex 自己查询</h2><p>方法非常简单，只需要把下面的 <strong>提示词</strong> 发送给 Codex，让它使用本机凭证自行查询即可。</p>
+<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">请使用本机 Codex 凭证查一下 rate-limit reset credits：</span><br><span class="line"></span><br><span class="line">读取 `~/.codex/auth.json` 里的 `tokens.access_token`，请求接口：</span><br><span class="line">https://chatgpt.com/backend-api/wham/rate-limit-reset-credits</span><br><span class="line"></span><br><span class="line">要求：</span><br><span class="line"></span><br><span class="line">1. 不要打印 access_token、refresh_token、cookie 或完整唯一 ID</span><br><span class="line">2. 只汇总 available_count、每个 credit 的 status/title/granted_at/expires_at</span><br><span class="line">3. 把 granted_at/expires_at 从 UTC 转成本地时间</span><br><span class="line">4. 如果状态码返回 401，说明是凭证失效或没带对 Authorization header</span><br></pre></td></tr></table></figure>
+
+<details class="flatpaper-note flatpaper-note--info"><summary class="flatpaper-note__title"><span class="flatpaper-note__icon" aria-hidden="true"></span><span class="flatpaper-note__label">回复示例</span><span class="flatpaper-note__chevron" aria-hidden="true"></span></summary><div class="flatpaper-note__body"><p>6 月份共赠送三次，我已经用掉了一次，所以显示还剩两次。</p>
+<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">请求成功，状态码 200。</span><br><span class="line">available_count: 2</span><br><span class="line">Credits:</span><br><span class="line">1. status: available</span><br><span class="line">    title: Full reset (Weekly + 5 hr)</span><br><span class="line">    granted_at: 2026-06-18 08:42:00 </span><br><span class="line">    expires_at: 2026-07-18 08:42:00 </span><br><span class="line"></span><br><span class="line">2. status: available</span><br><span class="line">    title: Full reset (Weekly + 5 hr)</span><br><span class="line">    granted_at: 2026-06-27 07:52:00 </span><br><span class="line">    expires_at: 2026-07-27 07:52:00 </span><br></pre></td></tr></table></figure></div></details>
+
+<h2 id="OpenAI-赠送的重置记录"><a href="#OpenAI-赠送的重置记录" class="headerlink" title="OpenAI 赠送的重置记录"></a>OpenAI 赠送的重置记录</h2><h3 id="6-月份共赠送四次"><a href="#6-月份共赠送四次" class="headerlink" title="6 月份共赠送四次"></a>6 月份共赠送四次</h3><ol>
+<li>推出重置保存机制时赠送：2026 年 6 月 12 日，到期日期为 <strong>7 月 12 日</strong></li>
+<li>BUG 赠送：2026 年 6 月 18 日，到期日期 <strong>7 月 18 日</strong></li>
+<li>BUG 赠送：2026 年 6 月 27 日，到期日期 <strong>7 月 27 日</strong></li>
+<li>BUG 赠送：2026 年 6 月 30 日，到期日期 <strong>7 月 30 日</strong></li>
+</ol>
+<p>我在 6 月 29 日的查询结果与记录一致，如果你有 X.com 账户，查看 <a href="https://x.com/thsottiaux/status/2071740419030053227">Tibo</a> 的推文获取最新 Codex 更新消息。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>快看看你的重置机会什么时候到期吧。Plus 用户每周额度价值大约 100 美元，千万不要浪费了。</p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>OpenAI</tag>
+        <tag>Codex</tag>
       </tags>
   </entry>
   <entry>
@@ -6616,6 +6616,102 @@
       </tags>
   </entry>
   <entry>
+    <title>台北电脑展：Nvidia 发布面向 PC 的 RTX Spark CPU，信息一览</title>
+    <url>/post/nvidia-announce-rtx-spark.html</url>
+    <content><![CDATA[<p>2026 年 6 月 1 日，之前各大科技品牌官推的 <code>A new era of PC.</code> 谜底终于揭晓：</p>
+<p>NVIDIA 在台北的 Computex 2026 正式发布了面向 PC 的 RTX Spark SoC ，定位为 AI PC 平台，面向轻薄本、AI 开发、创意工作站和高端 Windows PC。</p>
+<h2 id="RTX-Spark-最新发布重点"><a href="#RTX-Spark-最新发布重点" class="headerlink" title="RTX Spark 最新发布重点"></a>RTX Spark 最新发布重点</h2><h3 id="参数信息"><a href="#参数信息" class="headerlink" title="参数信息"></a>参数信息</h3><table>
+<thead>
+<tr>
+<th align="center">项目</th>
+<th>规格</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong>CPU</strong></td>
+<td>Grace ARM，最高 <strong>20</strong> 核心</td>
+</tr>
+<tr>
+<td align="center"><strong>GPU</strong></td>
+<td>Blackwell RTX GPU， <strong>6144</strong> 个 CUDA Core</td>
+</tr>
+<tr>
+<td align="center">内存</td>
+<td>最高 <strong>128GB</strong> 统一内存</td>
+</tr>
+<tr>
+<td align="center">AI 算力</td>
+<td>1 PFLOPS（FP4）</td>
+</tr>
+<tr>
+<td align="center">产品定位</td>
+<td>AI PC &#x2F; 创意工作站 &#x2F; 高端 Windows PC</td>
+</tr>
+<tr>
+<td align="center">上市时间</td>
+<td>2026 年秋季</td>
+</tr>
+</tbody></table>
+<p>GPU 的 6144 个 CUDA Core 规格接近桌面级 <strong>Nvidia RTX 5070</strong>，官方宣称 <code>FP4</code> AI 算力达到 <strong>1 PFLOPS</strong>， 略高于 RTX 5070 的 AI 算力指标。</p>
+<h2 id="官方卖点"><a href="#官方卖点" class="headerlink" title="官方卖点"></a>官方卖点</h2><p>NVIDIA 宣称其是“史上能效最高的 PC 芯片”，发布会并未公布功耗信息，根据 <a href="https://giznewsdaily.com/nvidia-n1x-leak-reveals-limited-availability-in-2026/">泄漏信息</a>  显示 TDP 约为 65-120W。</p>
+<p>NVIDIA 强调的卖点：  </p>
+<ul>
+<li>本地运行 AI Agent</li>
+<li>本地推理保护隐私</li>
+<li>视频编辑、3D 渲染、AI 创作加速</li>
+<li>高性能但低功耗的轻薄本体验</li>
+</ul>
+<h2 id="产品信息"><a href="#产品信息" class="headerlink" title="产品信息"></a>产品信息</h2><p>微软、Dell、HP、Lenovo、ASUS 等厂商已宣布采用 RTX Spark 平台推出新的产品。</p>
+<p><img src="https://img.nep.me/ooo/rtx-spark-oem.webp" alt="rtx-spark-oem.jpeg"></p>
+<p>其中微软宣布 <a href="https://www.microsoft.com/en-us/surface/devices/surface-laptop-ultra/">Surface Laptop Ultra</a> 将在 2026 年秋季上市</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>RTX Spark 标志着在云端 AI 生成占据统治地位的 NVIDIA 正式进入面向个人 AI 的 PC SoC 市场。</p>
+<p>与传统 Windows PC 的 x86 + 独立显卡方案不同，RTX Spark 试图通过 ARM CPU、Blackwell GPU 与统一内存架构，打造类似 Apple Silicon 的高性能 AI PC 平台。</p>
+<p>如果 NVIDIA 能兑现其能效与 AI 性能承诺，RTX Spark 有望成为未来高端 Windows AI PC 的重要选择。</p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
+<li><a href="https://blogs.nvidia.cn/blog/nvidia-microsoft-windows-pcs-agents-rtx-spark/">NVIDIA 携手微软，在个人 AI 时代重塑 Windows PC</a></li>
+<li><a href="https://www.nvidia.cn/gtc/taipei/keynote/">NVIDIA GTC 台北 2026 主题演讲回放</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>资讯</category>
+      </categories>
+      <tags>
+        <tag>RTX</tag>
+        <tag>RTX Spark</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Open Lovable：一键『克隆』任意网站为 React 应用的神器</title>
+    <url>/post/open-lovable-clone-website-to-react.html</url>
+    <content><![CDATA[<p>最近在逛 GitHub 的时候，刷到了一个极其亮眼的项目——由 <strong>Firecrawl</strong>（前 MendableAI）团队开源的 <strong>Open Lovable</strong>。目前该项目在 GitHub 上已经狂飙到了 <strong>24k+ Star</strong>，可谓是前端开发者和原型设计师的效率杀手锏。</p>
+<p>简单来说，<strong>Open Lovable</strong> 的用法几乎是“零门槛”：你只需要把你想“复刻”的网站链接丢进去，它就能在几秒内为你生成一个高度还原的 <strong>React</strong> 版本代码。不管是页面布局、样式还是交互细节，它都会尽可能贴近原站，让你在拿来进行二次开发时倍感顺手。</p>
+<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p><strong>项目地址</strong>：<a href="http://github.com/mendableai/open-lovable">http://github.com/mendableai/open-lovable</a><br><strong>开源协议</strong>：MIT</p></div></div>
+
+<h2 id="核心亮点速览"><a href="#核心亮点速览" class="headerlink" title="核心亮点速览"></a>核心亮点速览</h2><p><strong>Open Lovable</strong> 之所以能迅速爆火，离不开它扎实且直击痛点的功能设计：</p>
+<h3 id="1-一键“克隆”，所见即所得"><a href="#1-一键“克隆”，所见即所得" class="headerlink" title="1. 一键“克隆”，所见即所得"></a>1. 一键“克隆”，所见即所得</h3><p>它可以一键把任意网站“克隆”为现代化的 <strong>React</strong> 应用。无论是简单的落地页还是结构复杂的页面，它都能顶住压力，快速生成对应的组件代码。并且支持本地调试与部署，生成的同时即可提供预览，做到真正的“所见即所得”。</p>
+<h3 id="2-底层抓取更稳：基于-Firecrawl"><a href="#2-底层抓取更稳：基于-Firecrawl" class="headerlink" title="2. 底层抓取更稳：基于 Firecrawl"></a>2. 底层抓取更稳：基于 Firecrawl</h3><p>市面上有不少类似的代码生成工具，但它们往往会在读取复杂网页结构时“翻车”。<strong>Open Lovable</strong> 背靠自家强大的 <strong>Firecrawl</strong> 网页抓取技术，能够精准提取原站的页面结构、DOM 树和清洗后的内容，这使得最终交由大模型生成的代码还原度更高、视觉表现更一致。</p>
+<h3 id="3-多模型随意切，不折腾"><a href="#3-多模型随意切，不折腾" class="headerlink" title="3. 多模型随意切，不折腾"></a>3. 多模型随意切，不折腾</h3><p>不想被单一的大模型绑定？没问题。项目内置了对多种主流 LLM 的支持，你可以根据自己的 API 额度或者偏好，无缝接入 <strong>OpenAI</strong>、<strong>Anthropic</strong>、<strong>Gemini</strong>、<strong>Grok</strong> 等多种模型，按需切换，丰俭由人。</p>
+<h3 id="4-集成-E2B-沙盒，运行更安全"><a href="#4-集成-E2B-沙盒，运行更安全" class="headerlink" title="4. 集成 E2B 沙盒，运行更安全"></a>4. 集成 E2B 沙盒，运行更安全</h3><p>生成的代码直接跑怕有风险？环境配置太麻烦？<strong>Open Lovable</strong> 贴心地集成了 <strong>E2B</strong> 沙盒环境。代码的运行与测试都可以在隔离的沙盒中完成，不仅安全防泄漏，也让整个测试流程更加省心。</p>
+<h2 id="上手体验"><a href="#上手体验" class="headerlink" title="上手体验"></a>上手体验</h2><p>由于采用了完全自由的 <strong>MIT 协议</strong>，这款工具完全开源且免费。你只需要：</p>
+<ol>
+<li>将项目拉取到本地。</li>
+<li>配置好相关的 API key（如你想使用的大模型 API 以及 Firecrawl 等对应的 Key）。</li>
+<li>直接开跑！</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/mendableai/open-lovable.git</span><br><span class="line"><span class="built_in">cd</span> open-lovable</span><br><span class="line">npm install</span><br><span class="line"><span class="comment"># 配置 .env 文件填入相应的 API Key</span></span><br><span class="line">npm run dev</span><br></pre></td></tr></table></figure>
+
+<p>如果你经常需要参考其他网站的优秀设计，或者需要快速构建高保真产品原型，<strong>Open Lovable</strong> 绝对值得你把它加入到生产力工具箱中！赶快拉取代码亲自体验一下吧！</p>
+]]></content>
+      <categories>
+        <category>工具资源</category>
+      </categories>
+      <tags>
+        <tag>AI</tag>
+        <tag>开源项目</tag>
+        <tag>前端开发</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Nginx 还是 Caddy？一篇写给实际运维者的对比指南</title>
     <url>/post/nginx-vs-caddy.html</url>
     <content><![CDATA[<p>如果你要给一个网站、API 或者一堆容器选一个反向代理 &#x2F; Web 服务器，2026 年的今天你大概率会在 Nginx 和 Caddy 之间犹豫。这篇文章不站队，而是从配置体验、HTTPS、性能、生态、扩展性几个维度把两者掰开讲清楚，最后给出明确的选型建议。</p>
@@ -6723,102 +6819,6 @@
       </tags>
   </entry>
   <entry>
-    <title>台北电脑展：Nvidia 发布面向 PC 的 RTX Spark CPU，信息一览</title>
-    <url>/post/nvidia-announce-rtx-spark.html</url>
-    <content><![CDATA[<p>2026 年 6 月 1 日，之前各大科技品牌官推的 <code>A new era of PC.</code> 谜底终于揭晓：</p>
-<p>NVIDIA 在台北的 Computex 2026 正式发布了面向 PC 的 RTX Spark SoC ，定位为 AI PC 平台，面向轻薄本、AI 开发、创意工作站和高端 Windows PC。</p>
-<h2 id="RTX-Spark-最新发布重点"><a href="#RTX-Spark-最新发布重点" class="headerlink" title="RTX Spark 最新发布重点"></a>RTX Spark 最新发布重点</h2><h3 id="参数信息"><a href="#参数信息" class="headerlink" title="参数信息"></a>参数信息</h3><table>
-<thead>
-<tr>
-<th align="center">项目</th>
-<th>规格</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center"><strong>CPU</strong></td>
-<td>Grace ARM，最高 <strong>20</strong> 核心</td>
-</tr>
-<tr>
-<td align="center"><strong>GPU</strong></td>
-<td>Blackwell RTX GPU， <strong>6144</strong> 个 CUDA Core</td>
-</tr>
-<tr>
-<td align="center">内存</td>
-<td>最高 <strong>128GB</strong> 统一内存</td>
-</tr>
-<tr>
-<td align="center">AI 算力</td>
-<td>1 PFLOPS（FP4）</td>
-</tr>
-<tr>
-<td align="center">产品定位</td>
-<td>AI PC &#x2F; 创意工作站 &#x2F; 高端 Windows PC</td>
-</tr>
-<tr>
-<td align="center">上市时间</td>
-<td>2026 年秋季</td>
-</tr>
-</tbody></table>
-<p>GPU 的 6144 个 CUDA Core 规格接近桌面级 <strong>Nvidia RTX 5070</strong>，官方宣称 <code>FP4</code> AI 算力达到 <strong>1 PFLOPS</strong>， 略高于 RTX 5070 的 AI 算力指标。</p>
-<h2 id="官方卖点"><a href="#官方卖点" class="headerlink" title="官方卖点"></a>官方卖点</h2><p>NVIDIA 宣称其是“史上能效最高的 PC 芯片”，发布会并未公布功耗信息，根据 <a href="https://giznewsdaily.com/nvidia-n1x-leak-reveals-limited-availability-in-2026/">泄漏信息</a>  显示 TDP 约为 65-120W。</p>
-<p>NVIDIA 强调的卖点：  </p>
-<ul>
-<li>本地运行 AI Agent</li>
-<li>本地推理保护隐私</li>
-<li>视频编辑、3D 渲染、AI 创作加速</li>
-<li>高性能但低功耗的轻薄本体验</li>
-</ul>
-<h2 id="产品信息"><a href="#产品信息" class="headerlink" title="产品信息"></a>产品信息</h2><p>微软、Dell、HP、Lenovo、ASUS 等厂商已宣布采用 RTX Spark 平台推出新的产品。</p>
-<p><img src="https://img.nep.me/ooo/rtx-spark-oem.webp" alt="rtx-spark-oem.jpeg"></p>
-<p>其中微软宣布 <a href="https://www.microsoft.com/en-us/surface/devices/surface-laptop-ultra/">Surface Laptop Ultra</a> 将在 2026 年秋季上市</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>RTX Spark 标志着在云端 AI 生成占据统治地位的 NVIDIA 正式进入面向个人 AI 的 PC SoC 市场。</p>
-<p>与传统 Windows PC 的 x86 + 独立显卡方案不同，RTX Spark 试图通过 ARM CPU、Blackwell GPU 与统一内存架构，打造类似 Apple Silicon 的高性能 AI PC 平台。</p>
-<p>如果 NVIDIA 能兑现其能效与 AI 性能承诺，RTX Spark 有望成为未来高端 Windows AI PC 的重要选择。</p>
-<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
-<li><a href="https://blogs.nvidia.cn/blog/nvidia-microsoft-windows-pcs-agents-rtx-spark/">NVIDIA 携手微软，在个人 AI 时代重塑 Windows PC</a></li>
-<li><a href="https://www.nvidia.cn/gtc/taipei/keynote/">NVIDIA GTC 台北 2026 主题演讲回放</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>资讯</category>
-      </categories>
-      <tags>
-        <tag>RTX</tag>
-        <tag>RTX Spark</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Open Lovable：一键『克隆』任意网站为 React 应用的神器</title>
-    <url>/post/open-lovable-clone-website-to-react.html</url>
-    <content><![CDATA[<p>最近在逛 GitHub 的时候，刷到了一个极其亮眼的项目——由 <strong>Firecrawl</strong>（前 MendableAI）团队开源的 <strong>Open Lovable</strong>。目前该项目在 GitHub 上已经狂飙到了 <strong>24k+ Star</strong>，可谓是前端开发者和原型设计师的效率杀手锏。</p>
-<p>简单来说，<strong>Open Lovable</strong> 的用法几乎是“零门槛”：你只需要把你想“复刻”的网站链接丢进去，它就能在几秒内为你生成一个高度还原的 <strong>React</strong> 版本代码。不管是页面布局、样式还是交互细节，它都会尽可能贴近原站，让你在拿来进行二次开发时倍感顺手。</p>
-<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p><strong>项目地址</strong>：<a href="http://github.com/mendableai/open-lovable">http://github.com/mendableai/open-lovable</a><br><strong>开源协议</strong>：MIT</p></div></div>
-
-<h2 id="核心亮点速览"><a href="#核心亮点速览" class="headerlink" title="核心亮点速览"></a>核心亮点速览</h2><p><strong>Open Lovable</strong> 之所以能迅速爆火，离不开它扎实且直击痛点的功能设计：</p>
-<h3 id="1-一键“克隆”，所见即所得"><a href="#1-一键“克隆”，所见即所得" class="headerlink" title="1. 一键“克隆”，所见即所得"></a>1. 一键“克隆”，所见即所得</h3><p>它可以一键把任意网站“克隆”为现代化的 <strong>React</strong> 应用。无论是简单的落地页还是结构复杂的页面，它都能顶住压力，快速生成对应的组件代码。并且支持本地调试与部署，生成的同时即可提供预览，做到真正的“所见即所得”。</p>
-<h3 id="2-底层抓取更稳：基于-Firecrawl"><a href="#2-底层抓取更稳：基于-Firecrawl" class="headerlink" title="2. 底层抓取更稳：基于 Firecrawl"></a>2. 底层抓取更稳：基于 Firecrawl</h3><p>市面上有不少类似的代码生成工具，但它们往往会在读取复杂网页结构时“翻车”。<strong>Open Lovable</strong> 背靠自家强大的 <strong>Firecrawl</strong> 网页抓取技术，能够精准提取原站的页面结构、DOM 树和清洗后的内容，这使得最终交由大模型生成的代码还原度更高、视觉表现更一致。</p>
-<h3 id="3-多模型随意切，不折腾"><a href="#3-多模型随意切，不折腾" class="headerlink" title="3. 多模型随意切，不折腾"></a>3. 多模型随意切，不折腾</h3><p>不想被单一的大模型绑定？没问题。项目内置了对多种主流 LLM 的支持，你可以根据自己的 API 额度或者偏好，无缝接入 <strong>OpenAI</strong>、<strong>Anthropic</strong>、<strong>Gemini</strong>、<strong>Grok</strong> 等多种模型，按需切换，丰俭由人。</p>
-<h3 id="4-集成-E2B-沙盒，运行更安全"><a href="#4-集成-E2B-沙盒，运行更安全" class="headerlink" title="4. 集成 E2B 沙盒，运行更安全"></a>4. 集成 E2B 沙盒，运行更安全</h3><p>生成的代码直接跑怕有风险？环境配置太麻烦？<strong>Open Lovable</strong> 贴心地集成了 <strong>E2B</strong> 沙盒环境。代码的运行与测试都可以在隔离的沙盒中完成，不仅安全防泄漏，也让整个测试流程更加省心。</p>
-<h2 id="上手体验"><a href="#上手体验" class="headerlink" title="上手体验"></a>上手体验</h2><p>由于采用了完全自由的 <strong>MIT 协议</strong>，这款工具完全开源且免费。你只需要：</p>
-<ol>
-<li>将项目拉取到本地。</li>
-<li>配置好相关的 API key（如你想使用的大模型 API 以及 Firecrawl 等对应的 Key）。</li>
-<li>直接开跑！</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/mendableai/open-lovable.git</span><br><span class="line"><span class="built_in">cd</span> open-lovable</span><br><span class="line">npm install</span><br><span class="line"><span class="comment"># 配置 .env 文件填入相应的 API Key</span></span><br><span class="line">npm run dev</span><br></pre></td></tr></table></figure>
-
-<p>如果你经常需要参考其他网站的优秀设计，或者需要快速构建高保真产品原型，<strong>Open Lovable</strong> 绝对值得你把它加入到生产力工具箱中！赶快拉取代码亲自体验一下吧！</p>
-]]></content>
-      <categories>
-        <category>工具资源</category>
-      </categories>
-      <tags>
-        <tag>AI</tag>
-        <tag>开源项目</tag>
-        <tag>前端开发</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>OpenAI 发布 GPT-5.6 系列模型：Sol、Terra 和 Luna 开启有限预览，受美国政府要求限制初始访问</title>
     <url>/post/openai-gpt-5-6-limited-preview.html</url>
     <content><![CDATA[<p><strong>日期：美国时间 2026年6月26日</strong></p>
@@ -6844,49 +6844,6 @@
         <tag>OpenAI</tag>
         <tag>ChatGPT</tag>
         <tag>GPT-5.6</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>OpenAI 发布桌面版 Codex App ：开启 “AI 智能体” 指挥中心时代</title>
-    <url>/post/openai-release-codex-app.html</url>
-    <content><![CDATA[<p>OpenAI 正式 <a href="https://openai.com/index/introducing-the-codex-app/">宣布</a> 推出全新的 <a href="https://openai.com/zh-Hans-CN/codex/get-started/">Codex App</a>。这不仅仅是一个简单的聊天窗口，而是一个专为构建、管理和调度 AI Agents（智能体） 设计的强力“指挥中心”。</p>
-<p>目前，该应用已率先登陆 macOS 平台，Windows 版本也正在准备中。</p>
-<h2 id="核心功能：让-AI-深度介入工作流"><a href="#核心功能：让-AI-深度介入工作流" class="headerlink" title="核心功能：让 AI 深度介入工作流"></a>核心功能：让 AI 深度介入工作流</h2><p>Codex App 的推出标志着 OpenAI 从“对话式 AI”向“协作式&#x2F;自动化 AI”的重大跨越。其核心亮点包括：</p>
-<ul>
-<li><p><strong>多任务并行（Multitask Effortlessly）</strong>：<br>用户可以同时运行多个智能体处理不同任务。通过 Worktrees（工作树） 机制，系统能确保不同智能体所做的更改相互隔离，互不干扰，像管理代码分支一样管理 AI 的产出。</p>
-</li>
-<li><p><strong>技能封装（Create &amp; Use Skills）</strong>：<br>用户可以将特定的工具组合与操作规范打包成通用的 Skills 。这些 Skill 可以被重复调用，赋予智能体更强的专业执行力，Codex APP 安装后即内置了很多 Skill，可以做到开箱即用。<br><img src="https://img.nep.me/i/2026/02/codex-app-skills.png" alt="codex-app-skills.png"></p>
-</li>
-<li><p><strong>后台自动化（Set up Automations）</strong>：<br>通过设置定时工作流（Scheduled Workflows），用户可以将重复性的繁琐工作完全委托给 Codex。即使在后台，智能体也能根据预设逻辑自主完成任务。<br><img src="https://img.nep.me/i/2026/02/codex-app-automations.png" alt="codex-app-automations.png"></p>
-</li>
-</ul>
-<h2 id="发布福利：限时免费与额度翻倍"><a href="#发布福利：限时免费与额度翻倍" class="headerlink" title="发布福利：限时免费与额度翻倍"></a>发布福利：限时免费与额度翻倍</h2><p>为了庆祝 Codex App 的上线，OpenAI 首席执行官 Sam Altman 宣布了为期 2 个月 的重磅福利政策：</p>
-<ul>
-<li><strong>门槛降低</strong>： 免费用户（Free）及入门级用户（Go）在未来两个月内也可获得使用权限，体验最新的智能体构建功能。</li>
-<li><strong>付费用户额度翻倍</strong>： 所有付费订阅用户（Plus、Pro）的 Rate Limits（速率限制&#x2F;额度）直接翻倍。</li>
-</ul>
-<blockquote>
-<p>To celebrate the launch of the Codex app, we doubled all rate limits for paid plans for 2 months!<br>And added access for free&#x2F;go.<br>— <a href="https://x.com/sama/status/2018437537103269909">@Sam Altman</a></p>
-</blockquote>
-<h2 id="下载地址"><a href="#下载地址" class="headerlink" title="下载地址"></a>下载地址</h2><p>访问 <a href="https://openai.com/zh-Hans-CN/codex/get-started/">https://openai.com/zh-Hans-CN/codex/get-started/</a> 即可获取。</p>
-<h2 id="支持模型"><a href="#支持模型" class="headerlink" title="支持模型"></a>支持模型</h2><p>目前 Codex APP 中支持 GPT 5.2 与 GPT 5.2-Codex 模型，都包含 Medium、High、Extra High 等各种模式。<br><img src="https://img.nep.me/i/2026/02/codex-app-model-lists.png" style="width:25%;" alt="codex-app-model-lists.png" /></p>
-<h2 id="与-Codex-Web-联动"><a href="#与-Codex-Web-联动" class="headerlink" title="与 Codex Web 联动"></a>与 Codex Web 联动</h2><p>如果打开 Github 的项目，Codex APP 可以与 Codex Web 联动，选择在云端执行任务。<br><img src="https://img.nep.me/i/2026/02/codex-app-runtype.png" style="width:75%;" alt="codex-app-runtype.png" /></p>
-<h2 id="Codex-生态：全场景的-AI-开发闭环"><a href="#Codex-生态：全场景的-AI-开发闭环" class="headerlink" title="Codex 生态：全场景的 AI 开发闭环"></a>Codex 生态：全场景的 AI 开发闭环</h2><p>随着桌面版的发布，OpenAI 终于补齐了最后一块拼图，构建起了一个覆盖云端、终端与桌面的全方位 AI 开发生态。无论你的工作习惯如何，Codex 都能无缝融入：</p>
-<ul>
-<li><strong>Codex Web (ChatGPT)</strong> —— 随时随地的云端协作 深度集成于 ChatGPT 网页端与 App 中。连接 GitHub 后，无需配置任何本地环境，即可直接读取仓库、审查代码或提交轻量级修改。非常适合 Code Review 或快速修复 Bug。</li>
-<li><strong>Codex CLI</strong> —— 极客的终端利器 专为开发者打造的命令行工具。将 AI 注入终端，让你无需离开熟悉的 Shell 环境，仅凭自然语言指令即可完成代码生成、文件编辑和脚本执行，完美契合现有的命令行工作流。</li>
-<li><strong>Codex App</strong> —— 终极“指挥中心” 生态的核心枢纽。作为功能最完整的桌面客户端，它不仅拥有最强的本地读写权限，更是调度多智能体（Agents）并行协作、运行后台自动化任务的“总控台”，专门应对复杂的工程级挑战。</li>
-</ul>
-<p>Codex Web 与 Codex CLI 仍然是代码编写工具，Codex App 作为易用的 GUI 客户端，凭借 Agent Skill 加持，生态不再仅仅是辅助写代码的 Copilot，而是扩展到通用领域，致力于成为能听懂意图、自动执行、全天候待命的“硅基合伙人”，并且也让更多的人可以体验使用到 AI Agents。</p>
-]]></content>
-      <categories>
-        <category>资讯</category>
-      </categories>
-      <tags>
-        <tag>AI</tag>
-        <tag>OpenAI</tag>
-        <tag>Codex</tag>
-        <tag>Codex APP</tag>
       </tags>
   </entry>
   <entry>
@@ -6945,6 +6902,49 @@
         <tag>GitHub</tag>
         <tag>开源项目</tag>
         <tag>Three.js</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>OpenAI 发布桌面版 Codex App ：开启 “AI 智能体” 指挥中心时代</title>
+    <url>/post/openai-release-codex-app.html</url>
+    <content><![CDATA[<p>OpenAI 正式 <a href="https://openai.com/index/introducing-the-codex-app/">宣布</a> 推出全新的 <a href="https://openai.com/zh-Hans-CN/codex/get-started/">Codex App</a>。这不仅仅是一个简单的聊天窗口，而是一个专为构建、管理和调度 AI Agents（智能体） 设计的强力“指挥中心”。</p>
+<p>目前，该应用已率先登陆 macOS 平台，Windows 版本也正在准备中。</p>
+<h2 id="核心功能：让-AI-深度介入工作流"><a href="#核心功能：让-AI-深度介入工作流" class="headerlink" title="核心功能：让 AI 深度介入工作流"></a>核心功能：让 AI 深度介入工作流</h2><p>Codex App 的推出标志着 OpenAI 从“对话式 AI”向“协作式&#x2F;自动化 AI”的重大跨越。其核心亮点包括：</p>
+<ul>
+<li><p><strong>多任务并行（Multitask Effortlessly）</strong>：<br>用户可以同时运行多个智能体处理不同任务。通过 Worktrees（工作树） 机制，系统能确保不同智能体所做的更改相互隔离，互不干扰，像管理代码分支一样管理 AI 的产出。</p>
+</li>
+<li><p><strong>技能封装（Create &amp; Use Skills）</strong>：<br>用户可以将特定的工具组合与操作规范打包成通用的 Skills 。这些 Skill 可以被重复调用，赋予智能体更强的专业执行力，Codex APP 安装后即内置了很多 Skill，可以做到开箱即用。<br><img src="https://img.nep.me/i/2026/02/codex-app-skills.png" alt="codex-app-skills.png"></p>
+</li>
+<li><p><strong>后台自动化（Set up Automations）</strong>：<br>通过设置定时工作流（Scheduled Workflows），用户可以将重复性的繁琐工作完全委托给 Codex。即使在后台，智能体也能根据预设逻辑自主完成任务。<br><img src="https://img.nep.me/i/2026/02/codex-app-automations.png" alt="codex-app-automations.png"></p>
+</li>
+</ul>
+<h2 id="发布福利：限时免费与额度翻倍"><a href="#发布福利：限时免费与额度翻倍" class="headerlink" title="发布福利：限时免费与额度翻倍"></a>发布福利：限时免费与额度翻倍</h2><p>为了庆祝 Codex App 的上线，OpenAI 首席执行官 Sam Altman 宣布了为期 2 个月 的重磅福利政策：</p>
+<ul>
+<li><strong>门槛降低</strong>： 免费用户（Free）及入门级用户（Go）在未来两个月内也可获得使用权限，体验最新的智能体构建功能。</li>
+<li><strong>付费用户额度翻倍</strong>： 所有付费订阅用户（Plus、Pro）的 Rate Limits（速率限制&#x2F;额度）直接翻倍。</li>
+</ul>
+<blockquote>
+<p>To celebrate the launch of the Codex app, we doubled all rate limits for paid plans for 2 months!<br>And added access for free&#x2F;go.<br>— <a href="https://x.com/sama/status/2018437537103269909">@Sam Altman</a></p>
+</blockquote>
+<h2 id="下载地址"><a href="#下载地址" class="headerlink" title="下载地址"></a>下载地址</h2><p>访问 <a href="https://openai.com/zh-Hans-CN/codex/get-started/">https://openai.com/zh-Hans-CN/codex/get-started/</a> 即可获取。</p>
+<h2 id="支持模型"><a href="#支持模型" class="headerlink" title="支持模型"></a>支持模型</h2><p>目前 Codex APP 中支持 GPT 5.2 与 GPT 5.2-Codex 模型，都包含 Medium、High、Extra High 等各种模式。<br><img src="https://img.nep.me/i/2026/02/codex-app-model-lists.png" style="width:25%;" alt="codex-app-model-lists.png" /></p>
+<h2 id="与-Codex-Web-联动"><a href="#与-Codex-Web-联动" class="headerlink" title="与 Codex Web 联动"></a>与 Codex Web 联动</h2><p>如果打开 Github 的项目，Codex APP 可以与 Codex Web 联动，选择在云端执行任务。<br><img src="https://img.nep.me/i/2026/02/codex-app-runtype.png" style="width:75%;" alt="codex-app-runtype.png" /></p>
+<h2 id="Codex-生态：全场景的-AI-开发闭环"><a href="#Codex-生态：全场景的-AI-开发闭环" class="headerlink" title="Codex 生态：全场景的 AI 开发闭环"></a>Codex 生态：全场景的 AI 开发闭环</h2><p>随着桌面版的发布，OpenAI 终于补齐了最后一块拼图，构建起了一个覆盖云端、终端与桌面的全方位 AI 开发生态。无论你的工作习惯如何，Codex 都能无缝融入：</p>
+<ul>
+<li><strong>Codex Web (ChatGPT)</strong> —— 随时随地的云端协作 深度集成于 ChatGPT 网页端与 App 中。连接 GitHub 后，无需配置任何本地环境，即可直接读取仓库、审查代码或提交轻量级修改。非常适合 Code Review 或快速修复 Bug。</li>
+<li><strong>Codex CLI</strong> —— 极客的终端利器 专为开发者打造的命令行工具。将 AI 注入终端，让你无需离开熟悉的 Shell 环境，仅凭自然语言指令即可完成代码生成、文件编辑和脚本执行，完美契合现有的命令行工作流。</li>
+<li><strong>Codex App</strong> —— 终极“指挥中心” 生态的核心枢纽。作为功能最完整的桌面客户端，它不仅拥有最强的本地读写权限，更是调度多智能体（Agents）并行协作、运行后台自动化任务的“总控台”，专门应对复杂的工程级挑战。</li>
+</ul>
+<p>Codex Web 与 Codex CLI 仍然是代码编写工具，Codex App 作为易用的 GUI 客户端，凭借 Agent Skill 加持，生态不再仅仅是辅助写代码的 Copilot，而是扩展到通用领域，致力于成为能听懂意图、自动执行、全天候待命的“硅基合伙人”，并且也让更多的人可以体验使用到 AI Agents。</p>
+]]></content>
+      <categories>
+        <category>资讯</category>
+      </categories>
+      <tags>
+        <tag>AI</tag>
+        <tag>OpenAI</tag>
+        <tag>Codex</tag>
+        <tag>Codex APP</tag>
       </tags>
   </entry>
   <entry>
