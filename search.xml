@@ -322,188 +322,6 @@
       </tags>
   </entry>
   <entry>
-    <title>如何使用 SSH key 连接 GitHub</title>
-    <url>/post/how-to-add-ssh-key-to-github.html</url>
-    <content><![CDATA[<p>如果需要频繁的进行 GitHub pull&#x2F;push 操作，使用 SSH key 绑定到 GitHub 会更加方便，绑定后将使用公钥加密来验证用户身份，比传统的用户名和密码方式更安全。  </p>
-<p>本文命令与截图对应下面的系统版本，需要先安装 <a href="https://git-scm.com/downloads">Git</a></p>
-<ul>
-<li><strong>Windows 11</strong> : 一般安装 <code>64-bit Git for Windows Setup</code>, 安装选项全部<strong>默认</strong>即可</li>
-<li><strong>macOS 15.1</strong> : 更推荐通过安装 <a href="https://brew.sh/">Homebrew</a> 获取 Git 程序，查看 <a href="https://ooo.run/post/how-to-install-homebrew-on-macos.html">如何在 macOS 中安装 Homebrew </a></li>
-</ul>
-<h2 id="打开终端程序"><a href="#打开终端程序" class="headerlink" title="打开终端程序"></a>打开终端程序</h2><h3 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h3><ul>
-<li>右键点击开始菜单，选择终端</li>
-<li>或是按 <code>Windows + R</code> 快捷键打开 <strong>运行</strong> 窗口，输入 <code>cmd</code> ，回车打开</li>
-</ul>
-<h3 id="macOS"><a href="#macOS" class="headerlink" title="macOS"></a>macOS</h3><ul>
-<li>启动台 &gt; 其他 &gt; 终端</li>
-<li><strong>启动台</strong> 或是　<code>Commond⌘ + 空格</code> 打开聚焦搜索，搜索 <strong>终端</strong> 或是 <strong>Terminal</strong></li>
-</ul>
-<p>安装 Git 后，使用 <code>git -v</code> 测试，如果安装成功会显示版本号</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt; git -v</span><br><span class="line">git version 2.47.1</span><br></pre></td></tr></table></figure>
-<p>然后设置 Git 的个人信息</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;yourname&quot;</span></span><br><span class="line">git config --global user.email <span class="string">&quot;your_email@example.com&quot;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="测试一下-github-com"><a href="#测试一下-github-com" class="headerlink" title="测试一下 github.com"></a>测试一下 github.com</h2><div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>Windows 10 用户可以使用 Git Bash</p></div></div>
-<div class="flatpaper-note flatpaper-note--warning"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>测试时会自动创建 <code>.ssh</code> 文件夹，因此你也需要测试一下</p></div></div>
-
-<p>打开终端程序，运行测试命令，如果是第一次运行，需要输入 <code>yes</code> 确认</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure>
-
-<p>我们没有添加过 SSH key，会提示 <code>Permission denied (publickey).</code></p>
-<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-7-tab-0" aria-controls="tabs-7-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">Windows</button><button type="button" role="tab" id="tabs-7-tab-1" aria-controls="tabs-7-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">macOS</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-7-panel-0" aria-labelledby="tabs-7-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><p><img src="https://img.nep.me/i/2024/12/13/122owl6-2.webp"></p></section><section role="tabpanel" id="tabs-7-panel-1" aria-labelledby="tabs-7-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><p><img src="https://img.nep.me/i/2024/12/13/124oz3l-2.webp"></p></section></div></div>
-
-<h2 id="创建-SSH-Key"><a href="#创建-SSH-Key" class="headerlink" title="创建 SSH Key"></a>创建 SSH Key</h2><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> .ssh</span><br><span class="line"></span><br><span class="line">ssh-keygen -t rsa -C <span class="string">&quot;your_email@example.com&quot;</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">C:\Users\ME\.ssh&gt;ssh-keygen -t rsa</span><br><span class="line"></span><br><span class="line">Generating public/private rsa key pair.</span><br><span class="line"><span class="comment"># 设置保存文件名，留空则为 id_rsa</span></span><br><span class="line">Enter file <span class="keyword">in</span> <span class="built_in">which</span> to save the key (C:\Users\ME/.ssh/id_rsa):</span><br><span class="line"><span class="comment"># 设置密码，留空则是没有密码</span></span><br><span class="line">Enter passphrase (empty <span class="keyword">for</span> no passphrase):</span><br><span class="line"><span class="comment"># 确认密码</span></span><br><span class="line">Enter same passphrase again:</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成的私钥</span></span><br><span class="line">Your identification has been saved <span class="keyword">in</span> C:\Users\ME/.ssh/id_rsa</span><br><span class="line"><span class="comment"># 生成的公钥</span></span><br><span class="line">Your public key has been saved <span class="keyword">in</span> C:\Users\ME/.ssh/id_rsa.pub</span><br></pre></td></tr></table></figure>
-<div class="flatpaper-note flatpaper-note--warning"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p><code>.pub</code> 后缀的是公钥，可以公开，<strong>私钥相当于个人密码，要小心保存</strong></p></div></div>
-
-<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>git 默认会查找名称为 <code>id_rsa</code> 的 SSH key </p></div></div>
-
-<div class="flatpaper-note flatpaper-note--primary"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>如果设置了文件名称，或是生成其他格式的 SSH key 可以查看后文的配合 <code>SSH config</code> 的部分</p></div></div>
-
-<div class="flatpaper-note flatpaper-note--default"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>rsa 格式的 key 内容很长，使用 <code>ssh-keygen -t ed25519</code> 生成 <code>ed25519</code> 格式的 key，更简洁，更安全</p></div></div>
-
-<h2 id="添加公钥到-GitHub"><a href="#添加公钥到-GitHub" class="headerlink" title="添加公钥到 GitHub"></a>添加公钥到 GitHub</h2><p>使用命令或是文本编辑器查看公钥的内容</p>
-<ul>
-<li>Windows 使用 <code>type id_rsa.pub</code> </li>
-<li>macOS &#x2F; Linux 使用 <code>cat id_rsa.pub</code></li>
-</ul>
-<p>访问 <a href="https://github.com/settings/keys">Github - SSH Keys</a>，点击右上角 <strong>New SSH key</strong>。<br>手动访问路径：右上角点击 <strong>头像</strong> &gt; <strong>Settings</strong> &gt; <strong>SSH and GPG keys</strong> &gt; <strong>New SSH key</strong></p>
-<p><img src="https://img.nep.me/i/2024/12/13/12s8co0-2.webp" alt="github-add-ssh-key"></p>
-<ul>
-<li><strong>Title</strong>：取个备注名字</li>
-<li><strong>Key type</strong>：不需要修改，保持默认 <strong>Authentication Key</strong></li>
-<li><strong>Key</strong>：粘贴 <code>id_rsa.pub</code> 对应的文本内容</li>
-<li>点击 <code>Add SSH key</code> 保存</li>
-</ul>
-<p><img src="https://img.nep.me/i/2024/12/13/12sain9-2.webp" alt="github-add-ssh-key-details"></p>
-<p>添加成功会在列表显示<br><img src="https://img.nep.me/i/2024/12/13/12vf7u0-2.webp" alt="github-add-ssh-key-done"></p>
-<p>此时我们再执行测试命令，就会获得成功的欢迎提示。 </p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt;ssh -T git@github.com</span><br><span class="line">Hi &lt;Your username&gt;! You<span class="string">&#x27;ve successfully authenticated, but GitHub does not provide shell access.</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="配合-SSH-config-使用"><a href="#配合-SSH-config-使用" class="headerlink" title="配合 SSH config 使用"></a>配合 SSH config 使用</h2><p>如果我们的私钥的名称不是 <code>id_rsa</code> ，我们将仍然无法成功连接 GitHub ，你可以将私钥修改文件名后再试试 </p>
-<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-8-tab-0" aria-controls="tabs-8-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">Windows</button><button type="button" role="tab" id="tabs-8-tab-1" aria-controls="tabs-8-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">macOS&amp;Linux</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-8-panel-0" aria-labelledby="tabs-8-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt; rename id_rsa id_mysshkey</span><br><span class="line"></span><br><span class="line">&gt; ssh -T git@github.com</span><br><span class="line">git@github.com: Permission denied (publickey).</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-8-panel-1" aria-labelledby="tabs-8-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt; <span class="built_in">mv</span> id_rsa id_mysshkey</span><br><span class="line"></span><br><span class="line">&gt; ssh -T git@github.com</span><br><span class="line">git@github.com: Permission denied (publickey).</span><br></pre></td></tr></table></figure></section></div></div>
-
-<p>这时我们可以通过在 <code>.ssh</code> 文件夹中创建一个 <code>config</code> 文件，填入下面的内容来告诉 git 程序在哪里找到密钥</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Host github.com</span><br><span class="line">    HostName github.com</span><br><span class="line">    User git</span><br><span class="line">    IdentityFile ~/.ssh/id_mysshkey</span><br></pre></td></tr></table></figure>
-
-<p>其中 <code>IdentityFile</code> 部分填写私钥的路径， <code>~</code> 代表用户 Home 目录</p>
-<ul>
-<li>Windows 相当于 <code>C:\Users\&lt;username&gt;\</code></li>
-<li>macOS 相当于 <code>/Users/&lt;username&gt;/</code></li>
-<li>Linux 相当于 <code>/root/</code> 或是 <code>/home/&lt;username&gt;/</code></li>
-</ul>
-<p>再进行测试，发现又能显示成功的欢迎消息。  </p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt;ssh -T git@github.com</span><br><span class="line">Hi &lt;Your username&gt;! You<span class="string">&#x27;ve successfully authenticated, but GitHub does not provide shell access.</span></span><br></pre></td></tr></table></figure>
-
-<p>以后就可以很方便的使用 Git 了！</p>
-]]></content>
-      <categories>
-        <category>教程</category>
-      </categories>
-      <tags>
-        <tag>GitHub</tag>
-        <tag>SSH</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>如何安装 Node.js</title>
-    <url>/post/how-to-install-nodejs.html</url>
-    <content><![CDATA[<p>本文将带介绍如何在电脑上安装 Node.js 运行环境，从而可以使用丰富的应用 Nodejs 程序。 </p>
-<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-9-tab-0" aria-controls="tabs-9-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">Windows</button><button type="button" role="tab" id="tabs-9-tab-1" aria-controls="tabs-9-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">macOS</button><button type="button" role="tab" id="tabs-9-tab-2" aria-controls="tabs-9-panel-2" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="2">Linux</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-9-panel-0" aria-labelledby="tabs-9-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><h2 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h2><p>测试安装环境为 <code>Windows 11</code></p>
-<h3 id="下载-Node-js"><a href="#下载-Node-js" class="headerlink" title="下载 Node.js"></a>下载 Node.js</h3><p>访问 Node.js 的官方网站的 <a href="https://nodejs.org/zh-cn/download/prebuilt-installer">下载页面</a> 下载安装包。 </p>
-<p>我们选择 <strong>预构建安装程序</strong> ，选择一下自己的系统与 CPU 架构类型， Windows 一般选择 <strong>x64</strong>，再选择 Node.js 版本。</p>
-<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>推荐选择版本号为偶数的 LTS 版本</p></div></div>  
-
-<p><img src="https://img.nep.me/i/2024/12/13/7fzq5m-2.webp" alt="nodejs-home-page"></p>
-<h3 id="安装-Node-js"><a href="#安装-Node-js" class="headerlink" title="安装 Node.js"></a>安装 Node.js</h3><p>然后打开安装程序 <code>node-v22.12.0-x64.msi</code>，安装过程没有陷阱，我们 <strong>同意</strong> 协议后，一路点击 Next 即可。  </p>
-<p><img src="https://img.nep.me/i/2024/12/13/7hc7pi-2.webp" alt="nodejs-setup"></p>
-<p>安装完成后，打开终端程序：</p>
-<ul>
-<li>右键点击开始菜单，选择终端</li>
-<li>或是按 <code>Windows + R</code> 快捷键打开 <strong>运行</strong> 窗口，输入 <code>cmd</code> ，回车打开</li>
-<li>或是在资源管理器的地址栏中输入 <code>cmd</code> 回车打开（终端的运行目录将是资源管理器所在的目录）</li>
-</ul>
-<p>运行下面的命令测试安装结果。</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">node -v</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm -v</span><br></pre></td></tr></table></figure>
-
-<p>如果可以成功输出版本号，表示安装成功。  </p>
-<p><img src="https://img.nep.me/i/2024/12/13/7ilvge-2.webp" alt="nodejs-install-done"></p></section><section role="tabpanel" id="tabs-9-panel-1" aria-labelledby="tabs-9-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><h2 id="macOS"><a href="#macOS" class="headerlink" title="macOS"></a>macOS</h2><p>测试安装环境为 <code>macOS 15.1</code> ，macOS 更推荐使用 <strong>包管理器</strong> <code>Homebrew</code> 进行安装。</p>
-<blockquote>
-<p><a href="https://brew.sh/zh-cn/">Homebrew</a> 是 macOS 和 Linux 缺失软件包的管理器，用于安装 Apple没有预装但你需要的东西。</p>
-</blockquote>
-<p>安装需要使用终端，<a href="https://support.apple.com/zh-cn/guide/terminal/apd5265185d-f365-44cb-8b09-71a064a42125/mac">在 Mac 上打开或退出“终端”</a>：</p>
-<ul>
-<li>启动台 &gt; 其他 &gt; 终端</li>
-<li><strong>启动台</strong> 或是　<code>Commond⌘ + 空格</code> 打开聚焦搜索，搜索 <strong>终端</strong> 或是 <strong>Terminal</strong></li>
-</ul>
-<h3 id="安装-Homebrew"><a href="#安装-Homebrew" class="headerlink" title="安装 Homebrew"></a>安装 Homebrew</h3><p>中国大陆地区或是更详细步骤请查看：<a href="https://ooo.run/post/how-to-install-homebrew-on-macos.html" target="_blank">如何在 macOS 中安装 Homebrew</a></p>
-<p>首先复制安装命令  </p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">/bin/bash -c <span class="string">&quot;<span class="subst">$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)</span>&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>在终端内执行安装命令，安装时需要输入你的电脑密码进行授权：  </p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">==&gt; Checking <span class="keyword">for</span> `<span class="built_in">sudo</span>` access (<span class="built_in">which</span> may request your password)...</span><br><span class="line">Password:</span><br></pre></td></tr></table></figure>
-<p>brew 会提示将安装的软件以及创建的文件夹，按回车继续，等待下载和安装完成。</p>
-<p>命令执行结束后按照提示复制执行下面的三条命令添加 PATH :</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> &gt;&gt; /Users/me/.zprofile</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;eval &quot;$(/opt/homebrew/bin/brew shellenv)&quot;&#x27;</span> &gt;&gt; /Users/me/.zprofile</span><br><span class="line"><span class="built_in">eval</span> <span class="string">&quot;<span class="subst">$(/opt/homebrew/bin/brew shellenv)</span>&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>如果使用了 <code>oh-my-zsh</code> ，需要执行下面的命令:</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export PATH=&quot;/opt/homebrew/bin:$PATH&quot;&#x27;</span> &gt;&gt; ~/.zshrc   </span><br><span class="line"><span class="built_in">source</span> ~/.zshrc</span><br></pre></td></tr></table></figure>
-
-<p>然后可以执行 <code>brew -v</code> 测试安装结果，成功会显示 Hombrew 的版本号。   </p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt;brew -v</span><br><span class="line">Homebrew 4.4.11</span><br></pre></td></tr></table></figure>
-
-<h3 id="安装-Nodejs"><a href="#安装-Nodejs" class="headerlink" title="安装 Nodejs"></a>安装 Nodejs</h3><p>打开终端，执行</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">brew install node</span><br></pre></td></tr></table></figure>
-
-<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt;node -v</span><br><span class="line">v23.4.0</span><br><span class="line"></span><br><span class="line">&gt;npm -v</span><br><span class="line">10.9.2</span><br></pre></td></tr></table></figure>
-
-<h3 id="brew-常用命令"><a href="#brew-常用命令" class="headerlink" title="brew 常用命令"></a>brew 常用命令</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 安装指定版本</span></span><br><span class="line">brew install node@22</span><br><span class="line"></span><br><span class="line"><span class="comment"># 卸载</span></span><br><span class="line">brew remove node</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看已安装软件</span></span><br><span class="line">brew list </span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查更新</span></span><br><span class="line">brew update</span><br><span class="line"></span><br><span class="line"><span class="comment"># 下载更新</span></span><br><span class="line">brew upgrade</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-9-panel-2" aria-labelledby="tabs-9-tab-2" class="flatpaper-tabs__panel" data-index="2" hidden><h2 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h2><p>Linux 使用 nvm 包管理器可以很方便的安装 Node.js</p>
-<h3 id="首先安装-nvm"><a href="#首先安装-nvm" class="headerlink" title="首先安装 nvm"></a>首先安装 nvm</h3><h1 id="安装-nvm-Node-版本管理器"><a href="#安装-nvm-Node-版本管理器" class="headerlink" title="安装 nvm (Node 版本管理器)"></a>安装 nvm (Node 版本管理器)</h1><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash</span><br></pre></td></tr></table></figure>
-
-<p>更新一下 PATH</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># bash</span></span><br><span class="line"><span class="built_in">source</span> ~/.bashrc</span><br><span class="line"></span><br><span class="line"><span class="comment"># zsh</span></span><br><span class="line"><span class="built_in">source</span> ~/.zshrc</span><br></pre></td></tr></table></figure>
-
-<p>验证</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">root@debian:~# nvm -v</span><br><span class="line">0.40.1</span><br></pre></td></tr></table></figure>
-
-<h3 id="安装-Node-js"><a href="#安装-Node-js" class="headerlink" title="安装 Node.js"></a>安装 Node.js</h3><p>下载并安装 Node.js 22 LTS 版本</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">nvm install 22</span><br></pre></td></tr></table></figure>
-
-<p>验证</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">root@debian:~# node -v</span><br><span class="line">v22.12.0</span><br><span class="line">root@debian:~# npm -v</span><br><span class="line">10.9.0</span><br></pre></td></tr></table></figure></section></div></div>
-
-<h2 id="npm-常用命令"><a href="#npm-常用命令" class="headerlink" title="npm 常用命令"></a>npm 常用命令</h2><p><code>npm</code> 是 Node.js 自带的包管理器是 ，我们可以很方便的安装 Node.js 应用，常用命令介绍：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 初始化项目，创建 package.json 文件</span></span><br><span class="line">npm init</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看版本</span></span><br><span class="line">npm -v</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看当前 npm 的配</span></span><br><span class="line">npm config list	</span><br><span class="line"></span><br><span class="line"><span class="comment"># 更新 npm 到最新版本</span></span><br><span class="line">npm update -g npm</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装项目中的所有依赖项（基于 package.json）</span></span><br><span class="line">npm i</span><br><span class="line">npm install </span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装指定包，并添加到项目依赖</span></span><br><span class="line">npm install &lt;package&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装指定版本的包，例如：npm i lodash@4.17.20</span></span><br><span class="line">npm install &lt;package&gt;@&lt;version&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 全局安装指定的包（通常为 CLI 工具） </span></span><br><span class="line">npm install &lt;package&gt; -g</span><br><span class="line"></span><br><span class="line"><span class="comment"># 卸载指定包</span></span><br><span class="line">npm uninstall &lt;package&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 更新指定的包到最新版本</span></span><br><span class="line">npm update &lt;package&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看当前项目已安装的依赖包</span></span><br><span class="line">npm list</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看全局已安装的依赖包</span></span><br><span class="line">npm list -g</span><br><span class="line"></span><br><span class="line"><span class="comment"># 移除未在 package.json 中声明的多余依赖包</span></span><br><span class="line">npm prune</span><br></pre></td></tr></table></figure>
-
-<h2 id="使用-pnpm"><a href="#使用-pnpm" class="headerlink" title="使用 pnpm"></a>使用 pnpm</h2><p>如果你需要经常使用 Node.js 应用，更推荐安装 <code>pnpm</code> 包管理，它的性能更好，安装速度速度更快，默认开启严格模式，确保项目中的依赖版本一致，避免了某些隐藏的版本冲突问题，并且对保持对 npm 的兼容。</p>
-<p>pnpm 的版本锁定文件是 <code>pnpm-lock.yaml</code></p>
-<h3 id="安装-pnpm"><a href="#安装-pnpm" class="headerlink" title="安装 pnpm"></a>安装 pnpm</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm install -g pnpm</span><br></pre></td></tr></table></figure>
-
-<h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><p><code>pnpm</code> 使用命令与 <code>npm</code> 类似，比如：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 基于 pnpm-lock.yaml 安装依赖</span></span><br><span class="line">pnpm i</span><br><span class="line">pnpm install </span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看自身版本</span></span><br><span class="line">pnpm -v</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装单个依赖，使用 pnpm install 也是可以的</span></span><br><span class="line">pnpm add &lt;package&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 全局安装</span></span><br><span class="line">pnpm add -g &lt;package&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 指定版本</span></span><br><span class="line">pnpm add &lt;package&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除软件包</span></span><br><span class="line">pnpm remove &lt;package&gt; </span><br><span class="line"></span><br><span class="line"><span class="comment"># 更新自身</span></span><br><span class="line">pnpm self-update</span><br><span class="line">pnpm add -g pnpm</span><br></pre></td></tr></table></figure>
-
-<h2 id="其他操作"><a href="#其他操作" class="headerlink" title="其他操作"></a>其他操作</h2><h3 id="更换镜像源"><a href="#更换镜像源" class="headerlink" title="更换镜像源"></a>更换镜像源</h3><div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>中国大陆用户可以使用下面的命令切换使用淘宝的镜像源，加速下载</p></div></div>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm config <span class="built_in">set</span> registry https://registry.npm.taobao.org</span><br></pre></td></tr></table></figure>
-
-<p>查看当前的镜像源</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm config get registry</span><br></pre></td></tr></table></figure>
-
-
-]]></content>
-      <categories>
-        <category>教程</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-        <tag>Nodejs</tag>
-        <tag>macOS</tag>
-        <tag>Windows</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>如何在 macOS 中安装 Homebrew</title>
     <url>/post/how-to-install-homebrew-on-macos.html</url>
     <content><![CDATA[<p>有时我们在网络上看到别人使用 macOS 安装软件是使用的下面的命令，非常的方便。  </p>
@@ -543,7 +361,7 @@
 
 <p>或是查看下面的内容</p>
 <p>替换使用 <a href="https://developer.aliyun.com/mirror/homebrew/">阿里镜像源</a></p>
-<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-10-tab-0" aria-controls="tabs-10-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">zsh</button><button type="button" role="tab" id="tabs-10-tab-1" aria-controls="tabs-10-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">bash</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-10-panel-0" aria-labelledby="tabs-10-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo &#x27;export HOMEBREW_API_DOMAIN=&quot;https://mirrors.aliyun.com/homebrew-bottles/api&quot;&#x27; &gt;&gt; ~/.zshrc</span><br><span class="line">echo &#x27;export HOMEBREW_BREW_GIT_REMOTE=&quot;https://mirrors.aliyun.com/homebrew/brew.git&quot;&#x27; &gt;&gt; ~/.zshrc</span><br><span class="line">echo &#x27;export HOMEBREW_CORE_GIT_REMOTE=&quot;https://mirrors.aliyun.com/homebrew/homebrew-core.git&quot;&#x27; &gt;&gt; ~/.zshrc</span><br><span class="line">echo &#x27;export HOMEBREW_BOTTLE_DOMAIN=&quot;https://mirrors.aliyun.com/homebrew/homebrew-bottles&quot;&#x27; &gt;&gt; ~/.zshrc</span><br><span class="line">source ~/.zshrc</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-10-panel-1" aria-labelledby="tabs-10-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export HOMEBREW_API_DOMAIN=&quot;https://mirrors.aliyun.com/homebrew-bottles/api&quot;&#x27;</span> &gt;&gt; ~/.bash_profile</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export HOMEBREW_BREW_GIT_REMOTE=&quot;https://mirrors.aliyun.com/homebrew/brew.git&quot;&#x27;</span> &gt;&gt; ~/.bash_profile</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export HOMEBREW_CORE_GIT_REMOTE=&quot;https://mirrors.aliyun.com/homebrew/homebrew-core.git&quot;&#x27;</span> &gt;&gt; ~/.bash_profile</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export HOMEBREW_BOTTLE_DOMAIN=&quot;https://mirrors.aliyun.com/homebrew/homebrew-bottles&quot;&#x27;</span> &gt;&gt; ~/.bash_profile</span><br><span class="line"><span class="built_in">source</span> ~/.bash_profile</span><br></pre></td></tr></table></figure></section></div></div>
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-7-tab-0" aria-controls="tabs-7-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">zsh</button><button type="button" role="tab" id="tabs-7-tab-1" aria-controls="tabs-7-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">bash</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-7-panel-0" aria-labelledby="tabs-7-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo &#x27;export HOMEBREW_API_DOMAIN=&quot;https://mirrors.aliyun.com/homebrew-bottles/api&quot;&#x27; &gt;&gt; ~/.zshrc</span><br><span class="line">echo &#x27;export HOMEBREW_BREW_GIT_REMOTE=&quot;https://mirrors.aliyun.com/homebrew/brew.git&quot;&#x27; &gt;&gt; ~/.zshrc</span><br><span class="line">echo &#x27;export HOMEBREW_CORE_GIT_REMOTE=&quot;https://mirrors.aliyun.com/homebrew/homebrew-core.git&quot;&#x27; &gt;&gt; ~/.zshrc</span><br><span class="line">echo &#x27;export HOMEBREW_BOTTLE_DOMAIN=&quot;https://mirrors.aliyun.com/homebrew/homebrew-bottles&quot;&#x27; &gt;&gt; ~/.zshrc</span><br><span class="line">source ~/.zshrc</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-7-panel-1" aria-labelledby="tabs-7-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export HOMEBREW_API_DOMAIN=&quot;https://mirrors.aliyun.com/homebrew-bottles/api&quot;&#x27;</span> &gt;&gt; ~/.bash_profile</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export HOMEBREW_BREW_GIT_REMOTE=&quot;https://mirrors.aliyun.com/homebrew/brew.git&quot;&#x27;</span> &gt;&gt; ~/.bash_profile</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export HOMEBREW_CORE_GIT_REMOTE=&quot;https://mirrors.aliyun.com/homebrew/homebrew-core.git&quot;&#x27;</span> &gt;&gt; ~/.bash_profile</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export HOMEBREW_BOTTLE_DOMAIN=&quot;https://mirrors.aliyun.com/homebrew/homebrew-bottles&quot;&#x27;</span> &gt;&gt; ~/.bash_profile</span><br><span class="line"><span class="built_in">source</span> ~/.bash_profile</span><br></pre></td></tr></table></figure></section></div></div>
 
 <p>然后执行安装命令，从阿里云下载安装脚本并安装 Homebrew</p>
 <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://mirrors.aliyun.com/homebrew/install.git brew-install</span><br><span class="line">/bin/bash brew-install/install.sh</span><br><span class="line"><span class="built_in">rm</span> -rf brew-install</span><br></pre></td></tr></table></figure>
@@ -571,8 +389,190 @@
         <category>教程</category>
       </categories>
       <tags>
-        <tag>macOS</tag>
         <tag>Homebrew</tag>
+        <tag>macOS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>如何使用 SSH key 连接 GitHub</title>
+    <url>/post/how-to-add-ssh-key-to-github.html</url>
+    <content><![CDATA[<p>如果需要频繁的进行 GitHub pull&#x2F;push 操作，使用 SSH key 绑定到 GitHub 会更加方便，绑定后将使用公钥加密来验证用户身份，比传统的用户名和密码方式更安全。  </p>
+<p>本文命令与截图对应下面的系统版本，需要先安装 <a href="https://git-scm.com/downloads">Git</a></p>
+<ul>
+<li><strong>Windows 11</strong> : 一般安装 <code>64-bit Git for Windows Setup</code>, 安装选项全部<strong>默认</strong>即可</li>
+<li><strong>macOS 15.1</strong> : 更推荐通过安装 <a href="https://brew.sh/">Homebrew</a> 获取 Git 程序，查看 <a href="https://ooo.run/post/how-to-install-homebrew-on-macos.html">如何在 macOS 中安装 Homebrew </a></li>
+</ul>
+<h2 id="打开终端程序"><a href="#打开终端程序" class="headerlink" title="打开终端程序"></a>打开终端程序</h2><h3 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h3><ul>
+<li>右键点击开始菜单，选择终端</li>
+<li>或是按 <code>Windows + R</code> 快捷键打开 <strong>运行</strong> 窗口，输入 <code>cmd</code> ，回车打开</li>
+</ul>
+<h3 id="macOS"><a href="#macOS" class="headerlink" title="macOS"></a>macOS</h3><ul>
+<li>启动台 &gt; 其他 &gt; 终端</li>
+<li><strong>启动台</strong> 或是　<code>Commond⌘ + 空格</code> 打开聚焦搜索，搜索 <strong>终端</strong> 或是 <strong>Terminal</strong></li>
+</ul>
+<p>安装 Git 后，使用 <code>git -v</code> 测试，如果安装成功会显示版本号</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt; git -v</span><br><span class="line">git version 2.47.1</span><br></pre></td></tr></table></figure>
+<p>然后设置 Git 的个人信息</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;yourname&quot;</span></span><br><span class="line">git config --global user.email <span class="string">&quot;your_email@example.com&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="测试一下-github-com"><a href="#测试一下-github-com" class="headerlink" title="测试一下 github.com"></a>测试一下 github.com</h2><div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>Windows 10 用户可以使用 Git Bash</p></div></div>
+<div class="flatpaper-note flatpaper-note--warning"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>测试时会自动创建 <code>.ssh</code> 文件夹，因此你也需要测试一下</p></div></div>
+
+<p>打开终端程序，运行测试命令，如果是第一次运行，需要输入 <code>yes</code> 确认</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure>
+
+<p>我们没有添加过 SSH key，会提示 <code>Permission denied (publickey).</code></p>
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-8-tab-0" aria-controls="tabs-8-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">Windows</button><button type="button" role="tab" id="tabs-8-tab-1" aria-controls="tabs-8-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">macOS</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-8-panel-0" aria-labelledby="tabs-8-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><p><img src="https://img.nep.me/i/2024/12/13/122owl6-2.webp"></p></section><section role="tabpanel" id="tabs-8-panel-1" aria-labelledby="tabs-8-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><p><img src="https://img.nep.me/i/2024/12/13/124oz3l-2.webp"></p></section></div></div>
+
+<h2 id="创建-SSH-Key"><a href="#创建-SSH-Key" class="headerlink" title="创建 SSH Key"></a>创建 SSH Key</h2><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> .ssh</span><br><span class="line"></span><br><span class="line">ssh-keygen -t rsa -C <span class="string">&quot;your_email@example.com&quot;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">C:\Users\ME\.ssh&gt;ssh-keygen -t rsa</span><br><span class="line"></span><br><span class="line">Generating public/private rsa key pair.</span><br><span class="line"><span class="comment"># 设置保存文件名，留空则为 id_rsa</span></span><br><span class="line">Enter file <span class="keyword">in</span> <span class="built_in">which</span> to save the key (C:\Users\ME/.ssh/id_rsa):</span><br><span class="line"><span class="comment"># 设置密码，留空则是没有密码</span></span><br><span class="line">Enter passphrase (empty <span class="keyword">for</span> no passphrase):</span><br><span class="line"><span class="comment"># 确认密码</span></span><br><span class="line">Enter same passphrase again:</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成的私钥</span></span><br><span class="line">Your identification has been saved <span class="keyword">in</span> C:\Users\ME/.ssh/id_rsa</span><br><span class="line"><span class="comment"># 生成的公钥</span></span><br><span class="line">Your public key has been saved <span class="keyword">in</span> C:\Users\ME/.ssh/id_rsa.pub</span><br></pre></td></tr></table></figure>
+<div class="flatpaper-note flatpaper-note--warning"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p><code>.pub</code> 后缀的是公钥，可以公开，<strong>私钥相当于个人密码，要小心保存</strong></p></div></div>
+
+<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>git 默认会查找名称为 <code>id_rsa</code> 的 SSH key </p></div></div>
+
+<div class="flatpaper-note flatpaper-note--primary"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>如果设置了文件名称，或是生成其他格式的 SSH key 可以查看后文的配合 <code>SSH config</code> 的部分</p></div></div>
+
+<div class="flatpaper-note flatpaper-note--default"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>rsa 格式的 key 内容很长，使用 <code>ssh-keygen -t ed25519</code> 生成 <code>ed25519</code> 格式的 key，更简洁，更安全</p></div></div>
+
+<h2 id="添加公钥到-GitHub"><a href="#添加公钥到-GitHub" class="headerlink" title="添加公钥到 GitHub"></a>添加公钥到 GitHub</h2><p>使用命令或是文本编辑器查看公钥的内容</p>
+<ul>
+<li>Windows 使用 <code>type id_rsa.pub</code> </li>
+<li>macOS &#x2F; Linux 使用 <code>cat id_rsa.pub</code></li>
+</ul>
+<p>访问 <a href="https://github.com/settings/keys">Github - SSH Keys</a>，点击右上角 <strong>New SSH key</strong>。<br>手动访问路径：右上角点击 <strong>头像</strong> &gt; <strong>Settings</strong> &gt; <strong>SSH and GPG keys</strong> &gt; <strong>New SSH key</strong></p>
+<p><img src="https://img.nep.me/i/2024/12/13/12s8co0-2.webp" alt="github-add-ssh-key"></p>
+<ul>
+<li><strong>Title</strong>：取个备注名字</li>
+<li><strong>Key type</strong>：不需要修改，保持默认 <strong>Authentication Key</strong></li>
+<li><strong>Key</strong>：粘贴 <code>id_rsa.pub</code> 对应的文本内容</li>
+<li>点击 <code>Add SSH key</code> 保存</li>
+</ul>
+<p><img src="https://img.nep.me/i/2024/12/13/12sain9-2.webp" alt="github-add-ssh-key-details"></p>
+<p>添加成功会在列表显示<br><img src="https://img.nep.me/i/2024/12/13/12vf7u0-2.webp" alt="github-add-ssh-key-done"></p>
+<p>此时我们再执行测试命令，就会获得成功的欢迎提示。 </p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt;ssh -T git@github.com</span><br><span class="line">Hi &lt;Your username&gt;! You<span class="string">&#x27;ve successfully authenticated, but GitHub does not provide shell access.</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="配合-SSH-config-使用"><a href="#配合-SSH-config-使用" class="headerlink" title="配合 SSH config 使用"></a>配合 SSH config 使用</h2><p>如果我们的私钥的名称不是 <code>id_rsa</code> ，我们将仍然无法成功连接 GitHub ，你可以将私钥修改文件名后再试试 </p>
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-9-tab-0" aria-controls="tabs-9-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">Windows</button><button type="button" role="tab" id="tabs-9-tab-1" aria-controls="tabs-9-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">macOS&amp;Linux</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-9-panel-0" aria-labelledby="tabs-9-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt; rename id_rsa id_mysshkey</span><br><span class="line"></span><br><span class="line">&gt; ssh -T git@github.com</span><br><span class="line">git@github.com: Permission denied (publickey).</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-9-panel-1" aria-labelledby="tabs-9-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt; <span class="built_in">mv</span> id_rsa id_mysshkey</span><br><span class="line"></span><br><span class="line">&gt; ssh -T git@github.com</span><br><span class="line">git@github.com: Permission denied (publickey).</span><br></pre></td></tr></table></figure></section></div></div>
+
+<p>这时我们可以通过在 <code>.ssh</code> 文件夹中创建一个 <code>config</code> 文件，填入下面的内容来告诉 git 程序在哪里找到密钥</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Host github.com</span><br><span class="line">    HostName github.com</span><br><span class="line">    User git</span><br><span class="line">    IdentityFile ~/.ssh/id_mysshkey</span><br></pre></td></tr></table></figure>
+
+<p>其中 <code>IdentityFile</code> 部分填写私钥的路径， <code>~</code> 代表用户 Home 目录</p>
+<ul>
+<li>Windows 相当于 <code>C:\Users\&lt;username&gt;\</code></li>
+<li>macOS 相当于 <code>/Users/&lt;username&gt;/</code></li>
+<li>Linux 相当于 <code>/root/</code> 或是 <code>/home/&lt;username&gt;/</code></li>
+</ul>
+<p>再进行测试，发现又能显示成功的欢迎消息。  </p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt;ssh -T git@github.com</span><br><span class="line">Hi &lt;Your username&gt;! You<span class="string">&#x27;ve successfully authenticated, but GitHub does not provide shell access.</span></span><br></pre></td></tr></table></figure>
+
+<p>以后就可以很方便的使用 Git 了！</p>
+]]></content>
+      <categories>
+        <category>教程</category>
+      </categories>
+      <tags>
+        <tag>GitHub</tag>
+        <tag>SSH</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>如何安装 Node.js</title>
+    <url>/post/how-to-install-nodejs.html</url>
+    <content><![CDATA[<p>本文将带介绍如何在电脑上安装 Node.js 运行环境，从而可以使用丰富的应用 Nodejs 程序。 </p>
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-10-tab-0" aria-controls="tabs-10-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">Windows</button><button type="button" role="tab" id="tabs-10-tab-1" aria-controls="tabs-10-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">macOS</button><button type="button" role="tab" id="tabs-10-tab-2" aria-controls="tabs-10-panel-2" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="2">Linux</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-10-panel-0" aria-labelledby="tabs-10-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><h2 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h2><p>测试安装环境为 <code>Windows 11</code></p>
+<h3 id="下载-Node-js"><a href="#下载-Node-js" class="headerlink" title="下载 Node.js"></a>下载 Node.js</h3><p>访问 Node.js 的官方网站的 <a href="https://nodejs.org/zh-cn/download/prebuilt-installer">下载页面</a> 下载安装包。 </p>
+<p>我们选择 <strong>预构建安装程序</strong> ，选择一下自己的系统与 CPU 架构类型， Windows 一般选择 <strong>x64</strong>，再选择 Node.js 版本。</p>
+<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>推荐选择版本号为偶数的 LTS 版本</p></div></div>  
+
+<p><img src="https://img.nep.me/i/2024/12/13/7fzq5m-2.webp" alt="nodejs-home-page"></p>
+<h3 id="安装-Node-js"><a href="#安装-Node-js" class="headerlink" title="安装 Node.js"></a>安装 Node.js</h3><p>然后打开安装程序 <code>node-v22.12.0-x64.msi</code>，安装过程没有陷阱，我们 <strong>同意</strong> 协议后，一路点击 Next 即可。  </p>
+<p><img src="https://img.nep.me/i/2024/12/13/7hc7pi-2.webp" alt="nodejs-setup"></p>
+<p>安装完成后，打开终端程序：</p>
+<ul>
+<li>右键点击开始菜单，选择终端</li>
+<li>或是按 <code>Windows + R</code> 快捷键打开 <strong>运行</strong> 窗口，输入 <code>cmd</code> ，回车打开</li>
+<li>或是在资源管理器的地址栏中输入 <code>cmd</code> 回车打开（终端的运行目录将是资源管理器所在的目录）</li>
+</ul>
+<p>运行下面的命令测试安装结果。</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">node -v</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm -v</span><br></pre></td></tr></table></figure>
+
+<p>如果可以成功输出版本号，表示安装成功。  </p>
+<p><img src="https://img.nep.me/i/2024/12/13/7ilvge-2.webp" alt="nodejs-install-done"></p></section><section role="tabpanel" id="tabs-10-panel-1" aria-labelledby="tabs-10-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><h2 id="macOS"><a href="#macOS" class="headerlink" title="macOS"></a>macOS</h2><p>测试安装环境为 <code>macOS 15.1</code> ，macOS 更推荐使用 <strong>包管理器</strong> <code>Homebrew</code> 进行安装。</p>
+<blockquote>
+<p><a href="https://brew.sh/zh-cn/">Homebrew</a> 是 macOS 和 Linux 缺失软件包的管理器，用于安装 Apple没有预装但你需要的东西。</p>
+</blockquote>
+<p>安装需要使用终端，<a href="https://support.apple.com/zh-cn/guide/terminal/apd5265185d-f365-44cb-8b09-71a064a42125/mac">在 Mac 上打开或退出“终端”</a>：</p>
+<ul>
+<li>启动台 &gt; 其他 &gt; 终端</li>
+<li><strong>启动台</strong> 或是　<code>Commond⌘ + 空格</code> 打开聚焦搜索，搜索 <strong>终端</strong> 或是 <strong>Terminal</strong></li>
+</ul>
+<h3 id="安装-Homebrew"><a href="#安装-Homebrew" class="headerlink" title="安装 Homebrew"></a>安装 Homebrew</h3><p>中国大陆地区或是更详细步骤请查看：<a href="https://ooo.run/post/how-to-install-homebrew-on-macos.html" target="_blank">如何在 macOS 中安装 Homebrew</a></p>
+<p>首先复制安装命令  </p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">/bin/bash -c <span class="string">&quot;<span class="subst">$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>在终端内执行安装命令，安装时需要输入你的电脑密码进行授权：  </p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">==&gt; Checking <span class="keyword">for</span> `<span class="built_in">sudo</span>` access (<span class="built_in">which</span> may request your password)...</span><br><span class="line">Password:</span><br></pre></td></tr></table></figure>
+<p>brew 会提示将安装的软件以及创建的文件夹，按回车继续，等待下载和安装完成。</p>
+<p>命令执行结束后按照提示复制执行下面的三条命令添加 PATH :</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> &gt;&gt; /Users/me/.zprofile</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;eval &quot;$(/opt/homebrew/bin/brew shellenv)&quot;&#x27;</span> &gt;&gt; /Users/me/.zprofile</span><br><span class="line"><span class="built_in">eval</span> <span class="string">&quot;<span class="subst">$(/opt/homebrew/bin/brew shellenv)</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>如果使用了 <code>oh-my-zsh</code> ，需要执行下面的命令:</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export PATH=&quot;/opt/homebrew/bin:$PATH&quot;&#x27;</span> &gt;&gt; ~/.zshrc   </span><br><span class="line"><span class="built_in">source</span> ~/.zshrc</span><br></pre></td></tr></table></figure>
+
+<p>然后可以执行 <code>brew -v</code> 测试安装结果，成功会显示 Hombrew 的版本号。   </p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt;brew -v</span><br><span class="line">Homebrew 4.4.11</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装-Nodejs"><a href="#安装-Nodejs" class="headerlink" title="安装 Nodejs"></a>安装 Nodejs</h3><p>打开终端，执行</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">brew install node</span><br></pre></td></tr></table></figure>
+
+<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt;node -v</span><br><span class="line">v23.4.0</span><br><span class="line"></span><br><span class="line">&gt;npm -v</span><br><span class="line">10.9.2</span><br></pre></td></tr></table></figure>
+
+<h3 id="brew-常用命令"><a href="#brew-常用命令" class="headerlink" title="brew 常用命令"></a>brew 常用命令</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 安装指定版本</span></span><br><span class="line">brew install node@22</span><br><span class="line"></span><br><span class="line"><span class="comment"># 卸载</span></span><br><span class="line">brew remove node</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看已安装软件</span></span><br><span class="line">brew list </span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查更新</span></span><br><span class="line">brew update</span><br><span class="line"></span><br><span class="line"><span class="comment"># 下载更新</span></span><br><span class="line">brew upgrade</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-10-panel-2" aria-labelledby="tabs-10-tab-2" class="flatpaper-tabs__panel" data-index="2" hidden><h2 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h2><p>Linux 使用 nvm 包管理器可以很方便的安装 Node.js</p>
+<h3 id="首先安装-nvm"><a href="#首先安装-nvm" class="headerlink" title="首先安装 nvm"></a>首先安装 nvm</h3><h1 id="安装-nvm-Node-版本管理器"><a href="#安装-nvm-Node-版本管理器" class="headerlink" title="安装 nvm (Node 版本管理器)"></a>安装 nvm (Node 版本管理器)</h1><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash</span><br></pre></td></tr></table></figure>
+
+<p>更新一下 PATH</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># bash</span></span><br><span class="line"><span class="built_in">source</span> ~/.bashrc</span><br><span class="line"></span><br><span class="line"><span class="comment"># zsh</span></span><br><span class="line"><span class="built_in">source</span> ~/.zshrc</span><br></pre></td></tr></table></figure>
+
+<p>验证</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">root@debian:~# nvm -v</span><br><span class="line">0.40.1</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装-Node-js"><a href="#安装-Node-js" class="headerlink" title="安装 Node.js"></a>安装 Node.js</h3><p>下载并安装 Node.js 22 LTS 版本</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">nvm install 22</span><br></pre></td></tr></table></figure>
+
+<p>验证</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">root@debian:~# node -v</span><br><span class="line">v22.12.0</span><br><span class="line">root@debian:~# npm -v</span><br><span class="line">10.9.0</span><br></pre></td></tr></table></figure></section></div></div>
+
+<h2 id="npm-常用命令"><a href="#npm-常用命令" class="headerlink" title="npm 常用命令"></a>npm 常用命令</h2><p><code>npm</code> 是 Node.js 自带的包管理器是 ，我们可以很方便的安装 Node.js 应用，常用命令介绍：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 初始化项目，创建 package.json 文件</span></span><br><span class="line">npm init</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看版本</span></span><br><span class="line">npm -v</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看当前 npm 的配</span></span><br><span class="line">npm config list	</span><br><span class="line"></span><br><span class="line"><span class="comment"># 更新 npm 到最新版本</span></span><br><span class="line">npm update -g npm</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装项目中的所有依赖项（基于 package.json）</span></span><br><span class="line">npm i</span><br><span class="line">npm install </span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装指定包，并添加到项目依赖</span></span><br><span class="line">npm install &lt;package&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装指定版本的包，例如：npm i lodash@4.17.20</span></span><br><span class="line">npm install &lt;package&gt;@&lt;version&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 全局安装指定的包（通常为 CLI 工具） </span></span><br><span class="line">npm install &lt;package&gt; -g</span><br><span class="line"></span><br><span class="line"><span class="comment"># 卸载指定包</span></span><br><span class="line">npm uninstall &lt;package&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 更新指定的包到最新版本</span></span><br><span class="line">npm update &lt;package&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看当前项目已安装的依赖包</span></span><br><span class="line">npm list</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看全局已安装的依赖包</span></span><br><span class="line">npm list -g</span><br><span class="line"></span><br><span class="line"><span class="comment"># 移除未在 package.json 中声明的多余依赖包</span></span><br><span class="line">npm prune</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用-pnpm"><a href="#使用-pnpm" class="headerlink" title="使用 pnpm"></a>使用 pnpm</h2><p>如果你需要经常使用 Node.js 应用，更推荐安装 <code>pnpm</code> 包管理，它的性能更好，安装速度速度更快，默认开启严格模式，确保项目中的依赖版本一致，避免了某些隐藏的版本冲突问题，并且对保持对 npm 的兼容。</p>
+<p>pnpm 的版本锁定文件是 <code>pnpm-lock.yaml</code></p>
+<h3 id="安装-pnpm"><a href="#安装-pnpm" class="headerlink" title="安装 pnpm"></a>安装 pnpm</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm install -g pnpm</span><br></pre></td></tr></table></figure>
+
+<h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><p><code>pnpm</code> 使用命令与 <code>npm</code> 类似，比如：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 基于 pnpm-lock.yaml 安装依赖</span></span><br><span class="line">pnpm i</span><br><span class="line">pnpm install </span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看自身版本</span></span><br><span class="line">pnpm -v</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装单个依赖，使用 pnpm install 也是可以的</span></span><br><span class="line">pnpm add &lt;package&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 全局安装</span></span><br><span class="line">pnpm add -g &lt;package&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 指定版本</span></span><br><span class="line">pnpm add &lt;package&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除软件包</span></span><br><span class="line">pnpm remove &lt;package&gt; </span><br><span class="line"></span><br><span class="line"><span class="comment"># 更新自身</span></span><br><span class="line">pnpm self-update</span><br><span class="line">pnpm add -g pnpm</span><br></pre></td></tr></table></figure>
+
+<h2 id="其他操作"><a href="#其他操作" class="headerlink" title="其他操作"></a>其他操作</h2><h3 id="更换镜像源"><a href="#更换镜像源" class="headerlink" title="更换镜像源"></a>更换镜像源</h3><div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>中国大陆用户可以使用下面的命令切换使用淘宝的镜像源，加速下载</p></div></div>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm config <span class="built_in">set</span> registry https://registry.npm.taobao.org</span><br></pre></td></tr></table></figure>
+
+<p>查看当前的镜像源</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm config get registry</span><br></pre></td></tr></table></figure>
+
+
+]]></content>
+      <categories>
+        <category>教程</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>macOS</tag>
+        <tag>Nodejs</tag>
+        <tag>Windows</tag>
       </tags>
   </entry>
   <entry>
@@ -1588,6 +1588,38 @@
       </tags>
   </entry>
   <entry>
+    <title>OpenAI 发布两款高性能开源人工智能模型 GPT-OSS-20B 与 GPT-OSS-120B</title>
+    <url>/post/news-openai-releae-gpt-oss-model.html</url>
+    <content><![CDATA[<p><strong>旧金山 – 2025年8月6日</strong> – OpenAI今日宣布推出两款采用混合专家（MoE）架构的开源推理模型：<strong>GPT-OSS-120B</strong> 和 <strong>GPT-OSS-20B</strong> 。 </p>
+<p>这两款模型使用  Apache 2.0 开源许可证发布，允许开发者和研究人员免费使用、修改和分发。</p>
+<p>新模型专注于思维链（Chain-of-Thought）推理，旨在通过将复杂任务分解为更小的步骤来提升结果的准确性。根据 OpenAI 的基准测试，<strong>GPT-OSS-20B</strong> 的性能可与 <code>o4-mini</code> 相媲美，而 <strong>GPT-OSS-120B</strong> 的性能则与 <code>o3-mini</code> 相当。</p>
+<p>OpenAI CEO 萨姆·奥尔特曼表示：</p>
+<blockquote>
+<p>“我们很高兴能将这些模型交到全世界更多人的手中。它们不会取代现有的GPT模型，而是作为一种补充，推动人工智能领域的创新与协作。”</p>
+</blockquote>
+<p>此次发布的一大亮点是其在本地设备上的运行能力。GPT-OSS-20B 等较小尺寸的模型经过优化，可在笔记本电脑甚至智能手机上高效运行。在 M4 芯片的 MacBook 上，20B 模型的推理速度可达每秒30-40个token。</p>
+<p><strong>相关链接:</strong></p>
+<ul>
+<li><strong>模型信息:</strong> <a href="https://openai.com/zh-Hans-CN/open-models/">https://openai.com/zh-Hans-CN/open-models/</a></li>
+<li><strong>模型下载:</strong> <a href="https://huggingface.co/openai">https://huggingface.co/openai</a></li>
+</ul>
+<p><strong>本地运行 GPT-OSS-20B</strong><br><a href="https://ollama.com/download">ollama</a> 上 GPT-OSS-20B 模型大小为 14GB ，一键运行命令如下：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">ollama run gpt-oss:20b </span><br></pre></td></tr></table></figure>
+
+<p>图形界面则可以使用 <a href="https://lmstudio.ai/">LM Studio</a></p>
+<p><img src="https://img.nep.me/i/2025/08/06/lmstudio-run-gpt-oss-20b.webp" alt="LM Studio run GPT-OSS-20B"></p>
+]]></content>
+      <categories>
+        <category>资讯</category>
+      </categories>
+      <tags>
+        <tag>AI</tag>
+        <tag>大模型</tag>
+        <tag>OpenAI</tag>
+        <tag>开源</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>OpenAI 发布 GPT-5，新一代人工智能模型正式亮相</title>
     <url>/post/news-openai-released-gpt-5.html</url>
     <content><![CDATA[<p><strong>2025 年 8 月 7 日</strong> — OpenAI 正式推出最新旗舰级人工智能模型 <strong>GPT-5</strong>，即日起面向 ChatGPT 用户与开发者开放。该模型在推理、编程与创意生成等方面全面升级，Open AI 称之为迄今最强的通用 AI 模型之一。</p>
@@ -1666,38 +1698,6 @@
         <tag>AI</tag>
         <tag>大模型</tag>
         <tag>OpenAI</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>OpenAI 发布两款高性能开源人工智能模型 GPT-OSS-20B 与 GPT-OSS-120B</title>
-    <url>/post/news-openai-releae-gpt-oss-model.html</url>
-    <content><![CDATA[<p><strong>旧金山 – 2025年8月6日</strong> – OpenAI今日宣布推出两款采用混合专家（MoE）架构的开源推理模型：<strong>GPT-OSS-120B</strong> 和 <strong>GPT-OSS-20B</strong> 。 </p>
-<p>这两款模型使用  Apache 2.0 开源许可证发布，允许开发者和研究人员免费使用、修改和分发。</p>
-<p>新模型专注于思维链（Chain-of-Thought）推理，旨在通过将复杂任务分解为更小的步骤来提升结果的准确性。根据 OpenAI 的基准测试，<strong>GPT-OSS-20B</strong> 的性能可与 <code>o4-mini</code> 相媲美，而 <strong>GPT-OSS-120B</strong> 的性能则与 <code>o3-mini</code> 相当。</p>
-<p>OpenAI CEO 萨姆·奥尔特曼表示：</p>
-<blockquote>
-<p>“我们很高兴能将这些模型交到全世界更多人的手中。它们不会取代现有的GPT模型，而是作为一种补充，推动人工智能领域的创新与协作。”</p>
-</blockquote>
-<p>此次发布的一大亮点是其在本地设备上的运行能力。GPT-OSS-20B 等较小尺寸的模型经过优化，可在笔记本电脑甚至智能手机上高效运行。在 M4 芯片的 MacBook 上，20B 模型的推理速度可达每秒30-40个token。</p>
-<p><strong>相关链接:</strong></p>
-<ul>
-<li><strong>模型信息:</strong> <a href="https://openai.com/zh-Hans-CN/open-models/">https://openai.com/zh-Hans-CN/open-models/</a></li>
-<li><strong>模型下载:</strong> <a href="https://huggingface.co/openai">https://huggingface.co/openai</a></li>
-</ul>
-<p><strong>本地运行 GPT-OSS-20B</strong><br><a href="https://ollama.com/download">ollama</a> 上 GPT-OSS-20B 模型大小为 14GB ，一键运行命令如下：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">ollama run gpt-oss:20b </span><br></pre></td></tr></table></figure>
-
-<p>图形界面则可以使用 <a href="https://lmstudio.ai/">LM Studio</a></p>
-<p><img src="https://img.nep.me/i/2025/08/06/lmstudio-run-gpt-oss-20b.webp" alt="LM Studio run GPT-OSS-20B"></p>
-]]></content>
-      <categories>
-        <category>资讯</category>
-      </categories>
-      <tags>
-        <tag>AI</tag>
-        <tag>大模型</tag>
-        <tag>OpenAI</tag>
-        <tag>开源</tag>
       </tags>
   </entry>
   <entry>
@@ -1806,121 +1806,6 @@
         <tag>AI</tag>
         <tag>图像生成</tag>
         <tag>Nano Banana</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>使用 Docker 轻松部署 Bitwarden 服务端，搭建你自己的密码管理器</title>
-    <url>/post/use-docker-run-bitwarden.html</url>
-    <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>在数字时代，密码安全至关重要，然而，要为每个账户都设置复杂且独一无二的密码，并在不同设备间高效管理，是一项很有难度的挑战，所以十分推荐使用密码管理器。</p>
-<p>常见的密码管理方案对比如下：</p>
-<ul>
-<li><strong>Apple 内置密码管理器</strong> : 在非 Apple 设备使用受限，没有集成 TOTP 。</li>
-<li><strong>Google 内置密码管理器</strong> : 设备限制相比 Apple 少一些，但仍然受限，也不支持 TOTP，且 Chrome 开放权限过高。</li>
-<li><strong>1Password</strong> : 界面友好、功能完善，但需要订阅（个人版 $2.99&#x2F;月，家庭版 $4.99&#x2F;月）。</li>
-<li><strong>Bitwarden.com</strong> : 提供免费方案，但功能有限（不支持 TOTP），高级版 $1&#x2F;月。</li>
-<li><strong>KeePass</strong> : 开源的客户端，需要自行解决密码库的同步问题。</li>
-</ul>
-<p>从安全、便利的角度考虑，推荐直接使用 1Password 的服务，但如果你不想长期付费，或不愿意将所有密码存放在别人的服务器上，那么自托管就成为更理想的解决方案。</p>
-<p>本教程将介绍如何使用 <strong>Vaultwarden</strong>（一个轻量、高效的 Bitwarden 服务器实现）与 Docker Compose，快速部署一个完全由你掌控的、功能强大的私有密码库。</p>
-<h2 id="什么是-Bitwarden"><a href="#什么是-Bitwarden" class="headerlink" title="什么是 Bitwarden"></a>什么是 Bitwarden</h2><p><strong>Bitwarden</strong> 是一款免费、开源的密码管理器，支持所有主流平台（桌面端、移动端、浏览器扩展等）。</p>
-<p>用户可以直接使用  <a href="https://bitwarden.com/">bitwarden.com</a> 提供的官方托管服务，或者选择自行部署官方开源的服务端。</p>
-<p>不过需要注意的是，在官方托管或自建服务的情况下，高级功能（TOTP）仍受到付费限制。</p>
-<h2 id="什么是-Vaultwarden"><a href="#什么是-Vaultwarden" class="headerlink" title="什么是 Vaultwarden"></a>什么是 Vaultwarden</h2><p>Vaultwarden 是一个开源的，使用 Rust 编写的非官方 Bitwarden 服务器实现，它非常轻量、高效，并且与官方 Bitwarden 客户端完全兼容。</p>
-<p>Vaultwarden 的源代码托管在 <a href="https://github.com/dani-garcia/vaultwarden">GitHub</a> ，目前有 48k 的 Stars，受到广泛认可。</p>
-<p>通过 Vaultwarden，你不仅能自由掌控数据，还可以 免费解锁 Bitwarden 的全部高级功能，例如内置的 TOTP 验证器，并且依然能够无缝使用官方客户端。</p>
-<h2 id="一、环境准备"><a href="#一、环境准备" class="headerlink" title="一、环境准备"></a>一、环境准备</h2><p>在开始之前，需要拥有一个自己的 VPS 或是支持 Docker 容器的 NAS 系统。</p>
-<h3 id="1-安装-Docker-和-Docker-Compose"><a href="#1-安装-Docker-和-Docker-Compose" class="headerlink" title="1. 安装 Docker 和 Docker Compose"></a>1. 安装 Docker 和 Docker Compose</h3><p>这是我们容器化部署的基础。如果你的服务器尚未安装，可以参考以下教程。</p>
-<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p><strong>延伸阅读:</strong> <a href="https://ooo.run/post/debian-install-docker.html" target="_blank">在 Debian 12 中安装 Docker 以及 Docker Compose</a></p></div></div>
-
-<h3 id="2-准备域名"><a href="#2-准备域名" class="headerlink" title="2. 准备域名"></a>2. 准备域名</h3><p>为了通过 HTTPS 安全地访问你的密码管理器，你需要一个域名，并将其解析到你的服务器 IP。</p>
-<h3 id="3-创建项目目录"><a href="#3-创建项目目录" class="headerlink" title="3. 创建项目目录"></a>3. 创建项目目录</h3><p>为 Vaultwarden 创建一个专用的目录，用于存放配置文件和数据。</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p /opt/vaultwarden</span><br></pre></td></tr></table></figure>
-
-<h2 id="二、使用-Docker-Compose-部署-Vaultwarden"><a href="#二、使用-Docker-Compose-部署-Vaultwarden" class="headerlink" title="二、使用 Docker Compose 部署 Vaultwarden"></a>二、使用 Docker Compose 部署 Vaultwarden</h2><h3 id="创建-compose-yml-文件"><a href="#创建-compose-yml-文件" class="headerlink" title="创建 compose.yml 文件"></a>创建 <code>compose.yml</code> 文件</h3><p>在项目目录 (<code>/opt/vaultwarden</code>) 中，创建一个名为 <code>compose.yml</code> 的文件。</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /opt/vaultwarden</span><br><span class="line"></span><br><span class="line">vim compose.yml</span><br></pre></td></tr></table></figure>
-
-<p>将以下内容粘贴到文件中：</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">vaultwarden:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">vaultwarden/server:latest</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">vaultwarden</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span><span class="string">:6666:80</span>             <span class="comment"># 仅监听本地端口，由反向代理访问</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="attr">DOMAIN:</span> <span class="string">&quot;https://vault.yourdomain.com&quot;</span> <span class="comment"># 将这里替换为你的实际域名</span></span><br><span class="line">      <span class="attr">WEBSOCKET_ENABLED:</span> <span class="string">&quot;true&quot;</span>       <span class="comment"># 开启 WebSocket，用于客户端实时同步</span></span><br><span class="line">      <span class="comment"># SIGNUPS_ALLOWED: &quot;false&quot;      # 关闭公开注册，生效需要删除前面的 # </span></span><br><span class="line">      <span class="attr">INVITATIONS_ALLOWED:</span> <span class="string">&quot;false&quot;</span>    <span class="comment"># 关闭邀请功能</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./data:/data</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>配置解析:</strong></p>
-<ul>
-<li><code>image</code>: 使用 <code>vaultwarden/server:latest</code> 镜像。</li>
-<li><code>ports</code>: 将容器的 80 端口映射到主机的 <code>127.0.0.1:6666</code>。<strong>127.0.0.1</strong> 表示 Vaultwarden 只能通过本机（或反向代理）访问。</li>
-<li><code>environment</code>:<ul>
-<li><code>DOMAIN</code> : 设置需要使用的域名</li>
-<li><code>WEBSOCKET_ENABLED</code>: 启用 WebSocket 可以让你的客户端与服务器之间进行实时通信和同步。</li>
-<li><code>SIGNUPS_ALLOWED</code>: 设置为 <code>false</code> 会禁止注册新账户。<blockquote>
-<p><strong>注意</strong>: 可以在注册完账户后，删除前面的 <code># </code>，使这行配置生效，然后重新启动服务</p>
-</blockquote>
-</li>
-</ul>
-</li>
-<li><code>volumes</code>: 将 Vaultwarden 的所有数据（包括用户、密码库和配置）持久化存储在主机当前目录下的 <code>data</code> 文件夹中，确保容器更新或重建后数据不会丢失。</li>
-</ul>
-<h3 id="启动-Vaultwarden-服务"><a href="#启动-Vaultwarden-服务" class="headerlink" title="启动 Vaultwarden 服务"></a>启动 Vaultwarden 服务</h3><p>在 <code>compose.yml</code> 文件所在目录中，执行以下命令来拉取镜像并启动服务：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">docker compose up -d</span><br></pre></td></tr></table></figure>
-
-<h2 id="三、配置反向代理（关键步骤）"><a href="#三、配置反向代理（关键步骤）" class="headerlink" title="三、配置反向代理（关键步骤）"></a>三、配置反向代理（关键步骤）</h2><p><strong>绝对不要将没有 HTTPS 的密码管理器暴露在公网上。</strong> 我们需要使用 Nginx 或其他反向代理工具，为 Vaultwarden 启用 SSL&#x2F;TLS 加密。</p>
-<p>以下是一个 Nginx 的配置示例。你需要为你的域名申请一个 SSL 证书（例如通过 Let’s Encrypt）。</p>
-<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="comment"># /etc/nginx/conf.d/vault.yourdomain.com.conf</span></span><br><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">80</span>;</span><br><span class="line">    <span class="attribute">server_name</span> vault.yourdomain.com;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 将所有 HTTP 请求重定向到 HTTPS</span></span><br><span class="line">    <span class="section">location</span> / &#123;</span><br><span class="line">        <span class="attribute">return</span> <span class="number">301</span> https://<span class="variable">$host</span><span class="variable">$request_uri</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">443</span> ssl http2;</span><br><span class="line">    <span class="attribute">server_name</span> vault.yourdomain.com;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># SSL 证书路径</span></span><br><span class="line">    <span class="attribute">ssl_certificate</span> /path/to/your/fullchain.pem;</span><br><span class="line">    <span class="attribute">ssl_certificate_key</span> /path/to/your/privkey.pem;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 安全相关的 SSL 设置 (推荐)</span></span><br><span class="line">    <span class="attribute">ssl_protocols</span> TLSv1.<span class="number">2</span> TLSv1.<span class="number">3</span>;</span><br><span class="line">    <span class="attribute">ssl_ciphers</span> <span class="string">&#x27;ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384&#x27;</span>;</span><br><span class="line">    <span class="attribute">ssl_prefer_server_ciphers</span> <span class="literal">off</span>;</span><br><span class="line"></span><br><span class="line">    <span class="section">location</span> / &#123;</span><br><span class="line">        <span class="attribute">client_max_body_size</span> <span class="number">525M</span>;</span><br><span class="line">        <span class="attribute">proxy_pass</span> http://127.0.0.1:6666;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> Host <span class="variable">$host</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Real-IP <span class="variable">$remote_addr</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Forwarded-Proto <span class="variable">$scheme</span>;</span><br><span class="line"></span><br><span class="line">        <span class="attribute">proxy_set_header</span> Upgrade <span class="variable">$http_upgrade</span>; </span><br><span class="line">        <span class="attribute">proxy_set_header</span> Connection <span class="string">&quot;upgrade&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>测试并重载 Nginx 配置：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">nginx -t</span><br><span class="line">systemctl reload nginx</span><br></pre></td></tr></table></figure>
-
-<h2 id="四、使用你的自建密码库"><a href="#四、使用你的自建密码库" class="headerlink" title="四、使用你的自建密码库"></a>四、使用你的自建密码库</h2><ol>
-<li><p><strong>创建账户</strong>: 浏览器访问 <code>https://vault.yourdomain.com</code>，注册用户。</p>
-</li>
-<li><p><strong>配置客户端</strong>:</p>
-<ul>
-<li>打开 Bitwarden 浏览器插件或手机 App。</li>
-<li>在登录界面，服务器设置为自托管。</li>
-<li>在 “Server URL” 字段中，填入你的 Vaultwarden 访问地址：<code>https://vault.yourdomain.com</code></li>
-<li>保存后，使用你注册的账号密码登录。</li>
-</ul>
-</li>
-</ol>
-<h2 id="数据备份"><a href="#数据备份" class="headerlink" title="数据备份"></a>数据备份</h2><p>备份至关重要，我们必须对 Vaultwarden 的数据进行定期备份，以避免密码丢失的情况。</p>
-<h3 id="手动备份"><a href="#手动备份" class="headerlink" title="手动备份"></a>手动备份</h3><p>您可以随时执行以下命令来创建一份即时备份。</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">tar zcvf /root/backup/vaultwarden-backup-$(<span class="built_in">date</span> +%F).tar.gz -C /opt vaultwarden</span><br></pre></td></tr></table></figure>
-<ul>
-<li>此命令会将 <code>/opt/vaultwarden</code> 目录完整备份到 <code>/root/backup/</code> 目录下。</li>
-<li><code>$(date +%F)</code> 会在文件名中自动加入当前日期（例如 <code>2025-08-26</code>）。</li>
-<li><code>-C /opt vaultwarden</code> 参数可以避免在归档文件中包含 <code>/opt/</code> 的上层路径，使恢复过程更简洁。</li>
-</ul>
-<h3 id="自动备份-Crontab"><a href="#自动备份-Crontab" class="headerlink" title="自动备份 (Crontab)"></a>自动备份 (Crontab)</h3><p>为了实现自动化，我们可以使用 <code>crontab</code> 来设置定时备份任务。</p>
-<ol>
-<li><p><strong>编辑 Crontab</strong></p>
-<p>执行 <code>crontab -e</code> 命令来编辑定时任务列表。</p>
-</li>
-<li><p><strong>添加定时任务</strong></p>
-<p>在编辑器中添加以下两行内容：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 每天凌晨 3:00 备份 Vaultwarden 数据</span><br><span class="line">0 3 * * * tar zcvf /root/backup/vaultwarden-backup-$(date +\%F).tar.gz -C /opt vaultwarden &gt;/dev/null 2&gt;&amp;1</span><br><span class="line"></span><br><span class="line"># 每天凌晨 3:05 删除超过 7 天的旧备份</span><br><span class="line">5 3 * * * find /root/backup -name &quot;vaultwarden-backup-*.tar.gz&quot; -mtime +15 -delete</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>第一行命令会在每天凌晨 3:00 创建一个带时间戳的备份。<ul>
-<li><strong>注意</strong>: 在 <code>crontab</code> 中，<code>%</code> 字符需要被转义为 <code>\%</code>。</li>
-<li><code>&gt;/dev/null 2&gt;&amp;1</code> 会将命令的正常输出和错误输出都重定向到空设备，避免产生不必要的邮件通知。</li>
-</ul>
-</li>
-<li>第二行命令会在每天凌晨 3:05 查找并删除 <code>/root</code> 目录下所有超过 15 天的 Vaultwarden 备份文件，以节省磁盘空间。</li>
-</ul>
-</li>
-</ol>
-<p>保存并退出编辑器后，<code>cron</code> 服务会自动加载新的定时任务。</p>
-<blockquote>
-<p>除了打包备份之外，还要将备份文件保存在不同的设备中存储，避免遇到 VPS 服务商或是 NAS 的硬盘错误导致无法访问的情况</p>
-</blockquote>
-<p>对于 Linux 服务器，我们可以在存储备份的设备上使用 <code>rsync</code> 、<code>rclone</code> 定期同步 <code>/root/backup</code> 文件夹</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>恭喜！你现在拥有了一个完全由自己掌控、安全且功能强大的密码管理器。通过 Docker 和 Vaultwarden，你可以轻松地保护你的数字身份，同时享受媲美商业解决方案的便捷体验。</p>
-]]></content>
-      <categories>
-        <category>教程</category>
-      </categories>
-      <tags>
-        <tag>Docker</tag>
-        <tag>Self-hosted</tag>
-        <tag>Bitwarden</tag>
-        <tag>密码管理器</tag>
       </tags>
   </entry>
   <entry>
@@ -2122,6 +2007,121 @@
         <tag>Docker Compose</tag>
         <tag>Self-hosted</tag>
         <tag>记账</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用 Docker 轻松部署 Bitwarden 服务端，搭建你自己的密码管理器</title>
+    <url>/post/use-docker-run-bitwarden.html</url>
+    <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>在数字时代，密码安全至关重要，然而，要为每个账户都设置复杂且独一无二的密码，并在不同设备间高效管理，是一项很有难度的挑战，所以十分推荐使用密码管理器。</p>
+<p>常见的密码管理方案对比如下：</p>
+<ul>
+<li><strong>Apple 内置密码管理器</strong> : 在非 Apple 设备使用受限，没有集成 TOTP 。</li>
+<li><strong>Google 内置密码管理器</strong> : 设备限制相比 Apple 少一些，但仍然受限，也不支持 TOTP，且 Chrome 开放权限过高。</li>
+<li><strong>1Password</strong> : 界面友好、功能完善，但需要订阅（个人版 $2.99&#x2F;月，家庭版 $4.99&#x2F;月）。</li>
+<li><strong>Bitwarden.com</strong> : 提供免费方案，但功能有限（不支持 TOTP），高级版 $1&#x2F;月。</li>
+<li><strong>KeePass</strong> : 开源的客户端，需要自行解决密码库的同步问题。</li>
+</ul>
+<p>从安全、便利的角度考虑，推荐直接使用 1Password 的服务，但如果你不想长期付费，或不愿意将所有密码存放在别人的服务器上，那么自托管就成为更理想的解决方案。</p>
+<p>本教程将介绍如何使用 <strong>Vaultwarden</strong>（一个轻量、高效的 Bitwarden 服务器实现）与 Docker Compose，快速部署一个完全由你掌控的、功能强大的私有密码库。</p>
+<h2 id="什么是-Bitwarden"><a href="#什么是-Bitwarden" class="headerlink" title="什么是 Bitwarden"></a>什么是 Bitwarden</h2><p><strong>Bitwarden</strong> 是一款免费、开源的密码管理器，支持所有主流平台（桌面端、移动端、浏览器扩展等）。</p>
+<p>用户可以直接使用  <a href="https://bitwarden.com/">bitwarden.com</a> 提供的官方托管服务，或者选择自行部署官方开源的服务端。</p>
+<p>不过需要注意的是，在官方托管或自建服务的情况下，高级功能（TOTP）仍受到付费限制。</p>
+<h2 id="什么是-Vaultwarden"><a href="#什么是-Vaultwarden" class="headerlink" title="什么是 Vaultwarden"></a>什么是 Vaultwarden</h2><p>Vaultwarden 是一个开源的，使用 Rust 编写的非官方 Bitwarden 服务器实现，它非常轻量、高效，并且与官方 Bitwarden 客户端完全兼容。</p>
+<p>Vaultwarden 的源代码托管在 <a href="https://github.com/dani-garcia/vaultwarden">GitHub</a> ，目前有 48k 的 Stars，受到广泛认可。</p>
+<p>通过 Vaultwarden，你不仅能自由掌控数据，还可以 免费解锁 Bitwarden 的全部高级功能，例如内置的 TOTP 验证器，并且依然能够无缝使用官方客户端。</p>
+<h2 id="一、环境准备"><a href="#一、环境准备" class="headerlink" title="一、环境准备"></a>一、环境准备</h2><p>在开始之前，需要拥有一个自己的 VPS 或是支持 Docker 容器的 NAS 系统。</p>
+<h3 id="1-安装-Docker-和-Docker-Compose"><a href="#1-安装-Docker-和-Docker-Compose" class="headerlink" title="1. 安装 Docker 和 Docker Compose"></a>1. 安装 Docker 和 Docker Compose</h3><p>这是我们容器化部署的基础。如果你的服务器尚未安装，可以参考以下教程。</p>
+<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p><strong>延伸阅读:</strong> <a href="https://ooo.run/post/debian-install-docker.html" target="_blank">在 Debian 12 中安装 Docker 以及 Docker Compose</a></p></div></div>
+
+<h3 id="2-准备域名"><a href="#2-准备域名" class="headerlink" title="2. 准备域名"></a>2. 准备域名</h3><p>为了通过 HTTPS 安全地访问你的密码管理器，你需要一个域名，并将其解析到你的服务器 IP。</p>
+<h3 id="3-创建项目目录"><a href="#3-创建项目目录" class="headerlink" title="3. 创建项目目录"></a>3. 创建项目目录</h3><p>为 Vaultwarden 创建一个专用的目录，用于存放配置文件和数据。</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p /opt/vaultwarden</span><br></pre></td></tr></table></figure>
+
+<h2 id="二、使用-Docker-Compose-部署-Vaultwarden"><a href="#二、使用-Docker-Compose-部署-Vaultwarden" class="headerlink" title="二、使用 Docker Compose 部署 Vaultwarden"></a>二、使用 Docker Compose 部署 Vaultwarden</h2><h3 id="创建-compose-yml-文件"><a href="#创建-compose-yml-文件" class="headerlink" title="创建 compose.yml 文件"></a>创建 <code>compose.yml</code> 文件</h3><p>在项目目录 (<code>/opt/vaultwarden</code>) 中，创建一个名为 <code>compose.yml</code> 的文件。</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /opt/vaultwarden</span><br><span class="line"></span><br><span class="line">vim compose.yml</span><br></pre></td></tr></table></figure>
+
+<p>将以下内容粘贴到文件中：</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">vaultwarden:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">vaultwarden/server:latest</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">vaultwarden</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span><span class="string">:6666:80</span>             <span class="comment"># 仅监听本地端口，由反向代理访问</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="attr">DOMAIN:</span> <span class="string">&quot;https://vault.yourdomain.com&quot;</span> <span class="comment"># 将这里替换为你的实际域名</span></span><br><span class="line">      <span class="attr">WEBSOCKET_ENABLED:</span> <span class="string">&quot;true&quot;</span>       <span class="comment"># 开启 WebSocket，用于客户端实时同步</span></span><br><span class="line">      <span class="comment"># SIGNUPS_ALLOWED: &quot;false&quot;      # 关闭公开注册，生效需要删除前面的 # </span></span><br><span class="line">      <span class="attr">INVITATIONS_ALLOWED:</span> <span class="string">&quot;false&quot;</span>    <span class="comment"># 关闭邀请功能</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./data:/data</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>配置解析:</strong></p>
+<ul>
+<li><code>image</code>: 使用 <code>vaultwarden/server:latest</code> 镜像。</li>
+<li><code>ports</code>: 将容器的 80 端口映射到主机的 <code>127.0.0.1:6666</code>。<strong>127.0.0.1</strong> 表示 Vaultwarden 只能通过本机（或反向代理）访问。</li>
+<li><code>environment</code>:<ul>
+<li><code>DOMAIN</code> : 设置需要使用的域名</li>
+<li><code>WEBSOCKET_ENABLED</code>: 启用 WebSocket 可以让你的客户端与服务器之间进行实时通信和同步。</li>
+<li><code>SIGNUPS_ALLOWED</code>: 设置为 <code>false</code> 会禁止注册新账户。<blockquote>
+<p><strong>注意</strong>: 可以在注册完账户后，删除前面的 <code># </code>，使这行配置生效，然后重新启动服务</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><code>volumes</code>: 将 Vaultwarden 的所有数据（包括用户、密码库和配置）持久化存储在主机当前目录下的 <code>data</code> 文件夹中，确保容器更新或重建后数据不会丢失。</li>
+</ul>
+<h3 id="启动-Vaultwarden-服务"><a href="#启动-Vaultwarden-服务" class="headerlink" title="启动 Vaultwarden 服务"></a>启动 Vaultwarden 服务</h3><p>在 <code>compose.yml</code> 文件所在目录中，执行以下命令来拉取镜像并启动服务：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">docker compose up -d</span><br></pre></td></tr></table></figure>
+
+<h2 id="三、配置反向代理（关键步骤）"><a href="#三、配置反向代理（关键步骤）" class="headerlink" title="三、配置反向代理（关键步骤）"></a>三、配置反向代理（关键步骤）</h2><p><strong>绝对不要将没有 HTTPS 的密码管理器暴露在公网上。</strong> 我们需要使用 Nginx 或其他反向代理工具，为 Vaultwarden 启用 SSL&#x2F;TLS 加密。</p>
+<p>以下是一个 Nginx 的配置示例。你需要为你的域名申请一个 SSL 证书（例如通过 Let’s Encrypt）。</p>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="comment"># /etc/nginx/conf.d/vault.yourdomain.com.conf</span></span><br><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">80</span>;</span><br><span class="line">    <span class="attribute">server_name</span> vault.yourdomain.com;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 将所有 HTTP 请求重定向到 HTTPS</span></span><br><span class="line">    <span class="section">location</span> / &#123;</span><br><span class="line">        <span class="attribute">return</span> <span class="number">301</span> https://<span class="variable">$host</span><span class="variable">$request_uri</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">443</span> ssl http2;</span><br><span class="line">    <span class="attribute">server_name</span> vault.yourdomain.com;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># SSL 证书路径</span></span><br><span class="line">    <span class="attribute">ssl_certificate</span> /path/to/your/fullchain.pem;</span><br><span class="line">    <span class="attribute">ssl_certificate_key</span> /path/to/your/privkey.pem;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 安全相关的 SSL 设置 (推荐)</span></span><br><span class="line">    <span class="attribute">ssl_protocols</span> TLSv1.<span class="number">2</span> TLSv1.<span class="number">3</span>;</span><br><span class="line">    <span class="attribute">ssl_ciphers</span> <span class="string">&#x27;ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384&#x27;</span>;</span><br><span class="line">    <span class="attribute">ssl_prefer_server_ciphers</span> <span class="literal">off</span>;</span><br><span class="line"></span><br><span class="line">    <span class="section">location</span> / &#123;</span><br><span class="line">        <span class="attribute">client_max_body_size</span> <span class="number">525M</span>;</span><br><span class="line">        <span class="attribute">proxy_pass</span> http://127.0.0.1:6666;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> Host <span class="variable">$host</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Real-IP <span class="variable">$remote_addr</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Forwarded-Proto <span class="variable">$scheme</span>;</span><br><span class="line"></span><br><span class="line">        <span class="attribute">proxy_set_header</span> Upgrade <span class="variable">$http_upgrade</span>; </span><br><span class="line">        <span class="attribute">proxy_set_header</span> Connection <span class="string">&quot;upgrade&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>测试并重载 Nginx 配置：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">nginx -t</span><br><span class="line">systemctl reload nginx</span><br></pre></td></tr></table></figure>
+
+<h2 id="四、使用你的自建密码库"><a href="#四、使用你的自建密码库" class="headerlink" title="四、使用你的自建密码库"></a>四、使用你的自建密码库</h2><ol>
+<li><p><strong>创建账户</strong>: 浏览器访问 <code>https://vault.yourdomain.com</code>，注册用户。</p>
+</li>
+<li><p><strong>配置客户端</strong>:</p>
+<ul>
+<li>打开 Bitwarden 浏览器插件或手机 App。</li>
+<li>在登录界面，服务器设置为自托管。</li>
+<li>在 “Server URL” 字段中，填入你的 Vaultwarden 访问地址：<code>https://vault.yourdomain.com</code></li>
+<li>保存后，使用你注册的账号密码登录。</li>
+</ul>
+</li>
+</ol>
+<h2 id="数据备份"><a href="#数据备份" class="headerlink" title="数据备份"></a>数据备份</h2><p>备份至关重要，我们必须对 Vaultwarden 的数据进行定期备份，以避免密码丢失的情况。</p>
+<h3 id="手动备份"><a href="#手动备份" class="headerlink" title="手动备份"></a>手动备份</h3><p>您可以随时执行以下命令来创建一份即时备份。</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">tar zcvf /root/backup/vaultwarden-backup-$(<span class="built_in">date</span> +%F).tar.gz -C /opt vaultwarden</span><br></pre></td></tr></table></figure>
+<ul>
+<li>此命令会将 <code>/opt/vaultwarden</code> 目录完整备份到 <code>/root/backup/</code> 目录下。</li>
+<li><code>$(date +%F)</code> 会在文件名中自动加入当前日期（例如 <code>2025-08-26</code>）。</li>
+<li><code>-C /opt vaultwarden</code> 参数可以避免在归档文件中包含 <code>/opt/</code> 的上层路径，使恢复过程更简洁。</li>
+</ul>
+<h3 id="自动备份-Crontab"><a href="#自动备份-Crontab" class="headerlink" title="自动备份 (Crontab)"></a>自动备份 (Crontab)</h3><p>为了实现自动化，我们可以使用 <code>crontab</code> 来设置定时备份任务。</p>
+<ol>
+<li><p><strong>编辑 Crontab</strong></p>
+<p>执行 <code>crontab -e</code> 命令来编辑定时任务列表。</p>
+</li>
+<li><p><strong>添加定时任务</strong></p>
+<p>在编辑器中添加以下两行内容：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 每天凌晨 3:00 备份 Vaultwarden 数据</span><br><span class="line">0 3 * * * tar zcvf /root/backup/vaultwarden-backup-$(date +\%F).tar.gz -C /opt vaultwarden &gt;/dev/null 2&gt;&amp;1</span><br><span class="line"></span><br><span class="line"># 每天凌晨 3:05 删除超过 7 天的旧备份</span><br><span class="line">5 3 * * * find /root/backup -name &quot;vaultwarden-backup-*.tar.gz&quot; -mtime +15 -delete</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>第一行命令会在每天凌晨 3:00 创建一个带时间戳的备份。<ul>
+<li><strong>注意</strong>: 在 <code>crontab</code> 中，<code>%</code> 字符需要被转义为 <code>\%</code>。</li>
+<li><code>&gt;/dev/null 2&gt;&amp;1</code> 会将命令的正常输出和错误输出都重定向到空设备，避免产生不必要的邮件通知。</li>
+</ul>
+</li>
+<li>第二行命令会在每天凌晨 3:05 查找并删除 <code>/root</code> 目录下所有超过 15 天的 Vaultwarden 备份文件，以节省磁盘空间。</li>
+</ul>
+</li>
+</ol>
+<p>保存并退出编辑器后，<code>cron</code> 服务会自动加载新的定时任务。</p>
+<blockquote>
+<p>除了打包备份之外，还要将备份文件保存在不同的设备中存储，避免遇到 VPS 服务商或是 NAS 的硬盘错误导致无法访问的情况</p>
+</blockquote>
+<p>对于 Linux 服务器，我们可以在存储备份的设备上使用 <code>rsync</code> 、<code>rclone</code> 定期同步 <code>/root/backup</code> 文件夹</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>恭喜！你现在拥有了一个完全由自己掌控、安全且功能强大的密码管理器。通过 Docker 和 Vaultwarden，你可以轻松地保护你的数字身份，同时享受媲美商业解决方案的便捷体验。</p>
+]]></content>
+      <categories>
+        <category>教程</category>
+      </categories>
+      <tags>
+        <tag>Docker</tag>
+        <tag>Self-hosted</tag>
+        <tag>Bitwarden</tag>
+        <tag>密码管理器</tag>
       </tags>
   </entry>
   <entry>
@@ -2594,6 +2594,31 @@
       </tags>
   </entry>
   <entry>
+    <title>实用网站：使用 Dashboard Icons 便捷获取各种服务的图标</title>
+    <url>/post/website-dashboard-icons.html</url>
+    <content><![CDATA[<p>有时我们会需要获取一些服务的图标，用在一些面板或是需要的地方，这里推荐一个开源的项目 <strong>Dashboard Icons</strong> ：</p>
+<ul>
+<li><a href="https://github.com/homarr-labs/dashboard-icons">GitHub</a> </li>
+<li><a href="https://dashboardicons.com/">官网</a></li>
+</ul>
+<p>目前已经支持 2021 种服务了，而且完全免费！</p>
+<p>图标的列表可以在这里查看： <a href="https://dashboardicons.com/icons">https://dashboardicons.com/icons</a></p>
+<p><img src="https://img.nep.me/ooo/dashboard-icons-list.webp" alt="dashboard icons list"></p>
+<p>支持直接下载 <code>svg</code> 、 <code>png</code> 、 <code>webp</code> 格式的图标文件，也可以直接复制 <code>cdn.jsdelivr.net</code> CDN 的图标链接，非常的方便。</p>
+<p>部分服务还提供暗黑主题模式的图标。  </p>
+<p><img src="https://img.nep.me/ooo/dashboard-icons-details.webp" alt="dasboard icons get icons"></p>
+<p>这是一个开源的项目，如果觉得有帮助可以给项目点点 Star 支持一下！</p>
+]]></content>
+      <categories>
+        <category>工具资源</category>
+      </categories>
+      <tags>
+        <tag>Icons</tag>
+        <tag>Dashboard Icons</tag>
+        <tag>实用网站</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Git 技巧：为不同项目配置专属用户信息与 SSH 密钥</title>
     <url>/post/use-specific-git-user.html</url>
     <content><![CDATA[<p>在日常开发中，我们可能需要同时维护个人项目和工作项目，它们需要使用不同的 Git 用户信息（用户名、邮箱）和 SSH 密钥进行提交与推送。本文将介绍两种核心方法，帮你优雅地管理多个 Git 身份。</p>
@@ -2651,31 +2676,6 @@
       </categories>
       <tags>
         <tag>Git</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>实用网站：使用 Dashboard Icons 便捷获取各种服务的图标</title>
-    <url>/post/website-dashboard-icons.html</url>
-    <content><![CDATA[<p>有时我们会需要获取一些服务的图标，用在一些面板或是需要的地方，这里推荐一个开源的项目 <strong>Dashboard Icons</strong> ：</p>
-<ul>
-<li><a href="https://github.com/homarr-labs/dashboard-icons">GitHub</a> </li>
-<li><a href="https://dashboardicons.com/">官网</a></li>
-</ul>
-<p>目前已经支持 2021 种服务了，而且完全免费！</p>
-<p>图标的列表可以在这里查看： <a href="https://dashboardicons.com/icons">https://dashboardicons.com/icons</a></p>
-<p><img src="https://img.nep.me/ooo/dashboard-icons-list.webp" alt="dashboard icons list"></p>
-<p>支持直接下载 <code>svg</code> 、 <code>png</code> 、 <code>webp</code> 格式的图标文件，也可以直接复制 <code>cdn.jsdelivr.net</code> CDN 的图标链接，非常的方便。</p>
-<p>部分服务还提供暗黑主题模式的图标。  </p>
-<p><img src="https://img.nep.me/ooo/dashboard-icons-details.webp" alt="dasboard icons get icons"></p>
-<p>这是一个开源的项目，如果觉得有帮助可以给项目点点 Star 支持一下！</p>
-]]></content>
-      <categories>
-        <category>工具资源</category>
-      </categories>
-      <tags>
-        <tag>Icons</tag>
-        <tag>Dashboard Icons</tag>
-        <tag>实用网站</tag>
       </tags>
   </entry>
   <entry>
@@ -2862,28 +2862,6 @@
       </tags>
   </entry>
   <entry>
-    <title>什么是 “服务器奶牛化” ？</title>
-    <url>/post/what-is-turing-a-server-into-cash-cow.html</url>
-    <content><![CDATA[<p><strong>服务器奶牛化</strong> 是一个网络流行语，形象地描述了将服务器当作“奶牛”，通过持续压榨其资源以获取最大化收益的行为。这个词的核心在于“榨取价值”，类似于不断从奶牛身上挤奶。</p>
-<p>用于形容将服务器的计算、存储、带宽等资源，像挤牛奶一样持续变现的过程。</p>
-<h3 id="主要特征"><a href="#主要特征" class="headerlink" title="主要特征"></a>主要特征</h3><ol>
-<li><p><strong>资源极限压榨</strong><br>让服务器长期处于高负载状态，最大限度地利用其计算、存储和网络带宽，例如运行爬虫、挖矿或批量处理任务。</p>
-</li>
-<li><p><strong>成本套利（薅羊毛）</strong><br>利用云服务商的免费试用、促销活动或漏洞，以极低的成本获取服务器资源，再通过这些资源进行挖矿、跑节点或执行广告任务来盈利。</p>
-</li>
-<li><p><strong>规模化运作</strong><br>同时部署大量服务器运行相同的脚本或服务。单台服务器的产出虽小，但规模化后总收益非常可观，如同经营一个“云上牧场”。</p>
-</li>
-</ol>
-<p><img src="https://img.nep.me/i/2025/08/13/what-is-server-cow.webp" alt="what-is-server-cow"></p>
-]]></content>
-      <categories>
-        <category>笔记</category>
-      </categories>
-      <tags>
-        <tag>服务器</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Google Antigravity 已支持 Agent Skills</title>
     <url>/post/agent-skills-now-available-in-antigravity.html</url>
     <content><![CDATA[<p>Google 的 Antigravity 在1.14.2 版本中正式带来了 <a href="https://antigravity.google/docs/skills">Agent Skills</a> 的支持。 </p>
@@ -2905,6 +2883,28 @@
       <tags>
         <tag>Antigravity</tag>
         <tag>Agent Skills</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>什么是 “服务器奶牛化” ？</title>
+    <url>/post/what-is-turing-a-server-into-cash-cow.html</url>
+    <content><![CDATA[<p><strong>服务器奶牛化</strong> 是一个网络流行语，形象地描述了将服务器当作“奶牛”，通过持续压榨其资源以获取最大化收益的行为。这个词的核心在于“榨取价值”，类似于不断从奶牛身上挤奶。</p>
+<p>用于形容将服务器的计算、存储、带宽等资源，像挤牛奶一样持续变现的过程。</p>
+<h3 id="主要特征"><a href="#主要特征" class="headerlink" title="主要特征"></a>主要特征</h3><ol>
+<li><p><strong>资源极限压榨</strong><br>让服务器长期处于高负载状态，最大限度地利用其计算、存储和网络带宽，例如运行爬虫、挖矿或批量处理任务。</p>
+</li>
+<li><p><strong>成本套利（薅羊毛）</strong><br>利用云服务商的免费试用、促销活动或漏洞，以极低的成本获取服务器资源，再通过这些资源进行挖矿、跑节点或执行广告任务来盈利。</p>
+</li>
+<li><p><strong>规模化运作</strong><br>同时部署大量服务器运行相同的脚本或服务。单台服务器的产出虽小，但规模化后总收益非常可观，如同经营一个“云上牧场”。</p>
+</li>
+</ol>
+<p><img src="https://img.nep.me/i/2025/08/13/what-is-server-cow.webp" alt="what-is-server-cow"></p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>服务器</tag>
       </tags>
   </entry>
   <entry>
@@ -3816,6 +3816,205 @@
       <tags>
         <tag>ChatGPT</tag>
         <tag>Codex</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>后端回来了：Vercel 支持直接运行 Dockerfile</title>
+    <url>/post/backends-are-back-vercel-support-dockerfile.html</url>
+    <content><![CDATA[<p>你是否也想过用部署前端的丝滑体验来部署后端 Docker 服务？<strong>Vercel</strong> 近日正式支持直接运行 <strong>Dockerfile</strong>！本文我们将深入解析这一重磅更新、适用场景以及 Fluid Compute 底层机制。</p>
+<span id="more"></span>
+
+<p>北京时间 2026 年 7 月 1 日， <strong>Vercel</strong> 在官网宣布正式支持 <a href="https://vercel.com/blog/dockerfile-on-vercel">通过 Dockerfile 部署应用</a>，并在文章结尾喊出了 <mark>Backends are back</mark>。开发者现在可以在项目中添加 <code>Dockerfile.vercel</code>，让 <strong>Vercel</strong> 自动完成镜像构建、镜像存储和部署，并将应用运行在 <strong>Fluid Compute</strong> 之上。</p>
+<p>这项更新意味着，<strong>Vercel</strong> 不再只是一个更适合 <strong>Next.js</strong>、前端应用和 <strong>Serverless Functions</strong> 的平台，而是进一步向自定义后端服务 and 通用 Web 应用运行平台扩展。</p>
+<ul>
+<li><a href="https://vercel.com/docs/functions/container-images">文档</a></li>
+<li><a href="https://vercel.com/templates">示例</a></li>
+</ul>
+<details class="flatpaper-note flatpaper-note--warning"><summary class="flatpaper-note__title"><span class="flatpaper-note__icon" aria-hidden="true"></span><span class="flatpaper-note__label">注意事项</span><span class="flatpaper-note__chevron" aria-hidden="true"></span></summary><div class="flatpaper-note__body"><p>这并不等于 <strong>Vercel</strong> 可以运行任何 <strong>Docker</strong> 应用。更准确地说，<strong>Vercel</strong> 支持的是通过 <strong>Dockerfile</strong> 描述构建过程、并以 HTTP 服务形式运行的无状态应用。</p>
+<p>应用需要监听平台注入的端口，并把数据库、文件、缓存等持久化状态交给外部服务处理。</p></div></details>
+
+<p><img src="https://img.nep.me/ooo/cover-vercel-dockerfile.webp" alt="Vercel Support Dockerfile"></p>
+<h2 id="什么是-Dockerfile？"><a href="#什么是-Dockerfile？" class="headerlink" title="什么是 Dockerfile？"></a>什么是 Dockerfile？</h2><p><strong>Dockerfile</strong> 是一个用来描述“如何构建 Docker 镜像”的文本文件。</p>
+<p>它通常会写明应用基于什么系统或运行时镜像、需要安装哪些依赖、复制哪些代码、执行什么构建命令，以及容器启动时应该运行什么程序。简单来说，<strong>Dockerfile</strong> 不是应用本身，而是应用运行环境的说明书。</p>
+<p>例如，一个 <strong>Node.js</strong> Web 服务的 <strong>Dockerfile</strong> 可能长这样：</p>
+<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line"><span class="keyword">FROM</span> node:<span class="number">22</span>-alpine</span><br><span class="line"></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> /app</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> package.json pnpm-lock.yaml ./</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> corepack <span class="built_in">enable</span> &amp;&amp; pnpm install --frozen-lockfile</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> . .</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> pnpm build</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">CMD</span><span class="language-bash"> [<span class="string">&quot;pnpm&quot;</span>, <span class="string">&quot;start&quot;</span>]</span></span><br></pre></td></tr></table></figure>
+
+<p>这个文件表达的意思是：使用 <strong>Node.js 22</strong> 作为基础环境，安装依赖，复制项目代码，执行构建，最后启动应用。</p>
+<p>对于开发者来说，<strong>Dockerfile</strong> 最大的价值是“可复现”。只要 <strong>Dockerfile</strong> 写得清楚，无论是在本地、CI、云平台还是其他服务器上，都可以构建出相对一致的运行环境。</p>
+<p>这也是 <strong>Vercel</strong> 支持 <strong>Dockerfile</strong> 的意义：当平台无法通过框架自动识别一个项目应该如何构建和运行时，开发者可以直接用 <strong>Dockerfile</strong> 明确告诉 <strong>Vercel</strong>。</p>
+<h2 id="Dockerfile-和-docker-compose-yaml-有什么区别？"><a href="#Dockerfile-和-docker-compose-yaml-有什么区别？" class="headerlink" title="Dockerfile 和 docker-compose.yaml 有什么区别？"></a>Dockerfile 和 docker-compose.yaml 有什么区别？</h2><p>很多人会把 <strong>Dockerfile</strong> 和 <code>docker-compose.yaml</code> 混在一起，但它们其实解决的是两个不同层级的问题。</p>
+<p><strong>Dockerfile</strong> 负责“构建一个镜像”，而 <code>docker-compose.yaml</code> 负责“编排多个容器”。</p>
+<p>举个例子，一个 Web 应用可能需要：</p>
+<ul>
+<li>一个 <strong>Next.js</strong> 前端；</li>
+<li>一个 <strong>Express</strong> API；</li>
+<li>一个 <strong>PostgreSQL</strong> 数据库；</li>
+<li>一个 <strong>Redis</strong> 缓存；</li>
+<li>一个 <strong>MinIO</strong> 对象存储。</li>
+</ul>
+<p>其中，<strong>Express</strong> API 自己可以有一个 <strong>Dockerfile</strong>，用来描述 API 镜像怎么构建。而 <code>docker-compose.yaml</code> 则负责把 API、数据库、Redis、MinIO 这些服务一起启动，并配置端口、环境变量、数据卷和服务之间的网络关系。</p>
+<p>简单对比如下：</p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>Dockerfile</th>
+<th>docker-compose.yaml</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>主要作用</td>
+<td>构建单个镜像</td>
+<td>启动和编排多个容器</td>
+</tr>
+<tr>
+<td>关注重点</td>
+<td>应用如何打包、安装依赖、启动</td>
+<td>多个服务如何协作</td>
+</tr>
+<tr>
+<td>常见内容</td>
+<td>FROM、RUN、COPY、CMD</td>
+<td>services、ports、volumes、networks</td>
+</tr>
+<tr>
+<td>适合场景</td>
+<td>定义一个应用的运行环境</td>
+<td>本地开发、多容器部署、服务编排</td>
+</tr>
+<tr>
+<td>是否包含数据库编排</td>
+<td>通常不包含</td>
+<td>可以包含 PostgreSQL、Redis 等</td>
+</tr>
+<tr>
+<td>Vercel 此次支持重点</td>
+<td>是</td>
+<td>不是传统 Compose 部署</td>
+</tr>
+</tbody></table>
+<details class="flatpaper-note flatpaper-note--info"><summary class="flatpaper-note__title"><span class="flatpaper-note__icon" aria-hidden="true"></span><span class="flatpaper-note__label">核心差异</span><span class="flatpaper-note__chevron" aria-hidden="true"></span></summary><div class="flatpaper-note__body"><p><strong>Vercel</strong> 这次支持的是 <strong>Dockerfile</strong>，而不是把 <strong>Vercel</strong> 变成一台可以直接运行完整 <code>docker compose up -d</code> 的 <strong>VPS</strong>。</p>
+<p>你可以把一个 HTTP 服务通过 <strong>Dockerfile</strong> 部署到 <strong>Vercel</strong>，但不能直接把一整套包含数据库、Redis、后台 worker、对象存储、管理面板的 Compose 栈原样搬到 <strong>Vercel</strong> 上运行。</p></div></details>
+
+<h2 id="Vercel-支持的是什么类型的-Docker-应用？"><a href="#Vercel-支持的是什么类型的-Docker-应用？" class="headerlink" title="Vercel 支持的是什么类型的 Docker 应用？"></a>Vercel 支持的是什么类型的 Docker 应用？</h2><p><strong>Vercel</strong> 官方文档中，后端框架如 <strong>Express</strong>、<strong>Fastify</strong> 等会作为 Vercel Function 运行，并默认使用 <strong>Fluid Compute</strong>；<strong>Fluid Compute</strong> 可以让应用根据流量自动伸缩，并支持更高效的并发处理。</p>
+<p>从使用模型看，适合部署到 <strong>Vercel</strong> 的 <strong>Dockerfile</strong> 应用通常具备几个特征：</p>
+<ul>
+<li>是 Web 服务或 API 服务；</li>
+<li>通过 HTTP 对外提供能力；</li>
+<li>能监听平台提供的端口；</li>
+<li>本身无状态；</li>
+<li>数据库存储、文件上传、缓存、队列等依赖外部托管服务。</li>
+</ul>
+<p>下面我们通过 Tab 栏来看看适合与不适合部署到 <strong>Vercel</strong> 的应用类型对比：</p>
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-17-tab-0" aria-controls="tabs-17-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">适合部署的类型</button><button type="button" role="tab" id="tabs-17-tab-1" aria-controls="tabs-17-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">不适合部署的类型</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-17-panel-0" aria-labelledby="tabs-17-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><table>
+<thead>
+<tr>
+<th>应用类型</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Web 后端 API</td>
+<td>Express、Hono、Fastify、FastAPI、Go HTTP Server</td>
+</tr>
+<tr>
+<td>全栈 Web 应用</td>
+<td>Next.js、Nuxt、SvelteKit、TanStack Start</td>
+</tr>
+<tr>
+<td>内容网站</td>
+<td>博客、文档站、企业官网、CMS 前台</td>
+</tr>
+<tr>
+<td>Bot &#x2F; Webhook 服务</td>
+<td>Slack Bot、GitHub Webhook、MCP Server</td>
+</tr>
+<tr>
+<td>AI 工具后端</td>
+<td>Chatbot API、Agent 控制层、图片处理入口</td>
+</tr>
+<tr>
+<td>轻量内部工具</td>
+<td>Dashboard、Admin Panel、数据查询面板</td>
+</tr>
+</tbody></table></section><section role="tabpanel" id="tabs-17-panel-1" aria-labelledby="tabs-17-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><table>
+<thead>
+<tr>
+<th>应用类型</th>
+<th>原因</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>PostgreSQL、MySQL、Redis</td>
+<td>需要长期持久化状态和磁盘</td>
+</tr>
+<tr>
+<td>1Panel、宝塔、CasaOS</td>
+<td>依赖完整服务器环境和系统级能力</td>
+</tr>
+<tr>
+<td>Docker Compose 多容器栈</td>
+<td>Vercel 不是传统容器编排平台</td>
+</tr>
+<tr>
+<td>BT 下载器、网盘服务</td>
+<td>通常需要长时间运行和本地持久化</td>
+</tr>
+<tr>
+<td>游戏服务器、VPN、代理服务</td>
+<td>不属于普通 HTTP Web 应用模型</td>
+</tr>
+<tr>
+<td>强依赖本地磁盘的应用</td>
+<td>容器实例应视为无状态</td>
+</tr>
+</tbody></table></section></div></div>
+
+<p>换句话说，<strong>Vercel</strong> 支持 <strong>Dockerfile</strong> 后，部署范围确实扩大了，但它依然不是 <strong>VPS</strong>，也不是 <strong>Kubernetes</strong> 的替代品。</p>
+<h2 id="从-Vercel-Templates-看适合的应用场景"><a href="#从-Vercel-Templates-看适合的应用场景" class="headerlink" title="从 Vercel Templates 看适合的应用场景"></a>从 Vercel Templates 看适合的应用场景</h2><p>从 <a href="https://vercel.com/templates">Vercel Templates</a> 页面也可以看出，<strong>Vercel</strong> 目前重点覆盖的仍然是 Web 应用、后端 API、AI 应用和全栈项目，而不是传统意义上的服务器软件。<strong>Vercel</strong> 的 Backend Templates 中已经包含 <strong>Hono</strong>、<strong>Express</strong>、<strong>Elysia</strong>、<strong>MCP Server</strong>、<strong>Slack Bolt</strong> 等模板，这些都属于轻量 HTTP 服务、Bot 后端、Webhook 服务或 AI 工具后端。</p>
+<p>Starter Templates 中也可以看到 <strong>Next.js</strong>、<strong>Nuxt</strong>、<strong>SvelteKit</strong>、<strong>Rust Hello World</strong>、<strong>Rust Axum</strong>、<strong>TanStack Start</strong>、<strong>Slack Bolt with Hono</strong> 等模板。这说明 <strong>Vercel</strong> 希望覆盖的不只是前端页面，也包括通过 HTTP 暴露能力的后端程序。</p>
+<p><strong>Payload Website Starter</strong> 是另一个很典型的例子。这个模板包含后台管理、认证、内容发布、草稿预览、SEO、搜索、重定向、定时发布等功能，但它会配合 <strong>Neon Database</strong> 和 <strong>Vercel Blob Storage</strong> 等外部服务处理数据库和文件存储。</p>
+<p>这其实体现了 <strong>Vercel</strong> 的推荐架构：计算放在 <strong>Vercel</strong>，状态放在外部托管服务。</p>
+<h2 id="为什么这次更新重要？"><a href="#为什么这次更新重要？" class="headerlink" title="为什么这次更新重要？"></a>为什么这次更新重要？</h2><p>过去，<strong>Vercel</strong> 的最佳体验主要集中在 <strong>Next.js</strong> 和前端生态。虽然 <strong>Vercel</strong> 也支持多种 <strong>Serverless Functions</strong> 和后端框架，但如果项目需要特殊系统依赖、自定义启动命令、非标准框架、<strong>FFmpeg</strong>、<strong>Chromium</strong>、<strong>nginx</strong> 或其他复杂运行环境，就可能需要额外改造。</p>
+<p><strong>Dockerfile</strong> 支持补上了这块短板。</p>
+<p>开发者不再必须完全适配 <strong>Vercel</strong> 的框架检测逻辑，而是可以用 <strong>Dockerfile</strong> 描述自己的应用如何构建、如何启动。对于传统后端项目、跨语言服务、AI 工具后端 and 自定义 Web Server 来说，这会明显降低迁移成本。</p>
+<p>同时，部署到 <strong>Vercel</strong> 后，应用仍然可以获得 <strong>Vercel</strong> 原有的工程体验，例如 <strong>Git</strong> 集成、<strong>Preview Deployment</strong>、自动伸缩、日志、指标、回滚和平台级安全能力。<strong>Vercel</strong> 的 Functions 文档也强调，平台会根据框架自动设置构建和优化，并通过 CDN 与函数运行环境提供低运维体验。</p>
+<h2 id="Fluid-Compute：介于-Serverless-和服务器之间"><a href="#Fluid-Compute：介于-Serverless-和服务器之间" class="headerlink" title="Fluid Compute：介于 Serverless 和服务器之间"></a>Fluid Compute：介于 Serverless 和服务器之间</h2><p><strong>Vercel</strong> 这次 <strong>Dockerfile</strong> 支持的底层重点之一，是 <strong>Fluid Compute</strong>。</p>
+<p>根据 <strong>Vercel</strong> 文档，<strong>Fluid Compute</strong> 是一种介于传统 <strong>Serverless</strong> 和服务器之间的计算模型。它保留了 <strong>Serverless</strong> 的自动伸缩和低运维优势，同时加入了类似服务器的能力，例如同一个实例可以并发处理多个请求。</p>
+<p>对于 AI 应用、API 服务和 I&#x2F;O 密集型任务来说，这一点很重要。很多请求的大部分时间并不是 CPU 真正在计算，而是在等待数据库、向量数据库、外部 API 或模型服务返回结果。<strong>Fluid Compute</strong> 的并发模型可以让同一个实例更有效地处理这些等待时间。</p>
+<p><strong>Vercel</strong> 的 <strong>Fluid Compute</strong> 文档也提到，它支持 <strong>Node.js</strong>、<strong>Python</strong>、<strong>Edge</strong>、<strong>Bun</strong>、<strong>Rust</strong> 等运行时，并且适合需要优化并发和减少冷启动影响的场景。</p>
+<h2 id="计费方式：按实际资源使用付费"><a href="#计费方式：按实际资源使用付费" class="headerlink" title="计费方式：按实际资源使用付费"></a>计费方式：按实际资源使用付费</h2><p><strong>Vercel</strong> 在 <strong>Fluid Compute</strong> 的计费文档中使用 CPU 与内存维度计算资源消耗。例如，一个请求如果实例存活 10 秒，但实际活跃 CPU 时间只有 4 秒，费用会拆分为 CPU 使用和内存占用两部分计算。</p>
+<p>这说明 <strong>Vercel</strong> 并不是按照传统 VPS 那样“买一台机器一直开着”来计费，而是更接近按请求、按资源消耗计费的云函数模型。</p>
+<details class="flatpaper-note flatpaper-note--info"><summary class="flatpaper-note__title"><span class="flatpaper-note__icon" aria-hidden="true"></span><span class="flatpaper-note__label">成本考量</span><span class="flatpaper-note__chevron" aria-hidden="true"></span></summary><div class="flatpaper-note__body"><p>对于低频访问、突发流量、I&#x2F;O 等待较多的 Web 服务来说，这种模式可能更划算。但对于需要 24 小时高负载运行、持续占用 CPU 或内存的服务，传统 VPS、专用服务器或 Kubernetes 仍然可能更合适。</p></div></details>
+
+<h2 id="这不是-VPS，但让-Vercel-更像完整应用平台"><a href="#这不是-VPS，但让-Vercel-更像完整应用平台" class="headerlink" title="这不是 VPS，但让 Vercel 更像完整应用平台"></a>这不是 VPS，但让 Vercel 更像完整应用平台</h2><p><strong>Vercel</strong> 支持 <strong>Dockerfile</strong> 后，最容易产生的误解是：“是不是以后所有 Docker 应用都能放到 Vercel？”</p>
+<p>答案是否定的。</p>
+<p>它不能取代 <strong>VPS</strong>，也不能取代 <strong>Docker Compose</strong> 或 <strong>Kubernetes</strong>。它更适合部署单个 Web 服务、API 服务、全栈应用或 AI 工具后端，而不是运行一整套长期常驻、强依赖本地磁盘和系统权限的服务器环境。</p>
+<p>但这次更新依然非常重要。因为它把 <strong>Vercel</strong> 的边界从“框架友好的前端和全栈应用”继续推向“更通用的 HTTP 后端服务”。</p>
+<p>对于开发者来说，理想场景可能是：</p>
+<ul>
+<li>前端页面部署在 <strong>Vercel</strong>；</li>
+<li>后端 API 通过 <strong>Dockerfile</strong> 部署到 <strong>Vercel</strong>；</li>
+<li><strong>PostgreSQL</strong> 使用 <strong>Neon</strong>、<strong>Supabase</strong> 或其他托管数据库；</li>
+<li>文件存储使用 <strong>Vercel Blob</strong>、<strong>S3</strong> 或 <strong>R2</strong>；</li>
+<li>缓存和队列使用外部托管 <strong>Redis</strong> 或消息队列；</li>
+<li>每次 Git push 自动生成 Preview 环境。</li>
+</ul>
+<p>这是一种更现代的云应用部署方式：不再维护服务器本身，而是把应用拆成计算、数据库、对象存储、缓存和队列等托管组件。</p>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p><strong>Vercel</strong> 支持 <strong>Dockerfile</strong>，并不是简单地“支持 Docker”这么一句话就能概括。</p>
+<p>它真正改变的是：开发者可以用更标准、更通用的方式，把自定义 HTTP 服务部署到 <strong>Vercel</strong>。对于那些无法被框架自动识别、但本质上仍然是 Web 服务的项目，<strong>Dockerfile</strong> 提供了一条更直接的上云路径。</p>
+<p>不过，<strong>Dockerfile on Vercel</strong> 不是 <strong>Docker Compose on Vercel</strong>，也不是 <strong>VPS on Vercel</strong>。</p>
+<p>它适合的是无状态 HTTP 应用，而不是完整服务器环境。</p>
+<p>如果说过去 <strong>Vercel</strong> 最擅长的是前端部署体验，那么这次 <strong>Dockerfile</strong> 支持，则让更多后端服务也能享受到类似的开发体验：一次提交、自动构建、自动预览、自动伸缩，并在同一个平台上完成发布。</p>
+]]></content>
+      <categories>
+        <category>资讯</category>
+      </categories>
+      <tags>
+        <tag>Vercel</tag>
+        <tag>Dockerfile</tag>
+        <tag>Serverless</tag>
+        <tag>Cloud</tag>
       </tags>
   </entry>
   <entry>
@@ -4736,10 +4935,10 @@
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt update</span><br><span class="line">apt upgrade -y</span><br><span class="line">apt install curl vim wget gnupg dpkg apt-transport-https lsb-release ca-certificates</span><br></pre></td></tr></table></figure>
 
 <p>然后加入 <strong>Docker</strong> 的 GPG 公钥和 apt 源：</p>
-<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-17-tab-0" aria-controls="tabs-17-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">Debian</button><button type="button" role="tab" id="tabs-17-tab-1" aria-controls="tabs-17-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">Ubuntu</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-17-panel-0" aria-labelledby="tabs-17-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl -sSL https://download.docker.com/linux/debian/gpg | gpg --dearmor &gt; /usr/share/keyrings/docker-ce.gpg</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;deb [arch=<span class="subst">$(dpkg --print-architecture)</span> signed-by=/usr/share/keyrings/docker-ce.gpg] https://download.docker.com/linux/debian <span class="subst">$(lsb_release -sc)</span> stable&quot;</span> &gt; /etc/apt/sources.list.d/docker.list</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-17-panel-1" aria-labelledby="tabs-17-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl -sSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor &gt; /usr/share/keyrings/docker-ce.gpg</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;deb [arch=<span class="subst">$(dpkg --print-architecture)</span> signed-by=/usr/share/keyrings/docker-ce.gpg] https://download.docker.com/linux/ubuntu <span class="subst">$(lsb_release -sc)</span> stable&quot;</span> &gt; /etc/apt/sources.list.d/docker.list</span><br></pre></td></tr></table></figure></section></div></div>
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-18-tab-0" aria-controls="tabs-18-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">Debian</button><button type="button" role="tab" id="tabs-18-tab-1" aria-controls="tabs-18-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">Ubuntu</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-18-panel-0" aria-labelledby="tabs-18-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl -sSL https://download.docker.com/linux/debian/gpg | gpg --dearmor &gt; /usr/share/keyrings/docker-ce.gpg</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;deb [arch=<span class="subst">$(dpkg --print-architecture)</span> signed-by=/usr/share/keyrings/docker-ce.gpg] https://download.docker.com/linux/debian <span class="subst">$(lsb_release -sc)</span> stable&quot;</span> &gt; /etc/apt/sources.list.d/docker.list</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-18-panel-1" aria-labelledby="tabs-18-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl -sSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor &gt; /usr/share/keyrings/docker-ce.gpg</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;deb [arch=<span class="subst">$(dpkg --print-architecture)</span> signed-by=/usr/share/keyrings/docker-ce.gpg] https://download.docker.com/linux/ubuntu <span class="subst">$(lsb_release -sc)</span> stable&quot;</span> &gt; /etc/apt/sources.list.d/docker.list</span><br></pre></td></tr></table></figure></section></div></div>
 
 <p>国内机器可以用 <a href="https://mirrors.tuna.tsinghua.edu.cn/">清华 TUNA</a> 的国内源：</p>
-<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-18-tab-0" aria-controls="tabs-18-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">Debian</button><button type="button" role="tab" id="tabs-18-tab-1" aria-controls="tabs-18-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">Ubuntu</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-18-panel-0" aria-labelledby="tabs-18-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl -sS https://download.docker.com/linux/debian/gpg | gpg --dearmor &gt; /usr/share/keyrings/docker-ce.gpg</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;deb [arch=<span class="subst">$(dpkg --print-architecture)</span> signed-by=/usr/share/keyrings/docker-ce.gpg] https://mirrors.tuna.tsinghua.edu.cn/docker-ce/linux/debian <span class="subst">$(lsb_release -sc)</span> stable&quot;</span> &gt; /etc/apt/sources.list.d/docker.list</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-18-panel-1" aria-labelledby="tabs-18-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl -sS https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor &gt; /usr/share/keyrings/docker-ce.gpg</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;deb [arch=<span class="subst">$(dpkg --print-architecture)</span> signed-by=/usr/share/keyrings/docker-ce.gpg] https://mirrors.tuna.tsinghua.edu.cn/docker-ce/linux/ubuntu <span class="subst">$(lsb_release -sc)</span> stable&quot;</span> &gt; /etc/apt/sources.list.d/docker.list</span><br></pre></td></tr></table></figure></section></div></div>
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-19-tab-0" aria-controls="tabs-19-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">Debian</button><button type="button" role="tab" id="tabs-19-tab-1" aria-controls="tabs-19-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">Ubuntu</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-19-panel-0" aria-labelledby="tabs-19-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl -sS https://download.docker.com/linux/debian/gpg | gpg --dearmor &gt; /usr/share/keyrings/docker-ce.gpg</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;deb [arch=<span class="subst">$(dpkg --print-architecture)</span> signed-by=/usr/share/keyrings/docker-ce.gpg] https://mirrors.tuna.tsinghua.edu.cn/docker-ce/linux/debian <span class="subst">$(lsb_release -sc)</span> stable&quot;</span> &gt; /etc/apt/sources.list.d/docker.list</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-19-panel-1" aria-labelledby="tabs-19-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl -sS https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor &gt; /usr/share/keyrings/docker-ce.gpg</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;deb [arch=<span class="subst">$(dpkg --print-architecture)</span> signed-by=/usr/share/keyrings/docker-ce.gpg] https://mirrors.tuna.tsinghua.edu.cn/docker-ce/linux/ubuntu <span class="subst">$(lsb_release -sc)</span> stable&quot;</span> &gt; /etc/apt/sources.list.d/docker.list</span><br></pre></td></tr></table></figure></section></div></div>
 
 <p>然后更新系统后即可安装 Docker CE 和 Docker Compose 插件：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt update</span><br><span class="line">apt install docker-ce docker-ce-cli containerd.io docker-compose-plugin</span><br></pre></td></tr></table></figure>
@@ -4771,7 +4970,7 @@
 <p><code>docker compose</code> 还是太长？ 执行下面的命令后就可以使用 <code>dc</code> 作为替代：</p>
 <div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>执行前，先运行一下 <code>dc</code> 确认命令当前没有在使用，执行后运行 <code>dc version</code> 确认。</p></div></div>
 
-<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-19-tab-0" aria-controls="tabs-19-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">bash</button><button type="button" role="tab" id="tabs-19-tab-1" aria-controls="tabs-19-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">zsh</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-19-panel-0" aria-labelledby="tabs-19-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;alias dc=&quot;docker compose&quot;&#x27;</span> &gt;&gt; ~/.bashrc </span><br><span class="line"><span class="built_in">source</span> ~/.bashrc </span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-19-panel-1" aria-labelledby="tabs-19-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;alias dc=&quot;docker compose&quot;&#x27;</span> &gt;&gt; ~/.zshrc </span><br><span class="line"><span class="built_in">source</span> ~/.zshrc </span><br></pre></td></tr></table></figure></section></div></div>
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-20-tab-0" aria-controls="tabs-20-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">bash</button><button type="button" role="tab" id="tabs-20-tab-1" aria-controls="tabs-20-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">zsh</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-20-panel-0" aria-labelledby="tabs-20-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;alias dc=&quot;docker compose&quot;&#x27;</span> &gt;&gt; ~/.bashrc </span><br><span class="line"><span class="built_in">source</span> ~/.bashrc </span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-20-panel-1" aria-labelledby="tabs-20-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;alias dc=&quot;docker compose&quot;&#x27;</span> &gt;&gt; ~/.zshrc </span><br><span class="line"><span class="built_in">source</span> ~/.zshrc </span><br></pre></td></tr></table></figure></section></div></div>
 
 <p>效果:</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">root@debian:~# dc</span><br><span class="line">-bash: dc: <span class="built_in">command</span> not found</span><br><span class="line"></span><br><span class="line">root@debian:~# dc version</span><br><span class="line">Docker Compose version v5.2.0</span><br></pre></td></tr></table></figure>
@@ -5489,6 +5688,34 @@
       </tags>
   </entry>
   <entry>
+    <title>如何查询 Codex 赠送的重置机会的到期日期</title>
+    <url>/post/how-to-check-codex-reset-expiration.html</url>
+    <content><![CDATA[<p>2026 年 6 月份 Codex 的重置机制改为了可以存储的重置机会，并且由于一些 BUG 6 月份已经赠送了三次免费的重置机会，如通过邀请好友也可以额外获得最多三次的重置机会。不过重置此物不能无限期保存，每个重置次数只有 30 天的有效期，而 Codex 界面里不会显示每次重置机会的具体到期日期。</p>
+<p>下面给大家提供一个简单的查询方法</p>
+<h2 id="直接让-Codex-自己查询"><a href="#直接让-Codex-自己查询" class="headerlink" title="直接让 Codex 自己查询"></a>直接让 Codex 自己查询</h2><p>方法非常简单，只需要把下面的 <strong>提示词</strong> 发送给 Codex，让它使用本机凭证自行查询即可。</p>
+<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">请使用本机 Codex 凭证查一下 rate-limit reset credits：</span><br><span class="line"></span><br><span class="line">读取 `~/.codex/auth.json` 里的 `tokens.access_token`，请求接口：</span><br><span class="line">https://chatgpt.com/backend-api/wham/rate-limit-reset-credits</span><br><span class="line"></span><br><span class="line">要求：</span><br><span class="line"></span><br><span class="line">1. 不要打印 access_token、refresh_token、cookie 或完整唯一 ID</span><br><span class="line">2. 只汇总 available_count、每个 credit 的 status/title/granted_at/expires_at</span><br><span class="line">3. 把 granted_at/expires_at 从 UTC 转成本地时间</span><br><span class="line">4. 如果状态码返回 401，说明是凭证失效或没带对 Authorization header</span><br></pre></td></tr></table></figure>
+
+<details class="flatpaper-note flatpaper-note--info"><summary class="flatpaper-note__title"><span class="flatpaper-note__icon" aria-hidden="true"></span><span class="flatpaper-note__label">回复示例</span><span class="flatpaper-note__chevron" aria-hidden="true"></span></summary><div class="flatpaper-note__body"><p>6 月份共赠送三次，我已经用掉了一次，所以显示还剩两次。</p>
+<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">请求成功，状态码 200。</span><br><span class="line">available_count: 2</span><br><span class="line">Credits:</span><br><span class="line">1. status: available</span><br><span class="line">    title: Full reset (Weekly + 5 hr)</span><br><span class="line">    granted_at: 2026-06-18 08:42:00 </span><br><span class="line">    expires_at: 2026-07-18 08:42:00 </span><br><span class="line"></span><br><span class="line">2. status: available</span><br><span class="line">    title: Full reset (Weekly + 5 hr)</span><br><span class="line">    granted_at: 2026-06-27 07:52:00 </span><br><span class="line">    expires_at: 2026-07-27 07:52:00 </span><br></pre></td></tr></table></figure></div></details>
+
+<h2 id="OpenAI-赠送的重置记录"><a href="#OpenAI-赠送的重置记录" class="headerlink" title="OpenAI 赠送的重置记录"></a>OpenAI 赠送的重置记录</h2><h3 id="6-月份共赠送四次"><a href="#6-月份共赠送四次" class="headerlink" title="6 月份共赠送四次"></a>6 月份共赠送四次</h3><ol>
+<li>推出重置保存机制时赠送：2026 年 6 月 12 日，到期日期为 <strong>7 月 12 日</strong></li>
+<li>BUG 赠送：2026 年 6 月 18 日，到期日期 <strong>7 月 18 日</strong></li>
+<li>BUG 赠送：2026 年 6 月 27 日，到期日期 <strong>7 月 27 日</strong></li>
+<li>BUG 赠送：2026 年 6 月 30 日，到期日期 <strong>7 月 30 日</strong></li>
+</ol>
+<p>我在 6 月 29 日的查询结果与记录一致，如果你有 X.com 账户，查看 <a href="https://x.com/thsottiaux/status/2071740419030053227">Tibo</a> 的推文获取最新 Codex 更新消息。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>快看看你的重置机会什么时候到期吧。Plus 用户每周额度价值大约 100 美元，千万不要浪费了。</p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>OpenAI</tag>
+        <tag>Codex</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>如何查看 Antigravity 模型额度与 Google AI Credits 剩余情况</title>
     <url>/post/how-to-check-google-ai-credits.html</url>
     <content><![CDATA[<div class="flatpaper-note flatpaper-note--danger"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>重大更新： 2026 年 5 月 20 日， Google I&#x2F;O 2026 后， 套餐内不再赠送 AI 点数。</p></div></div>
@@ -5528,141 +5755,6 @@
       </categories>
       <tags>
         <tag>Google</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>如何查询 Codex 赠送的重置机会的到期日期</title>
-    <url>/post/how-to-check-codex-reset-expiration.html</url>
-    <content><![CDATA[<p>2026 年 6 月份 Codex 的重置机制改为了可以存储的重置机会，并且由于一些 BUG 6 月份已经赠送了三次免费的重置机会，如通过邀请好友也可以额外获得最多三次的重置机会。不过重置此物不能无限期保存，每个重置次数只有 30 天的有效期，而 Codex 界面里不会显示每次重置机会的具体到期日期。</p>
-<p>下面给大家提供一个简单的查询方法</p>
-<h2 id="直接让-Codex-自己查询"><a href="#直接让-Codex-自己查询" class="headerlink" title="直接让 Codex 自己查询"></a>直接让 Codex 自己查询</h2><p>方法非常简单，只需要把下面的 <strong>提示词</strong> 发送给 Codex，让它使用本机凭证自行查询即可。</p>
-<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">请使用本机 Codex 凭证查一下 rate-limit reset credits：</span><br><span class="line"></span><br><span class="line">读取 `~/.codex/auth.json` 里的 `tokens.access_token`，请求接口：</span><br><span class="line">https://chatgpt.com/backend-api/wham/rate-limit-reset-credits</span><br><span class="line"></span><br><span class="line">要求：</span><br><span class="line"></span><br><span class="line">1. 不要打印 access_token、refresh_token、cookie 或完整唯一 ID</span><br><span class="line">2. 只汇总 available_count、每个 credit 的 status/title/granted_at/expires_at</span><br><span class="line">3. 把 granted_at/expires_at 从 UTC 转成本地时间</span><br><span class="line">4. 如果状态码返回 401，说明是凭证失效或没带对 Authorization header</span><br></pre></td></tr></table></figure>
-
-<details class="flatpaper-note flatpaper-note--info"><summary class="flatpaper-note__title"><span class="flatpaper-note__icon" aria-hidden="true"></span><span class="flatpaper-note__label">回复示例</span><span class="flatpaper-note__chevron" aria-hidden="true"></span></summary><div class="flatpaper-note__body"><p>6 月份共赠送三次，我已经用掉了一次，所以显示还剩两次。</p>
-<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">请求成功，状态码 200。</span><br><span class="line">available_count: 2</span><br><span class="line">Credits:</span><br><span class="line">1. status: available</span><br><span class="line">    title: Full reset (Weekly + 5 hr)</span><br><span class="line">    granted_at: 2026-06-18 08:42:00 </span><br><span class="line">    expires_at: 2026-07-18 08:42:00 </span><br><span class="line"></span><br><span class="line">2. status: available</span><br><span class="line">    title: Full reset (Weekly + 5 hr)</span><br><span class="line">    granted_at: 2026-06-27 07:52:00 </span><br><span class="line">    expires_at: 2026-07-27 07:52:00 </span><br></pre></td></tr></table></figure></div></details>
-
-<h2 id="OpenAI-赠送的重置记录"><a href="#OpenAI-赠送的重置记录" class="headerlink" title="OpenAI 赠送的重置记录"></a>OpenAI 赠送的重置记录</h2><h3 id="6-月份共赠送四次"><a href="#6-月份共赠送四次" class="headerlink" title="6 月份共赠送四次"></a>6 月份共赠送四次</h3><ol>
-<li>推出重置保存机制时赠送：2026 年 6 月 12 日，到期日期为 <strong>7 月 12 日</strong></li>
-<li>BUG 赠送：2026 年 6 月 18 日，到期日期 <strong>7 月 18 日</strong></li>
-<li>BUG 赠送：2026 年 6 月 27 日，到期日期 <strong>7 月 27 日</strong></li>
-<li>BUG 赠送：2026 年 6 月 30 日，到期日期 <strong>7 月 30 日</strong></li>
-</ol>
-<p>我在 6 月 29 日的查询结果与记录一致，如果你有 X.com 账户，查看 <a href="https://x.com/thsottiaux/status/2071740419030053227">Tibo</a> 的推文获取最新 Codex 更新消息。</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>快看看你的重置机会什么时候到期吧。Plus 用户每周额度价值大约 100 美元，千万不要浪费了。</p>
-]]></content>
-      <categories>
-        <category>笔记</category>
-      </categories>
-      <tags>
-        <tag>OpenAI</tag>
-        <tag>Codex</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Nginx 还是 Caddy？一篇写给实际运维者的对比指南</title>
-    <url>/post/nginx-vs-caddy.html</url>
-    <content><![CDATA[<p>如果你要给一个网站、API 或者一堆容器选一个反向代理 &#x2F; Web 服务器，2026 年的今天你大概率会在 Nginx 和 Caddy 之间犹豫。这篇文章不站队，而是从配置体验、HTTPS、性能、生态、扩展性几个维度把两者掰开讲清楚，最后给出明确的选型建议。</p>
-<h2 id="一句话认识两位选手"><a href="#一句话认识两位选手" class="headerlink" title="一句话认识两位选手"></a>一句话认识两位选手</h2><ul>
-<li><strong>Nginx</strong>：2004 年诞生，C 语言编写，事件驱动架构的鼻祖级实现。占据全球 Web 服务器市场的头部份额，几乎是”反向代理”的代名词。</li>
-<li><strong>Caddy</strong>：2015 年发布，Go 语言编写，主打”默认 HTTPS”和极简配置。Caddy 2 重写后以模块化架构和 JSON 配置 API 为核心。</li>
-</ul>
-<h2 id="配置体验：最直观的差距"><a href="#配置体验：最直观的差距" class="headerlink" title="配置体验：最直观的差距"></a>配置体验：最直观的差距</h2><p>先看一个最常见的需求：把 <code>example.com</code> 反向代理到本地 8080 端口，并启用 HTTPS。</p>
-<p><strong>Caddy（Caddyfile，3 行）：</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">example.com &#123;</span><br><span class="line">    reverse_proxy localhost:8080</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>证书自动申请、自动续期、HTTP 自动跳转 HTTPS——全部默认完成。</p>
-<p><strong>Nginx（约 25 行 + certbot）：</strong></p>
-<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">80</span>;</span><br><span class="line">    <span class="attribute">server_name</span> example.com;</span><br><span class="line">    <span class="attribute">return</span> <span class="number">301</span> https://<span class="variable">$host</span><span class="variable">$request_uri</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">443</span> ssl http2;</span><br><span class="line">    <span class="attribute">server_name</span> example.com;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">ssl_certificate</span>     /etc/letsencrypt/live/example.com/fullchain.pem;</span><br><span class="line">    <span class="attribute">ssl_certificate_key</span> /etc/letsencrypt/live/example.com/privkey.pem;</span><br><span class="line"></span><br><span class="line">    <span class="section">location</span> / &#123;</span><br><span class="line">        <span class="attribute">proxy_pass</span> http://localhost:8080;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> Host <span class="variable">$host</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Real-IP <span class="variable">$remote_addr</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Forwarded-Proto <span class="variable">$scheme</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>还需要额外跑 <code>certbot</code> 申请证书并配置定时续期。</p>
-<p>但要公平地说：Nginx 的冗长换来的是<strong>显式与精细</strong>。<code>proxy_set_header</code> 每一行都看得见摸得着；而 Caddy 帮你做的事藏在默认值里，出问题时你需要知道它默认做了什么。对于配置规模庞大、需要精确控制每个 header、buffer、timeout 的场景，Nginx 的配置语言虽然啰嗦，但表达力和社区可参考的范例数量是压倒性的。</p>
-<h2 id="HTTPS-与证书管理"><a href="#HTTPS-与证书管理" class="headerlink" title="HTTPS 与证书管理"></a>HTTPS 与证书管理</h2><p>这是 Caddy 的主场：</p>
-<ul>
-<li><strong>自动 HTTPS</strong>：通过 ACME（Let’s Encrypt &#x2F; ZeroSSL）自动签发、续期、轮换证书，包括 OCSP 装订，零配置。</li>
-<li><strong>按需 TLS（On-Demand TLS）</strong>：在 TLS 握手时才为新域名签证书，是 SaaS 自定义域名（客户绑定自己的域名）场景的杀手锏。Nginx 体系要实现同样的效果通常得上 OpenResty + lua-resty-auto-ssl，复杂度完全不在一个量级。</li>
-<li><strong>内部 CA</strong>：内置本地 CA，<code>localhost</code> 开发环境也能用受信任的 HTTPS。</li>
-</ul>
-<p>Nginx 这边，证书管理依赖外部工具（certbot、acme.sh、lego），工作得也很成熟，但本质上是”胶水方案”：多一个进程、多一个 cron、多一个 reload 钩子，多一处可能坏的地方。</p>
-<h2 id="性能：差距比你想象的小"><a href="#性能：差距比你想象的小" class="headerlink" title="性能：差距比你想象的小"></a>性能：差距比你想象的小</h2><p>网络上流传”C 写的肯定比 Go 快”，实际测试中：</p>
-<ul>
-<li><strong>静态文件与常规反向代理</strong>：两者在绝大多数真实负载下吞吐量处于同一量级。Nginx 在极限 RPS 和内存占用上通常仍有优势（C + 精细的内存管理 vs Go runtime + GC），尤其是数十万并发连接的极端场景。</li>
-<li><strong>尾延迟</strong>：Go 的 GC 在高压下可能带来轻微的 P99 抖动，但对绝大多数业务无感。</li>
-<li><strong>HTTP&#x2F;3</strong>：两者都已支持 QUIC&#x2F;HTTP3，Caddy 默认启用，Nginx 需要显式配置。</li>
-</ul>
-<p>结论：<strong>除非你在做 CDN 边缘节点或单机要扛几十万并发，性能不应该是你们之间的决定因素。</strong> 瓶颈几乎总在上游应用，而不是代理层。</p>
-<h2 id="运维与生态"><a href="#运维与生态" class="headerlink" title="运维与生态"></a>运维与生态</h2><table>
-<thead>
-<tr>
-<th>维度</th>
-<th>Nginx</th>
-<th>Caddy</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>配置热加载</td>
-<td><code>nginx -s reload</code>，成熟可靠</td>
-<td>Admin API 优雅热加载，零停机</td>
-</tr>
-<tr>
-<td>动态配置</td>
-<td>原生不支持，需 reload 或商业版&#x2F;OpenResty</td>
-<td>内置 JSON Admin API，可编程修改运行时配置</td>
-</tr>
-<tr>
-<td>文档与搜索答案</td>
-<td>二十年积累，几乎任何问题都有现成答案</td>
-<td>文档质量高但社区体量小得多</td>
-</tr>
-<tr>
-<td>容器&#x2F;K8s 生态</td>
-<td>ingress-nginx 等久经考验</td>
-<td>有 Ingress Controller 但成熟度和采用率较低</td>
-</tr>
-<tr>
-<td>扩展方式</td>
-<td>C 模块（需重新编译）、OpenResty&#x2F;Lua、njs</td>
-<td>Go 插件生态，<code>xcaddy</code> 一条命令编译定制版本</td>
-</tr>
-<tr>
-<td>二进制分发</td>
-<td>包管理器，模块依赖发行版</td>
-<td>单一静态二进制，跨平台部署极其省心</td>
-</tr>
-<tr>
-<td>商业支持</td>
-<td>Nginx Plus（F5）</td>
-<td>官方赞助&#x2F;商业授权</td>
-</tr>
-</tbody></table>
-<p>几个值得展开的点：</p>
-<ul>
-<li><strong>扩展性</strong>：Caddy 的插件体验显著更好。<code>xcaddy build --with github.com/...</code> 一条命令就能编出带 Cloudflare DNS 验证、限流、安全模块的定制二进制。Nginx 编第三方 C 模块的痛苦，折腾过的人都懂（这也是 OpenResty 存在的原因）。</li>
-<li><strong>配置即 API</strong>：Caddy 的本质是一个 JSON 配置引擎，Caddyfile 只是人类友好的前端。这让它天然适合被程序驱动——平台型产品动态增删站点不需要生成配置文件再 reload。</li>
-<li><strong>久经考验</strong>：Nginx 的边缘案例处理、与各种奇怪客户端&#x2F;上游的兼容性，是二十年生产流量喂出来的。保守的大型生产环境选它，不会有人质疑。</li>
-</ul>
-<h2 id="选型建议"><a href="#选型建议" class="headerlink" title="选型建议"></a>选型建议</h2><p><strong>选 Caddy，如果你是：</strong></p>
-<ul>
-<li>个人项目、中小团队、初创公司——把省下来的证书运维时间拿去写业务</li>
-<li>SaaS 平台需要客户自定义域名（On-Demand TLS 几乎是唯一省心方案）</li>
-<li>需要通过 API 动态管理大量站点配置</li>
-<li>团队没有专职运维，希望配置文件三行能看懂</li>
-</ul>
-<p><strong>选 Nginx，如果你是：</strong></p>
-<ul>
-<li>已有大量 Nginx 配置和团队经验——迁移收益撑不起迁移成本</li>
-<li>极端高并发 &#x2F; 边缘节点 &#x2F; 对内存和尾延迟敏感的场景</li>
-<li>重度依赖 Kubernetes ingress-nginx 或 OpenResty&#x2F;Lua 生态</li>
-<li>需要 Nginx Plus 的商业特性与支持，或所在组织要求”最保守的选择”</li>
-</ul>
-<p><strong>也可以都要</strong>：不少团队用 Caddy 做边缘 TLS 终结（享受自动证书），后面挂 Nginx&#x2F;原有架构不动。架构上完全成立。</p>
-<h2 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h2><p>Nginx 和 Caddy 的关系，有点像 Vim 和 VS Code：前者无所不能但要求你懂它，后者把 90% 的常见需求做成了开箱即用。2026 年的今天，<strong>对于新项目我会默认从 Caddy 开始</strong>——直到遇到它解决不了的问题再换，而这一天对大多数项目来说不会到来。但如果你手里已经有一套运转良好的 Nginx，请记住运维界的第一定律：<strong>If it works, don’t fix it.</strong></p>
-]]></content>
-      <categories>
-        <category>教程</category>
-      </categories>
-      <tags>
-        <tag>Nginx</tag>
-        <tag>Caddy</tag>
       </tags>
   </entry>
   <entry>
@@ -5771,8 +5863,8 @@
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">log</span></span><br><span class="line"><span class="comment"># 或者使用更简洁的单行输出</span></span><br><span class="line">git <span class="built_in">log</span> --oneline</span><br></pre></td></tr></table></figure>
 
 <h3 id="2-查看文件变更-Git-Diff"><a href="#2-查看文件变更-Git-Diff" class="headerlink" title="2. 查看文件变更 (Git Diff)"></a>2. 查看文件变更 (Git Diff)</h3><p>在创建存档点之前，你需要确认自己到底改了哪些内容：</p>
-<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-20-tab-0" aria-controls="tabs-20-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">对比工作区</button><button type="button" role="tab" id="tabs-20-tab-1" aria-controls="tabs-20-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">对比暂存区</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-20-panel-0" aria-labelledby="tabs-20-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><p>我当前世界和上次存档相比，哪里变了？</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git diff</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-20-panel-1" aria-labelledby="tabs-20-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><p>我已经 add 到暂存区，准备写入下个存档点的内容是什么？</p>
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-21-tab-0" aria-controls="tabs-21-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">对比工作区</button><button type="button" role="tab" id="tabs-21-tab-1" aria-controls="tabs-21-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">对比暂存区</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-21-panel-0" aria-labelledby="tabs-21-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><p>我当前世界和上次存档相比，哪里变了？</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git diff</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-21-panel-1" aria-labelledby="tabs-21-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><p>我已经 add 到暂存区，准备写入下个存档点的内容是什么？</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git diff --staged</span><br></pre></td></tr></table></figure></section></div></div>
 
 <h2 id="五、分支-Branch-与合并-Merge-：多元世界线"><a href="#五、分支-Branch-与合并-Merge-：多元世界线" class="headerlink" title="五、分支 (Branch) 与合并 (Merge)：多元世界线"></a>五、分支 (Branch) 与合并 (Merge)：多元世界线</h2><p><strong>Git</strong> 最强大的功能之一就是分支。</p>
@@ -5794,10 +5886,10 @@
 <div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p><strong>多人协作黄金法则</strong>：在开始每天的工作或提交代码前，强烈建议先执行 <code>git pull</code> 同步服务器上的最新状态，这样可以大幅减少合并时的冲突概率。</p></div></div>
 
 <h2 id="七、撤销与临时口袋"><a href="#七、撤销与临时口袋" class="headerlink" title="七、撤销与临时口袋"></a>七、撤销与临时口袋</h2><h3 id="1-安全撤销与回滚"><a href="#1-安全撤销与回滚" class="headerlink" title="1. 安全撤销与回滚"></a>1. 安全撤销与回滚</h3><p>如果你改坏了代码或者提交错了内容，可以通过以下命令安全“读档”：</p>
-<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-21-tab-0" aria-controls="tabs-21-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">放弃工作区修改</button><button type="button" role="tab" id="tabs-21-tab-1" aria-controls="tabs-21-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">取消暂存</button><button type="button" role="tab" id="tabs-21-tab-2" aria-controls="tabs-21-panel-2" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="2">撤销已提交 (Revert)</button><button type="button" role="tab" id="tabs-21-tab-3" aria-controls="tabs-21-panel-3" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="3">强制回滚 (Reset)</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-21-panel-0" aria-labelledby="tabs-21-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><p>当前未 add 的修改不要了，回到上一个正式存档点状态：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git restore README.md</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-21-panel-1" aria-labelledby="tabs-21-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><p>后悔执行了 git add，把文件从暂存区拿出来（不会删除实际修改）：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git restore --staged README.md</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-21-panel-2" aria-labelledby="tabs-21-tab-2" class="flatpaper-tabs__panel" data-index="2" hidden><p>创建一个新的“反向提交”来撤销指定提交的影响。这是协作中最安全的做法！</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git revert a1b2c3d</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-21-panel-3" aria-labelledby="tabs-21-tab-3" class="flatpaper-tabs__panel" data-index="3" hidden><p>危险！直接把时间线强行挪回某个旧存档点，丢弃之后的所有提交：</p>
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-22-tab-0" aria-controls="tabs-22-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">放弃工作区修改</button><button type="button" role="tab" id="tabs-22-tab-1" aria-controls="tabs-22-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">取消暂存</button><button type="button" role="tab" id="tabs-22-tab-2" aria-controls="tabs-22-panel-2" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="2">撤销已提交 (Revert)</button><button type="button" role="tab" id="tabs-22-tab-3" aria-controls="tabs-22-panel-3" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="3">强制回滚 (Reset)</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-22-panel-0" aria-labelledby="tabs-22-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><p>当前未 add 的修改不要了，回到上一个正式存档点状态：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git restore README.md</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-22-panel-1" aria-labelledby="tabs-22-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><p>后悔执行了 git add，把文件从暂存区拿出来（不会删除实际修改）：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git restore --staged README.md</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-22-panel-2" aria-labelledby="tabs-22-tab-2" class="flatpaper-tabs__panel" data-index="2" hidden><p>创建一个新的“反向提交”来撤销指定提交的影响。这是协作中最安全的做法！</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git revert a1b2c3d</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-22-panel-3" aria-labelledby="tabs-22-tab-3" class="flatpaper-tabs__panel" data-index="3" hidden><p>危险！直接把时间线强行挪回某个旧存档点，丢弃之后的所有提交：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git reset --hard a1b2c3d</span><br></pre></td></tr></table></figure></section></div></div>
 
 <h3 id="2-Stash-临时口袋存档"><a href="#2-Stash-临时口袋存档" class="headerlink" title="2. Stash 临时口袋存档"></a>2. Stash 临时口袋存档</h3><p>有时候你在开发功能，改了一半需要临时切分支去修 Bug，但代码还不具备 commit 的条件。这时可以用临时口袋：</p>
@@ -6723,6 +6815,113 @@
       </tags>
   </entry>
   <entry>
+    <title>Nginx 还是 Caddy？一篇写给实际运维者的对比指南</title>
+    <url>/post/nginx-vs-caddy.html</url>
+    <content><![CDATA[<p>如果你要给一个网站、API 或者一堆容器选一个反向代理 &#x2F; Web 服务器，2026 年的今天你大概率会在 Nginx 和 Caddy 之间犹豫。这篇文章不站队，而是从配置体验、HTTPS、性能、生态、扩展性几个维度把两者掰开讲清楚，最后给出明确的选型建议。</p>
+<h2 id="一句话认识两位选手"><a href="#一句话认识两位选手" class="headerlink" title="一句话认识两位选手"></a>一句话认识两位选手</h2><ul>
+<li><strong>Nginx</strong>：2004 年诞生，C 语言编写，事件驱动架构的鼻祖级实现。占据全球 Web 服务器市场的头部份额，几乎是”反向代理”的代名词。</li>
+<li><strong>Caddy</strong>：2015 年发布，Go 语言编写，主打”默认 HTTPS”和极简配置。Caddy 2 重写后以模块化架构和 JSON 配置 API 为核心。</li>
+</ul>
+<h2 id="配置体验：最直观的差距"><a href="#配置体验：最直观的差距" class="headerlink" title="配置体验：最直观的差距"></a>配置体验：最直观的差距</h2><p>先看一个最常见的需求：把 <code>example.com</code> 反向代理到本地 8080 端口，并启用 HTTPS。</p>
+<p><strong>Caddy（Caddyfile，3 行）：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">example.com &#123;</span><br><span class="line">    reverse_proxy localhost:8080</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>证书自动申请、自动续期、HTTP 自动跳转 HTTPS——全部默认完成。</p>
+<p><strong>Nginx（约 25 行 + certbot）：</strong></p>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">80</span>;</span><br><span class="line">    <span class="attribute">server_name</span> example.com;</span><br><span class="line">    <span class="attribute">return</span> <span class="number">301</span> https://<span class="variable">$host</span><span class="variable">$request_uri</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">443</span> ssl http2;</span><br><span class="line">    <span class="attribute">server_name</span> example.com;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">ssl_certificate</span>     /etc/letsencrypt/live/example.com/fullchain.pem;</span><br><span class="line">    <span class="attribute">ssl_certificate_key</span> /etc/letsencrypt/live/example.com/privkey.pem;</span><br><span class="line"></span><br><span class="line">    <span class="section">location</span> / &#123;</span><br><span class="line">        <span class="attribute">proxy_pass</span> http://localhost:8080;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> Host <span class="variable">$host</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Real-IP <span class="variable">$remote_addr</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Forwarded-Proto <span class="variable">$scheme</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>还需要额外跑 <code>certbot</code> 申请证书并配置定时续期。</p>
+<p>但要公平地说：Nginx 的冗长换来的是<strong>显式与精细</strong>。<code>proxy_set_header</code> 每一行都看得见摸得着；而 Caddy 帮你做的事藏在默认值里，出问题时你需要知道它默认做了什么。对于配置规模庞大、需要精确控制每个 header、buffer、timeout 的场景，Nginx 的配置语言虽然啰嗦，但表达力和社区可参考的范例数量是压倒性的。</p>
+<h2 id="HTTPS-与证书管理"><a href="#HTTPS-与证书管理" class="headerlink" title="HTTPS 与证书管理"></a>HTTPS 与证书管理</h2><p>这是 Caddy 的主场：</p>
+<ul>
+<li><strong>自动 HTTPS</strong>：通过 ACME（Let’s Encrypt &#x2F; ZeroSSL）自动签发、续期、轮换证书，包括 OCSP 装订，零配置。</li>
+<li><strong>按需 TLS（On-Demand TLS）</strong>：在 TLS 握手时才为新域名签证书，是 SaaS 自定义域名（客户绑定自己的域名）场景的杀手锏。Nginx 体系要实现同样的效果通常得上 OpenResty + lua-resty-auto-ssl，复杂度完全不在一个量级。</li>
+<li><strong>内部 CA</strong>：内置本地 CA，<code>localhost</code> 开发环境也能用受信任的 HTTPS。</li>
+</ul>
+<p>Nginx 这边，证书管理依赖外部工具（certbot、acme.sh、lego），工作得也很成熟，但本质上是”胶水方案”：多一个进程、多一个 cron、多一个 reload 钩子，多一处可能坏的地方。</p>
+<h2 id="性能：差距比你想象的小"><a href="#性能：差距比你想象的小" class="headerlink" title="性能：差距比你想象的小"></a>性能：差距比你想象的小</h2><p>网络上流传”C 写的肯定比 Go 快”，实际测试中：</p>
+<ul>
+<li><strong>静态文件与常规反向代理</strong>：两者在绝大多数真实负载下吞吐量处于同一量级。Nginx 在极限 RPS 和内存占用上通常仍有优势（C + 精细的内存管理 vs Go runtime + GC），尤其是数十万并发连接的极端场景。</li>
+<li><strong>尾延迟</strong>：Go 的 GC 在高压下可能带来轻微的 P99 抖动，但对绝大多数业务无感。</li>
+<li><strong>HTTP&#x2F;3</strong>：两者都已支持 QUIC&#x2F;HTTP3，Caddy 默认启用，Nginx 需要显式配置。</li>
+</ul>
+<p>结论：<strong>除非你在做 CDN 边缘节点或单机要扛几十万并发，性能不应该是你们之间的决定因素。</strong> 瓶颈几乎总在上游应用，而不是代理层。</p>
+<h2 id="运维与生态"><a href="#运维与生态" class="headerlink" title="运维与生态"></a>运维与生态</h2><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>Nginx</th>
+<th>Caddy</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>配置热加载</td>
+<td><code>nginx -s reload</code>，成熟可靠</td>
+<td>Admin API 优雅热加载，零停机</td>
+</tr>
+<tr>
+<td>动态配置</td>
+<td>原生不支持，需 reload 或商业版&#x2F;OpenResty</td>
+<td>内置 JSON Admin API，可编程修改运行时配置</td>
+</tr>
+<tr>
+<td>文档与搜索答案</td>
+<td>二十年积累，几乎任何问题都有现成答案</td>
+<td>文档质量高但社区体量小得多</td>
+</tr>
+<tr>
+<td>容器&#x2F;K8s 生态</td>
+<td>ingress-nginx 等久经考验</td>
+<td>有 Ingress Controller 但成熟度和采用率较低</td>
+</tr>
+<tr>
+<td>扩展方式</td>
+<td>C 模块（需重新编译）、OpenResty&#x2F;Lua、njs</td>
+<td>Go 插件生态，<code>xcaddy</code> 一条命令编译定制版本</td>
+</tr>
+<tr>
+<td>二进制分发</td>
+<td>包管理器，模块依赖发行版</td>
+<td>单一静态二进制，跨平台部署极其省心</td>
+</tr>
+<tr>
+<td>商业支持</td>
+<td>Nginx Plus（F5）</td>
+<td>官方赞助&#x2F;商业授权</td>
+</tr>
+</tbody></table>
+<p>几个值得展开的点：</p>
+<ul>
+<li><strong>扩展性</strong>：Caddy 的插件体验显著更好。<code>xcaddy build --with github.com/...</code> 一条命令就能编出带 Cloudflare DNS 验证、限流、安全模块的定制二进制。Nginx 编第三方 C 模块的痛苦，折腾过的人都懂（这也是 OpenResty 存在的原因）。</li>
+<li><strong>配置即 API</strong>：Caddy 的本质是一个 JSON 配置引擎，Caddyfile 只是人类友好的前端。这让它天然适合被程序驱动——平台型产品动态增删站点不需要生成配置文件再 reload。</li>
+<li><strong>久经考验</strong>：Nginx 的边缘案例处理、与各种奇怪客户端&#x2F;上游的兼容性，是二十年生产流量喂出来的。保守的大型生产环境选它，不会有人质疑。</li>
+</ul>
+<h2 id="选型建议"><a href="#选型建议" class="headerlink" title="选型建议"></a>选型建议</h2><p><strong>选 Caddy，如果你是：</strong></p>
+<ul>
+<li>个人项目、中小团队、初创公司——把省下来的证书运维时间拿去写业务</li>
+<li>SaaS 平台需要客户自定义域名（On-Demand TLS 几乎是唯一省心方案）</li>
+<li>需要通过 API 动态管理大量站点配置</li>
+<li>团队没有专职运维，希望配置文件三行能看懂</li>
+</ul>
+<p><strong>选 Nginx，如果你是：</strong></p>
+<ul>
+<li>已有大量 Nginx 配置和团队经验——迁移收益撑不起迁移成本</li>
+<li>极端高并发 &#x2F; 边缘节点 &#x2F; 对内存和尾延迟敏感的场景</li>
+<li>重度依赖 Kubernetes ingress-nginx 或 OpenResty&#x2F;Lua 生态</li>
+<li>需要 Nginx Plus 的商业特性与支持，或所在组织要求”最保守的选择”</li>
+</ul>
+<p><strong>也可以都要</strong>：不少团队用 Caddy 做边缘 TLS 终结（享受自动证书），后面挂 Nginx&#x2F;原有架构不动。架构上完全成立。</p>
+<h2 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h2><p>Nginx 和 Caddy 的关系，有点像 Vim 和 VS Code：前者无所不能但要求你懂它，后者把 90% 的常见需求做成了开箱即用。2026 年的今天，<strong>对于新项目我会默认从 Caddy 开始</strong>——直到遇到它解决不了的问题再换，而这一天对大多数项目来说不会到来。但如果你手里已经有一套运转良好的 Nginx，请记住运维界的第一定律：<strong>If it works, don’t fix it.</strong></p>
+]]></content>
+      <categories>
+        <category>教程</category>
+      </categories>
+      <tags>
+        <tag>Nginx</tag>
+        <tag>Caddy</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>台北电脑展：Nvidia 发布面向 PC 的 RTX Spark CPU，信息一览</title>
     <url>/post/nvidia-announce-rtx-spark.html</url>
     <content><![CDATA[<p>2026 年 6 月 1 日，之前各大科技品牌官推的 <code>A new era of PC.</code> 谜底终于揭晓：</p>
@@ -6948,78 +7147,6 @@
       </tags>
   </entry>
   <entry>
-    <title>快讯：美国政府对 Claude Fable 5 发布禁令</title>
-    <url>/post/us-government-ban-claude-fable-5.html</url>
-    <content><![CDATA[<h2 id="AI-的“数字铁幕”落下：Claude-Fable-5-遭出口管制限制"><a href="#AI-的“数字铁幕”落下：Claude-Fable-5-遭出口管制限制" class="headerlink" title="AI 的“数字铁幕”落下：Claude Fable 5 遭出口管制限制"></a>AI 的“数字铁幕”落下：Claude Fable 5 遭出口管制限制</h2><p>北京时间 2026 年 6 月 13 日，在 Claude Fable 5 仅仅上线三天后，Anthropic 在社交平台上发布了一则令人震惊的 <a href="https://x.com/AnthropicAI/status/2065597531644743999">声明</a>： <strong>因美国政府援引国家安全授权下达出口管制指令，要求禁止任何外国公民访问 Fable 5 和 Mythos 5</strong> ，公司为确保合规，不得不紧急对所有客户全面停用这两款模型。</p>
-<blockquote>
-<p>The US government, citing national security authorities, has issued an export control directive to suspend all access to Fable 5 and Mythos 5 by any foreign national, whether inside or outside the United States, including foreign national Anthropic employees.</p>
-<p>The net effect of this order is that we must abruptly disable Fable 5 and Mythos 5 for all our customers to ensure compliance.</p>
-<p>Access to all other Claude models is not affected.</p>
-</blockquote>
-<p>在 Anthropic 的官网 <a href="https://www.anthropic.com/news/fable-mythos-access">声明</a> 中表示，美国政府是基于发现了一种绕过或破解 Fable 5 限制（即大模型的 <strong>越狱</strong>）的方法而发布了禁令。</p>
-<p>虽然其他 Claude 模型暂未受波及，但这则短短的声明，却无异于在生成式 AI 领域投下了一枚重磅炸弹。它不仅宣告了一个特定模型的下线，更标志着整个行业底层逻辑的根本性转折。</p>
-<h2 id="核心剧变：从“算力霸权”向“模型主权”的转移"><a href="#核心剧变：从“算力霸权”向“模型主权”的转移" class="headerlink" title="核心剧变：从“算力霸权”向“模型主权”的转移"></a>核心剧变：从“算力霸权”向“模型主权”的转移</h2><p>过去，大国博弈与行业竞争的焦点一直停留在硬件层面——谁掌握了最先进的 GPU 和芯片制造工艺，谁就扼住了 AI 发展的咽喉。</p>
-<p>然而，Fable 5 事件证明，到了 2026 年，最先进 AI 的核心价值已经从“训练基础设施”正式转移到了“模型本身”。当一个前沿模型具备了以下特征时，它便不再仅仅是商业软件，而是名副其实的国家战略级技术资产：</p>
-<ul>
-<li>顶级的科研与科学发现能力</li>
-<li>深度的自主编程与除错能力</li>
-<li>长周期的复杂任务规划与执行能力</li>
-<li>自动化的网络攻防与安全渗透能力</li>
-</ul>
-<p>美国政府对 Fable 5 的封锁逻辑，与当年限制高端芯片出口的逻辑如出一辙。因为在国家安全视域下，具备上述能力的软件，其杀伤力与重要性已与尖端军工硬件无异。</p>
-<h2 id="致命悖论：Anthropic-被自己的“安全牌”反噬"><a href="#致命悖论：Anthropic-被自己的“安全牌”反噬" class="headerlink" title="致命悖论：Anthropic 被自己的“安全牌”反噬"></a>致命悖论：Anthropic 被自己的“安全牌”反噬</h2><p>这起事件中最具戏剧性的一幕，在于 Anthropic 一直以来的人设。作为业界最著名的“AI 安全路线”倡导者，Anthropic 经常在公开场合展示其模型在网络安全、生物科学辅助、自动化代理等领域的强大乃至“危险”的能力。</p>
-<p>这种策略在商业上曾无比成功：</p>
-<ul>
-<li>对投资者： 证明了自己拥有逼近 AGI 的技术实力。</li>
-<li>对监管者： 彰显了企业对潜在风险的重视与透明度。</li>
-</ul>
-<p><strong>但也这是一个致命的悖论</strong>：<br>为了证明模型足够强大，企业必须充分展示其潜在的破坏力；而当这种危险性被反复强调并被广泛认可后，必然会精准踩中监管机构的红线。Anthropic 近期对 Fable 5 和 Mythos 5 危险能力的渲染，最终成为了促使监管重锤落下的核心背书。</p>
-<h2 id="行业新常态：互联网“无国界时代”的终结"><a href="#行业新常态：互联网“无国界时代”的终结" class="headerlink" title="行业新常态：互联网“无国界时代”的终结"></a>行业新常态：互联网“无国界时代”的终结</h2><p>Fable 5 的下线只是一个开始，它真正值得警惕的是其开创的政策先例。如果政府可以直接介入并限制特定 AI 模型的全球访问权，那么我们很可能即将迎来一个“技术边境”森严的新时代。</p>
-<p>未来，全球统一的 AI 软件服务模式可能走向瓦解，取而代之的将是高度分化的访问机制：</p>
-<ul>
-<li><strong>基于国籍的隔离</strong>： 不同国家的用户只能访问被阉割或完全不同的模型版本。  </li>
-<li><strong>模块化的权限管控</strong>： 科研、编程等关键能力模块受到严格的许可限制。</li>
-<li><strong>身份层级分化</strong>： 个人用户、普通企业与具有特殊资质的科研&#x2F;政府机构获得截然不同的访问权限。</li>
-</ul>
-<p>过去的焦点是<strong>数据主权</strong>，而未来的核心博弈将是<strong>模型主权</strong>。</p>
-<h2 id="悬念犹存：GPT-5-5-会步其后尘吗？"><a href="#悬念犹存：GPT-5-5-会步其后尘吗？" class="headerlink" title="悬念犹存：GPT-5.5 会步其后尘吗？"></a>悬念犹存：GPT-5.5 会步其后尘吗？</h2><p>面对 Claude 的遭遇，用户的焦虑很快蔓延至其竞争对手：OpenAI 的 GPT-5.5 会不会成为下一个管制目标？ 尤其是在 Anthropic 的官网 <a href="https://www.anthropic.com/news/fable-mythos-access">声明</a> 中包含了下面的内容：</p>
-<blockquote>
-<p>我们已经审查了一份据信是政府下达该指令依据的报告。我们已经核实，报告中所展示的能力水平在其他模型（包括 OpenAI 的 GPT-5.5）中广泛存在，并且每天都在被维护系统安全的防御者们所使用。</p>
-</blockquote>
-<p>Anthropic 认为，这场风波本质上是一场误解。所谓“越狱”并非体现模型具备普遍性、高风险能力，而只是某些狭窄、非通用的漏洞；类似能力在其他公开模型中也普遍存在，并不应被单独放大为管制依据。</p>
-<p>从声明全文来看，Anthropic 对相关管制政策持明确反对态度。其核心诉求显然是自救，而不是将其他竞争对手一并拖入困境。它真正希望推动的，是监管层重新评估 Claude Fable 5 的风险判断，并最终解除对其访问限制。</p>
-<p>毕竟，如果两家 AI 巨头的旗舰模型都相继被限制，那将不只是某一家公司的危机，而可能成为整个技术开放生态的至暗时刻。</p>
-<h2 id="结语：AI“开放时代”的落幕"><a href="#结语：AI“开放时代”的落幕" class="headerlink" title="结语：AI“开放时代”的落幕"></a>结语：AI“开放时代”的落幕</h2><p>回顾过去三年，大模型行业经历了一场狂飙突进的全球化盛宴。模型能力呈指数级跃升，使用成本不断逼近底线，全球用户几乎能够跨越地理界限，同步享受到人类最前沿的智慧结晶。</p>
-<p>但 6 月 13 日的 Fable 5 事件，是一道冰冷的历史分水岭。</p>
-<p>它宣告了先进 AI 正式脱离单纯的“消费级科技产品”范畴，被摆上了与核武器、航空航天、先进制程芯片同等的战略博弈棋盘。对于普通人而言，最大的震撼不在于某一个聊天窗口的暂时失效，而是我们终于看清了未来的残酷现实：</p>
-<p>由技术全球化所构筑的“普惠 AI”乌托邦正在消散，取而代之的，是数字铁幕时代下，被权力、国籍和安全政策严格切割的智能世界。</p>
-]]></content>
-      <categories>
-        <category>资讯</category>
-      </categories>
-      <tags>
-        <tag>Claude Fable 5</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Vercel 上线 Agents Skills 大全网站：skills.sh</title>
-    <url>/post/vercel-launch-agent-skills-directory.html</url>
-    <content><![CDATA[<p>Vercel 上线的 Agent Skill 大全网站 <a href="skills.sh">https://skills.sh</a> ，可以方便查找和快速安装 Skills 。</p>
-<p>访问网站即可查看热门的 Skills，还可以进行搜索。</p>
-<p>可以直接使用下面的命令将 skills 安装到项目目录：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npx skills add &lt;owner/repo&gt; </span><br></pre></td></tr></table></figure>
-
-<p><img src="https://img.nep.me/ooo/skills-sh.webp" alt="skills-sh"></p>
-]]></content>
-      <categories>
-        <category>资讯</category>
-      </categories>
-      <tags>
-        <tag>Agent Skills</tag>
-        <tag>Vercel</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>在 OpenCode 中免费体验 Kimi K2.5 模型</title>
     <url>/post/try-kimi-k25-free-in-opencode.html</url>
     <content><![CDATA[<h2 id="有关-Kimi-K2-5"><a href="#有关-Kimi-K2-5" class="headerlink" title="有关 Kimi K2.5"></a>有关 Kimi K2.5</h2><p>Kimi 是 <strong>月之暗面</strong> (<a href="https://www.moonshot.ai/">Moonshot AI</a>) 推出的系列模型，最新版本是 Kimi K2.5，点击这里查看 <a href="https://platform.moonshot.cn/docs/guide/kimi-k2-5-quickstart">Kimi K2.5 模型介绍</a></p>
@@ -7140,6 +7267,78 @@
       <tags>
         <tag>OpenCode</tag>
         <tag>Kimi</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>快讯：美国政府对 Claude Fable 5 发布禁令</title>
+    <url>/post/us-government-ban-claude-fable-5.html</url>
+    <content><![CDATA[<h2 id="AI-的“数字铁幕”落下：Claude-Fable-5-遭出口管制限制"><a href="#AI-的“数字铁幕”落下：Claude-Fable-5-遭出口管制限制" class="headerlink" title="AI 的“数字铁幕”落下：Claude Fable 5 遭出口管制限制"></a>AI 的“数字铁幕”落下：Claude Fable 5 遭出口管制限制</h2><p>北京时间 2026 年 6 月 13 日，在 Claude Fable 5 仅仅上线三天后，Anthropic 在社交平台上发布了一则令人震惊的 <a href="https://x.com/AnthropicAI/status/2065597531644743999">声明</a>： <strong>因美国政府援引国家安全授权下达出口管制指令，要求禁止任何外国公民访问 Fable 5 和 Mythos 5</strong> ，公司为确保合规，不得不紧急对所有客户全面停用这两款模型。</p>
+<blockquote>
+<p>The US government, citing national security authorities, has issued an export control directive to suspend all access to Fable 5 and Mythos 5 by any foreign national, whether inside or outside the United States, including foreign national Anthropic employees.</p>
+<p>The net effect of this order is that we must abruptly disable Fable 5 and Mythos 5 for all our customers to ensure compliance.</p>
+<p>Access to all other Claude models is not affected.</p>
+</blockquote>
+<p>在 Anthropic 的官网 <a href="https://www.anthropic.com/news/fable-mythos-access">声明</a> 中表示，美国政府是基于发现了一种绕过或破解 Fable 5 限制（即大模型的 <strong>越狱</strong>）的方法而发布了禁令。</p>
+<p>虽然其他 Claude 模型暂未受波及，但这则短短的声明，却无异于在生成式 AI 领域投下了一枚重磅炸弹。它不仅宣告了一个特定模型的下线，更标志着整个行业底层逻辑的根本性转折。</p>
+<h2 id="核心剧变：从“算力霸权”向“模型主权”的转移"><a href="#核心剧变：从“算力霸权”向“模型主权”的转移" class="headerlink" title="核心剧变：从“算力霸权”向“模型主权”的转移"></a>核心剧变：从“算力霸权”向“模型主权”的转移</h2><p>过去，大国博弈与行业竞争的焦点一直停留在硬件层面——谁掌握了最先进的 GPU 和芯片制造工艺，谁就扼住了 AI 发展的咽喉。</p>
+<p>然而，Fable 5 事件证明，到了 2026 年，最先进 AI 的核心价值已经从“训练基础设施”正式转移到了“模型本身”。当一个前沿模型具备了以下特征时，它便不再仅仅是商业软件，而是名副其实的国家战略级技术资产：</p>
+<ul>
+<li>顶级的科研与科学发现能力</li>
+<li>深度的自主编程与除错能力</li>
+<li>长周期的复杂任务规划与执行能力</li>
+<li>自动化的网络攻防与安全渗透能力</li>
+</ul>
+<p>美国政府对 Fable 5 的封锁逻辑，与当年限制高端芯片出口的逻辑如出一辙。因为在国家安全视域下，具备上述能力的软件，其杀伤力与重要性已与尖端军工硬件无异。</p>
+<h2 id="致命悖论：Anthropic-被自己的“安全牌”反噬"><a href="#致命悖论：Anthropic-被自己的“安全牌”反噬" class="headerlink" title="致命悖论：Anthropic 被自己的“安全牌”反噬"></a>致命悖论：Anthropic 被自己的“安全牌”反噬</h2><p>这起事件中最具戏剧性的一幕，在于 Anthropic 一直以来的人设。作为业界最著名的“AI 安全路线”倡导者，Anthropic 经常在公开场合展示其模型在网络安全、生物科学辅助、自动化代理等领域的强大乃至“危险”的能力。</p>
+<p>这种策略在商业上曾无比成功：</p>
+<ul>
+<li>对投资者： 证明了自己拥有逼近 AGI 的技术实力。</li>
+<li>对监管者： 彰显了企业对潜在风险的重视与透明度。</li>
+</ul>
+<p><strong>但也这是一个致命的悖论</strong>：<br>为了证明模型足够强大，企业必须充分展示其潜在的破坏力；而当这种危险性被反复强调并被广泛认可后，必然会精准踩中监管机构的红线。Anthropic 近期对 Fable 5 和 Mythos 5 危险能力的渲染，最终成为了促使监管重锤落下的核心背书。</p>
+<h2 id="行业新常态：互联网“无国界时代”的终结"><a href="#行业新常态：互联网“无国界时代”的终结" class="headerlink" title="行业新常态：互联网“无国界时代”的终结"></a>行业新常态：互联网“无国界时代”的终结</h2><p>Fable 5 的下线只是一个开始，它真正值得警惕的是其开创的政策先例。如果政府可以直接介入并限制特定 AI 模型的全球访问权，那么我们很可能即将迎来一个“技术边境”森严的新时代。</p>
+<p>未来，全球统一的 AI 软件服务模式可能走向瓦解，取而代之的将是高度分化的访问机制：</p>
+<ul>
+<li><strong>基于国籍的隔离</strong>： 不同国家的用户只能访问被阉割或完全不同的模型版本。  </li>
+<li><strong>模块化的权限管控</strong>： 科研、编程等关键能力模块受到严格的许可限制。</li>
+<li><strong>身份层级分化</strong>： 个人用户、普通企业与具有特殊资质的科研&#x2F;政府机构获得截然不同的访问权限。</li>
+</ul>
+<p>过去的焦点是<strong>数据主权</strong>，而未来的核心博弈将是<strong>模型主权</strong>。</p>
+<h2 id="悬念犹存：GPT-5-5-会步其后尘吗？"><a href="#悬念犹存：GPT-5-5-会步其后尘吗？" class="headerlink" title="悬念犹存：GPT-5.5 会步其后尘吗？"></a>悬念犹存：GPT-5.5 会步其后尘吗？</h2><p>面对 Claude 的遭遇，用户的焦虑很快蔓延至其竞争对手：OpenAI 的 GPT-5.5 会不会成为下一个管制目标？ 尤其是在 Anthropic 的官网 <a href="https://www.anthropic.com/news/fable-mythos-access">声明</a> 中包含了下面的内容：</p>
+<blockquote>
+<p>我们已经审查了一份据信是政府下达该指令依据的报告。我们已经核实，报告中所展示的能力水平在其他模型（包括 OpenAI 的 GPT-5.5）中广泛存在，并且每天都在被维护系统安全的防御者们所使用。</p>
+</blockquote>
+<p>Anthropic 认为，这场风波本质上是一场误解。所谓“越狱”并非体现模型具备普遍性、高风险能力，而只是某些狭窄、非通用的漏洞；类似能力在其他公开模型中也普遍存在，并不应被单独放大为管制依据。</p>
+<p>从声明全文来看，Anthropic 对相关管制政策持明确反对态度。其核心诉求显然是自救，而不是将其他竞争对手一并拖入困境。它真正希望推动的，是监管层重新评估 Claude Fable 5 的风险判断，并最终解除对其访问限制。</p>
+<p>毕竟，如果两家 AI 巨头的旗舰模型都相继被限制，那将不只是某一家公司的危机，而可能成为整个技术开放生态的至暗时刻。</p>
+<h2 id="结语：AI“开放时代”的落幕"><a href="#结语：AI“开放时代”的落幕" class="headerlink" title="结语：AI“开放时代”的落幕"></a>结语：AI“开放时代”的落幕</h2><p>回顾过去三年，大模型行业经历了一场狂飙突进的全球化盛宴。模型能力呈指数级跃升，使用成本不断逼近底线，全球用户几乎能够跨越地理界限，同步享受到人类最前沿的智慧结晶。</p>
+<p>但 6 月 13 日的 Fable 5 事件，是一道冰冷的历史分水岭。</p>
+<p>它宣告了先进 AI 正式脱离单纯的“消费级科技产品”范畴，被摆上了与核武器、航空航天、先进制程芯片同等的战略博弈棋盘。对于普通人而言，最大的震撼不在于某一个聊天窗口的暂时失效，而是我们终于看清了未来的残酷现实：</p>
+<p>由技术全球化所构筑的“普惠 AI”乌托邦正在消散，取而代之的，是数字铁幕时代下，被权力、国籍和安全政策严格切割的智能世界。</p>
+]]></content>
+      <categories>
+        <category>资讯</category>
+      </categories>
+      <tags>
+        <tag>Claude Fable 5</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Vercel 上线 Agents Skills 大全网站：skills.sh</title>
+    <url>/post/vercel-launch-agent-skills-directory.html</url>
+    <content><![CDATA[<p>Vercel 上线的 Agent Skill 大全网站 <a href="skills.sh">https://skills.sh</a> ，可以方便查找和快速安装 Skills 。</p>
+<p>访问网站即可查看热门的 Skills，还可以进行搜索。</p>
+<p>可以直接使用下面的命令将 skills 安装到项目目录：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npx skills add &lt;owner/repo&gt; </span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img.nep.me/ooo/skills-sh.webp" alt="skills-sh"></p>
+]]></content>
+      <categories>
+        <category>资讯</category>
+      </categories>
+      <tags>
+        <tag>Agent Skills</tag>
+        <tag>Vercel</tag>
       </tags>
   </entry>
   <entry>
@@ -7275,6 +7474,219 @@
       <tags>
         <tag>开发者安全</tag>
         <tag>pnpm</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Vercel Services 发布：一个项目部署 Next.js、FastAPI、Go 和 Astro</title>
+    <url>/post/vercel-services-multiple-frameworks-one-project.html</url>
+    <content><![CDATA[<p>当你手头有一个包含 Next.js 前端、FastAPI 后端、Go 服务和 Astro 文档站的复杂项目时，是否也曾为如何在 Vercel 上部署和管理而感到头疼？</p>
+<p>过去，这类项目往往需要拆成多个 Vercel Project，或者把部分服务放到其他平台上运行。项目一多，域名、环境变量、Preview URL、跨服务调用、CORS、路由转发都会变复杂。</p>
+<p>Vercel 最近推出的 <a href="https://vercel.com/changelog/run-multiple-frameworks-in-one-project-with-vercel-services">Vercel Services</a>，就是为了解决这个问题：它允许开发者在一个 Vercel Project 中部署多个独立构建的服务，并通过统一的路由规则把请求分发到不同服务中。</p>
+<p>换句话说，一个项目里可以同时放：</p>
+<ul>
+<li>Next.js 前端</li>
+<li>FastAPI 后端</li>
+<li>Go API 服务</li>
+<li>Astro 文档站</li>
+<li>Vite &#x2F; React 管理后台</li>
+<li>其他独立构建单元</li>
+</ul>
+<p>这些服务可以共享同一个部署、同一个域名、同一套 Preview Deployment，并且可以通过 Vercel 的服务路由和内部绑定进行通信。</p>
+<h2 id="Vercel-Services-是什么？"><a href="#Vercel-Services-是什么？" class="headerlink" title="Vercel Services 是什么？"></a>Vercel Services 是什么？</h2><p>简单来说，Vercel Services 可以把一个项目拆成多个独立的 <strong>Service</strong>。</p>
+<p>每个 Service 都是一个独立构建单元，可以有自己的根目录、框架、运行时、启动入口和依赖文件。但它们最终仍然属于同一个 Vercel Project，并共享同一个部署。</p>
+<p>例如，一个项目可以设计成这样：</p>
+<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">my-project/</span><br><span class="line">├── apps/</span><br><span class="line">│   ├── web/        # Next.js 前端</span><br><span class="line">│   ├── docs/       # Astro 文档站</span><br><span class="line">│   └── admin/      # Vite 管理后台</span><br><span class="line">├── backend/</span><br><span class="line">│   └── fastapi/    # FastAPI 后端</span><br><span class="line">├── services/</span><br><span class="line">│   └── go/         # Go 服务</span><br><span class="line">└── vercel.json</span><br></pre></td></tr></table></figure>
+
+<p>部署后，可以通过同一个域名访问不同服务：</p>
+<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">https://example.vercel.app/          -&gt; Next.js 前端</span><br><span class="line">https://example.vercel.app/api       -&gt; FastAPI 后端</span><br><span class="line">https://example.vercel.app/go        -&gt; Go 服务</span><br><span class="line">https://example.vercel.app/docs      -&gt; Astro 文档站</span><br></pre></td></tr></table></figure>
+
+<p>这就是 Vercel Services 最核心的价值：<strong>一个项目，多个服务，统一部署。</strong></p>
+<p><img src="https://img.nep.me/ooo/cover-vercel-services.webp" alt="Vercek Services"></p>
+<h2 id="它解决了什么问题？"><a href="#它解决了什么问题？" class="headerlink" title="它解决了什么问题？"></a>它解决了什么问题？</h2><h3 id="1-前端和后端不用拆成多个-Vercel-Project"><a href="#1-前端和后端不用拆成多个-Vercel-Project" class="headerlink" title="1. 前端和后端不用拆成多个 Vercel Project"></a>1. 前端和后端不用拆成多个 Vercel Project</h3><p>很多项目一开始只是一个前端站点，后来逐渐加上 API、后台、Webhook、文档站、小工具页面，最后目录可能变成这样：</p>
+<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">my-project/</span><br><span class="line">├── apps/</span><br><span class="line">│   ├── web/</span><br><span class="line">│   ├── admin/</span><br><span class="line">│   └── docs/</span><br><span class="line">├── backend/</span><br><span class="line">│   ├── main.py</span><br><span class="line">│   └── requirements.txt</span><br><span class="line">├── packages/</span><br><span class="line">│   └── shared/</span><br><span class="line">└── vercel.json</span><br></pre></td></tr></table></figure>
+
+<p>如果没有 Services，你可能需要这样拆：</p>
+<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">apps/web     -&gt; 一个 Vercel Project</span><br><span class="line">apps/admin   -&gt; 另一个 Vercel Project</span><br><span class="line">apps/docs    -&gt; 再一个 Vercel Project</span><br><span class="line">backend      -&gt; 部署到 VPS、Render、Fly.io 或其他平台</span><br></pre></td></tr></table></figure>
+
+<p>这样做当然可以，但维护成本会变高：</p>
+<ul>
+<li>每个项目都有单独的域名和 Preview URL</li>
+<li>环境变量需要重复配置</li>
+<li>前端调用后端要处理 CORS</li>
+<li>PR 预览时前后端地址可能对不上</li>
+<li>多个服务之间的版本同步更麻烦</li>
+</ul>
+<p>Vercel Services 的思路是：这些东西本来就属于同一个产品，那就让它们作为一个项目中的多个服务一起部署。</p>
+<h3 id="2-更适合多语言项目"><a href="#2-更适合多语言项目" class="headerlink" title="2. 更适合多语言项目"></a>2. 更适合多语言项目</h3><p>Vercel 过去最强的体验主要集中在前端和 Node.js 生态，尤其是 Next.js。</p>
+<p>但现实项目中，后端不一定都是 JavaScript。很多项目会同时使用：</p>
+<ul>
+<li>Next.js</li>
+<li>Astro</li>
+<li>Vite</li>
+<li>FastAPI</li>
+<li>Go</li>
+<li>Express</li>
+<li>Hono</li>
+<li>其他后端框架</li>
+</ul>
+<p>Vercel Services 让这些服务可以在一个项目中组合起来。</p>
+<p>例如：</p>
+<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">apps/web         -&gt; Next.js 前端</span><br><span class="line">apps/docs        -&gt; Astro 文档站</span><br><span class="line">backend/fastapi  -&gt; FastAPI 后端</span><br><span class="line">services/go      -&gt; Go 服务</span><br></pre></td></tr></table></figure>
+
+<p>这类项目过去更像是“多个部署拼起来”，现在则更接近“一个产品的多个组成部分”。</p>
+<h3 id="3-Preview-Deployment-更统一"><a href="#3-Preview-Deployment-更统一" class="headerlink" title="3. Preview Deployment 更统一"></a>3. Preview Deployment 更统一</h3><p>Vercel 最好用的能力之一是 Preview Deployment。</p>
+<p>每次提交 PR，都可以自动生成一个预览地址。如果前端、后端、文档站都拆成多个 Project，那么你可能需要同时管理多个预览地址。</p>
+<p>使用 Services 后，多个服务可以共享同一个部署 URL，通过不同路径区分：</p>
+<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">https://my-project-git-feature.vercel.app/</span><br><span class="line">https://my-project-git-feature.vercel.app/api</span><br><span class="line">https://my-project-git-feature.vercel.app/go</span><br><span class="line">https://my-project-git-feature.vercel.app/docs</span><br></pre></td></tr></table></figure>
+
+<p>对于团队协作、产品验收、临时测试来说，这会简单很多。</p>
+<h2 id="基础配置示例"><a href="#基础配置示例" class="headerlink" title="基础配置示例"></a>基础配置示例</h2><p>Vercel Services 使用 <code>vercel.json</code> 中的 <code>services</code> 字段声明多个服务。</p>
+<p>一个最简单的前后端项目可以这样写：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;services&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;my_frontend&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;root&quot;</span><span class="punctuation">:</span> <span class="string">&quot;frontend/&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;framework&quot;</span><span class="punctuation">:</span> <span class="string">&quot;nextjs&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;my_backend&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;root&quot;</span><span class="punctuation">:</span> <span class="string">&quot;backend/&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;entrypoint&quot;</span><span class="punctuation">:</span> <span class="string">&quot;main:app&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;rewrites&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;source&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/api/(.*)&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;destination&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span> <span class="attr">&quot;service&quot;</span><span class="punctuation">:</span> <span class="string">&quot;my_backend&quot;</span> <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;source&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/(.*)&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;destination&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span> <span class="attr">&quot;service&quot;</span><span class="punctuation">:</span> <span class="string">&quot;my_frontend&quot;</span> <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>这里定义了两个服务：</p>
+<ul>
+<li><code>my_frontend</code>：前端服务，根目录是 <code>frontend/</code>，使用 Next.js。</li>
+<li><code>my_backend</code>：后端服务，根目录是 <code>backend/</code>，启动入口是 <code>main:app</code>。</li>
+</ul>
+<p>下面的 <code>rewrites</code> 决定公网请求如何进入不同服务：</p>
+<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">/api/*  -&gt; my_backend</span><br><span class="line">/*      -&gt; my_frontend</span><br></pre></td></tr></table></figure>
+
+<p>也就是说：</p>
+<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">https://example.vercel.app/api/users  -&gt; FastAPI 后端</span><br><span class="line">https://example.vercel.app/about      -&gt; Next.js 前端</span><br></pre></td></tr></table></figure>
+
+<p>需要注意的是，Service 默认不会自动暴露到公网。只有被顶层 <code>rewrites</code> 指向的服务，才会接收公网请求。</p>
+<p>这点非常重要。</p>
+<p>如果你声明了一个 <code>my_backend</code> 服务，但没有在 <code>rewrites</code> 中把路径指向它，那么它不会直接对公网开放。这种设计适合处理一些只给内部调用的后端服务。</p>
+<img src="https://img.nep.me/ooo/vercel-services-deployment-ui.webp" alt="vercel-services-deployment-ui" style="width:75%;max-width:100%;height:auto" />
+
+<h2 id="更完整的示例：Next-js-FastAPI-Go-Astro"><a href="#更完整的示例：Next-js-FastAPI-Go-Astro" class="headerlink" title="更完整的示例：Next.js + FastAPI + Go + Astro"></a>更完整的示例：Next.js + FastAPI + Go + Astro</h2><p>假设我们有一个 Monorepo：</p>
+<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">my-app/</span><br><span class="line">├── apps/</span><br><span class="line">│   ├── web/</span><br><span class="line">│   │   ├── package.json</span><br><span class="line">│   │   └── app/</span><br><span class="line">│   └── docs/</span><br><span class="line">│       ├── package.json</span><br><span class="line">│       └── src/</span><br><span class="line">├── backend/</span><br><span class="line">│   └── fastapi/</span><br><span class="line">│       ├── main.py</span><br><span class="line">│       └── requirements.txt</span><br><span class="line">├── services/</span><br><span class="line">│   └── go/</span><br><span class="line">│       ├── main.go</span><br><span class="line">│       └── go.mod</span><br><span class="line">└── vercel.json</span><br></pre></td></tr></table></figure>
+
+<p>我们希望：</p>
+<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">/        -&gt; Next.js 前端</span><br><span class="line">/api/*   -&gt; FastAPI 后端</span><br><span class="line">/go/*    -&gt; Go 服务</span><br><span class="line">/docs/*  -&gt; Astro 文档站</span><br></pre></td></tr></table></figure>
+
+<p>那么 <code>vercel.json</code> 可以这样写：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;services&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;web&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;root&quot;</span><span class="punctuation">:</span> <span class="string">&quot;apps/web&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;framework&quot;</span><span class="punctuation">:</span> <span class="string">&quot;nextjs&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;api&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;root&quot;</span><span class="punctuation">:</span> <span class="string">&quot;backend/fastapi&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;entrypoint&quot;</span><span class="punctuation">:</span> <span class="string">&quot;main:app&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;go_service&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;root&quot;</span><span class="punctuation">:</span> <span class="string">&quot;services/go&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;entrypoint&quot;</span><span class="punctuation">:</span> <span class="string">&quot;main.go&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;docs&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;root&quot;</span><span class="punctuation">:</span> <span class="string">&quot;apps/docs&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;framework&quot;</span><span class="punctuation">:</span> <span class="string">&quot;astro&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;rewrites&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;source&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/api/(.*)&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;destination&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span> <span class="attr">&quot;service&quot;</span><span class="punctuation">:</span> <span class="string">&quot;api&quot;</span> <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;source&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/go/(.*)&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;destination&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span> <span class="attr">&quot;service&quot;</span><span class="punctuation">:</span> <span class="string">&quot;go_service&quot;</span> <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;source&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/docs/(.*)&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;destination&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span> <span class="attr">&quot;service&quot;</span><span class="punctuation">:</span> <span class="string">&quot;docs&quot;</span> <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;source&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/(.*)&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;destination&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span> <span class="attr">&quot;service&quot;</span><span class="punctuation">:</span> <span class="string">&quot;web&quot;</span> <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>这段配置的核心逻辑很清晰：</p>
+<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">/api/*   交给 FastAPI</span><br><span class="line">/go/*    交给 Go 服务</span><br><span class="line">/docs/*  交给 Astro 文档站</span><br><span class="line">其他路径 交给 Next.js 前端</span><br></pre></td></tr></table></figure>
+
+<p>注意，<code>rewrites</code> 的顺序很重要。更具体的路径应该放在前面，例如 <code>/api/(.*)</code>、<code>/go/(.*)</code>、<code>/docs/(.*)</code>；兜底的 <code>/(.*)</code> 应该放在最后。</p>
+<p>否则所有请求都可能先被前端服务接走。</p>
+<h2 id="配置字段说明"><a href="#配置字段说明" class="headerlink" title="配置字段说明"></a>配置字段说明</h2><h3 id="services"><a href="#services" class="headerlink" title="services"></a>services</h3><p><code>services</code> 用于声明当前项目中的多个服务。</p>
+<p>每个 key 都是一个服务名，例如：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;services&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;web&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span><span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;api&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span><span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;docs&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span><span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>这些服务名之后可以在 <code>rewrites</code> 或服务间调用配置中使用。</p>
+<h3 id="root"><a href="#root" class="headerlink" title="root"></a>root</h3><p><code>root</code> 指定该服务所在的目录。</p>
+<p>例如：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;services&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;web&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;root&quot;</span><span class="punctuation">:</span> <span class="string">&quot;apps/web&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>这表示 <code>web</code> 服务的代码位于 <code>apps/web</code> 目录下。</p>
+<h3 id="framework"><a href="#framework" class="headerlink" title="framework"></a>framework</h3><p><code>framework</code> 用于指定服务使用的框架。</p>
+<p>例如：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;services&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;web&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;root&quot;</span><span class="punctuation">:</span> <span class="string">&quot;apps/web&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;framework&quot;</span><span class="punctuation">:</span> <span class="string">&quot;nextjs&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;docs&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;root&quot;</span><span class="punctuation">:</span> <span class="string">&quot;apps/docs&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;framework&quot;</span><span class="punctuation">:</span> <span class="string">&quot;astro&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>如果不写，Vercel 会尝试自动识别框架。但对于复杂 Monorepo 项目，显式指定通常更稳定。</p>
+<h3 id="entrypoint"><a href="#entrypoint" class="headerlink" title="entrypoint"></a>entrypoint</h3><p><code>entrypoint</code> 通常用于后端服务，指定应用启动入口。</p>
+<p>FastAPI 常见写法类似：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;services&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;api&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;root&quot;</span><span class="punctuation">:</span> <span class="string">&quot;backend/fastapi&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;entrypoint&quot;</span><span class="punctuation">:</span> <span class="string">&quot;main:app&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>其中 <code>main:app</code> 通常表示：</p>
+<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">main.py 文件中的 app 对象</span><br></pre></td></tr></table></figure>
+
+<p>Go 服务可以根据项目结构指定入口，例如：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;services&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;go_service&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;root&quot;</span><span class="punctuation">:</span> <span class="string">&quot;services/go&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;entrypoint&quot;</span><span class="punctuation">:</span> <span class="string">&quot;main.go&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>实际写法需要根据项目结构和 Vercel 支持的运行方式调整。</p>
+<h3 id="rewrites"><a href="#rewrites" class="headerlink" title="rewrites"></a>rewrites</h3><p><code>rewrites</code> 是 Services 模式里非常重要的一部分。</p>
+<p>它决定公网请求会被路由到哪个 Service。</p>
+<p>例如：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;rewrites&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;source&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/api/(.*)&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;destination&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span> <span class="attr">&quot;service&quot;</span><span class="punctuation">:</span> <span class="string">&quot;api&quot;</span> <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;source&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/(.*)&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;destination&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span> <span class="attr">&quot;service&quot;</span><span class="punctuation">:</span> <span class="string">&quot;web&quot;</span> <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>这表示：</p>
+<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">/api/*  -&gt; api 服务</span><br><span class="line">其他路径 -&gt; web 服务</span><br></pre></td></tr></table></figure>
+
+<p>没有被 <code>rewrites</code> 暴露的服务，默认不会接收公网请求。</p>
+<p>这和传统的“每个服务自动挂一个公开路径”不太一样。Vercel Services 更像是先声明服务，再通过统一的顶层路由表决定哪些服务对外开放。</p>
+<h2 id="服务之间如何通信？"><a href="#服务之间如何通信？" class="headerlink" title="服务之间如何通信？"></a>服务之间如何通信？</h2><p>除了通过公网路径访问，Services 之间也可以通过内部方式通信。</p>
+<p>这适合一些不希望直接暴露给公网的服务。</p>
+<p>例如，你可能有：</p>
+<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">web       -&gt; Next.js 前端</span><br><span class="line">api       -&gt; 对外 API</span><br><span class="line">worker    -&gt; 内部任务服务</span><br></pre></td></tr></table></figure>
+
+<p><code>worker</code> 不需要公开 URL，只需要被 <code>api</code> 调用。这种情况下，就可以让它作为内部服务存在，而不是给它配置公网 rewrite。</p>
+<p>这种设计的好处是：</p>
+<ul>
+<li>减少公网暴露面</li>
+<li>避免无意义的外部路由</li>
+<li>更适合拆分后台能力</li>
+<li>让项目结构更接近真实的微服务或模块化后端</li>
+</ul>
+<p>当然，对于个人项目来说，不一定需要一开始就拆这么细。普通项目可以先从 <code>web + api</code> 两个服务开始。</p>
+<h2 id="它不是-Docker-Compose"><a href="#它不是-Docker-Compose" class="headerlink" title="它不是 Docker Compose"></a>它不是 Docker Compose</h2><p>需要注意的是，Vercel Services 并不等于 Docker Compose。</p>
+<p>Docker Compose 更像是在一台服务器或容器环境中编排多个长期运行的服务，例如：</p>
+<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">web</span><br><span class="line">api</span><br><span class="line">postgres</span><br><span class="line">redis</span><br><span class="line">worker</span><br></pre></td></tr></table></figure>
+
+<p>它通常负责启动多个容器，并让这些容器在同一个网络环境中长期运行。</p>
+<p>而 Vercel Services 更偏向于 Vercel 平台上的多服务构建与路由组织。它适合部署 Web 应用、API 服务、前端项目和轻量后端，但并不是让你在 Vercel 上直接运行一整套传统服务器环境。</p>
+<p>如果你的项目依赖：</p>
+<ul>
+<li>长期运行的数据库</li>
+<li>Redis</li>
+<li>队列</li>
+<li>后台常驻进程</li>
+<li>自定义守护进程</li>
+<li>复杂内网服务发现</li>
+<li>完整 Docker Compose 生态</li>
+</ul>
+<p>那仍然需要使用外部托管服务，或者选择 VPS &#x2F; Docker &#x2F; Kubernetes 等更传统的部署方式。</p>
+<p>不过，Vercel Services 确实让 Vercel 更接近“一个产品部署多个组成部分”的形态。对于不想自己维护服务器的人来说，这已经覆盖了很多常见场景。</p>
+<h2 id="适合哪些项目？"><a href="#适合哪些项目？" class="headerlink" title="适合哪些项目？"></a>适合哪些项目？</h2><p>Vercel Services 很适合这些场景。</p>
+<h3 id="Monorepo-项目"><a href="#Monorepo-项目" class="headerlink" title="Monorepo 项目"></a>Monorepo 项目</h3><p>例如：</p>
+<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">apps/web</span><br><span class="line">apps/admin</span><br><span class="line">apps/docs</span><br><span class="line">packages/ui</span><br><span class="line">packages/db</span><br><span class="line">backend/api</span><br></pre></td></tr></table></figure>
+
+<p>如果你已经在使用 pnpm workspace、Turborepo、Nx 或类似结构，Services 会很适合。</p>
+<h3 id="前后端分离项目"><a href="#前后端分离项目" class="headerlink" title="前后端分离项目"></a>前后端分离项目</h3><p>例如：</p>
+<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">frontend/</span><br><span class="line">backend/</span><br></pre></td></tr></table></figure>
+
+<p>前端用 Next.js，后端用 FastAPI、Go 或其他框架。</p>
+<p>以前这类项目在 Vercel 上不够自然，现在可以通过 Services 放在一个 Project 内。</p>
+<h3 id="多个后台服务"><a href="#多个后台服务" class="headerlink" title="多个后台服务"></a>多个后台服务</h3><p>有些项目可能不只是一个 API：</p>
+<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">services/auth</span><br><span class="line">services/payment</span><br><span class="line">services/webhook</span><br><span class="line">services/image</span><br></pre></td></tr></table></figure>
+
+<p>它们可以分别通过不同路径公开：</p>
+<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">/auth</span><br><span class="line">/payment</span><br><span class="line">/webhook</span><br><span class="line">/image</span><br></pre></td></tr></table></figure>
+
+<p>也可以只让部分服务公开，其他服务保持内部访问。</p>
+<h3 id="静态站点-后台接口"><a href="#静态站点-后台接口" class="headerlink" title="静态站点 + 后台接口"></a>静态站点 + 后台接口</h3><p>比如：</p>
+<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">apps/site      -&gt; Astro / Vite / Hexo 构建后的静态站</span><br><span class="line">backend/api    -&gt; Python / Node.js API</span><br></pre></td></tr></table></figure>
+
+<p>对于个人项目、工具站、轻量 SaaS、文档站 + API 的组合，这个功能会很有吸引力。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Vercel Services 的意义在于，它让 Vercel 从“一个项目部署一个框架”更进一步，变成 <strong>一个项目可以承载多个框架、多个服务</strong> 。</p>
+<p>对于现代 Web 项目来说，这个变化非常实用。</p>
+<p>过去我们经常需要在多个 Vercel Project、多个域名、多个 Preview URL 之间来回切换。现在，前端、后端、管理后台、文档站、工具页都可以作为一个项目里的多个服务统一部署。</p>
+<p>它尤其适合：</p>
+<ul>
+<li>Monorepo</li>
+<li>前后端分离项目</li>
+<li>Python + JavaScript 混合项目</li>
+<li>Go + Next.js 混合项目</li>
+<li>多框架应用</li>
+<li>个人工具站</li>
+<li>小型 SaaS</li>
+<li>静态站点 + API 的组合</li>
+</ul>
+<p>如果你一直想把一个复杂项目整理成更清晰的部署结构，Vercel Services 值得关注。</p>
+<p>它不是 Docker Compose 的替代品，也不是所有项目都必须使用的新能力。但对于已经开始变复杂的前端项目、个人工具站和轻量全栈应用来说，它确实让 Vercel 的部署模型更完整了。</p>
+]]></content>
+      <categories>
+        <category>资讯</category>
+      </categories>
+      <tags>
+        <tag>Vercel</tag>
+        <tag>Cloud</tag>
+        <tag>前端开发</tag>
       </tags>
   </entry>
   <entry>
