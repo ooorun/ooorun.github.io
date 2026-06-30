@@ -407,103 +407,6 @@
       </tags>
   </entry>
   <entry>
-    <title>如何安装 Node.js</title>
-    <url>/post/how-to-install-nodejs.html</url>
-    <content><![CDATA[<p>本文将带介绍如何在电脑上安装 Node.js 运行环境，从而可以使用丰富的应用 Nodejs 程序。 </p>
-<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-9-tab-0" aria-controls="tabs-9-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">Windows</button><button type="button" role="tab" id="tabs-9-tab-1" aria-controls="tabs-9-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">macOS</button><button type="button" role="tab" id="tabs-9-tab-2" aria-controls="tabs-9-panel-2" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="2">Linux</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-9-panel-0" aria-labelledby="tabs-9-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><h2 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h2><p>测试安装环境为 <code>Windows 11</code></p>
-<h3 id="下载-Node-js"><a href="#下载-Node-js" class="headerlink" title="下载 Node.js"></a>下载 Node.js</h3><p>访问 Node.js 的官方网站的 <a href="https://nodejs.org/zh-cn/download/prebuilt-installer">下载页面</a> 下载安装包。 </p>
-<p>我们选择 <strong>预构建安装程序</strong> ，选择一下自己的系统与 CPU 架构类型， Windows 一般选择 <strong>x64</strong>，再选择 Node.js 版本。</p>
-<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>推荐选择版本号为偶数的 LTS 版本</p></div></div>  
-
-<p><img src="https://img.nep.me/i/2024/12/13/7fzq5m-2.webp" alt="nodejs-home-page"></p>
-<h3 id="安装-Node-js"><a href="#安装-Node-js" class="headerlink" title="安装 Node.js"></a>安装 Node.js</h3><p>然后打开安装程序 <code>node-v22.12.0-x64.msi</code>，安装过程没有陷阱，我们 <strong>同意</strong> 协议后，一路点击 Next 即可。  </p>
-<p><img src="https://img.nep.me/i/2024/12/13/7hc7pi-2.webp" alt="nodejs-setup"></p>
-<p>安装完成后，打开终端程序：</p>
-<ul>
-<li>右键点击开始菜单，选择终端</li>
-<li>或是按 <code>Windows + R</code> 快捷键打开 <strong>运行</strong> 窗口，输入 <code>cmd</code> ，回车打开</li>
-<li>或是在资源管理器的地址栏中输入 <code>cmd</code> 回车打开（终端的运行目录将是资源管理器所在的目录）</li>
-</ul>
-<p>运行下面的命令测试安装结果。</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">node -v</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm -v</span><br></pre></td></tr></table></figure>
-
-<p>如果可以成功输出版本号，表示安装成功。  </p>
-<p><img src="https://img.nep.me/i/2024/12/13/7ilvge-2.webp" alt="nodejs-install-done"></p></section><section role="tabpanel" id="tabs-9-panel-1" aria-labelledby="tabs-9-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><h2 id="macOS"><a href="#macOS" class="headerlink" title="macOS"></a>macOS</h2><p>测试安装环境为 <code>macOS 15.1</code> ，macOS 更推荐使用 <strong>包管理器</strong> <code>Homebrew</code> 进行安装。</p>
-<blockquote>
-<p><a href="https://brew.sh/zh-cn/">Homebrew</a> 是 macOS 和 Linux 缺失软件包的管理器，用于安装 Apple没有预装但你需要的东西。</p>
-</blockquote>
-<p>安装需要使用终端，<a href="https://support.apple.com/zh-cn/guide/terminal/apd5265185d-f365-44cb-8b09-71a064a42125/mac">在 Mac 上打开或退出“终端”</a>：</p>
-<ul>
-<li>启动台 &gt; 其他 &gt; 终端</li>
-<li><strong>启动台</strong> 或是　<code>Commond⌘ + 空格</code> 打开聚焦搜索，搜索 <strong>终端</strong> 或是 <strong>Terminal</strong></li>
-</ul>
-<h3 id="安装-Homebrew"><a href="#安装-Homebrew" class="headerlink" title="安装 Homebrew"></a>安装 Homebrew</h3><p>中国大陆地区或是更详细步骤请查看：<a href="https://ooo.run/post/how-to-install-homebrew-on-macos.html" target="_blank">如何在 macOS 中安装 Homebrew</a></p>
-<p>首先复制安装命令  </p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">/bin/bash -c <span class="string">&quot;<span class="subst">$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)</span>&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>在终端内执行安装命令，安装时需要输入你的电脑密码进行授权：  </p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">==&gt; Checking <span class="keyword">for</span> `<span class="built_in">sudo</span>` access (<span class="built_in">which</span> may request your password)...</span><br><span class="line">Password:</span><br></pre></td></tr></table></figure>
-<p>brew 会提示将安装的软件以及创建的文件夹，按回车继续，等待下载和安装完成。</p>
-<p>命令执行结束后按照提示复制执行下面的三条命令添加 PATH :</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> &gt;&gt; /Users/me/.zprofile</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;eval &quot;$(/opt/homebrew/bin/brew shellenv)&quot;&#x27;</span> &gt;&gt; /Users/me/.zprofile</span><br><span class="line"><span class="built_in">eval</span> <span class="string">&quot;<span class="subst">$(/opt/homebrew/bin/brew shellenv)</span>&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>如果使用了 <code>oh-my-zsh</code> ，需要执行下面的命令:</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export PATH=&quot;/opt/homebrew/bin:$PATH&quot;&#x27;</span> &gt;&gt; ~/.zshrc   </span><br><span class="line"><span class="built_in">source</span> ~/.zshrc</span><br></pre></td></tr></table></figure>
-
-<p>然后可以执行 <code>brew -v</code> 测试安装结果，成功会显示 Hombrew 的版本号。   </p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt;brew -v</span><br><span class="line">Homebrew 4.4.11</span><br></pre></td></tr></table></figure>
-
-<h3 id="安装-Nodejs"><a href="#安装-Nodejs" class="headerlink" title="安装 Nodejs"></a>安装 Nodejs</h3><p>打开终端，执行</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">brew install node</span><br></pre></td></tr></table></figure>
-
-<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt;node -v</span><br><span class="line">v23.4.0</span><br><span class="line"></span><br><span class="line">&gt;npm -v</span><br><span class="line">10.9.2</span><br></pre></td></tr></table></figure>
-
-<h3 id="brew-常用命令"><a href="#brew-常用命令" class="headerlink" title="brew 常用命令"></a>brew 常用命令</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 安装指定版本</span></span><br><span class="line">brew install node@22</span><br><span class="line"></span><br><span class="line"><span class="comment"># 卸载</span></span><br><span class="line">brew remove node</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看已安装软件</span></span><br><span class="line">brew list </span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查更新</span></span><br><span class="line">brew update</span><br><span class="line"></span><br><span class="line"><span class="comment"># 下载更新</span></span><br><span class="line">brew upgrade</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-9-panel-2" aria-labelledby="tabs-9-tab-2" class="flatpaper-tabs__panel" data-index="2" hidden><h2 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h2><p>Linux 使用 nvm 包管理器可以很方便的安装 Node.js</p>
-<h3 id="首先安装-nvm"><a href="#首先安装-nvm" class="headerlink" title="首先安装 nvm"></a>首先安装 nvm</h3><h1 id="安装-nvm-Node-版本管理器"><a href="#安装-nvm-Node-版本管理器" class="headerlink" title="安装 nvm (Node 版本管理器)"></a>安装 nvm (Node 版本管理器)</h1><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash</span><br></pre></td></tr></table></figure>
-
-<p>更新一下 PATH</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># bash</span></span><br><span class="line"><span class="built_in">source</span> ~/.bashrc</span><br><span class="line"></span><br><span class="line"><span class="comment"># zsh</span></span><br><span class="line"><span class="built_in">source</span> ~/.zshrc</span><br></pre></td></tr></table></figure>
-
-<p>验证</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">root@debian:~# nvm -v</span><br><span class="line">0.40.1</span><br></pre></td></tr></table></figure>
-
-<h3 id="安装-Node-js"><a href="#安装-Node-js" class="headerlink" title="安装 Node.js"></a>安装 Node.js</h3><p>下载并安装 Node.js 22 LTS 版本</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">nvm install 22</span><br></pre></td></tr></table></figure>
-
-<p>验证</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">root@debian:~# node -v</span><br><span class="line">v22.12.0</span><br><span class="line">root@debian:~# npm -v</span><br><span class="line">10.9.0</span><br></pre></td></tr></table></figure></section></div></div>
-
-<h2 id="npm-常用命令"><a href="#npm-常用命令" class="headerlink" title="npm 常用命令"></a>npm 常用命令</h2><p><code>npm</code> 是 Node.js 自带的包管理器是 ，我们可以很方便的安装 Node.js 应用，常用命令介绍：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 初始化项目，创建 package.json 文件</span></span><br><span class="line">npm init</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看版本</span></span><br><span class="line">npm -v</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看当前 npm 的配</span></span><br><span class="line">npm config list	</span><br><span class="line"></span><br><span class="line"><span class="comment"># 更新 npm 到最新版本</span></span><br><span class="line">npm update -g npm</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装项目中的所有依赖项（基于 package.json）</span></span><br><span class="line">npm i</span><br><span class="line">npm install </span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装指定包，并添加到项目依赖</span></span><br><span class="line">npm install &lt;package&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装指定版本的包，例如：npm i lodash@4.17.20</span></span><br><span class="line">npm install &lt;package&gt;@&lt;version&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 全局安装指定的包（通常为 CLI 工具） </span></span><br><span class="line">npm install &lt;package&gt; -g</span><br><span class="line"></span><br><span class="line"><span class="comment"># 卸载指定包</span></span><br><span class="line">npm uninstall &lt;package&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 更新指定的包到最新版本</span></span><br><span class="line">npm update &lt;package&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看当前项目已安装的依赖包</span></span><br><span class="line">npm list</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看全局已安装的依赖包</span></span><br><span class="line">npm list -g</span><br><span class="line"></span><br><span class="line"><span class="comment"># 移除未在 package.json 中声明的多余依赖包</span></span><br><span class="line">npm prune</span><br></pre></td></tr></table></figure>
-
-<h2 id="使用-pnpm"><a href="#使用-pnpm" class="headerlink" title="使用 pnpm"></a>使用 pnpm</h2><p>如果你需要经常使用 Node.js 应用，更推荐安装 <code>pnpm</code> 包管理，它的性能更好，安装速度速度更快，默认开启严格模式，确保项目中的依赖版本一致，避免了某些隐藏的版本冲突问题，并且对保持对 npm 的兼容。</p>
-<p>pnpm 的版本锁定文件是 <code>pnpm-lock.yaml</code></p>
-<h3 id="安装-pnpm"><a href="#安装-pnpm" class="headerlink" title="安装 pnpm"></a>安装 pnpm</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm install -g pnpm</span><br></pre></td></tr></table></figure>
-
-<h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><p><code>pnpm</code> 使用命令与 <code>npm</code> 类似，比如：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 基于 pnpm-lock.yaml 安装依赖</span></span><br><span class="line">pnpm i</span><br><span class="line">pnpm install </span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看自身版本</span></span><br><span class="line">pnpm -v</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装单个依赖，使用 pnpm install 也是可以的</span></span><br><span class="line">pnpm add &lt;package&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 全局安装</span></span><br><span class="line">pnpm add -g &lt;package&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 指定版本</span></span><br><span class="line">pnpm add &lt;package&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除软件包</span></span><br><span class="line">pnpm remove &lt;package&gt; </span><br><span class="line"></span><br><span class="line"><span class="comment"># 更新自身</span></span><br><span class="line">pnpm self-update</span><br><span class="line">pnpm add -g pnpm</span><br></pre></td></tr></table></figure>
-
-<h2 id="其他操作"><a href="#其他操作" class="headerlink" title="其他操作"></a>其他操作</h2><h3 id="更换镜像源"><a href="#更换镜像源" class="headerlink" title="更换镜像源"></a>更换镜像源</h3><div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>中国大陆用户可以使用下面的命令切换使用淘宝的镜像源，加速下载</p></div></div>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm config <span class="built_in">set</span> registry https://registry.npm.taobao.org</span><br></pre></td></tr></table></figure>
-
-<p>查看当前的镜像源</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm config get registry</span><br></pre></td></tr></table></figure>
-
-
-]]></content>
-      <categories>
-        <category>教程</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-        <tag>Nodejs</tag>
-        <tag>macOS</tag>
-        <tag>Windows</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>如何在 macOS 中安装 Homebrew</title>
     <url>/post/how-to-install-homebrew-on-macos.html</url>
     <content><![CDATA[<p>有时我们在网络上看到别人使用 macOS 安装软件是使用的下面的命令，非常的方便。  </p>
@@ -543,7 +446,7 @@
 
 <p>或是查看下面的内容</p>
 <p>替换使用 <a href="https://developer.aliyun.com/mirror/homebrew/">阿里镜像源</a></p>
-<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-10-tab-0" aria-controls="tabs-10-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">zsh</button><button type="button" role="tab" id="tabs-10-tab-1" aria-controls="tabs-10-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">bash</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-10-panel-0" aria-labelledby="tabs-10-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo &#x27;export HOMEBREW_API_DOMAIN=&quot;https://mirrors.aliyun.com/homebrew-bottles/api&quot;&#x27; &gt;&gt; ~/.zshrc</span><br><span class="line">echo &#x27;export HOMEBREW_BREW_GIT_REMOTE=&quot;https://mirrors.aliyun.com/homebrew/brew.git&quot;&#x27; &gt;&gt; ~/.zshrc</span><br><span class="line">echo &#x27;export HOMEBREW_CORE_GIT_REMOTE=&quot;https://mirrors.aliyun.com/homebrew/homebrew-core.git&quot;&#x27; &gt;&gt; ~/.zshrc</span><br><span class="line">echo &#x27;export HOMEBREW_BOTTLE_DOMAIN=&quot;https://mirrors.aliyun.com/homebrew/homebrew-bottles&quot;&#x27; &gt;&gt; ~/.zshrc</span><br><span class="line">source ~/.zshrc</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-10-panel-1" aria-labelledby="tabs-10-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export HOMEBREW_API_DOMAIN=&quot;https://mirrors.aliyun.com/homebrew-bottles/api&quot;&#x27;</span> &gt;&gt; ~/.bash_profile</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export HOMEBREW_BREW_GIT_REMOTE=&quot;https://mirrors.aliyun.com/homebrew/brew.git&quot;&#x27;</span> &gt;&gt; ~/.bash_profile</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export HOMEBREW_CORE_GIT_REMOTE=&quot;https://mirrors.aliyun.com/homebrew/homebrew-core.git&quot;&#x27;</span> &gt;&gt; ~/.bash_profile</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export HOMEBREW_BOTTLE_DOMAIN=&quot;https://mirrors.aliyun.com/homebrew/homebrew-bottles&quot;&#x27;</span> &gt;&gt; ~/.bash_profile</span><br><span class="line"><span class="built_in">source</span> ~/.bash_profile</span><br></pre></td></tr></table></figure></section></div></div>
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-9-tab-0" aria-controls="tabs-9-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">zsh</button><button type="button" role="tab" id="tabs-9-tab-1" aria-controls="tabs-9-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">bash</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-9-panel-0" aria-labelledby="tabs-9-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo &#x27;export HOMEBREW_API_DOMAIN=&quot;https://mirrors.aliyun.com/homebrew-bottles/api&quot;&#x27; &gt;&gt; ~/.zshrc</span><br><span class="line">echo &#x27;export HOMEBREW_BREW_GIT_REMOTE=&quot;https://mirrors.aliyun.com/homebrew/brew.git&quot;&#x27; &gt;&gt; ~/.zshrc</span><br><span class="line">echo &#x27;export HOMEBREW_CORE_GIT_REMOTE=&quot;https://mirrors.aliyun.com/homebrew/homebrew-core.git&quot;&#x27; &gt;&gt; ~/.zshrc</span><br><span class="line">echo &#x27;export HOMEBREW_BOTTLE_DOMAIN=&quot;https://mirrors.aliyun.com/homebrew/homebrew-bottles&quot;&#x27; &gt;&gt; ~/.zshrc</span><br><span class="line">source ~/.zshrc</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-9-panel-1" aria-labelledby="tabs-9-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export HOMEBREW_API_DOMAIN=&quot;https://mirrors.aliyun.com/homebrew-bottles/api&quot;&#x27;</span> &gt;&gt; ~/.bash_profile</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export HOMEBREW_BREW_GIT_REMOTE=&quot;https://mirrors.aliyun.com/homebrew/brew.git&quot;&#x27;</span> &gt;&gt; ~/.bash_profile</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export HOMEBREW_CORE_GIT_REMOTE=&quot;https://mirrors.aliyun.com/homebrew/homebrew-core.git&quot;&#x27;</span> &gt;&gt; ~/.bash_profile</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export HOMEBREW_BOTTLE_DOMAIN=&quot;https://mirrors.aliyun.com/homebrew/homebrew-bottles&quot;&#x27;</span> &gt;&gt; ~/.bash_profile</span><br><span class="line"><span class="built_in">source</span> ~/.bash_profile</span><br></pre></td></tr></table></figure></section></div></div>
 
 <p>然后执行安装命令，从阿里云下载安装脚本并安装 Homebrew</p>
 <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://mirrors.aliyun.com/homebrew/install.git brew-install</span><br><span class="line">/bin/bash brew-install/install.sh</span><br><span class="line"><span class="built_in">rm</span> -rf brew-install</span><br></pre></td></tr></table></figure>
@@ -571,8 +474,105 @@
         <category>教程</category>
       </categories>
       <tags>
-        <tag>macOS</tag>
         <tag>Homebrew</tag>
+        <tag>macOS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>如何安装 Node.js</title>
+    <url>/post/how-to-install-nodejs.html</url>
+    <content><![CDATA[<p>本文将带介绍如何在电脑上安装 Node.js 运行环境，从而可以使用丰富的应用 Nodejs 程序。 </p>
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-10-tab-0" aria-controls="tabs-10-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">Windows</button><button type="button" role="tab" id="tabs-10-tab-1" aria-controls="tabs-10-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">macOS</button><button type="button" role="tab" id="tabs-10-tab-2" aria-controls="tabs-10-panel-2" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="2">Linux</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-10-panel-0" aria-labelledby="tabs-10-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><h2 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h2><p>测试安装环境为 <code>Windows 11</code></p>
+<h3 id="下载-Node-js"><a href="#下载-Node-js" class="headerlink" title="下载 Node.js"></a>下载 Node.js</h3><p>访问 Node.js 的官方网站的 <a href="https://nodejs.org/zh-cn/download/prebuilt-installer">下载页面</a> 下载安装包。 </p>
+<p>我们选择 <strong>预构建安装程序</strong> ，选择一下自己的系统与 CPU 架构类型， Windows 一般选择 <strong>x64</strong>，再选择 Node.js 版本。</p>
+<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>推荐选择版本号为偶数的 LTS 版本</p></div></div>  
+
+<p><img src="https://img.nep.me/i/2024/12/13/7fzq5m-2.webp" alt="nodejs-home-page"></p>
+<h3 id="安装-Node-js"><a href="#安装-Node-js" class="headerlink" title="安装 Node.js"></a>安装 Node.js</h3><p>然后打开安装程序 <code>node-v22.12.0-x64.msi</code>，安装过程没有陷阱，我们 <strong>同意</strong> 协议后，一路点击 Next 即可。  </p>
+<p><img src="https://img.nep.me/i/2024/12/13/7hc7pi-2.webp" alt="nodejs-setup"></p>
+<p>安装完成后，打开终端程序：</p>
+<ul>
+<li>右键点击开始菜单，选择终端</li>
+<li>或是按 <code>Windows + R</code> 快捷键打开 <strong>运行</strong> 窗口，输入 <code>cmd</code> ，回车打开</li>
+<li>或是在资源管理器的地址栏中输入 <code>cmd</code> 回车打开（终端的运行目录将是资源管理器所在的目录）</li>
+</ul>
+<p>运行下面的命令测试安装结果。</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">node -v</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm -v</span><br></pre></td></tr></table></figure>
+
+<p>如果可以成功输出版本号，表示安装成功。  </p>
+<p><img src="https://img.nep.me/i/2024/12/13/7ilvge-2.webp" alt="nodejs-install-done"></p></section><section role="tabpanel" id="tabs-10-panel-1" aria-labelledby="tabs-10-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><h2 id="macOS"><a href="#macOS" class="headerlink" title="macOS"></a>macOS</h2><p>测试安装环境为 <code>macOS 15.1</code> ，macOS 更推荐使用 <strong>包管理器</strong> <code>Homebrew</code> 进行安装。</p>
+<blockquote>
+<p><a href="https://brew.sh/zh-cn/">Homebrew</a> 是 macOS 和 Linux 缺失软件包的管理器，用于安装 Apple没有预装但你需要的东西。</p>
+</blockquote>
+<p>安装需要使用终端，<a href="https://support.apple.com/zh-cn/guide/terminal/apd5265185d-f365-44cb-8b09-71a064a42125/mac">在 Mac 上打开或退出“终端”</a>：</p>
+<ul>
+<li>启动台 &gt; 其他 &gt; 终端</li>
+<li><strong>启动台</strong> 或是　<code>Commond⌘ + 空格</code> 打开聚焦搜索，搜索 <strong>终端</strong> 或是 <strong>Terminal</strong></li>
+</ul>
+<h3 id="安装-Homebrew"><a href="#安装-Homebrew" class="headerlink" title="安装 Homebrew"></a>安装 Homebrew</h3><p>中国大陆地区或是更详细步骤请查看：<a href="https://ooo.run/post/how-to-install-homebrew-on-macos.html" target="_blank">如何在 macOS 中安装 Homebrew</a></p>
+<p>首先复制安装命令  </p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">/bin/bash -c <span class="string">&quot;<span class="subst">$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>在终端内执行安装命令，安装时需要输入你的电脑密码进行授权：  </p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">==&gt; Checking <span class="keyword">for</span> `<span class="built_in">sudo</span>` access (<span class="built_in">which</span> may request your password)...</span><br><span class="line">Password:</span><br></pre></td></tr></table></figure>
+<p>brew 会提示将安装的软件以及创建的文件夹，按回车继续，等待下载和安装完成。</p>
+<p>命令执行结束后按照提示复制执行下面的三条命令添加 PATH :</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> &gt;&gt; /Users/me/.zprofile</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;eval &quot;$(/opt/homebrew/bin/brew shellenv)&quot;&#x27;</span> &gt;&gt; /Users/me/.zprofile</span><br><span class="line"><span class="built_in">eval</span> <span class="string">&quot;<span class="subst">$(/opt/homebrew/bin/brew shellenv)</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>如果使用了 <code>oh-my-zsh</code> ，需要执行下面的命令:</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export PATH=&quot;/opt/homebrew/bin:$PATH&quot;&#x27;</span> &gt;&gt; ~/.zshrc   </span><br><span class="line"><span class="built_in">source</span> ~/.zshrc</span><br></pre></td></tr></table></figure>
+
+<p>然后可以执行 <code>brew -v</code> 测试安装结果，成功会显示 Hombrew 的版本号。   </p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt;brew -v</span><br><span class="line">Homebrew 4.4.11</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装-Nodejs"><a href="#安装-Nodejs" class="headerlink" title="安装 Nodejs"></a>安装 Nodejs</h3><p>打开终端，执行</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">brew install node</span><br></pre></td></tr></table></figure>
+
+<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt;node -v</span><br><span class="line">v23.4.0</span><br><span class="line"></span><br><span class="line">&gt;npm -v</span><br><span class="line">10.9.2</span><br></pre></td></tr></table></figure>
+
+<h3 id="brew-常用命令"><a href="#brew-常用命令" class="headerlink" title="brew 常用命令"></a>brew 常用命令</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 安装指定版本</span></span><br><span class="line">brew install node@22</span><br><span class="line"></span><br><span class="line"><span class="comment"># 卸载</span></span><br><span class="line">brew remove node</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看已安装软件</span></span><br><span class="line">brew list </span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查更新</span></span><br><span class="line">brew update</span><br><span class="line"></span><br><span class="line"><span class="comment"># 下载更新</span></span><br><span class="line">brew upgrade</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-10-panel-2" aria-labelledby="tabs-10-tab-2" class="flatpaper-tabs__panel" data-index="2" hidden><h2 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h2><p>Linux 使用 nvm 包管理器可以很方便的安装 Node.js</p>
+<h3 id="首先安装-nvm"><a href="#首先安装-nvm" class="headerlink" title="首先安装 nvm"></a>首先安装 nvm</h3><h1 id="安装-nvm-Node-版本管理器"><a href="#安装-nvm-Node-版本管理器" class="headerlink" title="安装 nvm (Node 版本管理器)"></a>安装 nvm (Node 版本管理器)</h1><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash</span><br></pre></td></tr></table></figure>
+
+<p>更新一下 PATH</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># bash</span></span><br><span class="line"><span class="built_in">source</span> ~/.bashrc</span><br><span class="line"></span><br><span class="line"><span class="comment"># zsh</span></span><br><span class="line"><span class="built_in">source</span> ~/.zshrc</span><br></pre></td></tr></table></figure>
+
+<p>验证</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">root@debian:~# nvm -v</span><br><span class="line">0.40.1</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装-Node-js"><a href="#安装-Node-js" class="headerlink" title="安装 Node.js"></a>安装 Node.js</h3><p>下载并安装 Node.js 22 LTS 版本</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">nvm install 22</span><br></pre></td></tr></table></figure>
+
+<p>验证</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">root@debian:~# node -v</span><br><span class="line">v22.12.0</span><br><span class="line">root@debian:~# npm -v</span><br><span class="line">10.9.0</span><br></pre></td></tr></table></figure></section></div></div>
+
+<h2 id="npm-常用命令"><a href="#npm-常用命令" class="headerlink" title="npm 常用命令"></a>npm 常用命令</h2><p><code>npm</code> 是 Node.js 自带的包管理器是 ，我们可以很方便的安装 Node.js 应用，常用命令介绍：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 初始化项目，创建 package.json 文件</span></span><br><span class="line">npm init</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看版本</span></span><br><span class="line">npm -v</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看当前 npm 的配</span></span><br><span class="line">npm config list	</span><br><span class="line"></span><br><span class="line"><span class="comment"># 更新 npm 到最新版本</span></span><br><span class="line">npm update -g npm</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装项目中的所有依赖项（基于 package.json）</span></span><br><span class="line">npm i</span><br><span class="line">npm install </span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装指定包，并添加到项目依赖</span></span><br><span class="line">npm install &lt;package&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装指定版本的包，例如：npm i lodash@4.17.20</span></span><br><span class="line">npm install &lt;package&gt;@&lt;version&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 全局安装指定的包（通常为 CLI 工具） </span></span><br><span class="line">npm install &lt;package&gt; -g</span><br><span class="line"></span><br><span class="line"><span class="comment"># 卸载指定包</span></span><br><span class="line">npm uninstall &lt;package&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 更新指定的包到最新版本</span></span><br><span class="line">npm update &lt;package&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看当前项目已安装的依赖包</span></span><br><span class="line">npm list</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看全局已安装的依赖包</span></span><br><span class="line">npm list -g</span><br><span class="line"></span><br><span class="line"><span class="comment"># 移除未在 package.json 中声明的多余依赖包</span></span><br><span class="line">npm prune</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用-pnpm"><a href="#使用-pnpm" class="headerlink" title="使用 pnpm"></a>使用 pnpm</h2><p>如果你需要经常使用 Node.js 应用，更推荐安装 <code>pnpm</code> 包管理，它的性能更好，安装速度速度更快，默认开启严格模式，确保项目中的依赖版本一致，避免了某些隐藏的版本冲突问题，并且对保持对 npm 的兼容。</p>
+<p>pnpm 的版本锁定文件是 <code>pnpm-lock.yaml</code></p>
+<h3 id="安装-pnpm"><a href="#安装-pnpm" class="headerlink" title="安装 pnpm"></a>安装 pnpm</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm install -g pnpm</span><br></pre></td></tr></table></figure>
+
+<h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><p><code>pnpm</code> 使用命令与 <code>npm</code> 类似，比如：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 基于 pnpm-lock.yaml 安装依赖</span></span><br><span class="line">pnpm i</span><br><span class="line">pnpm install </span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看自身版本</span></span><br><span class="line">pnpm -v</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装单个依赖，使用 pnpm install 也是可以的</span></span><br><span class="line">pnpm add &lt;package&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 全局安装</span></span><br><span class="line">pnpm add -g &lt;package&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 指定版本</span></span><br><span class="line">pnpm add &lt;package&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除软件包</span></span><br><span class="line">pnpm remove &lt;package&gt; </span><br><span class="line"></span><br><span class="line"><span class="comment"># 更新自身</span></span><br><span class="line">pnpm self-update</span><br><span class="line">pnpm add -g pnpm</span><br></pre></td></tr></table></figure>
+
+<h2 id="其他操作"><a href="#其他操作" class="headerlink" title="其他操作"></a>其他操作</h2><h3 id="更换镜像源"><a href="#更换镜像源" class="headerlink" title="更换镜像源"></a>更换镜像源</h3><div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>中国大陆用户可以使用下面的命令切换使用淘宝的镜像源，加速下载</p></div></div>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm config <span class="built_in">set</span> registry https://registry.npm.taobao.org</span><br></pre></td></tr></table></figure>
+
+<p>查看当前的镜像源</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm config get registry</span><br></pre></td></tr></table></figure>
+
+
+]]></content>
+      <categories>
+        <category>教程</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>macOS</tag>
+        <tag>Nodejs</tag>
+        <tag>Windows</tag>
       </tags>
   </entry>
   <entry>
@@ -1452,119 +1452,6 @@
       </tags>
   </entry>
   <entry>
-    <title>OpenAI 发布两款高性能开源人工智能模型 GPT-OSS-20B 与 GPT-OSS-120B</title>
-    <url>/post/news-openai-releae-gpt-oss-model.html</url>
-    <content><![CDATA[<p><strong>旧金山 – 2025年8月6日</strong> – OpenAI今日宣布推出两款采用混合专家（MoE）架构的开源推理模型：<strong>GPT-OSS-120B</strong> 和 <strong>GPT-OSS-20B</strong> 。 </p>
-<p>这两款模型使用  Apache 2.0 开源许可证发布，允许开发者和研究人员免费使用、修改和分发。</p>
-<p>新模型专注于思维链（Chain-of-Thought）推理，旨在通过将复杂任务分解为更小的步骤来提升结果的准确性。根据 OpenAI 的基准测试，<strong>GPT-OSS-20B</strong> 的性能可与 <code>o4-mini</code> 相媲美，而 <strong>GPT-OSS-120B</strong> 的性能则与 <code>o3-mini</code> 相当。</p>
-<p>OpenAI CEO 萨姆·奥尔特曼表示：</p>
-<blockquote>
-<p>“我们很高兴能将这些模型交到全世界更多人的手中。它们不会取代现有的GPT模型，而是作为一种补充，推动人工智能领域的创新与协作。”</p>
-</blockquote>
-<p>此次发布的一大亮点是其在本地设备上的运行能力。GPT-OSS-20B 等较小尺寸的模型经过优化，可在笔记本电脑甚至智能手机上高效运行。在 M4 芯片的 MacBook 上，20B 模型的推理速度可达每秒30-40个token。</p>
-<p><strong>相关链接:</strong></p>
-<ul>
-<li><strong>模型信息:</strong> <a href="https://openai.com/zh-Hans-CN/open-models/">https://openai.com/zh-Hans-CN/open-models/</a></li>
-<li><strong>模型下载:</strong> <a href="https://huggingface.co/openai">https://huggingface.co/openai</a></li>
-</ul>
-<p><strong>本地运行 GPT-OSS-20B</strong><br><a href="https://ollama.com/download">ollama</a> 上 GPT-OSS-20B 模型大小为 14GB ，一键运行命令如下：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">ollama run gpt-oss:20b </span><br></pre></td></tr></table></figure>
-
-<p>图形界面则可以使用 <a href="https://lmstudio.ai/">LM Studio</a></p>
-<p><img src="https://img.nep.me/i/2025/08/06/lmstudio-run-gpt-oss-20b.webp" alt="LM Studio run GPT-OSS-20B"></p>
-]]></content>
-      <categories>
-        <category>资讯</category>
-      </categories>
-      <tags>
-        <tag>AI</tag>
-        <tag>大模型</tag>
-        <tag>OpenAI</tag>
-        <tag>开源</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>OpenAI 发布 GPT-5，新一代人工智能模型正式亮相</title>
-    <url>/post/news-openai-released-gpt-5.html</url>
-    <content><![CDATA[<p><strong>2025 年 8 月 7 日</strong> — OpenAI 正式推出最新旗舰级人工智能模型 <strong>GPT-5</strong>，即日起面向 ChatGPT 用户与开发者开放。该模型在推理、编程与创意生成等方面全面升级，Open AI 称之为迄今最强的通用 AI 模型之一。</p>
-<h2 id="更新"><a href="#更新" class="headerlink" title="更新"></a>更新</h2><blockquote>
-<p>ChatGPT Plus 用户可以选择 GPT-5 Auto、Fast、或是 Thinking 模型，4o 模型重新开放给付费用户，Thinking 模型额度为每周 3000 次<br>2025.08.12 by <a href="https://x.com/sama/status/1955438916645130740">Sam Altman @ x.com</a></p>
-</blockquote>
-<blockquote>
-<p>ChatGPT Plus 中 GPT-5 Thinking 模型上下文为 196k<br>2025.08.12 by <a href="https://x.com/yanndubs/status/1955194413283737716">Yann Dubois @ x.com</a></p>
-</blockquote>
-<h2 id="亮点概览"><a href="#亮点概览" class="headerlink" title="亮点概览"></a>亮点概览</h2><ul>
-<li><p><strong>多版本可选</strong>  </p>
-<ul>
-<li><strong>GPT-5</strong>（标准版）  </li>
-<li><strong>GPT-5 mini</strong>（轻量版，成本更低）  </li>
-<li><strong>GPT-5 nano</strong>（极速低延迟）<br>自动路由系统会根据任务复杂度智能切换模型。</li>
-</ul>
-</li>
-<li><p><strong>推理与编程能力大幅提升</strong>  </p>
-<ul>
-<li>SWE-Bench 测试得分 <strong>74.9%</strong> ，Aider Polyglot 达 <strong>88%</strong> 。  </li>
-<li>一条指令可生成完整网页、游戏或应用原型。</li>
-</ul>
-</li>
-<li><p><strong>更强的多模态能力</strong><br>支持更大上下文窗口、文本与视觉输入，输出效率更高，在 API 中，所有 GPT‑5 模型最多可接受 272,000 个输入令牌，并生成最多 128,000 个推理及输出令牌，总上下文长度为 <strong>40 万</strong> 令牌。</p>
-</li>
-<li><p><strong>全面接入生态</strong><br>除了 OpenAI 自己的平台，已集成至 <strong>Microsoft 365 Copilot、GitHub Copilot、VS Code、Azure AI Foundry</strong> 等平台。<br>覆盖全球约 <strong>7 亿 ChatGPT 用户</strong>。</p>
-</li>
-</ul>
-<h2 id="API-价格"><a href="#API-价格" class="headerlink" title="API 价格"></a>API 价格</h2><p>标准（standard）模式下，每 1 百万 Token 价格为：</p>
-<table>
-<thead>
-<tr>
-<th>Model</th>
-<th>Input</th>
-<th>Cached input</th>
-<th>Output</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>gpt-5</td>
-<td>$1.25</td>
-<td>$0.125</td>
-<td>$10.00</td>
-</tr>
-<tr>
-<td>gpt-5-mini</td>
-<td>$0.25</td>
-<td>$0.025</td>
-<td>$2.00</td>
-</tr>
-<tr>
-<td>gpt-5-nano</td>
-<td>$0.05</td>
-<td>$0.005</td>
-<td>$0.40</td>
-</tr>
-</tbody></table>
-<ul>
-<li>Priority 模式下（响应更快，优先级更高），价格 <strong>翻倍</strong></li>
-<li>Flex 模式下（延迟更高），价格 <strong>减半</strong></li>
-</ul>
-<h2 id="官方立场"><a href="#官方立场" class="headerlink" title="官方立场"></a>官方立场</h2><ul>
-<li>OpenAI CEO <strong>Sam Altman</strong> 称 GPT-5 “像与 PhD 级专家对话”，体验过后“很难回到旧模型”。</li>
-<li>虽性能显著提升，但 OpenAI 表示 GPT-5 <strong>尚非 AGI</strong>，不具备自主学习能力。</li>
-<li>持续改进安全性与一致性，减少幻觉输出。</li>
-</ul>
-<h2 id="发布意义与未来展望"><a href="#发布意义与未来展望" class="headerlink" title="发布意义与未来展望"></a>发布意义与未来展望</h2><p>对于开发者而言，其自动模型路由、多规格 API 带来更低的成本和更高的智能，意味着创新门槛被大幅降低；对于企业，它将深度赋能产品研发、客户服务和战略决策；对于普通用户，它将带来远超想象的个性化智能体验。</p>
-<p>也许 GPT-5 的问世，将是 AI 发展史上的一个重要里程碑，意味着 AI 正从“提供信息的工具”转变为“解决问题的伙伴”。</p>
-<hr>
-<p>来源 <a href="https://openai.com/index/introducing-gpt-5/">openai.com - Introducing GPT-5</a></p>
-]]></content>
-      <categories>
-        <category>资讯</category>
-      </categories>
-      <tags>
-        <tag>AI</tag>
-        <tag>大模型</tag>
-        <tag>OpenAI</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>普通人掘金互联网：独立开发起步指南</title>
     <url>/post/how-to-make-money-from-internet.html</url>
     <content><![CDATA[<p>你是否也曾羡慕那些在社交媒体上“透明化”分享收入、靠个人项目实现财务自由的独立开发者？看到他们动辄上千美金的月收入，你或许会觉得那是一个难以达成的目标。</p>
@@ -1698,6 +1585,119 @@
         <tag>独立开发</tag>
         <tag>个人项目</tag>
         <tag>副业</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>OpenAI 发布两款高性能开源人工智能模型 GPT-OSS-20B 与 GPT-OSS-120B</title>
+    <url>/post/news-openai-releae-gpt-oss-model.html</url>
+    <content><![CDATA[<p><strong>旧金山 – 2025年8月6日</strong> – OpenAI今日宣布推出两款采用混合专家（MoE）架构的开源推理模型：<strong>GPT-OSS-120B</strong> 和 <strong>GPT-OSS-20B</strong> 。 </p>
+<p>这两款模型使用  Apache 2.0 开源许可证发布，允许开发者和研究人员免费使用、修改和分发。</p>
+<p>新模型专注于思维链（Chain-of-Thought）推理，旨在通过将复杂任务分解为更小的步骤来提升结果的准确性。根据 OpenAI 的基准测试，<strong>GPT-OSS-20B</strong> 的性能可与 <code>o4-mini</code> 相媲美，而 <strong>GPT-OSS-120B</strong> 的性能则与 <code>o3-mini</code> 相当。</p>
+<p>OpenAI CEO 萨姆·奥尔特曼表示：</p>
+<blockquote>
+<p>“我们很高兴能将这些模型交到全世界更多人的手中。它们不会取代现有的GPT模型，而是作为一种补充，推动人工智能领域的创新与协作。”</p>
+</blockquote>
+<p>此次发布的一大亮点是其在本地设备上的运行能力。GPT-OSS-20B 等较小尺寸的模型经过优化，可在笔记本电脑甚至智能手机上高效运行。在 M4 芯片的 MacBook 上，20B 模型的推理速度可达每秒30-40个token。</p>
+<p><strong>相关链接:</strong></p>
+<ul>
+<li><strong>模型信息:</strong> <a href="https://openai.com/zh-Hans-CN/open-models/">https://openai.com/zh-Hans-CN/open-models/</a></li>
+<li><strong>模型下载:</strong> <a href="https://huggingface.co/openai">https://huggingface.co/openai</a></li>
+</ul>
+<p><strong>本地运行 GPT-OSS-20B</strong><br><a href="https://ollama.com/download">ollama</a> 上 GPT-OSS-20B 模型大小为 14GB ，一键运行命令如下：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">ollama run gpt-oss:20b </span><br></pre></td></tr></table></figure>
+
+<p>图形界面则可以使用 <a href="https://lmstudio.ai/">LM Studio</a></p>
+<p><img src="https://img.nep.me/i/2025/08/06/lmstudio-run-gpt-oss-20b.webp" alt="LM Studio run GPT-OSS-20B"></p>
+]]></content>
+      <categories>
+        <category>资讯</category>
+      </categories>
+      <tags>
+        <tag>AI</tag>
+        <tag>大模型</tag>
+        <tag>OpenAI</tag>
+        <tag>开源</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>OpenAI 发布 GPT-5，新一代人工智能模型正式亮相</title>
+    <url>/post/news-openai-released-gpt-5.html</url>
+    <content><![CDATA[<p><strong>2025 年 8 月 7 日</strong> — OpenAI 正式推出最新旗舰级人工智能模型 <strong>GPT-5</strong>，即日起面向 ChatGPT 用户与开发者开放。该模型在推理、编程与创意生成等方面全面升级，Open AI 称之为迄今最强的通用 AI 模型之一。</p>
+<h2 id="更新"><a href="#更新" class="headerlink" title="更新"></a>更新</h2><blockquote>
+<p>ChatGPT Plus 用户可以选择 GPT-5 Auto、Fast、或是 Thinking 模型，4o 模型重新开放给付费用户，Thinking 模型额度为每周 3000 次<br>2025.08.12 by <a href="https://x.com/sama/status/1955438916645130740">Sam Altman @ x.com</a></p>
+</blockquote>
+<blockquote>
+<p>ChatGPT Plus 中 GPT-5 Thinking 模型上下文为 196k<br>2025.08.12 by <a href="https://x.com/yanndubs/status/1955194413283737716">Yann Dubois @ x.com</a></p>
+</blockquote>
+<h2 id="亮点概览"><a href="#亮点概览" class="headerlink" title="亮点概览"></a>亮点概览</h2><ul>
+<li><p><strong>多版本可选</strong>  </p>
+<ul>
+<li><strong>GPT-5</strong>（标准版）  </li>
+<li><strong>GPT-5 mini</strong>（轻量版，成本更低）  </li>
+<li><strong>GPT-5 nano</strong>（极速低延迟）<br>自动路由系统会根据任务复杂度智能切换模型。</li>
+</ul>
+</li>
+<li><p><strong>推理与编程能力大幅提升</strong>  </p>
+<ul>
+<li>SWE-Bench 测试得分 <strong>74.9%</strong> ，Aider Polyglot 达 <strong>88%</strong> 。  </li>
+<li>一条指令可生成完整网页、游戏或应用原型。</li>
+</ul>
+</li>
+<li><p><strong>更强的多模态能力</strong><br>支持更大上下文窗口、文本与视觉输入，输出效率更高，在 API 中，所有 GPT‑5 模型最多可接受 272,000 个输入令牌，并生成最多 128,000 个推理及输出令牌，总上下文长度为 <strong>40 万</strong> 令牌。</p>
+</li>
+<li><p><strong>全面接入生态</strong><br>除了 OpenAI 自己的平台，已集成至 <strong>Microsoft 365 Copilot、GitHub Copilot、VS Code、Azure AI Foundry</strong> 等平台。<br>覆盖全球约 <strong>7 亿 ChatGPT 用户</strong>。</p>
+</li>
+</ul>
+<h2 id="API-价格"><a href="#API-价格" class="headerlink" title="API 价格"></a>API 价格</h2><p>标准（standard）模式下，每 1 百万 Token 价格为：</p>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Input</th>
+<th>Cached input</th>
+<th>Output</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>gpt-5</td>
+<td>$1.25</td>
+<td>$0.125</td>
+<td>$10.00</td>
+</tr>
+<tr>
+<td>gpt-5-mini</td>
+<td>$0.25</td>
+<td>$0.025</td>
+<td>$2.00</td>
+</tr>
+<tr>
+<td>gpt-5-nano</td>
+<td>$0.05</td>
+<td>$0.005</td>
+<td>$0.40</td>
+</tr>
+</tbody></table>
+<ul>
+<li>Priority 模式下（响应更快，优先级更高），价格 <strong>翻倍</strong></li>
+<li>Flex 模式下（延迟更高），价格 <strong>减半</strong></li>
+</ul>
+<h2 id="官方立场"><a href="#官方立场" class="headerlink" title="官方立场"></a>官方立场</h2><ul>
+<li>OpenAI CEO <strong>Sam Altman</strong> 称 GPT-5 “像与 PhD 级专家对话”，体验过后“很难回到旧模型”。</li>
+<li>虽性能显著提升，但 OpenAI 表示 GPT-5 <strong>尚非 AGI</strong>，不具备自主学习能力。</li>
+<li>持续改进安全性与一致性，减少幻觉输出。</li>
+</ul>
+<h2 id="发布意义与未来展望"><a href="#发布意义与未来展望" class="headerlink" title="发布意义与未来展望"></a>发布意义与未来展望</h2><p>对于开发者而言，其自动模型路由、多规格 API 带来更低的成本和更高的智能，意味着创新门槛被大幅降低；对于企业，它将深度赋能产品研发、客户服务和战略决策；对于普通用户，它将带来远超想象的个性化智能体验。</p>
+<p>也许 GPT-5 的问世，将是 AI 发展史上的一个重要里程碑，意味着 AI 正从“提供信息的工具”转变为“解决问题的伙伴”。</p>
+<hr>
+<p>来源 <a href="https://openai.com/index/introducing-gpt-5/">openai.com - Introducing GPT-5</a></p>
+]]></content>
+      <categories>
+        <category>资讯</category>
+      </categories>
+      <tags>
+        <tag>AI</tag>
+        <tag>大模型</tag>
+        <tag>OpenAI</tag>
       </tags>
   </entry>
   <entry>
@@ -4666,6 +4666,50 @@
       </tags>
   </entry>
   <entry>
+    <title>新时代挖矿：看看你的 Mac 一个月能赚多少钱</title>
+    <url>/post/darkbloom-nodes-macbook-ai-mining-earnings.html</url>
+    <content><![CDATA[<p>曾经，无数人为了比特币和以太坊疯狂囤积显卡，把家里变成轰鸣的矿场。随着传统加密货币 “显卡挖矿” 时代的逐渐降温，很多人以为用个人电脑赚取被动收入的日子已经结束了。然而，随着 AI 大模型时代的爆发，一种全新的 “挖矿” 模式正在悄然兴起——AI 节点推理算力共享。</p>
+<p>最近，随着本地模型的能力进步，<a href="https://www.darkbloom.dev/#nodes">Darkbloom</a> 平台的出现向我们揭示了这一前景。在这个新时代，你不需要去计算毫无意义的哈希值，而是让你的电脑成为 AI 基础设施的一部分，通过为真实用户运行大语言模型（如 <code>Gemma 4 26B</code> ）来赚取收益。而在这场新游戏里，凭借着高带宽的统一内存架构，Apple 的 Mac 电脑意外地成为了最完美的 “矿机”。</p>
+<h2 id="Darbloom-介绍"><a href="#Darbloom-介绍" class="headerlink" title="Darbloom 介绍"></a>Darbloom 介绍</h2><p><a href="https://www.darkbloom.dev/">Darkbloom.dev</a> 可以将 MacBook 变成一个可产生收益的私有硬件节点网络。用户只需在 Mac 上安装一个命令行界面 (CLI)，设备就可以在闲置时自动接收并处理 AI 推理请求。开发者则可以通过兼容 OpenAI 的 API 调用这些分布式算力。设备每生成一个代币，节点运营者就能获得相应的美元收益。 </p>
+<p>这个项目背后的技术来自 Eigen Labs，相关论文和代码已经开源。其核心卖点是：在保护用户请求隐私的前提下，让普通 Apple Silicon 设备参与 AI 推理市场。<br>链接：<a href="https://github.com/Layr-Labs/d-inference/blob/master/papers/dginf-private-inference.pdf">https://github.com/Layr-Labs/d-inference/blob/master/papers/dginf-private-inference.pdf</a></p>
+<h2 id="Mac-变身-AI-服务器：到底能赚多少？"><a href="#Mac-变身-AI-服务器：到底能赚多少？" class="headerlink" title="Mac 变身 AI 服务器：到底能赚多少？"></a>Mac 变身 AI 服务器：到底能赚多少？</h2><p>按照项目方介绍，节点运营者可以获得 95% 的推理收入，平台抽取 5%。</p>
+<p>除了硬件设备，运营唯一的成本是电费，而 Apple Silicon 的功耗极低。即使在满负荷推理的情况下，每小时也只需 0.01 到 0.03 美元。这就像点亮一个灯泡一样。</p>
+<p>我们来看看 Darkbloom 提供的收益预估数据：</p>
+<h3 id="1-顶配印钞机：MacBook-Pro-M5-Max-128GB-内存"><a href="#1-顶配印钞机：MacBook-Pro-M5-Max-128GB-内存" class="headerlink" title="1. 顶配印钞机：MacBook Pro (M5 Max, 128GB 内存)"></a>1. 顶配印钞机：MacBook Pro (M5 Max, 128GB 内存)</h3><p>如果你拥有一台搭载 M5 Max 芯片和 128GB 内存的顶级 MacBook Pro，这台机器简直是为跑大模型而生的。它庞大的内存可以轻松装下甚至并行处理巨大的模型。</p>
+<ul>
+<li><strong>运行状态</strong>：每天运行 18 小时（比如下班后的闲置时间）。</li>
+<li><strong>处理速度</strong>：批量解码速度高达惊人的 <code>1326.2</code> tok&#x2F;s。</li>
+<li><strong>每月收益</strong>：预估每月总收入约为 <strong>$425.40</strong> 。扣除电费后，每月净赚约 $423（折合人民币约 3000 多元）！</li>
+</ul>
+<p>一年下来收益可达 <strong>$5,076</strong>，而在 Apple 官网上 <strong>M5 Max + 128GB RAM + 2TB</strong> 版本现在仅售 <strong>5399</strong> 美元（大陆官网售价 43,499 元）， 可以说这笔钱不仅足够你覆盖买电脑的成本，甚至相当于电脑自己在给自己打工还贷。</p>
+<p><img src="https://img.nep.me/ooo/darkbloom-m5max.webp" alt="darkbloom-m5max"></p>
+<h3 id="2-性能中坚：MacBook-Pro-M4-Pro-48GB-内存"><a href="#2-性能中坚：MacBook-Pro-M4-Pro-48GB-内存" class="headerlink" title="2. 性能中坚：MacBook Pro (M4 Pro, 48GB 内存)"></a>2. 性能中坚：MacBook Pro (M4 Pro, 48GB 内存)</h3><p>如果你的配置是偏向主流的工作站，比如搭载 M4 Pro 芯片和 48GB 内存的版本。</p>
+<ul>
+<li><strong>运行状态</strong>：同样每天运行 18 小时。</li>
+<li><strong>处理速度</strong>：<code>589.7</code> tok&#x2F;s。</li>
+<li><strong>每月收益</strong>：依然可以获得每月约 <strong>$188 美元</strong>（折合人民币约 1300 多元）的净收入。</li>
+</ul>
+<p>一年也有 $2,252 的进账。对于仅仅是利用电脑闲置时间的睡后收入来说，这绝对是一笔非常可观的零花钱。</p>
+<p><img src="https://img.nep.me/ooo/darkbloom-m4pro.webp" alt="darkbloom-m4pro"></p>
+<h2 id="Apple-Silicon-的恐怖能效"><a href="#Apple-Silicon-的恐怖能效" class="headerlink" title="Apple Silicon 的恐怖能效"></a>Apple Silicon 的恐怖能效</h2><p>传统挖矿最让人头疼的就是高昂的电费和机器狂转的噪音。但在这场AI 挖矿中，Apple M 系列芯片展现出了极其恐怖的能效比。</p>
+<p>以电费 $0.15&#x2F;kWh 计算，那台每月能为你赚取 425 美元的 M5 Max MacBook Pro，一整个月消耗的电费仅仅只有 $2.43；而 M4 Pro 版本的月电费更是低至 $1.46。电费成本甚至占不到总收入的 1%。没有轰鸣的风扇，没有天价电费账单，只有静悄悄地跑着大模型赚钱的优雅。</p>
+<p>AI 时代的算力需求是无穷无尽的，而去中心化的个人算力网络或许就是下一座金矿。你的 Mac 已经不再仅仅是一个昂贵的生产力工具，它完全有潜力成为你的“数字打工仔”。</p>
+<h2 id="结语与风险提示"><a href="#结语与风险提示" class="headerlink" title="结语与风险提示"></a>结语与风险提示</h2><p>当然，作为一个新兴领域，我们也要保持理性的预期。目前，Darkbloom 等平台已经在 Hacker News、Reddit 和 LinkedIn 等主流开发者社区引发了公开讨论。好消息是，目前尚未出现任何诈骗报告；但根据早期参与测试的节点用户反馈，当前网络中分配到的任务还主要是 Health Checks ，真实的商业推理需求仍然处于低位。这意味着官方计算器给出的高额预测相对较为乐观。</p>
+<p>更重要的是，如今大模型的进步速度实在是太快了。现在开源社区就已经迭代到了 Gemma 4 26B 这样庞大且高效的模型。AI 领域的算法架构、量化技术和吞吐量优化几乎每个月都在刷新。今天的配置组合可能刚好能吃满红利，但三个月后，随着更强、更大的模型诞生，整个网络对硬件门槛和带宽的要求可能会迎来彻底的洗牌。</p>
+<p>这注定是一场与技术演进赛跑的游戏。未来的实际收益，将极大地受制于真实商业请求的爆发、模型迭代的速度以及平台的后续运营。</p>
+<div class="flatpaper-note flatpaper-note--warning"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>请务必记住，以上数据只是参考，大家看看这些预估数据，把它当个有趣的参考就行。</p></div></div>
+]]></content>
+      <categories>
+        <category>工具资源</category>
+      </categories>
+      <tags>
+        <tag>AI</tag>
+        <tag>Apple</tag>
+        <tag>Darkbloom</tag>
+        <tag>MacBook</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>2026 Debian 13 安装 Docker 以及 Docker Compose 教程</title>
     <url>/post/debian-13-install-docker.html</url>
     <content><![CDATA[<p>现在越来越多的应用可以使用 <strong>Docker</strong> 一键部署，本文将介绍如何在最新的 Debian 13 (Trixie) 中安装 <strong>Docker</strong> 与 <strong>Docker Compose</strong>。</p>
@@ -4745,93 +4789,6 @@
         <tag>Docker Compose</tag>
         <tag>Debian</tag>
         <tag>Linux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>新时代挖矿：看看你的 Mac 一个月能赚多少钱</title>
-    <url>/post/darkbloom-nodes-macbook-ai-mining-earnings.html</url>
-    <content><![CDATA[<p>曾经，无数人为了比特币和以太坊疯狂囤积显卡，把家里变成轰鸣的矿场。随着传统加密货币 “显卡挖矿” 时代的逐渐降温，很多人以为用个人电脑赚取被动收入的日子已经结束了。然而，随着 AI 大模型时代的爆发，一种全新的 “挖矿” 模式正在悄然兴起——AI 节点推理算力共享。</p>
-<p>最近，随着本地模型的能力进步，<a href="https://www.darkbloom.dev/#nodes">Darkbloom</a> 平台的出现向我们揭示了这一前景。在这个新时代，你不需要去计算毫无意义的哈希值，而是让你的电脑成为 AI 基础设施的一部分，通过为真实用户运行大语言模型（如 <code>Gemma 4 26B</code> ）来赚取收益。而在这场新游戏里，凭借着高带宽的统一内存架构，Apple 的 Mac 电脑意外地成为了最完美的 “矿机”。</p>
-<h2 id="Darbloom-介绍"><a href="#Darbloom-介绍" class="headerlink" title="Darbloom 介绍"></a>Darbloom 介绍</h2><p><a href="https://www.darkbloom.dev/">Darkbloom.dev</a> 可以将 MacBook 变成一个可产生收益的私有硬件节点网络。用户只需在 Mac 上安装一个命令行界面 (CLI)，设备就可以在闲置时自动接收并处理 AI 推理请求。开发者则可以通过兼容 OpenAI 的 API 调用这些分布式算力。设备每生成一个代币，节点运营者就能获得相应的美元收益。 </p>
-<p>这个项目背后的技术来自 Eigen Labs，相关论文和代码已经开源。其核心卖点是：在保护用户请求隐私的前提下，让普通 Apple Silicon 设备参与 AI 推理市场。<br>链接：<a href="https://github.com/Layr-Labs/d-inference/blob/master/papers/dginf-private-inference.pdf">https://github.com/Layr-Labs/d-inference/blob/master/papers/dginf-private-inference.pdf</a></p>
-<h2 id="Mac-变身-AI-服务器：到底能赚多少？"><a href="#Mac-变身-AI-服务器：到底能赚多少？" class="headerlink" title="Mac 变身 AI 服务器：到底能赚多少？"></a>Mac 变身 AI 服务器：到底能赚多少？</h2><p>按照项目方介绍，节点运营者可以获得 95% 的推理收入，平台抽取 5%。</p>
-<p>除了硬件设备，运营唯一的成本是电费，而 Apple Silicon 的功耗极低。即使在满负荷推理的情况下，每小时也只需 0.01 到 0.03 美元。这就像点亮一个灯泡一样。</p>
-<p>我们来看看 Darkbloom 提供的收益预估数据：</p>
-<h3 id="1-顶配印钞机：MacBook-Pro-M5-Max-128GB-内存"><a href="#1-顶配印钞机：MacBook-Pro-M5-Max-128GB-内存" class="headerlink" title="1. 顶配印钞机：MacBook Pro (M5 Max, 128GB 内存)"></a>1. 顶配印钞机：MacBook Pro (M5 Max, 128GB 内存)</h3><p>如果你拥有一台搭载 M5 Max 芯片和 128GB 内存的顶级 MacBook Pro，这台机器简直是为跑大模型而生的。它庞大的内存可以轻松装下甚至并行处理巨大的模型。</p>
-<ul>
-<li><strong>运行状态</strong>：每天运行 18 小时（比如下班后的闲置时间）。</li>
-<li><strong>处理速度</strong>：批量解码速度高达惊人的 <code>1326.2</code> tok&#x2F;s。</li>
-<li><strong>每月收益</strong>：预估每月总收入约为 <strong>$425.40</strong> 。扣除电费后，每月净赚约 $423（折合人民币约 3000 多元）！</li>
-</ul>
-<p>一年下来收益可达 <strong>$5,076</strong>，而在 Apple 官网上 <strong>M5 Max + 128GB RAM + 2TB</strong> 版本现在仅售 <strong>5399</strong> 美元（大陆官网售价 43,499 元）， 可以说这笔钱不仅足够你覆盖买电脑的成本，甚至相当于电脑自己在给自己打工还贷。</p>
-<p><img src="https://img.nep.me/ooo/darkbloom-m5max.webp" alt="darkbloom-m5max"></p>
-<h3 id="2-性能中坚：MacBook-Pro-M4-Pro-48GB-内存"><a href="#2-性能中坚：MacBook-Pro-M4-Pro-48GB-内存" class="headerlink" title="2. 性能中坚：MacBook Pro (M4 Pro, 48GB 内存)"></a>2. 性能中坚：MacBook Pro (M4 Pro, 48GB 内存)</h3><p>如果你的配置是偏向主流的工作站，比如搭载 M4 Pro 芯片和 48GB 内存的版本。</p>
-<ul>
-<li><strong>运行状态</strong>：同样每天运行 18 小时。</li>
-<li><strong>处理速度</strong>：<code>589.7</code> tok&#x2F;s。</li>
-<li><strong>每月收益</strong>：依然可以获得每月约 <strong>$188 美元</strong>（折合人民币约 1300 多元）的净收入。</li>
-</ul>
-<p>一年也有 $2,252 的进账。对于仅仅是利用电脑闲置时间的睡后收入来说，这绝对是一笔非常可观的零花钱。</p>
-<p><img src="https://img.nep.me/ooo/darkbloom-m4pro.webp" alt="darkbloom-m4pro"></p>
-<h2 id="Apple-Silicon-的恐怖能效"><a href="#Apple-Silicon-的恐怖能效" class="headerlink" title="Apple Silicon 的恐怖能效"></a>Apple Silicon 的恐怖能效</h2><p>传统挖矿最让人头疼的就是高昂的电费和机器狂转的噪音。但在这场AI 挖矿中，Apple M 系列芯片展现出了极其恐怖的能效比。</p>
-<p>以电费 $0.15&#x2F;kWh 计算，那台每月能为你赚取 425 美元的 M5 Max MacBook Pro，一整个月消耗的电费仅仅只有 $2.43；而 M4 Pro 版本的月电费更是低至 $1.46。电费成本甚至占不到总收入的 1%。没有轰鸣的风扇，没有天价电费账单，只有静悄悄地跑着大模型赚钱的优雅。</p>
-<p>AI 时代的算力需求是无穷无尽的，而去中心化的个人算力网络或许就是下一座金矿。你的 Mac 已经不再仅仅是一个昂贵的生产力工具，它完全有潜力成为你的“数字打工仔”。</p>
-<h2 id="结语与风险提示"><a href="#结语与风险提示" class="headerlink" title="结语与风险提示"></a>结语与风险提示</h2><p>当然，作为一个新兴领域，我们也要保持理性的预期。目前，Darkbloom 等平台已经在 Hacker News、Reddit 和 LinkedIn 等主流开发者社区引发了公开讨论。好消息是，目前尚未出现任何诈骗报告；但根据早期参与测试的节点用户反馈，当前网络中分配到的任务还主要是 Health Checks ，真实的商业推理需求仍然处于低位。这意味着官方计算器给出的高额预测相对较为乐观。</p>
-<p>更重要的是，如今大模型的进步速度实在是太快了。现在开源社区就已经迭代到了 Gemma 4 26B 这样庞大且高效的模型。AI 领域的算法架构、量化技术和吞吐量优化几乎每个月都在刷新。今天的配置组合可能刚好能吃满红利，但三个月后，随着更强、更大的模型诞生，整个网络对硬件门槛和带宽的要求可能会迎来彻底的洗牌。</p>
-<p>这注定是一场与技术演进赛跑的游戏。未来的实际收益，将极大地受制于真实商业请求的爆发、模型迭代的速度以及平台的后续运营。</p>
-<div class="flatpaper-note flatpaper-note--warning"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>请务必记住，以上数据只是参考，大家看看这些预估数据，把它当个有趣的参考就行。</p></div></div>
-]]></content>
-      <categories>
-        <category>工具资源</category>
-      </categories>
-      <tags>
-        <tag>AI</tag>
-        <tag>Apple</tag>
-        <tag>Darkbloom</tag>
-        <tag>MacBook</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>赛博特权阶级的诞生：从 Fable 5 白名单看 AI 非营利乌托邦的终结</title>
-    <url>/post/fable-5-whitelist-new-privileged-class-ai-monopoly.html</url>
-    <content><![CDATA[<p>2026 年夏天，科技界经历了一场 “AI大地震”。美国商务部的一纸出口管制令，让刚刚问世、霸榜各大模型基座的 Anthropic 旗舰模型 <strong>Claude Fable 5</strong> 与其底层孪生模型 Mythos 5 瞬间在全球范围内被按下了暂停键。紧接着，经过政商闭门博弈，部分 <strong>可信赖的实体</strong> 和特定白名单单位逐步重获访问特权。</p>
-<p>这一历史性事件不仅颠覆了开发者对云端 API 稳定性的认知，更向世界宣告了一个残酷的事实：由美国政府特许的、由技术与权力交织而成的 <strong>赛博新特权阶级</strong> 已经正式诞生。</p>
-<p>这也给予了整个AI行业沉重一击 —— OpenAI 最初设立的 <strong>技术民主化、利益造福全人类</strong> 的乌托邦设想，已经彻底宣告失败。</p>
-<h2 id="一、-“白名单”下的赛博新特权阶级"><a href="#一、-“白名单”下的赛博新特权阶级" class="headerlink" title="一、 “白名单”下的赛博新特权阶级"></a>一、 “白名单”下的赛博新特权阶级</h2><p>在过去，黄金、石油和土地是核心的生产要素。而在2026年的今天，顶尖的通用人工智能（AGI）推理算力已成为最稀缺的战略资源。</p>
-<p>Fable 5 与Mythos 5 的强悍无需多言 —— 在 TerminalBench 2.1 等前沿评测中，它们展现出了恐怖的智能。支付巨头 Stripe 曾用它在短短一天内完成了原本需要一整个工程团队干满两个月的 5000 万行 Ruby 代码大迁移；在生物制药与网络安全领域，它们甚至展现出了越过安全限制、自主运行设计工具的“近神”能力。</p>
-<p>然而，正因为这种 “颠覆性力量” ，它引来了权力的铁拳。美国政府以国家安全、防范越狱（Jailbreak）和技术外泄为由，强行切断了公众和海外开发者的连接。随后出炉的 “白名单机制” ，将这种力量圈禁在了一个狭小的特权阶层手中：</p>
-<ul>
-<li><strong>国家机器与军工巨头</strong>： 拥有绝对豁免权，能够无限制调用未阉割、无安全拦截器的 Mythos 5。</li>
-<li><strong>合规的华尔街财阀与巨型跨国企业</strong>： 凭借强大的游说能力和国籍审查能力，跻身“可信合规白名单”。</li>
-</ul>
-<p>一个技术垄断的马太效应正在形成： 白名单内的企业利用 Fable 5 实现成百上千倍的效率跃升、垄断行业财富；而白名单外的中小创业者、研究机构甚至普通大众，只能眼睁睁看着技术代差被无限拉大。曾经人人平等的互联网API生态，变成了按权力、国籍和资本配给的 “口粮” 。美国政府的 “特许” ，正式在全球科技界划分出了高人一等的赛博新贵族。</p>
-<h2 id="二、-权力的入局：Fable-5-的“国家化”阵痛"><a href="#二、-权力的入局：Fable-5-的“国家化”阵痛" class="headerlink" title="二、 权力的入局：Fable 5 的“国家化”阵痛"></a>二、 权力的入局：Fable 5 的“国家化”阵痛</h2><p>Fable 5 的白名单风波，标志着 AI 技术正式从 “商业竞争阶段” 滑向 “地缘政治与国家安全阶段” 。</p>
-<p>“我们不认为这种政府准入程序应该成为长期的默认状态。” —— 面对政府的强势介入，即便是正在筹备 IPO 的 OpenAI 也在其发布 GPT-5.6 Sol 限量预览时发出了无力的警告。</p>
-<p>但资本和企业的挣扎在强大的国家机器面前显得微不足道。过去，硅谷的技术精英们总认为自己可以通过代码改变世界，凌驾于地缘政治之上。但当白宫执行行政令、国防部和国安局（NSA）直接介入审查时，强如 Anthropic 也只能选择 “积极与政府合作”，甚至连自己的非美籍员工也必须被剥夺访问权限。</p>
-<p>Fable 5不再只是一个商品，它成了被国家征用的 <strong>战略军火</strong> 。</p>
-<h2 id="三、-废墟中的理想：商业洪流下的破灭与向往"><a href="#三、-废墟中的理想：商业洪流下的破灭与向往" class="headerlink" title="三、 废墟中的理想：商业洪流下的破灭与向往"></a>三、 废墟中的理想：商业洪流下的破灭与向往</h2><p>回看 Fable 5 的白名单特权、OpenAI 的 GPT-5.6 受限审查，以及 OpenAI 自身提交的IPO申请，历史在这一刻完成了一个巨大的讽刺。</p>
-<p>2015年，当埃隆·马斯克、山姆·奥特曼等人创立 OpenAI 时，其核心宗旨是：</p>
-<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>作为一个非营利组织，不受财务回报的限制，确保 AGI 的技术向所有人开放，防止技术被单一国家或巨型财阀垄断，从而造福全人类。</p></div></div>
-
-<p>今天，这个设想已经碎成了满地瓦砾：</p>
-<p>从非营利到资本弄潮儿： OpenAI 早已转型为追求利润的实体，并为了迎合资本市场走向 IPO ，最初的非营利乌托邦理想早已被商业逻辑吞噬。</p>
-<p>从 “Open（开放）” 到 “Closed（封闭）” ： 曾经开源的承诺变成了最严密的商业机密，而如今更是在政府的指令下，演变成了 “白名单准入” 的割裂生态。</p>
-<p>从造福全人类到服务特权阶级： 顶尖大模型不再是普惠全人类的工具，而是成了强化特定国家霸权、提升少数垄断巨头生产力的私产。</p>
-<p><strong>然而，那道最初的微光，依然让我们充满向往</strong></p>
-<p>即便现实如此冰冷，即便 OpenAI 如今已实质性转为追逐利润的盈利实体，但当我们拂去商业的喧嚣，回望它最初的设想时，那幅“技术普惠”的宏大蓝图依然散发着让人心潮澎湃的理想主义光芒。</p>
-<p>那是人类科技史上少有的、试图超越国家边界和阶级壁垒的伟大尝试。它向世界许诺过一种可能：最高维度的智慧不需要附庸于权力，最顶尖的科技可以成为每一个普通人对抗命运、跨越数字鸿沟的武器。</p>
-<p>正是因为这个最初的设想曾如此美丽，甚至一度让我们看到了赛博乌托邦的曙光，才使得今天面对Fable 5的“白名单高墙”时，全球开发者心中的失落与阵痛显得如此剧烈。人们对 OpenAI 初心的向往，并非出于对商业幼稚的幻想，而是出于人类对公平、开放与知识无界根深蒂固的渴望。这种向往，恰恰成了当下对抗技术垄断、呼唤开源力量的最强韧的精神火种。</p>
-<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>Fable 5 的 “白名单风暴” 揭示了 AI 时代的未来图景：科技不再是平的，而是被权力筑起的高墙分割得支离破碎。</p>
-<p>OpenAI 最初那个充满人文主义情怀的设想失败了，取而代之的是一个更加冷酷、更加遵循达尔文主义的现实。在这个由政府特许、白名单构筑的赛博新秩序里，谁能拿到那张通往顶尖算力的 “特许通行证” ，谁就掌握了下一个时代改写世界的权力。而剩下的绝大多数人，正无可避免地沦为这场技术合谋下的 <strong>“数字平民”</strong> 。</p>
-<p>不过，局面并非完全没有转机。以 <strong>GLM 5.2</strong> 为代表的中国顶尖开源模型正在展现出越来越强的竞争力。如果它能在代码、推理、工具调用与长上下文等关键能力上持续追近甚至反超闭源白名单模型，那么全球开发者至少不会被迫完全依赖少数美国 API。它的强力表现，有望在一定程度上缓解这种由算力、资本与国家权力共同制造的技术阶层分化。</p>
-]]></content>
-      <categories>
-        <category>评论</category>
-      </categories>
-      <tags>
-        <tag>AI</tag>
-        <tag>OpenAI</tag>
-        <tag>Claude Fable 5</tag>
       </tags>
   </entry>
   <entry>
@@ -4920,6 +4877,49 @@
       <tags>
         <tag>Docker</tag>
         <tag>Fizzy</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>赛博特权阶级的诞生：从 Fable 5 白名单看 AI 非营利乌托邦的终结</title>
+    <url>/post/fable-5-whitelist-new-privileged-class-ai-monopoly.html</url>
+    <content><![CDATA[<p>2026 年夏天，科技界经历了一场 “AI大地震”。美国商务部的一纸出口管制令，让刚刚问世、霸榜各大模型基座的 Anthropic 旗舰模型 <strong>Claude Fable 5</strong> 与其底层孪生模型 Mythos 5 瞬间在全球范围内被按下了暂停键。紧接着，经过政商闭门博弈，部分 <strong>可信赖的实体</strong> 和特定白名单单位逐步重获访问特权。</p>
+<p>这一历史性事件不仅颠覆了开发者对云端 API 稳定性的认知，更向世界宣告了一个残酷的事实：由美国政府特许的、由技术与权力交织而成的 <strong>赛博新特权阶级</strong> 已经正式诞生。</p>
+<p>这也给予了整个AI行业沉重一击 —— OpenAI 最初设立的 <strong>技术民主化、利益造福全人类</strong> 的乌托邦设想，已经彻底宣告失败。</p>
+<h2 id="一、-“白名单”下的赛博新特权阶级"><a href="#一、-“白名单”下的赛博新特权阶级" class="headerlink" title="一、 “白名单”下的赛博新特权阶级"></a>一、 “白名单”下的赛博新特权阶级</h2><p>在过去，黄金、石油和土地是核心的生产要素。而在2026年的今天，顶尖的通用人工智能（AGI）推理算力已成为最稀缺的战略资源。</p>
+<p>Fable 5 与Mythos 5 的强悍无需多言 —— 在 TerminalBench 2.1 等前沿评测中，它们展现出了恐怖的智能。支付巨头 Stripe 曾用它在短短一天内完成了原本需要一整个工程团队干满两个月的 5000 万行 Ruby 代码大迁移；在生物制药与网络安全领域，它们甚至展现出了越过安全限制、自主运行设计工具的“近神”能力。</p>
+<p>然而，正因为这种 “颠覆性力量” ，它引来了权力的铁拳。美国政府以国家安全、防范越狱（Jailbreak）和技术外泄为由，强行切断了公众和海外开发者的连接。随后出炉的 “白名单机制” ，将这种力量圈禁在了一个狭小的特权阶层手中：</p>
+<ul>
+<li><strong>国家机器与军工巨头</strong>： 拥有绝对豁免权，能够无限制调用未阉割、无安全拦截器的 Mythos 5。</li>
+<li><strong>合规的华尔街财阀与巨型跨国企业</strong>： 凭借强大的游说能力和国籍审查能力，跻身“可信合规白名单”。</li>
+</ul>
+<p>一个技术垄断的马太效应正在形成： 白名单内的企业利用 Fable 5 实现成百上千倍的效率跃升、垄断行业财富；而白名单外的中小创业者、研究机构甚至普通大众，只能眼睁睁看着技术代差被无限拉大。曾经人人平等的互联网API生态，变成了按权力、国籍和资本配给的 “口粮” 。美国政府的 “特许” ，正式在全球科技界划分出了高人一等的赛博新贵族。</p>
+<h2 id="二、-权力的入局：Fable-5-的“国家化”阵痛"><a href="#二、-权力的入局：Fable-5-的“国家化”阵痛" class="headerlink" title="二、 权力的入局：Fable 5 的“国家化”阵痛"></a>二、 权力的入局：Fable 5 的“国家化”阵痛</h2><p>Fable 5 的白名单风波，标志着 AI 技术正式从 “商业竞争阶段” 滑向 “地缘政治与国家安全阶段” 。</p>
+<p>“我们不认为这种政府准入程序应该成为长期的默认状态。” —— 面对政府的强势介入，即便是正在筹备 IPO 的 OpenAI 也在其发布 GPT-5.6 Sol 限量预览时发出了无力的警告。</p>
+<p>但资本和企业的挣扎在强大的国家机器面前显得微不足道。过去，硅谷的技术精英们总认为自己可以通过代码改变世界，凌驾于地缘政治之上。但当白宫执行行政令、国防部和国安局（NSA）直接介入审查时，强如 Anthropic 也只能选择 “积极与政府合作”，甚至连自己的非美籍员工也必须被剥夺访问权限。</p>
+<p>Fable 5不再只是一个商品，它成了被国家征用的 <strong>战略军火</strong> 。</p>
+<h2 id="三、-废墟中的理想：商业洪流下的破灭与向往"><a href="#三、-废墟中的理想：商业洪流下的破灭与向往" class="headerlink" title="三、 废墟中的理想：商业洪流下的破灭与向往"></a>三、 废墟中的理想：商业洪流下的破灭与向往</h2><p>回看 Fable 5 的白名单特权、OpenAI 的 GPT-5.6 受限审查，以及 OpenAI 自身提交的IPO申请，历史在这一刻完成了一个巨大的讽刺。</p>
+<p>2015年，当埃隆·马斯克、山姆·奥特曼等人创立 OpenAI 时，其核心宗旨是：</p>
+<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>作为一个非营利组织，不受财务回报的限制，确保 AGI 的技术向所有人开放，防止技术被单一国家或巨型财阀垄断，从而造福全人类。</p></div></div>
+
+<p>今天，这个设想已经碎成了满地瓦砾：</p>
+<p>从非营利到资本弄潮儿： OpenAI 早已转型为追求利润的实体，并为了迎合资本市场走向 IPO ，最初的非营利乌托邦理想早已被商业逻辑吞噬。</p>
+<p>从 “Open（开放）” 到 “Closed（封闭）” ： 曾经开源的承诺变成了最严密的商业机密，而如今更是在政府的指令下，演变成了 “白名单准入” 的割裂生态。</p>
+<p>从造福全人类到服务特权阶级： 顶尖大模型不再是普惠全人类的工具，而是成了强化特定国家霸权、提升少数垄断巨头生产力的私产。</p>
+<p><strong>然而，那道最初的微光，依然让我们充满向往</strong></p>
+<p>即便现实如此冰冷，即便 OpenAI 如今已实质性转为追逐利润的盈利实体，但当我们拂去商业的喧嚣，回望它最初的设想时，那幅“技术普惠”的宏大蓝图依然散发着让人心潮澎湃的理想主义光芒。</p>
+<p>那是人类科技史上少有的、试图超越国家边界和阶级壁垒的伟大尝试。它向世界许诺过一种可能：最高维度的智慧不需要附庸于权力，最顶尖的科技可以成为每一个普通人对抗命运、跨越数字鸿沟的武器。</p>
+<p>正是因为这个最初的设想曾如此美丽，甚至一度让我们看到了赛博乌托邦的曙光，才使得今天面对Fable 5的“白名单高墙”时，全球开发者心中的失落与阵痛显得如此剧烈。人们对 OpenAI 初心的向往，并非出于对商业幼稚的幻想，而是出于人类对公平、开放与知识无界根深蒂固的渴望。这种向往，恰恰成了当下对抗技术垄断、呼唤开源力量的最强韧的精神火种。</p>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>Fable 5 的 “白名单风暴” 揭示了 AI 时代的未来图景：科技不再是平的，而是被权力筑起的高墙分割得支离破碎。</p>
+<p>OpenAI 最初那个充满人文主义情怀的设想失败了，取而代之的是一个更加冷酷、更加遵循达尔文主义的现实。在这个由政府特许、白名单构筑的赛博新秩序里，谁能拿到那张通往顶尖算力的 “特许通行证” ，谁就掌握了下一个时代改写世界的权力。而剩下的绝大多数人，正无可避免地沦为这场技术合谋下的 <strong>“数字平民”</strong> 。</p>
+<p>不过，局面并非完全没有转机。以 <strong>GLM 5.2</strong> 为代表的中国顶尖开源模型正在展现出越来越强的竞争力。如果它能在代码、推理、工具调用与长上下文等关键能力上持续追近甚至反超闭源白名单模型，那么全球开发者至少不会被迫完全依赖少数美国 API。它的强力表现，有望在一定程度上缓解这种由算力、资本与国家权力共同制造的技术阶层分化。</p>
+]]></content>
+      <categories>
+        <category>评论</category>
+      </categories>
+      <tags>
+        <tag>AI</tag>
+        <tag>OpenAI</tag>
+        <tag>Claude Fable 5</tag>
       </tags>
   </entry>
   <entry>
@@ -5505,7 +5505,7 @@
 <li>BUG 赠送：2026 年 6 月 27 日，到期日期 <strong>7 月 27 日</strong></li>
 <li>BUG 赠送：2026 年 6 月 30 日，到期日期 <strong>7 月 30 日</strong></li>
 </ol>
-<p>我的查询结果与记录一致。</p>
+<p>我在 6 月 29 日的查询结果与记录一致，如果你有 X.com 账户，查看 <a href="https://x.com/thsottiaux/status/2071740419030053227">Tibo</a> 的推文获取最新 Codex 更新消息。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>快看看你的重置机会什么时候到期吧。Plus 用户每周额度价值大约 100 美元，千万不要浪费了。</p>
 ]]></content>
       <categories>
@@ -5707,178 +5707,6 @@
       <tags>
         <tag>Git</tag>
         <tag>开发工具</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Nginx 还是 Caddy？一篇写给实际运维者的对比指南</title>
-    <url>/post/nginx-vs-caddy.html</url>
-    <content><![CDATA[<p>如果你要给一个网站、API 或者一堆容器选一个反向代理 &#x2F; Web 服务器，2026 年的今天你大概率会在 Nginx 和 Caddy 之间犹豫。这篇文章不站队，而是从配置体验、HTTPS、性能、生态、扩展性几个维度把两者掰开讲清楚，最后给出明确的选型建议。</p>
-<h2 id="一句话认识两位选手"><a href="#一句话认识两位选手" class="headerlink" title="一句话认识两位选手"></a>一句话认识两位选手</h2><ul>
-<li><strong>Nginx</strong>：2004 年诞生，C 语言编写，事件驱动架构的鼻祖级实现。占据全球 Web 服务器市场的头部份额，几乎是”反向代理”的代名词。</li>
-<li><strong>Caddy</strong>：2015 年发布，Go 语言编写，主打”默认 HTTPS”和极简配置。Caddy 2 重写后以模块化架构和 JSON 配置 API 为核心。</li>
-</ul>
-<h2 id="配置体验：最直观的差距"><a href="#配置体验：最直观的差距" class="headerlink" title="配置体验：最直观的差距"></a>配置体验：最直观的差距</h2><p>先看一个最常见的需求：把 <code>example.com</code> 反向代理到本地 8080 端口，并启用 HTTPS。</p>
-<p><strong>Caddy（Caddyfile，3 行）：</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">example.com &#123;</span><br><span class="line">    reverse_proxy localhost:8080</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>证书自动申请、自动续期、HTTP 自动跳转 HTTPS——全部默认完成。</p>
-<p><strong>Nginx（约 25 行 + certbot）：</strong></p>
-<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">80</span>;</span><br><span class="line">    <span class="attribute">server_name</span> example.com;</span><br><span class="line">    <span class="attribute">return</span> <span class="number">301</span> https://<span class="variable">$host</span><span class="variable">$request_uri</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">443</span> ssl http2;</span><br><span class="line">    <span class="attribute">server_name</span> example.com;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">ssl_certificate</span>     /etc/letsencrypt/live/example.com/fullchain.pem;</span><br><span class="line">    <span class="attribute">ssl_certificate_key</span> /etc/letsencrypt/live/example.com/privkey.pem;</span><br><span class="line"></span><br><span class="line">    <span class="section">location</span> / &#123;</span><br><span class="line">        <span class="attribute">proxy_pass</span> http://localhost:8080;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> Host <span class="variable">$host</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Real-IP <span class="variable">$remote_addr</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Forwarded-Proto <span class="variable">$scheme</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>还需要额外跑 <code>certbot</code> 申请证书并配置定时续期。</p>
-<p>但要公平地说：Nginx 的冗长换来的是<strong>显式与精细</strong>。<code>proxy_set_header</code> 每一行都看得见摸得着；而 Caddy 帮你做的事藏在默认值里，出问题时你需要知道它默认做了什么。对于配置规模庞大、需要精确控制每个 header、buffer、timeout 的场景，Nginx 的配置语言虽然啰嗦，但表达力和社区可参考的范例数量是压倒性的。</p>
-<h2 id="HTTPS-与证书管理"><a href="#HTTPS-与证书管理" class="headerlink" title="HTTPS 与证书管理"></a>HTTPS 与证书管理</h2><p>这是 Caddy 的主场：</p>
-<ul>
-<li><strong>自动 HTTPS</strong>：通过 ACME（Let’s Encrypt &#x2F; ZeroSSL）自动签发、续期、轮换证书，包括 OCSP 装订，零配置。</li>
-<li><strong>按需 TLS（On-Demand TLS）</strong>：在 TLS 握手时才为新域名签证书，是 SaaS 自定义域名（客户绑定自己的域名）场景的杀手锏。Nginx 体系要实现同样的效果通常得上 OpenResty + lua-resty-auto-ssl，复杂度完全不在一个量级。</li>
-<li><strong>内部 CA</strong>：内置本地 CA，<code>localhost</code> 开发环境也能用受信任的 HTTPS。</li>
-</ul>
-<p>Nginx 这边，证书管理依赖外部工具（certbot、acme.sh、lego），工作得也很成熟，但本质上是”胶水方案”：多一个进程、多一个 cron、多一个 reload 钩子，多一处可能坏的地方。</p>
-<h2 id="性能：差距比你想象的小"><a href="#性能：差距比你想象的小" class="headerlink" title="性能：差距比你想象的小"></a>性能：差距比你想象的小</h2><p>网络上流传”C 写的肯定比 Go 快”，实际测试中：</p>
-<ul>
-<li><strong>静态文件与常规反向代理</strong>：两者在绝大多数真实负载下吞吐量处于同一量级。Nginx 在极限 RPS 和内存占用上通常仍有优势（C + 精细的内存管理 vs Go runtime + GC），尤其是数十万并发连接的极端场景。</li>
-<li><strong>尾延迟</strong>：Go 的 GC 在高压下可能带来轻微的 P99 抖动，但对绝大多数业务无感。</li>
-<li><strong>HTTP&#x2F;3</strong>：两者都已支持 QUIC&#x2F;HTTP3，Caddy 默认启用，Nginx 需要显式配置。</li>
-</ul>
-<p>结论：<strong>除非你在做 CDN 边缘节点或单机要扛几十万并发，性能不应该是你们之间的决定因素。</strong> 瓶颈几乎总在上游应用，而不是代理层。</p>
-<h2 id="运维与生态"><a href="#运维与生态" class="headerlink" title="运维与生态"></a>运维与生态</h2><table>
-<thead>
-<tr>
-<th>维度</th>
-<th>Nginx</th>
-<th>Caddy</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>配置热加载</td>
-<td><code>nginx -s reload</code>，成熟可靠</td>
-<td>Admin API 优雅热加载，零停机</td>
-</tr>
-<tr>
-<td>动态配置</td>
-<td>原生不支持，需 reload 或商业版&#x2F;OpenResty</td>
-<td>内置 JSON Admin API，可编程修改运行时配置</td>
-</tr>
-<tr>
-<td>文档与搜索答案</td>
-<td>二十年积累，几乎任何问题都有现成答案</td>
-<td>文档质量高但社区体量小得多</td>
-</tr>
-<tr>
-<td>容器&#x2F;K8s 生态</td>
-<td>ingress-nginx 等久经考验</td>
-<td>有 Ingress Controller 但成熟度和采用率较低</td>
-</tr>
-<tr>
-<td>扩展方式</td>
-<td>C 模块（需重新编译）、OpenResty&#x2F;Lua、njs</td>
-<td>Go 插件生态，<code>xcaddy</code> 一条命令编译定制版本</td>
-</tr>
-<tr>
-<td>二进制分发</td>
-<td>包管理器，模块依赖发行版</td>
-<td>单一静态二进制，跨平台部署极其省心</td>
-</tr>
-<tr>
-<td>商业支持</td>
-<td>Nginx Plus（F5）</td>
-<td>官方赞助&#x2F;商业授权</td>
-</tr>
-</tbody></table>
-<p>几个值得展开的点：</p>
-<ul>
-<li><strong>扩展性</strong>：Caddy 的插件体验显著更好。<code>xcaddy build --with github.com/...</code> 一条命令就能编出带 Cloudflare DNS 验证、限流、安全模块的定制二进制。Nginx 编第三方 C 模块的痛苦，折腾过的人都懂（这也是 OpenResty 存在的原因）。</li>
-<li><strong>配置即 API</strong>：Caddy 的本质是一个 JSON 配置引擎，Caddyfile 只是人类友好的前端。这让它天然适合被程序驱动——平台型产品动态增删站点不需要生成配置文件再 reload。</li>
-<li><strong>久经考验</strong>：Nginx 的边缘案例处理、与各种奇怪客户端&#x2F;上游的兼容性，是二十年生产流量喂出来的。保守的大型生产环境选它，不会有人质疑。</li>
-</ul>
-<h2 id="选型建议"><a href="#选型建议" class="headerlink" title="选型建议"></a>选型建议</h2><p><strong>选 Caddy，如果你是：</strong></p>
-<ul>
-<li>个人项目、中小团队、初创公司——把省下来的证书运维时间拿去写业务</li>
-<li>SaaS 平台需要客户自定义域名（On-Demand TLS 几乎是唯一省心方案）</li>
-<li>需要通过 API 动态管理大量站点配置</li>
-<li>团队没有专职运维，希望配置文件三行能看懂</li>
-</ul>
-<p><strong>选 Nginx，如果你是：</strong></p>
-<ul>
-<li>已有大量 Nginx 配置和团队经验——迁移收益撑不起迁移成本</li>
-<li>极端高并发 &#x2F; 边缘节点 &#x2F; 对内存和尾延迟敏感的场景</li>
-<li>重度依赖 Kubernetes ingress-nginx 或 OpenResty&#x2F;Lua 生态</li>
-<li>需要 Nginx Plus 的商业特性与支持，或所在组织要求”最保守的选择”</li>
-</ul>
-<p><strong>也可以都要</strong>：不少团队用 Caddy 做边缘 TLS 终结（享受自动证书），后面挂 Nginx&#x2F;原有架构不动。架构上完全成立。</p>
-<h2 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h2><p>Nginx 和 Caddy 的关系，有点像 Vim 和 VS Code：前者无所不能但要求你懂它，后者把 90% 的常见需求做成了开箱即用。2026 年的今天，<strong>对于新项目我会默认从 Caddy 开始</strong>——直到遇到它解决不了的问题再换，而这一天对大多数项目来说不会到来。但如果你手里已经有一套运转良好的 Nginx，请记住运维界的第一定律：<strong>If it works, don’t fix it.</strong></p>
-]]></content>
-      <categories>
-        <category>教程</category>
-      </categories>
-      <tags>
-        <tag>Nginx</tag>
-        <tag>Caddy</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>台北电脑展：Nvidia 发布面向 PC 的 RTX Spark CPU，信息一览</title>
-    <url>/post/nvidia-announce-rtx-spark.html</url>
-    <content><![CDATA[<p>2026 年 6 月 1 日，之前各大科技品牌官推的 <code>A new era of PC.</code> 谜底终于揭晓：</p>
-<p>NVIDIA 在台北的 Computex 2026 正式发布了面向 PC 的 RTX Spark SoC ，定位为 AI PC 平台，面向轻薄本、AI 开发、创意工作站和高端 Windows PC。</p>
-<h2 id="RTX-Spark-最新发布重点"><a href="#RTX-Spark-最新发布重点" class="headerlink" title="RTX Spark 最新发布重点"></a>RTX Spark 最新发布重点</h2><h3 id="参数信息"><a href="#参数信息" class="headerlink" title="参数信息"></a>参数信息</h3><table>
-<thead>
-<tr>
-<th align="center">项目</th>
-<th>规格</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center"><strong>CPU</strong></td>
-<td>Grace ARM，最高 <strong>20</strong> 核心</td>
-</tr>
-<tr>
-<td align="center"><strong>GPU</strong></td>
-<td>Blackwell RTX GPU， <strong>6144</strong> 个 CUDA Core</td>
-</tr>
-<tr>
-<td align="center">内存</td>
-<td>最高 <strong>128GB</strong> 统一内存</td>
-</tr>
-<tr>
-<td align="center">AI 算力</td>
-<td>1 PFLOPS（FP4）</td>
-</tr>
-<tr>
-<td align="center">产品定位</td>
-<td>AI PC &#x2F; 创意工作站 &#x2F; 高端 Windows PC</td>
-</tr>
-<tr>
-<td align="center">上市时间</td>
-<td>2026 年秋季</td>
-</tr>
-</tbody></table>
-<p>GPU 的 6144 个 CUDA Core 规格接近桌面级 <strong>Nvidia RTX 5070</strong>，官方宣称 <code>FP4</code> AI 算力达到 <strong>1 PFLOPS</strong>， 略高于 RTX 5070 的 AI 算力指标。</p>
-<h2 id="官方卖点"><a href="#官方卖点" class="headerlink" title="官方卖点"></a>官方卖点</h2><p>NVIDIA 宣称其是“史上能效最高的 PC 芯片”，发布会并未公布功耗信息，根据 <a href="https://giznewsdaily.com/nvidia-n1x-leak-reveals-limited-availability-in-2026/">泄漏信息</a>  显示 TDP 约为 65-120W。</p>
-<p>NVIDIA 强调的卖点：  </p>
-<ul>
-<li>本地运行 AI Agent</li>
-<li>本地推理保护隐私</li>
-<li>视频编辑、3D 渲染、AI 创作加速</li>
-<li>高性能但低功耗的轻薄本体验</li>
-</ul>
-<h2 id="产品信息"><a href="#产品信息" class="headerlink" title="产品信息"></a>产品信息</h2><p>微软、Dell、HP、Lenovo、ASUS 等厂商已宣布采用 RTX Spark 平台推出新的产品。</p>
-<p><img src="https://img.nep.me/ooo/rtx-spark-oem.webp" alt="rtx-spark-oem.jpeg"></p>
-<p>其中微软宣布 <a href="https://www.microsoft.com/en-us/surface/devices/surface-laptop-ultra/">Surface Laptop Ultra</a> 将在 2026 年秋季上市</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>RTX Spark 标志着在云端 AI 生成占据统治地位的 NVIDIA 正式进入面向个人 AI 的 PC SoC 市场。</p>
-<p>与传统 Windows PC 的 x86 + 独立显卡方案不同，RTX Spark 试图通过 ARM CPU、Blackwell GPU 与统一内存架构，打造类似 Apple Silicon 的高性能 AI PC 平台。</p>
-<p>如果 NVIDIA 能兑现其能效与 AI 性能承诺，RTX Spark 有望成为未来高端 Windows AI PC 的重要选择。</p>
-<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
-<li><a href="https://blogs.nvidia.cn/blog/nvidia-microsoft-windows-pcs-agents-rtx-spark/">NVIDIA 携手微软，在个人 AI 时代重塑 Windows PC</a></li>
-<li><a href="https://www.nvidia.cn/gtc/taipei/keynote/">NVIDIA GTC 台北 2026 主题演讲回放</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>资讯</category>
-      </categories>
-      <tags>
-        <tag>RTX</tag>
-        <tag>RTX Spark</tag>
       </tags>
   </entry>
   <entry>
@@ -6781,6 +6609,178 @@
       <tags>
         <tag>NPM</tag>
         <tag>安全</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Nginx 还是 Caddy？一篇写给实际运维者的对比指南</title>
+    <url>/post/nginx-vs-caddy.html</url>
+    <content><![CDATA[<p>如果你要给一个网站、API 或者一堆容器选一个反向代理 &#x2F; Web 服务器，2026 年的今天你大概率会在 Nginx 和 Caddy 之间犹豫。这篇文章不站队，而是从配置体验、HTTPS、性能、生态、扩展性几个维度把两者掰开讲清楚，最后给出明确的选型建议。</p>
+<h2 id="一句话认识两位选手"><a href="#一句话认识两位选手" class="headerlink" title="一句话认识两位选手"></a>一句话认识两位选手</h2><ul>
+<li><strong>Nginx</strong>：2004 年诞生，C 语言编写，事件驱动架构的鼻祖级实现。占据全球 Web 服务器市场的头部份额，几乎是”反向代理”的代名词。</li>
+<li><strong>Caddy</strong>：2015 年发布，Go 语言编写，主打”默认 HTTPS”和极简配置。Caddy 2 重写后以模块化架构和 JSON 配置 API 为核心。</li>
+</ul>
+<h2 id="配置体验：最直观的差距"><a href="#配置体验：最直观的差距" class="headerlink" title="配置体验：最直观的差距"></a>配置体验：最直观的差距</h2><p>先看一个最常见的需求：把 <code>example.com</code> 反向代理到本地 8080 端口，并启用 HTTPS。</p>
+<p><strong>Caddy（Caddyfile，3 行）：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">example.com &#123;</span><br><span class="line">    reverse_proxy localhost:8080</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>证书自动申请、自动续期、HTTP 自动跳转 HTTPS——全部默认完成。</p>
+<p><strong>Nginx（约 25 行 + certbot）：</strong></p>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">80</span>;</span><br><span class="line">    <span class="attribute">server_name</span> example.com;</span><br><span class="line">    <span class="attribute">return</span> <span class="number">301</span> https://<span class="variable">$host</span><span class="variable">$request_uri</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">443</span> ssl http2;</span><br><span class="line">    <span class="attribute">server_name</span> example.com;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">ssl_certificate</span>     /etc/letsencrypt/live/example.com/fullchain.pem;</span><br><span class="line">    <span class="attribute">ssl_certificate_key</span> /etc/letsencrypt/live/example.com/privkey.pem;</span><br><span class="line"></span><br><span class="line">    <span class="section">location</span> / &#123;</span><br><span class="line">        <span class="attribute">proxy_pass</span> http://localhost:8080;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> Host <span class="variable">$host</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Real-IP <span class="variable">$remote_addr</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Forwarded-Proto <span class="variable">$scheme</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>还需要额外跑 <code>certbot</code> 申请证书并配置定时续期。</p>
+<p>但要公平地说：Nginx 的冗长换来的是<strong>显式与精细</strong>。<code>proxy_set_header</code> 每一行都看得见摸得着；而 Caddy 帮你做的事藏在默认值里，出问题时你需要知道它默认做了什么。对于配置规模庞大、需要精确控制每个 header、buffer、timeout 的场景，Nginx 的配置语言虽然啰嗦，但表达力和社区可参考的范例数量是压倒性的。</p>
+<h2 id="HTTPS-与证书管理"><a href="#HTTPS-与证书管理" class="headerlink" title="HTTPS 与证书管理"></a>HTTPS 与证书管理</h2><p>这是 Caddy 的主场：</p>
+<ul>
+<li><strong>自动 HTTPS</strong>：通过 ACME（Let’s Encrypt &#x2F; ZeroSSL）自动签发、续期、轮换证书，包括 OCSP 装订，零配置。</li>
+<li><strong>按需 TLS（On-Demand TLS）</strong>：在 TLS 握手时才为新域名签证书，是 SaaS 自定义域名（客户绑定自己的域名）场景的杀手锏。Nginx 体系要实现同样的效果通常得上 OpenResty + lua-resty-auto-ssl，复杂度完全不在一个量级。</li>
+<li><strong>内部 CA</strong>：内置本地 CA，<code>localhost</code> 开发环境也能用受信任的 HTTPS。</li>
+</ul>
+<p>Nginx 这边，证书管理依赖外部工具（certbot、acme.sh、lego），工作得也很成熟，但本质上是”胶水方案”：多一个进程、多一个 cron、多一个 reload 钩子，多一处可能坏的地方。</p>
+<h2 id="性能：差距比你想象的小"><a href="#性能：差距比你想象的小" class="headerlink" title="性能：差距比你想象的小"></a>性能：差距比你想象的小</h2><p>网络上流传”C 写的肯定比 Go 快”，实际测试中：</p>
+<ul>
+<li><strong>静态文件与常规反向代理</strong>：两者在绝大多数真实负载下吞吐量处于同一量级。Nginx 在极限 RPS 和内存占用上通常仍有优势（C + 精细的内存管理 vs Go runtime + GC），尤其是数十万并发连接的极端场景。</li>
+<li><strong>尾延迟</strong>：Go 的 GC 在高压下可能带来轻微的 P99 抖动，但对绝大多数业务无感。</li>
+<li><strong>HTTP&#x2F;3</strong>：两者都已支持 QUIC&#x2F;HTTP3，Caddy 默认启用，Nginx 需要显式配置。</li>
+</ul>
+<p>结论：<strong>除非你在做 CDN 边缘节点或单机要扛几十万并发，性能不应该是你们之间的决定因素。</strong> 瓶颈几乎总在上游应用，而不是代理层。</p>
+<h2 id="运维与生态"><a href="#运维与生态" class="headerlink" title="运维与生态"></a>运维与生态</h2><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>Nginx</th>
+<th>Caddy</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>配置热加载</td>
+<td><code>nginx -s reload</code>，成熟可靠</td>
+<td>Admin API 优雅热加载，零停机</td>
+</tr>
+<tr>
+<td>动态配置</td>
+<td>原生不支持，需 reload 或商业版&#x2F;OpenResty</td>
+<td>内置 JSON Admin API，可编程修改运行时配置</td>
+</tr>
+<tr>
+<td>文档与搜索答案</td>
+<td>二十年积累，几乎任何问题都有现成答案</td>
+<td>文档质量高但社区体量小得多</td>
+</tr>
+<tr>
+<td>容器&#x2F;K8s 生态</td>
+<td>ingress-nginx 等久经考验</td>
+<td>有 Ingress Controller 但成熟度和采用率较低</td>
+</tr>
+<tr>
+<td>扩展方式</td>
+<td>C 模块（需重新编译）、OpenResty&#x2F;Lua、njs</td>
+<td>Go 插件生态，<code>xcaddy</code> 一条命令编译定制版本</td>
+</tr>
+<tr>
+<td>二进制分发</td>
+<td>包管理器，模块依赖发行版</td>
+<td>单一静态二进制，跨平台部署极其省心</td>
+</tr>
+<tr>
+<td>商业支持</td>
+<td>Nginx Plus（F5）</td>
+<td>官方赞助&#x2F;商业授权</td>
+</tr>
+</tbody></table>
+<p>几个值得展开的点：</p>
+<ul>
+<li><strong>扩展性</strong>：Caddy 的插件体验显著更好。<code>xcaddy build --with github.com/...</code> 一条命令就能编出带 Cloudflare DNS 验证、限流、安全模块的定制二进制。Nginx 编第三方 C 模块的痛苦，折腾过的人都懂（这也是 OpenResty 存在的原因）。</li>
+<li><strong>配置即 API</strong>：Caddy 的本质是一个 JSON 配置引擎，Caddyfile 只是人类友好的前端。这让它天然适合被程序驱动——平台型产品动态增删站点不需要生成配置文件再 reload。</li>
+<li><strong>久经考验</strong>：Nginx 的边缘案例处理、与各种奇怪客户端&#x2F;上游的兼容性，是二十年生产流量喂出来的。保守的大型生产环境选它，不会有人质疑。</li>
+</ul>
+<h2 id="选型建议"><a href="#选型建议" class="headerlink" title="选型建议"></a>选型建议</h2><p><strong>选 Caddy，如果你是：</strong></p>
+<ul>
+<li>个人项目、中小团队、初创公司——把省下来的证书运维时间拿去写业务</li>
+<li>SaaS 平台需要客户自定义域名（On-Demand TLS 几乎是唯一省心方案）</li>
+<li>需要通过 API 动态管理大量站点配置</li>
+<li>团队没有专职运维，希望配置文件三行能看懂</li>
+</ul>
+<p><strong>选 Nginx，如果你是：</strong></p>
+<ul>
+<li>已有大量 Nginx 配置和团队经验——迁移收益撑不起迁移成本</li>
+<li>极端高并发 &#x2F; 边缘节点 &#x2F; 对内存和尾延迟敏感的场景</li>
+<li>重度依赖 Kubernetes ingress-nginx 或 OpenResty&#x2F;Lua 生态</li>
+<li>需要 Nginx Plus 的商业特性与支持，或所在组织要求”最保守的选择”</li>
+</ul>
+<p><strong>也可以都要</strong>：不少团队用 Caddy 做边缘 TLS 终结（享受自动证书），后面挂 Nginx&#x2F;原有架构不动。架构上完全成立。</p>
+<h2 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h2><p>Nginx 和 Caddy 的关系，有点像 Vim 和 VS Code：前者无所不能但要求你懂它，后者把 90% 的常见需求做成了开箱即用。2026 年的今天，<strong>对于新项目我会默认从 Caddy 开始</strong>——直到遇到它解决不了的问题再换，而这一天对大多数项目来说不会到来。但如果你手里已经有一套运转良好的 Nginx，请记住运维界的第一定律：<strong>If it works, don’t fix it.</strong></p>
+]]></content>
+      <categories>
+        <category>教程</category>
+      </categories>
+      <tags>
+        <tag>Nginx</tag>
+        <tag>Caddy</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>台北电脑展：Nvidia 发布面向 PC 的 RTX Spark CPU，信息一览</title>
+    <url>/post/nvidia-announce-rtx-spark.html</url>
+    <content><![CDATA[<p>2026 年 6 月 1 日，之前各大科技品牌官推的 <code>A new era of PC.</code> 谜底终于揭晓：</p>
+<p>NVIDIA 在台北的 Computex 2026 正式发布了面向 PC 的 RTX Spark SoC ，定位为 AI PC 平台，面向轻薄本、AI 开发、创意工作站和高端 Windows PC。</p>
+<h2 id="RTX-Spark-最新发布重点"><a href="#RTX-Spark-最新发布重点" class="headerlink" title="RTX Spark 最新发布重点"></a>RTX Spark 最新发布重点</h2><h3 id="参数信息"><a href="#参数信息" class="headerlink" title="参数信息"></a>参数信息</h3><table>
+<thead>
+<tr>
+<th align="center">项目</th>
+<th>规格</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong>CPU</strong></td>
+<td>Grace ARM，最高 <strong>20</strong> 核心</td>
+</tr>
+<tr>
+<td align="center"><strong>GPU</strong></td>
+<td>Blackwell RTX GPU， <strong>6144</strong> 个 CUDA Core</td>
+</tr>
+<tr>
+<td align="center">内存</td>
+<td>最高 <strong>128GB</strong> 统一内存</td>
+</tr>
+<tr>
+<td align="center">AI 算力</td>
+<td>1 PFLOPS（FP4）</td>
+</tr>
+<tr>
+<td align="center">产品定位</td>
+<td>AI PC &#x2F; 创意工作站 &#x2F; 高端 Windows PC</td>
+</tr>
+<tr>
+<td align="center">上市时间</td>
+<td>2026 年秋季</td>
+</tr>
+</tbody></table>
+<p>GPU 的 6144 个 CUDA Core 规格接近桌面级 <strong>Nvidia RTX 5070</strong>，官方宣称 <code>FP4</code> AI 算力达到 <strong>1 PFLOPS</strong>， 略高于 RTX 5070 的 AI 算力指标。</p>
+<h2 id="官方卖点"><a href="#官方卖点" class="headerlink" title="官方卖点"></a>官方卖点</h2><p>NVIDIA 宣称其是“史上能效最高的 PC 芯片”，发布会并未公布功耗信息，根据 <a href="https://giznewsdaily.com/nvidia-n1x-leak-reveals-limited-availability-in-2026/">泄漏信息</a>  显示 TDP 约为 65-120W。</p>
+<p>NVIDIA 强调的卖点：  </p>
+<ul>
+<li>本地运行 AI Agent</li>
+<li>本地推理保护隐私</li>
+<li>视频编辑、3D 渲染、AI 创作加速</li>
+<li>高性能但低功耗的轻薄本体验</li>
+</ul>
+<h2 id="产品信息"><a href="#产品信息" class="headerlink" title="产品信息"></a>产品信息</h2><p>微软、Dell、HP、Lenovo、ASUS 等厂商已宣布采用 RTX Spark 平台推出新的产品。</p>
+<p><img src="https://img.nep.me/ooo/rtx-spark-oem.webp" alt="rtx-spark-oem.jpeg"></p>
+<p>其中微软宣布 <a href="https://www.microsoft.com/en-us/surface/devices/surface-laptop-ultra/">Surface Laptop Ultra</a> 将在 2026 年秋季上市</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>RTX Spark 标志着在云端 AI 生成占据统治地位的 NVIDIA 正式进入面向个人 AI 的 PC SoC 市场。</p>
+<p>与传统 Windows PC 的 x86 + 独立显卡方案不同，RTX Spark 试图通过 ARM CPU、Blackwell GPU 与统一内存架构，打造类似 Apple Silicon 的高性能 AI PC 平台。</p>
+<p>如果 NVIDIA 能兑现其能效与 AI 性能承诺，RTX Spark 有望成为未来高端 Windows AI PC 的重要选择。</p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
+<li><a href="https://blogs.nvidia.cn/blog/nvidia-microsoft-windows-pcs-agents-rtx-spark/">NVIDIA 携手微软，在个人 AI 时代重塑 Windows PC</a></li>
+<li><a href="https://www.nvidia.cn/gtc/taipei/keynote/">NVIDIA GTC 台北 2026 主题演讲回放</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>资讯</category>
+      </categories>
+      <tags>
+        <tag>RTX</tag>
+        <tag>RTX Spark</tag>
       </tags>
   </entry>
   <entry>

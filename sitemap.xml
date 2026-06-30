@@ -236,7 +236,7 @@
   </url>
   
   <url>
-    <loc>https://ooo.run/post/how-to-install-nodejs.html</loc>
+    <loc>https://ooo.run/post/how-to-install-homebrew-on-macos.html</loc>
     
     <lastmod>2026-06-24</lastmod>
     
@@ -245,7 +245,7 @@
   </url>
   
   <url>
-    <loc>https://ooo.run/post/how-to-install-homebrew-on-macos.html</loc>
+    <loc>https://ooo.run/post/how-to-install-nodejs.html</loc>
     
     <lastmod>2026-06-24</lastmod>
     
@@ -461,7 +461,7 @@
   </url>
   
   <url>
-    <loc>https://ooo.run/post/nginx-vs-caddy.html</loc>
+    <loc>https://ooo.run/post/mini-shai-hulud-check-and-defense.html</loc>
     
     <lastmod>2026-06-24</lastmod>
     
@@ -470,7 +470,7 @@
   </url>
   
   <url>
-    <loc>https://ooo.run/post/mini-shai-hulud-check-and-defense.html</loc>
+    <loc>https://ooo.run/post/nginx-vs-caddy.html</loc>
     
     <lastmod>2026-06-24</lastmod>
     
@@ -623,6 +623,15 @@
   </url>
   
   <url>
+    <loc>https://ooo.run/post/how-to-make-money-from-internet.html</loc>
+    
+    <lastmod>2026-06-24</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://ooo.run/post/news-openai-releae-gpt-oss-model.html</loc>
     
     <lastmod>2026-06-24</lastmod>
@@ -633,15 +642,6 @@
   
   <url>
     <loc>https://ooo.run/post/news-openai-released-gpt-5.html</loc>
-    
-    <lastmod>2026-06-24</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://ooo.run/post/how-to-make-money-from-internet.html</loc>
     
     <lastmod>2026-06-24</lastmod>
     
@@ -813,7 +813,7 @@
   </url>
   
   <url>
-    <loc>https://ooo.run/tags/Nodejs/</loc>
+    <loc>https://ooo.run/tags/Homebrew/</loc>
     <lastmod>2026-06-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -827,14 +827,14 @@
   </url>
   
   <url>
-    <loc>https://ooo.run/tags/Windows/</loc>
+    <loc>https://ooo.run/tags/Nodejs/</loc>
     <lastmod>2026-06-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://ooo.run/tags/Homebrew/</loc>
+    <loc>https://ooo.run/tags/Windows/</loc>
     <lastmod>2026-06-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -939,13 +939,6 @@
   </url>
   
   <url>
-    <loc>https://ooo.run/tags/%E5%BC%80%E6%BA%90/</loc>
-    <lastmod>2026-06-30</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://ooo.run/tags/%E7%8B%AC%E7%AB%8B%E5%BC%80%E5%8F%91/</loc>
     <lastmod>2026-06-30</lastmod>
     <changefreq>weekly</changefreq>
@@ -961,6 +954,13 @@
   
   <url>
     <loc>https://ooo.run/tags/%E5%89%AF%E4%B8%9A/</loc>
+    <lastmod>2026-06-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://ooo.run/tags/%E5%BC%80%E6%BA%90/</loc>
     <lastmod>2026-06-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1331,6 +1331,20 @@
   </url>
   
   <url>
+    <loc>https://ooo.run/tags/NPM/</loc>
+    <lastmod>2026-06-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://ooo.run/tags/%E5%AE%89%E5%85%A8/</loc>
+    <lastmod>2026-06-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://ooo.run/tags/Nginx/</loc>
     <lastmod>2026-06-30</lastmod>
     <changefreq>weekly</changefreq>
@@ -1353,20 +1367,6 @@
   
   <url>
     <loc>https://ooo.run/tags/RTX-Spark/</loc>
-    <lastmod>2026-06-30</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://ooo.run/tags/NPM/</loc>
-    <lastmod>2026-06-30</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://ooo.run/tags/%E5%AE%89%E5%85%A8/</loc>
     <lastmod>2026-06-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
