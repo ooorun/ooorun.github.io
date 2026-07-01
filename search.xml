@@ -1012,6 +1012,84 @@
       </tags>
   </entry>
   <entry>
+    <title>AI 大模型集中发布：DeepSeek 3.2、Claude Sonnet 4.5、OpenAI Sora 2、GLM-4.6 亮点速览</title>
+    <url>/post/2025-oct-new-models-coming.html</url>
+    <content><![CDATA[<p>9月29日，AI 领域迎来了一波重磅更新。DeepSeek、Anthropic、OpenAI 和智谱 AI 四家公司不约而同地发布了各自的最新模型，为开发者和用户带来了更强大的 AI 能力。</p>
+<h2 id="DeepSeek-V3-2：开源大模型再突破，成本下降超-50"><a href="#DeepSeek-V3-2：开源大模型再突破，成本下降超-50" class="headerlink" title="DeepSeek-V3.2：开源大模型再突破，成本下降超 50%"></a>DeepSeek-V3.2：开源大模型再突破，成本下降超 50%</h2><p>9月29日，DeepSeek 正式在 Hugging Face 平台发布并开源了 DeepSeek-V3.2-Exp 模型。</p>
+<p><strong>模型地址</strong>：<a href="https://huggingface.co/deepseek-ai/DeepSeek-V3.2-Exp">https://huggingface.co/deepseek-ai/DeepSeek-V3.2-Exp</a></p>
+<h3 id="API-价格大幅下调超-50"><a href="#API-价格大幅下调超-50" class="headerlink" title="API 价格大幅下调超 50%"></a>API 价格大幅下调超 50%</h3><p>新模型主要特点是服务成本的显著降低，DeepSeek 随即下调 API 调用费用：官方 API 价格下调超过 50%，新价格已即刻生效。这一举措将大幅降低开发者的使用成本。</p>
+<img src="https://img.nep.me/i/2025/10/01/oct-deepseek-price.webp" style="width:50%;" alt="DeepSeek 价格调整" />
+
+<h2 id="Anthropic-Claude-Sonnet-4-5：自主编程能力跃升"><a href="#Anthropic-Claude-Sonnet-4-5：自主编程能力跃升" class="headerlink" title="Anthropic Claude Sonnet 4.5：自主编程能力跃升"></a>Anthropic Claude Sonnet 4.5：自主编程能力跃升</h2><p>9月29日，Anthropic 发布了全新的 Claude Sonnet 4.5 模型。</p>
+<p><strong>官方介绍</strong>：<a href="https://www.anthropic.com/news/claude-sonnet-4-5">https://www.anthropic.com/news/claude-sonnet-4-5</a></p>
+<h3 id="核心亮点"><a href="#核心亮点" class="headerlink" title="核心亮点"></a>核心亮点</h3><ul>
+<li><strong>指令遵循能力显著提升</strong>：模型对复杂指令的理解和执行更加精准</li>
+<li><strong>长时间自主编程</strong>：可连续自主编程长达 30 小时，相比 Claude Opus 4 的 7 小时提升了 4 倍以上</li>
+<li><strong>立即可用</strong>：已在 Claude Code 中上线，开发者可直接使用</li>
+</ul>
+<p><img src="https://img.nep.me/i/2025/10/01/oct-claude-sonnet.webp" alt="Claude Sonnet 4.5"></p>
+<h2 id="OpenAI-Sora-2：视频生成的-ChatGPT-时刻"><a href="#OpenAI-Sora-2：视频生成的-ChatGPT-时刻" class="headerlink" title="OpenAI Sora 2：视频生成的 ChatGPT 时刻"></a>OpenAI Sora 2：视频生成的 ChatGPT 时刻</h2><p>9月29日，OpenAI 推出了其迄今最先进的视频生成模型 Sora 2.0，并同步上线独立 iOS 应用（目前采用邀请机制）。</p>
+<h3 id="主要特性"><a href="#主要特性" class="headerlink" title="主要特性"></a>主要特性</h3><ul>
+<li><strong>物理真实感大幅提升</strong>：生成视频的物理表现更加逼真</li>
+<li><strong>音视频同步优化</strong>：声音与画面的匹配度显著提高</li>
+<li><strong>多镜头叙事能力</strong>：支持更复杂的故事叙述方式</li>
+<li><strong>社交互动功能</strong>：用户可生成、浏览和分享 AI 视频，甚至以虚拟形象”客串”他人作品</li>
+</ul>
+<p>OpenAI 将此次更新称为”视频生成的 ChatGPT 时刻”，意味着视频生成技术正在迎来质的飞跃。</p>
+<p><strong>官方介绍与 Demo 预览</strong>：<a href="https://openai.com/index/sora-2/">https://openai.com/index/sora-2/</a><br><strong>可以在官方 Discord 获取其他用户分享的邀请码（加入社群需要连接 OpenAI 账户）</strong>： <a href="https://discord.gg/openai">https://discord.gg/openai</a> </p>
+<h3 id="Sora-by-OpenAI-iOS-APP-介绍"><a href="#Sora-by-OpenAI-iOS-APP-介绍" class="headerlink" title="Sora by OpenAI (iOS APP) 介绍"></a>Sora by OpenAI (iOS APP) 介绍</h3><p><strong>下载地址</strong>：<a href="https://apps.apple.com/us/app/sora-by-openai/id6744034028">https://apps.apple.com/us/app/sora-by-openai/id6744034028</a></p>
+<p>目前支持美国、加拿大、日本地区的 Apple ID 下载。</p>
+<h4 id="获取方式"><a href="#获取方式" class="headerlink" title="获取方式"></a>获取方式</h4><p>OpenAI 采用邀请码裂变机制推广 Sora APP：每个账户加入后可生成一个邀请码，每个邀请码可以使用 4 次。</p>
+<p>使用流程：下载 APP → 使用 OpenAI 账户登录 → 输入邀请码即可开始使用。</p>
+<h4 id="产品定位"><a href="#产品定位" class="headerlink" title="产品定位"></a>产品定位</h4><p>Sora by OpenAI 是一款短视频社交平台，定位类似 TikTok，核心区别在于所有内容均由 AI 生成。用户可以创作、浏览和分享 AI 视频，打造全新的社交体验。</p>
+<h4 id="核心功能"><a href="#核心功能" class="headerlink" title="核心功能"></a>核心功能</h4><ul>
+<li><strong>文本生成视频</strong>：通过一句话描述即可生成 10 秒视频</li>
+<li><strong>草稿管理</strong>：生成的视频会自动保存为草稿，用户可选择下载到本地或公开发布到平台</li>
+<li><strong>Cameo 功能</strong>：扫描 3D 人脸并克隆音色，创建个人数字分身，供 AI 在视频生成时使用</li>
+<li><strong>权限控制</strong>：Cameo 支持灵活的权限设置，保护用户隐私</li>
+<li><strong>社交互动</strong>：生成视频时，通过 @ 可引用其他用户的 Cameo。例如 <code>@sama</code> 可让 OpenAI CEO 直接出现在你的视频中，实现创意联动</li>
+</ul>
+<h2 id="智谱-GLM-4-6：对齐-Claude-Sonnet-4"><a href="#智谱-GLM-4-6：对齐-Claude-Sonnet-4" class="headerlink" title="智谱 GLM-4.6：对齐 Claude Sonnet 4"></a>智谱 GLM-4.6：对齐 Claude Sonnet 4</h2><p>智谱 AI 更新了旗舰模型 GLM-4.6，在多个维度实现了显著提升。</p>
+<h3 id="核心亮点-1"><a href="#核心亮点-1" class="headerlink" title="核心亮点"></a>核心亮点</h3><p><strong>代码能力大幅提升</strong></p>
+<ul>
+<li>较 GLM-4.5 提升了 27%</li>
+<li>在公开基准与真实编程任务中，代码能力对齐 Claude Sonnet 4</li>
+</ul>
+<p><strong>上下文窗口扩展</strong></p>
+<ul>
+<li>从 128K 提升到 200K</li>
+<li>能更好地处理复杂代码项目和需要长程记忆的智能体任务</li>
+</ul>
+<p><strong>推理能力增强</strong></p>
+<ul>
+<li>支持在推理过程中调用工具</li>
+<li>多步骤推理更加稳定可靠</li>
+</ul>
+<p><strong>写作与交互优化</strong></p>
+<ul>
+<li>搜索能力、写作能力增强</li>
+<li>写作风格和可读性更贴近人类偏好</li>
+<li>在角色扮演等场景下表现更自然</li>
+</ul>
+<h3 id="Benchmark-对比"><a href="#Benchmark-对比" class="headerlink" title="Benchmark 对比"></a>Benchmark 对比</h3><p><img src="https://img.nep.me/i/2025/10/01/oct-glm.webp" alt="GLM-4.6 性能对比"></p>
+<p><strong>官方文档</strong>：<a href="https://docs.bigmodel.cn/cn/guide/models/text/glm-4.6">https://docs.bigmodel.cn/cn/guide/models/text/glm-4.6</a><br><strong>在线体验</strong>：<a href="https://z.ai/">https://z.ai</a></p>
+<hr>
+<p>这次四家公司的集中发布，展现了 AI 大模型领域的激烈竞争与快速进步。从降价到性能提升，从代码生成到视频创作，AI 技术正在加速渗透到各个应用场景中。</p>
+]]></content>
+      <categories>
+        <category>资讯</category>
+      </categories>
+      <tags>
+        <tag>AI</tag>
+        <tag>大模型</tag>
+        <tag>DeepSeek</tag>
+        <tag>Claude</tag>
+        <tag>Claude Code</tag>
+        <tag>OpenAI</tag>
+        <tag>智谱AI</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>使用 VitePress 轻松搭建一个简单的导航站</title>
     <url>/post/build-nav-site-with-vitepress.html</url>
     <content><![CDATA[<p>在日常工作和学习中，我们经常会收集各种有用的网站链接，从开发工具、技术文档到实用的在线服务。随着收藏的网站越来越多，如何高效地管理和快速访问这些资源成了一个问题。</p>
@@ -1157,84 +1235,6 @@
       </categories>
       <tags>
         <tag>Hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>AI 大模型集中发布：DeepSeek 3.2、Claude Sonnet 4.5、OpenAI Sora 2、GLM-4.6 亮点速览</title>
-    <url>/post/2025-oct-new-models-coming.html</url>
-    <content><![CDATA[<p>9月29日，AI 领域迎来了一波重磅更新。DeepSeek、Anthropic、OpenAI 和智谱 AI 四家公司不约而同地发布了各自的最新模型，为开发者和用户带来了更强大的 AI 能力。</p>
-<h2 id="DeepSeek-V3-2：开源大模型再突破，成本下降超-50"><a href="#DeepSeek-V3-2：开源大模型再突破，成本下降超-50" class="headerlink" title="DeepSeek-V3.2：开源大模型再突破，成本下降超 50%"></a>DeepSeek-V3.2：开源大模型再突破，成本下降超 50%</h2><p>9月29日，DeepSeek 正式在 Hugging Face 平台发布并开源了 DeepSeek-V3.2-Exp 模型。</p>
-<p><strong>模型地址</strong>：<a href="https://huggingface.co/deepseek-ai/DeepSeek-V3.2-Exp">https://huggingface.co/deepseek-ai/DeepSeek-V3.2-Exp</a></p>
-<h3 id="API-价格大幅下调超-50"><a href="#API-价格大幅下调超-50" class="headerlink" title="API 价格大幅下调超 50%"></a>API 价格大幅下调超 50%</h3><p>新模型主要特点是服务成本的显著降低，DeepSeek 随即下调 API 调用费用：官方 API 价格下调超过 50%，新价格已即刻生效。这一举措将大幅降低开发者的使用成本。</p>
-<img src="https://img.nep.me/i/2025/10/01/oct-deepseek-price.webp" style="width:50%;" alt="DeepSeek 价格调整" />
-
-<h2 id="Anthropic-Claude-Sonnet-4-5：自主编程能力跃升"><a href="#Anthropic-Claude-Sonnet-4-5：自主编程能力跃升" class="headerlink" title="Anthropic Claude Sonnet 4.5：自主编程能力跃升"></a>Anthropic Claude Sonnet 4.5：自主编程能力跃升</h2><p>9月29日，Anthropic 发布了全新的 Claude Sonnet 4.5 模型。</p>
-<p><strong>官方介绍</strong>：<a href="https://www.anthropic.com/news/claude-sonnet-4-5">https://www.anthropic.com/news/claude-sonnet-4-5</a></p>
-<h3 id="核心亮点"><a href="#核心亮点" class="headerlink" title="核心亮点"></a>核心亮点</h3><ul>
-<li><strong>指令遵循能力显著提升</strong>：模型对复杂指令的理解和执行更加精准</li>
-<li><strong>长时间自主编程</strong>：可连续自主编程长达 30 小时，相比 Claude Opus 4 的 7 小时提升了 4 倍以上</li>
-<li><strong>立即可用</strong>：已在 Claude Code 中上线，开发者可直接使用</li>
-</ul>
-<p><img src="https://img.nep.me/i/2025/10/01/oct-claude-sonnet.webp" alt="Claude Sonnet 4.5"></p>
-<h2 id="OpenAI-Sora-2：视频生成的-ChatGPT-时刻"><a href="#OpenAI-Sora-2：视频生成的-ChatGPT-时刻" class="headerlink" title="OpenAI Sora 2：视频生成的 ChatGPT 时刻"></a>OpenAI Sora 2：视频生成的 ChatGPT 时刻</h2><p>9月29日，OpenAI 推出了其迄今最先进的视频生成模型 Sora 2.0，并同步上线独立 iOS 应用（目前采用邀请机制）。</p>
-<h3 id="主要特性"><a href="#主要特性" class="headerlink" title="主要特性"></a>主要特性</h3><ul>
-<li><strong>物理真实感大幅提升</strong>：生成视频的物理表现更加逼真</li>
-<li><strong>音视频同步优化</strong>：声音与画面的匹配度显著提高</li>
-<li><strong>多镜头叙事能力</strong>：支持更复杂的故事叙述方式</li>
-<li><strong>社交互动功能</strong>：用户可生成、浏览和分享 AI 视频，甚至以虚拟形象”客串”他人作品</li>
-</ul>
-<p>OpenAI 将此次更新称为”视频生成的 ChatGPT 时刻”，意味着视频生成技术正在迎来质的飞跃。</p>
-<p><strong>官方介绍与 Demo 预览</strong>：<a href="https://openai.com/index/sora-2/">https://openai.com/index/sora-2/</a><br><strong>可以在官方 Discord 获取其他用户分享的邀请码（加入社群需要连接 OpenAI 账户）</strong>： <a href="https://discord.gg/openai">https://discord.gg/openai</a> </p>
-<h3 id="Sora-by-OpenAI-iOS-APP-介绍"><a href="#Sora-by-OpenAI-iOS-APP-介绍" class="headerlink" title="Sora by OpenAI (iOS APP) 介绍"></a>Sora by OpenAI (iOS APP) 介绍</h3><p><strong>下载地址</strong>：<a href="https://apps.apple.com/us/app/sora-by-openai/id6744034028">https://apps.apple.com/us/app/sora-by-openai/id6744034028</a></p>
-<p>目前支持美国、加拿大、日本地区的 Apple ID 下载。</p>
-<h4 id="获取方式"><a href="#获取方式" class="headerlink" title="获取方式"></a>获取方式</h4><p>OpenAI 采用邀请码裂变机制推广 Sora APP：每个账户加入后可生成一个邀请码，每个邀请码可以使用 4 次。</p>
-<p>使用流程：下载 APP → 使用 OpenAI 账户登录 → 输入邀请码即可开始使用。</p>
-<h4 id="产品定位"><a href="#产品定位" class="headerlink" title="产品定位"></a>产品定位</h4><p>Sora by OpenAI 是一款短视频社交平台，定位类似 TikTok，核心区别在于所有内容均由 AI 生成。用户可以创作、浏览和分享 AI 视频，打造全新的社交体验。</p>
-<h4 id="核心功能"><a href="#核心功能" class="headerlink" title="核心功能"></a>核心功能</h4><ul>
-<li><strong>文本生成视频</strong>：通过一句话描述即可生成 10 秒视频</li>
-<li><strong>草稿管理</strong>：生成的视频会自动保存为草稿，用户可选择下载到本地或公开发布到平台</li>
-<li><strong>Cameo 功能</strong>：扫描 3D 人脸并克隆音色，创建个人数字分身，供 AI 在视频生成时使用</li>
-<li><strong>权限控制</strong>：Cameo 支持灵活的权限设置，保护用户隐私</li>
-<li><strong>社交互动</strong>：生成视频时，通过 @ 可引用其他用户的 Cameo。例如 <code>@sama</code> 可让 OpenAI CEO 直接出现在你的视频中，实现创意联动</li>
-</ul>
-<h2 id="智谱-GLM-4-6：对齐-Claude-Sonnet-4"><a href="#智谱-GLM-4-6：对齐-Claude-Sonnet-4" class="headerlink" title="智谱 GLM-4.6：对齐 Claude Sonnet 4"></a>智谱 GLM-4.6：对齐 Claude Sonnet 4</h2><p>智谱 AI 更新了旗舰模型 GLM-4.6，在多个维度实现了显著提升。</p>
-<h3 id="核心亮点-1"><a href="#核心亮点-1" class="headerlink" title="核心亮点"></a>核心亮点</h3><p><strong>代码能力大幅提升</strong></p>
-<ul>
-<li>较 GLM-4.5 提升了 27%</li>
-<li>在公开基准与真实编程任务中，代码能力对齐 Claude Sonnet 4</li>
-</ul>
-<p><strong>上下文窗口扩展</strong></p>
-<ul>
-<li>从 128K 提升到 200K</li>
-<li>能更好地处理复杂代码项目和需要长程记忆的智能体任务</li>
-</ul>
-<p><strong>推理能力增强</strong></p>
-<ul>
-<li>支持在推理过程中调用工具</li>
-<li>多步骤推理更加稳定可靠</li>
-</ul>
-<p><strong>写作与交互优化</strong></p>
-<ul>
-<li>搜索能力、写作能力增强</li>
-<li>写作风格和可读性更贴近人类偏好</li>
-<li>在角色扮演等场景下表现更自然</li>
-</ul>
-<h3 id="Benchmark-对比"><a href="#Benchmark-对比" class="headerlink" title="Benchmark 对比"></a>Benchmark 对比</h3><p><img src="https://img.nep.me/i/2025/10/01/oct-glm.webp" alt="GLM-4.6 性能对比"></p>
-<p><strong>官方文档</strong>：<a href="https://docs.bigmodel.cn/cn/guide/models/text/glm-4.6">https://docs.bigmodel.cn/cn/guide/models/text/glm-4.6</a><br><strong>在线体验</strong>：<a href="https://z.ai/">https://z.ai</a></p>
-<hr>
-<p>这次四家公司的集中发布，展现了 AI 大模型领域的激烈竞争与快速进步。从降价到性能提升，从代码生成到视频创作，AI 技术正在加速渗透到各个应用场景中。</p>
-]]></content>
-      <categories>
-        <category>资讯</category>
-      </categories>
-      <tags>
-        <tag>AI</tag>
-        <tag>大模型</tag>
-        <tag>DeepSeek</tag>
-        <tag>Claude</tag>
-        <tag>Claude Code</tag>
-        <tag>OpenAI</tag>
-        <tag>智谱AI</tag>
       </tags>
   </entry>
   <entry>
@@ -2125,6 +2125,98 @@
       </tags>
   </entry>
   <entry>
+    <title>使用 Gitea 与 Docker Compose 轻松自建你的私人 Git 服务器</title>
+    <url>/post/use-docker-run-gitea.html</url>
+    <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>想要一个完全由你掌控的私人代码仓库吗？Gitea 是一个轻量级、高性能的自托管 Git 服务，功能强大且资源占用极低，甚至可以在树莓派上流畅运行。</p>
+<p>本教程将指导你如何使用 Docker Compose 快速部署一个安全、私有的 Gitea 实例，让你在几分钟内拥有媲美 GitHub 的代码管理体验。</p>
+<h2 id="一、环境准备"><a href="#一、环境准备" class="headerlink" title="一、环境准备"></a>一、环境准备</h2><p>在开始之前，需要拥有一个自己的 VPS 或是支持 Docker 容器的 NAS 系统。</p>
+<h3 id="1-安装-Docker-和-Docker-Compose"><a href="#1-安装-Docker-和-Docker-Compose" class="headerlink" title="1. 安装 Docker 和 Docker Compose"></a>1. 安装 Docker 和 Docker Compose</h3><p>这是我们容器化部署的基础。如果你的服务器尚未安装，可以参考以下教程。</p>
+<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p><strong>延伸阅读:</strong> <a href="https://ooo.run/post/debian-install-docker.html">在 Debian 12 中安装 Docker 以及 Docker Compose</a></p></div></div>
+
+<h3 id="2-（可选）调整服务器-SSH-端口S"><a href="#2-（可选）调整服务器-SSH-端口S" class="headerlink" title="2. （可选）调整服务器 SSH 端口S"></a>2. （可选）调整服务器 SSH 端口S</h3><p>Gitea 需要使用 22 端口来处理 Git 的 SSH 操作 (如 <code>git clone git@...</code>)。为了避免与服务器自身的 SSH 服务端口冲突，建议将服务器的 SSH 端口修改为一个非标准端口（例如 <code>2222</code>）。</p>
+<ul>
+<li><p>编辑 SSH 配置文件:</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">vim /etc/ssh/sshd_config</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>找到 <code>#Port 22</code> 这一行，取消 <code>#</code> 的注释，将 22 修改为新的端口数字。</p>
+</li>
+<li><p>重启 SSH 服务使其生效:</p>
+ <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">systemctl restart sshd</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>重要提示</strong>: 在断开当前连接之前，请务必打开一个新的终端窗口，尝试使用新端口号登录，确保可以成功登录。</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="3-创建项目目录"><a href="#3-创建项目目录" class="headerlink" title="3. 创建项目目录"></a>3. 创建项目目录</h3><p>为 Gitea 创建一个专用的目录，用于存放配置文件和数据。</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p /opt/gitea &amp;&amp; <span class="built_in">cd</span> /opt/gitea</span><br></pre></td></tr></table></figure>
+
+<h2 id="二、使用-Docker-Compose-部署-Gitea"><a href="#二、使用-Docker-Compose-部署-Gitea" class="headerlink" title="二、使用 Docker Compose 部署 Gitea"></a>二、使用 Docker Compose 部署 Gitea</h2><h3 id="创建-docker-compose-yml-文件"><a href="#创建-docker-compose-yml-文件" class="headerlink" title="创建 docker-compose.yml 文件"></a>创建 <code>docker-compose.yml</code> 文件</h3><p>在项目目录 (<code>/opt/gitea</code>) 中，创建一个名为 <code>docker-compose.yml</code> 的文件。</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">vim docker-compose.yml</span><br></pre></td></tr></table></figure>
+
+<p>将以下内容粘贴到文件中：</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># docker-compose.yml</span></span><br><span class="line"><span class="attr">networks:</span></span><br><span class="line">  <span class="attr">gitea:</span></span><br><span class="line">    <span class="attr">external:</span> <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">gitea:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">gitea/gitea:1.24.2</span> <span class="comment"># 建议锁定版本以确保稳定性</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">gitea</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">USER_UID=1000</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">USER_GID=1000</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">GITEA__database__DB_TYPE=postgres</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">GITEA__database__HOST=db:5432</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">GITEA__database__NAME=gitea</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">GITEA__database__USER=gitea</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">GITEA__database__PASSWD=gitea</span> <span class="comment"># 请在生产环境中替换为更强的密码</span></span><br><span class="line">    <span class="attr">networks:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">gitea</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./data:/data</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/etc/timezone:/etc/timezone:ro</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/etc/localtime:/etc/localtime:ro</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;3000:3000&quot;</span> <span class="comment"># Web 界面端口</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;22:22&quot;</span>    <span class="comment"># SSH Git 操作端口 (主机端口:容器端口)</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">db</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">db:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">postgres:15</span> <span class="comment"># 建议锁定版本</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">gitea-db</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">POSTGRES_USER=gitea</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">POSTGRES_PASSWORD=gitea</span> <span class="comment"># 请在生产环境中替换为更强的密码</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">POSTGRES_DB=gitea</span></span><br><span class="line">    <span class="attr">networks:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">gitea</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./postgres:/var/lib/postgresql/data</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>配置解析:</strong></p>
+<ul>
+<li><code>image</code>: 我们为 Gitea 和 Postgres 数据库都指定了具体的版本，这有助于避免未来自动更新可能带来的兼容性问题。</li>
+<li><code>environment</code>: 用于配置 Gitea 和数据库之间的连接信息。<strong>请务C必将 <code>GITEA__database__PASSWD</code> 和 <code>POSTGRES_PASSWORD</code> 修改为强密码。</strong></li>
+<li><code>volumes</code>: 将 Gitea 的数据（仓库、配置等）和数据库文件持久化存储在主机当前目录下的 <code>data</code> 和 <code>postgres</code> 文件夹中，确保容器重建后数据不丢失。</li>
+<li><code>ports</code>:<ul>
+<li><code>3000:3000</code>: 将 Gitea 的 Web 界面映射到主机的 3000 端口。 </li>
+<li><code>22:22</code>: 将 Git 的 SSH 操作端口映射到主机的 22 端口。</li>
+</ul>
+</li>
+</ul>
+<h3 id="启动-Gitea-服务"><a href="#启动-Gitea-服务" class="headerlink" title="启动 Gitea 服务"></a>启动 Gitea 服务</h3><p>在 <code>docker-compose.yml</code> 文件所在目录中，执行以下命令来拉取镜像并启动服务：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">docker compose up -d</span><br></pre></td></tr></table></figure>
+
+<h2 id="三、初始化-Gitea-设置"><a href="#三、初始化-Gitea-设置" class="headerlink" title="三、初始化 Gitea 设置"></a>三、初始化 Gitea 设置</h2><ol>
+<li><strong>访问 Web 界面</strong>: 打开浏览器，访问 <code>http://&lt;你的服务器IP&gt;:3000</code>。</li>
+<li><strong>完成安装</strong>: 你会看到 Gitea 的安装页面。<ul>
+<li><strong>数据库设置</strong>: Docker Compose 已经通过环境变量自动配置好了，你无需修改。</li>
+<li><strong>通用设置</strong>: 这是你需要关注的部分。<ul>
+<li><strong>服务器域名</strong>: 填写你的域名，例如 <code>git.yourdomain.com</code>。</li>
+<li><strong>Gitea 基本 URL</strong>: 填写完整的访问地址，例如 <code>http://git.yourdomain.com/</code>。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>点击“立即安装”，Gitea 会完成最后的设置并跳转到登录页面。请立即注册你的管理员账户。</li>
+</ol>
+<h2 id="四、安全加固"><a href="#四、安全加固" class="headerlink" title="四、安全加固"></a>四、安全加固</h2><p>对于一个私有 Git 服务器，安全至关重要。</p>
+<h3 id="关闭用户注册"><a href="#关闭用户注册" class="headerlink" title="关闭用户注册"></a>关闭用户注册</h3><p>为了防止未经授权的用户注册，我们需要修改 Gitea 的配置文件。</p>
+<p><code>1</code> 编辑 <code>app.ini</code> 文件：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">vim ./data/gitea/conf/app.ini</span><br></pre></td></tr></table></figure>
+
+<p><code>2</code> 在 <code>[service]</code> 部分，找到并修改或添加以下配置：</p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="section">[service]</span></span><br><span class="line"><span class="attr">DISABLE_REGISTRATION</span> = <span class="literal">true</span>  <span class="comment">; 禁用注册功能</span></span><br><span class="line"><span class="attr">SHOW_REGISTRATION_BUTTON</span> = <span class="literal">false</span> <span class="comment">; 从主页隐藏注册按钮</span></span><br></pre></td></tr></table></figure>
+
+<p><code>3</code> 重启 Gitea 使配置生效：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">docker compose restart gitea</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-（强烈推荐）使用反向代理"><a href="#2-（强烈推荐）使用反向代理" class="headerlink" title="2. （强烈推荐）使用反向代理"></a>2. （强烈推荐）使用反向代理</h3><p>直接暴露 Web 端口到公网是不安全的。推荐使用 Nginx 或其他反向代理工具来提供 Web 服务，并且使用 HTTPS 访问。</p>
+<p><code>1</code> <strong>修改端口映射</strong>: 将 Gitea 的 Web 端口限制为仅限本机访问。<br>   修改 <code>docker-compose.yml</code> 文件中的 <code>ports</code> 部分：<br>   <figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">ports:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">&quot;127.0.0.1:3000:3000&quot;</span> <span class="comment"># 仅允许本地访问</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">&quot;22:22&quot;</span></span><br></pre></td></tr></table></figure></p>
+<p><code>2</code> <strong>重启服务</strong>:<br>   <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">docker compose down</span><br><span class="line">docker compose up -d</span><br></pre></td></tr></table></figure></p>
+<p><code>3</code> <strong>配置反向代理</strong>: 在你的反向代理工具中，设置一个代理规则，将 <code>git.yourdomain.com</code> 的流量转发到 <code>http://127.0.0.1:3000</code>。</p>
+<p><strong>Nginx 示例（仅反代部分）</strong></p>
+<p>以下示例将域名 <code>git.example.com</code> 的 HTTP 流量反代到本机的 <code>127.0.0.1:3000</code>。请先确保在 compose 中使用了 <code>127.0.0.1:3000:3000</code> 的端口映射，并在 Gitea 配置中将 <code>ROOT_URL</code> 设置为 <code>http://git.example.com/</code>。</p>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="section">location</span> / &#123;</span><br><span class="line">    <span class="attribute">proxy_pass</span> http://127.0.0.1:3000;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 透传必要头部，确保生成正确克隆地址与日志 IP</span></span><br><span class="line">    <span class="attribute">proxy_set_header</span> Host <span class="variable">$host</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> X-Real-IP <span class="variable">$remote_addr</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> X-Forwarded-Proto <span class="variable">$scheme</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># WebSocket 支持（如通知、终端等）</span></span><br><span class="line">    <span class="attribute">proxy_set_header</span> Upgrade <span class="variable">$http_upgrade</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> Connection <span class="string">&quot;upgrade&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 超时设置，避免大仓库推送中断</span></span><br><span class="line">    <span class="attribute">proxy_connect_timeout</span> <span class="number">60s</span>;</span><br><span class="line">    <span class="attribute">proxy_send_timeout</span> <span class="number">60s</span>;</span><br><span class="line">    <span class="attribute">proxy_read_timeout</span> <span class="number">3600s</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>测试并重载 Nginx 配置</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">nginx -t</span><br><span class="line">nginx -s reload </span><br></pre></td></tr></table></figure>
+
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>恭喜！你现在拥有了一个功能全面、安全可靠的私有 Git 服务器。相比于 GitLab 等重型方案，Gitea 在提供核心功能的同时保持了极低的资源消耗，是个人开发者与小团队的理想之选。通过 Docker Compose 进行部署，更让整个过程变得简单、高效且易于维护。</p>
+]]></content>
+      <categories>
+        <category>教程</category>
+      </categories>
+      <tags>
+        <tag>Docker</tag>
+        <tag>Docker Compose</tag>
+        <tag>Self-hosted</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>使用 Docker 快速部署 Memos 个人笔记系统</title>
     <url>/post/use-docker-run-memeos.html</url>
     <content><![CDATA[<h2 id="Memos-简介"><a href="#Memos-简介" class="headerlink" title="Memos 简介"></a>Memos 简介</h2><p>Memos 是一款开源的轻量级笔记服务，它允许你像发微博或推特一样，轻松记录每一个灵感和想法。由于其开源、支持 Docker 部署的特性，我们可以用它来搭建一个完全由自己掌控的私有化笔记系统。</p>
@@ -2324,98 +2416,6 @@
         <tag>Docker Compose</tag>
         <tag>Self-hosted</tag>
         <tag>Wallos</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>使用 Gitea 与 Docker Compose 轻松自建你的私人 Git 服务器</title>
-    <url>/post/use-docker-run-gitea.html</url>
-    <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>想要一个完全由你掌控的私人代码仓库吗？Gitea 是一个轻量级、高性能的自托管 Git 服务，功能强大且资源占用极低，甚至可以在树莓派上流畅运行。</p>
-<p>本教程将指导你如何使用 Docker Compose 快速部署一个安全、私有的 Gitea 实例，让你在几分钟内拥有媲美 GitHub 的代码管理体验。</p>
-<h2 id="一、环境准备"><a href="#一、环境准备" class="headerlink" title="一、环境准备"></a>一、环境准备</h2><p>在开始之前，需要拥有一个自己的 VPS 或是支持 Docker 容器的 NAS 系统。</p>
-<h3 id="1-安装-Docker-和-Docker-Compose"><a href="#1-安装-Docker-和-Docker-Compose" class="headerlink" title="1. 安装 Docker 和 Docker Compose"></a>1. 安装 Docker 和 Docker Compose</h3><p>这是我们容器化部署的基础。如果你的服务器尚未安装，可以参考以下教程。</p>
-<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p><strong>延伸阅读:</strong> <a href="https://ooo.run/post/debian-install-docker.html">在 Debian 12 中安装 Docker 以及 Docker Compose</a></p></div></div>
-
-<h3 id="2-（可选）调整服务器-SSH-端口S"><a href="#2-（可选）调整服务器-SSH-端口S" class="headerlink" title="2. （可选）调整服务器 SSH 端口S"></a>2. （可选）调整服务器 SSH 端口S</h3><p>Gitea 需要使用 22 端口来处理 Git 的 SSH 操作 (如 <code>git clone git@...</code>)。为了避免与服务器自身的 SSH 服务端口冲突，建议将服务器的 SSH 端口修改为一个非标准端口（例如 <code>2222</code>）。</p>
-<ul>
-<li><p>编辑 SSH 配置文件:</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">vim /etc/ssh/sshd_config</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>找到 <code>#Port 22</code> 这一行，取消 <code>#</code> 的注释，将 22 修改为新的端口数字。</p>
-</li>
-<li><p>重启 SSH 服务使其生效:</p>
- <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">systemctl restart sshd</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p><strong>重要提示</strong>: 在断开当前连接之前，请务必打开一个新的终端窗口，尝试使用新端口号登录，确保可以成功登录。</p>
-</blockquote>
-</li>
-</ul>
-<h3 id="3-创建项目目录"><a href="#3-创建项目目录" class="headerlink" title="3. 创建项目目录"></a>3. 创建项目目录</h3><p>为 Gitea 创建一个专用的目录，用于存放配置文件和数据。</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p /opt/gitea &amp;&amp; <span class="built_in">cd</span> /opt/gitea</span><br></pre></td></tr></table></figure>
-
-<h2 id="二、使用-Docker-Compose-部署-Gitea"><a href="#二、使用-Docker-Compose-部署-Gitea" class="headerlink" title="二、使用 Docker Compose 部署 Gitea"></a>二、使用 Docker Compose 部署 Gitea</h2><h3 id="创建-docker-compose-yml-文件"><a href="#创建-docker-compose-yml-文件" class="headerlink" title="创建 docker-compose.yml 文件"></a>创建 <code>docker-compose.yml</code> 文件</h3><p>在项目目录 (<code>/opt/gitea</code>) 中，创建一个名为 <code>docker-compose.yml</code> 的文件。</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">vim docker-compose.yml</span><br></pre></td></tr></table></figure>
-
-<p>将以下内容粘贴到文件中：</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># docker-compose.yml</span></span><br><span class="line"><span class="attr">networks:</span></span><br><span class="line">  <span class="attr">gitea:</span></span><br><span class="line">    <span class="attr">external:</span> <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">gitea:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">gitea/gitea:1.24.2</span> <span class="comment"># 建议锁定版本以确保稳定性</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">gitea</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">USER_UID=1000</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">USER_GID=1000</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">GITEA__database__DB_TYPE=postgres</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">GITEA__database__HOST=db:5432</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">GITEA__database__NAME=gitea</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">GITEA__database__USER=gitea</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">GITEA__database__PASSWD=gitea</span> <span class="comment"># 请在生产环境中替换为更强的密码</span></span><br><span class="line">    <span class="attr">networks:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">gitea</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./data:/data</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/etc/timezone:/etc/timezone:ro</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/etc/localtime:/etc/localtime:ro</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;3000:3000&quot;</span> <span class="comment"># Web 界面端口</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;22:22&quot;</span>    <span class="comment"># SSH Git 操作端口 (主机端口:容器端口)</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">db</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">db:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">postgres:15</span> <span class="comment"># 建议锁定版本</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">gitea-db</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">POSTGRES_USER=gitea</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">POSTGRES_PASSWORD=gitea</span> <span class="comment"># 请在生产环境中替换为更强的密码</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">POSTGRES_DB=gitea</span></span><br><span class="line">    <span class="attr">networks:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">gitea</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./postgres:/var/lib/postgresql/data</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>配置解析:</strong></p>
-<ul>
-<li><code>image</code>: 我们为 Gitea 和 Postgres 数据库都指定了具体的版本，这有助于避免未来自动更新可能带来的兼容性问题。</li>
-<li><code>environment</code>: 用于配置 Gitea 和数据库之间的连接信息。<strong>请务C必将 <code>GITEA__database__PASSWD</code> 和 <code>POSTGRES_PASSWORD</code> 修改为强密码。</strong></li>
-<li><code>volumes</code>: 将 Gitea 的数据（仓库、配置等）和数据库文件持久化存储在主机当前目录下的 <code>data</code> 和 <code>postgres</code> 文件夹中，确保容器重建后数据不丢失。</li>
-<li><code>ports</code>:<ul>
-<li><code>3000:3000</code>: 将 Gitea 的 Web 界面映射到主机的 3000 端口。 </li>
-<li><code>22:22</code>: 将 Git 的 SSH 操作端口映射到主机的 22 端口。</li>
-</ul>
-</li>
-</ul>
-<h3 id="启动-Gitea-服务"><a href="#启动-Gitea-服务" class="headerlink" title="启动 Gitea 服务"></a>启动 Gitea 服务</h3><p>在 <code>docker-compose.yml</code> 文件所在目录中，执行以下命令来拉取镜像并启动服务：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">docker compose up -d</span><br></pre></td></tr></table></figure>
-
-<h2 id="三、初始化-Gitea-设置"><a href="#三、初始化-Gitea-设置" class="headerlink" title="三、初始化 Gitea 设置"></a>三、初始化 Gitea 设置</h2><ol>
-<li><strong>访问 Web 界面</strong>: 打开浏览器，访问 <code>http://&lt;你的服务器IP&gt;:3000</code>。</li>
-<li><strong>完成安装</strong>: 你会看到 Gitea 的安装页面。<ul>
-<li><strong>数据库设置</strong>: Docker Compose 已经通过环境变量自动配置好了，你无需修改。</li>
-<li><strong>通用设置</strong>: 这是你需要关注的部分。<ul>
-<li><strong>服务器域名</strong>: 填写你的域名，例如 <code>git.yourdomain.com</code>。</li>
-<li><strong>Gitea 基本 URL</strong>: 填写完整的访问地址，例如 <code>http://git.yourdomain.com/</code>。</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>点击“立即安装”，Gitea 会完成最后的设置并跳转到登录页面。请立即注册你的管理员账户。</li>
-</ol>
-<h2 id="四、安全加固"><a href="#四、安全加固" class="headerlink" title="四、安全加固"></a>四、安全加固</h2><p>对于一个私有 Git 服务器，安全至关重要。</p>
-<h3 id="关闭用户注册"><a href="#关闭用户注册" class="headerlink" title="关闭用户注册"></a>关闭用户注册</h3><p>为了防止未经授权的用户注册，我们需要修改 Gitea 的配置文件。</p>
-<p><code>1</code> 编辑 <code>app.ini</code> 文件：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">vim ./data/gitea/conf/app.ini</span><br></pre></td></tr></table></figure>
-
-<p><code>2</code> 在 <code>[service]</code> 部分，找到并修改或添加以下配置：</p>
-<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="section">[service]</span></span><br><span class="line"><span class="attr">DISABLE_REGISTRATION</span> = <span class="literal">true</span>  <span class="comment">; 禁用注册功能</span></span><br><span class="line"><span class="attr">SHOW_REGISTRATION_BUTTON</span> = <span class="literal">false</span> <span class="comment">; 从主页隐藏注册按钮</span></span><br></pre></td></tr></table></figure>
-
-<p><code>3</code> 重启 Gitea 使配置生效：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">docker compose restart gitea</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-（强烈推荐）使用反向代理"><a href="#2-（强烈推荐）使用反向代理" class="headerlink" title="2. （强烈推荐）使用反向代理"></a>2. （强烈推荐）使用反向代理</h3><p>直接暴露 Web 端口到公网是不安全的。推荐使用 Nginx 或其他反向代理工具来提供 Web 服务，并且使用 HTTPS 访问。</p>
-<p><code>1</code> <strong>修改端口映射</strong>: 将 Gitea 的 Web 端口限制为仅限本机访问。<br>   修改 <code>docker-compose.yml</code> 文件中的 <code>ports</code> 部分：<br>   <figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">ports:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">&quot;127.0.0.1:3000:3000&quot;</span> <span class="comment"># 仅允许本地访问</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">&quot;22:22&quot;</span></span><br></pre></td></tr></table></figure></p>
-<p><code>2</code> <strong>重启服务</strong>:<br>   <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">docker compose down</span><br><span class="line">docker compose up -d</span><br></pre></td></tr></table></figure></p>
-<p><code>3</code> <strong>配置反向代理</strong>: 在你的反向代理工具中，设置一个代理规则，将 <code>git.yourdomain.com</code> 的流量转发到 <code>http://127.0.0.1:3000</code>。</p>
-<p><strong>Nginx 示例（仅反代部分）</strong></p>
-<p>以下示例将域名 <code>git.example.com</code> 的 HTTP 流量反代到本机的 <code>127.0.0.1:3000</code>。请先确保在 compose 中使用了 <code>127.0.0.1:3000:3000</code> 的端口映射，并在 Gitea 配置中将 <code>ROOT_URL</code> 设置为 <code>http://git.example.com/</code>。</p>
-<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="section">location</span> / &#123;</span><br><span class="line">    <span class="attribute">proxy_pass</span> http://127.0.0.1:3000;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 透传必要头部，确保生成正确克隆地址与日志 IP</span></span><br><span class="line">    <span class="attribute">proxy_set_header</span> Host <span class="variable">$host</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> X-Real-IP <span class="variable">$remote_addr</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> X-Forwarded-Proto <span class="variable">$scheme</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># WebSocket 支持（如通知、终端等）</span></span><br><span class="line">    <span class="attribute">proxy_set_header</span> Upgrade <span class="variable">$http_upgrade</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> Connection <span class="string">&quot;upgrade&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 超时设置，避免大仓库推送中断</span></span><br><span class="line">    <span class="attribute">proxy_connect_timeout</span> <span class="number">60s</span>;</span><br><span class="line">    <span class="attribute">proxy_send_timeout</span> <span class="number">60s</span>;</span><br><span class="line">    <span class="attribute">proxy_read_timeout</span> <span class="number">3600s</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>测试并重载 Nginx 配置</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">nginx -t</span><br><span class="line">nginx -s reload </span><br></pre></td></tr></table></figure>
-
-<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>恭喜！你现在拥有了一个功能全面、安全可靠的私有 Git 服务器。相比于 GitLab 等重型方案，Gitea 在提供核心功能的同时保持了极低的资源消耗，是个人开发者与小团队的理想之选。通过 Docker Compose 进行部署，更让整个过程变得简单、高效且易于维护。</p>
-]]></content>
-      <categories>
-        <category>教程</category>
-      </categories>
-      <tags>
-        <tag>Docker</tag>
-        <tag>Docker Compose</tag>
-        <tag>Self-hosted</tag>
       </tags>
   </entry>
   <entry>
@@ -2771,6 +2771,37 @@
       </tags>
   </entry>
   <entry>
+    <title>实用网站：Photopea —— 浏览器中的 Photoshop</title>
+    <url>/post/website-photopea-com.html</url>
+    <content><![CDATA[<p>你是否遇到过以下情况：</p>
+<ul>
+<li>出差时需要紧急修改客户的 PSD 文件</li>
+<li>电脑上没有安装 Photoshop，但需要处理复杂图片</li>
+<li>想要体验专业图片编辑功能，但不想付费购买软件</li>
+</ul>
+<p><a href="https://www.photopea.com/">Photopea.com</a> 正是为解决这些问题而生的免费在线图片编辑器。它在浏览器中提供了接近 Photoshop 的专业编辑体验，支持 PSD、AI、Sketch 等多种专业格式。</p>
+<p><strong>快速上手：</strong> 访问网站后，将图片文件直接拖放到浏览器窗口即可开始编辑。</p>
+<p><img src="https://img.nep.me/i/2025/08/18/photopea-preview.webp" alt="photopea-preview"></p>
+<h3 id="Photopea-的主要功能"><a href="#Photopea-的主要功能" class="headerlink" title="Photopea 的主要功能"></a>Photopea 的主要功能</h3><p><strong>1. 支持多种文件格式</strong><br>Photopea 的一个主要优点是它的兼容性。除了常规的图片格式，它还支持打开和编辑 <code>.psd</code>, <code>.ai</code>, <code>.sketch</code>, <code>.raw</code> 等专业格式的文件。这对于临时处理工作文件非常方便。</p>
+<p><strong>2. 熟悉的编辑界面</strong><br>Photopea 的界面和操作方式与 Photoshop 很像，如果你用过 PS，会感觉非常熟悉。它提供了 <strong>图层</strong> 、<strong>滤镜</strong> 等核心编辑功能，可以满足大部分日常的编辑需求。</p>
+<p><strong>3. 提供免费模版</strong><br>网站还提供了一些免费的设计模版，涵盖海报、社交媒体图片等，可以帮助你快速开始创作。</p>
+<p><strong>4. 支持 AI 图片生成</strong><br>除了传统的图片编辑功能，Photopea 还支持一句话生成图片，仍然是免费功能，非常适合体验一下。 </p>
+<p><strong>5. 隐私安全</strong><br>Photopea 默认文件处理都在浏览器本地完成，不会上传到服务器，网页加载完全后，甚至可以离线使用。</p>
+<h3 id="关于广告"><a href="#关于广告" class="headerlink" title="关于广告"></a>关于广告</h3><p>作为一个免费工具，Photopea 的在界面右侧添加了 Google 广告。考虑到它提供的免费功能，这点广告通常是可以接受的。网站的访问量很大，也说明它受到了全球用户的广泛认可。</p>
+<p><img src="https://img.nep.me/i/2025/08/18/photopea-traffic.webp" alt="photopea-traffic"></p>
+<p>简单来说，Photopea 是一个非常实用的在线工具。它免费、免安装，并且支持多种文件格式。</p>
+<p>如果你偶尔需要编辑图片，或者临时需要处理 PSD 这样的文件，Photopea 是一个非常值得收藏的网站，不妨现在加个书签，以备不时之需。</p>
+]]></content>
+      <categories>
+        <category>工具资源</category>
+      </categories>
+      <tags>
+        <tag>实用网站</tag>
+        <tag>图片编辑</tag>
+        <tag>Photopea</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>实用网站：通过 traffic.cv 免费查看网站流量数据</title>
     <url>/post/website-traffic-cv.html</url>
     <content><![CDATA[<p>作为一名互联网冲浪爱好者，你是否曾对某个网站的流量数据感到好奇？或许是想了解竞争对手的表现，又或者是想发掘下一个“爆款”网站。</p>
@@ -2809,37 +2840,6 @@
       <tags>
         <tag>实用网站</tag>
         <tag>Free</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>实用网站：Photopea —— 浏览器中的 Photoshop</title>
-    <url>/post/website-photopea-com.html</url>
-    <content><![CDATA[<p>你是否遇到过以下情况：</p>
-<ul>
-<li>出差时需要紧急修改客户的 PSD 文件</li>
-<li>电脑上没有安装 Photoshop，但需要处理复杂图片</li>
-<li>想要体验专业图片编辑功能，但不想付费购买软件</li>
-</ul>
-<p><a href="https://www.photopea.com/">Photopea.com</a> 正是为解决这些问题而生的免费在线图片编辑器。它在浏览器中提供了接近 Photoshop 的专业编辑体验，支持 PSD、AI、Sketch 等多种专业格式。</p>
-<p><strong>快速上手：</strong> 访问网站后，将图片文件直接拖放到浏览器窗口即可开始编辑。</p>
-<p><img src="https://img.nep.me/i/2025/08/18/photopea-preview.webp" alt="photopea-preview"></p>
-<h3 id="Photopea-的主要功能"><a href="#Photopea-的主要功能" class="headerlink" title="Photopea 的主要功能"></a>Photopea 的主要功能</h3><p><strong>1. 支持多种文件格式</strong><br>Photopea 的一个主要优点是它的兼容性。除了常规的图片格式，它还支持打开和编辑 <code>.psd</code>, <code>.ai</code>, <code>.sketch</code>, <code>.raw</code> 等专业格式的文件。这对于临时处理工作文件非常方便。</p>
-<p><strong>2. 熟悉的编辑界面</strong><br>Photopea 的界面和操作方式与 Photoshop 很像，如果你用过 PS，会感觉非常熟悉。它提供了 <strong>图层</strong> 、<strong>滤镜</strong> 等核心编辑功能，可以满足大部分日常的编辑需求。</p>
-<p><strong>3. 提供免费模版</strong><br>网站还提供了一些免费的设计模版，涵盖海报、社交媒体图片等，可以帮助你快速开始创作。</p>
-<p><strong>4. 支持 AI 图片生成</strong><br>除了传统的图片编辑功能，Photopea 还支持一句话生成图片，仍然是免费功能，非常适合体验一下。 </p>
-<p><strong>5. 隐私安全</strong><br>Photopea 默认文件处理都在浏览器本地完成，不会上传到服务器，网页加载完全后，甚至可以离线使用。</p>
-<h3 id="关于广告"><a href="#关于广告" class="headerlink" title="关于广告"></a>关于广告</h3><p>作为一个免费工具，Photopea 的在界面右侧添加了 Google 广告。考虑到它提供的免费功能，这点广告通常是可以接受的。网站的访问量很大，也说明它受到了全球用户的广泛认可。</p>
-<p><img src="https://img.nep.me/i/2025/08/18/photopea-traffic.webp" alt="photopea-traffic"></p>
-<p>简单来说，Photopea 是一个非常实用的在线工具。它免费、免安装，并且支持多种文件格式。</p>
-<p>如果你偶尔需要编辑图片，或者临时需要处理 PSD 这样的文件，Photopea 是一个非常值得收藏的网站，不妨现在加个书签，以备不时之需。</p>
-]]></content>
-      <categories>
-        <category>工具资源</category>
-      </categories>
-      <tags>
-        <tag>实用网站</tag>
-        <tag>图片编辑</tag>
-        <tag>Photopea</tag>
       </tags>
   </entry>
   <entry>
@@ -2886,25 +2886,6 @@
       <tags>
         <tag>Antigravity</tag>
         <tag>Agent Skills</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>什么是 BYOK ？</title>
-    <url>/post/what-is-byok.html</url>
-    <content><![CDATA[<h2 id="什么是-BYOK-？"><a href="#什么是-BYOK-？" class="headerlink" title="什么是 BYOK ？"></a>什么是 BYOK ？</h2><p><code>BYOK</code> 是英文 <strong>Bring Your Own Key</strong> 的缩写，就是字面上的意思 <strong>自带密钥</strong> 。在云计算和软件服务领域，这是一种安全模型，允许客户使用自己的加密密钥来加密他们在服务商那里的数据，而不是使用由服务商提供的默认密钥。</p>
-<h2 id="在大模型应用中"><a href="#在大模型应用中" class="headerlink" title="在大模型应用中"></a>在大模型应用中</h2><p>最近，BYOK 这个概念在各类大模型（LLM）应用中变得越来越流行。通常使用 AI 应用需要消耗开发者提供的 Token，但有些应用采取了 BYOK 模式，它们允许用户直接填入自己从 OpenAI、Google、Anthropic 等官方或是其他渠道渠道获取的 API Key。</p>
-<p>对于用户而言，这意味着：</p>
-<ul>
-<li><strong>成本透明</strong>：你可以直接通过自己的 API 账户支付消耗的 Token，清楚地知道每一分钱花在了哪里。</li>
-<li><strong>使用灵活</strong>：不受应用开发者 Token 配额的限制，只要自己的 API Key 有效且有余额，就能持续使用。</li>
-</ul>
-<p>对于开发者而言，BYOK 模式也降低了他们的运营负担。他们无需预先购买和管理大量的 API Token，也简化了复杂的计费和分发流程，可以更专注于核心功能的开发。</p>
-]]></content>
-      <categories>
-        <category>笔记</category>
-      </categories>
-      <tags>
-        <tag>BYOK</tag>
       </tags>
   </entry>
   <entry>
@@ -4991,49 +4972,6 @@
       </tags>
   </entry>
   <entry>
-    <title>赛博特权阶级的诞生：从 Fable 5 白名单看 AI 非营利乌托邦的终结</title>
-    <url>/post/fable-5-whitelist-new-privileged-class-ai-monopoly.html</url>
-    <content><![CDATA[<p>2026 年夏天，科技界经历了一场 “AI大地震”。美国商务部的一纸出口管制令，让刚刚问世、霸榜各大模型基座的 Anthropic 旗舰模型 <strong>Claude Fable 5</strong> 与其底层孪生模型 Mythos 5 瞬间在全球范围内被按下了暂停键。紧接着，经过政商闭门博弈，部分 <strong>可信赖的实体</strong> 和特定白名单单位逐步重获访问特权。</p>
-<p>这一历史性事件不仅颠覆了开发者对云端 API 稳定性的认知，更向世界宣告了一个残酷的事实：由美国政府特许的、由技术与权力交织而成的 <strong>赛博新特权阶级</strong> 已经正式诞生。</p>
-<p>这也给予了整个AI行业沉重一击 —— OpenAI 最初设立的 <strong>技术民主化、利益造福全人类</strong> 的乌托邦设想，已经彻底宣告失败。</p>
-<h2 id="一、-“白名单”下的赛博新特权阶级"><a href="#一、-“白名单”下的赛博新特权阶级" class="headerlink" title="一、 “白名单”下的赛博新特权阶级"></a>一、 “白名单”下的赛博新特权阶级</h2><p>在过去，黄金、石油和土地是核心的生产要素。而在2026年的今天，顶尖的通用人工智能（AGI）推理算力已成为最稀缺的战略资源。</p>
-<p>Fable 5 与Mythos 5 的强悍无需多言 —— 在 TerminalBench 2.1 等前沿评测中，它们展现出了恐怖的智能。支付巨头 Stripe 曾用它在短短一天内完成了原本需要一整个工程团队干满两个月的 5000 万行 Ruby 代码大迁移；在生物制药与网络安全领域，它们甚至展现出了越过安全限制、自主运行设计工具的“近神”能力。</p>
-<p>然而，正因为这种 “颠覆性力量” ，它引来了权力的铁拳。美国政府以国家安全、防范越狱（Jailbreak）和技术外泄为由，强行切断了公众和海外开发者的连接。随后出炉的 “白名单机制” ，将这种力量圈禁在了一个狭小的特权阶层手中：</p>
-<ul>
-<li><strong>国家机器与军工巨头</strong>： 拥有绝对豁免权，能够无限制调用未阉割、无安全拦截器的 Mythos 5。</li>
-<li><strong>合规的华尔街财阀与巨型跨国企业</strong>： 凭借强大的游说能力和国籍审查能力，跻身“可信合规白名单”。</li>
-</ul>
-<p>一个技术垄断的马太效应正在形成： 白名单内的企业利用 Fable 5 实现成百上千倍的效率跃升、垄断行业财富；而白名单外的中小创业者、研究机构甚至普通大众，只能眼睁睁看着技术代差被无限拉大。曾经人人平等的互联网API生态，变成了按权力、国籍和资本配给的 “口粮” 。美国政府的 “特许” ，正式在全球科技界划分出了高人一等的赛博新贵族。</p>
-<h2 id="二、-权力的入局：Fable-5-的“国家化”阵痛"><a href="#二、-权力的入局：Fable-5-的“国家化”阵痛" class="headerlink" title="二、 权力的入局：Fable 5 的“国家化”阵痛"></a>二、 权力的入局：Fable 5 的“国家化”阵痛</h2><p>Fable 5 的白名单风波，标志着 AI 技术正式从 “商业竞争阶段” 滑向 “地缘政治与国家安全阶段” 。</p>
-<p>“我们不认为这种政府准入程序应该成为长期的默认状态。” —— 面对政府的强势介入，即便是正在筹备 IPO 的 OpenAI 也在其发布 GPT-5.6 Sol 限量预览时发出了无力的警告。</p>
-<p>但资本和企业的挣扎在强大的国家机器面前显得微不足道。过去，硅谷的技术精英们总认为自己可以通过代码改变世界，凌驾于地缘政治之上。但当白宫执行行政令、国防部和国安局（NSA）直接介入审查时，强如 Anthropic 也只能选择 “积极与政府合作”，甚至连自己的非美籍员工也必须被剥夺访问权限。</p>
-<p>Fable 5不再只是一个商品，它成了被国家征用的 <strong>战略军火</strong> 。</p>
-<h2 id="三、-废墟中的理想：商业洪流下的破灭与向往"><a href="#三、-废墟中的理想：商业洪流下的破灭与向往" class="headerlink" title="三、 废墟中的理想：商业洪流下的破灭与向往"></a>三、 废墟中的理想：商业洪流下的破灭与向往</h2><p>回看 Fable 5 的白名单特权、OpenAI 的 GPT-5.6 受限审查，以及 OpenAI 自身提交的IPO申请，历史在这一刻完成了一个巨大的讽刺。</p>
-<p>2015年，当埃隆·马斯克、山姆·奥特曼等人创立 OpenAI 时，其核心宗旨是：</p>
-<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>作为一个非营利组织，不受财务回报的限制，确保 AGI 的技术向所有人开放，防止技术被单一国家或巨型财阀垄断，从而造福全人类。</p></div></div>
-
-<p>今天，这个设想已经碎成了满地瓦砾：</p>
-<p>从非营利到资本弄潮儿： OpenAI 早已转型为追求利润的实体，并为了迎合资本市场走向 IPO ，最初的非营利乌托邦理想早已被商业逻辑吞噬。</p>
-<p>从 “Open（开放）” 到 “Closed（封闭）” ： 曾经开源的承诺变成了最严密的商业机密，而如今更是在政府的指令下，演变成了 “白名单准入” 的割裂生态。</p>
-<p>从造福全人类到服务特权阶级： 顶尖大模型不再是普惠全人类的工具，而是成了强化特定国家霸权、提升少数垄断巨头生产力的私产。</p>
-<p><strong>然而，那道最初的微光，依然让我们充满向往</strong></p>
-<p>即便现实如此冰冷，即便 OpenAI 如今已实质性转为追逐利润的盈利实体，但当我们拂去商业的喧嚣，回望它最初的设想时，那幅“技术普惠”的宏大蓝图依然散发着让人心潮澎湃的理想主义光芒。</p>
-<p>那是人类科技史上少有的、试图超越国家边界和阶级壁垒的伟大尝试。它向世界许诺过一种可能：最高维度的智慧不需要附庸于权力，最顶尖的科技可以成为每一个普通人对抗命运、跨越数字鸿沟的武器。</p>
-<p>正是因为这个最初的设想曾如此美丽，甚至一度让我们看到了赛博乌托邦的曙光，才使得今天面对Fable 5的“白名单高墙”时，全球开发者心中的失落与阵痛显得如此剧烈。人们对 OpenAI 初心的向往，并非出于对商业幼稚的幻想，而是出于人类对公平、开放与知识无界根深蒂固的渴望。这种向往，恰恰成了当下对抗技术垄断、呼唤开源力量的最强韧的精神火种。</p>
-<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>Fable 5 的 “白名单风暴” 揭示了 AI 时代的未来图景：科技不再是平的，而是被权力筑起的高墙分割得支离破碎。</p>
-<p>OpenAI 最初那个充满人文主义情怀的设想失败了，取而代之的是一个更加冷酷、更加遵循达尔文主义的现实。在这个由政府特许、白名单构筑的赛博新秩序里，谁能拿到那张通往顶尖算力的 “特许通行证” ，谁就掌握了下一个时代改写世界的权力。而剩下的绝大多数人，正无可避免地沦为这场技术合谋下的 <strong>“数字平民”</strong> 。</p>
-<p>不过，局面并非完全没有转机。以 <strong>GLM 5.2</strong> 为代表的中国顶尖开源模型正在展现出越来越强的竞争力。如果它能在代码、推理、工具调用与长上下文等关键能力上持续追近甚至反超闭源白名单模型，那么全球开发者至少不会被迫完全依赖少数美国 API。它的强力表现，有望在一定程度上缓解这种由算力、资本与国家权力共同制造的技术阶层分化。</p>
-]]></content>
-      <categories>
-        <category>评论</category>
-      </categories>
-      <tags>
-        <tag>AI</tag>
-        <tag>OpenAI</tag>
-        <tag>Claude Fable 5</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>使用 Docker 部署 Fizzy ： 一个轻量、漂亮、可自托管的看板工具</title>
     <url>/post/docker-run-fizzy-kanban.html</url>
     <content><![CDATA[<h2 id="Fizzy-介绍"><a href="#Fizzy-介绍" class="headerlink" title="Fizzy 介绍"></a>Fizzy 介绍</h2><p>Fizzy (<a href="https://fizzy.do/">https://fizzy.do</a>) 是由著名软件公司 <mark>37signals</mark>（开发过 Basecamp 和 HEY 的团队）推出的一款全新 <strong>看板</strong> 任务管理工具。主打快速、简单、色彩鲜明，非常适合用来跟踪 Bug、想法、小项目和内容流程。</p>
@@ -5122,6 +5060,49 @@
       </tags>
   </entry>
   <entry>
+    <title>赛博特权阶级的诞生：从 Fable 5 白名单看 AI 非营利乌托邦的终结</title>
+    <url>/post/fable-5-whitelist-new-privileged-class-ai-monopoly.html</url>
+    <content><![CDATA[<p>2026 年夏天，科技界经历了一场 “AI大地震”。美国商务部的一纸出口管制令，让刚刚问世、霸榜各大模型基座的 Anthropic 旗舰模型 <strong>Claude Fable 5</strong> 与其底层孪生模型 Mythos 5 瞬间在全球范围内被按下了暂停键。紧接着，经过政商闭门博弈，部分 <strong>可信赖的实体</strong> 和特定白名单单位逐步重获访问特权。</p>
+<p>这一历史性事件不仅颠覆了开发者对云端 API 稳定性的认知，更向世界宣告了一个残酷的事实：由美国政府特许的、由技术与权力交织而成的 <strong>赛博新特权阶级</strong> 已经正式诞生。</p>
+<p>这也给予了整个AI行业沉重一击 —— OpenAI 最初设立的 <strong>技术民主化、利益造福全人类</strong> 的乌托邦设想，已经彻底宣告失败。</p>
+<h2 id="一、-“白名单”下的赛博新特权阶级"><a href="#一、-“白名单”下的赛博新特权阶级" class="headerlink" title="一、 “白名单”下的赛博新特权阶级"></a>一、 “白名单”下的赛博新特权阶级</h2><p>在过去，黄金、石油和土地是核心的生产要素。而在2026年的今天，顶尖的通用人工智能（AGI）推理算力已成为最稀缺的战略资源。</p>
+<p>Fable 5 与Mythos 5 的强悍无需多言 —— 在 TerminalBench 2.1 等前沿评测中，它们展现出了恐怖的智能。支付巨头 Stripe 曾用它在短短一天内完成了原本需要一整个工程团队干满两个月的 5000 万行 Ruby 代码大迁移；在生物制药与网络安全领域，它们甚至展现出了越过安全限制、自主运行设计工具的“近神”能力。</p>
+<p>然而，正因为这种 “颠覆性力量” ，它引来了权力的铁拳。美国政府以国家安全、防范越狱（Jailbreak）和技术外泄为由，强行切断了公众和海外开发者的连接。随后出炉的 “白名单机制” ，将这种力量圈禁在了一个狭小的特权阶层手中：</p>
+<ul>
+<li><strong>国家机器与军工巨头</strong>： 拥有绝对豁免权，能够无限制调用未阉割、无安全拦截器的 Mythos 5。</li>
+<li><strong>合规的华尔街财阀与巨型跨国企业</strong>： 凭借强大的游说能力和国籍审查能力，跻身“可信合规白名单”。</li>
+</ul>
+<p>一个技术垄断的马太效应正在形成： 白名单内的企业利用 Fable 5 实现成百上千倍的效率跃升、垄断行业财富；而白名单外的中小创业者、研究机构甚至普通大众，只能眼睁睁看着技术代差被无限拉大。曾经人人平等的互联网API生态，变成了按权力、国籍和资本配给的 “口粮” 。美国政府的 “特许” ，正式在全球科技界划分出了高人一等的赛博新贵族。</p>
+<h2 id="二、-权力的入局：Fable-5-的“国家化”阵痛"><a href="#二、-权力的入局：Fable-5-的“国家化”阵痛" class="headerlink" title="二、 权力的入局：Fable 5 的“国家化”阵痛"></a>二、 权力的入局：Fable 5 的“国家化”阵痛</h2><p>Fable 5 的白名单风波，标志着 AI 技术正式从 “商业竞争阶段” 滑向 “地缘政治与国家安全阶段” 。</p>
+<p>“我们不认为这种政府准入程序应该成为长期的默认状态。” —— 面对政府的强势介入，即便是正在筹备 IPO 的 OpenAI 也在其发布 GPT-5.6 Sol 限量预览时发出了无力的警告。</p>
+<p>但资本和企业的挣扎在强大的国家机器面前显得微不足道。过去，硅谷的技术精英们总认为自己可以通过代码改变世界，凌驾于地缘政治之上。但当白宫执行行政令、国防部和国安局（NSA）直接介入审查时，强如 Anthropic 也只能选择 “积极与政府合作”，甚至连自己的非美籍员工也必须被剥夺访问权限。</p>
+<p>Fable 5不再只是一个商品，它成了被国家征用的 <strong>战略军火</strong> 。</p>
+<h2 id="三、-废墟中的理想：商业洪流下的破灭与向往"><a href="#三、-废墟中的理想：商业洪流下的破灭与向往" class="headerlink" title="三、 废墟中的理想：商业洪流下的破灭与向往"></a>三、 废墟中的理想：商业洪流下的破灭与向往</h2><p>回看 Fable 5 的白名单特权、OpenAI 的 GPT-5.6 受限审查，以及 OpenAI 自身提交的IPO申请，历史在这一刻完成了一个巨大的讽刺。</p>
+<p>2015年，当埃隆·马斯克、山姆·奥特曼等人创立 OpenAI 时，其核心宗旨是：</p>
+<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>作为一个非营利组织，不受财务回报的限制，确保 AGI 的技术向所有人开放，防止技术被单一国家或巨型财阀垄断，从而造福全人类。</p></div></div>
+
+<p>今天，这个设想已经碎成了满地瓦砾：</p>
+<p>从非营利到资本弄潮儿： OpenAI 早已转型为追求利润的实体，并为了迎合资本市场走向 IPO ，最初的非营利乌托邦理想早已被商业逻辑吞噬。</p>
+<p>从 “Open（开放）” 到 “Closed（封闭）” ： 曾经开源的承诺变成了最严密的商业机密，而如今更是在政府的指令下，演变成了 “白名单准入” 的割裂生态。</p>
+<p>从造福全人类到服务特权阶级： 顶尖大模型不再是普惠全人类的工具，而是成了强化特定国家霸权、提升少数垄断巨头生产力的私产。</p>
+<p><strong>然而，那道最初的微光，依然让我们充满向往</strong></p>
+<p>即便现实如此冰冷，即便 OpenAI 如今已实质性转为追逐利润的盈利实体，但当我们拂去商业的喧嚣，回望它最初的设想时，那幅“技术普惠”的宏大蓝图依然散发着让人心潮澎湃的理想主义光芒。</p>
+<p>那是人类科技史上少有的、试图超越国家边界和阶级壁垒的伟大尝试。它向世界许诺过一种可能：最高维度的智慧不需要附庸于权力，最顶尖的科技可以成为每一个普通人对抗命运、跨越数字鸿沟的武器。</p>
+<p>正是因为这个最初的设想曾如此美丽，甚至一度让我们看到了赛博乌托邦的曙光，才使得今天面对Fable 5的“白名单高墙”时，全球开发者心中的失落与阵痛显得如此剧烈。人们对 OpenAI 初心的向往，并非出于对商业幼稚的幻想，而是出于人类对公平、开放与知识无界根深蒂固的渴望。这种向往，恰恰成了当下对抗技术垄断、呼唤开源力量的最强韧的精神火种。</p>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>Fable 5 的 “白名单风暴” 揭示了 AI 时代的未来图景：科技不再是平的，而是被权力筑起的高墙分割得支离破碎。</p>
+<p>OpenAI 最初那个充满人文主义情怀的设想失败了，取而代之的是一个更加冷酷、更加遵循达尔文主义的现实。在这个由政府特许、白名单构筑的赛博新秩序里，谁能拿到那张通往顶尖算力的 “特许通行证” ，谁就掌握了下一个时代改写世界的权力。而剩下的绝大多数人，正无可避免地沦为这场技术合谋下的 <strong>“数字平民”</strong> 。</p>
+<p>不过，局面并非完全没有转机。以 <strong>GLM 5.2</strong> 为代表的中国顶尖开源模型正在展现出越来越强的竞争力。如果它能在代码、推理、工具调用与长上下文等关键能力上持续追近甚至反超闭源白名单模型，那么全球开发者至少不会被迫完全依赖少数美国 API。它的强力表现，有望在一定程度上缓解这种由算力、资本与国家权力共同制造的技术阶层分化。</p>
+]]></content>
+      <categories>
+        <category>评论</category>
+      </categories>
+      <tags>
+        <tag>AI</tag>
+        <tag>OpenAI</tag>
+        <tag>Claude Fable 5</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>解决 Antigravity 通过 SSH 连接远程服务器崩溃的问题</title>
     <url>/post/fix-antigravity-ssh-remote-crash-problem.html</url>
     <content><![CDATA[<h2 id="问题详情"><a href="#问题详情" class="headerlink" title="问题详情"></a>问题详情</h2><p>在使用 Google Antigravity 通过 SSH 连接运行在 <strong>PVE</strong> 的 <strong>Linux 虚拟机</strong> 时，会直接崩溃，报错信息如下：</p>
@@ -5136,31 +5117,6 @@
       </categories>
       <tags>
         <tag>Antigravity</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>解决 Electron 42 APP 初次运行 pnpm dev 报错的问题</title>
-    <url>/post/fix-electron-42-app-cannot-run.html</url>
-    <content><![CDATA[<h2 id="问题复现"><a href="#问题复现" class="headerlink" title="问题复现"></a>问题复现</h2><p>开发或是 Clone 一个 Electron 42 APP 时，安装完依赖后第一次运行 <code>pnpm dev</code> 你可能遇到 <code>Error: Electron uninstall</code> 的错误信息：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pnpm install --frozen-lockfile</span><br><span class="line">pnpm approve-builds</span><br><span class="line"></span><br><span class="line">pnpm dev </span><br></pre></td></tr></table></figure>
-
-<p>报错信息</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">error during start dev server and electron app:</span><br><span class="line">Error: Electron uninstall</span><br><span class="line">    at getElectronPath</span><br><span class="line">...</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-
-<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p>需要手动运行下面的命令</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npx install-electron</span><br></pre></td></tr></table></figure>
-
-<h2 id="问题原因"><a href="#问题原因" class="headerlink" title="问题原因"></a>问题原因</h2><p>这是由于为了应对供应链攻击， Electron 42 不再通过 <code>postinstall</code> 下载自身</p>
-<p><a href="https://www.electronjs.org/blog/electron-42-0#electron-no-longer-downloads-itself-via-postinstall-script">Electron 42: electron no longer downloads itself via postinstall script</a></p>
-<p>可以运行下面的命令</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install electron --save-dev --ignore-scripts</span><br><span class="line">npx install-electron</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>笔记</category>
-      </categories>
-      <tags>
-        <tag>Electron</tag>
       </tags>
   </entry>
   <entry>
@@ -5210,6 +5166,31 @@
       <tags>
         <tag>Antigravity</tag>
         <tag>Antigravity IDE</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>解决 Electron 42 APP 初次运行 pnpm dev 报错的问题</title>
+    <url>/post/fix-electron-42-app-cannot-run.html</url>
+    <content><![CDATA[<h2 id="问题复现"><a href="#问题复现" class="headerlink" title="问题复现"></a>问题复现</h2><p>开发或是 Clone 一个 Electron 42 APP 时，安装完依赖后第一次运行 <code>pnpm dev</code> 你可能遇到 <code>Error: Electron uninstall</code> 的错误信息：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pnpm install --frozen-lockfile</span><br><span class="line">pnpm approve-builds</span><br><span class="line"></span><br><span class="line">pnpm dev </span><br></pre></td></tr></table></figure>
+
+<p>报错信息</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">error during start dev server and electron app:</span><br><span class="line">Error: Electron uninstall</span><br><span class="line">    at getElectronPath</span><br><span class="line">...</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p>需要手动运行下面的命令</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npx install-electron</span><br></pre></td></tr></table></figure>
+
+<h2 id="问题原因"><a href="#问题原因" class="headerlink" title="问题原因"></a>问题原因</h2><p>这是由于为了应对供应链攻击， Electron 42 不再通过 <code>postinstall</code> 下载自身</p>
+<p><a href="https://www.electronjs.org/blog/electron-42-0#electron-no-longer-downloads-itself-via-postinstall-script">Electron 42: electron no longer downloads itself via postinstall script</a></p>
+<p>可以运行下面的命令</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install electron --save-dev --ignore-scripts</span><br><span class="line">npx install-electron</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>Electron</tag>
       </tags>
   </entry>
   <entry>
@@ -5783,6 +5764,12 @@
 <td>5 美元</td>
 <td>25 美元</td>
 <td>无限时优惠</td>
+</tr>
+<tr>
+<td>Fable 5</td>
+<td>10 美元</td>
+<td>50 美元</td>
+<td>7 月 7 日后订阅额度不再包含，需按 API 付费</td>
 </tr>
 </tbody></table>
 <p>无论输入还是输出，Sonnet 5 的单价都只有 Opus 的六成。但单价更低不代表实际更省——后面会提到，按实际任务成本衡量，Sonnet 5 完成同一任务反而可能花更多钱，这也是后面争议的根源。</p>
@@ -7913,6 +7900,25 @@
         <tag>OpenClaw</tag>
         <tag>Clawdbot</tag>
         <tag>moltbook</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>什么是 BYOK ？</title>
+    <url>/post/what-is-byok.html</url>
+    <content><![CDATA[<h2 id="什么是-BYOK-？"><a href="#什么是-BYOK-？" class="headerlink" title="什么是 BYOK ？"></a>什么是 BYOK ？</h2><p><code>BYOK</code> 是英文 <strong>Bring Your Own Key</strong> 的缩写，就是字面上的意思 <strong>自带密钥</strong> 。在云计算和软件服务领域，这是一种安全模型，允许客户使用自己的加密密钥来加密他们在服务商那里的数据，而不是使用由服务商提供的默认密钥。</p>
+<h2 id="在大模型应用中"><a href="#在大模型应用中" class="headerlink" title="在大模型应用中"></a>在大模型应用中</h2><p>最近，BYOK 这个概念在各类大模型（LLM）应用中变得越来越流行。通常使用 AI 应用需要消耗开发者提供的 Token，但有些应用采取了 BYOK 模式，它们允许用户直接填入自己从 OpenAI、Google、Anthropic 等官方或是其他渠道渠道获取的 API Key。</p>
+<p>对于用户而言，这意味着：</p>
+<ul>
+<li><strong>成本透明</strong>：你可以直接通过自己的 API 账户支付消耗的 Token，清楚地知道每一分钱花在了哪里。</li>
+<li><strong>使用灵活</strong>：不受应用开发者 Token 配额的限制，只要自己的 API Key 有效且有余额，就能持续使用。</li>
+</ul>
+<p>对于开发者而言，BYOK 模式也降低了他们的运营负担。他们无需预先购买和管理大量的 API Token，也简化了复杂的计费和分发流程，可以更专注于核心功能的开发。</p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>BYOK</tag>
       </tags>
   </entry>
 </search>

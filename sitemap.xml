@@ -200,6 +200,15 @@
   </url>
   
   <url>
+    <loc>https://ooo.run/post/use-docker-run-gitea.html</loc>
+    
+    <lastmod>2026-06-24</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://ooo.run/post/use-docker-run-memeos.html</loc>
     
     <lastmod>2026-06-24</lastmod>
@@ -210,15 +219,6 @@
   
   <url>
     <loc>https://ooo.run/post/use-docker-run-wallos.html</loc>
-    
-    <lastmod>2026-06-24</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://ooo.run/post/use-docker-run-gitea.html</loc>
     
     <lastmod>2026-06-24</lastmod>
     
@@ -335,7 +335,7 @@
   </url>
   
   <url>
-    <loc>https://ooo.run/post/website-traffic-cv.html</loc>
+    <loc>https://ooo.run/post/website-photopea-com.html</loc>
     
     <lastmod>2026-06-24</lastmod>
     
@@ -344,7 +344,7 @@
   </url>
   
   <url>
-    <loc>https://ooo.run/post/website-photopea-com.html</loc>
+    <loc>https://ooo.run/post/website-traffic-cv.html</loc>
     
     <lastmod>2026-06-24</lastmod>
     
@@ -363,15 +363,6 @@
   
   <url>
     <loc>https://ooo.run/post/agent-skills-now-available-in-antigravity.html</loc>
-    
-    <lastmod>2026-06-24</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://ooo.run/post/what-is-byok.html</loc>
     
     <lastmod>2026-06-24</lastmod>
     
@@ -560,6 +551,15 @@
   </url>
   
   <url>
+    <loc>https://ooo.run/post/what-is-byok.html</loc>
+    
+    <lastmod>2026-06-24</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://ooo.run/about/index.html</loc>
     
     <lastmod>2026-06-24</lastmod>
@@ -605,6 +605,15 @@
   </url>
   
   <url>
+    <loc>https://ooo.run/post/2025-oct-new-models-coming.html</loc>
+    
+    <lastmod>2026-06-24</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://ooo.run/post/build-nav-site-with-vitepress.html</loc>
     
     <lastmod>2026-06-24</lastmod>
@@ -615,15 +624,6 @@
   
   <url>
     <loc>https://ooo.run/post/change-hexo-theme-to-anzhiyu.html</loc>
-    
-    <lastmod>2026-06-24</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://ooo.run/post/2025-oct-new-models-coming.html</loc>
     
     <lastmod>2026-06-24</lastmod>
     
@@ -882,27 +882,6 @@
   </url>
   
   <url>
-    <loc>https://ooo.run/tags/%E5%AF%BC%E8%88%AA/</loc>
-    <lastmod>2026-07-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://ooo.run/tags/VitePress/</loc>
-    <lastmod>2026-07-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://ooo.run/tags/Self-hosted/</loc>
-    <lastmod>2026-07-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://ooo.run/tags/AI/</loc>
     <lastmod>2026-07-01</lastmod>
     <changefreq>weekly</changefreq>
@@ -946,6 +925,27 @@
   
   <url>
     <loc>https://ooo.run/tags/%E6%99%BA%E8%B0%B1AI/</loc>
+    <lastmod>2026-07-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://ooo.run/tags/%E5%AF%BC%E8%88%AA/</loc>
+    <lastmod>2026-07-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://ooo.run/tags/VitePress/</loc>
+    <lastmod>2026-07-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://ooo.run/tags/Self-hosted/</loc>
     <lastmod>2026-07-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1113,13 +1113,6 @@
   </url>
   
   <url>
-    <loc>https://ooo.run/tags/Free/</loc>
-    <lastmod>2026-07-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://ooo.run/tags/%E5%9B%BE%E7%89%87%E7%BC%96%E8%BE%91/</loc>
     <lastmod>2026-07-01</lastmod>
     <changefreq>weekly</changefreq>
@@ -1134,6 +1127,13 @@
   </url>
   
   <url>
+    <loc>https://ooo.run/tags/Free/</loc>
+    <lastmod>2026-07-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://ooo.run/tags/Antigravity/</loc>
     <lastmod>2026-07-01</lastmod>
     <changefreq>weekly</changefreq>
@@ -1142,13 +1142,6 @@
   
   <url>
     <loc>https://ooo.run/tags/Agent-Skills/</loc>
-    <lastmod>2026-07-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://ooo.run/tags/BYOK/</loc>
     <lastmod>2026-07-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1323,14 +1316,14 @@
   </url>
   
   <url>
-    <loc>https://ooo.run/tags/Electron/</loc>
+    <loc>https://ooo.run/tags/Antigravity-IDE/</loc>
     <lastmod>2026-07-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://ooo.run/tags/Antigravity-IDE/</loc>
+    <loc>https://ooo.run/tags/Electron/</loc>
     <lastmod>2026-07-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1518,6 +1511,13 @@
     <priority>0.2</priority>
   </url>
   
+  <url>
+    <loc>https://ooo.run/tags/BYOK/</loc>
+    <lastmod>2026-07-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
 
   
   <url>
@@ -1528,14 +1528,14 @@
   </url>
   
   <url>
-    <loc>https://ooo.run/categories/%E7%AC%94%E8%AE%B0/</loc>
+    <loc>https://ooo.run/categories/%E8%B5%84%E8%AE%AF/</loc>
     <lastmod>2026-07-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://ooo.run/categories/%E8%B5%84%E8%AE%AF/</loc>
+    <loc>https://ooo.run/categories/%E7%AC%94%E8%AE%B0/</loc>
     <lastmod>2026-07-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
