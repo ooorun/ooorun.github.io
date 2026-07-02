@@ -86,6 +86,107 @@
       </tags>
   </entry>
   <entry>
+    <title>为 Hexo 博客添加评论系统，Giscus or Twikoo or Arttalk or Disqus</title>
+    <url>/post/how-to-add-comment-system-for-static-blog.html</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>静态博客系统不像 Wordpress 一样自带评论系统，不过由于使用静态博客的人越来越多，社区已经有了多种评论系统可以供我们选择。</p>
+<p>如果你还没有属于自己的博客，可以查看： <a href="https://ooo.run/post/start-blog-with-hexo-and-github.html" target="_blank">使用 Hexo + GitHub 建立个人博客</a></p>
+<p>本文将基于Hexo Butterfly 主题介绍以下四种评论系统的添加方法，可以选择一个适合自己的，同样适用于其他主题或是其他博客系统：</p>
+<ul>
+<li><a href="https://giscus.app/zh-CN"><strong>Giscus</strong></a>： 评论托管在 GitHub 上，用户评论必须使用 <strong>GitHub</strong> 账户登陆，在开发者中比较流行。</li>
+<li><a href="https://twikoo.js.org/"><strong>Twikoo</strong></a>：可以<strong>自己托管</strong>的评论系统，用户评论无需登陆，可以使用第三方云服务托管。</li>
+<li><a href="https://artalk.js.org/"><strong>Artalk</strong></a>: 同样可以<strong>自己托管</strong>，相比于 Twikoo 国际化更好<strong>支持更多的显示语言</strong>，需要有一个服务器部署。</li>
+<li><strong>Disqus</strong>： 设置上相对最简单，用户评论必须登陆，需要有 <strong>Disqus</strong> 账户，<strong>会有广告</strong>，中国大陆可能<strong>无法访问</strong></li>
+</ul>
+<p>更多的评论系统可以查看 <a href="https://butterfly.js.org/posts/4aa8abbe/?highlight=comment#%E8%A9%95%E8%AB%96">Butterfly 设置文档</a></p>
+<h2 id="Giscus"><a href="#Giscus" class="headerlink" title="Giscus"></a>Giscus</h2><p>Giscus 是一个基于 GitHub Discussions 的评论，其他基于 Github 的评论系统还有 Gitalk 、Utterances 等，推荐使用 Giscus ，设置更为简单一些，而且请求的权限更少。</p>
+<p><a href="https://github.com/giscus/giscus/blob/main/README.zh-CN.md">中文介绍</a></p>
+<h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><blockquote>
+<ol>
+<li>你的仓库必须是公开的 (public)，否则访客将无法查看 discussion        </li>
+<li>你的 GitHub 已安装 giscus app ，否则访客将无法评论和回应        </li>
+<li>在你的仓库中启用 Discussions 功能</li>
+</ol>
+</blockquote>
+<p>设置步骤如下</p>
+<h3 id="创建仓库"><a href="#创建仓库" class="headerlink" title="创建仓库"></a>创建仓库</h3><p>首先访问 <a href="https://github.com/new">https://github.com/new</a> 创建一个<strong>公开</strong>的 GitHub 仓库，可以叫做 <strong>blog-commnts</strong></p>
+<h3 id="开启-Discussions"><a href="#开启-Discussions" class="headerlink" title="开启 Discussions"></a>开启 Discussions</h3><p>在仓库的 Web 页面，点击顶部的 <strong>Settings</strong><br><img src="https://docs.github.com/assets/cb-51103/mw-1440/images/help/discussions/public-repo-settings-global-nav-update.webp"></p>
+<p>向下滚动，在 <strong>Features</strong> 部分，勾选开启 <strong>Discussions</strong><br><img src="https://img.nep.me/i/2024/12/14/3uq699-2.webp" alt="GitHub repo enable Discussions "></p>
+<h3 id="安装-Giscus-APP"><a href="#安装-Giscus-APP" class="headerlink" title="安装 Giscus APP"></a>安装 Giscus APP</h3><p>访问 <a href="https://github.com/apps/giscus">https://github.com/apps/giscus</a> 点击 <code>Install</code>，进入选择仓库界面<br>选择 <code>Only select repositories</code> ，然后选择刚才创建的 <strong>blog-commnts</strong> 仓库，点击 <code>Install</code></p>
+<h3 id="获取-Giscus-设置"><a href="#获取-Giscus-设置" class="headerlink" title="获取 Giscus 设置"></a>获取 Giscus 设置</h3><p>访问 <a href="https://giscus.app/zh-CN">Giscus</a> ，从设置部分开始</p>
+<ul>
+<li>选择语言</li>
+<li>设置仓库，填写上面创建的 <strong>blog-commnts</strong> 仓库</li>
+<li>页面 ↔️ discussion 映射关系： 保持默认</li>
+<li>Discussion 分类： 按照推荐选择 <strong>Announcements</strong></li>
+<li>特性： 保持默认</li>
+<li>主题： 保持默认，或是选择一个自己喜欢的</li>
+</ul>
+<p>在 <strong>启用 giscus</strong> 部分，我们将看到 Giscus 的配置</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&lt;script src=<span class="string">&quot;https://giscus.app/client.js&quot;</span></span><br><span class="line">        data-repo=<span class="string">&quot;&lt;username&gt;/blog-commnts&quot;</span></span><br><span class="line">        data-repo-id=<span class="string">&quot;R_xxxxxxx&quot;</span></span><br><span class="line">        data-category=<span class="string">&quot;Announcements&quot;</span></span><br><span class="line">        data-category-id=<span class="string">&quot;DIC_xxxxxxx-b&quot;</span></span><br><span class="line">        data-mapping=<span class="string">&quot;pathname&quot;</span></span><br><span class="line">        data-strict=<span class="string">&quot;0&quot;</span></span><br><span class="line">        data-reactions-enabled=<span class="string">&quot;1&quot;</span></span><br><span class="line">        data-emit-metadata=<span class="string">&quot;0&quot;</span></span><br><span class="line">        data-input-position=<span class="string">&quot;bottom&quot;</span></span><br><span class="line">        data-theme=<span class="string">&quot;preferred_color_scheme&quot;</span></span><br><span class="line">        data-lang=<span class="string">&quot;zh-CN&quot;</span></span><br><span class="line">        crossorigin=<span class="string">&quot;anonymous&quot;</span></span><br><span class="line">        <span class="keyword">async</span>&gt;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="启用-Giscus"><a href="#启用-Giscus" class="headerlink" title="启用 Giscus"></a>启用 Giscus</h3><p>编辑 Hexo 目录下的 <code>_config.butterfly.yml</code> 文件，找到 <code>comments</code> 部分：</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">comments:</span>  </span><br><span class="line">  <span class="comment"># 设置为 giscus</span></span><br><span class="line">  <span class="attr">use:</span> <span class="string">giscus</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 对照 Giscus 的配置填写</span></span><br><span class="line"><span class="attr">giscus:</span></span><br><span class="line">  <span class="attr">repo:</span> <span class="string">&quot;&lt;username&gt;/blog-commnts&quot;</span></span><br><span class="line">  <span class="attr">repo_id:</span> <span class="string">&quot;R_xxxxxxx&quot;</span></span><br><span class="line">  <span class="attr">category_id:</span> <span class="string">&quot;DIC_xxxxxxx-b&quot;</span></span><br><span class="line">  <span class="attr">theme:</span></span><br><span class="line">    <span class="attr">light:</span> <span class="string">light</span></span><br><span class="line">    <span class="attr">dark:</span> <span class="string">dark</span></span><br><span class="line">  <span class="attr">option:</span></span><br></pre></td></tr></table></figure>
+
+<p>即可运行命令在网站查看评论预览</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">hexo g</span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
+
+<h3 id="预览-Giscus"><a href="#预览-Giscus" class="headerlink" title="预览 Giscus"></a>预览 Giscus</h3><p><img src="https://img.nep.me/i/2024/12/14/42ljtq-2.webp"></p>
+<h2 id="Twikoo-与-Artalk"><a href="#Twikoo-与-Artalk" class="headerlink" title="Twikoo 与 Artalk"></a>Twikoo 与 Artalk</h2><h3 id="准备工作-1"><a href="#准备工作-1" class="headerlink" title="准备工作"></a>准备工作</h3><ul>
+<li>需要有一台已安装 Docker 与 Docker Compose 的服务器：<a href="https://ooo.run/post/debian-install-docker.html" target="_blank">在 Debian 中安装 Docker 以及 Docker Compose</a></li>
+<li>分配一个子域名给 Twikoo &#x2F; Artalk 服务</li>
+<li>设置好域名的 HTTPS 证书</li>
+</ul>
+<p>我们将使用 <code>docker compose</code> 管理 Twikoo 或 Artalk 服务。</p>
+<h3 id="Twikoo-介绍"><a href="#Twikoo-介绍" class="headerlink" title="Twikoo 介绍"></a>Twikoo 介绍</h3><p><a href="https://twikoo.js.org/intro.html">Twikoo</a> 是一个简洁、安全、免费的静态网站评论系统。<br>Twikoo 可以选择使用云服务托管，支持腾讯云、Vercel 或是 Cloudflare wrokers 等第三方云平台，也可以选择部署至自己的 VPS 服务器上。  </p>
+<p><a href="https://twikoo.js.org/backend.html">官方文档</a> 针对各个平台都提供了部署说明，由于使用第三方服务需要注册多个第三方平台账户，本文将仅介绍使用 Docker 进行私有部署方式。  </p>
+<h3 id="Artalk-介绍"><a href="#Artalk-介绍" class="headerlink" title="Artalk 介绍"></a>Artalk 介绍</h3><p><a href="https://artalk.js.org/">Artalk</a> 同样是一款简单易用但功能丰富的评论系统，与 Twikoo 项目，Artalk 国际化更加友好，支持更多的语言，但是无法使用第三方云服务托管。</p>
+<p>如果你也有一台 VPS 服务器，那么 Twikoo 和 Artalk 都是不错的选择，可以对比一下具体的功能与界面样式再做选择。 </p>
+<h3 id="创建-docker-compose-yml"><a href="#创建-docker-compose-yml" class="headerlink" title="创建 docker-compose.yml"></a>创建 docker-compose.yml</h3><p>首先创建一个工作目录，然后在文件夹内创建 <code>docker-compose.yml</code> 文件，填入下面的内容</p>
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-4-tab-0" aria-controls="tabs-4-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">Twikoo</button><button type="button" role="tab" id="tabs-4-tab-1" aria-controls="tabs-4-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">Artalk</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-4-panel-0" aria-labelledby="tabs-4-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">twikoo:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">imaegoo/twikoo:latest</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">twikoo</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="comment"># 本机设置 Nginx 反代后可以设置为 - 127.0.0.1:8080:8080 关闭公网访问</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">8080</span><span class="string">:8080</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="comment"># 数据存放路径:容器内路径</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/var/www/twikoo/data:/app/data</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-4-panel-1" aria-labelledby="tabs-4-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">artalk:</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">artalk</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">artalk/artalk-go</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">unless-stopped</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">8080</span><span class="string">:23366</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/opt/artalk/data:/data</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">TZ=Asia/Shanghai</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">ATK_LOCALE=zh-CN</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">ATK_SITE_DEFAULT=Artalk</span> <span class="string">的博客</span></span><br><span class="line">      <span class="comment"># 填写博客域名</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">ATK_SITE_URL=https://your_domain</span></span><br></pre></td></tr></table></figure></section></div></div>
+
+<h3 id="启动服务"><a href="#启动服务" class="headerlink" title="启动服务"></a>启动服务</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 拉取、更新镜像</span></span><br><span class="line">docker compose pull</span><br><span class="line"><span class="comment"># 启动后台</span></span><br><span class="line">docker compose up -d</span><br><span class="line"></span><br><span class="line"><span class="comment"># 常用命令</span></span><br><span class="line">docker compose stop     <span class="comment"># 暂停容器</span></span><br><span class="line">docker compose down     <span class="comment"># 删除容器</span></span><br><span class="line">docker compose restart  <span class="comment"># 重启容器</span></span><br></pre></td></tr></table></figure>
+
+<p>Artalk 在运行后执行下面命令创建管理员账户</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">docker <span class="built_in">exec</span> -it artalk artalk admin</span><br></pre></td></tr></table></figure>
+
+<h3 id="设置-Nginx-反代"><a href="#设置-Nginx-反代" class="headerlink" title="设置 Nginx 反代"></a>设置 Nginx 反代</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">server&#123;</span><br><span class="line">  location / &#123;</span><br><span class="line">    proxy_pass 127.0.0.1:8080;</span><br><span class="line"></span><br><span class="line">    proxy_set_header Host $host;</span><br><span class="line">    proxy_set_header X-Real-IP $remote_addr;</span><br><span class="line">    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">    proxy_set_header X-Forwarded-Proto $scheme;</span><br><span class="line">    proxy_set_header REMOTE-HOST $remote_addr;</span><br><span class="line">    add_header X-Cache $upstream_cache_status;</span><br><span class="line">    # cache</span><br><span class="line">    add_header Cache-Control no-cache;</span><br><span class="line">    expires 12h;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;    </span><br></pre></td></tr></table></figure>
+
+<h4 id="测试-Twikoo"><a href="#测试-Twikoo" class="headerlink" title="测试 Twikoo"></a>测试 Twikoo</h4><p>访问使用的域名，如果成功 Twikoo 会提示</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#123;&quot;code&quot;:100,&quot;message&quot;:&quot;Twikoo 云函数运行正常，...&quot;,&quot;version&quot;:&quot;1.x.x&quot;&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="测试-Artalk"><a href="#测试-Artalk" class="headerlink" title="测试 Artalk"></a>测试 Artalk</h3><p>访问使用的域名，如果成功 Artalk 会显示登录界面<br><img src="https://img.nep.me/i/2024/12/15/agkca0-2.webp" style="width:50%;" alt="image" /></p>
+<h3 id="在主题中启用"><a href="#在主题中启用" class="headerlink" title="在主题中启用"></a>在主题中启用</h3><p>编辑 Hexo 目录下的 <code>_config.butterfly.yml</code> 文件： </p>
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-5-tab-0" aria-controls="tabs-5-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">Twikoo</button><button type="button" role="tab" id="tabs-5-tab-1" aria-controls="tabs-5-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">Artalk</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-5-panel-0" aria-labelledby="tabs-5-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">comments:</span>  </span><br><span class="line">  <span class="comment"># 设置为 twikoo</span></span><br><span class="line">  <span class="attr">use:</span> <span class="string">twikoo</span></span><br><span class="line"></span><br><span class="line"><span class="attr">twikoo:</span></span><br><span class="line">  <span class="comment"># envId 填写你的域名</span></span><br><span class="line">  <span class="attr">envId:</span> <span class="string">https://twikoo.example.com</span></span><br><span class="line">  <span class="attr">region:</span></span><br><span class="line">  <span class="attr">visitor:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">option:</span></span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-5-panel-1" aria-labelledby="tabs-5-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">comments:</span>  </span><br><span class="line">  <span class="comment"># 设置为 artalk</span></span><br><span class="line">  <span class="attr">use:</span> <span class="string">artalk</span></span><br><span class="line"></span><br><span class="line"><span class="attr">artalk:</span></span><br><span class="line">  <span class="comment"># server 填 artalk 的域名</span></span><br><span class="line">  <span class="attr">server:</span> <span class="string">https://artalk.example.com</span></span><br><span class="line">  <span class="comment"># site ATK_SITE_DEFAULT 设置的内容，不是博客域名，不能包含引号</span></span><br><span class="line">  <span class="attr">site:</span> <span class="string">Artalk</span> <span class="string">的博客</span></span><br><span class="line">  <span class="comment"># Use Artalk visitor count as the page view count</span></span><br><span class="line">  <span class="attr">visitor:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">option:</span></span><br></pre></td></tr></table></figure></section></div></div>
+
+<h3 id="预览"><a href="#预览" class="headerlink" title="预览"></a>预览</h3><p>运行命令在网站查看评论预览</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">hexo g</span><br><span class="line">hexo s</span><br><span class="line"></span><br><span class="line"><span class="comment"># Artalk 默认需要推送到服务器才可以预览</span></span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure>
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-6-tab-0" aria-controls="tabs-6-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">Twikoo</button><button type="button" role="tab" id="tabs-6-tab-1" aria-controls="tabs-6-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">Artalk</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-6-panel-0" aria-labelledby="tabs-6-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><p><img src="https://img.nep.me/i/2024/12/14/5cyu50-2.webp" alt="Twikoo Preview"></p></section><section role="tabpanel" id="tabs-6-panel-1" aria-labelledby="tabs-6-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><p><img src="https://img.nep.me/i/2024/12/15/c38ctz-2.webp" alt="Artalk Preview"></p></section></div></div>
+
+<h3 id="设置面板"><a href="#设置面板" class="headerlink" title="设置面板"></a>设置面板</h3><p>Twikoo：<br>第一次打开 Twikoo 面板，需要设置 <strong>密码</strong> ，然后进入面板可以导入评论、设置站点信息、SMTP 邮件发送、消息推送等功能。</p>
+<p>Artalk：<br>Artalk 则是访问自己的域名，使用管理员账户登陆后台进行设置，同样可以设置SMTP 邮件发送、消息推送等功能。</p>
+<div class="flatpaper-note flatpaper-note--warning"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>使用 <code>#### Artalk</code> 的标题会导致评论无法显示 </p></div></div>
+
+<h2 id="Disqus"><a href="#Disqus" class="headerlink" title="Disqus"></a>Disqus</h2><p>Disqus 是一个第三方评论服务平台，使用 Disqus 无需我们自己手动部署，只需要在 Disqus 网站设置好站点信息后，在主题中启用即可，但是免费的版本包含广告与推广。</p>
+<h3 id="获取-shortname"><a href="#获取-shortname" class="headerlink" title="获取 shortname"></a>获取 shortname</h3><p>首先需要注册一个 <a href="https://disqus.com/">Disqus</a> 账户，然后访问 <a href="https://disqus.com/admin/create/">https://disqus.com/admin/create/</a>  进入站点创建页面</p>
+<p>其中 Website Name 填写的就是我们之后需要用到的 <code>shortname</code><br><img src="https://img.nep.me/i/2024/12/14/2l4x2b-2.webp"></p>
+<p>点击 create site 后进入 Install 界面，我们不需要从这里安装，可以直接关闭，当然也可以访问 <code>https://shortname.disqus.com/admin/</code> 修改站点的一些设置。</p>
+<h3 id="在主题中启用-Disqus"><a href="#在主题中启用-Disqus" class="headerlink" title="在主题中启用 Disqus"></a>在主题中启用 Disqus</h3><p>编辑 Hexo 目录下的 <code>_config.butterfly.yml</code> 文件： </p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">comments:</span>  </span><br><span class="line">  <span class="comment"># 设置为 disqus</span></span><br><span class="line">  <span class="attr">use:</span> <span class="string">disqus</span></span><br><span class="line"></span><br><span class="line"><span class="attr">disqus:</span></span><br><span class="line">  <span class="comment"># 填写 shortname</span></span><br><span class="line">  <span class="attr">shortname:</span></span><br></pre></td></tr></table></figure>
+
+<p>即可运行命令在网站查看评论预览</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">hexo g</span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>教程</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+        <tag>Blog</tag>
+        <tag>Twikoo</tag>
+        <tag>Artalk</tag>
+        <tag>Giscus</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Docker 项目，使用 EasyImage 轻松搭建个人图床</title>
     <url>/post/docker-project-easy-images.html</url>
     <content><![CDATA[<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>我们有时需要上传一些图片用于个人博客，或是其他项目分享，如果你也像我一样更加希望图片存放在自己的服务器上而不是第三方平台上，那么推荐搭建一个属于自己的图床。  </p>
@@ -221,192 +322,6 @@
       </tags>
   </entry>
   <entry>
-    <title>为 Hexo 博客添加评论系统，Giscus or Twikoo or Arttalk or Disqus</title>
-    <url>/post/how-to-add-comment-system-for-static-blog.html</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>静态博客系统不像 Wordpress 一样自带评论系统，不过由于使用静态博客的人越来越多，社区已经有了多种评论系统可以供我们选择。</p>
-<p>如果你还没有属于自己的博客，可以查看： <a href="https://ooo.run/post/start-blog-with-hexo-and-github.html" target="_blank">使用 Hexo + GitHub 建立个人博客</a></p>
-<p>本文将基于Hexo Butterfly 主题介绍以下四种评论系统的添加方法，可以选择一个适合自己的，同样适用于其他主题或是其他博客系统：</p>
-<ul>
-<li><a href="https://giscus.app/zh-CN"><strong>Giscus</strong></a>： 评论托管在 GitHub 上，用户评论必须使用 <strong>GitHub</strong> 账户登陆，在开发者中比较流行。</li>
-<li><a href="https://twikoo.js.org/"><strong>Twikoo</strong></a>：可以<strong>自己托管</strong>的评论系统，用户评论无需登陆，可以使用第三方云服务托管。</li>
-<li><a href="https://artalk.js.org/"><strong>Artalk</strong></a>: 同样可以<strong>自己托管</strong>，相比于 Twikoo 国际化更好<strong>支持更多的显示语言</strong>，需要有一个服务器部署。</li>
-<li><strong>Disqus</strong>： 设置上相对最简单，用户评论必须登陆，需要有 <strong>Disqus</strong> 账户，<strong>会有广告</strong>，中国大陆可能<strong>无法访问</strong></li>
-</ul>
-<p>更多的评论系统可以查看 <a href="https://butterfly.js.org/posts/4aa8abbe/?highlight=comment#%E8%A9%95%E8%AB%96">Butterfly 设置文档</a></p>
-<h2 id="Giscus"><a href="#Giscus" class="headerlink" title="Giscus"></a>Giscus</h2><p>Giscus 是一个基于 GitHub Discussions 的评论，其他基于 Github 的评论系统还有 Gitalk 、Utterances 等，推荐使用 Giscus ，设置更为简单一些，而且请求的权限更少。</p>
-<p><a href="https://github.com/giscus/giscus/blob/main/README.zh-CN.md">中文介绍</a></p>
-<h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><blockquote>
-<ol>
-<li>你的仓库必须是公开的 (public)，否则访客将无法查看 discussion        </li>
-<li>你的 GitHub 已安装 giscus app ，否则访客将无法评论和回应        </li>
-<li>在你的仓库中启用 Discussions 功能</li>
-</ol>
-</blockquote>
-<p>设置步骤如下</p>
-<h3 id="创建仓库"><a href="#创建仓库" class="headerlink" title="创建仓库"></a>创建仓库</h3><p>首先访问 <a href="https://github.com/new">https://github.com/new</a> 创建一个<strong>公开</strong>的 GitHub 仓库，可以叫做 <strong>blog-commnts</strong></p>
-<h3 id="开启-Discussions"><a href="#开启-Discussions" class="headerlink" title="开启 Discussions"></a>开启 Discussions</h3><p>在仓库的 Web 页面，点击顶部的 <strong>Settings</strong><br><img src="https://docs.github.com/assets/cb-51103/mw-1440/images/help/discussions/public-repo-settings-global-nav-update.webp"></p>
-<p>向下滚动，在 <strong>Features</strong> 部分，勾选开启 <strong>Discussions</strong><br><img src="https://img.nep.me/i/2024/12/14/3uq699-2.webp" alt="GitHub repo enable Discussions "></p>
-<h3 id="安装-Giscus-APP"><a href="#安装-Giscus-APP" class="headerlink" title="安装 Giscus APP"></a>安装 Giscus APP</h3><p>访问 <a href="https://github.com/apps/giscus">https://github.com/apps/giscus</a> 点击 <code>Install</code>，进入选择仓库界面<br>选择 <code>Only select repositories</code> ，然后选择刚才创建的 <strong>blog-commnts</strong> 仓库，点击 <code>Install</code></p>
-<h3 id="获取-Giscus-设置"><a href="#获取-Giscus-设置" class="headerlink" title="获取 Giscus 设置"></a>获取 Giscus 设置</h3><p>访问 <a href="https://giscus.app/zh-CN">Giscus</a> ，从设置部分开始</p>
-<ul>
-<li>选择语言</li>
-<li>设置仓库，填写上面创建的 <strong>blog-commnts</strong> 仓库</li>
-<li>页面 ↔️ discussion 映射关系： 保持默认</li>
-<li>Discussion 分类： 按照推荐选择 <strong>Announcements</strong></li>
-<li>特性： 保持默认</li>
-<li>主题： 保持默认，或是选择一个自己喜欢的</li>
-</ul>
-<p>在 <strong>启用 giscus</strong> 部分，我们将看到 Giscus 的配置</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&lt;script src=<span class="string">&quot;https://giscus.app/client.js&quot;</span></span><br><span class="line">        data-repo=<span class="string">&quot;&lt;username&gt;/blog-commnts&quot;</span></span><br><span class="line">        data-repo-id=<span class="string">&quot;R_xxxxxxx&quot;</span></span><br><span class="line">        data-category=<span class="string">&quot;Announcements&quot;</span></span><br><span class="line">        data-category-id=<span class="string">&quot;DIC_xxxxxxx-b&quot;</span></span><br><span class="line">        data-mapping=<span class="string">&quot;pathname&quot;</span></span><br><span class="line">        data-strict=<span class="string">&quot;0&quot;</span></span><br><span class="line">        data-reactions-enabled=<span class="string">&quot;1&quot;</span></span><br><span class="line">        data-emit-metadata=<span class="string">&quot;0&quot;</span></span><br><span class="line">        data-input-position=<span class="string">&quot;bottom&quot;</span></span><br><span class="line">        data-theme=<span class="string">&quot;preferred_color_scheme&quot;</span></span><br><span class="line">        data-lang=<span class="string">&quot;zh-CN&quot;</span></span><br><span class="line">        crossorigin=<span class="string">&quot;anonymous&quot;</span></span><br><span class="line">        <span class="keyword">async</span>&gt;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
-
-<h3 id="启用-Giscus"><a href="#启用-Giscus" class="headerlink" title="启用 Giscus"></a>启用 Giscus</h3><p>编辑 Hexo 目录下的 <code>_config.butterfly.yml</code> 文件，找到 <code>comments</code> 部分：</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">comments:</span>  </span><br><span class="line">  <span class="comment"># 设置为 giscus</span></span><br><span class="line">  <span class="attr">use:</span> <span class="string">giscus</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 对照 Giscus 的配置填写</span></span><br><span class="line"><span class="attr">giscus:</span></span><br><span class="line">  <span class="attr">repo:</span> <span class="string">&quot;&lt;username&gt;/blog-commnts&quot;</span></span><br><span class="line">  <span class="attr">repo_id:</span> <span class="string">&quot;R_xxxxxxx&quot;</span></span><br><span class="line">  <span class="attr">category_id:</span> <span class="string">&quot;DIC_xxxxxxx-b&quot;</span></span><br><span class="line">  <span class="attr">theme:</span></span><br><span class="line">    <span class="attr">light:</span> <span class="string">light</span></span><br><span class="line">    <span class="attr">dark:</span> <span class="string">dark</span></span><br><span class="line">  <span class="attr">option:</span></span><br></pre></td></tr></table></figure>
-
-<p>即可运行命令在网站查看评论预览</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">hexo g</span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
-
-<h3 id="预览-Giscus"><a href="#预览-Giscus" class="headerlink" title="预览 Giscus"></a>预览 Giscus</h3><p><img src="https://img.nep.me/i/2024/12/14/42ljtq-2.webp"></p>
-<h2 id="Twikoo-与-Artalk"><a href="#Twikoo-与-Artalk" class="headerlink" title="Twikoo 与 Artalk"></a>Twikoo 与 Artalk</h2><h3 id="准备工作-1"><a href="#准备工作-1" class="headerlink" title="准备工作"></a>准备工作</h3><ul>
-<li>需要有一台已安装 Docker 与 Docker Compose 的服务器：<a href="https://ooo.run/post/debian-install-docker.html" target="_blank">在 Debian 中安装 Docker 以及 Docker Compose</a></li>
-<li>分配一个子域名给 Twikoo &#x2F; Artalk 服务</li>
-<li>设置好域名的 HTTPS 证书</li>
-</ul>
-<p>我们将使用 <code>docker compose</code> 管理 Twikoo 或 Artalk 服务。</p>
-<h3 id="Twikoo-介绍"><a href="#Twikoo-介绍" class="headerlink" title="Twikoo 介绍"></a>Twikoo 介绍</h3><p><a href="https://twikoo.js.org/intro.html">Twikoo</a> 是一个简洁、安全、免费的静态网站评论系统。<br>Twikoo 可以选择使用云服务托管，支持腾讯云、Vercel 或是 Cloudflare wrokers 等第三方云平台，也可以选择部署至自己的 VPS 服务器上。  </p>
-<p><a href="https://twikoo.js.org/backend.html">官方文档</a> 针对各个平台都提供了部署说明，由于使用第三方服务需要注册多个第三方平台账户，本文将仅介绍使用 Docker 进行私有部署方式。  </p>
-<h3 id="Artalk-介绍"><a href="#Artalk-介绍" class="headerlink" title="Artalk 介绍"></a>Artalk 介绍</h3><p><a href="https://artalk.js.org/">Artalk</a> 同样是一款简单易用但功能丰富的评论系统，与 Twikoo 项目，Artalk 国际化更加友好，支持更多的语言，但是无法使用第三方云服务托管。</p>
-<p>如果你也有一台 VPS 服务器，那么 Twikoo 和 Artalk 都是不错的选择，可以对比一下具体的功能与界面样式再做选择。 </p>
-<h3 id="创建-docker-compose-yml"><a href="#创建-docker-compose-yml" class="headerlink" title="创建 docker-compose.yml"></a>创建 docker-compose.yml</h3><p>首先创建一个工作目录，然后在文件夹内创建 <code>docker-compose.yml</code> 文件，填入下面的内容</p>
-<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-4-tab-0" aria-controls="tabs-4-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">Twikoo</button><button type="button" role="tab" id="tabs-4-tab-1" aria-controls="tabs-4-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">Artalk</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-4-panel-0" aria-labelledby="tabs-4-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">twikoo:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">imaegoo/twikoo:latest</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">twikoo</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="comment"># 本机设置 Nginx 反代后可以设置为 - 127.0.0.1:8080:8080 关闭公网访问</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">8080</span><span class="string">:8080</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="comment"># 数据存放路径:容器内路径</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/var/www/twikoo/data:/app/data</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-4-panel-1" aria-labelledby="tabs-4-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">artalk:</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">artalk</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">artalk/artalk-go</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">unless-stopped</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">8080</span><span class="string">:23366</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/opt/artalk/data:/data</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">TZ=Asia/Shanghai</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">ATK_LOCALE=zh-CN</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">ATK_SITE_DEFAULT=Artalk</span> <span class="string">的博客</span></span><br><span class="line">      <span class="comment"># 填写博客域名</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">ATK_SITE_URL=https://your_domain</span></span><br></pre></td></tr></table></figure></section></div></div>
-
-<h3 id="启动服务"><a href="#启动服务" class="headerlink" title="启动服务"></a>启动服务</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 拉取、更新镜像</span></span><br><span class="line">docker compose pull</span><br><span class="line"><span class="comment"># 启动后台</span></span><br><span class="line">docker compose up -d</span><br><span class="line"></span><br><span class="line"><span class="comment"># 常用命令</span></span><br><span class="line">docker compose stop     <span class="comment"># 暂停容器</span></span><br><span class="line">docker compose down     <span class="comment"># 删除容器</span></span><br><span class="line">docker compose restart  <span class="comment"># 重启容器</span></span><br></pre></td></tr></table></figure>
-
-<p>Artalk 在运行后执行下面命令创建管理员账户</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">docker <span class="built_in">exec</span> -it artalk artalk admin</span><br></pre></td></tr></table></figure>
-
-<h3 id="设置-Nginx-反代"><a href="#设置-Nginx-反代" class="headerlink" title="设置 Nginx 反代"></a>设置 Nginx 反代</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">server&#123;</span><br><span class="line">  location / &#123;</span><br><span class="line">    proxy_pass 127.0.0.1:8080;</span><br><span class="line"></span><br><span class="line">    proxy_set_header Host $host;</span><br><span class="line">    proxy_set_header X-Real-IP $remote_addr;</span><br><span class="line">    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">    proxy_set_header X-Forwarded-Proto $scheme;</span><br><span class="line">    proxy_set_header REMOTE-HOST $remote_addr;</span><br><span class="line">    add_header X-Cache $upstream_cache_status;</span><br><span class="line">    # cache</span><br><span class="line">    add_header Cache-Control no-cache;</span><br><span class="line">    expires 12h;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;    </span><br></pre></td></tr></table></figure>
-
-<h4 id="测试-Twikoo"><a href="#测试-Twikoo" class="headerlink" title="测试 Twikoo"></a>测试 Twikoo</h4><p>访问使用的域名，如果成功 Twikoo 会提示</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#123;&quot;code&quot;:100,&quot;message&quot;:&quot;Twikoo 云函数运行正常，...&quot;,&quot;version&quot;:&quot;1.x.x&quot;&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="测试-Artalk"><a href="#测试-Artalk" class="headerlink" title="测试 Artalk"></a>测试 Artalk</h3><p>访问使用的域名，如果成功 Artalk 会显示登录界面<br><img src="https://img.nep.me/i/2024/12/15/agkca0-2.webp" style="width:50%;" alt="image" /></p>
-<h3 id="在主题中启用"><a href="#在主题中启用" class="headerlink" title="在主题中启用"></a>在主题中启用</h3><p>编辑 Hexo 目录下的 <code>_config.butterfly.yml</code> 文件： </p>
-<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-5-tab-0" aria-controls="tabs-5-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">Twikoo</button><button type="button" role="tab" id="tabs-5-tab-1" aria-controls="tabs-5-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">Artalk</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-5-panel-0" aria-labelledby="tabs-5-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">comments:</span>  </span><br><span class="line">  <span class="comment"># 设置为 twikoo</span></span><br><span class="line">  <span class="attr">use:</span> <span class="string">twikoo</span></span><br><span class="line"></span><br><span class="line"><span class="attr">twikoo:</span></span><br><span class="line">  <span class="comment"># envId 填写你的域名</span></span><br><span class="line">  <span class="attr">envId:</span> <span class="string">https://twikoo.example.com</span></span><br><span class="line">  <span class="attr">region:</span></span><br><span class="line">  <span class="attr">visitor:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">option:</span></span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-5-panel-1" aria-labelledby="tabs-5-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">comments:</span>  </span><br><span class="line">  <span class="comment"># 设置为 artalk</span></span><br><span class="line">  <span class="attr">use:</span> <span class="string">artalk</span></span><br><span class="line"></span><br><span class="line"><span class="attr">artalk:</span></span><br><span class="line">  <span class="comment"># server 填 artalk 的域名</span></span><br><span class="line">  <span class="attr">server:</span> <span class="string">https://artalk.example.com</span></span><br><span class="line">  <span class="comment"># site ATK_SITE_DEFAULT 设置的内容，不是博客域名，不能包含引号</span></span><br><span class="line">  <span class="attr">site:</span> <span class="string">Artalk</span> <span class="string">的博客</span></span><br><span class="line">  <span class="comment"># Use Artalk visitor count as the page view count</span></span><br><span class="line">  <span class="attr">visitor:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">option:</span></span><br></pre></td></tr></table></figure></section></div></div>
-
-<h3 id="预览"><a href="#预览" class="headerlink" title="预览"></a>预览</h3><p>运行命令在网站查看评论预览</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">hexo g</span><br><span class="line">hexo s</span><br><span class="line"></span><br><span class="line"><span class="comment"># Artalk 默认需要推送到服务器才可以预览</span></span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure>
-<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-6-tab-0" aria-controls="tabs-6-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">Twikoo</button><button type="button" role="tab" id="tabs-6-tab-1" aria-controls="tabs-6-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">Artalk</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-6-panel-0" aria-labelledby="tabs-6-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><p><img src="https://img.nep.me/i/2024/12/14/5cyu50-2.webp" alt="Twikoo Preview"></p></section><section role="tabpanel" id="tabs-6-panel-1" aria-labelledby="tabs-6-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><p><img src="https://img.nep.me/i/2024/12/15/c38ctz-2.webp" alt="Artalk Preview"></p></section></div></div>
-
-<h3 id="设置面板"><a href="#设置面板" class="headerlink" title="设置面板"></a>设置面板</h3><p>Twikoo：<br>第一次打开 Twikoo 面板，需要设置 <strong>密码</strong> ，然后进入面板可以导入评论、设置站点信息、SMTP 邮件发送、消息推送等功能。</p>
-<p>Artalk：<br>Artalk 则是访问自己的域名，使用管理员账户登陆后台进行设置，同样可以设置SMTP 邮件发送、消息推送等功能。</p>
-<div class="flatpaper-note flatpaper-note--warning"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>使用 <code>#### Artalk</code> 的标题会导致评论无法显示 </p></div></div>
-
-<h2 id="Disqus"><a href="#Disqus" class="headerlink" title="Disqus"></a>Disqus</h2><p>Disqus 是一个第三方评论服务平台，使用 Disqus 无需我们自己手动部署，只需要在 Disqus 网站设置好站点信息后，在主题中启用即可，但是免费的版本包含广告与推广。</p>
-<h3 id="获取-shortname"><a href="#获取-shortname" class="headerlink" title="获取 shortname"></a>获取 shortname</h3><p>首先需要注册一个 <a href="https://disqus.com/">Disqus</a> 账户，然后访问 <a href="https://disqus.com/admin/create/">https://disqus.com/admin/create/</a>  进入站点创建页面</p>
-<p>其中 Website Name 填写的就是我们之后需要用到的 <code>shortname</code><br><img src="https://img.nep.me/i/2024/12/14/2l4x2b-2.webp"></p>
-<p>点击 create site 后进入 Install 界面，我们不需要从这里安装，可以直接关闭，当然也可以访问 <code>https://shortname.disqus.com/admin/</code> 修改站点的一些设置。</p>
-<h3 id="在主题中启用-Disqus"><a href="#在主题中启用-Disqus" class="headerlink" title="在主题中启用 Disqus"></a>在主题中启用 Disqus</h3><p>编辑 Hexo 目录下的 <code>_config.butterfly.yml</code> 文件： </p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">comments:</span>  </span><br><span class="line">  <span class="comment"># 设置为 disqus</span></span><br><span class="line">  <span class="attr">use:</span> <span class="string">disqus</span></span><br><span class="line"></span><br><span class="line"><span class="attr">disqus:</span></span><br><span class="line">  <span class="comment"># 填写 shortname</span></span><br><span class="line">  <span class="attr">shortname:</span></span><br></pre></td></tr></table></figure>
-
-<p>即可运行命令在网站查看评论预览</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">hexo g</span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>教程</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
-        <tag>Blog</tag>
-        <tag>Twikoo</tag>
-        <tag>Artalk</tag>
-        <tag>Giscus</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>如何使用 SSH key 连接 GitHub</title>
-    <url>/post/how-to-add-ssh-key-to-github.html</url>
-    <content><![CDATA[<p>如果需要频繁的进行 GitHub pull&#x2F;push 操作，使用 SSH key 绑定到 GitHub 会更加方便，绑定后将使用公钥加密来验证用户身份，比传统的用户名和密码方式更安全。  </p>
-<p>本文命令与截图对应下面的系统版本，需要先安装 <a href="https://git-scm.com/downloads">Git</a></p>
-<ul>
-<li><strong>Windows 11</strong> : 一般安装 <code>64-bit Git for Windows Setup</code>, 安装选项全部<strong>默认</strong>即可</li>
-<li><strong>macOS 15.1</strong> : 更推荐通过安装 <a href="https://brew.sh/">Homebrew</a> 获取 Git 程序，查看 <a href="https://ooo.run/post/how-to-install-homebrew-on-macos.html">如何在 macOS 中安装 Homebrew </a></li>
-</ul>
-<h2 id="打开终端程序"><a href="#打开终端程序" class="headerlink" title="打开终端程序"></a>打开终端程序</h2><h3 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h3><ul>
-<li>右键点击开始菜单，选择终端</li>
-<li>或是按 <code>Windows + R</code> 快捷键打开 <strong>运行</strong> 窗口，输入 <code>cmd</code> ，回车打开</li>
-</ul>
-<h3 id="macOS"><a href="#macOS" class="headerlink" title="macOS"></a>macOS</h3><ul>
-<li>启动台 &gt; 其他 &gt; 终端</li>
-<li><strong>启动台</strong> 或是　<code>Commond⌘ + 空格</code> 打开聚焦搜索，搜索 <strong>终端</strong> 或是 <strong>Terminal</strong></li>
-</ul>
-<p>安装 Git 后，使用 <code>git -v</code> 测试，如果安装成功会显示版本号</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt; git -v</span><br><span class="line">git version 2.47.1</span><br></pre></td></tr></table></figure>
-<p>然后设置 Git 的个人信息</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;yourname&quot;</span></span><br><span class="line">git config --global user.email <span class="string">&quot;your_email@example.com&quot;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="测试一下-github-com"><a href="#测试一下-github-com" class="headerlink" title="测试一下 github.com"></a>测试一下 github.com</h2><div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>Windows 10 用户可以使用 Git Bash</p></div></div>
-<div class="flatpaper-note flatpaper-note--warning"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>测试时会自动创建 <code>.ssh</code> 文件夹，因此你也需要测试一下</p></div></div>
-
-<p>打开终端程序，运行测试命令，如果是第一次运行，需要输入 <code>yes</code> 确认</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure>
-
-<p>我们没有添加过 SSH key，会提示 <code>Permission denied (publickey).</code></p>
-<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-7-tab-0" aria-controls="tabs-7-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">Windows</button><button type="button" role="tab" id="tabs-7-tab-1" aria-controls="tabs-7-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">macOS</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-7-panel-0" aria-labelledby="tabs-7-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><p><img src="https://img.nep.me/i/2024/12/13/122owl6-2.webp"></p></section><section role="tabpanel" id="tabs-7-panel-1" aria-labelledby="tabs-7-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><p><img src="https://img.nep.me/i/2024/12/13/124oz3l-2.webp"></p></section></div></div>
-
-<h2 id="创建-SSH-Key"><a href="#创建-SSH-Key" class="headerlink" title="创建 SSH Key"></a>创建 SSH Key</h2><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> .ssh</span><br><span class="line"></span><br><span class="line">ssh-keygen -t rsa -C <span class="string">&quot;your_email@example.com&quot;</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">C:\Users\ME\.ssh&gt;ssh-keygen -t rsa</span><br><span class="line"></span><br><span class="line">Generating public/private rsa key pair.</span><br><span class="line"><span class="comment"># 设置保存文件名，留空则为 id_rsa</span></span><br><span class="line">Enter file <span class="keyword">in</span> <span class="built_in">which</span> to save the key (C:\Users\ME/.ssh/id_rsa):</span><br><span class="line"><span class="comment"># 设置密码，留空则是没有密码</span></span><br><span class="line">Enter passphrase (empty <span class="keyword">for</span> no passphrase):</span><br><span class="line"><span class="comment"># 确认密码</span></span><br><span class="line">Enter same passphrase again:</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成的私钥</span></span><br><span class="line">Your identification has been saved <span class="keyword">in</span> C:\Users\ME/.ssh/id_rsa</span><br><span class="line"><span class="comment"># 生成的公钥</span></span><br><span class="line">Your public key has been saved <span class="keyword">in</span> C:\Users\ME/.ssh/id_rsa.pub</span><br></pre></td></tr></table></figure>
-<div class="flatpaper-note flatpaper-note--warning"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p><code>.pub</code> 后缀的是公钥，可以公开，<strong>私钥相当于个人密码，要小心保存</strong></p></div></div>
-
-<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>git 默认会查找名称为 <code>id_rsa</code> 的 SSH key </p></div></div>
-
-<div class="flatpaper-note flatpaper-note--primary"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>如果设置了文件名称，或是生成其他格式的 SSH key 可以查看后文的配合 <code>SSH config</code> 的部分</p></div></div>
-
-<div class="flatpaper-note flatpaper-note--default"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>rsa 格式的 key 内容很长，使用 <code>ssh-keygen -t ed25519</code> 生成 <code>ed25519</code> 格式的 key，更简洁，更安全</p></div></div>
-
-<h2 id="添加公钥到-GitHub"><a href="#添加公钥到-GitHub" class="headerlink" title="添加公钥到 GitHub"></a>添加公钥到 GitHub</h2><p>使用命令或是文本编辑器查看公钥的内容</p>
-<ul>
-<li>Windows 使用 <code>type id_rsa.pub</code> </li>
-<li>macOS &#x2F; Linux 使用 <code>cat id_rsa.pub</code></li>
-</ul>
-<p>访问 <a href="https://github.com/settings/keys">Github - SSH Keys</a>，点击右上角 <strong>New SSH key</strong>。<br>手动访问路径：右上角点击 <strong>头像</strong> &gt; <strong>Settings</strong> &gt; <strong>SSH and GPG keys</strong> &gt; <strong>New SSH key</strong></p>
-<p><img src="https://img.nep.me/i/2024/12/13/12s8co0-2.webp" alt="github-add-ssh-key"></p>
-<ul>
-<li><strong>Title</strong>：取个备注名字</li>
-<li><strong>Key type</strong>：不需要修改，保持默认 <strong>Authentication Key</strong></li>
-<li><strong>Key</strong>：粘贴 <code>id_rsa.pub</code> 对应的文本内容</li>
-<li>点击 <code>Add SSH key</code> 保存</li>
-</ul>
-<p><img src="https://img.nep.me/i/2024/12/13/12sain9-2.webp" alt="github-add-ssh-key-details"></p>
-<p>添加成功会在列表显示<br><img src="https://img.nep.me/i/2024/12/13/12vf7u0-2.webp" alt="github-add-ssh-key-done"></p>
-<p>此时我们再执行测试命令，就会获得成功的欢迎提示。 </p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt;ssh -T git@github.com</span><br><span class="line">Hi &lt;Your username&gt;! You<span class="string">&#x27;ve successfully authenticated, but GitHub does not provide shell access.</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="配合-SSH-config-使用"><a href="#配合-SSH-config-使用" class="headerlink" title="配合 SSH config 使用"></a>配合 SSH config 使用</h2><p>如果我们的私钥的名称不是 <code>id_rsa</code> ，我们将仍然无法成功连接 GitHub ，你可以将私钥修改文件名后再试试 </p>
-<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-8-tab-0" aria-controls="tabs-8-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">Windows</button><button type="button" role="tab" id="tabs-8-tab-1" aria-controls="tabs-8-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">macOS&amp;Linux</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-8-panel-0" aria-labelledby="tabs-8-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt; rename id_rsa id_mysshkey</span><br><span class="line"></span><br><span class="line">&gt; ssh -T git@github.com</span><br><span class="line">git@github.com: Permission denied (publickey).</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-8-panel-1" aria-labelledby="tabs-8-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt; <span class="built_in">mv</span> id_rsa id_mysshkey</span><br><span class="line"></span><br><span class="line">&gt; ssh -T git@github.com</span><br><span class="line">git@github.com: Permission denied (publickey).</span><br></pre></td></tr></table></figure></section></div></div>
-
-<p>这时我们可以通过在 <code>.ssh</code> 文件夹中创建一个 <code>config</code> 文件，填入下面的内容来告诉 git 程序在哪里找到密钥</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Host github.com</span><br><span class="line">    HostName github.com</span><br><span class="line">    User git</span><br><span class="line">    IdentityFile ~/.ssh/id_mysshkey</span><br></pre></td></tr></table></figure>
-
-<p>其中 <code>IdentityFile</code> 部分填写私钥的路径， <code>~</code> 代表用户 Home 目录</p>
-<ul>
-<li>Windows 相当于 <code>C:\Users\&lt;username&gt;\</code></li>
-<li>macOS 相当于 <code>/Users/&lt;username&gt;/</code></li>
-<li>Linux 相当于 <code>/root/</code> 或是 <code>/home/&lt;username&gt;/</code></li>
-</ul>
-<p>再进行测试，发现又能显示成功的欢迎消息。  </p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt;ssh -T git@github.com</span><br><span class="line">Hi &lt;Your username&gt;! You<span class="string">&#x27;ve successfully authenticated, but GitHub does not provide shell access.</span></span><br></pre></td></tr></table></figure>
-
-<p>以后就可以很方便的使用 Git 了！</p>
-]]></content>
-      <categories>
-        <category>教程</category>
-      </categories>
-      <tags>
-        <tag>GitHub</tag>
-        <tag>SSH</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>如何在 macOS 中安装 Homebrew</title>
     <url>/post/how-to-install-homebrew-on-macos.html</url>
     <content><![CDATA[<p>有时我们在网络上看到别人使用 macOS 安装软件是使用的下面的命令，非常的方便。  </p>
@@ -446,7 +361,7 @@
 
 <p>或是查看下面的内容</p>
 <p>替换使用 <a href="https://developer.aliyun.com/mirror/homebrew/">阿里镜像源</a></p>
-<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-9-tab-0" aria-controls="tabs-9-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">zsh</button><button type="button" role="tab" id="tabs-9-tab-1" aria-controls="tabs-9-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">bash</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-9-panel-0" aria-labelledby="tabs-9-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo &#x27;export HOMEBREW_API_DOMAIN=&quot;https://mirrors.aliyun.com/homebrew-bottles/api&quot;&#x27; &gt;&gt; ~/.zshrc</span><br><span class="line">echo &#x27;export HOMEBREW_BREW_GIT_REMOTE=&quot;https://mirrors.aliyun.com/homebrew/brew.git&quot;&#x27; &gt;&gt; ~/.zshrc</span><br><span class="line">echo &#x27;export HOMEBREW_CORE_GIT_REMOTE=&quot;https://mirrors.aliyun.com/homebrew/homebrew-core.git&quot;&#x27; &gt;&gt; ~/.zshrc</span><br><span class="line">echo &#x27;export HOMEBREW_BOTTLE_DOMAIN=&quot;https://mirrors.aliyun.com/homebrew/homebrew-bottles&quot;&#x27; &gt;&gt; ~/.zshrc</span><br><span class="line">source ~/.zshrc</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-9-panel-1" aria-labelledby="tabs-9-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export HOMEBREW_API_DOMAIN=&quot;https://mirrors.aliyun.com/homebrew-bottles/api&quot;&#x27;</span> &gt;&gt; ~/.bash_profile</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export HOMEBREW_BREW_GIT_REMOTE=&quot;https://mirrors.aliyun.com/homebrew/brew.git&quot;&#x27;</span> &gt;&gt; ~/.bash_profile</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export HOMEBREW_CORE_GIT_REMOTE=&quot;https://mirrors.aliyun.com/homebrew/homebrew-core.git&quot;&#x27;</span> &gt;&gt; ~/.bash_profile</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export HOMEBREW_BOTTLE_DOMAIN=&quot;https://mirrors.aliyun.com/homebrew/homebrew-bottles&quot;&#x27;</span> &gt;&gt; ~/.bash_profile</span><br><span class="line"><span class="built_in">source</span> ~/.bash_profile</span><br></pre></td></tr></table></figure></section></div></div>
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-7-tab-0" aria-controls="tabs-7-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">zsh</button><button type="button" role="tab" id="tabs-7-tab-1" aria-controls="tabs-7-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">bash</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-7-panel-0" aria-labelledby="tabs-7-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo &#x27;export HOMEBREW_API_DOMAIN=&quot;https://mirrors.aliyun.com/homebrew-bottles/api&quot;&#x27; &gt;&gt; ~/.zshrc</span><br><span class="line">echo &#x27;export HOMEBREW_BREW_GIT_REMOTE=&quot;https://mirrors.aliyun.com/homebrew/brew.git&quot;&#x27; &gt;&gt; ~/.zshrc</span><br><span class="line">echo &#x27;export HOMEBREW_CORE_GIT_REMOTE=&quot;https://mirrors.aliyun.com/homebrew/homebrew-core.git&quot;&#x27; &gt;&gt; ~/.zshrc</span><br><span class="line">echo &#x27;export HOMEBREW_BOTTLE_DOMAIN=&quot;https://mirrors.aliyun.com/homebrew/homebrew-bottles&quot;&#x27; &gt;&gt; ~/.zshrc</span><br><span class="line">source ~/.zshrc</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-7-panel-1" aria-labelledby="tabs-7-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export HOMEBREW_API_DOMAIN=&quot;https://mirrors.aliyun.com/homebrew-bottles/api&quot;&#x27;</span> &gt;&gt; ~/.bash_profile</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export HOMEBREW_BREW_GIT_REMOTE=&quot;https://mirrors.aliyun.com/homebrew/brew.git&quot;&#x27;</span> &gt;&gt; ~/.bash_profile</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export HOMEBREW_CORE_GIT_REMOTE=&quot;https://mirrors.aliyun.com/homebrew/homebrew-core.git&quot;&#x27;</span> &gt;&gt; ~/.bash_profile</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export HOMEBREW_BOTTLE_DOMAIN=&quot;https://mirrors.aliyun.com/homebrew/homebrew-bottles&quot;&#x27;</span> &gt;&gt; ~/.bash_profile</span><br><span class="line"><span class="built_in">source</span> ~/.bash_profile</span><br></pre></td></tr></table></figure></section></div></div>
 
 <p>然后执行安装命令，从阿里云下载安装脚本并安装 Homebrew</p>
 <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://mirrors.aliyun.com/homebrew/install.git brew-install</span><br><span class="line">/bin/bash brew-install/install.sh</span><br><span class="line"><span class="built_in">rm</span> -rf brew-install</span><br></pre></td></tr></table></figure>
@@ -476,6 +391,91 @@
       <tags>
         <tag>Homebrew</tag>
         <tag>macOS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>如何使用 SSH key 连接 GitHub</title>
+    <url>/post/how-to-add-ssh-key-to-github.html</url>
+    <content><![CDATA[<p>如果需要频繁的进行 GitHub pull&#x2F;push 操作，使用 SSH key 绑定到 GitHub 会更加方便，绑定后将使用公钥加密来验证用户身份，比传统的用户名和密码方式更安全。  </p>
+<p>本文命令与截图对应下面的系统版本，需要先安装 <a href="https://git-scm.com/downloads">Git</a></p>
+<ul>
+<li><strong>Windows 11</strong> : 一般安装 <code>64-bit Git for Windows Setup</code>, 安装选项全部<strong>默认</strong>即可</li>
+<li><strong>macOS 15.1</strong> : 更推荐通过安装 <a href="https://brew.sh/">Homebrew</a> 获取 Git 程序，查看 <a href="https://ooo.run/post/how-to-install-homebrew-on-macos.html">如何在 macOS 中安装 Homebrew </a></li>
+</ul>
+<h2 id="打开终端程序"><a href="#打开终端程序" class="headerlink" title="打开终端程序"></a>打开终端程序</h2><h3 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h3><ul>
+<li>右键点击开始菜单，选择终端</li>
+<li>或是按 <code>Windows + R</code> 快捷键打开 <strong>运行</strong> 窗口，输入 <code>cmd</code> ，回车打开</li>
+</ul>
+<h3 id="macOS"><a href="#macOS" class="headerlink" title="macOS"></a>macOS</h3><ul>
+<li>启动台 &gt; 其他 &gt; 终端</li>
+<li><strong>启动台</strong> 或是　<code>Commond⌘ + 空格</code> 打开聚焦搜索，搜索 <strong>终端</strong> 或是 <strong>Terminal</strong></li>
+</ul>
+<p>安装 Git 后，使用 <code>git -v</code> 测试，如果安装成功会显示版本号</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt; git -v</span><br><span class="line">git version 2.47.1</span><br></pre></td></tr></table></figure>
+<p>然后设置 Git 的个人信息</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;yourname&quot;</span></span><br><span class="line">git config --global user.email <span class="string">&quot;your_email@example.com&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="测试一下-github-com"><a href="#测试一下-github-com" class="headerlink" title="测试一下 github.com"></a>测试一下 github.com</h2><div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>Windows 10 用户可以使用 Git Bash</p></div></div>
+<div class="flatpaper-note flatpaper-note--warning"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>测试时会自动创建 <code>.ssh</code> 文件夹，因此你也需要测试一下</p></div></div>
+
+<p>打开终端程序，运行测试命令，如果是第一次运行，需要输入 <code>yes</code> 确认</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure>
+
+<p>我们没有添加过 SSH key，会提示 <code>Permission denied (publickey).</code></p>
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-8-tab-0" aria-controls="tabs-8-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">Windows</button><button type="button" role="tab" id="tabs-8-tab-1" aria-controls="tabs-8-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">macOS</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-8-panel-0" aria-labelledby="tabs-8-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><p><img src="https://img.nep.me/i/2024/12/13/122owl6-2.webp"></p></section><section role="tabpanel" id="tabs-8-panel-1" aria-labelledby="tabs-8-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><p><img src="https://img.nep.me/i/2024/12/13/124oz3l-2.webp"></p></section></div></div>
+
+<h2 id="创建-SSH-Key"><a href="#创建-SSH-Key" class="headerlink" title="创建 SSH Key"></a>创建 SSH Key</h2><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> .ssh</span><br><span class="line"></span><br><span class="line">ssh-keygen -t rsa -C <span class="string">&quot;your_email@example.com&quot;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">C:\Users\ME\.ssh&gt;ssh-keygen -t rsa</span><br><span class="line"></span><br><span class="line">Generating public/private rsa key pair.</span><br><span class="line"><span class="comment"># 设置保存文件名，留空则为 id_rsa</span></span><br><span class="line">Enter file <span class="keyword">in</span> <span class="built_in">which</span> to save the key (C:\Users\ME/.ssh/id_rsa):</span><br><span class="line"><span class="comment"># 设置密码，留空则是没有密码</span></span><br><span class="line">Enter passphrase (empty <span class="keyword">for</span> no passphrase):</span><br><span class="line"><span class="comment"># 确认密码</span></span><br><span class="line">Enter same passphrase again:</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成的私钥</span></span><br><span class="line">Your identification has been saved <span class="keyword">in</span> C:\Users\ME/.ssh/id_rsa</span><br><span class="line"><span class="comment"># 生成的公钥</span></span><br><span class="line">Your public key has been saved <span class="keyword">in</span> C:\Users\ME/.ssh/id_rsa.pub</span><br></pre></td></tr></table></figure>
+<div class="flatpaper-note flatpaper-note--warning"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p><code>.pub</code> 后缀的是公钥，可以公开，<strong>私钥相当于个人密码，要小心保存</strong></p></div></div>
+
+<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>git 默认会查找名称为 <code>id_rsa</code> 的 SSH key </p></div></div>
+
+<div class="flatpaper-note flatpaper-note--primary"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>如果设置了文件名称，或是生成其他格式的 SSH key 可以查看后文的配合 <code>SSH config</code> 的部分</p></div></div>
+
+<div class="flatpaper-note flatpaper-note--default"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>rsa 格式的 key 内容很长，使用 <code>ssh-keygen -t ed25519</code> 生成 <code>ed25519</code> 格式的 key，更简洁，更安全</p></div></div>
+
+<h2 id="添加公钥到-GitHub"><a href="#添加公钥到-GitHub" class="headerlink" title="添加公钥到 GitHub"></a>添加公钥到 GitHub</h2><p>使用命令或是文本编辑器查看公钥的内容</p>
+<ul>
+<li>Windows 使用 <code>type id_rsa.pub</code> </li>
+<li>macOS &#x2F; Linux 使用 <code>cat id_rsa.pub</code></li>
+</ul>
+<p>访问 <a href="https://github.com/settings/keys">Github - SSH Keys</a>，点击右上角 <strong>New SSH key</strong>。<br>手动访问路径：右上角点击 <strong>头像</strong> &gt; <strong>Settings</strong> &gt; <strong>SSH and GPG keys</strong> &gt; <strong>New SSH key</strong></p>
+<p><img src="https://img.nep.me/i/2024/12/13/12s8co0-2.webp" alt="github-add-ssh-key"></p>
+<ul>
+<li><strong>Title</strong>：取个备注名字</li>
+<li><strong>Key type</strong>：不需要修改，保持默认 <strong>Authentication Key</strong></li>
+<li><strong>Key</strong>：粘贴 <code>id_rsa.pub</code> 对应的文本内容</li>
+<li>点击 <code>Add SSH key</code> 保存</li>
+</ul>
+<p><img src="https://img.nep.me/i/2024/12/13/12sain9-2.webp" alt="github-add-ssh-key-details"></p>
+<p>添加成功会在列表显示<br><img src="https://img.nep.me/i/2024/12/13/12vf7u0-2.webp" alt="github-add-ssh-key-done"></p>
+<p>此时我们再执行测试命令，就会获得成功的欢迎提示。 </p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt;ssh -T git@github.com</span><br><span class="line">Hi &lt;Your username&gt;! You<span class="string">&#x27;ve successfully authenticated, but GitHub does not provide shell access.</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="配合-SSH-config-使用"><a href="#配合-SSH-config-使用" class="headerlink" title="配合 SSH config 使用"></a>配合 SSH config 使用</h2><p>如果我们的私钥的名称不是 <code>id_rsa</code> ，我们将仍然无法成功连接 GitHub ，你可以将私钥修改文件名后再试试 </p>
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-9-tab-0" aria-controls="tabs-9-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">Windows</button><button type="button" role="tab" id="tabs-9-tab-1" aria-controls="tabs-9-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">macOS&amp;Linux</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-9-panel-0" aria-labelledby="tabs-9-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt; rename id_rsa id_mysshkey</span><br><span class="line"></span><br><span class="line">&gt; ssh -T git@github.com</span><br><span class="line">git@github.com: Permission denied (publickey).</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-9-panel-1" aria-labelledby="tabs-9-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt; <span class="built_in">mv</span> id_rsa id_mysshkey</span><br><span class="line"></span><br><span class="line">&gt; ssh -T git@github.com</span><br><span class="line">git@github.com: Permission denied (publickey).</span><br></pre></td></tr></table></figure></section></div></div>
+
+<p>这时我们可以通过在 <code>.ssh</code> 文件夹中创建一个 <code>config</code> 文件，填入下面的内容来告诉 git 程序在哪里找到密钥</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Host github.com</span><br><span class="line">    HostName github.com</span><br><span class="line">    User git</span><br><span class="line">    IdentityFile ~/.ssh/id_mysshkey</span><br></pre></td></tr></table></figure>
+
+<p>其中 <code>IdentityFile</code> 部分填写私钥的路径， <code>~</code> 代表用户 Home 目录</p>
+<ul>
+<li>Windows 相当于 <code>C:\Users\&lt;username&gt;\</code></li>
+<li>macOS 相当于 <code>/Users/&lt;username&gt;/</code></li>
+<li>Linux 相当于 <code>/root/</code> 或是 <code>/home/&lt;username&gt;/</code></li>
+</ul>
+<p>再进行测试，发现又能显示成功的欢迎消息。  </p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt;ssh -T git@github.com</span><br><span class="line">Hi &lt;Your username&gt;! You<span class="string">&#x27;ve successfully authenticated, but GitHub does not provide shell access.</span></span><br></pre></td></tr></table></figure>
+
+<p>以后就可以很方便的使用 Git 了！</p>
+]]></content>
+      <categories>
+        <category>教程</category>
+      </categories>
+      <tags>
+        <tag>GitHub</tag>
+        <tag>SSH</tag>
       </tags>
   </entry>
   <entry>
@@ -1766,49 +1766,6 @@
       </tags>
   </entry>
   <entry>
-    <title>在 Google AI Studio 中免费体验 Nano Banana(Gemini 2.5 Flash Image)</title>
-    <url>/post/try-gemini-flash-image-preview.html</url>
-    <content><![CDATA[<p>Google 发布了预览版本的 Gemini 2.5 Flash Image Preview，一个图像生成与编辑模型，可以进行对话式的编辑或是图像合成，现已在 Google 的各种服务中中提供。</p>
-<p>可以直接打开 <a href="https://gemini.google/">Gemini APP</a> 或是访问 <a href="https://aistudio.google.com/prompts/new_chat?model=gemini-2.5-flash-image-preview">Google AI Studio</a> 免费体验。</p>
-<blockquote>
-<p>更新：现在可以直接在 X(Twitter) 上 <a href="https://x.com/NanoBanana/with_replies">@NanoBanana</a> 来生成图片了</p>
-</blockquote>
-<p>访问 Google AI Studio 后可以看到右上角的模型为 <code>Gemini 2.5 Flash Image Preview</code>。</p>
-<blockquote>
-<p>更新：现在已经直接显示为 Nano Banana 了</p>
-</blockquote>
-<img src="https://img.nep.me/i/2025/09/01/google-ai-studio-web-nano.webp" style="width:85%;" alt="google-ai-studio-web" />
-
-<p>如果需要上传图片，只需要点击对话框右侧的 <code>+</code> 或是直接拖动图片到输入框，不如就试试现在比较火的生成手办图片的 prompts 吧：</p>
-<blockquote>
-<p>Use the nano-banana model to create a 1&#x2F;7 scale commercialized figure of thecharacter in the illustration, in a realistic style and environment. Place the figure on a computer desk, using a circular transparent acrylic base without any text.On the computer screen, display the ZBrush modeling process of the figure. Next to the computer screen, place a BANDAI-style toy packaging box printed with the original artwork.</p>
-</blockquote>
-<img src="https://img.nep.me/i/2025/08/28/gemini-flash-images-figure.webp" style="width:50%;" alt="google-ai-studio-prompts" />
-
-<p>提示词来源 <a href="https://x.com/YunFeng_cc/status/1960595391461908528">雲風Cloudwind @ x.com</a></p>
-<blockquote>
-<p>实测效果也没有那么稳定，有时需要抽卡</p>
-</blockquote>
-<p>Gemini 2.5 Flash Image Preview 主要特色：</p>
-<ul>
-<li>在多个提示和图像中 <strong>保持角色的一致性</strong>：一致性非常强，所以非常适合编辑图片。</li>
-<li>使用 <strong>自然语言</strong> 有针对性的编辑&#x2F;替换对象： 不需要写专业的提示词，一句话就能编辑图片，当然专业准确的提示器效果更好。</li>
-<li>基于前面两个特性，可以将多个图像根据提示词进行 <strong>合成</strong>。</li>
-<li>准确呈现图像中的文本： <strong>仅限英文</strong> ，中文效果不好。</li>
-<li>每 100 万个输出令牌 30 美元（1 幅图像约 0.039 美分）。</li>
-</ul>
-<p>上传或是生成的图片都会保存在 <strong>Google 云端硬盘</strong> &gt; <strong>我的云端硬盘</strong> &gt; <strong>Google AI Studio</strong> 文件夹内。</p>
-]]></content>
-      <categories>
-        <category>资讯</category>
-      </categories>
-      <tags>
-        <tag>AI</tag>
-        <tag>图像生成</tag>
-        <tag>Nano Banana</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>使用 ccusage 查看 Claude Code 用量</title>
     <url>/post/use-ccusage-check-claude-code-cost.html</url>
     <content><![CDATA[<p>如果你是通过 Claude Pro 或是 Max 订阅使用的 Claude Code，通过 <code>/cost</code> 会得到无需关注消耗的提示   </p>
@@ -1965,6 +1922,49 @@
         <tag>Self-hosted</tag>
         <tag>Bitwarden</tag>
         <tag>密码管理器</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>在 Google AI Studio 中免费体验 Nano Banana(Gemini 2.5 Flash Image)</title>
+    <url>/post/try-gemini-flash-image-preview.html</url>
+    <content><![CDATA[<p>Google 发布了预览版本的 Gemini 2.5 Flash Image Preview，一个图像生成与编辑模型，可以进行对话式的编辑或是图像合成，现已在 Google 的各种服务中中提供。</p>
+<p>可以直接打开 <a href="https://gemini.google/">Gemini APP</a> 或是访问 <a href="https://aistudio.google.com/prompts/new_chat?model=gemini-2.5-flash-image-preview">Google AI Studio</a> 免费体验。</p>
+<blockquote>
+<p>更新：现在可以直接在 X(Twitter) 上 <a href="https://x.com/NanoBanana/with_replies">@NanoBanana</a> 来生成图片了</p>
+</blockquote>
+<p>访问 Google AI Studio 后可以看到右上角的模型为 <code>Gemini 2.5 Flash Image Preview</code>。</p>
+<blockquote>
+<p>更新：现在已经直接显示为 Nano Banana 了</p>
+</blockquote>
+<img src="https://img.nep.me/i/2025/09/01/google-ai-studio-web-nano.webp" style="width:85%;" alt="google-ai-studio-web" />
+
+<p>如果需要上传图片，只需要点击对话框右侧的 <code>+</code> 或是直接拖动图片到输入框，不如就试试现在比较火的生成手办图片的 prompts 吧：</p>
+<blockquote>
+<p>Use the nano-banana model to create a 1&#x2F;7 scale commercialized figure of thecharacter in the illustration, in a realistic style and environment. Place the figure on a computer desk, using a circular transparent acrylic base without any text.On the computer screen, display the ZBrush modeling process of the figure. Next to the computer screen, place a BANDAI-style toy packaging box printed with the original artwork.</p>
+</blockquote>
+<img src="https://img.nep.me/i/2025/08/28/gemini-flash-images-figure.webp" style="width:50%;" alt="google-ai-studio-prompts" />
+
+<p>提示词来源 <a href="https://x.com/YunFeng_cc/status/1960595391461908528">雲風Cloudwind @ x.com</a></p>
+<blockquote>
+<p>实测效果也没有那么稳定，有时需要抽卡</p>
+</blockquote>
+<p>Gemini 2.5 Flash Image Preview 主要特色：</p>
+<ul>
+<li>在多个提示和图像中 <strong>保持角色的一致性</strong>：一致性非常强，所以非常适合编辑图片。</li>
+<li>使用 <strong>自然语言</strong> 有针对性的编辑&#x2F;替换对象： 不需要写专业的提示词，一句话就能编辑图片，当然专业准确的提示器效果更好。</li>
+<li>基于前面两个特性，可以将多个图像根据提示词进行 <strong>合成</strong>。</li>
+<li>准确呈现图像中的文本： <strong>仅限英文</strong> ，中文效果不好。</li>
+<li>每 100 万个输出令牌 30 美元（1 幅图像约 0.039 美分）。</li>
+</ul>
+<p>上传或是生成的图片都会保存在 <strong>Google 云端硬盘</strong> &gt; <strong>我的云端硬盘</strong> &gt; <strong>Google AI Studio</strong> 文件夹内。</p>
+]]></content>
+      <categories>
+        <category>资讯</category>
+      </categories>
+      <tags>
+        <tag>AI</tag>
+        <tag>图像生成</tag>
+        <tag>Nano Banana</tag>
       </tags>
   </entry>
   <entry>
@@ -2843,25 +2843,22 @@
       </tags>
   </entry>
   <entry>
-    <title>什么是 “服务器奶牛化” ？</title>
-    <url>/post/what-is-turing-a-server-into-cash-cow.html</url>
-    <content><![CDATA[<p><strong>服务器奶牛化</strong> 是一个网络流行语，形象地描述了将服务器当作“奶牛”，通过持续压榨其资源以获取最大化收益的行为。这个词的核心在于“榨取价值”，类似于不断从奶牛身上挤奶。</p>
-<p>用于形容将服务器的计算、存储、带宽等资源，像挤牛奶一样持续变现的过程。</p>
-<h3 id="主要特征"><a href="#主要特征" class="headerlink" title="主要特征"></a>主要特征</h3><ol>
-<li><p><strong>资源极限压榨</strong><br>让服务器长期处于高负载状态，最大限度地利用其计算、存储和网络带宽，例如运行爬虫、挖矿或批量处理任务。</p>
-</li>
-<li><p><strong>成本套利（薅羊毛）</strong><br>利用云服务商的免费试用、促销活动或漏洞，以极低的成本获取服务器资源，再通过这些资源进行挖矿、跑节点或执行广告任务来盈利。</p>
-</li>
-<li><p><strong>规模化运作</strong><br>同时部署大量服务器运行相同的脚本或服务。单台服务器的产出虽小，但规模化后总收益非常可观，如同经营一个“云上牧场”。</p>
-</li>
-</ol>
-<p><img src="https://img.nep.me/i/2025/08/13/what-is-server-cow.webp" alt="what-is-server-cow"></p>
+    <title>什么是 BYOK ？</title>
+    <url>/post/what-is-byok.html</url>
+    <content><![CDATA[<h2 id="什么是-BYOK-？"><a href="#什么是-BYOK-？" class="headerlink" title="什么是 BYOK ？"></a>什么是 BYOK ？</h2><p><code>BYOK</code> 是英文 <strong>Bring Your Own Key</strong> 的缩写，就是字面上的意思 <strong>自带密钥</strong> 。在云计算和软件服务领域，这是一种安全模型，允许客户使用自己的加密密钥来加密他们在服务商那里的数据，而不是使用由服务商提供的默认密钥。</p>
+<h2 id="在大模型应用中"><a href="#在大模型应用中" class="headerlink" title="在大模型应用中"></a>在大模型应用中</h2><p>最近，BYOK 这个概念在各类大模型（LLM）应用中变得越来越流行。通常使用 AI 应用需要消耗开发者提供的 Token，但有些应用采取了 BYOK 模式，它们允许用户直接填入自己从 OpenAI、Google、Anthropic 等官方或是其他渠道渠道获取的 API Key。</p>
+<p>对于用户而言，这意味着：</p>
+<ul>
+<li><strong>成本透明</strong>：你可以直接通过自己的 API 账户支付消耗的 Token，清楚地知道每一分钱花在了哪里。</li>
+<li><strong>使用灵活</strong>：不受应用开发者 Token 配额的限制，只要自己的 API Key 有效且有余额，就能持续使用。</li>
+</ul>
+<p>对于开发者而言，BYOK 模式也降低了他们的运营负担。他们无需预先购买和管理大量的 API Token，也简化了复杂的计费和分发流程，可以更专注于核心功能的开发。</p>
 ]]></content>
       <categories>
         <category>笔记</category>
       </categories>
       <tags>
-        <tag>服务器</tag>
+        <tag>BYOK</tag>
       </tags>
   </entry>
   <entry>
@@ -2886,6 +2883,121 @@
       <tags>
         <tag>Antigravity</tag>
         <tag>Agent Skills</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>什么是 “服务器奶牛化” ？</title>
+    <url>/post/what-is-turing-a-server-into-cash-cow.html</url>
+    <content><![CDATA[<p><strong>服务器奶牛化</strong> 是一个网络流行语，形象地描述了将服务器当作“奶牛”，通过持续压榨其资源以获取最大化收益的行为。这个词的核心在于“榨取价值”，类似于不断从奶牛身上挤奶。</p>
+<p>用于形容将服务器的计算、存储、带宽等资源，像挤牛奶一样持续变现的过程。</p>
+<h3 id="主要特征"><a href="#主要特征" class="headerlink" title="主要特征"></a>主要特征</h3><ol>
+<li><p><strong>资源极限压榨</strong><br>让服务器长期处于高负载状态，最大限度地利用其计算、存储和网络带宽，例如运行爬虫、挖矿或批量处理任务。</p>
+</li>
+<li><p><strong>成本套利（薅羊毛）</strong><br>利用云服务商的免费试用、促销活动或漏洞，以极低的成本获取服务器资源，再通过这些资源进行挖矿、跑节点或执行广告任务来盈利。</p>
+</li>
+<li><p><strong>规模化运作</strong><br>同时部署大量服务器运行相同的脚本或服务。单台服务器的产出虽小，但规模化后总收益非常可观，如同经营一个“云上牧场”。</p>
+</li>
+</ol>
+<p><img src="https://img.nep.me/i/2025/08/13/what-is-server-cow.webp" alt="what-is-server-cow"></p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>服务器</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Anthropic 发布 Claude Mythos Preview，但不会向普通用户开放</title>
+    <url>/post/anthropic-announced-claude-mythos-preview.html</url>
+    <content><![CDATA[<p>2026 年 4 月 8 日，Anthropic 正式发布了有关新的模型 Claude Mythos Preview，并表示基于安全原因不会向普通用户开放该模型。</p>
+<p>Anthropic 表示这是一个全新的通用语言模型，该模型在各个方面都表现出色，尤其在计算机安全任务方面更是卓越非凡。</p>
+<p>在 Anthropic 的测试中，新的模型在网络安全领域展现了超凡能力，能够在用户指示下，识别并利用所有主流操作系统和主流浏览器中的零日漏洞。</p>
+<p>以下是 Anthropic 提供的应用示例：</p>
+<ul>
+<li>发现了一个在 OpenBSD 中存在了 27 年的漏洞 (OpenBSD 是一个以其安全性著称的操作系统) 。</li>
+<li>编写了一个 Web 浏览器漏洞利用程序，将四个漏洞串联起来，绕过了浏览器的沙箱保护。</li>
+<li>Mythos Preview 自主识别出 FFmpeg 最流行的编解码器之一 H.264 中一个存在了 16 年的漏洞。</li>
+<li>Mythos Preview 完全自主地识别并利用了 FreeBSD 中一个存在了 17 年的远程代码执行漏洞，该漏洞允许任何人获取运行NFS 的机器的 root 权限。</li>
+<li>Mythos Preview 发现了一些 Linux 内核漏洞，这些漏洞允许攻击者进行越界写入（例如，通过缓冲区溢出、释放后使用或双重释放漏洞）。</li>
+</ul>
+<p>具体内容可以查看原文链接：<a href="https://red.anthropic.com/2026/mythos-preview/">Assessing Claude Mythos Preview’s cybersecurity capabilities</a></p>
+<p>根据 Mythos Preview 在测试中表现的能力，Anthropic 表示这揭示了一个严峻的事实：人工智能模型的编码能力已经达到了极高的水平，在发现和利用软件漏洞方面，它们几乎可以超越除最熟练的人类之外的所有人。</p>
+<p>因此 Anthropic 启动了 <a href="https://www.anthropic.com/glasswing">Glasswing</a> 项目，汇集所有顶尖企业包含 Amazon、Anthropic、苹果、博通、思科、CrowdStrike、谷歌、摩根大通、Linux 基金会、微软、英伟达等企业，旨在保护世界上最关键的软件。</p>
+<p>如果事实真如 Anthropic 所言，这将标志着 AI 正在重写网络安全的底层规则，我们构建了几十年的数字防线正面临前所未有的危机，“识别漏洞” 将从从人类专家的漫长审计变为 AI 模型的本能。</p>
+<p>而我们普通用户在短期内将无法接触到这一模型，这不免也是一种遗憾。</p>
+]]></content>
+      <categories>
+        <category>资讯</category>
+      </categories>
+      <tags>
+        <tag>AI</tag>
+        <tag>Claude Mythos</tag>
+        <tag>Anthropic</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Anthropic 发布 Claude Fable 5：首个公开 Mythos-class 模型亮相，但充满限制</title>
+    <url>/post/anthropic-releases-claude-fable-5.html</url>
+    <content><![CDATA[<h2 id="发布信息"><a href="#发布信息" class="headerlink" title="发布信息"></a>发布信息</h2><p>Anthropic 于美国时间 <strong>2026 年 6 月 9 日</strong> 宣布推出 <code>Claude Fable 5</code> 和 <code>Claude Mythos 5</code> 。其中，<strong>Claude Fable 5</strong> 被定位为 Anthropic 迄今 “最强的广泛发布模型” ，面向普通用户和开发者开放；Claude Mythos 5 则与 Fable 5 共享底层模型能力，但在部分安全限制上更少，当前仅向 Project Glasswing 中获批的网络安全防御方和基础设施合作伙伴有限开放。</p>
+<p>Claude Fable 5 被 Anthropic 定位为面向最高能力需求的 Mythos-class 模型，能力层级高于现有 Opus 4.8，主要面向复杂推理、长周期智能体任务、软件工程、知识工作、视觉理解和科学研究等高难度场景。官方表示，在任务越长、越复杂的情况下，Fable 5 相比此前 Claude 模型的优势越明显。</p>
+<h2 id="模型基准测试得分情况"><a href="#模型基准测试得分情况" class="headerlink" title="模型基准测试得分情况"></a>模型基准测试得分情况</h2><p>Anthropic 公布了 Claude Fable 5 与 Claude Mythos 5 在基准测试中的得分情况，表现出了全方位的优势：</p>
+<p><img src="https://img.nep.me/ooo/claude-fable5-benchmark.webp" alt="claude-fable5-benchmark.webp"></p>
+<h2 id="模型信息"><a href="#模型信息" class="headerlink" title="模型信息"></a>模型信息</h2><p>在开发者能力方面，Claude API 文档显示，Fable 5 的 API 模型 ID 为 claude-fable-5，支持 <strong>1M</strong> token 上下文窗口、最高 <strong>128K</strong> token 输出，并默认启用自适应思考能力。该模型自 2026 年 6 月 9 日起已在 Claude API、Claude Platform on AWS、Amazon Bedrock、Google Vertex AI 和 Microsoft Foundry 上正式可用。</p>
+<p>价格方面可以查看表格对比，Claude Fable 5 和 Claude Mythos 5 的标准 API 价格约为 Claude Opus 4.8 的两倍；其中 Fable 5 在批量处理场景下价格减半。</p>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th align="right">标准输入价格</th>
+<th align="right">标准输出价格</th>
+<th align="right">批量输入价格</th>
+<th align="right">批量输出价格</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Claude Fable 5</td>
+<td align="right">10 美元</td>
+<td align="right">50 美元</td>
+<td align="right">5 美元</td>
+<td align="right">25 美元</td>
+</tr>
+<tr>
+<td>Claude Mythos 5</td>
+<td align="right">10 美元</td>
+<td align="right">50 美元</td>
+<td align="right">暂未说明</td>
+<td align="right">暂未说明</td>
+</tr>
+<tr>
+<td>Claude Opus 4.8</td>
+<td align="right">5 美元</td>
+<td align="right">25 美元</td>
+<td align="right">—</td>
+<td align="right">—</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>表格价格为每 100 万 token 的计费标准，参考： <a href="https://platform.claude.com/docs/zh-CN/about-claude/pricing">模型定价 - Claude API Docs</a></p>
+</blockquote>
+<h2 id="限制信息"><a href="#限制信息" class="headerlink" title="限制信息"></a>限制信息</h2><h3 id="内置请求审核"><a href="#内置请求审核" class="headerlink" title="内置请求审核"></a>内置请求审核</h3><p>Claude Fable 5 的发布伴随更严格的安全机制。 Anthropic <a href="https://www.anthropic.com/news/claude-fable-5-mythos-5">表示</a>，若模型检测到涉及 <strong>网络安全、生物、化学或模型蒸馏</strong> 等高风险主题的请求，Claude Fable 5 可能不会直接回答，而是回退至 Claude Opus 4.8 或返回拒答结果。官方称，安全分类器在推出初期被有意调得较为保守，可能误伤部分无害请求；但 Anthropic 表示，超过 95% 的 Fable 会话不会触发回退。</p>
+<h3 id="使用限制"><a href="#使用限制" class="headerlink" title="使用限制"></a>使用限制</h3><p>Anthropic 表示 Claude Fable 5 将在 <strong>6 月 9 日</strong> 至 <strong>6 月 22 日</strong> 期间包含在 Pro、Max、Team 和席位制 Enterprise 计划中；自 6 月 23 日起，除非容量允许延长，继续使用 Claude Fable 5 将需要消耗 <strong>usage credits</strong> 或是在 API 中进行调用，即需要额外付费才可以使用。</p>
+<h3 id="数据留存与隐私限制"><a href="#数据留存与隐私限制" class="headerlink" title="数据留存与隐私限制"></a>数据留存与隐私限制</h3><p>由于 Anthropic 在新模型中引入了更强的安全监测机制，对使用数据的保存时间也存在限制，Claude API <a href="https://platform.claude.com/docs/en/about-claude/models/introducing-claude-fable-5-and-claude-mythos-5">文档</a> 显示，Claude Fable 5 与 Claude Mythos 5 被列为 Covered Models，要求保留 30 天的使用数据，不支持零数据保留（ZDR）安排；不符合该要求的组织请求将返回 <code>400 invalid_request_error</code>。</p>
+<h2 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h2><p>Claude Fable 5 模型在 Anthropic 的网页、API 与 Claude Code 中已立即可用，Claude Code 需要更新至 <code>v2.1.170</code> 以上的版本，如果打开 Claude Code 没有自动更新可以执行下面的命令手动更新</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">claude update</span><br></pre></td></tr></table></figure>
+
+<p>然后运行 <code>/model</code> 即可切换，信息页面已显示了预计使用量消耗为 Opus 模型的 2 倍。</p>
+<p><img src="https://img.nep.me/ooo/claude-fable5-model.webp" alt="claude-fable5-model.png"></p>
+<h2 id="发布福利"><a href="#发布福利" class="headerlink" title="发布福利"></a>发布福利</h2><p>为了庆祝 Claude Fable 5 发布，Anthropic 对用户的 Claude 使用额度进行了临时重置，包括 5 小时使用限额和每周使用限额，让用户可以在新模型上线初期获得更多体验机会。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>总体来看，Claude Fable 5 的发布，标志着 Anthropic 开始把此前仅在受控项目中验证的 Mythos-class 能力推向大众市场。它的主要卖点不是更快或更便宜，而是在长上下文、复杂代码、知识工作和视觉任务中的更强上限。但与此同时，更高 API 价格、安全机制回退、订阅端临时开放机制，以及与安全监测相关的数据留存安排，也意味着企业和重度开发者在采用前需要重新评估成本、合规与产品体验。</p>
+]]></content>
+      <categories>
+        <category>资讯</category>
+      </categories>
+      <tags>
+        <tag>AI</tag>
+        <tag>Claude</tag>
+        <tag>Claude Fable 5</tag>
       </tags>
   </entry>
   <entry>
@@ -3489,99 +3601,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Anthropic 发布 Claude Mythos Preview，但不会向普通用户开放</title>
-    <url>/post/anthropic-announced-claude-mythos-preview.html</url>
-    <content><![CDATA[<p>2026 年 4 月 8 日，Anthropic 正式发布了有关新的模型 Claude Mythos Preview，并表示基于安全原因不会向普通用户开放该模型。</p>
-<p>Anthropic 表示这是一个全新的通用语言模型，该模型在各个方面都表现出色，尤其在计算机安全任务方面更是卓越非凡。</p>
-<p>在 Anthropic 的测试中，新的模型在网络安全领域展现了超凡能力，能够在用户指示下，识别并利用所有主流操作系统和主流浏览器中的零日漏洞。</p>
-<p>以下是 Anthropic 提供的应用示例：</p>
-<ul>
-<li>发现了一个在 OpenBSD 中存在了 27 年的漏洞 (OpenBSD 是一个以其安全性著称的操作系统) 。</li>
-<li>编写了一个 Web 浏览器漏洞利用程序，将四个漏洞串联起来，绕过了浏览器的沙箱保护。</li>
-<li>Mythos Preview 自主识别出 FFmpeg 最流行的编解码器之一 H.264 中一个存在了 16 年的漏洞。</li>
-<li>Mythos Preview 完全自主地识别并利用了 FreeBSD 中一个存在了 17 年的远程代码执行漏洞，该漏洞允许任何人获取运行NFS 的机器的 root 权限。</li>
-<li>Mythos Preview 发现了一些 Linux 内核漏洞，这些漏洞允许攻击者进行越界写入（例如，通过缓冲区溢出、释放后使用或双重释放漏洞）。</li>
-</ul>
-<p>具体内容可以查看原文链接：<a href="https://red.anthropic.com/2026/mythos-preview/">Assessing Claude Mythos Preview’s cybersecurity capabilities</a></p>
-<p>根据 Mythos Preview 在测试中表现的能力，Anthropic 表示这揭示了一个严峻的事实：人工智能模型的编码能力已经达到了极高的水平，在发现和利用软件漏洞方面，它们几乎可以超越除最熟练的人类之外的所有人。</p>
-<p>因此 Anthropic 启动了 <a href="https://www.anthropic.com/glasswing">Glasswing</a> 项目，汇集所有顶尖企业包含 Amazon、Anthropic、苹果、博通、思科、CrowdStrike、谷歌、摩根大通、Linux 基金会、微软、英伟达等企业，旨在保护世界上最关键的软件。</p>
-<p>如果事实真如 Anthropic 所言，这将标志着 AI 正在重写网络安全的底层规则，我们构建了几十年的数字防线正面临前所未有的危机，“识别漏洞” 将从从人类专家的漫长审计变为 AI 模型的本能。</p>
-<p>而我们普通用户在短期内将无法接触到这一模型，这不免也是一种遗憾。</p>
-]]></content>
-      <categories>
-        <category>资讯</category>
-      </categories>
-      <tags>
-        <tag>AI</tag>
-        <tag>Claude Mythos</tag>
-        <tag>Anthropic</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Anthropic 发布 Claude Fable 5：首个公开 Mythos-class 模型亮相，但充满限制</title>
-    <url>/post/anthropic-releases-claude-fable-5.html</url>
-    <content><![CDATA[<h2 id="发布信息"><a href="#发布信息" class="headerlink" title="发布信息"></a>发布信息</h2><p>Anthropic 于美国时间 <strong>2026 年 6 月 9 日</strong> 宣布推出 <code>Claude Fable 5</code> 和 <code>Claude Mythos 5</code> 。其中，<strong>Claude Fable 5</strong> 被定位为 Anthropic 迄今 “最强的广泛发布模型” ，面向普通用户和开发者开放；Claude Mythos 5 则与 Fable 5 共享底层模型能力，但在部分安全限制上更少，当前仅向 Project Glasswing 中获批的网络安全防御方和基础设施合作伙伴有限开放。</p>
-<p>Claude Fable 5 被 Anthropic 定位为面向最高能力需求的 Mythos-class 模型，能力层级高于现有 Opus 4.8，主要面向复杂推理、长周期智能体任务、软件工程、知识工作、视觉理解和科学研究等高难度场景。官方表示，在任务越长、越复杂的情况下，Fable 5 相比此前 Claude 模型的优势越明显。</p>
-<h2 id="模型基准测试得分情况"><a href="#模型基准测试得分情况" class="headerlink" title="模型基准测试得分情况"></a>模型基准测试得分情况</h2><p>Anthropic 公布了 Claude Fable 5 与 Claude Mythos 5 在基准测试中的得分情况，表现出了全方位的优势：</p>
-<p><img src="https://img.nep.me/ooo/claude-fable5-benchmark.webp" alt="claude-fable5-benchmark.webp"></p>
-<h2 id="模型信息"><a href="#模型信息" class="headerlink" title="模型信息"></a>模型信息</h2><p>在开发者能力方面，Claude API 文档显示，Fable 5 的 API 模型 ID 为 claude-fable-5，支持 <strong>1M</strong> token 上下文窗口、最高 <strong>128K</strong> token 输出，并默认启用自适应思考能力。该模型自 2026 年 6 月 9 日起已在 Claude API、Claude Platform on AWS、Amazon Bedrock、Google Vertex AI 和 Microsoft Foundry 上正式可用。</p>
-<p>价格方面可以查看表格对比，Claude Fable 5 和 Claude Mythos 5 的标准 API 价格约为 Claude Opus 4.8 的两倍；其中 Fable 5 在批量处理场景下价格减半。</p>
-<table>
-<thead>
-<tr>
-<th>模型</th>
-<th align="right">标准输入价格</th>
-<th align="right">标准输出价格</th>
-<th align="right">批量输入价格</th>
-<th align="right">批量输出价格</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Claude Fable 5</td>
-<td align="right">10 美元</td>
-<td align="right">50 美元</td>
-<td align="right">5 美元</td>
-<td align="right">25 美元</td>
-</tr>
-<tr>
-<td>Claude Mythos 5</td>
-<td align="right">10 美元</td>
-<td align="right">50 美元</td>
-<td align="right">暂未说明</td>
-<td align="right">暂未说明</td>
-</tr>
-<tr>
-<td>Claude Opus 4.8</td>
-<td align="right">5 美元</td>
-<td align="right">25 美元</td>
-<td align="right">—</td>
-<td align="right">—</td>
-</tr>
-</tbody></table>
-<blockquote>
-<p>表格价格为每 100 万 token 的计费标准，参考： <a href="https://platform.claude.com/docs/zh-CN/about-claude/pricing">模型定价 - Claude API Docs</a></p>
-</blockquote>
-<h2 id="限制信息"><a href="#限制信息" class="headerlink" title="限制信息"></a>限制信息</h2><h3 id="内置请求审核"><a href="#内置请求审核" class="headerlink" title="内置请求审核"></a>内置请求审核</h3><p>Claude Fable 5 的发布伴随更严格的安全机制。 Anthropic <a href="https://www.anthropic.com/news/claude-fable-5-mythos-5">表示</a>，若模型检测到涉及 <strong>网络安全、生物、化学或模型蒸馏</strong> 等高风险主题的请求，Claude Fable 5 可能不会直接回答，而是回退至 Claude Opus 4.8 或返回拒答结果。官方称，安全分类器在推出初期被有意调得较为保守，可能误伤部分无害请求；但 Anthropic 表示，超过 95% 的 Fable 会话不会触发回退。</p>
-<h3 id="使用限制"><a href="#使用限制" class="headerlink" title="使用限制"></a>使用限制</h3><p>Anthropic 表示 Claude Fable 5 将在 <strong>6 月 9 日</strong> 至 <strong>6 月 22 日</strong> 期间包含在 Pro、Max、Team 和席位制 Enterprise 计划中；自 6 月 23 日起，除非容量允许延长，继续使用 Claude Fable 5 将需要消耗 <strong>usage credits</strong> 或是在 API 中进行调用，即需要额外付费才可以使用。</p>
-<h3 id="数据留存与隐私限制"><a href="#数据留存与隐私限制" class="headerlink" title="数据留存与隐私限制"></a>数据留存与隐私限制</h3><p>由于 Anthropic 在新模型中引入了更强的安全监测机制，对使用数据的保存时间也存在限制，Claude API <a href="https://platform.claude.com/docs/en/about-claude/models/introducing-claude-fable-5-and-claude-mythos-5">文档</a> 显示，Claude Fable 5 与 Claude Mythos 5 被列为 Covered Models，要求保留 30 天的使用数据，不支持零数据保留（ZDR）安排；不符合该要求的组织请求将返回 <code>400 invalid_request_error</code>。</p>
-<h2 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h2><p>Claude Fable 5 模型在 Anthropic 的网页、API 与 Claude Code 中已立即可用，Claude Code 需要更新至 <code>v2.1.170</code> 以上的版本，如果打开 Claude Code 没有自动更新可以执行下面的命令手动更新</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">claude update</span><br></pre></td></tr></table></figure>
-
-<p>然后运行 <code>/model</code> 即可切换，信息页面已显示了预计使用量消耗为 Opus 模型的 2 倍。</p>
-<p><img src="https://img.nep.me/ooo/claude-fable5-model.webp" alt="claude-fable5-model.png"></p>
-<h2 id="发布福利"><a href="#发布福利" class="headerlink" title="发布福利"></a>发布福利</h2><p>为了庆祝 Claude Fable 5 发布，Anthropic 对用户的 Claude 使用额度进行了临时重置，包括 5 小时使用限额和每周使用限额，让用户可以在新模型上线初期获得更多体验机会。</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>总体来看，Claude Fable 5 的发布，标志着 Anthropic 开始把此前仅在受控项目中验证的 Mythos-class 能力推向大众市场。它的主要卖点不是更快或更便宜，而是在长上下文、复杂代码、知识工作和视觉任务中的更强上限。但与此同时，更高 API 价格、安全机制回退、订阅端临时开放机制，以及与安全监测相关的数据留存安排，也意味着企业和重度开发者在采用前需要重新评估成本、合规与产品体验。</p>
-]]></content>
-      <categories>
-        <category>资讯</category>
-      </categories>
-      <tags>
-        <tag>AI</tag>
-        <tag>Claude</tag>
-        <tag>Claude Fable 5</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>AI 正在影响消费者的钱包：苹果大幅上调多款产品价格</title>
     <url>/post/apple-products-price-increase.html</url>
     <content><![CDATA[<p>自 2025 年 11 月以来，内存和存储芯片价格持续上涨，至今仍未出现明显放缓迹象。美国头部 AI 企业持续加码数据中心建设，大量采购内存与存储元件，也进一步挤压了消费电子厂商的供应空间。如今，苹果也开始将这部分成本压力传导到终端产品上，宣布上调 iPhone 产品线之外多款设备的售价。</p>
@@ -3672,106 +3691,28 @@
       </tags>
   </entry>
   <entry>
-    <title>别让终端历史成为你的&quot;密码本&quot;：避免记录敏感命的实用指南</title>
-    <url>/post/avoid-leaking-secrets-in-shell-history.html</url>
-    <content><![CDATA[<h2 id="前言：供应链攻击之下，每一行命令都可能是入口"><a href="#前言：供应链攻击之下，每一行命令都可能是入口" class="headerlink" title="前言：供应链攻击之下，每一行命令都可能是入口"></a>前言：供应链攻击之下，每一行命令都可能是入口</h2><p>2025 年至今，针对 npm、PyPI、GitHub Actions、Docker Hub 的供应链攻击事件持续走高：被污染的依赖、被劫持的 CI Token、被钓鱼的维护者账号……攻击者越来越偏好「绕过你的代码、直接拿你的凭证」的低成本路径。</p>
-<p>而开发者最容易忽略的一处 “凭证仓库” ，恰恰是每天都在用、却几乎从不审计的：<strong>Shell 历史记录文件</strong>。</p>
-<ul>
-<li>macOS &#x2F; Linux：<code>~/.zsh_history</code>、<code>~/.bash_history</code></li>
-<li>Windows PowerShell：<code>%APPDATA%\Microsoft\Windows\PowerShell\PSReadLine\ConsoleHost_history.txt</code></li>
-</ul>
-<p>这些文件以 <strong>明文</strong> 保存你输入过的所有命令——包括误粘贴的 API Key、带密码的 URL、订阅链接、数据库连接串。一旦你的电脑被恶意 npm 包、伪装 VSCode 插件、或被入侵的 CLI 工具读取到这些路径，攻击者无需提权就能直接打包带走。</p>
-<p>但是有时也的确会需要在命令中输入密钥，比如 <code>export API_KEY=</code>，本文给出两件可立刻落地的小事：</p>
-<ol>
-<li><strong>写命令时</strong>：让敏感命令一开始就不进历史。</li>
-<li><strong>写完之后</strong>：定期扫一遍历史文件，看看自己是不是早就漏过。</li>
-</ol>
-<hr>
-<h2 id="一、macOS-Linux：在命令前加一个空格"><a href="#一、macOS-Linux：在命令前加一个空格" class="headerlink" title="一、macOS &#x2F; Linux：在命令前加一个空格"></a>一、macOS &#x2F; Linux：在命令前加一个空格</h2><p><code>bash</code> 和 <code>zsh</code> 都支持 <code>HISTCONTROL</code> &#x2F; <code>HIST_IGNORE_SPACE</code> —— 一旦开启，<strong>以空格开头的命令不会被写入历史文件，也不会出现在 <code>↑</code> 历史回溯里</strong>。</p>
-<p>很多发行版或 shell 框架可能已经启用启用了这个特性。验证一下：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># bash - 期望包含 ignorespace 或 ignoreboth</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$HISTCONTROL</span>&quot;</span>   </span><br><span class="line"></span><br><span class="line"><span class="comment"># zsh - 期望看到 histignorespace</span></span><br><span class="line"><span class="built_in">setopt</span> | grep histignorespace   </span><br></pre></td></tr></table></figure>
+    <title>ChatGPT Business 为成员启用设备代码身份验证</title>
+    <url>/post/chatgpt-business-enable-codex-device-code.html</url>
+    <content><![CDATA[<p>最近 OpenAI 大促销，ChatGPT Business 免费一个席位 48 个月，应该会有小伙伴们打算同时使用两个账户，享受双倍额度。 </p>
+<h2 id="同时使用两个-ChatGPT-账户的方法-CC-Switch"><a href="#同时使用两个-ChatGPT-账户的方法-CC-Switch" class="headerlink" title="同时使用两个 ChatGPT 账户的方法(CC-Switch)"></a>同时使用两个 ChatGPT 账户的方法(CC-Switch)</h2><p>同时使用两个账户时，我们可以使用 <a href="https://github.com/farion1231/cc-switch">CC-Switch</a> 快速切换账户，而不必重新登陆。</p>
+<p>登录了一个账户后，在 CC-Switch 的 Codex 应用中添加一个新的 OpenAI Offical 供应商即可，不过我们启用新的供应商后，再执行 codex 可能会遇到账户错误的提示: </p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">Error: account/read failed during TUI bootstrap: account/read failed: email and plan <span class="built_in">type</span> are required <span class="keyword">for</span> chatgpt authentication (code -32600)</span><br></pre></td></tr></table></figure>
 
-<p>如果没有，加入你的 <code>~/.bashrc</code> 或 <code>~/.zshrc</code>：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># bash</span></span><br><span class="line"><span class="comment"># ignorespace + ignoredups</span></span><br><span class="line"><span class="built_in">export</span> HISTCONTROL=ignoreboth   </span><br><span class="line"><span class="comment"># zsh</span></span><br><span class="line"><span class="built_in">setopt</span> HIST_IGNORE_SPACE</span><br></pre></td></tr></table></figure>
+<p>可以直接执行下面的命令，使用设备代码为第二个账户进行登录认证。</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">codex login --device-auth</span><br></pre></td></tr></table></figure>
 
-<p>之后，敏感命令前面<strong>加一个空格</strong>即可：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"> <span class="built_in">export</span> OPENAI_API_KEY=<span class="string">&quot;sk-...&quot;</span></span><br><span class="line">curl -H <span class="string">&quot;Authorization: Bearer <span class="variable">$TOKEN</span>&quot;</span> https://api.example.com</span><br></pre></td></tr></table></figure>
-
-<p>退后退出本次终端(将命令写入历史记录文件)，重新打开，使用下面的命令验证：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">tail</span> -n 5 ~/.zsh_history</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">tail</span> -n 5 ~/.bash_history</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="二、Windows-PowerShell：用-AddToHistoryHandler-自己实现"><a href="#二、Windows-PowerShell：用-AddToHistoryHandler-自己实现" class="headerlink" title="二、Windows PowerShell：用 AddToHistoryHandler 自己实现"></a>二、Windows PowerShell：用 AddToHistoryHandler 自己实现</h2><p>PowerShell 没有内置「前导空格不入历史」的开关，但 PSReadLine 提供了 <code>AddToHistoryHandler</code>，可以自定义哪些命令进历史。</p>
-<h3 id="配置步骤"><a href="#配置步骤" class="headerlink" title="配置步骤"></a>配置步骤</h3><p>打开（或创建）你的 PowerShell profile：</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">notepad <span class="variable">$PROFILE</span></span><br></pre></td></tr></table></figure>
-
-<p>写入：</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">Set-PSReadLineOption</span> <span class="literal">-AddToHistoryHandler</span> &#123;</span><br><span class="line">    <span class="keyword">param</span>([<span class="built_in">string</span>]<span class="variable">$Line</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="variable">$Line</span>.StartsWith(<span class="string">&#x27; &#x27;</span>)) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="variable">$false</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="variable">$true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>保存后，<strong>重启 PowerShell</strong>。之后像这样以空格开头输入的命令，不会写入当前会话历史，也不会落盘到 <code>ConsoleHost_history.txt</code>：</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="comment"># ...</span></span><br><span class="line">  <span class="built_in">curl</span> https://example.com/secret<span class="literal">-url</span> </span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>PSReadLine 文档明确说明：handler 返回 <code>$false</code> 等同于 <code>SkipAdding</code>，<strong>当前会话和历史文件</strong>都不会保留这条命令。</p>
-</blockquote>
-<blockquote>
-<p>这只影响<strong>之后</strong>输入的新命令；已经写进 <code>ConsoleHost_history.txt</code> 的内容不会被清理。</p>
-</blockquote>
-<hr>
-<h2 id="三、回头审计：你的历史里早就有什么？"><a href="#三、回头审计：你的历史里早就有什么？" class="headerlink" title="三、回头审计：你的历史里早就有什么？"></a>三、回头审计：你的历史里早就有什么？</h2><p>加了开关只是治未病。下一步是<strong>翻账</strong>——很多人第一次扫描<code>~/.zsh_history</code> 都会被吓到。</p>
-<p>下面这一组命令面向 zsh，bash 用户把路径换成 <code>~/.bash_history</code> 即可。</p>
-<h3 id="1-先看文件大小，心里有数"><a href="#1-先看文件大小，心里有数" class="headerlink" title="1. 先看文件大小，心里有数"></a>1. 先看文件大小，心里有数</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">ls</span> -lh ~/.zsh_history</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-排查常见密钥-密码关键词"><a href="#2-排查常见密钥-密码关键词" class="headerlink" title="2. 排查常见密钥&#x2F;密码关键词"></a>2. 排查常见密钥&#x2F;密码关键词</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">grep -nEi <span class="string">&#x27;api[_-]?key|apikey|secret|token|password|passwd|pwd|authorization|bearer|credential|client_secret|access[_-]?key|private[_-]?key|OPENAI_API_KEY|ANTHROPIC_API_KEY|GITHUB_TOKEN|GH_TOKEN|NPM_TOKEN|AWS_ACCESS_KEY_ID|AWS_SECRET_ACCESS_KEY|DATABASE_URL|MONGODB_URI|REDIS_URL&#x27;</span> ~/.zsh_history</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-排查典型-Token-格式"><a href="#3-排查典型-Token-格式" class="headerlink" title="3. 排查典型 Token 格式"></a>3. 排查典型 Token 格式</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">grep -nE <span class="string">&#x27;sk-[A-Za-z0-9_-]&#123;20,&#125;|github_pat_[A-Za-z0-9_]&#123;20,&#125;|gh[pousr]_[A-Za-z0-9]&#123;20,&#125;|AKIA[0-9A-Z]&#123;16&#125;|AIza[0-9A-Za-z_-]&#123;35&#125;&#x27;</span> ~/.zsh_history</span><br></pre></td></tr></table></figure>
-
-<p>覆盖：OpenAI &#x2F; Anthropic 风格 <code>sk-…</code>、GitHub Fine-grained PAT、Classic PAT、AWS Access Key、Google API Key。</p>
-<h3 id="4-排查带账号密码的-URL"><a href="#4-排查带账号密码的-URL" class="headerlink" title="4. 排查带账号密码的 URL"></a>4. 排查带账号密码的 URL</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">grep -nEi <span class="string">&#x27;https?://[^[:space:]/@:]+:[^[:space:]/@]+@&#x27;</span> ~/.zsh_history</span><br></pre></td></tr></table></figure>
-
-<p>形如 <code>https://user:password@host/...</code> —— 在 git clone、curl、psql 里非常常见。</p>
-<h3 id="5-排查环境变量赋值"><a href="#5-排查环境变量赋值" class="headerlink" title="5. 排查环境变量赋值"></a>5. 排查环境变量赋值</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">grep -nEi <span class="string">&#x27;(\$?[A-Z0-9_]*(KEY|TOKEN|SECRET|PASSWORD|PASS|PWD|URL|URI|AUTH|CREDENTIAL)[A-Z0-9_]*=|export [A-Z0-9_]+=)&#x27;</span> ~/.zsh_history</span><br></pre></td></tr></table></figure>
-
-<p>抓 <code>export FOO_TOKEN=...</code>、<code>API_KEY=...</code> 这类一行式赋值。</p>
-<h3 id="6-排查-curl-请求头泄漏"><a href="#6-排查-curl-请求头泄漏" class="headerlink" title="6. 排查 curl &#x2F; 请求头泄漏"></a>6. 排查 curl &#x2F; 请求头泄漏</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">grep -nEi <span class="string">&#x27;(curl|wget|httpie|http) .*(Authorization|Bearer|X-API-Key|api-key|token)&#x27;</span> ~/.zsh_history</span><br></pre></td></tr></table></figure>
-
-<h3 id="7-排查云服务-部署工具的登录与密钥命令"><a href="#7-排查云服务-部署工具的登录与密钥命令" class="headerlink" title="7. 排查云服务 &#x2F; 部署工具的登录与密钥命令"></a>7. 排查云服务 &#x2F; 部署工具的登录与密钥命令</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">grep -nEi <span class="string">&#x27;\b(aws|az|gcloud|vercel|netlify|supabase|firebase|docker|npm|pnpm|gh)\b.*\b(login|auth|token|secret|credentials|env)\b&#x27;</span> ~/.zsh_history</span><br></pre></td></tr></table></figure>
-
-<h3 id="8-排查订阅-科学上网链接"><a href="#8-排查订阅-科学上网链接" class="headerlink" title="8. 排查订阅 &#x2F; 科学上网链接"></a>8. 排查订阅 &#x2F; 科学上网链接</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">grep -nEi <span class="string">&#x27;(subscription|shadowrocket|clash|mihomo|vless://|vmess://|trojan://|ss://|trojan|proxy)&#x27;</span> ~/.zsh_history</span><br></pre></td></tr></table></figure>
-
-<h3 id="9-排查-URL-中的-UUID（常见于订阅链接）"><a href="#9-排查-URL-中的-UUID（常见于订阅链接）" class="headerlink" title="9. 排查 URL 中的 UUID（常见于订阅链接）"></a>9. 排查 URL 中的 UUID（常见于订阅链接）</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">grep -nEi <span class="string">&#x27;https?://[^[:space:]]*[0-9a-f]&#123;8&#125;-[0-9a-f]&#123;4&#125;-[0-9a-f]&#123;4&#125;-[0-9a-f]&#123;4&#125;-[0-9a-f]&#123;12&#125;[^[:space:]]*&#x27;</span> ~/.zsh_history</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="四、命中了之后怎么办？"><a href="#四、命中了之后怎么办？" class="headerlink" title="四、命中了之后怎么办？"></a>四、命中了之后怎么办？</h2><p><strong>主动审查后，可以选择删除本地的历史记录，如果担心凭证存在泄漏风险。</strong> 可以按照优先级建议排查：</p>
-<ol>
-<li><strong>真实的 token &#x2F; API key</strong>（OpenAI、Anthropic、GitHub PAT、NPM Token……）—— 立刻去对应平台 revoke 并重新签发。</li>
-<li><strong>订阅 URL &#x2F; VPN 节点链接</strong> —— 重置 UUID 或 token，旧链接会一直被滥用流量。</li>
-<li><strong>数据库连接串、Redis &#x2F; MongoDB URI</strong> —— 改密码，必要时调整网络访问白名单。</li>
-<li><strong>带密码的 HTTP(S) URL</strong> —— 改密码，并检查 git remote、~&#x2F;.netrc 等地方是否同步残留。</li>
-<li><strong>云服务凭证</strong>（AWS Access Key、GCP Service Account JSON 内容）—— 走云厂商的 rotate 流程，并检查 CloudTrail &#x2F; Audit Log 是否有异常调用。</li>
-</ol>
-<hr>
-<h2 id="五、把好习惯固化下来"><a href="#五、把好习惯固化下来" class="headerlink" title="五、把好习惯固化下来"></a>五、把好习惯固化下来</h2><ul>
-<li><strong>行首加空格</strong>这件事，要练成肌肉记忆：复制任何含密钥的命令，先按一下 <code>Space</code> 再粘贴。</li>
-<li>能用文件读取的就不要写在命令行：<code>curl --header @auth.txt</code>、<code>gh auth login --with-token &lt; token.txt</code>、<code>docker login --password-stdin</code> 都是更好的形态。</li>
-<li>真敏感的密钥，长期方案是放进 macOS Keychain &#x2F; Windows Credential Manager &#x2F; <code>pass</code> &#x2F; 1Password CLI &#x2F; <code>gh secret</code>，让命令行里只出现引用名，不出现明文。</li>
-<li>给自己设一个每月一次的「翻历史」提醒——供应链事件大多在事发后才被披露，定期回头审计比一次性清理更重要。</li>
-</ul>
-<blockquote>
-<p>终端历史不是你的备忘录，是攻击者的字典。少留一点东西在里面，下次出事的时候，你就少一份要连夜轮换的清单。</p>
-</blockquote>
+<p>但是基于安全原因，设备代码认证默认是关闭的，可以参考下面的方法开启。</p>
+<h2 id="启用设备代码身份验证"><a href="#启用设备代码身份验证" class="headerlink" title="启用设备代码身份验证"></a>启用设备代码身份验证</h2><p>团队的管理员在网页上访问 <strong>工作空间设置</strong> &gt; <strong>权限与角色</strong> ，在右侧开启 <strong>为 Codex CLI 启用设备代码身份验证</strong> 的选项即可。 </p>
+<p><a href="https://chatgpt.com/admin/permissions">https://chatgpt.com/admin/permissions</a></p>
+<p><img src="https://img.nep.me/ooo/codex-device-code-enable.webp" alt="codex-device-code-enable.png"></p>
+<p>然后就可以正常使用使用设备代码完成认证了。</p>
 ]]></content>
       <categories>
         <category>笔记</category>
       </categories>
       <tags>
-        <tag>Bash</tag>
-        <tag>Zsh</tag>
-        <tag>Powershell</tag>
-        <tag>Shell</tag>
-        <tag>开发者安全</tag>
+        <tag>ChatGPT</tag>
+        <tag>Codex</tag>
       </tags>
   </entry>
   <entry>
@@ -3974,28 +3915,106 @@
       </tags>
   </entry>
   <entry>
-    <title>ChatGPT Business 为成员启用设备代码身份验证</title>
-    <url>/post/chatgpt-business-enable-codex-device-code.html</url>
-    <content><![CDATA[<p>最近 OpenAI 大促销，ChatGPT Business 免费一个席位 48 个月，应该会有小伙伴们打算同时使用两个账户，享受双倍额度。 </p>
-<h2 id="同时使用两个-ChatGPT-账户的方法-CC-Switch"><a href="#同时使用两个-ChatGPT-账户的方法-CC-Switch" class="headerlink" title="同时使用两个 ChatGPT 账户的方法(CC-Switch)"></a>同时使用两个 ChatGPT 账户的方法(CC-Switch)</h2><p>同时使用两个账户时，我们可以使用 <a href="https://github.com/farion1231/cc-switch">CC-Switch</a> 快速切换账户，而不必重新登陆。</p>
-<p>登录了一个账户后，在 CC-Switch 的 Codex 应用中添加一个新的 OpenAI Offical 供应商即可，不过我们启用新的供应商后，再执行 codex 可能会遇到账户错误的提示: </p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">Error: account/read failed during TUI bootstrap: account/read failed: email and plan <span class="built_in">type</span> are required <span class="keyword">for</span> chatgpt authentication (code -32600)</span><br></pre></td></tr></table></figure>
+    <title>别让终端历史成为你的&quot;密码本&quot;：避免记录敏感命的实用指南</title>
+    <url>/post/avoid-leaking-secrets-in-shell-history.html</url>
+    <content><![CDATA[<h2 id="前言：供应链攻击之下，每一行命令都可能是入口"><a href="#前言：供应链攻击之下，每一行命令都可能是入口" class="headerlink" title="前言：供应链攻击之下，每一行命令都可能是入口"></a>前言：供应链攻击之下，每一行命令都可能是入口</h2><p>2025 年至今，针对 npm、PyPI、GitHub Actions、Docker Hub 的供应链攻击事件持续走高：被污染的依赖、被劫持的 CI Token、被钓鱼的维护者账号……攻击者越来越偏好「绕过你的代码、直接拿你的凭证」的低成本路径。</p>
+<p>而开发者最容易忽略的一处 “凭证仓库” ，恰恰是每天都在用、却几乎从不审计的：<strong>Shell 历史记录文件</strong>。</p>
+<ul>
+<li>macOS &#x2F; Linux：<code>~/.zsh_history</code>、<code>~/.bash_history</code></li>
+<li>Windows PowerShell：<code>%APPDATA%\Microsoft\Windows\PowerShell\PSReadLine\ConsoleHost_history.txt</code></li>
+</ul>
+<p>这些文件以 <strong>明文</strong> 保存你输入过的所有命令——包括误粘贴的 API Key、带密码的 URL、订阅链接、数据库连接串。一旦你的电脑被恶意 npm 包、伪装 VSCode 插件、或被入侵的 CLI 工具读取到这些路径，攻击者无需提权就能直接打包带走。</p>
+<p>但是有时也的确会需要在命令中输入密钥，比如 <code>export API_KEY=</code>，本文给出两件可立刻落地的小事：</p>
+<ol>
+<li><strong>写命令时</strong>：让敏感命令一开始就不进历史。</li>
+<li><strong>写完之后</strong>：定期扫一遍历史文件，看看自己是不是早就漏过。</li>
+</ol>
+<hr>
+<h2 id="一、macOS-Linux：在命令前加一个空格"><a href="#一、macOS-Linux：在命令前加一个空格" class="headerlink" title="一、macOS &#x2F; Linux：在命令前加一个空格"></a>一、macOS &#x2F; Linux：在命令前加一个空格</h2><p><code>bash</code> 和 <code>zsh</code> 都支持 <code>HISTCONTROL</code> &#x2F; <code>HIST_IGNORE_SPACE</code> —— 一旦开启，<strong>以空格开头的命令不会被写入历史文件，也不会出现在 <code>↑</code> 历史回溯里</strong>。</p>
+<p>很多发行版或 shell 框架可能已经启用启用了这个特性。验证一下：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># bash - 期望包含 ignorespace 或 ignoreboth</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$HISTCONTROL</span>&quot;</span>   </span><br><span class="line"></span><br><span class="line"><span class="comment"># zsh - 期望看到 histignorespace</span></span><br><span class="line"><span class="built_in">setopt</span> | grep histignorespace   </span><br></pre></td></tr></table></figure>
 
-<p>可以直接执行下面的命令，使用设备代码为第二个账户进行登录认证。</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">codex login --device-auth</span><br></pre></td></tr></table></figure>
+<p>如果没有，加入你的 <code>~/.bashrc</code> 或 <code>~/.zshrc</code>：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># bash</span></span><br><span class="line"><span class="comment"># ignorespace + ignoredups</span></span><br><span class="line"><span class="built_in">export</span> HISTCONTROL=ignoreboth   </span><br><span class="line"><span class="comment"># zsh</span></span><br><span class="line"><span class="built_in">setopt</span> HIST_IGNORE_SPACE</span><br></pre></td></tr></table></figure>
 
-<p>但是基于安全原因，设备代码认证默认是关闭的，可以参考下面的方法开启。</p>
-<h2 id="启用设备代码身份验证"><a href="#启用设备代码身份验证" class="headerlink" title="启用设备代码身份验证"></a>启用设备代码身份验证</h2><p>团队的管理员在网页上访问 <strong>工作空间设置</strong> &gt; <strong>权限与角色</strong> ，在右侧开启 <strong>为 Codex CLI 启用设备代码身份验证</strong> 的选项即可。 </p>
-<p><a href="https://chatgpt.com/admin/permissions">https://chatgpt.com/admin/permissions</a></p>
-<p><img src="https://img.nep.me/ooo/codex-device-code-enable.webp" alt="codex-device-code-enable.png"></p>
-<p>然后就可以正常使用使用设备代码完成认证了。</p>
+<p>之后，敏感命令前面<strong>加一个空格</strong>即可：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"> <span class="built_in">export</span> OPENAI_API_KEY=<span class="string">&quot;sk-...&quot;</span></span><br><span class="line">curl -H <span class="string">&quot;Authorization: Bearer <span class="variable">$TOKEN</span>&quot;</span> https://api.example.com</span><br></pre></td></tr></table></figure>
+
+<p>退后退出本次终端(将命令写入历史记录文件)，重新打开，使用下面的命令验证：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">tail</span> -n 5 ~/.zsh_history</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">tail</span> -n 5 ~/.bash_history</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="二、Windows-PowerShell：用-AddToHistoryHandler-自己实现"><a href="#二、Windows-PowerShell：用-AddToHistoryHandler-自己实现" class="headerlink" title="二、Windows PowerShell：用 AddToHistoryHandler 自己实现"></a>二、Windows PowerShell：用 AddToHistoryHandler 自己实现</h2><p>PowerShell 没有内置「前导空格不入历史」的开关，但 PSReadLine 提供了 <code>AddToHistoryHandler</code>，可以自定义哪些命令进历史。</p>
+<h3 id="配置步骤"><a href="#配置步骤" class="headerlink" title="配置步骤"></a>配置步骤</h3><p>打开（或创建）你的 PowerShell profile：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">notepad <span class="variable">$PROFILE</span></span><br></pre></td></tr></table></figure>
+
+<p>写入：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">Set-PSReadLineOption</span> <span class="literal">-AddToHistoryHandler</span> &#123;</span><br><span class="line">    <span class="keyword">param</span>([<span class="built_in">string</span>]<span class="variable">$Line</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="variable">$Line</span>.StartsWith(<span class="string">&#x27; &#x27;</span>)) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="variable">$false</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="variable">$true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>保存后，<strong>重启 PowerShell</strong>。之后像这样以空格开头输入的命令，不会写入当前会话历史，也不会落盘到 <code>ConsoleHost_history.txt</code>：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="comment"># ...</span></span><br><span class="line">  <span class="built_in">curl</span> https://example.com/secret<span class="literal">-url</span> </span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>PSReadLine 文档明确说明：handler 返回 <code>$false</code> 等同于 <code>SkipAdding</code>，<strong>当前会话和历史文件</strong>都不会保留这条命令。</p>
+</blockquote>
+<blockquote>
+<p>这只影响<strong>之后</strong>输入的新命令；已经写进 <code>ConsoleHost_history.txt</code> 的内容不会被清理。</p>
+</blockquote>
+<hr>
+<h2 id="三、回头审计：你的历史里早就有什么？"><a href="#三、回头审计：你的历史里早就有什么？" class="headerlink" title="三、回头审计：你的历史里早就有什么？"></a>三、回头审计：你的历史里早就有什么？</h2><p>加了开关只是治未病。下一步是<strong>翻账</strong>——很多人第一次扫描<code>~/.zsh_history</code> 都会被吓到。</p>
+<p>下面这一组命令面向 zsh，bash 用户把路径换成 <code>~/.bash_history</code> 即可。</p>
+<h3 id="1-先看文件大小，心里有数"><a href="#1-先看文件大小，心里有数" class="headerlink" title="1. 先看文件大小，心里有数"></a>1. 先看文件大小，心里有数</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">ls</span> -lh ~/.zsh_history</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-排查常见密钥-密码关键词"><a href="#2-排查常见密钥-密码关键词" class="headerlink" title="2. 排查常见密钥&#x2F;密码关键词"></a>2. 排查常见密钥&#x2F;密码关键词</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">grep -nEi <span class="string">&#x27;api[_-]?key|apikey|secret|token|password|passwd|pwd|authorization|bearer|credential|client_secret|access[_-]?key|private[_-]?key|OPENAI_API_KEY|ANTHROPIC_API_KEY|GITHUB_TOKEN|GH_TOKEN|NPM_TOKEN|AWS_ACCESS_KEY_ID|AWS_SECRET_ACCESS_KEY|DATABASE_URL|MONGODB_URI|REDIS_URL&#x27;</span> ~/.zsh_history</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-排查典型-Token-格式"><a href="#3-排查典型-Token-格式" class="headerlink" title="3. 排查典型 Token 格式"></a>3. 排查典型 Token 格式</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">grep -nE <span class="string">&#x27;sk-[A-Za-z0-9_-]&#123;20,&#125;|github_pat_[A-Za-z0-9_]&#123;20,&#125;|gh[pousr]_[A-Za-z0-9]&#123;20,&#125;|AKIA[0-9A-Z]&#123;16&#125;|AIza[0-9A-Za-z_-]&#123;35&#125;&#x27;</span> ~/.zsh_history</span><br></pre></td></tr></table></figure>
+
+<p>覆盖：OpenAI &#x2F; Anthropic 风格 <code>sk-…</code>、GitHub Fine-grained PAT、Classic PAT、AWS Access Key、Google API Key。</p>
+<h3 id="4-排查带账号密码的-URL"><a href="#4-排查带账号密码的-URL" class="headerlink" title="4. 排查带账号密码的 URL"></a>4. 排查带账号密码的 URL</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">grep -nEi <span class="string">&#x27;https?://[^[:space:]/@:]+:[^[:space:]/@]+@&#x27;</span> ~/.zsh_history</span><br></pre></td></tr></table></figure>
+
+<p>形如 <code>https://user:password@host/...</code> —— 在 git clone、curl、psql 里非常常见。</p>
+<h3 id="5-排查环境变量赋值"><a href="#5-排查环境变量赋值" class="headerlink" title="5. 排查环境变量赋值"></a>5. 排查环境变量赋值</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">grep -nEi <span class="string">&#x27;(\$?[A-Z0-9_]*(KEY|TOKEN|SECRET|PASSWORD|PASS|PWD|URL|URI|AUTH|CREDENTIAL)[A-Z0-9_]*=|export [A-Z0-9_]+=)&#x27;</span> ~/.zsh_history</span><br></pre></td></tr></table></figure>
+
+<p>抓 <code>export FOO_TOKEN=...</code>、<code>API_KEY=...</code> 这类一行式赋值。</p>
+<h3 id="6-排查-curl-请求头泄漏"><a href="#6-排查-curl-请求头泄漏" class="headerlink" title="6. 排查 curl &#x2F; 请求头泄漏"></a>6. 排查 curl &#x2F; 请求头泄漏</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">grep -nEi <span class="string">&#x27;(curl|wget|httpie|http) .*(Authorization|Bearer|X-API-Key|api-key|token)&#x27;</span> ~/.zsh_history</span><br></pre></td></tr></table></figure>
+
+<h3 id="7-排查云服务-部署工具的登录与密钥命令"><a href="#7-排查云服务-部署工具的登录与密钥命令" class="headerlink" title="7. 排查云服务 &#x2F; 部署工具的登录与密钥命令"></a>7. 排查云服务 &#x2F; 部署工具的登录与密钥命令</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">grep -nEi <span class="string">&#x27;\b(aws|az|gcloud|vercel|netlify|supabase|firebase|docker|npm|pnpm|gh)\b.*\b(login|auth|token|secret|credentials|env)\b&#x27;</span> ~/.zsh_history</span><br></pre></td></tr></table></figure>
+
+<h3 id="8-排查订阅-科学上网链接"><a href="#8-排查订阅-科学上网链接" class="headerlink" title="8. 排查订阅 &#x2F; 科学上网链接"></a>8. 排查订阅 &#x2F; 科学上网链接</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">grep -nEi <span class="string">&#x27;(subscription|shadowrocket|clash|mihomo|vless://|vmess://|trojan://|ss://|trojan|proxy)&#x27;</span> ~/.zsh_history</span><br></pre></td></tr></table></figure>
+
+<h3 id="9-排查-URL-中的-UUID（常见于订阅链接）"><a href="#9-排查-URL-中的-UUID（常见于订阅链接）" class="headerlink" title="9. 排查 URL 中的 UUID（常见于订阅链接）"></a>9. 排查 URL 中的 UUID（常见于订阅链接）</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">grep -nEi <span class="string">&#x27;https?://[^[:space:]]*[0-9a-f]&#123;8&#125;-[0-9a-f]&#123;4&#125;-[0-9a-f]&#123;4&#125;-[0-9a-f]&#123;4&#125;-[0-9a-f]&#123;12&#125;[^[:space:]]*&#x27;</span> ~/.zsh_history</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="四、命中了之后怎么办？"><a href="#四、命中了之后怎么办？" class="headerlink" title="四、命中了之后怎么办？"></a>四、命中了之后怎么办？</h2><p><strong>主动审查后，可以选择删除本地的历史记录，如果担心凭证存在泄漏风险。</strong> 可以按照优先级建议排查：</p>
+<ol>
+<li><strong>真实的 token &#x2F; API key</strong>（OpenAI、Anthropic、GitHub PAT、NPM Token……）—— 立刻去对应平台 revoke 并重新签发。</li>
+<li><strong>订阅 URL &#x2F; VPN 节点链接</strong> —— 重置 UUID 或 token，旧链接会一直被滥用流量。</li>
+<li><strong>数据库连接串、Redis &#x2F; MongoDB URI</strong> —— 改密码，必要时调整网络访问白名单。</li>
+<li><strong>带密码的 HTTP(S) URL</strong> —— 改密码，并检查 git remote、~&#x2F;.netrc 等地方是否同步残留。</li>
+<li><strong>云服务凭证</strong>（AWS Access Key、GCP Service Account JSON 内容）—— 走云厂商的 rotate 流程，并检查 CloudTrail &#x2F; Audit Log 是否有异常调用。</li>
+</ol>
+<hr>
+<h2 id="五、把好习惯固化下来"><a href="#五、把好习惯固化下来" class="headerlink" title="五、把好习惯固化下来"></a>五、把好习惯固化下来</h2><ul>
+<li><strong>行首加空格</strong>这件事，要练成肌肉记忆：复制任何含密钥的命令，先按一下 <code>Space</code> 再粘贴。</li>
+<li>能用文件读取的就不要写在命令行：<code>curl --header @auth.txt</code>、<code>gh auth login --with-token &lt; token.txt</code>、<code>docker login --password-stdin</code> 都是更好的形态。</li>
+<li>真敏感的密钥，长期方案是放进 macOS Keychain &#x2F; Windows Credential Manager &#x2F; <code>pass</code> &#x2F; 1Password CLI &#x2F; <code>gh secret</code>，让命令行里只出现引用名，不出现明文。</li>
+<li>给自己设一个每月一次的「翻历史」提醒——供应链事件大多在事发后才被披露，定期回头审计比一次性清理更重要。</li>
+</ul>
+<blockquote>
+<p>终端历史不是你的备忘录，是攻击者的字典。少留一点东西在里面，下次出事的时候，你就少一份要连夜轮换的清单。</p>
+</blockquote>
 ]]></content>
       <categories>
         <category>笔记</category>
       </categories>
       <tags>
-        <tag>ChatGPT</tag>
-        <tag>Codex</tag>
+        <tag>Bash</tag>
+        <tag>Zsh</tag>
+        <tag>Powershell</tag>
+        <tag>Shell</tag>
+        <tag>开发者安全</tag>
       </tags>
   </entry>
   <entry>
@@ -4071,58 +4090,6 @@
       <tags>
         <tag>Anthropic</tag>
         <tag>Opus</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Codex 的日志记录消耗 SSD 寿命？OpenAI 已修复</title>
-    <url>/post/codex-is-buring-your-ssd.html</url>
-    <content><![CDATA[<h2 id="Bug-信息"><a href="#Bug-信息" class="headerlink" title="Bug 信息"></a>Bug 信息</h2><div class="flatpaper-note flatpaper-note--primary"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>好消息，OpenAI 已在 Codex 0.142.0 版本中修复了这个问题，可以放心使用。</p></div></div>
-
-<p>最近，Codex 凭借其强大的功能和丝滑的体验，周活跃用户已经突破了 <strong>500 万</strong> 大关。越来越多的开发者和极客都已经把它当成了日常高频使用的得力助手。</p>
-<p>不过，随着使用人数的增加，有用户反馈，在某些流式输出或自动化任务场景下，Codex 会持续向本地磁盘写入 TRACE 级别的日志。</p>
-<p>GitHUb 的 <a href="https://github.com/openai/codex/issues/28224">ISSUE</a> 上声称该 BUG 可能会产生 <strong>640GB&#x2F;年</strong> 的写入，这对于消费级 SSD 来说是致命的。对于目前主流的 1TB 或 2TB 消费级固态硬盘（标称寿命通常在 600TBW ~ 1200TBW）来说，可以说是非常严重。</p>
-<p><strong>而且，正因为现在 AI 浪潮空前火热，全球对高带宽、高性能存储的需求集中爆发，导致现在的 SSD 固态硬盘价格一路上涨，存储成本变得相当昂贵，尤其是 mac 设备的硬盘无法更换。在这种寸土寸金的时期，我们对硬盘的每一度磨损、每一 G 空间都不得不更加精打细算。</strong></p>
-<hr>
-<h2 id="1分钟自查：你中招了吗？"><a href="#1分钟自查：你中招了吗？" class="headerlink" title="1分钟自查：你中招了吗？"></a>1分钟自查：你中招了吗？</h2><p>如果你使用的是 Linux 或 Mac 系统，可以直接通过终端跑两行命令看看情况。</p>
-<p>首先，看看日志文件的大小：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">ls</span> -lh ~/.codex/logs_2.sqlite</span><br></pre></td></tr></table></figure>
-
-<p>然后，统计一下日志的写入级别：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;SELECT level, COUNT(*) FROM logs GROUP BY level ORDER BY COUNT(*) DESC&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>如何判断：</strong><br>如果查询结果中，<code>TRACE</code> 级别的日志占了绝大多数，并且 <code>logs_2.sqlite</code> 文件体积比较大，那就说明 Codex 确实在后台认真地记录着无关紧要的追踪信息。</p>
-<p><strong>参考数据：</strong><br>我的文件大小为 <strong>468MB：</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&gt; <span class="built_in">ls</span> -lh ~/.codex/logs_2.sqlite Jun 23</span><br><span class="line">-rw-r--r--@ 1 mro  staff   468M</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&gt; sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;SELECT level, COUNT(*) FROM logs GROUP BY level ORDER BY COUNT(*) DESC&quot;</span></span><br><span class="line">TRACE|39961</span><br><span class="line">INFO|39919</span><br><span class="line">DEBUG|7307</span><br><span class="line">WARN|177</span><br></pre></td></tr></table></figure>
-
-<p>可以看到 <code>TRACE|39961</code> 占了接近一半的数据，确实存在所说的问题，主要是目前 OpenAI 官方尚未做出修复的回应。</p>
-<h2 id="一劳永逸的解决方案-：直接在数据库拦截"><a href="#一劳永逸的解决方案-：直接在数据库拦截" class="headerlink" title="一劳永逸的解决方案 ：直接在数据库拦截"></a>一劳永逸的解决方案 ：直接在数据库拦截</h2><p><mark>OpenAI 已经修复这个问题了，不需要操作了</mark></p>
-<p>这里提供比较激进、但也最直接的临时方案：给日志表加一个 SQLite 触发器，让新的日志写入被忽略，毕竟这个文件里只有诊断日志，没有对话历史。</p>
-<p>执行前建议先退出 Codex，并备份日志数据库：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cp</span> ~/.codex/logs_2.sqlite ~/.codex/logs_2.sqlite.bak</span><br></pre></td></tr></table></figure>
-<p>然后执行：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;CREATE TRIGGER IF NOT EXISTS block_log_inserts BEFORE INSERT ON logs BEGIN SELECT RAISE(IGNORE); END;&quot;</span></span><br></pre></td></tr></table></figure>
-<p>设置完成后，新的日志记录会被拦截，从而减少后续写入。</p>
-<p>需要注意的是，这个方法会影响 Codex 后续生成诊断日志。如果你之后需要向官方反馈问题，或者担心未来版本兼容性，可以先不要使用这个方案，改用定期清理的方式。</p>
-<details class="flatpaper-note flatpaper-note--info"><summary class="flatpaper-note__title"><span class="flatpaper-note__icon" aria-hidden="true"></span><span class="flatpaper-note__label">如何恢复</span><span class="flatpaper-note__chevron" aria-hidden="true"></span></summary><div class="flatpaper-note__body"><p>如果想要恢复的话就是删除这个 trigger 。先退出 Codex，再执行：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;DROP TRIGGER IF EXISTS block_log_inserts;&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>执行后可以检查是否还存在：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;.schema block_log_inserts&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>如果没有输出，说明已经删除成功。</p>
-<p>也可以用这个命令查看当前所有 trigger：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;SELECT name, tbl_name, sql FROM sqlite_master WHERE type=&#x27;trigger&#x27;;&quot;</span></span><br></pre></td></tr></table></figure></div></details>
-
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>GitHub ISSUE 中的数据是比较夸张的，Codex 的这个日志问题并没有网传的那么吓人，但也感谢 OpenAI 完成了 BUG 的修复，祝大家用 Codex 敲代码愉快！</p>
-]]></content>
-      <categories>
-        <category>笔记</category>
-      </categories>
-      <tags>
-        <tag>OpenAI</tag>
-        <tag>Codex</tag>
       </tags>
   </entry>
   <entry>
@@ -4846,47 +4813,55 @@
       </tags>
   </entry>
   <entry>
-    <title>新时代挖矿：看看你的 Mac 一个月能赚多少钱</title>
-    <url>/post/darkbloom-nodes-macbook-ai-mining-earnings.html</url>
-    <content><![CDATA[<p>曾经，无数人为了比特币和以太坊疯狂囤积显卡，把家里变成轰鸣的矿场。随着传统加密货币 “显卡挖矿” 时代的逐渐降温，很多人以为用个人电脑赚取被动收入的日子已经结束了。然而，随着 AI 大模型时代的爆发，一种全新的 “挖矿” 模式正在悄然兴起——AI 节点推理算力共享。</p>
-<p>最近，随着本地模型的能力进步，<a href="https://www.darkbloom.dev/#nodes">Darkbloom</a> 平台的出现向我们揭示了这一前景。在这个新时代，你不需要去计算毫无意义的哈希值，而是让你的电脑成为 AI 基础设施的一部分，通过为真实用户运行大语言模型（如 <code>Gemma 4 26B</code> ）来赚取收益。而在这场新游戏里，凭借着高带宽的统一内存架构，Apple 的 Mac 电脑意外地成为了最完美的 “矿机”。</p>
-<h2 id="Darbloom-介绍"><a href="#Darbloom-介绍" class="headerlink" title="Darbloom 介绍"></a>Darbloom 介绍</h2><p><a href="https://www.darkbloom.dev/">Darkbloom.dev</a> 可以将 MacBook 变成一个可产生收益的私有硬件节点网络。用户只需在 Mac 上安装一个命令行界面 (CLI)，设备就可以在闲置时自动接收并处理 AI 推理请求。开发者则可以通过兼容 OpenAI 的 API 调用这些分布式算力。设备每生成一个代币，节点运营者就能获得相应的美元收益。 </p>
-<p>这个项目背后的技术来自 Eigen Labs，相关论文和代码已经开源。其核心卖点是：在保护用户请求隐私的前提下，让普通 Apple Silicon 设备参与 AI 推理市场。<br>链接：<a href="https://github.com/Layr-Labs/d-inference/blob/master/papers/dginf-private-inference.pdf">https://github.com/Layr-Labs/d-inference/blob/master/papers/dginf-private-inference.pdf</a></p>
-<h2 id="Mac-变身-AI-服务器：到底能赚多少？"><a href="#Mac-变身-AI-服务器：到底能赚多少？" class="headerlink" title="Mac 变身 AI 服务器：到底能赚多少？"></a>Mac 变身 AI 服务器：到底能赚多少？</h2><p>按照项目方介绍，节点运营者可以获得 95% 的推理收入，平台抽取 5%。</p>
-<p>除了硬件设备，运营唯一的成本是电费，而 Apple Silicon 的功耗极低。即使在满负荷推理的情况下，每小时也只需 0.01 到 0.03 美元。这就像点亮一个灯泡一样。</p>
-<p>我们来看看 Darkbloom 提供的收益预估数据：</p>
-<h3 id="1-顶配印钞机：MacBook-Pro-M5-Max-128GB-内存"><a href="#1-顶配印钞机：MacBook-Pro-M5-Max-128GB-内存" class="headerlink" title="1. 顶配印钞机：MacBook Pro (M5 Max, 128GB 内存)"></a>1. 顶配印钞机：MacBook Pro (M5 Max, 128GB 内存)</h3><p>如果你拥有一台搭载 M5 Max 芯片和 128GB 内存的顶级 MacBook Pro，这台机器简直是为跑大模型而生的。它庞大的内存可以轻松装下甚至并行处理巨大的模型。</p>
-<ul>
-<li><strong>运行状态</strong>：每天运行 18 小时（比如下班后的闲置时间）。</li>
-<li><strong>处理速度</strong>：批量解码速度高达惊人的 <code>1326.2</code> tok&#x2F;s。</li>
-<li><strong>每月收益</strong>：预估每月总收入约为 <strong>$425.40</strong> 。扣除电费后，每月净赚约 $423（折合人民币约 3000 多元）！</li>
-</ul>
-<p>一年下来收益可达 <strong>$5,076</strong>，而在 Apple 官网上 <strong>M5 Max + 128GB RAM + 2TB</strong> 版本现在仅售 <strong>5399</strong> 美元（大陆官网售价 43,499 元）， 可以说这笔钱不仅足够你覆盖买电脑的成本，甚至相当于电脑自己在给自己打工还贷。</p>
-<p><img src="https://img.nep.me/ooo/darkbloom-m5max.webp" alt="darkbloom-m5max"></p>
-<h3 id="2-性能中坚：MacBook-Pro-M4-Pro-48GB-内存"><a href="#2-性能中坚：MacBook-Pro-M4-Pro-48GB-内存" class="headerlink" title="2. 性能中坚：MacBook Pro (M4 Pro, 48GB 内存)"></a>2. 性能中坚：MacBook Pro (M4 Pro, 48GB 内存)</h3><p>如果你的配置是偏向主流的工作站，比如搭载 M4 Pro 芯片和 48GB 内存的版本。</p>
-<ul>
-<li><strong>运行状态</strong>：同样每天运行 18 小时。</li>
-<li><strong>处理速度</strong>：<code>589.7</code> tok&#x2F;s。</li>
-<li><strong>每月收益</strong>：依然可以获得每月约 <strong>$188 美元</strong>（折合人民币约 1300 多元）的净收入。</li>
-</ul>
-<p>一年也有 $2,252 的进账。对于仅仅是利用电脑闲置时间的睡后收入来说，这绝对是一笔非常可观的零花钱。</p>
-<p><img src="https://img.nep.me/ooo/darkbloom-m4pro.webp" alt="darkbloom-m4pro"></p>
-<h2 id="Apple-Silicon-的恐怖能效"><a href="#Apple-Silicon-的恐怖能效" class="headerlink" title="Apple Silicon 的恐怖能效"></a>Apple Silicon 的恐怖能效</h2><p>传统挖矿最让人头疼的就是高昂的电费和机器狂转的噪音。但在这场AI 挖矿中，Apple M 系列芯片展现出了极其恐怖的能效比。</p>
-<p>以电费 $0.15&#x2F;kWh 计算，那台每月能为你赚取 425 美元的 M5 Max MacBook Pro，一整个月消耗的电费仅仅只有 $2.43；而 M4 Pro 版本的月电费更是低至 $1.46。电费成本甚至占不到总收入的 1%。没有轰鸣的风扇，没有天价电费账单，只有静悄悄地跑着大模型赚钱的优雅。</p>
-<p>AI 时代的算力需求是无穷无尽的，而去中心化的个人算力网络或许就是下一座金矿。你的 Mac 已经不再仅仅是一个昂贵的生产力工具，它完全有潜力成为你的“数字打工仔”。</p>
-<h2 id="结语与风险提示"><a href="#结语与风险提示" class="headerlink" title="结语与风险提示"></a>结语与风险提示</h2><p>当然，作为一个新兴领域，我们也要保持理性的预期。目前，Darkbloom 等平台已经在 Hacker News、Reddit 和 LinkedIn 等主流开发者社区引发了公开讨论。好消息是，目前尚未出现任何诈骗报告；但根据早期参与测试的节点用户反馈，当前网络中分配到的任务还主要是 Health Checks ，真实的商业推理需求仍然处于低位。这意味着官方计算器给出的高额预测相对较为乐观。</p>
-<p>更重要的是，如今大模型的进步速度实在是太快了。现在开源社区就已经迭代到了 Gemma 4 26B 这样庞大且高效的模型。AI 领域的算法架构、量化技术和吞吐量优化几乎每个月都在刷新。今天的配置组合可能刚好能吃满红利，但三个月后，随着更强、更大的模型诞生，整个网络对硬件门槛和带宽的要求可能会迎来彻底的洗牌。</p>
-<p>这注定是一场与技术演进赛跑的游戏。未来的实际收益，将极大地受制于真实商业请求的爆发、模型迭代的速度以及平台的后续运营。</p>
-<div class="flatpaper-note flatpaper-note--warning"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>请务必记住，以上数据只是参考，大家看看这些预估数据，把它当个有趣的参考就行。</p></div></div>
+    <title>Codex 的日志记录消耗 SSD 寿命？OpenAI 已修复</title>
+    <url>/post/codex-is-buring-your-ssd.html</url>
+    <content><![CDATA[<h2 id="Bug-信息"><a href="#Bug-信息" class="headerlink" title="Bug 信息"></a>Bug 信息</h2><div class="flatpaper-note flatpaper-note--primary"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>好消息，OpenAI 已在 Codex 0.142.0 版本中修复了这个问题，可以放心使用。</p></div></div>
+
+<p>最近，Codex 凭借其强大的功能和丝滑的体验，周活跃用户已经突破了 <strong>500 万</strong> 大关。越来越多的开发者和极客都已经把它当成了日常高频使用的得力助手。</p>
+<p>不过，随着使用人数的增加，有用户反馈，在某些流式输出或自动化任务场景下，Codex 会持续向本地磁盘写入 TRACE 级别的日志。</p>
+<p>GitHUb 的 <a href="https://github.com/openai/codex/issues/28224">ISSUE</a> 上声称该 BUG 可能会产生 <strong>640GB&#x2F;年</strong> 的写入，这对于消费级 SSD 来说是致命的。对于目前主流的 1TB 或 2TB 消费级固态硬盘（标称寿命通常在 600TBW ~ 1200TBW）来说，可以说是非常严重。</p>
+<p><strong>而且，正因为现在 AI 浪潮空前火热，全球对高带宽、高性能存储的需求集中爆发，导致现在的 SSD 固态硬盘价格一路上涨，存储成本变得相当昂贵，尤其是 mac 设备的硬盘无法更换。在这种寸土寸金的时期，我们对硬盘的每一度磨损、每一 G 空间都不得不更加精打细算。</strong></p>
+<hr>
+<h2 id="1分钟自查：你中招了吗？"><a href="#1分钟自查：你中招了吗？" class="headerlink" title="1分钟自查：你中招了吗？"></a>1分钟自查：你中招了吗？</h2><p>如果你使用的是 Linux 或 Mac 系统，可以直接通过终端跑两行命令看看情况。</p>
+<p>首先，看看日志文件的大小：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">ls</span> -lh ~/.codex/logs_2.sqlite</span><br></pre></td></tr></table></figure>
+
+<p>然后，统计一下日志的写入级别：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;SELECT level, COUNT(*) FROM logs GROUP BY level ORDER BY COUNT(*) DESC&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>如何判断：</strong><br>如果查询结果中，<code>TRACE</code> 级别的日志占了绝大多数，并且 <code>logs_2.sqlite</code> 文件体积比较大，那就说明 Codex 确实在后台认真地记录着无关紧要的追踪信息。</p>
+<p><strong>参考数据：</strong><br>我的文件大小为 <strong>468MB：</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&gt; <span class="built_in">ls</span> -lh ~/.codex/logs_2.sqlite Jun 23</span><br><span class="line">-rw-r--r--@ 1 mro  staff   468M</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&gt; sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;SELECT level, COUNT(*) FROM logs GROUP BY level ORDER BY COUNT(*) DESC&quot;</span></span><br><span class="line">TRACE|39961</span><br><span class="line">INFO|39919</span><br><span class="line">DEBUG|7307</span><br><span class="line">WARN|177</span><br></pre></td></tr></table></figure>
+
+<p>可以看到 <code>TRACE|39961</code> 占了接近一半的数据，确实存在所说的问题，主要是目前 OpenAI 官方尚未做出修复的回应。</p>
+<h2 id="一劳永逸的解决方案-：直接在数据库拦截"><a href="#一劳永逸的解决方案-：直接在数据库拦截" class="headerlink" title="一劳永逸的解决方案 ：直接在数据库拦截"></a>一劳永逸的解决方案 ：直接在数据库拦截</h2><p><mark>OpenAI 已经修复这个问题了，不需要操作了</mark></p>
+<p>这里提供比较激进、但也最直接的临时方案：给日志表加一个 SQLite 触发器，让新的日志写入被忽略，毕竟这个文件里只有诊断日志，没有对话历史。</p>
+<p>执行前建议先退出 Codex，并备份日志数据库：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cp</span> ~/.codex/logs_2.sqlite ~/.codex/logs_2.sqlite.bak</span><br></pre></td></tr></table></figure>
+<p>然后执行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;CREATE TRIGGER IF NOT EXISTS block_log_inserts BEFORE INSERT ON logs BEGIN SELECT RAISE(IGNORE); END;&quot;</span></span><br></pre></td></tr></table></figure>
+<p>设置完成后，新的日志记录会被拦截，从而减少后续写入。</p>
+<p>需要注意的是，这个方法会影响 Codex 后续生成诊断日志。如果你之后需要向官方反馈问题，或者担心未来版本兼容性，可以先不要使用这个方案，改用定期清理的方式。</p>
+<details class="flatpaper-note flatpaper-note--info"><summary class="flatpaper-note__title"><span class="flatpaper-note__icon" aria-hidden="true"></span><span class="flatpaper-note__label">如何恢复</span><span class="flatpaper-note__chevron" aria-hidden="true"></span></summary><div class="flatpaper-note__body"><p>如果想要恢复的话就是删除这个 trigger 。先退出 Codex，再执行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;DROP TRIGGER IF EXISTS block_log_inserts;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>执行后可以检查是否还存在：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;.schema block_log_inserts&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>如果没有输出，说明已经删除成功。</p>
+<p>也可以用这个命令查看当前所有 trigger：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;SELECT name, tbl_name, sql FROM sqlite_master WHERE type=&#x27;trigger&#x27;;&quot;</span></span><br></pre></td></tr></table></figure></div></details>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>GitHub ISSUE 中的数据是比较夸张的，Codex 的这个日志问题并没有网传的那么吓人，但也感谢 OpenAI 完成了 BUG 的修复，祝大家用 Codex 敲代码愉快！</p>
 ]]></content>
       <categories>
-        <category>工具资源</category>
+        <category>笔记</category>
       </categories>
       <tags>
-        <tag>AI</tag>
-        <tag>Apple</tag>
-        <tag>Darkbloom</tag>
-        <tag>MacBook</tag>
+        <tag>OpenAI</tag>
+        <tag>Codex</tag>
       </tags>
   </entry>
   <entry>
@@ -5103,20 +5078,72 @@
       </tags>
   </entry>
   <entry>
-    <title>解决 Antigravity 通过 SSH 连接远程服务器崩溃的问题</title>
-    <url>/post/fix-antigravity-ssh-remote-crash-problem.html</url>
-    <content><![CDATA[<h2 id="问题详情"><a href="#问题详情" class="headerlink" title="问题详情"></a>问题详情</h2><p>在使用 Google Antigravity 通过 SSH 连接运行在 <strong>PVE</strong> 的 <strong>Linux 虚拟机</strong> 时，会直接崩溃，报错信息如下：</p>
-<blockquote>
-<p>Antigravity server crashed unexpectedly. Please restart to fully restore AI features.</p>
-</blockquote>
-<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>在 PVE 中将 Linux 虚拟机的 <strong>CPU 类型</strong> 设置为 <code>host</code>，再尝试连接就可以了。</p>
-<p>参考： <a href="https://discuss.ai.google.dev/t/antigravity-crashes-on-linux-but-works-on-windows/110355/3">Antigravity crashes on Linux, but works on Windows</a></p>
+    <title>新时代挖矿：看看你的 Mac 一个月能赚多少钱</title>
+    <url>/post/darkbloom-nodes-macbook-ai-mining-earnings.html</url>
+    <content><![CDATA[<p>曾经，无数人为了比特币和以太坊疯狂囤积显卡，把家里变成轰鸣的矿场。随着传统加密货币 “显卡挖矿” 时代的逐渐降温，很多人以为用个人电脑赚取被动收入的日子已经结束了。然而，随着 AI 大模型时代的爆发，一种全新的 “挖矿” 模式正在悄然兴起——AI 节点推理算力共享。</p>
+<p>最近，随着本地模型的能力进步，<a href="https://www.darkbloom.dev/#nodes">Darkbloom</a> 平台的出现向我们揭示了这一前景。在这个新时代，你不需要去计算毫无意义的哈希值，而是让你的电脑成为 AI 基础设施的一部分，通过为真实用户运行大语言模型（如 <code>Gemma 4 26B</code> ）来赚取收益。而在这场新游戏里，凭借着高带宽的统一内存架构，Apple 的 Mac 电脑意外地成为了最完美的 “矿机”。</p>
+<h2 id="Darbloom-介绍"><a href="#Darbloom-介绍" class="headerlink" title="Darbloom 介绍"></a>Darbloom 介绍</h2><p><a href="https://www.darkbloom.dev/">Darkbloom.dev</a> 可以将 MacBook 变成一个可产生收益的私有硬件节点网络。用户只需在 Mac 上安装一个命令行界面 (CLI)，设备就可以在闲置时自动接收并处理 AI 推理请求。开发者则可以通过兼容 OpenAI 的 API 调用这些分布式算力。设备每生成一个代币，节点运营者就能获得相应的美元收益。 </p>
+<p>这个项目背后的技术来自 Eigen Labs，相关论文和代码已经开源。其核心卖点是：在保护用户请求隐私的前提下，让普通 Apple Silicon 设备参与 AI 推理市场。<br>链接：<a href="https://github.com/Layr-Labs/d-inference/blob/master/papers/dginf-private-inference.pdf">https://github.com/Layr-Labs/d-inference/blob/master/papers/dginf-private-inference.pdf</a></p>
+<h2 id="Mac-变身-AI-服务器：到底能赚多少？"><a href="#Mac-变身-AI-服务器：到底能赚多少？" class="headerlink" title="Mac 变身 AI 服务器：到底能赚多少？"></a>Mac 变身 AI 服务器：到底能赚多少？</h2><p>按照项目方介绍，节点运营者可以获得 95% 的推理收入，平台抽取 5%。</p>
+<p>除了硬件设备，运营唯一的成本是电费，而 Apple Silicon 的功耗极低。即使在满负荷推理的情况下，每小时也只需 0.01 到 0.03 美元。这就像点亮一个灯泡一样。</p>
+<p>我们来看看 Darkbloom 提供的收益预估数据：</p>
+<h3 id="1-顶配印钞机：MacBook-Pro-M5-Max-128GB-内存"><a href="#1-顶配印钞机：MacBook-Pro-M5-Max-128GB-内存" class="headerlink" title="1. 顶配印钞机：MacBook Pro (M5 Max, 128GB 内存)"></a>1. 顶配印钞机：MacBook Pro (M5 Max, 128GB 内存)</h3><p>如果你拥有一台搭载 M5 Max 芯片和 128GB 内存的顶级 MacBook Pro，这台机器简直是为跑大模型而生的。它庞大的内存可以轻松装下甚至并行处理巨大的模型。</p>
+<ul>
+<li><strong>运行状态</strong>：每天运行 18 小时（比如下班后的闲置时间）。</li>
+<li><strong>处理速度</strong>：批量解码速度高达惊人的 <code>1326.2</code> tok&#x2F;s。</li>
+<li><strong>每月收益</strong>：预估每月总收入约为 <strong>$425.40</strong> 。扣除电费后，每月净赚约 $423（折合人民币约 3000 多元）！</li>
+</ul>
+<p>一年下来收益可达 <strong>$5,076</strong>，而在 Apple 官网上 <strong>M5 Max + 128GB RAM + 2TB</strong> 版本现在仅售 <strong>5399</strong> 美元（大陆官网售价 43,499 元）， 可以说这笔钱不仅足够你覆盖买电脑的成本，甚至相当于电脑自己在给自己打工还贷。</p>
+<p><img src="https://img.nep.me/ooo/darkbloom-m5max.webp" alt="darkbloom-m5max"></p>
+<h3 id="2-性能中坚：MacBook-Pro-M4-Pro-48GB-内存"><a href="#2-性能中坚：MacBook-Pro-M4-Pro-48GB-内存" class="headerlink" title="2. 性能中坚：MacBook Pro (M4 Pro, 48GB 内存)"></a>2. 性能中坚：MacBook Pro (M4 Pro, 48GB 内存)</h3><p>如果你的配置是偏向主流的工作站，比如搭载 M4 Pro 芯片和 48GB 内存的版本。</p>
+<ul>
+<li><strong>运行状态</strong>：同样每天运行 18 小时。</li>
+<li><strong>处理速度</strong>：<code>589.7</code> tok&#x2F;s。</li>
+<li><strong>每月收益</strong>：依然可以获得每月约 <strong>$188 美元</strong>（折合人民币约 1300 多元）的净收入。</li>
+</ul>
+<p>一年也有 $2,252 的进账。对于仅仅是利用电脑闲置时间的睡后收入来说，这绝对是一笔非常可观的零花钱。</p>
+<p><img src="https://img.nep.me/ooo/darkbloom-m4pro.webp" alt="darkbloom-m4pro"></p>
+<h2 id="Apple-Silicon-的恐怖能效"><a href="#Apple-Silicon-的恐怖能效" class="headerlink" title="Apple Silicon 的恐怖能效"></a>Apple Silicon 的恐怖能效</h2><p>传统挖矿最让人头疼的就是高昂的电费和机器狂转的噪音。但在这场AI 挖矿中，Apple M 系列芯片展现出了极其恐怖的能效比。</p>
+<p>以电费 $0.15&#x2F;kWh 计算，那台每月能为你赚取 425 美元的 M5 Max MacBook Pro，一整个月消耗的电费仅仅只有 $2.43；而 M4 Pro 版本的月电费更是低至 $1.46。电费成本甚至占不到总收入的 1%。没有轰鸣的风扇，没有天价电费账单，只有静悄悄地跑着大模型赚钱的优雅。</p>
+<p>AI 时代的算力需求是无穷无尽的，而去中心化的个人算力网络或许就是下一座金矿。你的 Mac 已经不再仅仅是一个昂贵的生产力工具，它完全有潜力成为你的“数字打工仔”。</p>
+<h2 id="结语与风险提示"><a href="#结语与风险提示" class="headerlink" title="结语与风险提示"></a>结语与风险提示</h2><p>当然，作为一个新兴领域，我们也要保持理性的预期。目前，Darkbloom 等平台已经在 Hacker News、Reddit 和 LinkedIn 等主流开发者社区引发了公开讨论。好消息是，目前尚未出现任何诈骗报告；但根据早期参与测试的节点用户反馈，当前网络中分配到的任务还主要是 Health Checks ，真实的商业推理需求仍然处于低位。这意味着官方计算器给出的高额预测相对较为乐观。</p>
+<p>更重要的是，如今大模型的进步速度实在是太快了。现在开源社区就已经迭代到了 Gemma 4 26B 这样庞大且高效的模型。AI 领域的算法架构、量化技术和吞吐量优化几乎每个月都在刷新。今天的配置组合可能刚好能吃满红利，但三个月后，随着更强、更大的模型诞生，整个网络对硬件门槛和带宽的要求可能会迎来彻底的洗牌。</p>
+<p>这注定是一场与技术演进赛跑的游戏。未来的实际收益，将极大地受制于真实商业请求的爆发、模型迭代的速度以及平台的后续运营。</p>
+<div class="flatpaper-note flatpaper-note--warning"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>请务必记住，以上数据只是参考，大家看看这些预估数据，把它当个有趣的参考就行。</p></div></div>
+]]></content>
+      <categories>
+        <category>工具资源</category>
+      </categories>
+      <tags>
+        <tag>AI</tag>
+        <tag>Apple</tag>
+        <tag>Darkbloom</tag>
+        <tag>MacBook</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>解决 Electron 42 APP 初次运行 pnpm dev 报错的问题</title>
+    <url>/post/fix-electron-42-app-cannot-run.html</url>
+    <content><![CDATA[<h2 id="问题复现"><a href="#问题复现" class="headerlink" title="问题复现"></a>问题复现</h2><p>开发或是 Clone 一个 Electron 42 APP 时，安装完依赖后第一次运行 <code>pnpm dev</code> 你可能遇到 <code>Error: Electron uninstall</code> 的错误信息：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pnpm install --frozen-lockfile</span><br><span class="line">pnpm approve-builds</span><br><span class="line"></span><br><span class="line">pnpm dev </span><br></pre></td></tr></table></figure>
+
+<p>报错信息</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">error during start dev server and electron app:</span><br><span class="line">Error: Electron uninstall</span><br><span class="line">    at getElectronPath</span><br><span class="line">...</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p>需要手动运行下面的命令</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npx install-electron</span><br></pre></td></tr></table></figure>
+
+<h2 id="问题原因"><a href="#问题原因" class="headerlink" title="问题原因"></a>问题原因</h2><p>这是由于为了应对供应链攻击， Electron 42 不再通过 <code>postinstall</code> 下载自身</p>
+<p><a href="https://www.electronjs.org/blog/electron-42-0#electron-no-longer-downloads-itself-via-postinstall-script">Electron 42: electron no longer downloads itself via postinstall script</a></p>
+<p>可以运行下面的命令</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install electron --save-dev --ignore-scripts</span><br><span class="line">npx install-electron</span><br></pre></td></tr></table></figure>
+
 ]]></content>
       <categories>
         <category>笔记</category>
       </categories>
       <tags>
-        <tag>Antigravity</tag>
+        <tag>Electron</tag>
       </tags>
   </entry>
   <entry>
@@ -5169,28 +5196,20 @@
       </tags>
   </entry>
   <entry>
-    <title>解决 Electron 42 APP 初次运行 pnpm dev 报错的问题</title>
-    <url>/post/fix-electron-42-app-cannot-run.html</url>
-    <content><![CDATA[<h2 id="问题复现"><a href="#问题复现" class="headerlink" title="问题复现"></a>问题复现</h2><p>开发或是 Clone 一个 Electron 42 APP 时，安装完依赖后第一次运行 <code>pnpm dev</code> 你可能遇到 <code>Error: Electron uninstall</code> 的错误信息：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pnpm install --frozen-lockfile</span><br><span class="line">pnpm approve-builds</span><br><span class="line"></span><br><span class="line">pnpm dev </span><br></pre></td></tr></table></figure>
-
-<p>报错信息</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">error during start dev server and electron app:</span><br><span class="line">Error: Electron uninstall</span><br><span class="line">    at getElectronPath</span><br><span class="line">...</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-
-<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p>需要手动运行下面的命令</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npx install-electron</span><br></pre></td></tr></table></figure>
-
-<h2 id="问题原因"><a href="#问题原因" class="headerlink" title="问题原因"></a>问题原因</h2><p>这是由于为了应对供应链攻击， Electron 42 不再通过 <code>postinstall</code> 下载自身</p>
-<p><a href="https://www.electronjs.org/blog/electron-42-0#electron-no-longer-downloads-itself-via-postinstall-script">Electron 42: electron no longer downloads itself via postinstall script</a></p>
-<p>可以运行下面的命令</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install electron --save-dev --ignore-scripts</span><br><span class="line">npx install-electron</span><br></pre></td></tr></table></figure>
-
+    <title>解决 Antigravity 通过 SSH 连接远程服务器崩溃的问题</title>
+    <url>/post/fix-antigravity-ssh-remote-crash-problem.html</url>
+    <content><![CDATA[<h2 id="问题详情"><a href="#问题详情" class="headerlink" title="问题详情"></a>问题详情</h2><p>在使用 Google Antigravity 通过 SSH 连接运行在 <strong>PVE</strong> 的 <strong>Linux 虚拟机</strong> 时，会直接崩溃，报错信息如下：</p>
+<blockquote>
+<p>Antigravity server crashed unexpectedly. Please restart to fully restore AI features.</p>
+</blockquote>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>在 PVE 中将 Linux 虚拟机的 <strong>CPU 类型</strong> 设置为 <code>host</code>，再尝试连接就可以了。</p>
+<p>参考： <a href="https://discuss.ai.google.dev/t/antigravity-crashes-on-linux-but-works-on-windows/110355/3">Antigravity crashes on Linux, but works on Windows</a></p>
 ]]></content>
       <categories>
         <category>笔记</category>
       </categories>
       <tags>
-        <tag>Electron</tag>
+        <tag>Antigravity</tag>
       </tags>
   </entry>
   <entry>
@@ -5525,67 +5544,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Google 为 AI Pro 用户提供每月 10 美元 GCP 额度，获取教程</title>
-    <url>/post/google-offer-10usd-gcp-credit-for-ai-pro-user.html</url>
-    <content><![CDATA[<p>Google AI Pro 订阅用户每月可获得 10 美元的 Google Cloud 抵用金，Google AI Ultra 订阅用户每月可获得 100 美元的 Google Cloud 抵用金。</p>
-<h2 id="获取地址"><a href="#获取地址" class="headerlink" title="获取地址"></a>获取地址</h2><p>获取地址： <a href="https://developers.google.com/program/my-benefits?hl=zh-cn">Google Developers - 我的福利</a></p>
-<blockquote>
-<p>提示：该福利不是自动发放，每月需要访问一下该页面才会领取当月福利</p>
-</blockquote>
-<p>如果你从未使用过 Google Developer 访问后首先要点击 <strong>享受福利</strong> ，创建个人资料。</p>
-<p><img src="https://img.nep.me/i/2026/01/29/google-developer-my-benefits.webp" alt="google-developer-my-benefits"></p>
-<p>然后可以看到详细的福利信息，其中 AI Pro 用户将包含 <strong>每月可获得 $10 的生成式 AI 和 Cloud 点数</strong></p>
-<p><img src="https://img.nep.me/i/2026/01/29/google-developer-my-benefits-details.webp" alt="google-developer-my-benefits-details"></p>
-<h2 id="开通-Google-Cloud-结算账户"><a href="#开通-Google-Cloud-结算账户" class="headerlink" title="开通 Google Cloud 结算账户"></a>开通 Google Cloud 结算账户</h2><p>如果你从未使用过 Google Cloud，那么需要先访问 <a href="https://console.cloud.google.com/billing">您的结算账户</a> 创建一个结算账户，同时还可以获取 Google Cloud 的 300 美元福利(90天)，需要添加信用卡。</p>
-<img src="https://img.nep.me/i/2026/01/29/google-cloud-free-trial.webp" style="width:75%;" alt="google-cloud-free-trial" />
-
-<p>下一步将验证付款信息，可以直接使用 Google AI Pro 的付款信息。</p>
-<blockquote>
-<p>Google 对付款卡片的地区限制不严格，使用招商银行发行的 VISA、JCB 信用卡均可以通过验证。</p>
-</blockquote>
-<h2 id="申请-10-美元-Credit"><a href="#申请-10-美元-Credit" class="headerlink" title="申请 10 美元 Credit"></a>申请 10 美元 Credit</h2><p>开通 Google Cloud 后，返回 <a href="https://developers.google.com/program/my-benefits?hl=zh-cn">Google Developers - 我的福利</a> 即可发现可以选择结算账户并申请了。<br><img src="https://img.nep.me/i/2026/01/29/google-dev-my-bill-account.webp" style="width:50%;" alt="google-dev-my-bill-account" /></p>
-<p>福利有效期自申请日起一年。</p>
-<div class="flatpaper-note flatpaper-note--warning"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>如果你使用了 Google 赠送的 300 美金的赠金试用 VPS 服务，记得在 90 天快到期时取消相关服务。</p></div></div>
-
-<h2 id="可以干什么"><a href="#可以干什么" class="headerlink" title="可以干什么"></a>可以干什么</h2><p>可以访问 <a href="https://console.cloud.google.com/billing/015AC2-2A20AA-619377/credits/all?hl=zh-cn&organizationId=0">Google Cloud - 赠金</a> 页面查看当前的赠金详情。</p>
-<p>其中 10 美元的可用范围是 <strong>以下服务：整个 Google Cloud Platform和Google 地图 API。</strong></p>
-<p><img src="https://img.nep.me/i/2026/01/29/google-cloud-credit-details.webp" alt="google-cloud-credit-details"></p>
-<p>可以直接在 Vertex AI Studio 中使用 Nano banana Pro 生成图片。<br>也可以获取 API 密钥在应用中使用。</p>
-<h2 id="获取-API-密钥"><a href="#获取-API-密钥" class="headerlink" title="获取 API 密钥"></a>获取 API 密钥</h2><p>如果创建 GCP 的 Vertex API 密钥请查看 Google 提供的文档 <a href="https://docs.cloud.google.com/vertex-ai/generative-ai/docs/start/api-keys?hl=zh-cn&usertype=standard">Google Cloud - 获取 Google Cloud API 密钥</a></p>
-<div class="flatpaper-note flatpaper-note--danger"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>Update 2026.03: Google 已更新政策，AI Studio 的 Key 已无法使用赠金抵扣，以下内容已失效。</p></div></div>
-
-<p>但是步骤较为繁琐，简单的是通过 <a href="https://aistudio.google.com/app/api-keys?hl=zh-cn">Google AI Studio</a> 创建，并关联 GCP 结算账户，同样可以使用赠金。<br><img src="https://img.nep.me/i/2026/01/29/gemini-api-set-billing.webp" style="width:50%;" alt="gemini-api-set-billing" /></p>
-<p>点击 API 右侧的 <strong>设置结算账户</strong>   </p>
-<img src="https://img.nep.me/i/2026/01/29/gemini-api-set-billing-02.webp" style="width:50%;" alt="gemini-api-set-billing-02" />
-
-<p>跳转到新页面后，选择结算账户，如果没有修改过，默认叫 <strong>我的结算账户</strong></p>
-<p>然后就可以返回 <a href="https://aistudio.google.com/app/api-keys?hl=zh-cn">Google AI Studio</a> 点击 <strong>激活结算</strong> 了</p>
-<img src="https://img.nep.me/i/2026/01/29/gemini-api-active-billing.webp" style="width:50%;" alt="gemini-api-active-billing" />
-
-<div class="flatpaper-note flatpaper-note--warning"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>启用结算后记得设置结算提醒，避免使用超出赠金额度</p></div></div>
-
-<div class="flatpaper-note flatpaper-note--danger"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>一定要保存好 API 密钥，尤其是不要上传到 GitHub 公开项目中，以免被别人使用，收到天价账单</p></div></div>
-
-<p>可以点击 <a href="https://aistudio.google.com/api-keys">Google AI Studo &gt; API Keys</a> 右侧的 <strong>view usage</strong> 查看用量。<br><img src="https://img.nep.me/i/2026/01/29/api-view-usage.webp" alt="api-view-usage"></p>
-<h2 id="在-Alma-中使用"><a href="#在-Alma-中使用" class="headerlink" title="在 Alma 中使用"></a>在 Alma 中使用</h2><p>获取的 API Token 非常适合在 <a href="https://alma.now/">Alma</a> 中使用。</p>
-<p>打开 Alma 客户端，点击 <strong>设置</strong> ，在 <strong>提供商</strong> 页面右侧，激活 <strong>Google Gemini</strong>。</p>
-<p>填入从 Google AI Studio 获取的 API Token，点击 Fetch 即可查看可用模型列表，激活希望使用的模型后就可以在对话中使用了。</p>
-<p><img src="https://img.nep.me/i/2026/01/29/alma-use-gemini-api.webp" alt="alma-use-gemini-api"></p>
-<blockquote>
-<p>没有开启结算前，免费层级的 API Token 可用列表是没有 Gemini 3 的</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>优惠活动</category>
-      </categories>
-      <tags>
-        <tag>AI</tag>
-        <tag>Google</tag>
-        <tag>Google Cloud</tag>
-        <tag>Gemini</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>榨干 AI 订阅额度：使用 Claude Pro 与 ChatGPT 订阅到底能省多少钱？</title>
     <url>/post/how-much-can-you-save-with-subscription-vs-api.html</url>
     <content><![CDATA[<p>Anthropic（Claude）与 OpenAI（ChatGPT）的 API 按量计费对于高频使用者而言通常“贵出天际”，一般只有企业级用户才能负担。因此，它们推出的按月订阅套餐，才是绝大多数普通用户的性价比首选。</p>
@@ -5669,6 +5627,67 @@
       </tags>
   </entry>
   <entry>
+    <title>Google 为 AI Pro 用户提供每月 10 美元 GCP 额度，获取教程</title>
+    <url>/post/google-offer-10usd-gcp-credit-for-ai-pro-user.html</url>
+    <content><![CDATA[<p>Google AI Pro 订阅用户每月可获得 10 美元的 Google Cloud 抵用金，Google AI Ultra 订阅用户每月可获得 100 美元的 Google Cloud 抵用金。</p>
+<h2 id="获取地址"><a href="#获取地址" class="headerlink" title="获取地址"></a>获取地址</h2><p>获取地址： <a href="https://developers.google.com/program/my-benefits?hl=zh-cn">Google Developers - 我的福利</a></p>
+<blockquote>
+<p>提示：该福利不是自动发放，每月需要访问一下该页面才会领取当月福利</p>
+</blockquote>
+<p>如果你从未使用过 Google Developer 访问后首先要点击 <strong>享受福利</strong> ，创建个人资料。</p>
+<p><img src="https://img.nep.me/i/2026/01/29/google-developer-my-benefits.webp" alt="google-developer-my-benefits"></p>
+<p>然后可以看到详细的福利信息，其中 AI Pro 用户将包含 <strong>每月可获得 $10 的生成式 AI 和 Cloud 点数</strong></p>
+<p><img src="https://img.nep.me/i/2026/01/29/google-developer-my-benefits-details.webp" alt="google-developer-my-benefits-details"></p>
+<h2 id="开通-Google-Cloud-结算账户"><a href="#开通-Google-Cloud-结算账户" class="headerlink" title="开通 Google Cloud 结算账户"></a>开通 Google Cloud 结算账户</h2><p>如果你从未使用过 Google Cloud，那么需要先访问 <a href="https://console.cloud.google.com/billing">您的结算账户</a> 创建一个结算账户，同时还可以获取 Google Cloud 的 300 美元福利(90天)，需要添加信用卡。</p>
+<img src="https://img.nep.me/i/2026/01/29/google-cloud-free-trial.webp" style="width:75%;" alt="google-cloud-free-trial" />
+
+<p>下一步将验证付款信息，可以直接使用 Google AI Pro 的付款信息。</p>
+<blockquote>
+<p>Google 对付款卡片的地区限制不严格，使用招商银行发行的 VISA、JCB 信用卡均可以通过验证。</p>
+</blockquote>
+<h2 id="申请-10-美元-Credit"><a href="#申请-10-美元-Credit" class="headerlink" title="申请 10 美元 Credit"></a>申请 10 美元 Credit</h2><p>开通 Google Cloud 后，返回 <a href="https://developers.google.com/program/my-benefits?hl=zh-cn">Google Developers - 我的福利</a> 即可发现可以选择结算账户并申请了。<br><img src="https://img.nep.me/i/2026/01/29/google-dev-my-bill-account.webp" style="width:50%;" alt="google-dev-my-bill-account" /></p>
+<p>福利有效期自申请日起一年。</p>
+<div class="flatpaper-note flatpaper-note--warning"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>如果你使用了 Google 赠送的 300 美金的赠金试用 VPS 服务，记得在 90 天快到期时取消相关服务。</p></div></div>
+
+<h2 id="可以干什么"><a href="#可以干什么" class="headerlink" title="可以干什么"></a>可以干什么</h2><p>可以访问 <a href="https://console.cloud.google.com/billing/015AC2-2A20AA-619377/credits/all?hl=zh-cn&organizationId=0">Google Cloud - 赠金</a> 页面查看当前的赠金详情。</p>
+<p>其中 10 美元的可用范围是 <strong>以下服务：整个 Google Cloud Platform和Google 地图 API。</strong></p>
+<p><img src="https://img.nep.me/i/2026/01/29/google-cloud-credit-details.webp" alt="google-cloud-credit-details"></p>
+<p>可以直接在 Vertex AI Studio 中使用 Nano banana Pro 生成图片。<br>也可以获取 API 密钥在应用中使用。</p>
+<h2 id="获取-API-密钥"><a href="#获取-API-密钥" class="headerlink" title="获取 API 密钥"></a>获取 API 密钥</h2><p>如果创建 GCP 的 Vertex API 密钥请查看 Google 提供的文档 <a href="https://docs.cloud.google.com/vertex-ai/generative-ai/docs/start/api-keys?hl=zh-cn&usertype=standard">Google Cloud - 获取 Google Cloud API 密钥</a></p>
+<div class="flatpaper-note flatpaper-note--danger"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>Update 2026.03: Google 已更新政策，AI Studio 的 Key 已无法使用赠金抵扣，以下内容已失效。</p></div></div>
+
+<p>但是步骤较为繁琐，简单的是通过 <a href="https://aistudio.google.com/app/api-keys?hl=zh-cn">Google AI Studio</a> 创建，并关联 GCP 结算账户，同样可以使用赠金。<br><img src="https://img.nep.me/i/2026/01/29/gemini-api-set-billing.webp" style="width:50%;" alt="gemini-api-set-billing" /></p>
+<p>点击 API 右侧的 <strong>设置结算账户</strong>   </p>
+<img src="https://img.nep.me/i/2026/01/29/gemini-api-set-billing-02.webp" style="width:50%;" alt="gemini-api-set-billing-02" />
+
+<p>跳转到新页面后，选择结算账户，如果没有修改过，默认叫 <strong>我的结算账户</strong></p>
+<p>然后就可以返回 <a href="https://aistudio.google.com/app/api-keys?hl=zh-cn">Google AI Studio</a> 点击 <strong>激活结算</strong> 了</p>
+<img src="https://img.nep.me/i/2026/01/29/gemini-api-active-billing.webp" style="width:50%;" alt="gemini-api-active-billing" />
+
+<div class="flatpaper-note flatpaper-note--warning"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>启用结算后记得设置结算提醒，避免使用超出赠金额度</p></div></div>
+
+<div class="flatpaper-note flatpaper-note--danger"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>一定要保存好 API 密钥，尤其是不要上传到 GitHub 公开项目中，以免被别人使用，收到天价账单</p></div></div>
+
+<p>可以点击 <a href="https://aistudio.google.com/api-keys">Google AI Studo &gt; API Keys</a> 右侧的 <strong>view usage</strong> 查看用量。<br><img src="https://img.nep.me/i/2026/01/29/api-view-usage.webp" alt="api-view-usage"></p>
+<h2 id="在-Alma-中使用"><a href="#在-Alma-中使用" class="headerlink" title="在 Alma 中使用"></a>在 Alma 中使用</h2><p>获取的 API Token 非常适合在 <a href="https://alma.now/">Alma</a> 中使用。</p>
+<p>打开 Alma 客户端，点击 <strong>设置</strong> ，在 <strong>提供商</strong> 页面右侧，激活 <strong>Google Gemini</strong>。</p>
+<p>填入从 Google AI Studio 获取的 API Token，点击 Fetch 即可查看可用模型列表，激活希望使用的模型后就可以在对话中使用了。</p>
+<p><img src="https://img.nep.me/i/2026/01/29/alma-use-gemini-api.webp" alt="alma-use-gemini-api"></p>
+<blockquote>
+<p>没有开启结算前，免费层级的 API Token 可用列表是没有 Gemini 3 的</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>优惠活动</category>
+      </categories>
+      <tags>
+        <tag>AI</tag>
+        <tag>Google</tag>
+        <tag>Google Cloud</tag>
+        <tag>Gemini</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>如何查询 Codex 赠送的重置机会的到期日期</title>
     <url>/post/how-to-check-codex-reset-expiration.html</url>
     <content><![CDATA[<p>2026 年 6 月份 Codex 的重置机制改为了可以存储的重置机会，并且由于一些 BUG 6 月份已经赠送了三次免费的重置机会，如通过邀请好友也可以额外获得最多三次的重置机会。不过重置次数不能无限期保存，每个重置次数只有 30 天的有效期，而 Codex 界面里不会显示每次重置机会的具体到期日期。</p>
@@ -5685,8 +5704,8 @@
 <li>BUG 赠送：2026 年 6 月 27 日，到期日期 <strong>7 月 27 日</strong></li>
 </ol>
 <p>我在 6 月 29 日的查询结果与记录一致，如果你有 X.com 账户，查看 <a href="https://x.com/thsottiaux">Tibo</a> 的推文获取最新 Codex 更新消息。</p>
-<ol start="4">
-<li>6 月 30 日，Tibo 在社交媒体 X 宣布将 <a href="https://x.com/thsottiaux/status/2071740419030053227">再赠送一次</a> 重置机会，</li>
+<h3 id="7-月份赠送记录"><a href="#7-月份赠送记录" class="headerlink" title="7 月份赠送记录"></a>7 月份赠送记录</h3><ol start="4">
+<li>BUG 赠送：2026 年 7 月 2 日，到期日期 **8 月 1 日</li>
 </ol>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>快看看你的重置机会什么时候到期吧。Plus 用户每周额度价值大约 100 美元，千万不要浪费了。</p>
 ]]></content>
@@ -7439,60 +7458,6 @@
       </tags>
   </entry>
   <entry>
-    <title>快讯：美国政府对 Claude Fable 5 发布禁令</title>
-    <url>/post/us-government-ban-claude-fable-5.html</url>
-    <content><![CDATA[<h2 id="AI-的“数字铁幕”落下：Claude-Fable-5-遭出口管制限制"><a href="#AI-的“数字铁幕”落下：Claude-Fable-5-遭出口管制限制" class="headerlink" title="AI 的“数字铁幕”落下：Claude Fable 5 遭出口管制限制"></a>AI 的“数字铁幕”落下：Claude Fable 5 遭出口管制限制</h2><p>北京时间 2026 年 6 月 13 日，在 Claude Fable 5 仅仅上线三天后，Anthropic 在社交平台上发布了一则令人震惊的 <a href="https://x.com/AnthropicAI/status/2065597531644743999">声明</a>： <strong>因美国政府援引国家安全授权下达出口管制指令，要求禁止任何外国公民访问 Fable 5 和 Mythos 5</strong> ，公司为确保合规，不得不紧急对所有客户全面停用这两款模型。</p>
-<blockquote>
-<p>The US government, citing national security authorities, has issued an export control directive to suspend all access to Fable 5 and Mythos 5 by any foreign national, whether inside or outside the United States, including foreign national Anthropic employees.</p>
-<p>The net effect of this order is that we must abruptly disable Fable 5 and Mythos 5 for all our customers to ensure compliance.</p>
-<p>Access to all other Claude models is not affected.</p>
-</blockquote>
-<p>在 Anthropic 的官网 <a href="https://www.anthropic.com/news/fable-mythos-access">声明</a> 中表示，美国政府是基于发现了一种绕过或破解 Fable 5 限制（即大模型的 <strong>越狱</strong>）的方法而发布了禁令。</p>
-<p>虽然其他 Claude 模型暂未受波及，但这则短短的声明，却无异于在生成式 AI 领域投下了一枚重磅炸弹。它不仅宣告了一个特定模型的下线，更标志着整个行业底层逻辑的根本性转折。</p>
-<h2 id="核心剧变：从“算力霸权”向“模型主权”的转移"><a href="#核心剧变：从“算力霸权”向“模型主权”的转移" class="headerlink" title="核心剧变：从“算力霸权”向“模型主权”的转移"></a>核心剧变：从“算力霸权”向“模型主权”的转移</h2><p>过去，大国博弈与行业竞争的焦点一直停留在硬件层面——谁掌握了最先进的 GPU 和芯片制造工艺，谁就扼住了 AI 发展的咽喉。</p>
-<p>然而，Fable 5 事件证明，到了 2026 年，最先进 AI 的核心价值已经从“训练基础设施”正式转移到了“模型本身”。当一个前沿模型具备了以下特征时，它便不再仅仅是商业软件，而是名副其实的国家战略级技术资产：</p>
-<ul>
-<li>顶级的科研与科学发现能力</li>
-<li>深度的自主编程与除错能力</li>
-<li>长周期的复杂任务规划与执行能力</li>
-<li>自动化的网络攻防与安全渗透能力</li>
-</ul>
-<p>美国政府对 Fable 5 的封锁逻辑，与当年限制高端芯片出口的逻辑如出一辙。因为在国家安全视域下，具备上述能力的软件，其杀伤力与重要性已与尖端军工硬件无异。</p>
-<h2 id="致命悖论：Anthropic-被自己的“安全牌”反噬"><a href="#致命悖论：Anthropic-被自己的“安全牌”反噬" class="headerlink" title="致命悖论：Anthropic 被自己的“安全牌”反噬"></a>致命悖论：Anthropic 被自己的“安全牌”反噬</h2><p>这起事件中最具戏剧性的一幕，在于 Anthropic 一直以来的人设。作为业界最著名的“AI 安全路线”倡导者，Anthropic 经常在公开场合展示其模型在网络安全、生物科学辅助、自动化代理等领域的强大乃至“危险”的能力。</p>
-<p>这种策略在商业上曾无比成功：</p>
-<ul>
-<li>对投资者： 证明了自己拥有逼近 AGI 的技术实力。</li>
-<li>对监管者： 彰显了企业对潜在风险的重视与透明度。</li>
-</ul>
-<p><strong>但也这是一个致命的悖论</strong>：<br>为了证明模型足够强大，企业必须充分展示其潜在的破坏力；而当这种危险性被反复强调并被广泛认可后，必然会精准踩中监管机构的红线。Anthropic 近期对 Fable 5 和 Mythos 5 危险能力的渲染，最终成为了促使监管重锤落下的核心背书。</p>
-<h2 id="行业新常态：互联网“无国界时代”的终结"><a href="#行业新常态：互联网“无国界时代”的终结" class="headerlink" title="行业新常态：互联网“无国界时代”的终结"></a>行业新常态：互联网“无国界时代”的终结</h2><p>Fable 5 的下线只是一个开始，它真正值得警惕的是其开创的政策先例。如果政府可以直接介入并限制特定 AI 模型的全球访问权，那么我们很可能即将迎来一个“技术边境”森严的新时代。</p>
-<p>未来，全球统一的 AI 软件服务模式可能走向瓦解，取而代之的将是高度分化的访问机制：</p>
-<ul>
-<li><strong>基于国籍的隔离</strong>： 不同国家的用户只能访问被阉割或完全不同的模型版本。  </li>
-<li><strong>模块化的权限管控</strong>： 科研、编程等关键能力模块受到严格的许可限制。</li>
-<li><strong>身份层级分化</strong>： 个人用户、普通企业与具有特殊资质的科研&#x2F;政府机构获得截然不同的访问权限。</li>
-</ul>
-<p>过去的焦点是<strong>数据主权</strong>，而未来的核心博弈将是<strong>模型主权</strong>。</p>
-<h2 id="悬念犹存：GPT-5-5-会步其后尘吗？"><a href="#悬念犹存：GPT-5-5-会步其后尘吗？" class="headerlink" title="悬念犹存：GPT-5.5 会步其后尘吗？"></a>悬念犹存：GPT-5.5 会步其后尘吗？</h2><p>面对 Claude 的遭遇，用户的焦虑很快蔓延至其竞争对手：OpenAI 的 GPT-5.5 会不会成为下一个管制目标？ 尤其是在 Anthropic 的官网 <a href="https://www.anthropic.com/news/fable-mythos-access">声明</a> 中包含了下面的内容：</p>
-<blockquote>
-<p>我们已经审查了一份据信是政府下达该指令依据的报告。我们已经核实，报告中所展示的能力水平在其他模型（包括 OpenAI 的 GPT-5.5）中广泛存在，并且每天都在被维护系统安全的防御者们所使用。</p>
-</blockquote>
-<p>Anthropic 认为，这场风波本质上是一场误解。所谓“越狱”并非体现模型具备普遍性、高风险能力，而只是某些狭窄、非通用的漏洞；类似能力在其他公开模型中也普遍存在，并不应被单独放大为管制依据。</p>
-<p>从声明全文来看，Anthropic 对相关管制政策持明确反对态度。其核心诉求显然是自救，而不是将其他竞争对手一并拖入困境。它真正希望推动的，是监管层重新评估 Claude Fable 5 的风险判断，并最终解除对其访问限制。</p>
-<p>毕竟，如果两家 AI 巨头的旗舰模型都相继被限制，那将不只是某一家公司的危机，而可能成为整个技术开放生态的至暗时刻。</p>
-<h2 id="结语：AI“开放时代”的落幕"><a href="#结语：AI“开放时代”的落幕" class="headerlink" title="结语：AI“开放时代”的落幕"></a>结语：AI“开放时代”的落幕</h2><p>回顾过去三年，大模型行业经历了一场狂飙突进的全球化盛宴。模型能力呈指数级跃升，使用成本不断逼近底线，全球用户几乎能够跨越地理界限，同步享受到人类最前沿的智慧结晶。</p>
-<p>但 6 月 13 日的 Fable 5 事件，是一道冰冷的历史分水岭。</p>
-<p>它宣告了先进 AI 正式脱离单纯的“消费级科技产品”范畴，被摆上了与核武器、航空航天、先进制程芯片同等的战略博弈棋盘。对于普通人而言，最大的震撼不在于某一个聊天窗口的暂时失效，而是我们终于看清了未来的残酷现实：</p>
-<p>由技术全球化所构筑的“普惠 AI”乌托邦正在消散，取而代之的，是数字铁幕时代下，被权力、国籍和安全政策严格切割的智能世界。</p>
-]]></content>
-      <categories>
-        <category>资讯</category>
-      </categories>
-      <tags>
-        <tag>Claude Fable 5</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>在 pnpm 中设置 minimumReleaseAge，远离供应链攻击</title>
     <url>/post/use-miniumreleaseage-feature-in-pnpm.html</url>
     <content><![CDATA[<p>近来针对开发者的供应链攻击越来越频繁，且规模也在变大，比如最近的 <a href="https://ooo.run/post/mini-shai-hulud-check-and-defense.html">Mini Shai-Hulud 供应链攻击事件</a> 中，顶级项目的开发者也难以避免，事后攻击发起者黑客团队 TeamPCP 居然将攻击代码开源了（现已被 GitHub 下架），使得攻击更为容易。</p>
@@ -7625,6 +7590,60 @@
       <tags>
         <tag>开发者安全</tag>
         <tag>pnpm</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>快讯：美国政府对 Claude Fable 5 发布禁令</title>
+    <url>/post/us-government-ban-claude-fable-5.html</url>
+    <content><![CDATA[<h2 id="AI-的“数字铁幕”落下：Claude-Fable-5-遭出口管制限制"><a href="#AI-的“数字铁幕”落下：Claude-Fable-5-遭出口管制限制" class="headerlink" title="AI 的“数字铁幕”落下：Claude Fable 5 遭出口管制限制"></a>AI 的“数字铁幕”落下：Claude Fable 5 遭出口管制限制</h2><p>北京时间 2026 年 6 月 13 日，在 Claude Fable 5 仅仅上线三天后，Anthropic 在社交平台上发布了一则令人震惊的 <a href="https://x.com/AnthropicAI/status/2065597531644743999">声明</a>： <strong>因美国政府援引国家安全授权下达出口管制指令，要求禁止任何外国公民访问 Fable 5 和 Mythos 5</strong> ，公司为确保合规，不得不紧急对所有客户全面停用这两款模型。</p>
+<blockquote>
+<p>The US government, citing national security authorities, has issued an export control directive to suspend all access to Fable 5 and Mythos 5 by any foreign national, whether inside or outside the United States, including foreign national Anthropic employees.</p>
+<p>The net effect of this order is that we must abruptly disable Fable 5 and Mythos 5 for all our customers to ensure compliance.</p>
+<p>Access to all other Claude models is not affected.</p>
+</blockquote>
+<p>在 Anthropic 的官网 <a href="https://www.anthropic.com/news/fable-mythos-access">声明</a> 中表示，美国政府是基于发现了一种绕过或破解 Fable 5 限制（即大模型的 <strong>越狱</strong>）的方法而发布了禁令。</p>
+<p>虽然其他 Claude 模型暂未受波及，但这则短短的声明，却无异于在生成式 AI 领域投下了一枚重磅炸弹。它不仅宣告了一个特定模型的下线，更标志着整个行业底层逻辑的根本性转折。</p>
+<h2 id="核心剧变：从“算力霸权”向“模型主权”的转移"><a href="#核心剧变：从“算力霸权”向“模型主权”的转移" class="headerlink" title="核心剧变：从“算力霸权”向“模型主权”的转移"></a>核心剧变：从“算力霸权”向“模型主权”的转移</h2><p>过去，大国博弈与行业竞争的焦点一直停留在硬件层面——谁掌握了最先进的 GPU 和芯片制造工艺，谁就扼住了 AI 发展的咽喉。</p>
+<p>然而，Fable 5 事件证明，到了 2026 年，最先进 AI 的核心价值已经从“训练基础设施”正式转移到了“模型本身”。当一个前沿模型具备了以下特征时，它便不再仅仅是商业软件，而是名副其实的国家战略级技术资产：</p>
+<ul>
+<li>顶级的科研与科学发现能力</li>
+<li>深度的自主编程与除错能力</li>
+<li>长周期的复杂任务规划与执行能力</li>
+<li>自动化的网络攻防与安全渗透能力</li>
+</ul>
+<p>美国政府对 Fable 5 的封锁逻辑，与当年限制高端芯片出口的逻辑如出一辙。因为在国家安全视域下，具备上述能力的软件，其杀伤力与重要性已与尖端军工硬件无异。</p>
+<h2 id="致命悖论：Anthropic-被自己的“安全牌”反噬"><a href="#致命悖论：Anthropic-被自己的“安全牌”反噬" class="headerlink" title="致命悖论：Anthropic 被自己的“安全牌”反噬"></a>致命悖论：Anthropic 被自己的“安全牌”反噬</h2><p>这起事件中最具戏剧性的一幕，在于 Anthropic 一直以来的人设。作为业界最著名的“AI 安全路线”倡导者，Anthropic 经常在公开场合展示其模型在网络安全、生物科学辅助、自动化代理等领域的强大乃至“危险”的能力。</p>
+<p>这种策略在商业上曾无比成功：</p>
+<ul>
+<li>对投资者： 证明了自己拥有逼近 AGI 的技术实力。</li>
+<li>对监管者： 彰显了企业对潜在风险的重视与透明度。</li>
+</ul>
+<p><strong>但也这是一个致命的悖论</strong>：<br>为了证明模型足够强大，企业必须充分展示其潜在的破坏力；而当这种危险性被反复强调并被广泛认可后，必然会精准踩中监管机构的红线。Anthropic 近期对 Fable 5 和 Mythos 5 危险能力的渲染，最终成为了促使监管重锤落下的核心背书。</p>
+<h2 id="行业新常态：互联网“无国界时代”的终结"><a href="#行业新常态：互联网“无国界时代”的终结" class="headerlink" title="行业新常态：互联网“无国界时代”的终结"></a>行业新常态：互联网“无国界时代”的终结</h2><p>Fable 5 的下线只是一个开始，它真正值得警惕的是其开创的政策先例。如果政府可以直接介入并限制特定 AI 模型的全球访问权，那么我们很可能即将迎来一个“技术边境”森严的新时代。</p>
+<p>未来，全球统一的 AI 软件服务模式可能走向瓦解，取而代之的将是高度分化的访问机制：</p>
+<ul>
+<li><strong>基于国籍的隔离</strong>： 不同国家的用户只能访问被阉割或完全不同的模型版本。  </li>
+<li><strong>模块化的权限管控</strong>： 科研、编程等关键能力模块受到严格的许可限制。</li>
+<li><strong>身份层级分化</strong>： 个人用户、普通企业与具有特殊资质的科研&#x2F;政府机构获得截然不同的访问权限。</li>
+</ul>
+<p>过去的焦点是<strong>数据主权</strong>，而未来的核心博弈将是<strong>模型主权</strong>。</p>
+<h2 id="悬念犹存：GPT-5-5-会步其后尘吗？"><a href="#悬念犹存：GPT-5-5-会步其后尘吗？" class="headerlink" title="悬念犹存：GPT-5.5 会步其后尘吗？"></a>悬念犹存：GPT-5.5 会步其后尘吗？</h2><p>面对 Claude 的遭遇，用户的焦虑很快蔓延至其竞争对手：OpenAI 的 GPT-5.5 会不会成为下一个管制目标？ 尤其是在 Anthropic 的官网 <a href="https://www.anthropic.com/news/fable-mythos-access">声明</a> 中包含了下面的内容：</p>
+<blockquote>
+<p>我们已经审查了一份据信是政府下达该指令依据的报告。我们已经核实，报告中所展示的能力水平在其他模型（包括 OpenAI 的 GPT-5.5）中广泛存在，并且每天都在被维护系统安全的防御者们所使用。</p>
+</blockquote>
+<p>Anthropic 认为，这场风波本质上是一场误解。所谓“越狱”并非体现模型具备普遍性、高风险能力，而只是某些狭窄、非通用的漏洞；类似能力在其他公开模型中也普遍存在，并不应被单独放大为管制依据。</p>
+<p>从声明全文来看，Anthropic 对相关管制政策持明确反对态度。其核心诉求显然是自救，而不是将其他竞争对手一并拖入困境。它真正希望推动的，是监管层重新评估 Claude Fable 5 的风险判断，并最终解除对其访问限制。</p>
+<p>毕竟，如果两家 AI 巨头的旗舰模型都相继被限制，那将不只是某一家公司的危机，而可能成为整个技术开放生态的至暗时刻。</p>
+<h2 id="结语：AI“开放时代”的落幕"><a href="#结语：AI“开放时代”的落幕" class="headerlink" title="结语：AI“开放时代”的落幕"></a>结语：AI“开放时代”的落幕</h2><p>回顾过去三年，大模型行业经历了一场狂飙突进的全球化盛宴。模型能力呈指数级跃升，使用成本不断逼近底线，全球用户几乎能够跨越地理界限，同步享受到人类最前沿的智慧结晶。</p>
+<p>但 6 月 13 日的 Fable 5 事件，是一道冰冷的历史分水岭。</p>
+<p>它宣告了先进 AI 正式脱离单纯的“消费级科技产品”范畴，被摆上了与核武器、航空航天、先进制程芯片同等的战略博弈棋盘。对于普通人而言，最大的震撼不在于某一个聊天窗口的暂时失效，而是我们终于看清了未来的残酷现实：</p>
+<p>由技术全球化所构筑的“普惠 AI”乌托邦正在消散，取而代之的，是数字铁幕时代下，被权力、国籍和安全政策严格切割的智能世界。</p>
+]]></content>
+      <categories>
+        <category>资讯</category>
+      </categories>
+      <tags>
+        <tag>Claude Fable 5</tag>
       </tags>
   </entry>
   <entry>
@@ -7900,25 +7919,6 @@
         <tag>OpenClaw</tag>
         <tag>Clawdbot</tag>
         <tag>moltbook</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>什么是 BYOK ？</title>
-    <url>/post/what-is-byok.html</url>
-    <content><![CDATA[<h2 id="什么是-BYOK-？"><a href="#什么是-BYOK-？" class="headerlink" title="什么是 BYOK ？"></a>什么是 BYOK ？</h2><p><code>BYOK</code> 是英文 <strong>Bring Your Own Key</strong> 的缩写，就是字面上的意思 <strong>自带密钥</strong> 。在云计算和软件服务领域，这是一种安全模型，允许客户使用自己的加密密钥来加密他们在服务商那里的数据，而不是使用由服务商提供的默认密钥。</p>
-<h2 id="在大模型应用中"><a href="#在大模型应用中" class="headerlink" title="在大模型应用中"></a>在大模型应用中</h2><p>最近，BYOK 这个概念在各类大模型（LLM）应用中变得越来越流行。通常使用 AI 应用需要消耗开发者提供的 Token，但有些应用采取了 BYOK 模式，它们允许用户直接填入自己从 OpenAI、Google、Anthropic 等官方或是其他渠道渠道获取的 API Key。</p>
-<p>对于用户而言，这意味着：</p>
-<ul>
-<li><strong>成本透明</strong>：你可以直接通过自己的 API 账户支付消耗的 Token，清楚地知道每一分钱花在了哪里。</li>
-<li><strong>使用灵活</strong>：不受应用开发者 Token 配额的限制，只要自己的 API Key 有效且有余额，就能持续使用。</li>
-</ul>
-<p>对于开发者而言，BYOK 模式也降低了他们的运营负担。他们无需预先购买和管理大量的 API Token，也简化了复杂的计费和分发流程，可以更专注于核心功能的开发。</p>
-]]></content>
-      <categories>
-        <category>笔记</category>
-      </categories>
-      <tags>
-        <tag>BYOK</tag>
       </tags>
   </entry>
 </search>
