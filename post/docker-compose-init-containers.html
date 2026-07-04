@@ -1,0 +1,1011 @@
+<!doctype html>
+
+<html lang="zh-CN" data-fancybox-enabled="1">
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f7f3e9" data-flatpaper-theme-color>
+
+<title>Docker Compose 新增 Init Containers：终于不用再写一堆一次性初始化服务了 | O&#39;s World</title>
+<meta name="description" content="在使用 Docker Compose 部署应用时，你是否也曾为“如何在主应用启动前优雅地运行数据库迁移或修复权限”而烦恼过？ 过去，我们不得不编写各种一次性服务并用复杂的 depends_on 串联。而现在，随着 Docker Compose 新特性的发布，我们终于迎来了官方的 Init Containers 支持。本文将带你一探究竟，看看它如何帮我们精简...">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Docker Compose 新增 Init Containers：终于不用再写一堆一次性初始化服务了 | O&#39;s World">
+<meta property="og:url" content="https://ooo.run/post/docker-compose-init-containers.html">
+<meta property="og:site_name" content="O&#39;s World">
+<meta property="og:description" content="在使用 Docker Compose 部署应用时，你是否也曾为“如何在主应用启动前优雅地运行数据库迁移或修复权限”而烦恼过？ 过去，我们不得不编写各种一次性服务并用复杂的 depends_on 串联。而现在，随着 Docker Compose 新特性的发布，我们终于迎来了官方的 Init Containers 支持。本文将带你一探究竟，看看它如何帮我们精简...">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img.nep.me/ooo/cover-docker-init.webp">
+<meta property="article:published_time" content="2026-07-04T03:00:00.000Z">
+<meta property="article:modified_time" content="2026-07-04T04:16:51.110Z">
+<meta property="article:author" content="Mr. O">
+<meta property="article:tag" content="Docker">
+<meta property="article:tag" content="Docker Compose">
+<meta property="article:tag" content="Init Containers">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img.nep.me/ooo/cover-docker-init.webp">
+<link rel="canonical" href="https://ooo.run/post/docker-compose-init-containers.html">
+
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Docker Compose 新增 Init Containers：终于不用再写一堆一次性初始化服务了","name":"Docker Compose 新增 Init Containers：终于不用再写一堆一次性初始化服务了 | O's World","description":"在使用 Docker Compose 部署应用时，你是否也曾为“如何在主应用启动前优雅地运行数据库迁移或修复权限”而烦恼过？ 过去，我们不得不编写各种一次性服务并用复杂的 depends_on 串联。而现在，随着 Docker Compose 新特性的发布，我们终于迎来了官方的 Init Containers 支持。本文将带你一探究竟，看看它如何帮我们精简...","url":"https://ooo.run/post/docker-compose-init-containers.html","inLanguage":"zh-CN","isPartOf":{"@type":"WebSite","name":"O's World","url":"https://ooo.run/"},"image":["https://img.nep.me/ooo/cover-docker-init.webp"],"mainEntityOfPage":"https://ooo.run/post/docker-compose-init-containers.html","datePublished":"2026-07-04T03:00:00.000Z","dateModified":"2026-07-04T04:16:51.110Z","author":{"@type":"Person","name":"Mr. O"},"publisher":{"@type":"Organization","name":"O's World"},"keywords":"Docker, Docker Compose, Init Containers"}</script>
+
+<script>
+  (function () {
+    var accents = { orange: 1, purple: 1, sakura: 1, blue: 1, pink: 1, green: 1, black: 1 };
+    var match = document.cookie.match(/(?:^|;\s*)flatpaper-accent=([^;]+)/);
+    var accent = 'blue';
+    if (match) {
+      try { accent = decodeURIComponent(match[1]); } catch (e) {}
+    }
+    if (!accents[accent]) accent = 'blue';
+    document.documentElement.setAttribute('data-accent', accent);
+    try {
+      if (localStorage.getItem('flatpaper-mode') === 'dark') {
+        document.documentElement.classList.add('dark-mode');
+      }
+    } catch (e) {}
+  })();
+</script>
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+
+
+
+  
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-PZSHQ0MC4Q"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-PZSHQ0MC4Q');
+</script>
+
+
+  
+<script defer src="https://u.nep.me/script.js" data-website-id="768b68c3-d4ed-429e-aa11-f5099ea5adbf" data-domains="ooo.run"></script>
+
+
+  
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8052638941019443" crossorigin="anonymous"></script>
+
+
+  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/artalk@2.9.1/dist/Artalk.css">
+
+<script defer src="https://cdn.jsdelivr.net/npm/artalk@2.9.1/dist/Artalk.js"></script>
+
+
+  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css">
+<script defer src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+
+
+  
+<meta name="generator" content="Hexo 8.1.2"><link rel="alternate" href="/atom.xml" title="O's World" type="application/atom+xml">
+</head>
+
+<body
+  class="is-post tag-style-tape bg-style-default"
+  data-default-accent="blue"
+  data-code-theme="simple"
+  data-note-style="sticky"
+  data-note-icons="on"
+  data-button-style="tape"
+  data-strong-accent="on"
+>
+  
+    <div class="page-grain"></div>
+  
+  <svg width="0" height="0" style="position:absolute;z-index:-1;" aria-hidden="true">
+    <defs>
+      <filter id="paper-edge" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" result="noise" />
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G" />
+      </filter>
+    </defs>
+  </svg>
+  
+  <header class="site-header">
+  
+  <button class="icon-button js-sidebar-toggle sidebar-toggle" type="button" aria-label="打开侧边栏" aria-controls="paper-sidebar-drawer" aria-expanded="false">
+    
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-menu"></use></svg>
+
+  </button>
+
+  <div class="brand">
+    <div class="brand-mark-wrapper">
+      
+        <button class="brand-mark" type="button" aria-label="打开站点导航" aria-haspopup="true" aria-expanded="false" aria-controls="brand-nav-menu">
+          
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-grid flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-layout-grid"></use></svg>
+
+        </button>
+        <div class="brand-nav-menu" id="brand-nav-menu" role="menu">
+          
+            <div class="brand-nav-group">
+              <div class="brand-nav-title">Blog</div>
+              
+                <a role="menuitem" href="https://ooo.run/" target="_blank" rel="noopener noreferrer">
+                  
+                    <img src="https://ooo.run/favicon.ico" alt="" class="nav-img-icon" aria-hidden="true" />
+                  
+                  <span>O&#39;s World</span>
+                </a>
+              
+            </div>
+          
+            <div class="brand-nav-group">
+              <div class="brand-nav-title">Project</div>
+              
+                <a role="menuitem" href="https://tools.ooo.run" target="_blank" rel="noopener noreferrer">
+                  
+                    <img src="https://tools.ooo.run/favicon.png" alt="" class="nav-img-icon" aria-hidden="true" />
+                  
+                  <span>简易工具</span>
+                </a>
+              
+                <a role="menuitem" href="https://ooo.run/games" target="_blank" rel="noopener noreferrer">
+                  
+                    <img src="https://img.nep.me/ooo/game.webp" alt="" class="nav-img-icon" aria-hidden="true" />
+                  
+                  <span>简单游戏</span>
+                </a>
+              
+            </div>
+          
+        </div>
+      
+    </div>
+    <a class="brand-text" href="/">O&#39;s World</a>
+  </div>
+
+  <nav class="site-nav" aria-label="主导航">
+    
+      
+        <a class="site-nav-link " href="/">
+          
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-house flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-house"></use></svg>
+
+          <span>首页</span>
+        </a>
+      
+    
+      
+        <a class="site-nav-link " href="/links/">
+          
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-link"></use></svg>
+
+          <span>友链</span>
+        </a>
+      
+    
+      
+        <div class="site-nav-item has-children">
+          <button class="site-nav-link site-nav-parent" type="button" aria-haspopup="true" aria-expanded="false">
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-folder"></use></svg>
+
+            <span>文章</span>
+          </button>
+          <div class="site-nav-menu" role="menu">
+            
+              <a role="menuitem" class="" href="/archives/">
+                
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-archive flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-archive"></use></svg>
+
+                <span>归档</span>
+              </a>
+            
+              <a role="menuitem" class="" href="/categories/">
+                
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-folder"></use></svg>
+
+                <span>分类</span>
+              </a>
+            
+              <a role="menuitem" class="" href="/tags/">
+                
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tag flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-tag"></use></svg>
+
+                <span>标签</span>
+              </a>
+            
+          </div>
+        </div>
+      
+    
+      
+        <a class="site-nav-link " target="_blank" rel="noopener" href="https://www.travellings.cn/go.html">
+          
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tram-front flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-tram-front"></use></svg>
+
+          <span>开往</span>
+        </a>
+      
+    
+  </nav>
+
+  <div class="header-tools">
+    <button class="icon-button js-search-open" type="button" aria-label="搜索文章">
+      
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-search"></use></svg>
+
+    </button>
+    <div class="accent-picker">
+      <button class="icon-button accent-toggle" type="button" aria-label="选择主题色" title="选择主题色" aria-haspopup="true" aria-expanded="false" aria-controls="accent-menu">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-palette flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-palette"></use></svg>
+
+      </button>
+      <div class="accent-menu" id="accent-menu" role="menu" aria-label="主题色">
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="橙色" aria-checked="false" data-accent-option="orange">
+          <span class="accent-swatch accent-swatch--orange" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="紫色" aria-checked="false" data-accent-option="purple">
+          <span class="accent-swatch accent-swatch--purple" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="樱花粉" aria-checked="false" data-accent-option="sakura">
+          <span class="accent-swatch accent-swatch--sakura" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="蓝色" aria-checked="false" data-accent-option="blue">
+          <span class="accent-swatch accent-swatch--blue" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="粉色" aria-checked="false" data-accent-option="pink">
+          <span class="accent-swatch accent-swatch--pink" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="绿色" aria-checked="false" data-accent-option="green">
+          <span class="accent-swatch accent-swatch--green" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="黑色" aria-checked="false" data-accent-option="black">
+          <span class="accent-swatch accent-swatch--black" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
+    <button class="theme-toggle" type="button" aria-label="切换颜色模式">
+      <span class="theme-icon theme-icon--sun">
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sun flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-sun"></use></svg>
+</span>
+      <span class="theme-icon theme-icon--moon">
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-moon flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-moon"></use></svg>
+</span>
+    </button>
+  </div>
+</header>
+
+
+  
+  <main class="paper-shell paper-shell--article">
+    
+
+<aside id="paper-sidebar-drawer" class="paper-sidebar paper-sidebar--right" aria-label="侧边栏">
+  <div class="drawer-toolbar" aria-label="侧边栏工具">
+    <div class="drawer-accent-options" role="group" aria-label="主题色">
+      <button type="button" class="accent-option" aria-label="橙色" aria-pressed="false" data-accent-option="orange">
+        <span class="accent-swatch accent-swatch--orange" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="accent-option" aria-label="紫色" aria-pressed="false" data-accent-option="purple">
+        <span class="accent-swatch accent-swatch--purple" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="accent-option" aria-label="樱花粉" aria-pressed="false" data-accent-option="sakura">
+        <span class="accent-swatch accent-swatch--sakura" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="accent-option" aria-label="蓝色" aria-pressed="false" data-accent-option="blue">
+        <span class="accent-swatch accent-swatch--blue" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="accent-option" aria-label="粉色" aria-pressed="false" data-accent-option="pink">
+        <span class="accent-swatch accent-swatch--pink" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="accent-option" aria-label="绿色" aria-pressed="false" data-accent-option="green">
+        <span class="accent-swatch accent-swatch--green" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="accent-option" aria-label="黑色" aria-pressed="false" data-accent-option="black">
+        <span class="accent-swatch accent-swatch--black" aria-hidden="true"></span>
+      </button>
+    </div>
+    <button class="icon-button drawer-close js-sidebar-close" type="button" aria-label="关闭侧边栏">
+      
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-x"></use></svg>
+
+    </button>
+  </div>
+
+  <section class="side-card nav-card">
+    <nav class="site-nav-drawer" aria-label="移动端导航">
+      
+        
+          <a class="" href="/">
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-house flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-house"></use></svg>
+
+            <span>首页</span>
+          </a>
+        
+      
+        
+          <a class="" href="/links/">
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-link"></use></svg>
+
+            <span>友链</span>
+          </a>
+        
+      
+        
+          <div class="drawer-nav-group">
+            <button class="drawer-nav-parent" type="button" aria-expanded="false">
+              
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-folder"></use></svg>
+
+              <span>文章</span>
+            </button>
+            <div class="drawer-nav-children">
+              
+                <a class="" href="/archives/">
+                  
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-archive flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-archive"></use></svg>
+
+                  <span>归档</span>
+                </a>
+              
+                <a class="" href="/categories/">
+                  
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-folder"></use></svg>
+
+                  <span>分类</span>
+                </a>
+              
+                <a class="" href="/tags/">
+                  
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tag flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-tag"></use></svg>
+
+                  <span>标签</span>
+                </a>
+              
+            </div>
+          </div>
+        
+      
+        
+          <a class="" target="_blank" rel="noopener" href="https://www.travellings.cn/go.html">
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tram-front flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-tram-front"></use></svg>
+
+            <span>开往</span>
+          </a>
+        
+      
+    </nav>
+  </section>
+
+  <section class="side-card profile-card">
+    
+      <div class="avatar avatar--image avatar--circle">
+        <img src="/images/avatar.png" alt="Mr. O" loading="lazy" referrerpolicy="no-referrer">
+      </div>
+    
+    <h3>Mr. O</h3>
+    <p class="profile-role">独立开发者</p>
+    <p>探索互联网世界，分享实用教程与精彩内容，发现更多有趣之处。</p>
+    
+      <div class="site-info" aria-label="站点信息">
+        
+          
+            <a class="site-info__item" href="/archives/">
+              <strong>77</strong>
+              <span>文章</span>
+            </a>
+          
+        
+          
+            <a class="site-info__item" href="/categories/">
+              <strong>8</strong>
+              <span>分类</span>
+            </a>
+          
+        
+          
+            <a class="site-info__item" href="/tags/">
+              <strong>113</strong>
+              <span>标签</span>
+            </a>
+          
+        
+      </div>
+    
+    <div class="socials">
+      
+        <a href="https://tools.ooo.run" target="_blank" rel="noopener" aria-label="Tools" data-tooltip="Tools">
+          
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tool-case flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-tool-case"></use></svg>
+
+          
+        </a>
+      
+      
+        
+        
+        <a href="/atom.xml" aria-label="RSS feed" data-tooltip="RSS feed">
+          
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-rss flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-rss"></use></svg>
+
+        </a>
+      
+    </div>
+  </section>
+
+  
+    <section class="side-card brand-link-card" aria-label="站点链接">
+      
+        <div class="brand-link-group">
+          <div class="brand-link-title">Blog</div>
+          <div class="brand-link-list">
+            
+              <a href="https://ooo.run/" target="_blank" rel="noopener noreferrer">
+                
+                  <img src="https://ooo.run/favicon.ico" alt="" class="nav-img-icon" aria-hidden="true" />
+                
+                <span>O&#39;s World</span>
+              </a>
+            
+          </div>
+        </div>
+      
+        <div class="brand-link-group">
+          <div class="brand-link-title">Project</div>
+          <div class="brand-link-list">
+            
+              <a href="https://tools.ooo.run" target="_blank" rel="noopener noreferrer">
+                
+                  <img src="https://tools.ooo.run/favicon.png" alt="" class="nav-img-icon" aria-hidden="true" />
+                
+                <span>简易工具</span>
+              </a>
+            
+              <a href="https://ooo.run/games" target="_blank" rel="noopener noreferrer">
+                
+                  <img src="https://img.nep.me/ooo/game.webp" alt="" class="nav-img-icon" aria-hidden="true" />
+                
+                <span>简单游戏</span>
+              </a>
+            
+          </div>
+        </div>
+      
+    </section>
+  
+
+  
+    <div class="post-sticky-stack">
+      <section class="side-card toc-card">
+        <header class="toc-card__head">
+          <h2>
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-table-of-contents flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-table-of-contents"></use></svg>
+文章目录</h2>
+          <button type="button" class="toc-toggle-all" data-action="toggle-toc" aria-pressed="false" aria-label="展开全部目录" title="展开全部目录">
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-chevron-down"></use></svg>
+
+          </button>
+        </header>
+        <div class="toc-content">
+          
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF-Init-Containers%EF%BC%9F"><span class="toc-text">什么是 Init Containers？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A5%E5%89%8D%E6%88%91%E4%BB%AC%E6%98%AF%E6%80%8E%E4%B9%88%E5%81%9A%E7%9A%84%EF%BC%9F"><span class="toc-text">以前我们是怎么做的？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B%E4%B8%80%EF%BC%9A%E5%90%AF%E5%8A%A8%E5%89%8D%E6%89%A7%E8%A1%8C%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%81%E7%A7%BB"><span class="toc-text">示例一：启动前执行数据库迁移</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B%E4%BA%8C%EF%BC%9A%E4%BF%AE%E5%A4%8D-Volume-%E6%9D%83%E9%99%90"><span class="toc-text">示例二：修复 Volume 权限</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B%E4%B8%89%EF%BC%9A%E4%B8%B2%E8%81%94%E5%A4%9A%E4%B8%AA%E5%88%9D%E5%A7%8B%E5%8C%96%E6%AD%A5%E9%AA%A4"><span class="toc-text">示例三：串联多个初始化步骤</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#pre-start-%E5%AE%B9%E5%99%A8%E7%9A%84%E8%BF%90%E8%A1%8C%E8%A7%84%E5%88%99"><span class="toc-text">pre_start 容器的运行规则</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%83%E4%BC%9A%E6%AF%8F%E6%AC%A1-docker-compose-up-%E9%83%BD%E6%89%A7%E8%A1%8C%E5%90%97%EF%BC%9F"><span class="toc-text">它会每次 docker compose up 都执行吗？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E4%B8%8D%E9%80%82%E5%90%88%E4%BD%BF%E7%94%A8-Init-Containers%EF%BC%9F"><span class="toc-text">什么时候不适合使用 Init Containers？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E9%9D%99%E6%80%81%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E6%8C%82%E8%BD%BD"><span class="toc-text">1. 静态配置文件挂载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%95%8F%E6%84%9F%E5%87%AD%E8%AF%81-Secret-%E6%B3%A8%E5%85%A5"><span class="toc-text">2. 敏感凭证 (Secret) 注入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1%E4%B8%8E%E5%90%8E%E5%8F%B0%E8%BF%90%E7%BB%B4%E4%BB%BB%E5%8A%A1"><span class="toc-text">3. 定时任务与后台运维任务</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BD%93%E5%89%8D%E7%9A%84%E8%AE%BE%E8%AE%A1%E9%99%90%E5%88%B6"><span class="toc-text">当前的设计限制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8E-Kubernetes-Init-Containers-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">与 Kubernetes Init Containers 的区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5%E5%BB%BA%E8%AE%AE"><span class="toc-text">最佳实践建议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li></ol>
+          
+        </div>
+      </section>
+      
+
+  <section class="side-card recent-card latest-posts-card">
+    <h2>
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-history flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-history"></use></svg>
+最新文章</h2>
+    <ul class="recent-list">
+      
+        <li>
+          <a class="recent-item" href="/post/paper-shaders-open-source-webgl-design-effects.html">
+            <strong>开源项目: 把酷炫的 WebGL Shader 变成前端组件 - Paper Shaders 介绍</strong>
+            <em>2026-07-02</em>
+          </a>
+        </li>
+      
+        <li>
+          <a class="recent-item" href="/post/is-sonnet-5-worth-using.html">
+            <strong>Sonnet 5 已发布，值得用吗？</strong>
+            <em>2026-07-01</em>
+          </a>
+        </li>
+      
+        <li>
+          <a class="recent-item" href="/post/vercel-services-multiple-frameworks-one-project.html">
+            <strong>Vercel Services 发布：一个项目部署 Next.js、FastAPI、Go 和 Astro</strong>
+            <em>2026-07-01</em>
+          </a>
+        </li>
+      
+        <li>
+          <a class="recent-item" href="/post/backends-are-back-vercel-support-dockerfile.html">
+            <strong>后端回来了：Vercel 支持直接运行 Dockerfile</strong>
+            <em>2026-07-01</em>
+          </a>
+        </li>
+      
+        <li>
+          <a class="recent-item" href="/post/debian-13-install-docker.html">
+            <strong>2026 Debian 13 安装 Docker 以及 Docker Compose 教程</strong>
+            <em>2026-06-30</em>
+          </a>
+        </li>
+      
+    </ul>
+  </section>
+
+
+    </div>
+  
+
+  
+
+</aside>
+
+    <section class="paper-main">
+      
+
+<div class="article-tape-wrap">
+<span class="tape tape--top-right" aria-hidden="true"></span>
+<article class="article-paper article-paper--with-top-img">
+  
+    <figure class="article-top-img" aria-label="Docker Compose 新增 Init Containers：终于不用再写一堆一次性初始化服务了">
+      <img src="https://img.nep.me/ooo/cover-docker-init.webp" alt="" loading="eager" fetchpriority="high" referrerpolicy="no-referrer" draggable="false">
+    </figure>
+  
+  <header class="article-header">
+    
+      <a class="label-pill" href="/categories/%E6%95%99%E7%A8%8B/">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-folder"></use></svg>
+
+        教程
+      </a>
+    
+    <h1>Docker Compose 新增 Init Containers：终于不用再写一堆一次性初始化服务了</h1>
+    <div class="meta-line meta-line--article">
+      <span class="meta-date">
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-calendar"></use></svg>
+2026-07-04</span>
+      
+        <span class="meta-tags">
+          
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tag flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-tag"></use></svg>
+
+          <a class="meta-tag-link" href="/tags/Docker/">#Docker</a><a class="meta-tag-link" href="/tags/Docker-Compose/">#Docker Compose</a><a class="meta-tag-link" href="/tags/Init-Containers/">#Init Containers</a>
+        </span>
+      
+    </div>
+  </header>
+
+  
+
+
+  <div class="article-content">
+    <p>在使用 Docker Compose 部署应用时，你是否也曾为“如何在主应用启动前优雅地运行数据库迁移或修复权限”而烦恼过？</p>
+<p>过去，我们不得不编写各种一次性服务并用复杂的 <code>depends_on</code> 串联。而现在，随着 Docker Compose 新特性的发布，我们终于迎来了官方的 <strong>Init Containers</strong> 支持。本文将带你一探究竟，看看它如何帮我们精简 <code>compose.yaml</code>！</p>
+<span id="more"></span>
+
+<p>在使用 <strong>Docker Compose</strong> 部署应用时，我们经常会遇到一种很常见的需求：在应用启动之前，先执行一些初始化任务。</p>
+<p>例如：</p>
+<ul>
+<li>启动 Web 服务之前，先执行数据库迁移</li>
+<li>容器以非 root 用户运行前，先修复挂载目录权限</li>
+<li>应用正式启动前，先生成配置文件</li>
+<li>先导入初始化数据，再启动主服务</li>
+</ul>
+<p>过去我们通常会单独定义一个 <code>migrate</code>、<code>init</code>、<code>setup</code> 之类的一次性服务，然后通过 <code>depends_on</code> 和 <code>condition: service_completed_successfully</code> 控制启动顺序。</p>
+<p>现在，<strong>Docker Compose</strong> 正式提供了更自然的写法：<strong>Init Containers</strong>。</p>
+<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>根据 Docker 官方文档，该功能需要 <strong>Docker Compose 5.3.0</strong> 及以上版本。</p></div></div>
+
+<p>Init Containers 本质上是 short-lived（短生命周期）容器，会在主服务容器启动之前依次执行；如果其中任何一步返回非 0 退出码，主服务就不会启动。</p>
+<h2 id="什么是-Init-Containers？"><a href="#什么是-Init-Containers？" class="headerlink" title="什么是 Init Containers？"></a>什么是 Init Containers？</h2><p>Init Containers 可以理解为：</p>
+<blockquote>
+<p>绑定在某个服务启动前执行的一组初始化步骤。</p>
+</blockquote>
+<p>它们不是长期运行的服务，也不是后台任务，而是“跑完就退出”的临时容器。</p>
+<p><strong>Docker Compose</strong> 中这个能力通过 <code>pre_start</code> 生命周期钩子实现。根据官方文档说明，<code>pre_start</code> 中的每个步骤都会在独立的临时容器中运行，这些容器会在服务容器创建之后、真正启动之前执行。</p>
+<p>一个最简单的例子：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">app:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">myapp:latest</span></span><br><span class="line">    <span class="attr">pre_start:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">command:</span> [<span class="string">&quot;./manage.py&quot;</span>, <span class="string">&quot;migrate&quot;</span>]</span><br></pre></td></tr></table></figure>
+
+<p>这段配置表示：</p>
+<ol>
+<li><strong>Docker Compose</strong> 先创建 <code>app</code> 服务容器；</li>
+<li>在 <code>app</code> 真正启动之前，先运行 <code>./manage.py migrate</code>；</li>
+<li>如果迁移命令成功退出（即返回状态码 <code>0</code>），<code>app</code> 才会启动；</li>
+<li>如果迁移失败，<code>app</code> 不会启动。</li>
+</ol>
+<p>这比过去单独写一个 <code>migrate</code> 服务清晰很多。</p>
+<h2 id="以前我们是怎么做的？"><a href="#以前我们是怎么做的？" class="headerlink" title="以前我们是怎么做的？"></a>以前我们是怎么做的？</h2><p>在 <code>pre_start</code> 出现之前，如果想表达“先执行迁移，再启动应用”，通常会这样写：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">migrate:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">myapp:latest</span></span><br><span class="line">    <span class="attr">command:</span> [<span class="string">&quot;./manage.py&quot;</span>, <span class="string">&quot;migrate&quot;</span>]</span><br><span class="line">    <span class="attr">restart:</span> <span class="string">&quot;no&quot;</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">app:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">myapp:latest</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="attr">migrate:</span></span><br><span class="line">        <span class="attr">condition:</span> <span class="string">service_completed_successfully</span></span><br></pre></td></tr></table></figure>
+
+<p>这种写法虽然可以工作，但存在以下几个明显的问题：</p>
+<ul>
+<li><strong>概念混淆</strong>：<code>migrate</code> 本质上并不是一个真正的长期运行服务，它只是 <code>app</code> 启动前的一个初始化步骤。把它放在 <code>services</code> 顶层，会让整个 Compose 配置文件显得臃肿。</li>
+<li><strong>状态残留</strong>：任务执行完成后，它会作为已退出的服务留在 <code>docker compose ps</code> 列表中，使得容器服务列表不够清爽。</li>
+<li><strong>编排繁琐</strong>：如果初始化步骤较多（比如先迁移数据库、再导入默认数据、最后生成配置文件），就需要定义多个一次性服务，并用一堆复杂的 <code>depends_on</code> 串联起来。</li>
+</ul>
+<p>使用新的 <code>pre_start</code> 特性后，我们可以直接把它们收纳进服务内部：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">app:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">myapp:latest</span></span><br><span class="line">    <span class="attr">pre_start:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">command:</span> [<span class="string">&quot;./manage.py&quot;</span>, <span class="string">&quot;migrate&quot;</span>]</span><br><span class="line">      <span class="bullet">-</span> <span class="attr">command:</span> [<span class="string">&quot;./manage.py&quot;</span>, <span class="string">&quot;loaddata&quot;</span>, <span class="string">&quot;fixtures.json&quot;</span>]</span><br></pre></td></tr></table></figure>
+
+<p><strong>Docker</strong> 官方也明确指出，<code>pre_start</code> 的优势在于：</p>
+<ol>
+<li>初始化逻辑作为服务的<strong>从属步骤</strong>表达，不再伪装成并列的独立服务；</li>
+<li>已完成的临时步骤不会出现在 <code>docker compose ps</code> 中，保持环境整洁；</li>
+<li>多个步骤按顺序执行，无需再通过复杂的 <code>depends_on</code> 逻辑进行链式串联。</li>
+</ol>
+<h2 id="示例一：启动前执行数据库迁移"><a href="#示例一：启动前执行数据库迁移" class="headerlink" title="示例一：启动前执行数据库迁移"></a>示例一：启动前执行数据库迁移</h2><p>这是最典型的使用场景。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">app:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">myapp:latest</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="attr">db:</span></span><br><span class="line">        <span class="attr">condition:</span> <span class="string">service_healthy</span></span><br><span class="line">    <span class="attr">pre_start:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">command:</span> [<span class="string">&quot;./manage.py&quot;</span>, <span class="string">&quot;migrate&quot;</span>]</span><br><span class="line"></span><br><span class="line">  <span class="attr">db:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">postgres:18</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="attr">POSTGRES_USER:</span> <span class="string">app</span></span><br><span class="line">      <span class="attr">POSTGRES_PASSWORD:</span> <span class="string">password</span></span><br><span class="line">      <span class="attr">POSTGRES_DB:</span> <span class="string">app</span></span><br><span class="line">    <span class="attr">healthcheck:</span></span><br><span class="line">      <span class="attr">test:</span> [<span class="string">&quot;CMD-SHELL&quot;</span>, <span class="string">&quot;pg_isready -U $$&#123;POSTGRES_USER&#125; -d $$&#123;POSTGRES_DB&#125;&quot;</span>]</span><br><span class="line">      <span class="attr">interval:</span> <span class="string">10s</span></span><br><span class="line">      <span class="attr">retries:</span> <span class="number">5</span></span><br><span class="line">      <span class="attr">start_period:</span> <span class="string">30s</span></span><br><span class="line">      <span class="attr">timeout:</span> <span class="string">10s</span></span><br></pre></td></tr></table></figure>
+
+<p>这里有两个关键点：</p>
+<ol>
+<li><strong>依赖关系</strong>：<code>app</code> 通过 <code>depends_on</code> 等待 <code>db</code> 容器进入 <code>service_healthy</code>（健康）状态。</li>
+<li><strong>初始化时机</strong>：在 <code>app</code> 真正启动前，会先在临时容器中执行 <code>./manage.py migrate</code>。</li>
+</ol>
+<p>若数据库迁移成功，<code>app</code> 主服务会继续启动；若失败，<code>app</code> 不会启动，且相关错误日志会直接输出在 <code>docker compose up</code> 中。</p>
+<p>这种设计非常适合 <strong>Django</strong>、<strong>Rails</strong>、<strong>Laravel</strong>、<strong>Prisma</strong>、<strong>Drizzle</strong>、<strong>Alembic</strong> 等需要在服务运行前进行表结构迁移的项目。</p>
+<h2 id="示例二：修复-Volume-权限"><a href="#示例二：修复-Volume-权限" class="headerlink" title="示例二：修复 Volume 权限"></a>示例二：修复 Volume 权限</h2><p>另一个痛点是权限问题：当服务本身以非 root 用户运行，但挂载的 <strong>Docker named volume</strong> 默认归属于 root 权限时，容器可能会因为没有写入权限而崩溃。</p>
+<p>过去，我们可能需要在 <code>Dockerfile</code> 里大动干戈，或者单独拉起一个辅助服务。现在，使用 <code>pre_start</code> 可以非常轻量地搞定：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">app:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">myapp:latest</span></span><br><span class="line">    <span class="attr">user:</span> <span class="string">&quot;1000:1000&quot;</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">data:/data</span></span><br><span class="line">    <span class="attr">pre_start:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">image:</span> <span class="string">busybox</span></span><br><span class="line">        <span class="attr">user:</span> <span class="string">root</span></span><br><span class="line">        <span class="attr">command:</span> <span class="string">sh</span> <span class="string">-c</span> <span class="string">&#x27;chown -R 1000:1000 /data&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">volumes:</span></span><br><span class="line">  <span class="attr">data:</span></span><br></pre></td></tr></table></figure>
+
+<p>在这个例子中：</p>
+<ul>
+<li><code>app</code> 容器以 <code>1000:1000</code> 非 root 用户运行。</li>
+<li><code>pre_start</code> 步骤指定了覆盖镜像为 <code>busybox</code>，并以 <code>root</code> 权限执行 <code>chown</code>，从而在主服务运行前顺利修正挂载目录所有权。</li>
+</ul>
+<p>该场景在自托管&#x2F;开源应用部署中极度实用，例如：</p>
+<ul>
+<li>修复上传&#x2F;缓存目录权限；</li>
+<li>自动初始化数据目录结构；</li>
+<li>在挂载路径中提前生成默认配置文件。</li>
+</ul>
+<h2 id="示例三：串联多个初始化步骤"><a href="#示例三：串联多个初始化步骤" class="headerlink" title="示例三：串联多个初始化步骤"></a>示例三：串联多个初始化步骤</h2><p><code>pre_start</code> 支持定义一个步骤列表，并会按照声明顺序<strong>串行执行</strong>。只有当前一个步骤成功退出（返回 <code>0</code>）时，才会继续运行下一个步骤；若中间某一步失败，后续步骤和主服务都将终止。</p>
+<p>例如：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">app:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">myapp:latest</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="attr">db:</span></span><br><span class="line">        <span class="attr">condition:</span> <span class="string">service_healthy</span></span><br><span class="line">    <span class="attr">pre_start:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">command:</span> [<span class="string">&quot;./manage.py&quot;</span>, <span class="string">&quot;migrate&quot;</span>]</span><br><span class="line">      <span class="bullet">-</span> <span class="attr">command:</span> [<span class="string">&quot;./manage.py&quot;</span>, <span class="string">&quot;loaddata&quot;</span>, <span class="string">&quot;fixtures.json&quot;</span>]</span><br><span class="line">      <span class="bullet">-</span> <span class="attr">command:</span> [<span class="string">&quot;./scripts/generate-config.sh&quot;</span>]</span><br><span class="line"></span><br><span class="line">  <span class="attr">db:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">postgres:18</span></span><br></pre></td></tr></table></figure>
+
+<p>整个启动流为：</p>
+<ol>
+<li><strong>等待</strong>数据库容器进入健康状态；</li>
+<li><strong>执行</strong>数据库表结构迁移；</li>
+<li><strong>导入</strong>系统初始数据；</li>
+<li><strong>生成</strong>动态配置文件；</li>
+<li><strong>拉起</strong>主应用容器。</li>
+</ol>
+<div class="flatpaper-note flatpaper-note--warning"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>需要注意的是，<code>pre_start</code> 中的多个步骤<strong>并不是事务</strong>。如果第二步执行成功、第三步失败，<strong>Docker Compose</strong> 不会自动回滚第二步。<br>因此，强烈建议将初始化脚本设计为<strong>可重复运行的幂等逻辑</strong>。</p></div></div>
+
+<p>例如在导入数据时：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 不推荐：每次无脑插入，可能会导致主键冲突或数据重复</span></span><br><span class="line"><span class="keyword">INSERT INTO</span> users (id, name) <span class="keyword">VALUES</span> (<span class="number">1</span>, <span class="string">&#x27;admin&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 推荐：检测到冲突时跳过，保证幂等性</span></span><br><span class="line"><span class="keyword">INSERT INTO</span> users (id, name) <span class="keyword">VALUES</span> (<span class="number">1</span>, <span class="string">&#x27;admin&#x27;</span>)</span><br><span class="line"><span class="keyword">ON</span> CONFLICT (id) DO NOTHING;</span><br></pre></td></tr></table></figure>
+
+<h2 id="pre-start-容器的运行规则"><a href="#pre-start-容器的运行规则" class="headerlink" title="pre_start 容器的运行规则"></a><code>pre_start</code> 容器的运行规则</h2><p>根据官方文档说明，<code>pre_start</code> 步骤拉起的临时容器具有以下行为特征：</p>
+<ul>
+<li><strong>独立容器</strong>：每个步骤都在自己专属的临时容器中运行。</li>
+<li><strong>默认继承</strong>：默认继承当前宿主服务的 <code>image</code> 定义，无需重复指定镜像。</li>
+<li><strong>允许覆盖</strong>：可以通过 <code>image</code> 字段指定其他的轻量工具镜像（如 <code>busybox</code>）。</li>
+<li><strong>同网共用</strong>：会自动加入当前宿主服务所在的网络，因此可以直接访问通过 <code>depends_on</code> 声明的其他依赖服务。</li>
+<li><strong>共享卷挂载</strong>：会自动共享当前服务定义的所有 <code>volumes</code> 挂载。</li>
+<li><strong>强状态约束</strong>：必须返回退出码 <code>0</code>，下一个步骤及主服务才会继续运行。</li>
+</ul>
+<p>这些特性为我们编写配置带来了很大便利。例如，若迁移命令就存放在应用镜像内，你只需直接声明命令，无需重复书写镜像名称：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">pre_start:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">command:</span> [<span class="string">&quot;pnpm&quot;</span>, <span class="string">&quot;db:migrate&quot;</span>]</span><br></pre></td></tr></table></figure>
+
+<p>如果需要使用辅助镜像（如 <code>busybox</code>）来做文件操作，直接在步骤内声明 <code>image</code> 即可进行覆盖：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">pre_start:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">image:</span> <span class="string">busybox</span></span><br><span class="line">    <span class="attr">user:</span> <span class="string">root</span></span><br><span class="line">    <span class="attr">command:</span> <span class="string">sh</span> <span class="string">-c</span> <span class="string">&#x27;chown -R 1000:1000 /data&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>因为共享了同一网络与 <code>volumes</code>，初始化容器在挂载目录中写入的动态配置文件、修正的权限或是写入的数据，在主容器拉起后会立刻生效。</p>
+<h2 id="它会每次-docker-compose-up-都执行吗？"><a href="#它会每次-docker-compose-up-都执行吗？" class="headerlink" title="它会每次 docker compose up 都执行吗？"></a>它会每次 <code>docker compose up</code> 都执行吗？</h2><p>答案是：<strong>不会</strong>。这是一个非常关键的细节。</p>
+<p>根据 Docker 官方文档：</p>
+<ul>
+<li>如果某个 <code>pre_start</code> 步骤在上一次部署中已经<strong>成功执行</strong>过，且其<strong>定义没有发生任何变化</strong>，那么后续执行 <code>docker compose up</code> 时，Compose 会<strong>自动跳过</strong>该步骤。</li>
+<li>当服务因 <code>restart</code> 策略发生重启时，<strong>不会</strong>重新触发 <code>pre_start</code>。</li>
+<li><strong>只有在以下情况</strong>下，初始化步骤才会再次执行：<ol>
+<li>步骤的配置定义发生变更；</li>
+<li>上一次执行失败（退出码非 0）；</li>
+<li>执行 <code>docker compose up --force-recreate</code> 强制重建服务。</li>
+</ol>
+</li>
+</ul>
+<p>由此可见，<code>pre_start</code> 偏向于“宿主服务生命周期中的一次性部署初始化”，而不是“每次容器进程启动前的强制拦截”。</p>
+<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p><strong>提示</strong>： 如果你有一些需要在每次容器重启、扩容或进程拉起时都必定运行的逻辑（如动态读取最新环境变量），建议依然将其写入镜像的 <code>entrypoint.sh</code> 入口脚本中。</p></div></div>
+
+<h2 id="什么时候不适合使用-Init-Containers？"><a href="#什么时候不适合使用-Init-Containers？" class="headerlink" title="什么时候不适合使用 Init Containers？"></a>什么时候不适合使用 Init Containers？</h2><p>Init Containers 虽然方便，但并非银弹。根据官方文档的建议，如果你的需求仅是注入静态配置文件或密钥，应当优先使用 <strong>Docker Compose</strong> 原生的 <code>configs</code> 和 <code>secrets</code>，因为它们支持直接挂载，并允许精细化配置权限和所属用户。</p>
+<p>以下场景不建议使用 <code>pre_start</code>：</p>
+<h3 id="1-静态配置文件挂载"><a href="#1-静态配置文件挂载" class="headerlink" title="1. 静态配置文件挂载"></a>1. 静态配置文件挂载</h3><p>对于不需要动态生成的固定配置文件，直接挂载即可，无需启动一个额外的初始化容器去写文件。</p>
+<p><strong>推荐方案：</strong></p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">configs:</span></span><br><span class="line">  <span class="attr">app_config:</span></span><br><span class="line">    <span class="attr">file:</span> <span class="string">./config/app.yml</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">app:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">myapp:latest</span></span><br><span class="line">    <span class="attr">configs:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">source:</span> <span class="string">app_config</span></span><br><span class="line">        <span class="attr">target:</span> <span class="string">/app/config.yml</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-敏感凭证-Secret-注入"><a href="#2-敏感凭证-Secret-注入" class="headerlink" title="2. 敏感凭证 (Secret) 注入"></a>2. 敏感凭证 (Secret) 注入</h3><p>数据库密码、API 密钥等敏感数据切忌通过初始化脚本写入 volume 或文件系统，以防泄露。</p>
+<p><strong>推荐方案：</strong></p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">secrets:</span></span><br><span class="line">  <span class="attr">db_password:</span></span><br><span class="line">    <span class="attr">file:</span> <span class="string">./secrets/db_password.txt</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">app:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">myapp:latest</span></span><br><span class="line">    <span class="attr">secrets:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">db_password</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-定时任务与后台运维任务"><a href="#3-定时任务与后台运维任务" class="headerlink" title="3. 定时任务与后台运维任务"></a>3. 定时任务与后台运维任务</h3><p>例如：</p>
+<ul>
+<li>定期数据备份</li>
+<li>定期清理缓存与临时文件</li>
+<li>容器销毁后的退出清理工作</li>
+</ul>
+<p>这些任务并不属于“主应用启动前必须阻塞完成的必要依赖”，因此不适合放进 <code>pre_start</code>。</p>
+<h2 id="当前的设计限制"><a href="#当前的设计限制" class="headerlink" title="当前的设计限制"></a>当前的设计限制</h2><p>由于该特性还相对较新，在使用时需要注意以下局限性：</p>
+<ul>
+<li><strong>非副本级执行</strong>：<code>pre_start</code> 是针对服务整体执行一次，而非针对每个容器副本单独运行（目前尚不支持 <code>per_replica: true</code> 配置）。</li>
+<li><strong>部分挂载类型不兼容</strong>：多副本共享的命名卷（Named Volume）和绑定挂载（Bind Mount）能够完美适配；但对于每个实例完全独立的匿名卷或 <code>tmpfs</code> 挂载，<code>pre_start</code> 临时容器写入的数据是无法同步到主容器的。</li>
+<li><strong>扩容时不触发</strong>：当你执行扩容命令时（例如 <code>docker compose up --scale app=3</code>），新创建的副本容器<strong>不会</strong>再次触发 <code>pre_start</code> 执行。它依然只遵循“配置变更&#x2F;强制重建”的触发逻辑。</li>
+</ul>
+<p>因此，如果你的某些初始化逻辑（如本地缓存预热）必须在每一个容器副本里运行，目前请不要依赖 <code>pre_start</code>。</p>
+<h2 id="与-Kubernetes-Init-Containers-的区别"><a href="#与-Kubernetes-Init-Containers-的区别" class="headerlink" title="与 Kubernetes Init Containers 的区别"></a>与 Kubernetes Init Containers 的区别</h2><p>从概念上看，两者的目的非常一致：都在主业务容器拉起前执行前置准备。</p>
+<p>但实现和能力上有所差异：</p>
+<ul>
+<li><strong>Kubernetes (K8s)</strong> 的 Init Containers 是 Pod 级别的核心一等公民，高度契合云原生分布式调度，且天然对多副本容器进行各自初始化。</li>
+<li><strong>Docker Compose</strong> 的 Init Containers 则是通过 <code>pre_start</code> 生命周期钩子实现的一种<strong>轻量级解决方案</strong>。它更契合单机部署、本地开发、小规模自托管（Self-Hosted）场景。</li>
+</ul>
+<p>简单来说，<strong>Docker Compose 的 Init Containers 是为 Compose 场景量身定制的精简版初始化机制</strong>，小巧但十分够用。</p>
+<h2 id="最佳实践建议"><a href="#最佳实践建议" class="headerlink" title="最佳实践建议"></a>最佳实践建议</h2><p>在实际生产或开发环境使用 <code>pre_start</code> 时，建议遵循以下原则：</p>
+<ol>
+<li><strong>绝对的幂等性</strong>：初始化脚本一定要做到“多次执行，结果一致”，随时准备应对重试和重建场景。</li>
+<li><strong>严禁包含长驻进程</strong>：<code>pre_start</code> 的步骤必须是能在短时间内主动退出并返回 <code>0</code> 的任务，否则将无限期阻塞主服务的启动。</li>
+<li><strong>区分生产与开发环境的迁移策略</strong>：虽然在 <code>pre_start</code> 中自动运行 <code>migrate</code> 很爽，但在生产环境中自动执行数据库迁移依然存在一定风险。建议重要线上项目通过独立的 CI&#x2F;CD Pipeline 触发迁移。</li>
+<li><strong>封装复杂逻辑为脚本</strong>：如果初始化流程复杂（包含多步判断和环境准备），建议封装为独立脚本（如 <code>./scripts/init.sh</code>）放入容器，而在 <code>compose.yaml</code> 中只调用该脚本，避免配置文件过长。</li>
+</ol>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">pre_start:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">command:</span> [<span class="string">&quot;./scripts/init.sh&quot;</span>]</span><br></pre></td></tr></table></figure>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><strong>Docker Compose</strong> 的 <strong>Init Containers</strong> 终于解决了容器编排中长久以来的一个痛点：<strong>如何优雅地表达“启动前的必要前置步骤”</strong>。</p>
+<p>我们可以将它的应用场景简单归纳为：</p>
+<table>
+<thead>
+<tr>
+<th align="left">适合使用 ✅</th>
+<th align="left">不适合使用 ❌</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">数据库自动迁移 (<code>migrate</code>)</td>
+<td align="left">长期运行的后台任务</td>
+</tr>
+<tr>
+<td align="left">初始数据导入与种子填充</td>
+<td align="left">定时备份&#x2F;清理等 Cron 任务</td>
+</tr>
+<tr>
+<td align="left">修正宿主卷挂载（Volume）权限</td>
+<td align="left">纯静态的配置文件挂载 (使用 <code>configs</code>)</td>
+</tr>
+<tr>
+<td align="left">动态生成局部配置</td>
+<td align="left">敏感凭证的安全管理 (使用 <code>secrets</code>)</td>
+</tr>
+<tr>
+<td align="left">串联多个有顺序的前置校验步骤</td>
+<td align="left">必须针对每个副本 (Replica) 重复执行的初始化</td>
+</tr>
+</tbody></table>
+<p>最后，让我们用一张直观的对比来看看引入这一新特性后的变化：</p>
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-21-tab-0" aria-controls="tabs-21-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">以前的写法 (depends_on)</button><button type="button" role="tab" id="tabs-21-tab-1" aria-controls="tabs-21-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">现在的写法 (pre_start)</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-21-panel-0" aria-labelledby="tabs-21-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">migrate:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">myapp:latest</span></span><br><span class="line">    <span class="attr">command:</span> [<span class="string">&quot;./manage.py&quot;</span>, <span class="string">&quot;migrate&quot;</span>]</span><br><span class="line">    <span class="attr">restart:</span> <span class="string">&quot;no&quot;</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">app:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">myapp:latest</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="attr">migrate:</span></span><br><span class="line">        <span class="attr">condition:</span> <span class="string">service_completed_successfully</span></span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-21-panel-1" aria-labelledby="tabs-21-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">app:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">myapp:latest</span></span><br><span class="line">    <span class="attr">pre_start:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">command:</span> [<span class="string">&quot;./manage.py&quot;</span>, <span class="string">&quot;migrate&quot;</span>]</span><br></pre></td></tr></table></figure></section></div></div>
+
+<p>这就是 <strong>Docker Compose Init Containers</strong> 的终极奥义 —— <strong>让初始化步骤，优雅地回到它真正属于的地方</strong>。</p>
+
+  </div>
+
+  <footer class="article-reactions">
+    <div class="reaction-group">
+      <button type="button" class="reaction reaction--comment" aria-label="跳转到评论区" data-action="scroll-to-comments">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-message-circle"></use></svg>
+
+      </button>
+      <span class="reaction-label">评论</span>
+      
+    </div>
+    <div class="reaction-group reaction-group--right">
+      
+      <button type="button" class="reaction reaction--share" aria-label="分享" data-action="share">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-share-2 flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-share-2"></use></svg>
+
+      </button>
+      <span class="reaction-label">分享</span>
+    </div>
+  </footer>
+
+  
+
+
+  <nav class="article-actions">
+    
+      <span class="article-action article-action--prev is-disabled" aria-disabled="true">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-arrow-left"></use></svg>
+
+        <span class="action-label">上一篇</span>
+        <span class="action-title">没有更早的文章了</span>
+      </span>
+    
+    
+      <a class="article-action article-action--next" href="/post/paper-shaders-open-source-webgl-design-effects.html">
+        <span class="action-label">下一篇</span>
+        <span class="action-title">开源项目: 把酷炫的 WebGL Shader 变成前端组件 - Paper Shaders 介绍</span>
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-arrow-right"></use></svg>
+
+      </a>
+    
+  </nav>
+</article>
+</div>
+
+<button type="button" class="back-to-top" data-action="scroll-to-top" aria-label="返回顶部" hidden>
+  
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-arrow-up"></use></svg>
+
+</button>
+
+
+  <section class="related-paper">
+    <header class="related-paper__head">
+      <h2>
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-link"></use></svg>
+相关文章</h2>
+      <a class="related-paper__more" href="/archives/">
+        <span>查看更多</span>
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-arrow-right"></use></svg>
+
+      </a>
+    </header>
+    <div class="related-paper__grid">
+      
+        <a class="related-card" href="/post/debian-13-install-docker.html">
+          <span class="related-card__thumb">
+            
+<div class="paper-thumb paper-thumb-0 paper-thumb--cover">
+  
+    <img class="paper-thumb__img" src="https://img.nep.me/ooo/cover-docker-2026.webp" alt="2026 Debian 13 安装 Docker 以及 Docker Compose 教程" loading="lazy" referrerpolicy="no-referrer">
+  
+</div>
+
+          </span>
+          <span class="related-card__body">
+            <strong class="related-card__title">2026 Debian 13 安装 Docker 以及 Docker Compose 教程</strong>
+            <em class="related-card__date">2026-06-30</em>
+          </span>
+        </a>
+      
+        <a class="related-card" href="/post/use-docker-run-wallos.html">
+          <span class="related-card__thumb">
+            
+<div class="paper-thumb paper-thumb-1 paper-thumb--cover">
+  
+    <img class="paper-thumb__img" src="https://img.nep.me/ooo/cover-wallos.webp" alt="使用 Docker 与 Wallos 快速搭建个人订阅管理系统" loading="lazy" referrerpolicy="no-referrer">
+  
+</div>
+
+          </span>
+          <span class="related-card__body">
+            <strong class="related-card__title">使用 Docker 与 Wallos 快速搭建个人订阅管理系统</strong>
+            <em class="related-card__date">2025-09-12</em>
+          </span>
+        </a>
+      
+        <a class="related-card" href="/post/use-docker-run-ezbookkeeping.html">
+          <span class="related-card__thumb">
+            
+<div class="paper-thumb paper-thumb-2 paper-thumb--cover">
+  
+    <img class="paper-thumb__img" src="https://img.nep.me/i/2026/01/21/cover-ezbookkeeping.webp" alt="使用 Docker 与 ezBookkeeping 快速搭建美观的个人记账系统" loading="lazy" referrerpolicy="no-referrer">
+  
+</div>
+
+          </span>
+          <span class="related-card__body">
+            <strong class="related-card__title">使用 Docker 与 ezBookkeeping 快速搭建美观的个人记账系统</strong>
+            <em class="related-card__date">2025-09-02</em>
+          </span>
+        </a>
+      
+        <a class="related-card" href="/post/use-docker-run-memeos.html">
+          <span class="related-card__thumb">
+            
+<div class="paper-thumb paper-thumb-0 paper-thumb--cover">
+  
+    <img class="paper-thumb__img" src="https://img.nep.me/i/2025/08/18/cover-docker-memos-v2.webp" alt="使用 Docker 快速部署 Memos 个人笔记系统" loading="lazy" referrerpolicy="no-referrer">
+  
+</div>
+
+          </span>
+          <span class="related-card__body">
+            <strong class="related-card__title">使用 Docker 快速部署 Memos 个人笔记系统</strong>
+            <em class="related-card__date">2025-08-18</em>
+          </span>
+        </a>
+      
+    </div>
+  </section>
+
+
+      
+
+<section class="comments-section" aria-label="评论">
+  <header class="comments-section__head">
+    <h2>
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-message-circle"></use></svg>
+评论</h2>
+  </header>
+  <div id="artalk-comments"></div>
+</section>
+<script>
+window.addEventListener('load', function () {
+  if (typeof Artalk === 'undefined' || typeof Artalk.init !== 'function') return;
+  Artalk.init({
+    el: '#artalk-comments',
+    pageKey: "https://ooo.run/post/docker-compose-init-containers.html",
+    pageTitle: "Docker Compose 新增 Init Containers：终于不用再写一堆一次性初始化服务了",
+    server: "https://artalk.ooo.run",
+    site: "Mr. O 的博客"
+  });
+});
+</script>
+
+
+    </section>
+    
+  </main>
+
+  <div class="sidebar-backdrop js-sidebar-close" aria-hidden="true"></div>
+
+  
+<footer class="site-footer">
+  <span class="site-footer__left">© 2026 By Mr. O</span>
+  
+    <span class="site-footer__right">
+      
+        <span class="site-footer__row"><span class="site-footer__powered-prefix">Powered by Theme</span> <a href="https://github.com/Homulilly/hexo-theme-flatpaper" target="_blank" rel="noopener">FlatPaper</a></span>
+      
+        <span class="site-footer__row"><a href="/terms">服务条款</a><span class="site-footer__separator"> · </span><a href="/privacy">隐私政策</a></span>
+      
+        <span class="site-footer__row"><a href="https://tools.ooo.run" target="_blank" rel="noopener">简易工具</a></span>
+      
+    </span>
+  
+</footer>
+
+  
+<div class="search-panel" aria-hidden="true" data-index-url="/flatpaper-search.json">
+  <div class="search-backdrop js-search-close"></div>
+  <section class="search-dialog" role="dialog" aria-modal="true" aria-label="搜索文章">
+    <span class="tape tape--top-left" aria-hidden="true"></span>
+    <header class="search-head">
+      <h2><span class="green-dot"></span>搜索文章</h2>
+      <button class="icon-button js-search-close" type="button" aria-label="关闭搜索">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-x"></use></svg>
+
+      </button>
+    </header>
+    <label class="search-field">
+      
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-search"></use></svg>
+
+      <input id="flatpaper-search" class="search-input" type="search" placeholder="输入关键词，按 Esc 关闭" autocomplete="off">
+    </label>
+    <div class="search-results" data-empty="输入关键词后显示匹配的文章">
+      <p class="search-empty">输入关键词后显示匹配的文章</p>
+    </div>
+  </section>
+</div>
+
+  <script>
+  window.FLATPAPER_I18N = {"language":"zh-CN","common.posts":"文章","common.categories":"分类","common.tags":"标签","common.comments":"评论","common.share":"分享","common.page":"页面","common.archive":"归档","common.post_list":"文章列表","common.search_posts":"搜索文章","common.random_posts":"随机文章","common.reward":"赞赏","common.view_all":"查看全部","pagination.prev":"上一页","pagination.next":"下一页","pagination.post_pager":"文章分页","pagination.archive_pager":"归档分页","index.featured":"精选文章","index.pinned":"置顶","index.read_more":"阅读全文","index.previous_slide":"上一张","index.next_slide":"下一张","index.carousel_pagination":"轮播页码","index.carousel_slide":"第 %d 张","index.latest_posts":"最新文章","index.empty_posts":"还没有文章。创建第一篇文章后，这里会显示最新内容。","archive.title":"归档","archive.post_list":"文章列表","taxonomy.category_count":"%d 篇","taxonomy.empty_categories":"暂时还没有分类。","taxonomy.empty_tags":"暂时还没有标签。","links.label":"友链","links.title":"友情链接","links.empty_data":"暂未加载到友链数据。请确认 source/_data/links.yml 存在并已 hexo clean。","links.rss_label":"%s 的 RSS","friends_feed.label":"朋友圈","friends_feed.title":"友链朋友圈","friends_feed.loading":"正在加载友链动态…","friends_feed.missing_url":"暂未配置 all.json 地址。","friends_feed.load_failed":"友链动态加载失败，请稍后再试。","friends_feed.empty":"暂时没有抓取到友链文章。","friends_feed.load_more":"加载更多","friends_feed.updated_at":"更新于 %s","friends_feed.friend_count":"%d 位友邻","friends_feed.active_count":"%d 位活跃","friends_feed.article_count":"%d 篇文章","friends_feed.unknown_author":"未知站点","friends_feed.date_unknown":"时间未知","post.scroll_to_comments":"跳转到评论区","post.previous":"上一篇","post.next":"下一篇","post.no_previous":"没有更早的文章了","post.no_next":"已经是最新的一篇","post.back_to_top":"返回顶部","post.related_posts":"相关文章","post.view_more":"查看更多","not_found.label":"页面走丢了","not_found.title":"找不到这个页面","not_found.text":"这个地址可能已经移动、删除，或者从未存在。","not_found.home":"返回首页","not_found.search":"搜索文章","search.placeholder":"输入关键词，按 Esc 关闭","search.empty":"输入关键词后显示匹配的文章","search.loading":"正在加载搜索索引…","search.load_failed":"搜索索引加载失败，请重新打开搜索重试","search.no_result":"没有找到与 \"%s\" 相关的文章","search.close":"关闭搜索","code.copy":"复制代码","code.collapse":"折叠代码","code.expand":"展开代码","heading.anchor":"链接到此节: %s","head.tag":"标签：%s","head.category":"分类：%s","head.archive":"归档","head.archive_with_date":"归档：%s","head.page_number":"第 %d 页","navigation.primary":"主导航","navigation.mobile":"移动端导航","navigation.brand_home":"FlatPaper 首页","navigation.brand_menu":"打开站点导航","navigation.open_sidebar":"打开侧边栏","navigation.close_sidebar":"关闭侧边栏","navigation.sidebar":"侧边栏","navigation.sidebar_tools":"侧边栏工具","navigation.site_links":"站点链接","navigation.site_info":"站点信息","colors.choose_theme_color":"选择主题色","colors.theme_color":"主题色","colors.toggle_color_mode":"切换颜色模式","colors.green":"绿色","colors.purple":"紫色","colors.pink":"粉色","colors.sakura":"樱花粉","colors.blue":"蓝色","colors.orange":"橙色","colors.black":"黑色","profile.default_bio":"热爱生活，热爱代码，喜欢分享技术与生活中的点滴。","welcome.cta":"开始阅读","welcome.title":"欢迎来到 FlatPaper","welcome.text":"一个专注于内容与阅读体验的博客主题。","home_hero.label":"首页开屏","home_hero.enter":"开始阅读","home_hero.note":"今日","home_hero.default_subtitle":"日常记录","home_hero.nav_links":"开屏导航","home_hero.profile_links":"个人链接","home_hero.tools":"开屏工具","home_hero.shuffle_stickers":"打乱贴纸位置","home_hero.link":"链接","home_hero.sticker_image":"贴纸图片","home_hero.visit_confirm":"要访问 %s 吗？","home_hero.visit":"访问","home_hero.cancel":"取消","toc.title":"文章目录","toc.empty":"目录会根据文章标题自动生成。","toc.expand_all":"展开全部目录","toc.collapse_all":"收起全部目录","sidebar.hot_tags":"热门标签","sidebar.latest_posts":"最新文章"};
+  </script>
+  
+<script src="/js/main.js"></script>
+
+  
+</body>
+</html>

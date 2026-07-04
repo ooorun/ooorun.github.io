@@ -576,6 +576,183 @@
       </tags>
   </entry>
   <entry>
+    <title>Nginx Proxy Manager 使用教程</title>
+    <url>/post/use-nginx-proxy-manager.html</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>对于现在网站来说， HTTPS 证书已经必不可少，虽然我们已经可以使用 Let’s Encrypt 获取免费证书，并且可以使用 acme.sh 快速申请、自动续期，但是每次添加新域名时仍然需要编辑 Nginx 配置文件，略有麻烦。  </p>
+<p>本文将介绍使用 <strong>Nginx Proxy Manager</strong> 设置 Nginx 反向代理，同时支持自动申请、续期 HTTPS 证书，即便在局域网内也可以使用 API 申请证书！  </p>
+<p>Nginx Proxy Manager 完全是图形界面，不懂代码也没有关系，非常适合个人使用！   </p>
+<p>主要特点：</p>
+<ul>
+<li>漂亮的用户界面</li>
+<li>轻松的反向代理设置</li>
+<li>轻松配置HTTPS，内置对 Let’s Encrypt 的支持</li>
+<li>提供 Docker 镜像 ，轻松部署</li>
+<li>支持多用户，提供简单的访问权限设置</li>
+</ul>
+<h2 id="与-Nginx-对比"><a href="#与-Nginx-对比" class="headerlink" title="与 Nginx 对比"></a>与 Nginx 对比</h2><table>
+<thead>
+<tr>
+<th align="center">特性</th>
+<th align="center">Nginx Proxy Manager</th>
+<th align="center">Nginx（手动配置）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong>配置方式</strong></td>
+<td align="center">Web 界面管理，操作简单</td>
+<td align="center">手动编辑配置文件，灵活度高</td>
+</tr>
+<tr>
+<td align="center"><strong>功能性</strong></td>
+<td align="center">基础反向代理与 SSL 管理</td>
+<td align="center">支持高级功能与复杂场景</td>
+</tr>
+<tr>
+<td align="center"><strong>安全性</strong></td>
+<td align="center">更新频率较低，依赖第三方维护</td>
+<td align="center">官方定期更新，更安全可靠</td>
+</tr>
+<tr>
+<td align="center"><strong>错误容忍</strong></td>
+<td align="center">错误配置可能影响整体服务</td>
+<td align="center">站点配置独立，互不影响</td>
+</tr>
+<tr>
+<td align="center"><strong>性能</strong></td>
+<td align="center">对高并发请求性能有限，适合轻量应用</td>
+<td align="center">原生性能，支持高并发场景</td>
+</tr>
+<tr>
+<td align="center"><strong>适用场景</strong></td>
+<td align="center">适合小型项目、无技术背景的用户</td>
+<td align="center">适合大型项目与高级用户</td>
+</tr>
+</tbody></table>
+<h2 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h2><p>Nginx Proxy Manager 使用 <code>Docker</code> 部署，因此你的服务器上需要安装 Docker 与 Docker Compose 。</p>
+<p>如果你还未安装，可以查看：<a href="https://ooo.run/post/debian-install-docker.html" target="_blank">在 Debian 中安装 Docker 以及 Docker Compose</a></p>
+<h2 id="使用-Docker-安装"><a href="#使用-Docker-安装" class="headerlink" title="使用 Docker 安装"></a>使用 Docker 安装</h2><p>创建一个工作目录，然后在其中创建 <code>docker-compose.yml</code> 文件，填入下面的内容</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">app:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">&#x27;jc21/nginx-proxy-manager:latest&#x27;</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">unless-stopped</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&#x27;80:80&#x27;</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&#x27;81:81&#x27;</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&#x27;443:443&#x27;</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./data:/data</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./letsencrypt:/etc/letsencrypt</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>80 是网站的 80 端口</li>
+<li>81 是 Nginx Proxy Manager 的管理端口</li>
+<li>443 是网站的 443 端口</li>
+</ul>
+<p>Nginx Proxy Manager 的数据保存在 <code>docker-compose.yml</code> 同目录下 <code>.data</code> 文件夹，证书保存在 <code>./letsencrypt</code> 文件夹。<br>也可以自己修改路径。</p>
+<div class="flatpaper-note flatpaper-note--warning"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>由于都需要使用 80 &#x2F; 443 端口，所以如果宿主机有安装 Nginx ，请先禁用</p></div></div>
+
+<p>使用 <code>docker compose</code> 运行 Nginx Proxy Manager</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">docker compose pull </span><br><span class="line">docker compose up -d</span><br></pre></td></tr></table></figure>
+
+<h2 id="访问面板"><a href="#访问面板" class="headerlink" title="访问面板"></a>访问面板</h2><p>启动后，访问 <code>http://&lt;server_ip&gt;:81</code> 即可打开管理面板。   </p>
+<p><img src="https://img.nep.me/i/2024/12/15/3w01bl-2.webp" alt="nginx-proxy-manager-login-screen"></p>
+<p>默认管理员用户如下，登陆后会要求重新设置邮箱与密码</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Email:    admin@example.com</span><br><span class="line">Password: changeme</span><br></pre></td></tr></table></figure>
+<div class="flatpaper-note flatpaper-note--warning"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>启动后，请立即登陆面板，设置账户与密码</p></div></div>
+
+<h2 id="功能介绍"><a href="#功能介绍" class="headerlink" title="功能介绍"></a>功能介绍</h2><p>安装完成后，我们可以在顶部查看 Nginx Proxy Manager 的功能区</p>
+<ul>
+<li><strong>Hosts</strong>: 反代站点管理</li>
+<li><strong>Access Lists</strong>: 管理访问限制策略</li>
+<li><strong>SSL Certificates</strong> : SSL 证书管理</li>
+<li><strong>Users</strong> : 用户管理，Nginx Proxy Manager 提供简单的用户管理</li>
+<li><strong>Audit Log</strong> : 日志</li>
+<li><strong>Settings</strong> : 设置当请求的域名不在站点列表时的回应</li>
+</ul>
+<img src="https://img.nep.me/i/2024/12/15/8rqhli-2.webp" style="width:50%;" alt="image" />
+
+<h2 id="申请证书"><a href="#申请证书" class="headerlink" title="申请证书"></a>申请证书</h2><p>首先我们需要为域名申请证书，点击顶部的 <code>SSL Certificates</code> ，再点击 <code>Add SSL Certificate</code><br><img src="https://img.nep.me/i/2024/12/15/3us18w-2.webp" alt="Nginx Proxy Manager get SSL"></p>
+<p>Nginx Proxy Manager 生成的证书会自动续期。  </p>
+<h3 id="单域名证书"><a href="#单域名证书" class="headerlink" title="单域名证书"></a>单域名证书</h3><p>如果我们申请单域名证书，只需要</p>
+<ul>
+<li>将域名解析到服务器</li>
+<li><strong>Domain Names</strong> 填写需要申请证书的域名</li>
+<li>填写 Let’s Encrypt 需要使用的邮箱</li>
+<li>同意 Let’s Encrypt Terms of Service </li>
+<li>然后点击 <strong>Save</strong> 就可以了</li>
+</ul>
+<p><img src="https://img.nep.me/i/2024/12/15/3zn2an-2.webp" alt="Nginx Proxy Manager Add Single Cert"> </p>
+<p>当然保存前可以先点击 <strong>Test Server Reachability</strong> 测试一下<br><img src="https://img.nep.me/i/2024/12/15/408w0j-2.webp" alt="Nginx Proxy Manager Test Reachability"></p>
+<h3 id="申请泛域名证书"><a href="#申请泛域名证书" class="headerlink" title="申请泛域名证书"></a>申请泛域名证书</h3><p>申请 ***.example.com** 泛域名证书需要修改 DNS 记录，需要通过 API 的方式申请，Nginx Proxy Manager 的支持列表非常的长，这里以 Cloudflare 为例。  </p>
+<p>首先我们需要获取 API 令牌，访问 <a href="https://dash.cloudflare.com/profile/api-tokens">https://dash.cloudflare.com/profile/api-tokens</a> 点击 <strong>创建令牌</strong>，下一步中选择使用 <code>编辑区域 DNS</code> 对应的 <code>使用模版</code>。<br><img src="https://img.nep.me/i/2024/12/15/45kt7a-2.webp"></p>
+<p>下一步种设置具体的令牌信息：</p>
+<ul>
+<li><strong>令牌名称</strong>：改个用于区分的名字</li>
+<li><strong>权限</strong>：保持默认 <strong>编辑</strong></li>
+<li><strong>区域资源</strong>： 特定区域，然后选择对应的域名</li>
+<li><strong>客户端 IP 筛选</strong>：设置可以使用令牌的 IP，可以选择 在 ，然后填写您的服务器 IP</li>
+<li><strong>TTL</strong>： 令牌有效期，默认是永久有效<img src="https://img.nep.me/i/2024/12/15/46p2d9-2.webp" style="width:75%;" alt="Clodflare API Token Config" /></li>
+</ul>
+<p>点击 <strong>继续以显示摘要</strong> ，确认令牌的信息，如果没有错误，点击 <strong>创建令牌</strong></p>
+<p>创建后将显示 Token ，点击 <strong>Copy</strong> 复制。<br><img src="https://img.nep.me/i/2024/12/15/4ajdxe-2.webp"></p>
+<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>只有这一次机会查看 Token 明文，无法再次查看。 </p></div></div>
+
+<p>然后在 Nginx Proxy Manager 中申请证书 </p>
+<ul>
+<li><strong>Domain Names</strong> 填写 <code>*.example.com</code> 与 <code>expample.com</code></li>
+<li>填写 Let’s Encrypt 需要使用的邮箱</li>
+<li>打开 <strong>Use a DNS Challenge</strong></li>
+<li><strong>DNS Provide</strong> 选择 <strong>Cloudflare</strong></li>
+<li>替换 <strong>Credential File Content</strong> 中的 <code>token</code> </li>
+<li>同意 Let’s Encrypt Terms of Service</li>
+<li>点击 <code>Save</code> 申请</li>
+</ul>
+<img src="https://img.nep.me/i/2024/12/15/51nizh-2.webp" style="width:50%;" alt="image" />
+
+<p>成功后即会在列表中显示<br><img src="https://img.nep.me/i/2024/12/15/545b7p-2.webp"> </p>
+<h2 id="添加反代站点"><a href="#添加反代站点" class="headerlink" title="添加反代站点"></a>添加反代站点</h2><h3 id="示例：反代管理页面"><a href="#示例：反代管理页面" class="headerlink" title="示例：反代管理页面"></a>示例：反代管理页面</h3><p>Nginx Proxy Manager 默认端口是报漏在公网中的，这很不安全，如果设置完成后取消这个端口映射，以后需要修改配置时又比较麻烦，我们可以设置一个二级域名来访问，首先解析一个二级域名例如 <code>nginx.example.com</code> 指向服务器。</p>
+<p>在 <code>Hosts</code> &gt; <code>Proxy Hosts</code> 中点击 <code>Add Proxy Host</code> 添加站点，管理页面的目标地址是 <code>http://127.0.0.1:81</code></p>
+<ul>
+<li><strong>Domain Names</strong>: 填写你的二级域名</li>
+<li><strong>Scheme</strong>: 目标网站的协议，<code>http</code></li>
+<li><strong>Forward Hostname&#x2F;IP</strong>: 目标网站的域名或是 IP，这里填 <code>127.0.0.1</code></li>
+<li><strong>Forward Port</strong>: 目标网站的端口 <code>81</code></li>
+<li><strong>Cache Assets</strong>： 是否启用缓存</li>
+<li><strong>Block Common Exploits</strong>: 阻止常见漏洞</li>
+<li><strong>Websockets Support</strong>: 是否开启 Websockets 支持 </li>
+<li><strong>Accessible</strong>: 设置访问限制</li>
+</ul>
+<img src="https://img.nep.me/i/2024/12/15/5qnmd0-2.webp" style="width:50%;" alt="image" />
+
+<p>然后点击顶部 <code>SSL</code> 选择证书</p>
+<ul>
+<li><strong>Force SSL</strong> : 是否强制使用 <code>https://</code> 访问</li>
+<li><strong>HTTP&#x2F;2 Support</strong> : 是否开启 HTTP&#x2F;2 支持</li>
+<li><strong>HSTS Enabled</strong> : 是否开启 HSTS ，开启后用户访问过一次之后将只会使用 https 访问</li>
+<li><strong>HSTS Subdomains</strong> : 子域名是否开启 HSTS</li>
+</ul>
+<img src="https://img.nep.me/i/2024/12/15/5lxr81-2.webp" style="width:50%;" alt="image" />
+
+
+<p>我们可以在 Advanced 中添加自定义设置，比如</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">gzip on;</span><br><span class="line">gzip_min_length 1k;</span><br><span class="line">gzip_comp_level 2;</span><br><span class="line">gzip_types text/plain application/javascript application/x-javascript text/css application/xml text/javascript application/x-httpd-php image/jpeg image/gif image/png font/ttf font/otf image/svg+xml;</span><br><span class="line">gzip_vary on;</span><br></pre></td></tr></table></figure>
+
+<p>最中将被插入在站点配置中。</p>
+<p>如果添加 <code>Location</code> 段则必须包含转发转发内容。</p>
+<p>然后使用浏览器访问 <code>https://nginx.example.com</code> ，如果可以成功访问，我们就可以注释掉 docker 配置文件中的管理端口了！</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">ports:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">&#x27;80:80&#x27;</span></span><br><span class="line">  <span class="comment"># - &#x27;81:81&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>然后重新创建并运行 Nginx Proxy Manager 容器：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">docker compose down</span><br><span class="line">docker compose up -d</span><br></pre></td></tr></table></figure>
+
+<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>因为管理页面位于容器内部，所以可以使用 <code>127.0.0.1</code></p></div></div>
+
+<p>无法使用 <code>127.0.0.1</code> 反代宿主机以及宿主机上的其他 Docker 容器的服务，需要使用 <code>ip addr show docker0</code> 查看 docker 网络的 ip 地址，一般为 <code>172.17.0.1</code>, 并且其他 docker 容器的也需要设置监听到 <code>172.17.0.1</code> 而非 <code>127.0.0.1</code> 来关闭公网访问</p>
+<p><img src="https://img.nep.me/i/2024/12/15/72czrt-2.webp"></p>
+<h3 id="查看配置"><a href="#查看配置" class="headerlink" title="查看配置"></a>查看配置</h3><p>Nginx Proxy Manager 添加的站点的配置位于宿主机 <code>data/nginx/proxy_host</code> ，以数字递增的 <code>conf</code> 文件。</p>
+<h3 id="反代宿主机的静态站点"><a href="#反代宿主机的静态站点" class="headerlink" title="反代宿主机的静态站点"></a>反代宿主机的静态站点</h3><p>由于 Nginx Proxy Manager 需要使用 80 与 443 端口，Nginx 无法同时使用这两个端口在宿主机上设置静态站点，可以设置 Nginx 监听 <code>172.17.0.1:8080</code> ，然后使用 Nginx Proxy Manager 添加指向 Nginx 的反向代理。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>如果你是个人用户，且主要使用 Nginx 的反向代理功能，Nginx Proxy Manager 是一个简化设置流程的理想选择，尤其在 SSL 证书配置方面更为便捷，更适合初学者，也可以在局域网内使用。  </p>
+<p>如果你需要直接使用 Nginx 提供网站服务，尤其是在<strong>生产环境</strong>中，推荐选择手动配置 Nginx，以充分发挥其性能和灵活性，可以使用 acme.sh 获取 SSL 证书，实现自动续期。  </p>
+]]></content>
+      <categories>
+        <category>教程</category>
+      </categories>
+      <tags>
+        <tag>Docker</tag>
+        <tag>Nginx Proxy Manager</tag>
+        <tag>HTTPS</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>使用 Hexo + GitHub 建立个人博客</title>
     <url>/post/start-blog-with-hexo-and-github.html</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>欢迎来到我的世界！这里是 Mr. O。你是否也有过这样的想法：拥有一个属于自己的博客，记录生活的点滴、分享自己的经验或者展示你的专业技能？</p>
@@ -832,183 +1009,6 @@
       <tags>
         <tag>Hexo</tag>
         <tag>GitHub</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Nginx Proxy Manager 使用教程</title>
-    <url>/post/use-nginx-proxy-manager.html</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>对于现在网站来说， HTTPS 证书已经必不可少，虽然我们已经可以使用 Let’s Encrypt 获取免费证书，并且可以使用 acme.sh 快速申请、自动续期，但是每次添加新域名时仍然需要编辑 Nginx 配置文件，略有麻烦。  </p>
-<p>本文将介绍使用 <strong>Nginx Proxy Manager</strong> 设置 Nginx 反向代理，同时支持自动申请、续期 HTTPS 证书，即便在局域网内也可以使用 API 申请证书！  </p>
-<p>Nginx Proxy Manager 完全是图形界面，不懂代码也没有关系，非常适合个人使用！   </p>
-<p>主要特点：</p>
-<ul>
-<li>漂亮的用户界面</li>
-<li>轻松的反向代理设置</li>
-<li>轻松配置HTTPS，内置对 Let’s Encrypt 的支持</li>
-<li>提供 Docker 镜像 ，轻松部署</li>
-<li>支持多用户，提供简单的访问权限设置</li>
-</ul>
-<h2 id="与-Nginx-对比"><a href="#与-Nginx-对比" class="headerlink" title="与 Nginx 对比"></a>与 Nginx 对比</h2><table>
-<thead>
-<tr>
-<th align="center">特性</th>
-<th align="center">Nginx Proxy Manager</th>
-<th align="center">Nginx（手动配置）</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center"><strong>配置方式</strong></td>
-<td align="center">Web 界面管理，操作简单</td>
-<td align="center">手动编辑配置文件，灵活度高</td>
-</tr>
-<tr>
-<td align="center"><strong>功能性</strong></td>
-<td align="center">基础反向代理与 SSL 管理</td>
-<td align="center">支持高级功能与复杂场景</td>
-</tr>
-<tr>
-<td align="center"><strong>安全性</strong></td>
-<td align="center">更新频率较低，依赖第三方维护</td>
-<td align="center">官方定期更新，更安全可靠</td>
-</tr>
-<tr>
-<td align="center"><strong>错误容忍</strong></td>
-<td align="center">错误配置可能影响整体服务</td>
-<td align="center">站点配置独立，互不影响</td>
-</tr>
-<tr>
-<td align="center"><strong>性能</strong></td>
-<td align="center">对高并发请求性能有限，适合轻量应用</td>
-<td align="center">原生性能，支持高并发场景</td>
-</tr>
-<tr>
-<td align="center"><strong>适用场景</strong></td>
-<td align="center">适合小型项目、无技术背景的用户</td>
-<td align="center">适合大型项目与高级用户</td>
-</tr>
-</tbody></table>
-<h2 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h2><p>Nginx Proxy Manager 使用 <code>Docker</code> 部署，因此你的服务器上需要安装 Docker 与 Docker Compose 。</p>
-<p>如果你还未安装，可以查看：<a href="https://ooo.run/post/debian-install-docker.html" target="_blank">在 Debian 中安装 Docker 以及 Docker Compose</a></p>
-<h2 id="使用-Docker-安装"><a href="#使用-Docker-安装" class="headerlink" title="使用 Docker 安装"></a>使用 Docker 安装</h2><p>创建一个工作目录，然后在其中创建 <code>docker-compose.yml</code> 文件，填入下面的内容</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">app:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">&#x27;jc21/nginx-proxy-manager:latest&#x27;</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">unless-stopped</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&#x27;80:80&#x27;</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&#x27;81:81&#x27;</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&#x27;443:443&#x27;</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./data:/data</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./letsencrypt:/etc/letsencrypt</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>80 是网站的 80 端口</li>
-<li>81 是 Nginx Proxy Manager 的管理端口</li>
-<li>443 是网站的 443 端口</li>
-</ul>
-<p>Nginx Proxy Manager 的数据保存在 <code>docker-compose.yml</code> 同目录下 <code>.data</code> 文件夹，证书保存在 <code>./letsencrypt</code> 文件夹。<br>也可以自己修改路径。</p>
-<div class="flatpaper-note flatpaper-note--warning"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>由于都需要使用 80 &#x2F; 443 端口，所以如果宿主机有安装 Nginx ，请先禁用</p></div></div>
-
-<p>使用 <code>docker compose</code> 运行 Nginx Proxy Manager</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">docker compose pull </span><br><span class="line">docker compose up -d</span><br></pre></td></tr></table></figure>
-
-<h2 id="访问面板"><a href="#访问面板" class="headerlink" title="访问面板"></a>访问面板</h2><p>启动后，访问 <code>http://&lt;server_ip&gt;:81</code> 即可打开管理面板。   </p>
-<p><img src="https://img.nep.me/i/2024/12/15/3w01bl-2.webp" alt="nginx-proxy-manager-login-screen"></p>
-<p>默认管理员用户如下，登陆后会要求重新设置邮箱与密码</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Email:    admin@example.com</span><br><span class="line">Password: changeme</span><br></pre></td></tr></table></figure>
-<div class="flatpaper-note flatpaper-note--warning"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>启动后，请立即登陆面板，设置账户与密码</p></div></div>
-
-<h2 id="功能介绍"><a href="#功能介绍" class="headerlink" title="功能介绍"></a>功能介绍</h2><p>安装完成后，我们可以在顶部查看 Nginx Proxy Manager 的功能区</p>
-<ul>
-<li><strong>Hosts</strong>: 反代站点管理</li>
-<li><strong>Access Lists</strong>: 管理访问限制策略</li>
-<li><strong>SSL Certificates</strong> : SSL 证书管理</li>
-<li><strong>Users</strong> : 用户管理，Nginx Proxy Manager 提供简单的用户管理</li>
-<li><strong>Audit Log</strong> : 日志</li>
-<li><strong>Settings</strong> : 设置当请求的域名不在站点列表时的回应</li>
-</ul>
-<img src="https://img.nep.me/i/2024/12/15/8rqhli-2.webp" style="width:50%;" alt="image" />
-
-<h2 id="申请证书"><a href="#申请证书" class="headerlink" title="申请证书"></a>申请证书</h2><p>首先我们需要为域名申请证书，点击顶部的 <code>SSL Certificates</code> ，再点击 <code>Add SSL Certificate</code><br><img src="https://img.nep.me/i/2024/12/15/3us18w-2.webp" alt="Nginx Proxy Manager get SSL"></p>
-<p>Nginx Proxy Manager 生成的证书会自动续期。  </p>
-<h3 id="单域名证书"><a href="#单域名证书" class="headerlink" title="单域名证书"></a>单域名证书</h3><p>如果我们申请单域名证书，只需要</p>
-<ul>
-<li>将域名解析到服务器</li>
-<li><strong>Domain Names</strong> 填写需要申请证书的域名</li>
-<li>填写 Let’s Encrypt 需要使用的邮箱</li>
-<li>同意 Let’s Encrypt Terms of Service </li>
-<li>然后点击 <strong>Save</strong> 就可以了</li>
-</ul>
-<p><img src="https://img.nep.me/i/2024/12/15/3zn2an-2.webp" alt="Nginx Proxy Manager Add Single Cert"> </p>
-<p>当然保存前可以先点击 <strong>Test Server Reachability</strong> 测试一下<br><img src="https://img.nep.me/i/2024/12/15/408w0j-2.webp" alt="Nginx Proxy Manager Test Reachability"></p>
-<h3 id="申请泛域名证书"><a href="#申请泛域名证书" class="headerlink" title="申请泛域名证书"></a>申请泛域名证书</h3><p>申请 ***.example.com** 泛域名证书需要修改 DNS 记录，需要通过 API 的方式申请，Nginx Proxy Manager 的支持列表非常的长，这里以 Cloudflare 为例。  </p>
-<p>首先我们需要获取 API 令牌，访问 <a href="https://dash.cloudflare.com/profile/api-tokens">https://dash.cloudflare.com/profile/api-tokens</a> 点击 <strong>创建令牌</strong>，下一步中选择使用 <code>编辑区域 DNS</code> 对应的 <code>使用模版</code>。<br><img src="https://img.nep.me/i/2024/12/15/45kt7a-2.webp"></p>
-<p>下一步种设置具体的令牌信息：</p>
-<ul>
-<li><strong>令牌名称</strong>：改个用于区分的名字</li>
-<li><strong>权限</strong>：保持默认 <strong>编辑</strong></li>
-<li><strong>区域资源</strong>： 特定区域，然后选择对应的域名</li>
-<li><strong>客户端 IP 筛选</strong>：设置可以使用令牌的 IP，可以选择 在 ，然后填写您的服务器 IP</li>
-<li><strong>TTL</strong>： 令牌有效期，默认是永久有效<img src="https://img.nep.me/i/2024/12/15/46p2d9-2.webp" style="width:75%;" alt="Clodflare API Token Config" /></li>
-</ul>
-<p>点击 <strong>继续以显示摘要</strong> ，确认令牌的信息，如果没有错误，点击 <strong>创建令牌</strong></p>
-<p>创建后将显示 Token ，点击 <strong>Copy</strong> 复制。<br><img src="https://img.nep.me/i/2024/12/15/4ajdxe-2.webp"></p>
-<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>只有这一次机会查看 Token 明文，无法再次查看。 </p></div></div>
-
-<p>然后在 Nginx Proxy Manager 中申请证书 </p>
-<ul>
-<li><strong>Domain Names</strong> 填写 <code>*.example.com</code> 与 <code>expample.com</code></li>
-<li>填写 Let’s Encrypt 需要使用的邮箱</li>
-<li>打开 <strong>Use a DNS Challenge</strong></li>
-<li><strong>DNS Provide</strong> 选择 <strong>Cloudflare</strong></li>
-<li>替换 <strong>Credential File Content</strong> 中的 <code>token</code> </li>
-<li>同意 Let’s Encrypt Terms of Service</li>
-<li>点击 <code>Save</code> 申请</li>
-</ul>
-<img src="https://img.nep.me/i/2024/12/15/51nizh-2.webp" style="width:50%;" alt="image" />
-
-<p>成功后即会在列表中显示<br><img src="https://img.nep.me/i/2024/12/15/545b7p-2.webp"> </p>
-<h2 id="添加反代站点"><a href="#添加反代站点" class="headerlink" title="添加反代站点"></a>添加反代站点</h2><h3 id="示例：反代管理页面"><a href="#示例：反代管理页面" class="headerlink" title="示例：反代管理页面"></a>示例：反代管理页面</h3><p>Nginx Proxy Manager 默认端口是报漏在公网中的，这很不安全，如果设置完成后取消这个端口映射，以后需要修改配置时又比较麻烦，我们可以设置一个二级域名来访问，首先解析一个二级域名例如 <code>nginx.example.com</code> 指向服务器。</p>
-<p>在 <code>Hosts</code> &gt; <code>Proxy Hosts</code> 中点击 <code>Add Proxy Host</code> 添加站点，管理页面的目标地址是 <code>http://127.0.0.1:81</code></p>
-<ul>
-<li><strong>Domain Names</strong>: 填写你的二级域名</li>
-<li><strong>Scheme</strong>: 目标网站的协议，<code>http</code></li>
-<li><strong>Forward Hostname&#x2F;IP</strong>: 目标网站的域名或是 IP，这里填 <code>127.0.0.1</code></li>
-<li><strong>Forward Port</strong>: 目标网站的端口 <code>81</code></li>
-<li><strong>Cache Assets</strong>： 是否启用缓存</li>
-<li><strong>Block Common Exploits</strong>: 阻止常见漏洞</li>
-<li><strong>Websockets Support</strong>: 是否开启 Websockets 支持 </li>
-<li><strong>Accessible</strong>: 设置访问限制</li>
-</ul>
-<img src="https://img.nep.me/i/2024/12/15/5qnmd0-2.webp" style="width:50%;" alt="image" />
-
-<p>然后点击顶部 <code>SSL</code> 选择证书</p>
-<ul>
-<li><strong>Force SSL</strong> : 是否强制使用 <code>https://</code> 访问</li>
-<li><strong>HTTP&#x2F;2 Support</strong> : 是否开启 HTTP&#x2F;2 支持</li>
-<li><strong>HSTS Enabled</strong> : 是否开启 HSTS ，开启后用户访问过一次之后将只会使用 https 访问</li>
-<li><strong>HSTS Subdomains</strong> : 子域名是否开启 HSTS</li>
-</ul>
-<img src="https://img.nep.me/i/2024/12/15/5lxr81-2.webp" style="width:50%;" alt="image" />
-
-
-<p>我们可以在 Advanced 中添加自定义设置，比如</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">gzip on;</span><br><span class="line">gzip_min_length 1k;</span><br><span class="line">gzip_comp_level 2;</span><br><span class="line">gzip_types text/plain application/javascript application/x-javascript text/css application/xml text/javascript application/x-httpd-php image/jpeg image/gif image/png font/ttf font/otf image/svg+xml;</span><br><span class="line">gzip_vary on;</span><br></pre></td></tr></table></figure>
-
-<p>最中将被插入在站点配置中。</p>
-<p>如果添加 <code>Location</code> 段则必须包含转发转发内容。</p>
-<p>然后使用浏览器访问 <code>https://nginx.example.com</code> ，如果可以成功访问，我们就可以注释掉 docker 配置文件中的管理端口了！</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">ports:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">&#x27;80:80&#x27;</span></span><br><span class="line">  <span class="comment"># - &#x27;81:81&#x27;</span></span><br></pre></td></tr></table></figure>
-
-<p>然后重新创建并运行 Nginx Proxy Manager 容器：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">docker compose down</span><br><span class="line">docker compose up -d</span><br></pre></td></tr></table></figure>
-
-<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>因为管理页面位于容器内部，所以可以使用 <code>127.0.0.1</code></p></div></div>
-
-<p>无法使用 <code>127.0.0.1</code> 反代宿主机以及宿主机上的其他 Docker 容器的服务，需要使用 <code>ip addr show docker0</code> 查看 docker 网络的 ip 地址，一般为 <code>172.17.0.1</code>, 并且其他 docker 容器的也需要设置监听到 <code>172.17.0.1</code> 而非 <code>127.0.0.1</code> 来关闭公网访问</p>
-<p><img src="https://img.nep.me/i/2024/12/15/72czrt-2.webp"></p>
-<h3 id="查看配置"><a href="#查看配置" class="headerlink" title="查看配置"></a>查看配置</h3><p>Nginx Proxy Manager 添加的站点的配置位于宿主机 <code>data/nginx/proxy_host</code> ，以数字递增的 <code>conf</code> 文件。</p>
-<h3 id="反代宿主机的静态站点"><a href="#反代宿主机的静态站点" class="headerlink" title="反代宿主机的静态站点"></a>反代宿主机的静态站点</h3><p>由于 Nginx Proxy Manager 需要使用 80 与 443 端口，Nginx 无法同时使用这两个端口在宿主机上设置静态站点，可以设置 Nginx 监听 <code>172.17.0.1:8080</code> ，然后使用 Nginx Proxy Manager 添加指向 Nginx 的反向代理。</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>如果你是个人用户，且主要使用 Nginx 的反向代理功能，Nginx Proxy Manager 是一个简化设置流程的理想选择，尤其在 SSL 证书配置方面更为便捷，更适合初学者，也可以在局域网内使用。  </p>
-<p>如果你需要直接使用 Nginx 提供网站服务，尤其是在<strong>生产环境</strong>中，推荐选择手动配置 Nginx，以充分发挥其性能和灵活性，可以使用 acme.sh 获取 SSL 证书，实现自动续期。  </p>
-]]></content>
-      <categories>
-        <category>教程</category>
-      </categories>
-      <tags>
-        <tag>Docker</tag>
-        <tag>Nginx Proxy Manager</tag>
-        <tag>HTTPS</tag>
       </tags>
   </entry>
   <entry>
@@ -1359,6 +1359,99 @@
       </tags>
   </entry>
   <entry>
+    <title>域名选择与注册简要指南</title>
+    <url>/post/how-to-choose-domain.html</url>
+    <content><![CDATA[<p>拥有一个好域名，是打造个人博客或项目网站的重要第一步。一个简洁、易记的域名，不仅能提升网站的专业感，还能让访问者更容易记住并再次找到你。</p>
+<p>本文将带你简单了解如何挑选并注册最适合自己的域名。</p>
+<h2 id="第一步：免费还是付费？你需要哪种域名？"><a href="#第一步：免费还是付费？你需要哪种域名？" class="headerlink" title="第一步：免费还是付费？你需要哪种域名？"></a>第一步：免费还是付费？你需要哪种域名？</h2><p>在开始之前，首先要明确你的需求。域名主要分为免费的二级域名和付费的独立域名。</p>
+<h3 id="选项A：免费二级域名"><a href="#选项A：免费二级域名" class="headerlink" title="选项A：免费二级域名"></a>选项A：免费二级域名</h3><p>许多平台为开发者提供了免费的二级域名，例如 <code>your-name.github.io</code> 或 <code>your-project.vercel.app</code>。</p>
+<ul>
+<li><strong>优点</strong>：<ul>
+<li><strong>完全免费</strong>：零成本启动项目。</li>
+<li><strong>部署简单</strong>：通常与平台自带的托管服务（如 GitHub Pages, Vercel, Cloudflare Pages）深度集成，部署非常方便。</li>
+</ul>
+</li>
+<li><strong>缺点</strong>：<ul>
+<li><strong>不够专业</strong>：域名中包含他人品牌，显得不够正式。</li>
+<li><strong>没有所有权</strong>：你只是使用者，域名归平台所有，受其政策限制。</li>
+<li><strong>不利于品牌建设</strong>：用户记住的是 <code>github.io</code> 而不是你的品牌。</li>
+</ul>
+</li>
+</ul>
+<p><strong>适用场景</strong>：个人玩具项目、技术演示、临时页面。</p>
+<h3 id="选项B：付费独立域名"><a href="#选项B：付费独立域名" class="headerlink" title="选项B：付费独立域名"></a>选项B：付费独立域名</h3><p>一级域名，如 <code>your-brand.com</code>，是你自己拥有的独立域名。</p>
+<ul>
+<li><strong>优点</strong>：<ul>
+<li><strong>专业形象</strong>：拥有独立域名是专业网站的标志。</li>
+<li><strong>完全控制权</strong>：你可以自由地将其指向任何服务器，并设置任意数量子域名。</li>
+<li><strong>利于品牌和SEO</strong>：一个好的域名本身就是品牌的一部分，也更容易被搜索引擎收录。</li>
+</ul>
+</li>
+<li><strong>缺点</strong>：<ul>
+<li><strong>需要成本</strong>：涉及注册费和年续费。</li>
+</ul>
+</li>
+</ul>
+<p><strong>适用场景</strong>：个人博客、作品集、商业网站、任何长期项目。</p>
+<h2 id="第二步：如何挑选一个完美的域名？"><a href="#第二步：如何挑选一个完美的域名？" class="headerlink" title="第二步：如何挑选一个完美的域名？"></a>第二步：如何挑选一个完美的域名？</h2><p>确定要购买独立域名后，就进入了最有创造性的一步：选择一个好名字。</p>
+<h3 id="1-选择域名后缀-TLD"><a href="#1-选择域名后缀-TLD" class="headerlink" title="1. 选择域名后缀 (TLD)"></a>1. 选择域名后缀 (TLD)</h3><p>后缀是域名的重要组成部分，不同的后缀有不同的含义和价值。</p>
+<ul>
+<li><strong>首选 <code>.com</code>：</strong> 作为全球最流行、最受认可的后缀，<code>.com</code> 依然是王道。如果能注册到，应作为第一选择。</li>
+<li><strong>备选 <code>.net</code>, <code>.org</code>：</strong>当 <code>.com</code> 被占用时，这两个是常见的替代选项。</li>
+<li><strong>国别域名 (ccTLD)：</strong> 如 <code>.io</code>, <code>.ai</code>, <code>.me</code>, <code>.cn</code> 等，是特定国家或地区的后缀，因其科技感和简洁性在技术圈广受欢迎。</li>
+<li><strong>新通用后缀 (gTLD)：</strong> 如 <code>.app</code>, <code>.blog</code>, <code>.xyz</code> 等，非常个性化，能准确反映网站主题。但需注意，相比国别域名可能会出现涨价或是各种意外情况。</li>
+</ul>
+<h3 id="2-构思域名主体"><a href="#2-构思域名主体" class="headerlink" title="2. 构思域名主体"></a>2. 构思域名主体</h3><p>域名主体应力求：</p>
+<ul>
+<li><strong>简短易记</strong>：越短越好记，也越不容易拼错。</li>
+<li><strong>紧扣主题</strong>：能直接反映你的网站是关于什么的。</li>
+<li><strong>避免使用连字符和数字</strong>：这会增加输入难度和口头传播的障碍。</li>
+</ul>
+<h2 id="第三步：去哪里买？如何找到最低价？"><a href="#第三步：去哪里买？如何找到最低价？" class="headerlink" title="第三步：去哪里买？如何找到最低价？"></a>第三步：去哪里买？如何找到最低价？</h2><p>域名价格由两部分组成：<strong>首年注册价</strong>和<strong>后续续费价</strong>。很多注册商用极低的“首年优惠”吸引用户，但续费价格可能很高。因此，我们需要工具来全面比较价格。</p>
+<h3 id="价格比较工具"><a href="#价格比较工具" class="headerlink" title="价格比较工具"></a>价格比较工具</h3><ol>
+<li><p><strong>TLD-List</strong>：一个强大的国际域名价格对比网站，支持 3400+ 后缀和数十家主流注册商，信息非常全面(<a href="https://zh-hans.tld-list.com/">tld-list.com</a>)。<br><img src="https://img.nep.me/i/2025/08/20/domain-tld-list.webp" alt="domain-tld-list"></p>
+</li>
+<li><p><strong>哪煮米</strong> ：一个中文域名比价网站，支持 2900+ 后缀，收录了包括中国大陆注册商在内的多家服务商，界面友好 (<a href="https://nazhumi.com/">nazhumi.com</a>)。<br><img src="https://img.nep.me/i/2025/08/20/domain-nazhumi.webp" alt="domain-nazhumi"></p>
+</li>
+</ol>
+<h3 id="优秀注册商推荐"><a href="#优秀注册商推荐" class="headerlink" title="优秀注册商推荐"></a>优秀注册商推荐</h3><ol>
+<li><p><strong>porkbun.com</strong></p>
+<ul>
+<li><strong>优点</strong>：常年提供极具竞争力的价格，无论是注册还是续费都相对便宜，支持后缀也较多。界面友好，免费提供 WHOIS 隐私保护。并且支持使用支付宝付款。<blockquote>
+<p>在 <a href="https://porkbun.com/">porkbun.com</a> 点击查询后，点击 <code>Show All Extensions</code> ，新的页面继续点击 <code>Sort by price</code> 可以按照价格从低到高排序，会发现很多域名首年只需要 1 - 2 美元，但一定要注意续费价格，一般来说续费价格在 <strong>20 美元&#x2F;年</strong> 以内是比较合适的。</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p><strong>cloudflare.com</strong></p>
+<ul>
+<li><strong>优点</strong>：Cloudflare 承诺以<strong>成本价</strong>提供域名注册和续费服务，不加收任何利润。这意味着它的续费价格几乎是全网最低的。<blockquote>
+<p>可以在其他平台（如 Porkbun）用首年优惠价注册，然后在第一年到期前，将域名<strong>转移 (Transfer)</strong> 到 Cloudflare，以享受其低廉的续费价格。</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p><strong>阿里云</strong></p>
+<ul>
+<li>中国最大的云服务商，如果你域名需要备案，那么 <a href="https://wanwang.aliyun.com/">阿里云</a> 是你的不二之选。</li>
+</ul>
+</li>
+</ol>
+<h2 id="特别注意：面向中国大陆用户"><a href="#特别注意：面向中国大陆用户" class="headerlink" title="特别注意：面向中国大陆用户"></a>特别注意：面向中国大陆用户</h2><p>如果你的网站主要服务于中国大陆用户，并计划将服务器部署在中国大陆境内，则必须完成<strong>ICP备案</strong>，ICP 备案需要 <strong>后缀</strong> 以及 <strong>注册商</strong> 都已获得工信部批准。  </p>
+<p>并非所有域名后缀都支持备案，比如常见的 <code>.org</code> 就无法进行备案，在购买前，请务必通过 <a href="https://domain.miit.gov.cn/">工信部 - 中国互联网域名体系</a> 查询你心仪的后缀是否在支持备案的列表中。</p>
+<p>然后前往 <a href="https://wanwang.aliyun.com/">阿里云</a> 或是其他中国大陆的域名服务商进行域名注册，他们将提供包含备案在内的支持服务。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>使用国外的域名注册商可以有更多的后缀选择，价格也相对便宜，转入转出一般也不会受到限制。</p>
+<p>如果需要进行备案，则只能选择国内的域名注册商。</p>
+<p>希望这篇指南能帮助你顺利开启你的网站之旅！</p>
+]]></content>
+      <categories>
+        <category>教程</category>
+      </categories>
+      <tags>
+        <tag>域名</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>普通人掘金互联网：独立开发起步指南</title>
     <url>/post/how-to-make-money-from-internet.html</url>
     <content><![CDATA[<p>你是否也曾羡慕那些在社交媒体上“透明化”分享收入、靠个人项目实现财务自由的独立开发者？看到他们动辄上千美金的月收入，你或许会觉得那是一个难以达成的目标。</p>
@@ -1492,99 +1585,6 @@
         <tag>独立开发</tag>
         <tag>个人项目</tag>
         <tag>副业</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>域名选择与注册简要指南</title>
-    <url>/post/how-to-choose-domain.html</url>
-    <content><![CDATA[<p>拥有一个好域名，是打造个人博客或项目网站的重要第一步。一个简洁、易记的域名，不仅能提升网站的专业感，还能让访问者更容易记住并再次找到你。</p>
-<p>本文将带你简单了解如何挑选并注册最适合自己的域名。</p>
-<h2 id="第一步：免费还是付费？你需要哪种域名？"><a href="#第一步：免费还是付费？你需要哪种域名？" class="headerlink" title="第一步：免费还是付费？你需要哪种域名？"></a>第一步：免费还是付费？你需要哪种域名？</h2><p>在开始之前，首先要明确你的需求。域名主要分为免费的二级域名和付费的独立域名。</p>
-<h3 id="选项A：免费二级域名"><a href="#选项A：免费二级域名" class="headerlink" title="选项A：免费二级域名"></a>选项A：免费二级域名</h3><p>许多平台为开发者提供了免费的二级域名，例如 <code>your-name.github.io</code> 或 <code>your-project.vercel.app</code>。</p>
-<ul>
-<li><strong>优点</strong>：<ul>
-<li><strong>完全免费</strong>：零成本启动项目。</li>
-<li><strong>部署简单</strong>：通常与平台自带的托管服务（如 GitHub Pages, Vercel, Cloudflare Pages）深度集成，部署非常方便。</li>
-</ul>
-</li>
-<li><strong>缺点</strong>：<ul>
-<li><strong>不够专业</strong>：域名中包含他人品牌，显得不够正式。</li>
-<li><strong>没有所有权</strong>：你只是使用者，域名归平台所有，受其政策限制。</li>
-<li><strong>不利于品牌建设</strong>：用户记住的是 <code>github.io</code> 而不是你的品牌。</li>
-</ul>
-</li>
-</ul>
-<p><strong>适用场景</strong>：个人玩具项目、技术演示、临时页面。</p>
-<h3 id="选项B：付费独立域名"><a href="#选项B：付费独立域名" class="headerlink" title="选项B：付费独立域名"></a>选项B：付费独立域名</h3><p>一级域名，如 <code>your-brand.com</code>，是你自己拥有的独立域名。</p>
-<ul>
-<li><strong>优点</strong>：<ul>
-<li><strong>专业形象</strong>：拥有独立域名是专业网站的标志。</li>
-<li><strong>完全控制权</strong>：你可以自由地将其指向任何服务器，并设置任意数量子域名。</li>
-<li><strong>利于品牌和SEO</strong>：一个好的域名本身就是品牌的一部分，也更容易被搜索引擎收录。</li>
-</ul>
-</li>
-<li><strong>缺点</strong>：<ul>
-<li><strong>需要成本</strong>：涉及注册费和年续费。</li>
-</ul>
-</li>
-</ul>
-<p><strong>适用场景</strong>：个人博客、作品集、商业网站、任何长期项目。</p>
-<h2 id="第二步：如何挑选一个完美的域名？"><a href="#第二步：如何挑选一个完美的域名？" class="headerlink" title="第二步：如何挑选一个完美的域名？"></a>第二步：如何挑选一个完美的域名？</h2><p>确定要购买独立域名后，就进入了最有创造性的一步：选择一个好名字。</p>
-<h3 id="1-选择域名后缀-TLD"><a href="#1-选择域名后缀-TLD" class="headerlink" title="1. 选择域名后缀 (TLD)"></a>1. 选择域名后缀 (TLD)</h3><p>后缀是域名的重要组成部分，不同的后缀有不同的含义和价值。</p>
-<ul>
-<li><strong>首选 <code>.com</code>：</strong> 作为全球最流行、最受认可的后缀，<code>.com</code> 依然是王道。如果能注册到，应作为第一选择。</li>
-<li><strong>备选 <code>.net</code>, <code>.org</code>：</strong>当 <code>.com</code> 被占用时，这两个是常见的替代选项。</li>
-<li><strong>国别域名 (ccTLD)：</strong> 如 <code>.io</code>, <code>.ai</code>, <code>.me</code>, <code>.cn</code> 等，是特定国家或地区的后缀，因其科技感和简洁性在技术圈广受欢迎。</li>
-<li><strong>新通用后缀 (gTLD)：</strong> 如 <code>.app</code>, <code>.blog</code>, <code>.xyz</code> 等，非常个性化，能准确反映网站主题。但需注意，相比国别域名可能会出现涨价或是各种意外情况。</li>
-</ul>
-<h3 id="2-构思域名主体"><a href="#2-构思域名主体" class="headerlink" title="2. 构思域名主体"></a>2. 构思域名主体</h3><p>域名主体应力求：</p>
-<ul>
-<li><strong>简短易记</strong>：越短越好记，也越不容易拼错。</li>
-<li><strong>紧扣主题</strong>：能直接反映你的网站是关于什么的。</li>
-<li><strong>避免使用连字符和数字</strong>：这会增加输入难度和口头传播的障碍。</li>
-</ul>
-<h2 id="第三步：去哪里买？如何找到最低价？"><a href="#第三步：去哪里买？如何找到最低价？" class="headerlink" title="第三步：去哪里买？如何找到最低价？"></a>第三步：去哪里买？如何找到最低价？</h2><p>域名价格由两部分组成：<strong>首年注册价</strong>和<strong>后续续费价</strong>。很多注册商用极低的“首年优惠”吸引用户，但续费价格可能很高。因此，我们需要工具来全面比较价格。</p>
-<h3 id="价格比较工具"><a href="#价格比较工具" class="headerlink" title="价格比较工具"></a>价格比较工具</h3><ol>
-<li><p><strong>TLD-List</strong>：一个强大的国际域名价格对比网站，支持 3400+ 后缀和数十家主流注册商，信息非常全面(<a href="https://zh-hans.tld-list.com/">tld-list.com</a>)。<br><img src="https://img.nep.me/i/2025/08/20/domain-tld-list.webp" alt="domain-tld-list"></p>
-</li>
-<li><p><strong>哪煮米</strong> ：一个中文域名比价网站，支持 2900+ 后缀，收录了包括中国大陆注册商在内的多家服务商，界面友好 (<a href="https://nazhumi.com/">nazhumi.com</a>)。<br><img src="https://img.nep.me/i/2025/08/20/domain-nazhumi.webp" alt="domain-nazhumi"></p>
-</li>
-</ol>
-<h3 id="优秀注册商推荐"><a href="#优秀注册商推荐" class="headerlink" title="优秀注册商推荐"></a>优秀注册商推荐</h3><ol>
-<li><p><strong>porkbun.com</strong></p>
-<ul>
-<li><strong>优点</strong>：常年提供极具竞争力的价格，无论是注册还是续费都相对便宜，支持后缀也较多。界面友好，免费提供 WHOIS 隐私保护。并且支持使用支付宝付款。<blockquote>
-<p>在 <a href="https://porkbun.com/">porkbun.com</a> 点击查询后，点击 <code>Show All Extensions</code> ，新的页面继续点击 <code>Sort by price</code> 可以按照价格从低到高排序，会发现很多域名首年只需要 1 - 2 美元，但一定要注意续费价格，一般来说续费价格在 <strong>20 美元&#x2F;年</strong> 以内是比较合适的。</p>
-</blockquote>
-</li>
-</ul>
-</li>
-<li><p><strong>cloudflare.com</strong></p>
-<ul>
-<li><strong>优点</strong>：Cloudflare 承诺以<strong>成本价</strong>提供域名注册和续费服务，不加收任何利润。这意味着它的续费价格几乎是全网最低的。<blockquote>
-<p>可以在其他平台（如 Porkbun）用首年优惠价注册，然后在第一年到期前，将域名<strong>转移 (Transfer)</strong> 到 Cloudflare，以享受其低廉的续费价格。</p>
-</blockquote>
-</li>
-</ul>
-</li>
-<li><p><strong>阿里云</strong></p>
-<ul>
-<li>中国最大的云服务商，如果你域名需要备案，那么 <a href="https://wanwang.aliyun.com/">阿里云</a> 是你的不二之选。</li>
-</ul>
-</li>
-</ol>
-<h2 id="特别注意：面向中国大陆用户"><a href="#特别注意：面向中国大陆用户" class="headerlink" title="特别注意：面向中国大陆用户"></a>特别注意：面向中国大陆用户</h2><p>如果你的网站主要服务于中国大陆用户，并计划将服务器部署在中国大陆境内，则必须完成<strong>ICP备案</strong>，ICP 备案需要 <strong>后缀</strong> 以及 <strong>注册商</strong> 都已获得工信部批准。  </p>
-<p>并非所有域名后缀都支持备案，比如常见的 <code>.org</code> 就无法进行备案，在购买前，请务必通过 <a href="https://domain.miit.gov.cn/">工信部 - 中国互联网域名体系</a> 查询你心仪的后缀是否在支持备案的列表中。</p>
-<p>然后前往 <a href="https://wanwang.aliyun.com/">阿里云</a> 或是其他中国大陆的域名服务商进行域名注册，他们将提供包含备案在内的支持服务。</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>使用国外的域名注册商可以有更多的后缀选择，价格也相对便宜，转入转出一般也不会受到限制。</p>
-<p>如果需要进行备案，则只能选择国内的域名注册商。</p>
-<p>希望这篇指南能帮助你顺利开启你的网站之旅！</p>
-]]></content>
-      <categories>
-        <category>教程</category>
-      </categories>
-      <tags>
-        <tag>域名</tag>
       </tags>
   </entry>
   <entry>
@@ -3508,35 +3508,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Anthropic 发布 Claude Mythos Preview，但不会向普通用户开放</title>
-    <url>/post/anthropic-announced-claude-mythos-preview.html</url>
-    <content><![CDATA[<p>2026 年 4 月 8 日，Anthropic 正式发布了有关新的模型 Claude Mythos Preview，并表示基于安全原因不会向普通用户开放该模型。</p>
-<p>Anthropic 表示这是一个全新的通用语言模型，该模型在各个方面都表现出色，尤其在计算机安全任务方面更是卓越非凡。</p>
-<p>在 Anthropic 的测试中，新的模型在网络安全领域展现了超凡能力，能够在用户指示下，识别并利用所有主流操作系统和主流浏览器中的零日漏洞。</p>
-<p>以下是 Anthropic 提供的应用示例：</p>
-<ul>
-<li>发现了一个在 OpenBSD 中存在了 27 年的漏洞 (OpenBSD 是一个以其安全性著称的操作系统) 。</li>
-<li>编写了一个 Web 浏览器漏洞利用程序，将四个漏洞串联起来，绕过了浏览器的沙箱保护。</li>
-<li>Mythos Preview 自主识别出 FFmpeg 最流行的编解码器之一 H.264 中一个存在了 16 年的漏洞。</li>
-<li>Mythos Preview 完全自主地识别并利用了 FreeBSD 中一个存在了 17 年的远程代码执行漏洞，该漏洞允许任何人获取运行NFS 的机器的 root 权限。</li>
-<li>Mythos Preview 发现了一些 Linux 内核漏洞，这些漏洞允许攻击者进行越界写入（例如，通过缓冲区溢出、释放后使用或双重释放漏洞）。</li>
-</ul>
-<p>具体内容可以查看原文链接：<a href="https://red.anthropic.com/2026/mythos-preview/">Assessing Claude Mythos Preview’s cybersecurity capabilities</a></p>
-<p>根据 Mythos Preview 在测试中表现的能力，Anthropic 表示这揭示了一个严峻的事实：人工智能模型的编码能力已经达到了极高的水平，在发现和利用软件漏洞方面，它们几乎可以超越除最熟练的人类之外的所有人。</p>
-<p>因此 Anthropic 启动了 <a href="https://www.anthropic.com/glasswing">Glasswing</a> 项目，汇集所有顶尖企业包含 Amazon、Anthropic、苹果、博通、思科、CrowdStrike、谷歌、摩根大通、Linux 基金会、微软、英伟达等企业，旨在保护世界上最关键的软件。</p>
-<p>如果事实真如 Anthropic 所言，这将标志着 AI 正在重写网络安全的底层规则，我们构建了几十年的数字防线正面临前所未有的危机，“识别漏洞” 将从从人类专家的漫长审计变为 AI 模型的本能。</p>
-<p>而我们普通用户在短期内将无法接触到这一模型，这不免也是一种遗憾。</p>
-]]></content>
-      <categories>
-        <category>资讯</category>
-      </categories>
-      <tags>
-        <tag>AI</tag>
-        <tag>Claude Mythos</tag>
-        <tag>Anthropic</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Anthropic 发布 Claude Fable 5：首个公开 Mythos-class 模型亮相，但充满限制</title>
     <url>/post/anthropic-releases-claude-fable-5.html</url>
     <content><![CDATA[<h2 id="发布信息"><a href="#发布信息" class="headerlink" title="发布信息"></a>发布信息</h2><p>Anthropic 于美国时间 <strong>2026 年 6 月 9 日</strong> 宣布推出 <code>Claude Fable 5</code> 和 <code>Claude Mythos 5</code> 。其中，<strong>Claude Fable 5</strong> 被定位为 Anthropic 迄今 “最强的广泛发布模型” ，面向普通用户和开发者开放；Claude Mythos 5 则与 Fable 5 共享底层模型能力，但在部分安全限制上更少，当前仅向 Project Glasswing 中获批的网络安全防御方和基础设施合作伙伴有限开放。</p>
@@ -3598,6 +3569,125 @@
         <tag>AI</tag>
         <tag>Claude</tag>
         <tag>Claude Fable 5</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Anthropic 发布 Claude Mythos Preview，但不会向普通用户开放</title>
+    <url>/post/anthropic-announced-claude-mythos-preview.html</url>
+    <content><![CDATA[<p>2026 年 4 月 8 日，Anthropic 正式发布了有关新的模型 Claude Mythos Preview，并表示基于安全原因不会向普通用户开放该模型。</p>
+<p>Anthropic 表示这是一个全新的通用语言模型，该模型在各个方面都表现出色，尤其在计算机安全任务方面更是卓越非凡。</p>
+<p>在 Anthropic 的测试中，新的模型在网络安全领域展现了超凡能力，能够在用户指示下，识别并利用所有主流操作系统和主流浏览器中的零日漏洞。</p>
+<p>以下是 Anthropic 提供的应用示例：</p>
+<ul>
+<li>发现了一个在 OpenBSD 中存在了 27 年的漏洞 (OpenBSD 是一个以其安全性著称的操作系统) 。</li>
+<li>编写了一个 Web 浏览器漏洞利用程序，将四个漏洞串联起来，绕过了浏览器的沙箱保护。</li>
+<li>Mythos Preview 自主识别出 FFmpeg 最流行的编解码器之一 H.264 中一个存在了 16 年的漏洞。</li>
+<li>Mythos Preview 完全自主地识别并利用了 FreeBSD 中一个存在了 17 年的远程代码执行漏洞，该漏洞允许任何人获取运行NFS 的机器的 root 权限。</li>
+<li>Mythos Preview 发现了一些 Linux 内核漏洞，这些漏洞允许攻击者进行越界写入（例如，通过缓冲区溢出、释放后使用或双重释放漏洞）。</li>
+</ul>
+<p>具体内容可以查看原文链接：<a href="https://red.anthropic.com/2026/mythos-preview/">Assessing Claude Mythos Preview’s cybersecurity capabilities</a></p>
+<p>根据 Mythos Preview 在测试中表现的能力，Anthropic 表示这揭示了一个严峻的事实：人工智能模型的编码能力已经达到了极高的水平，在发现和利用软件漏洞方面，它们几乎可以超越除最熟练的人类之外的所有人。</p>
+<p>因此 Anthropic 启动了 <a href="https://www.anthropic.com/glasswing">Glasswing</a> 项目，汇集所有顶尖企业包含 Amazon、Anthropic、苹果、博通、思科、CrowdStrike、谷歌、摩根大通、Linux 基金会、微软、英伟达等企业，旨在保护世界上最关键的软件。</p>
+<p>如果事实真如 Anthropic 所言，这将标志着 AI 正在重写网络安全的底层规则，我们构建了几十年的数字防线正面临前所未有的危机，“识别漏洞” 将从从人类专家的漫长审计变为 AI 模型的本能。</p>
+<p>而我们普通用户在短期内将无法接触到这一模型，这不免也是一种遗憾。</p>
+]]></content>
+      <categories>
+        <category>资讯</category>
+      </categories>
+      <tags>
+        <tag>AI</tag>
+        <tag>Claude Mythos</tag>
+        <tag>Anthropic</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>AI 正在影响消费者的钱包：苹果大幅上调多款产品价格</title>
+    <url>/post/apple-products-price-increase.html</url>
+    <content><![CDATA[<p>自 2025 年 11 月以来，内存和存储芯片价格持续上涨，至今仍未出现明显放缓迹象。美国头部 AI 企业持续加码数据中心建设，大量采购内存与存储元件，也进一步挤压了消费电子厂商的供应空间。如今，苹果也开始将这部分成本压力传导到终端产品上，宣布上调 iPhone 产品线之外多款设备的售价。</p>
+<p>在通过科技媒体 MacRumors 发布的声明中，苹果公司表示本轮涨价主要受内存 RAM 和存储 SSD 元件影响：</p>
+<blockquote>
+<p>消费电子行业正面临前所未有的挑战，人工智能数据中心的快速扩张导致内存和存储需求激增。我们从未见过如此大幅度、如此迅速的元器件价格上涨。</p>
+<p>我们此前一直内部消化元件成本上涨压力，尽力避免冲击波及我们的客户。包括今天 iPad 和 Mac 等产品的涨价在内，现在我们不得不开始提高部分产品的价格。我们知道这对大家来说并非好消息，我们正在竭尽全力寻找解决方案。</p>
+</blockquote>
+<h2 id="价格调整详情"><a href="#价格调整详情" class="headerlink" title="价格调整详情"></a>价格调整详情</h2><p>下图是不同产品的上涨情况：</p>
+<p><img src="https://img.nep.me/ooo/apple-price-up.webp" alt="apple-price-up.jpg"></p>
+<table>
+<thead>
+<tr>
+<th align="left">产品</th>
+<th align="left">当前官网起售价</th>
+<th align="left">发售时起售价</th>
+<th align="left">变化</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">MacBook Neo</td>
+<td align="left">¥5,499</td>
+<td align="left">¥4,599</td>
+<td align="left">+¥900</td>
+</tr>
+<tr>
+<td align="left">MacBook Air M5 13 英寸</td>
+<td align="left">¥9,999</td>
+<td align="left">¥8,499</td>
+<td align="left">+¥1,500</td>
+</tr>
+<tr>
+<td align="left">MacBook Pro M5 系列</td>
+<td align="left">¥15,999</td>
+<td align="left">¥13,499</td>
+<td align="left">+¥2,500</td>
+</tr>
+<tr>
+<td align="left">Mac mini M4</td>
+<td align="left">¥5,999</td>
+<td align="left">¥4,499</td>
+<td align="left">+¥1,500</td>
+</tr>
+<tr>
+<td align="left">iPad Pro 11 英寸 M5</td>
+<td align="left">¥10,799</td>
+<td align="left">¥8,999</td>
+<td align="left">+¥1,800</td>
+</tr>
+<tr>
+<td align="left">iPad Air 11 英寸 M4</td>
+<td align="left">¥5,999</td>
+<td align="left">¥4,799</td>
+<td align="left">+¥1,200</td>
+</tr>
+<tr>
+<td align="left">iPad A16</td>
+<td align="left">¥3,799</td>
+<td align="left">¥2,999</td>
+<td align="left">+¥800</td>
+</tr>
+<tr>
+<td align="left">iPad mini A17 Pro</td>
+<td align="left">¥4,799</td>
+<td align="left">¥3,999</td>
+<td align="left">+¥800</td>
+</tr>
+</tbody></table>
+<p>一同上涨的还有提升存储配置的价格，以 MacBook Pro 系列为例，部分机型每增加 1TB SSD 存储，定制价格已达到 3750 元。</p>
+<p><img src="https://img.nep.me/ooo/apple-price-up-ssd.webp" alt="apple-price-up-ssd.png"></p>
+<h2 id="微软上调-XBOX-产品价格"><a href="#微软上调-XBOX-产品价格" class="headerlink" title="微软上调 XBOX 产品价格"></a>微软上调 XBOX 产品价格</h2><p>于此同时微软也一同上调了 XBOX 的产品线价格，在微软的声明中指出</p>
+<blockquote>
+<p>推动本轮涨价的主要原因是存储和内存成本大幅攀升。“游戏主机存储和内存价格已经涨超2.5倍，我们预计到2027年秋季还会再翻一番。</p>
+</blockquote>
+<h2 id="美光回应"><a href="#美光回应" class="headerlink" title="美光回应"></a>美光回应</h2><p>值得注意的是，围绕本轮存储芯片涨价，苹果与供应链厂商之间也出现了微妙的责任归属分歧。由于苹果方面表示，内存供应紧张、存储厂商大幅涨价，正在迫使苹果上调产品售价。但作为苹果供应商之一，美光科技首席商务官 Sumit Sadana 随后回应称，<mark>苹果此前激进的压价采购策略，才是当前存储供应紧缺的重要原因之一</mark>。</p>
+<p>这个说法的背景在于，上一轮存储行业低谷期，消费电子需求疲软，苹果等大客户利用自身议价能力持续压低采购价格，导致部分存储厂商一度陷入负毛利，生产越多亏得越多。为了止血，厂商不得不削减资本开支、放缓扩产计划，甚至缩减部分长期投资。</p>
+<p>而当 AI 数据中心需求突然爆发，内存和存储芯片重新进入供不应求周期时，过去被压下去的产能投资缺口就开始反噬整个产业链。换句话说，今天的涨价并不只是 AI 企业抢产能造成的短期波动，也和上一轮行业低谷中消费电子厂商过度压价、供应商被迫收缩投资有关。</p>
+<p>这也让这次涨价不再只是单纯的 “AI 成本上涨” 问题，而更像是消费电子供应链长期博弈的一次集中爆发。过去被压在供应链里的成本矛盾，最终还是绕了一圈，回到了消费者的钱包上。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这件事也再次提醒我们，现代科技产品从来不是某一家公司的孤立成果。一台 Mac、一部 iPad，背后连接的是芯片设计、存储制造、软件生态、能源供应、物流运输，以及跨越多个国家和地区的协作网络。任何一个环节出现紧张，最后都会在终端市场上体现出来。</p>
+<p>过去几年，全球科技产业在地缘政治、供应链重组和贸易壁垒中不断被切割。短期来看，这或许能带来所谓的“安全感”，但长期来看，重复建设、产能错配和合作受阻，都会推高整个行业的成本。而这些成本，最终仍然会由企业、开发者和消费者共同承担。</p>
+<p>希望这次由 AI 带来的价格波动，能让更多人重新意识到全球合作的重要性。科技进步本该让更多人受益，而不是让资源被少数巨头争抢、让普通用户被迫为更高的成本买单。比起各自为战，我们更需要一个开放、稳定、互相信任的全球产业链，让创新回到提升效率、降低成本、改善生活的方向上。</p>
+]]></content>
+      <categories>
+        <category>资讯</category>
+      </categories>
+      <tags>
+        <tag>APPLE</tag>
       </tags>
   </entry>
   <entry>
@@ -3701,292 +3791,6 @@
         <tag>Powershell</tag>
         <tag>Shell</tag>
         <tag>开发者安全</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>AI 正在影响消费者的钱包：苹果大幅上调多款产品价格</title>
-    <url>/post/apple-products-price-increase.html</url>
-    <content><![CDATA[<p>自 2025 年 11 月以来，内存和存储芯片价格持续上涨，至今仍未出现明显放缓迹象。美国头部 AI 企业持续加码数据中心建设，大量采购内存与存储元件，也进一步挤压了消费电子厂商的供应空间。如今，苹果也开始将这部分成本压力传导到终端产品上，宣布上调 iPhone 产品线之外多款设备的售价。</p>
-<p>在通过科技媒体 MacRumors 发布的声明中，苹果公司表示本轮涨价主要受内存 RAM 和存储 SSD 元件影响：</p>
-<blockquote>
-<p>消费电子行业正面临前所未有的挑战，人工智能数据中心的快速扩张导致内存和存储需求激增。我们从未见过如此大幅度、如此迅速的元器件价格上涨。</p>
-<p>我们此前一直内部消化元件成本上涨压力，尽力避免冲击波及我们的客户。包括今天 iPad 和 Mac 等产品的涨价在内，现在我们不得不开始提高部分产品的价格。我们知道这对大家来说并非好消息，我们正在竭尽全力寻找解决方案。</p>
-</blockquote>
-<h2 id="价格调整详情"><a href="#价格调整详情" class="headerlink" title="价格调整详情"></a>价格调整详情</h2><p>下图是不同产品的上涨情况：</p>
-<p><img src="https://img.nep.me/ooo/apple-price-up.webp" alt="apple-price-up.jpg"></p>
-<table>
-<thead>
-<tr>
-<th align="left">产品</th>
-<th align="left">当前官网起售价</th>
-<th align="left">发售时起售价</th>
-<th align="left">变化</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">MacBook Neo</td>
-<td align="left">¥5,499</td>
-<td align="left">¥4,599</td>
-<td align="left">+¥900</td>
-</tr>
-<tr>
-<td align="left">MacBook Air M5 13 英寸</td>
-<td align="left">¥9,999</td>
-<td align="left">¥8,499</td>
-<td align="left">+¥1,500</td>
-</tr>
-<tr>
-<td align="left">MacBook Pro M5 系列</td>
-<td align="left">¥15,999</td>
-<td align="left">¥13,499</td>
-<td align="left">+¥2,500</td>
-</tr>
-<tr>
-<td align="left">Mac mini M4</td>
-<td align="left">¥5,999</td>
-<td align="left">¥4,499</td>
-<td align="left">+¥1,500</td>
-</tr>
-<tr>
-<td align="left">iPad Pro 11 英寸 M5</td>
-<td align="left">¥10,799</td>
-<td align="left">¥8,999</td>
-<td align="left">+¥1,800</td>
-</tr>
-<tr>
-<td align="left">iPad Air 11 英寸 M4</td>
-<td align="left">¥5,999</td>
-<td align="left">¥4,799</td>
-<td align="left">+¥1,200</td>
-</tr>
-<tr>
-<td align="left">iPad A16</td>
-<td align="left">¥3,799</td>
-<td align="left">¥2,999</td>
-<td align="left">+¥800</td>
-</tr>
-<tr>
-<td align="left">iPad mini A17 Pro</td>
-<td align="left">¥4,799</td>
-<td align="left">¥3,999</td>
-<td align="left">+¥800</td>
-</tr>
-</tbody></table>
-<p>一同上涨的还有提升存储配置的价格，以 MacBook Pro 系列为例，部分机型每增加 1TB SSD 存储，定制价格已达到 3750 元。</p>
-<p><img src="https://img.nep.me/ooo/apple-price-up-ssd.webp" alt="apple-price-up-ssd.png"></p>
-<h2 id="微软上调-XBOX-产品价格"><a href="#微软上调-XBOX-产品价格" class="headerlink" title="微软上调 XBOX 产品价格"></a>微软上调 XBOX 产品价格</h2><p>于此同时微软也一同上调了 XBOX 的产品线价格，在微软的声明中指出</p>
-<blockquote>
-<p>推动本轮涨价的主要原因是存储和内存成本大幅攀升。“游戏主机存储和内存价格已经涨超2.5倍，我们预计到2027年秋季还会再翻一番。</p>
-</blockquote>
-<h2 id="美光回应"><a href="#美光回应" class="headerlink" title="美光回应"></a>美光回应</h2><p>值得注意的是，围绕本轮存储芯片涨价，苹果与供应链厂商之间也出现了微妙的责任归属分歧。由于苹果方面表示，内存供应紧张、存储厂商大幅涨价，正在迫使苹果上调产品售价。但作为苹果供应商之一，美光科技首席商务官 Sumit Sadana 随后回应称，<mark>苹果此前激进的压价采购策略，才是当前存储供应紧缺的重要原因之一</mark>。</p>
-<p>这个说法的背景在于，上一轮存储行业低谷期，消费电子需求疲软，苹果等大客户利用自身议价能力持续压低采购价格，导致部分存储厂商一度陷入负毛利，生产越多亏得越多。为了止血，厂商不得不削减资本开支、放缓扩产计划，甚至缩减部分长期投资。</p>
-<p>而当 AI 数据中心需求突然爆发，内存和存储芯片重新进入供不应求周期时，过去被压下去的产能投资缺口就开始反噬整个产业链。换句话说，今天的涨价并不只是 AI 企业抢产能造成的短期波动，也和上一轮行业低谷中消费电子厂商过度压价、供应商被迫收缩投资有关。</p>
-<p>这也让这次涨价不再只是单纯的 “AI 成本上涨” 问题，而更像是消费电子供应链长期博弈的一次集中爆发。过去被压在供应链里的成本矛盾，最终还是绕了一圈，回到了消费者的钱包上。</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这件事也再次提醒我们，现代科技产品从来不是某一家公司的孤立成果。一台 Mac、一部 iPad，背后连接的是芯片设计、存储制造、软件生态、能源供应、物流运输，以及跨越多个国家和地区的协作网络。任何一个环节出现紧张，最后都会在终端市场上体现出来。</p>
-<p>过去几年，全球科技产业在地缘政治、供应链重组和贸易壁垒中不断被切割。短期来看，这或许能带来所谓的“安全感”，但长期来看，重复建设、产能错配和合作受阻，都会推高整个行业的成本。而这些成本，最终仍然会由企业、开发者和消费者共同承担。</p>
-<p>希望这次由 AI 带来的价格波动，能让更多人重新意识到全球合作的重要性。科技进步本该让更多人受益，而不是让资源被少数巨头争抢、让普通用户被迫为更高的成本买单。比起各自为战，我们更需要一个开放、稳定、互相信任的全球产业链，让创新回到提升效率、降低成本、改善生活的方向上。</p>
-]]></content>
-      <categories>
-        <category>资讯</category>
-      </categories>
-      <tags>
-        <tag>APPLE</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ChatGPT Business 为成员启用设备代码身份验证</title>
-    <url>/post/chatgpt-business-enable-codex-device-code.html</url>
-    <content><![CDATA[<p>最近 OpenAI 大促销，ChatGPT Business 免费一个席位 48 个月，应该会有小伙伴们打算同时使用两个账户，享受双倍额度。 </p>
-<h2 id="同时使用两个-ChatGPT-账户的方法-CC-Switch"><a href="#同时使用两个-ChatGPT-账户的方法-CC-Switch" class="headerlink" title="同时使用两个 ChatGPT 账户的方法(CC-Switch)"></a>同时使用两个 ChatGPT 账户的方法(CC-Switch)</h2><p>同时使用两个账户时，我们可以使用 <a href="https://github.com/farion1231/cc-switch">CC-Switch</a> 快速切换账户，而不必重新登陆。</p>
-<p>登录了一个账户后，在 CC-Switch 的 Codex 应用中添加一个新的 OpenAI Offical 供应商即可，不过我们启用新的供应商后，再执行 codex 可能会遇到账户错误的提示: </p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">Error: account/read failed during TUI bootstrap: account/read failed: email and plan <span class="built_in">type</span> are required <span class="keyword">for</span> chatgpt authentication (code -32600)</span><br></pre></td></tr></table></figure>
-
-<p>可以直接执行下面的命令，使用设备代码为第二个账户进行登录认证。</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">codex login --device-auth</span><br></pre></td></tr></table></figure>
-
-<p>但是基于安全原因，设备代码认证默认是关闭的，可以参考下面的方法开启。</p>
-<h2 id="启用设备代码身份验证"><a href="#启用设备代码身份验证" class="headerlink" title="启用设备代码身份验证"></a>启用设备代码身份验证</h2><p>团队的管理员在网页上访问 <strong>工作空间设置</strong> &gt; <strong>权限与角色</strong> ，在右侧开启 <strong>为 Codex CLI 启用设备代码身份验证</strong> 的选项即可。 </p>
-<p><a href="https://chatgpt.com/admin/permissions">https://chatgpt.com/admin/permissions</a></p>
-<p><img src="https://img.nep.me/ooo/codex-device-code-enable.webp" alt="codex-device-code-enable.png"></p>
-<p>然后就可以正常使用使用设备代码完成认证了。</p>
-]]></content>
-      <categories>
-        <category>笔记</category>
-      </categories>
-      <tags>
-        <tag>ChatGPT</tag>
-        <tag>Codex</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>不使用插件让 Claude Code 显示额度使用情况</title>
-    <url>/post/claude-code-show-5h-quota-without-plugin.html</url>
-    <content><![CDATA[<p>Claude Code 不像 Codex 那样执行 <code>/statusline</code> 命令后提供选项直接快速调整可以显示的内容，执行 <code>/statusline</code> 其实是调用模型去分析然后修改 <code>~/.claude/settings.json</code> 文件。</p>
-<h2 id="通过-Claude-Code-实现"><a href="#通过-Claude-Code-实现" class="headerlink" title="通过 Claude Code 实现"></a>通过 Claude Code 实现</h2><p>如果要让 Claude Code 显示 5H \ 7 Day 额度以及上下文窗口使用情况只需要使用执行一下下面的命令:</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">/statusline show 5h quota, 7d quota, context usage</span><br></pre></td></tr></table></figure>
-
-<p>Claude Code 就会自己创建对应的脚本，更新 <code>~/.claude/settings.json</code></p>
-<h2 id="手动实现-macOS"><a href="#手动实现-macOS" class="headerlink" title="手动实现 macOS"></a>手动实现 macOS</h2><blockquote>
-<p>Claude Code 会调用模型分析需求并自动生成脚本，因此会消耗一次正常的模型请求额度。</p>
-</blockquote>
-<p>这里提供了我已经创建了的代码，还额外增加了 <code>git branch</code> 显示，可以直接复制使用</p>
-<p>脚本依赖 <code>jq</code>，如果系统未安装，可以通过 Homebrew 安装：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">brew install jq</span><br></pre></td></tr></table></figure>
-
-<h3 id="创建-statusline-command-sh-文件"><a href="#创建-statusline-command-sh-文件" class="headerlink" title="创建 statusline-command.sh 文件"></a>创建 statusline-command.sh 文件</h3><p>首先需要创建 <code>~/.claude/statusline-command.sh</code> 文件，填入下面的内容：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line">input=$(<span class="built_in">cat</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Model display name</span></span><br><span class="line">model=$(<span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$input</span>&quot;</span> | jq -r <span class="string">&#x27;.model.display_name // empty&#x27;</span>)</span><br><span class="line"><span class="comment"># Git branch (skip optional locks to avoid hangs)</span></span><br><span class="line">branch=$(git -C <span class="string">&quot;<span class="subst">$(echo <span class="string">&quot;<span class="variable">$input</span>&quot;</span> | jq -r &#x27;.workspace.current_dir // empty&#x27;)</span>&quot;</span> \</span><br><span class="line">  --no-optional-locks symbolic-ref --short HEAD 2&gt;/dev/null)</span><br><span class="line"><span class="comment"># 5-hour quota</span></span><br><span class="line">five=$(<span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$input</span>&quot;</span> | jq -r <span class="string">&#x27;.rate_limits.five_hour.used_percentage // empty&#x27;</span>)</span><br><span class="line"><span class="comment"># 7-day quota</span></span><br><span class="line">week=$(<span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$input</span>&quot;</span> | jq -r <span class="string">&#x27;.rate_limits.seven_day.used_percentage // empty&#x27;</span>)</span><br><span class="line"><span class="comment"># Context used percentage</span></span><br><span class="line">ctx=$(<span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$input</span>&quot;</span> | jq -r <span class="string">&#x27;.context_window.used_percentage // empty&#x27;</span>)</span><br><span class="line"></span><br><span class="line">parts=<span class="string">&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ -n <span class="string">&quot;<span class="variable">$model</span>&quot;</span> ]; <span class="keyword">then</span></span><br><span class="line">  parts=<span class="string">&quot;<span class="variable">$&#123;parts&#125;</span><span class="variable">$&#123;model&#125;</span>&quot;</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ -n <span class="string">&quot;<span class="variable">$branch</span>&quot;</span> ]; <span class="keyword">then</span></span><br><span class="line">  [ -n <span class="string">&quot;<span class="variable">$parts</span>&quot;</span> ] &amp;&amp; parts=<span class="string">&quot;<span class="variable">$&#123;parts&#125;</span>  &quot;</span></span><br><span class="line">  parts=<span class="string">&quot;<span class="variable">$&#123;parts&#125;</span>branch:<span class="variable">$&#123;branch&#125;</span>&quot;</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ -n <span class="string">&quot;<span class="variable">$five</span>&quot;</span> ]; <span class="keyword">then</span></span><br><span class="line">  [ -n <span class="string">&quot;<span class="variable">$parts</span>&quot;</span> ] &amp;&amp; parts=<span class="string">&quot;<span class="variable">$&#123;parts&#125;</span>  &quot;</span></span><br><span class="line">  parts=<span class="string">&quot;<span class="variable">$&#123;parts&#125;</span>5h:<span class="subst">$(printf &#x27;%.0f&#x27; <span class="string">&quot;<span class="variable">$five</span>&quot;</span>)</span>%&quot;</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ -n <span class="string">&quot;<span class="variable">$week</span>&quot;</span> ]; <span class="keyword">then</span></span><br><span class="line">  [ -n <span class="string">&quot;<span class="variable">$parts</span>&quot;</span> ] &amp;&amp; parts=<span class="string">&quot;<span class="variable">$&#123;parts&#125;</span>  &quot;</span></span><br><span class="line">  parts=<span class="string">&quot;<span class="variable">$&#123;parts&#125;</span>7d:<span class="subst">$(printf &#x27;%.0f&#x27; <span class="string">&quot;<span class="variable">$week</span>&quot;</span>)</span>%&quot;</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ -n <span class="string">&quot;<span class="variable">$ctx</span>&quot;</span> ]; <span class="keyword">then</span></span><br><span class="line">  [ -n <span class="string">&quot;<span class="variable">$parts</span>&quot;</span> ] &amp;&amp; parts=<span class="string">&quot;<span class="variable">$&#123;parts&#125;</span>  &quot;</span></span><br><span class="line">  parts=<span class="string">&quot;<span class="variable">$&#123;parts&#125;</span>ctx:<span class="subst">$(printf &#x27;%.0f&#x27; <span class="string">&quot;<span class="variable">$ctx</span>&quot;</span>)</span>%&quot;</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">printf</span> <span class="string">&quot;%s&quot;</span> <span class="string">&quot;<span class="variable">$parts</span>&quot;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="编辑-claude-settings-json"><a href="#编辑-claude-settings-json" class="headerlink" title="编辑 ~&#x2F;.claude&#x2F;settings.json"></a>编辑 ~&#x2F;.claude&#x2F;settings.json</h3><p>然后编辑 <code>~/.claude/settings.json</code>，在最后 <code>}</code> 前加入下面的内容<br>macOS: </p>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="attr">&quot;statusLine&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;command&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;command&quot;</span><span class="punctuation">:</span> <span class="string">&quot;sh /Users/&lt;User&gt;/.claude/statusline-command.sh&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span> </span><br></pre></td></tr></table></figure>
-
-<p>需要把 <code>&lt;User&gt;</code> 替换为实际的路径</p>
-<h2 id="手动实现：-Windows-Powershell7"><a href="#手动实现：-Windows-Powershell7" class="headerlink" title="手动实现： Windows + Powershell7"></a>手动实现： Windows + Powershell7</h2><h3 id="创建-statusline-command-ps1"><a href="#创建-statusline-command-ps1" class="headerlink" title="创建 statusline-command.ps1"></a>创建 statusline-command.ps1</h3><p>首先需要创建 <code>~/.claude/statusline-command.ps1</code> 文件，填入下面的内容：</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="comment"># statusline-command.ps1</span></span><br><span class="line"><span class="comment"># 读取 stdin 的 JSON 输入</span></span><br><span class="line"><span class="variable">$input_raw</span> = [<span class="type">Console</span>]::In.ReadToEnd()</span><br><span class="line"><span class="variable">$data</span> = <span class="variable">$input_raw</span> | <span class="built_in">ConvertFrom-Json</span></span><br><span class="line"></span><br><span class="line"><span class="variable">$parts</span> = [<span class="type">System.Collections.Generic.List</span>[<span class="built_in">string</span>]]::new()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Model display name</span></span><br><span class="line"><span class="variable">$model</span> = <span class="variable">$data</span>.model.display_name</span><br><span class="line"><span class="keyword">if</span> (<span class="variable">$model</span>) &#123; <span class="variable">$parts</span>.Add(<span class="variable">$model</span>) &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># Git branch (skip optional locks to avoid hangs)</span></span><br><span class="line"><span class="variable">$branch</span> = git <span class="literal">--no-optional-locks</span> symbolic<span class="literal">-ref</span> <span class="literal">--short</span> HEAD <span class="number">2</span>&gt;<span class="variable">$null</span></span><br><span class="line"><span class="keyword">if</span> (<span class="variable">$branch</span>) &#123; <span class="variable">$parts</span>.Add(<span class="string">&quot;branch:<span class="variable">$branch</span>&quot;</span>) &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 5-hour quota（注意:用 $null 判断字段是否存在,使 0% 也能正常显示）</span></span><br><span class="line"><span class="variable">$five</span> = <span class="variable">$data</span>.rate_limits.five_hour.used_percentage</span><br><span class="line"><span class="keyword">if</span> (<span class="variable">$null</span> <span class="operator">-ne</span> <span class="variable">$five</span>) &#123;</span><br><span class="line">    <span class="variable">$parts</span>.Add(<span class="string">&quot;5h:&#123;0:N0&#125;%&quot;</span> <span class="operator">-f</span> [<span class="built_in">double</span>]<span class="variable">$five</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 7-day quota</span></span><br><span class="line"><span class="variable">$week</span> = <span class="variable">$data</span>.rate_limits.seven_day.used_percentage</span><br><span class="line"><span class="keyword">if</span> (<span class="variable">$null</span> <span class="operator">-ne</span> <span class="variable">$week</span>) &#123;</span><br><span class="line">    <span class="variable">$parts</span>.Add(<span class="string">&quot;7d:&#123;0:N0&#125;%&quot;</span> <span class="operator">-f</span> [<span class="built_in">double</span>]<span class="variable">$week</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># Context used percentage</span></span><br><span class="line"><span class="variable">$ctx</span> = <span class="variable">$data</span>.context_window.used_percentage</span><br><span class="line"><span class="keyword">if</span> (<span class="variable">$null</span> <span class="operator">-ne</span> <span class="variable">$ctx</span>) &#123;</span><br><span class="line">    <span class="variable">$parts</span>.Add(<span class="string">&quot;ctx:&#123;0:N0&#125;%&quot;</span> <span class="operator">-f</span> [<span class="built_in">double</span>]<span class="variable">$ctx</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 用两个空格连接各部分,不输出换行</span></span><br><span class="line">[<span class="type">Console</span>]::Out.Write((<span class="variable">$parts</span> <span class="operator">-join</span> <span class="string">&quot;  &quot;</span>))</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="编辑-claude-settings-json-1"><a href="#编辑-claude-settings-json-1" class="headerlink" title="编辑 ~&#x2F;.claude&#x2F;settings.json"></a>编辑 ~&#x2F;.claude&#x2F;settings.json</h3><p>然后编辑 <code>~/.claude/settings.json</code>，在最后 <code>}</code> 前加入下面的内容<br><strong>Windows</strong> : </p>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="attr">&quot;statusLine&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;command&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;command&quot;</span><span class="punctuation">:</span> <span class="string">&quot;\&quot;C:\\Program Files\\PowerShell\\7\\pwsh.exe\&quot; -NoProfile -File \&quot;C:\\Users\\&lt;User&gt;\\.claude\\statusline-command.ps1\&quot;&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
-
-<p>需要把 <code>&lt;User&gt;</code> 替换为实际的路径</p>
-<h2 id="预览效果"><a href="#预览效果" class="headerlink" title="预览效果"></a>预览效果</h2><p>macOS:</p>
-<p><img src="https://img.nep.me/ooo/claudecode-statusline-macos.webp?20260530" alt="claudecode-statusline-macos.png"></p>
-<p>Windows:</p>
-<p><img src="https://img.nep.me/ooo/claudecode-statusline-win.webp" alt="claudecode-statusline-win.png"></p>
-<h2 id="新打开的窗口不生效"><a href="#新打开的窗口不生效" class="headerlink" title="新打开的窗口不生效"></a>新打开的窗口不生效</h2><p>打开新窗口时，会发现没有额度使用信息，这是因为需要对话一下才会刷新。</p>
-<h2 id="调整显示信息"><a href="#调整显示信息" class="headerlink" title="调整显示信息"></a>调整显示信息</h2><p>只需要打开 Claude Code 后，输入 <code>/statusline 调整内容</code> 即可让 Claude Code 自己进行调整了。</p>
-<h2 id="直接使用第三方包实现"><a href="#直接使用第三方包实现" class="headerlink" title="直接使用第三方包实现"></a>直接使用第三方包实现</h2><p>如果不希望手动设置，有很多第三方包可以实现这个效果，比如很流行的查看模型使用情况的 <code>ccusage</code> 就提供这个功能。</p>
-<p><a href="https://ccusage.com/guide/statusline">https://ccusage.com/guide/statusline</a></p>
-<p>ccusage 除了提供状态栏显示外，还能统计历史 Token、模型使用量以及额度消耗情况。</p>
-]]></content>
-      <categories>
-        <category>笔记</category>
-      </categories>
-      <tags>
-        <tag>Claude Code</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Anthropic 发布 Claude Opus 4.6 模型，赠送付费用户 50 美元余额</title>
-    <url>/post/claude-subscription-user-can-get-50-usd-extra-credit.html</url>
-    <content><![CDATA[<h2 id="Claude-Opus-4-6-发布"><a href="#Claude-Opus-4-6-发布" class="headerlink" title="Claude Opus 4.6 发布"></a>Claude Opus 4.6 发布</h2><p>今天 Anthropic 发布了最新的 <a href="https://www.anthropic.com/news/claude-opus-4-6">Claude Opus 4.6</a> ，官方表示 Claude Opus 4.6 在编码能力上超越了前代产品。它规划更周密，能够更长时间地执行代理任务，在大规模代码库中运行更可靠，并且拥有更强大的代码审查和调试能力，可以更有效地发现自身错误。</p>
-<p>并且在 Beta 版本中 Opus 模型首次支持 1M tokens 上下文，API 价格方面保持不变。</p>
-<p>Claude Opus 4.6 目前已在 API、Claude Code 中可用。</p>
-<h2 id="更新-Claude-Code"><a href="#更新-Claude-Code" class="headerlink" title="更新 Claude Code"></a>更新 Claude Code</h2><p>运行下面命令即可：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm install -g @anthropic-ai/claude-code</span><br></pre></td></tr></table></figure>
-
-<h2 id="Anthropic-赠送付费用户-50-美元"><a href="#Anthropic-赠送付费用户-50-美元" class="headerlink" title="Anthropic 赠送付费用户 50 美元"></a>Anthropic 赠送付费用户 50 美元</h2><p>在推出新模型的同时，Anthropic 还提供给已订阅 Claude Pro &#x2F; MAX 的用户 50 美元的 <a href="https://support.claude.com/en/articles/13613973-claude-opus-4-6-extra-usage-promo#h_bf8366a5e9">福利</a>，用于体验最新的模型。 </p>
-<p>需要手动领取，只需访问 <a href="https://claude.ai/settings/usage">https://claude.ai/settings/usage</a> 点击 <strong>Claim</strong> 即可。</p>
-<p><img src="https://img.nep.me/i/2026/02/claude-50-usd-credit.jpeg" alt="claude-50-usd-credit.jpeg"></p>
-<h3 id="领取条件"><a href="#领取条件" class="headerlink" title="领取条件"></a>领取条件</h3><p>领取 50 美元满足下面的条件：</p>
-<ul>
-<li>在 2 月 4 日之前开通了 Claude Pro &#x2F; MAX 订阅套餐</li>
-<li>在 2 月 16 日之前开启 <strong>extra usage</strong></li>
-</ul>
-<p>所以如果你 在 2 月 4 日之前没有订阅 Claude Pro，无法领取优惠。</p>
-<h3 id="有效期"><a href="#有效期" class="headerlink" title="有效期"></a>有效期</h3><p>领取的 50 美元余额有效期为 60 天。</p>
-<h3 id="截止日期"><a href="#截止日期" class="headerlink" title="截止日期"></a>截止日期</h3><p>在 2 月 16 日之前都可以领取，如果你正在订阅 Claude Pro &#x2F; MAX，领取你的优惠吧。</p>
-]]></content>
-      <categories>
-        <category>优惠活动</category>
-      </categories>
-      <tags>
-        <tag>Anthropic</tag>
-        <tag>Opus</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Codex 的日志记录消耗 SSD 寿命？OpenAI 已修复</title>
-    <url>/post/codex-is-buring-your-ssd.html</url>
-    <content><![CDATA[<h2 id="Bug-信息"><a href="#Bug-信息" class="headerlink" title="Bug 信息"></a>Bug 信息</h2><div class="flatpaper-note flatpaper-note--primary"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>好消息，OpenAI 已在 Codex 0.142.0 版本中修复了这个问题，可以放心使用。</p></div></div>
-
-<p>最近，Codex 凭借其强大的功能和丝滑的体验，周活跃用户已经突破了 <strong>500 万</strong> 大关。越来越多的开发者和极客都已经把它当成了日常高频使用的得力助手。</p>
-<p>不过，随着使用人数的增加，有用户反馈，在某些流式输出或自动化任务场景下，Codex 会持续向本地磁盘写入 TRACE 级别的日志。</p>
-<p>GitHUb 的 <a href="https://github.com/openai/codex/issues/28224">ISSUE</a> 上声称该 BUG 可能会产生 <strong>640GB&#x2F;年</strong> 的写入，这对于消费级 SSD 来说是致命的。对于目前主流的 1TB 或 2TB 消费级固态硬盘（标称寿命通常在 600TBW ~ 1200TBW）来说，可以说是非常严重。</p>
-<p><strong>而且，正因为现在 AI 浪潮空前火热，全球对高带宽、高性能存储的需求集中爆发，导致现在的 SSD 固态硬盘价格一路上涨，存储成本变得相当昂贵，尤其是 mac 设备的硬盘无法更换。在这种寸土寸金的时期，我们对硬盘的每一度磨损、每一 G 空间都不得不更加精打细算。</strong></p>
-<hr>
-<h2 id="1分钟自查：你中招了吗？"><a href="#1分钟自查：你中招了吗？" class="headerlink" title="1分钟自查：你中招了吗？"></a>1分钟自查：你中招了吗？</h2><p>如果你使用的是 Linux 或 Mac 系统，可以直接通过终端跑两行命令看看情况。</p>
-<p>首先，看看日志文件的大小：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">ls</span> -lh ~/.codex/logs_2.sqlite</span><br></pre></td></tr></table></figure>
-
-<p>然后，统计一下日志的写入级别：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;SELECT level, COUNT(*) FROM logs GROUP BY level ORDER BY COUNT(*) DESC&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>如何判断：</strong><br>如果查询结果中，<code>TRACE</code> 级别的日志占了绝大多数，并且 <code>logs_2.sqlite</code> 文件体积比较大，那就说明 Codex 确实在后台认真地记录着无关紧要的追踪信息。</p>
-<p><strong>参考数据：</strong><br>我的文件大小为 <strong>468MB：</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&gt; <span class="built_in">ls</span> -lh ~/.codex/logs_2.sqlite Jun 23</span><br><span class="line">-rw-r--r--@ 1 mro  staff   468M</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&gt; sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;SELECT level, COUNT(*) FROM logs GROUP BY level ORDER BY COUNT(*) DESC&quot;</span></span><br><span class="line">TRACE|39961</span><br><span class="line">INFO|39919</span><br><span class="line">DEBUG|7307</span><br><span class="line">WARN|177</span><br></pre></td></tr></table></figure>
-
-<p>可以看到 <code>TRACE|39961</code> 占了接近一半的数据，确实存在所说的问题，主要是目前 OpenAI 官方尚未做出修复的回应。</p>
-<h2 id="一劳永逸的解决方案-：直接在数据库拦截"><a href="#一劳永逸的解决方案-：直接在数据库拦截" class="headerlink" title="一劳永逸的解决方案 ：直接在数据库拦截"></a>一劳永逸的解决方案 ：直接在数据库拦截</h2><p><mark>OpenAI 已经修复这个问题了，不需要操作了</mark></p>
-<p>这里提供比较激进、但也最直接的临时方案：给日志表加一个 SQLite 触发器，让新的日志写入被忽略，毕竟这个文件里只有诊断日志，没有对话历史。</p>
-<p>执行前建议先退出 Codex，并备份日志数据库：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cp</span> ~/.codex/logs_2.sqlite ~/.codex/logs_2.sqlite.bak</span><br></pre></td></tr></table></figure>
-<p>然后执行：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;CREATE TRIGGER IF NOT EXISTS block_log_inserts BEFORE INSERT ON logs BEGIN SELECT RAISE(IGNORE); END;&quot;</span></span><br></pre></td></tr></table></figure>
-<p>设置完成后，新的日志记录会被拦截，从而减少后续写入。</p>
-<p>需要注意的是，这个方法会影响 Codex 后续生成诊断日志。如果你之后需要向官方反馈问题，或者担心未来版本兼容性，可以先不要使用这个方案，改用定期清理的方式。</p>
-<details class="flatpaper-note flatpaper-note--info"><summary class="flatpaper-note__title"><span class="flatpaper-note__icon" aria-hidden="true"></span><span class="flatpaper-note__label">如何恢复</span><span class="flatpaper-note__chevron" aria-hidden="true"></span></summary><div class="flatpaper-note__body"><p>如果想要恢复的话就是删除这个 trigger 。先退出 Codex，再执行：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;DROP TRIGGER IF EXISTS block_log_inserts;&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>执行后可以检查是否还存在：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;.schema block_log_inserts&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>如果没有输出，说明已经删除成功。</p>
-<p>也可以用这个命令查看当前所有 trigger：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;SELECT name, tbl_name, sql FROM sqlite_master WHERE type=&#x27;trigger&#x27;;&quot;</span></span><br></pre></td></tr></table></figure></div></details>
-
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>GitHub ISSUE 中的数据是比较夸张的，Codex 的这个日志问题并没有网传的那么吓人，但也感谢 OpenAI 完成了 BUG 的修复，祝大家用 Codex 敲代码愉快！</p>
-]]></content>
-      <categories>
-        <category>笔记</category>
-      </categories>
-      <tags>
-        <tag>OpenAI</tag>
-        <tag>Codex</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>新时代挖矿：看看你的 Mac 一个月能赚多少钱</title>
-    <url>/post/darkbloom-nodes-macbook-ai-mining-earnings.html</url>
-    <content><![CDATA[<p>曾经，无数人为了比特币和以太坊疯狂囤积显卡，把家里变成轰鸣的矿场。随着传统加密货币 “显卡挖矿” 时代的逐渐降温，很多人以为用个人电脑赚取被动收入的日子已经结束了。然而，随着 AI 大模型时代的爆发，一种全新的 “挖矿” 模式正在悄然兴起——AI 节点推理算力共享。</p>
-<p>最近，随着本地模型的能力进步，<a href="https://www.darkbloom.dev/#nodes">Darkbloom</a> 平台的出现向我们揭示了这一前景。在这个新时代，你不需要去计算毫无意义的哈希值，而是让你的电脑成为 AI 基础设施的一部分，通过为真实用户运行大语言模型（如 <code>Gemma 4 26B</code> ）来赚取收益。而在这场新游戏里，凭借着高带宽的统一内存架构，Apple 的 Mac 电脑意外地成为了最完美的 “矿机”。</p>
-<h2 id="Darbloom-介绍"><a href="#Darbloom-介绍" class="headerlink" title="Darbloom 介绍"></a>Darbloom 介绍</h2><p><a href="https://www.darkbloom.dev/">Darkbloom.dev</a> 可以将 MacBook 变成一个可产生收益的私有硬件节点网络。用户只需在 Mac 上安装一个命令行界面 (CLI)，设备就可以在闲置时自动接收并处理 AI 推理请求。开发者则可以通过兼容 OpenAI 的 API 调用这些分布式算力。设备每生成一个代币，节点运营者就能获得相应的美元收益。 </p>
-<p>这个项目背后的技术来自 Eigen Labs，相关论文和代码已经开源。其核心卖点是：在保护用户请求隐私的前提下，让普通 Apple Silicon 设备参与 AI 推理市场。<br>链接：<a href="https://github.com/Layr-Labs/d-inference/blob/master/papers/dginf-private-inference.pdf">https://github.com/Layr-Labs/d-inference/blob/master/papers/dginf-private-inference.pdf</a></p>
-<h2 id="Mac-变身-AI-服务器：到底能赚多少？"><a href="#Mac-变身-AI-服务器：到底能赚多少？" class="headerlink" title="Mac 变身 AI 服务器：到底能赚多少？"></a>Mac 变身 AI 服务器：到底能赚多少？</h2><p>按照项目方介绍，节点运营者可以获得 95% 的推理收入，平台抽取 5%。</p>
-<p>除了硬件设备，运营唯一的成本是电费，而 Apple Silicon 的功耗极低。即使在满负荷推理的情况下，每小时也只需 0.01 到 0.03 美元。这就像点亮一个灯泡一样。</p>
-<p>我们来看看 Darkbloom 提供的收益预估数据：</p>
-<h3 id="1-顶配印钞机：MacBook-Pro-M5-Max-128GB-内存"><a href="#1-顶配印钞机：MacBook-Pro-M5-Max-128GB-内存" class="headerlink" title="1. 顶配印钞机：MacBook Pro (M5 Max, 128GB 内存)"></a>1. 顶配印钞机：MacBook Pro (M5 Max, 128GB 内存)</h3><p>如果你拥有一台搭载 M5 Max 芯片和 128GB 内存的顶级 MacBook Pro，这台机器简直是为跑大模型而生的。它庞大的内存可以轻松装下甚至并行处理巨大的模型。</p>
-<ul>
-<li><strong>运行状态</strong>：每天运行 18 小时（比如下班后的闲置时间）。</li>
-<li><strong>处理速度</strong>：批量解码速度高达惊人的 <code>1326.2</code> tok&#x2F;s。</li>
-<li><strong>每月收益</strong>：预估每月总收入约为 <strong>$425.40</strong> 。扣除电费后，每月净赚约 $423（折合人民币约 3000 多元）！</li>
-</ul>
-<p>一年下来收益可达 <strong>$5,076</strong>，而在 Apple 官网上 <strong>M5 Max + 128GB RAM + 2TB</strong> 版本现在仅售 <strong>5399</strong> 美元（大陆官网售价 43,499 元）， 可以说这笔钱不仅足够你覆盖买电脑的成本，甚至相当于电脑自己在给自己打工还贷。</p>
-<p><img src="https://img.nep.me/ooo/darkbloom-m5max.webp" alt="darkbloom-m5max"></p>
-<h3 id="2-性能中坚：MacBook-Pro-M4-Pro-48GB-内存"><a href="#2-性能中坚：MacBook-Pro-M4-Pro-48GB-内存" class="headerlink" title="2. 性能中坚：MacBook Pro (M4 Pro, 48GB 内存)"></a>2. 性能中坚：MacBook Pro (M4 Pro, 48GB 内存)</h3><p>如果你的配置是偏向主流的工作站，比如搭载 M4 Pro 芯片和 48GB 内存的版本。</p>
-<ul>
-<li><strong>运行状态</strong>：同样每天运行 18 小时。</li>
-<li><strong>处理速度</strong>：<code>589.7</code> tok&#x2F;s。</li>
-<li><strong>每月收益</strong>：依然可以获得每月约 <strong>$188 美元</strong>（折合人民币约 1300 多元）的净收入。</li>
-</ul>
-<p>一年也有 $2,252 的进账。对于仅仅是利用电脑闲置时间的睡后收入来说，这绝对是一笔非常可观的零花钱。</p>
-<p><img src="https://img.nep.me/ooo/darkbloom-m4pro.webp" alt="darkbloom-m4pro"></p>
-<h2 id="Apple-Silicon-的恐怖能效"><a href="#Apple-Silicon-的恐怖能效" class="headerlink" title="Apple Silicon 的恐怖能效"></a>Apple Silicon 的恐怖能效</h2><p>传统挖矿最让人头疼的就是高昂的电费和机器狂转的噪音。但在这场AI 挖矿中，Apple M 系列芯片展现出了极其恐怖的能效比。</p>
-<p>以电费 $0.15&#x2F;kWh 计算，那台每月能为你赚取 425 美元的 M5 Max MacBook Pro，一整个月消耗的电费仅仅只有 $2.43；而 M4 Pro 版本的月电费更是低至 $1.46。电费成本甚至占不到总收入的 1%。没有轰鸣的风扇，没有天价电费账单，只有静悄悄地跑着大模型赚钱的优雅。</p>
-<p>AI 时代的算力需求是无穷无尽的，而去中心化的个人算力网络或许就是下一座金矿。你的 Mac 已经不再仅仅是一个昂贵的生产力工具，它完全有潜力成为你的“数字打工仔”。</p>
-<h2 id="结语与风险提示"><a href="#结语与风险提示" class="headerlink" title="结语与风险提示"></a>结语与风险提示</h2><p>当然，作为一个新兴领域，我们也要保持理性的预期。目前，Darkbloom 等平台已经在 Hacker News、Reddit 和 LinkedIn 等主流开发者社区引发了公开讨论。好消息是，目前尚未出现任何诈骗报告；但根据早期参与测试的节点用户反馈，当前网络中分配到的任务还主要是 Health Checks ，真实的商业推理需求仍然处于低位。这意味着官方计算器给出的高额预测相对较为乐观。</p>
-<p>更重要的是，如今大模型的进步速度实在是太快了。现在开源社区就已经迭代到了 Gemma 4 26B 这样庞大且高效的模型。AI 领域的算法架构、量化技术和吞吐量优化几乎每个月都在刷新。今天的配置组合可能刚好能吃满红利，但三个月后，随着更强、更大的模型诞生，整个网络对硬件门槛和带宽的要求可能会迎来彻底的洗牌。</p>
-<p>这注定是一场与技术演进赛跑的游戏。未来的实际收益，将极大地受制于真实商业请求的爆发、模型迭代的速度以及平台的后续运营。</p>
-<div class="flatpaper-note flatpaper-note--warning"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>请务必记住，以上数据只是参考，大家看看这些预估数据，把它当个有趣的参考就行。</p></div></div>
-]]></content>
-      <categories>
-        <category>工具资源</category>
-      </categories>
-      <tags>
-        <tag>AI</tag>
-        <tag>Apple</tag>
-        <tag>Darkbloom</tag>
-        <tag>MacBook</tag>
       </tags>
   </entry>
   <entry>
@@ -4189,88 +3993,103 @@
       </tags>
   </entry>
   <entry>
-    <title>赛博特权阶级的诞生：从 Fable 5 白名单看 AI 非营利乌托邦的终结</title>
-    <url>/post/fable-5-whitelist-new-privileged-class-ai-monopoly.html</url>
-    <content><![CDATA[<p>2026 年夏天，科技界经历了一场 “AI大地震”。美国商务部的一纸出口管制令，让刚刚问世、霸榜各大模型基座的 Anthropic 旗舰模型 <strong>Claude Fable 5</strong> 与其底层孪生模型 Mythos 5 瞬间在全球范围内被按下了暂停键。紧接着，经过政商闭门博弈，部分 <strong>可信赖的实体</strong> 和特定白名单单位逐步重获访问特权。</p>
-<p>这一历史性事件不仅颠覆了开发者对云端 API 稳定性的认知，更向世界宣告了一个残酷的事实：由美国政府特许的、由技术与权力交织而成的 <strong>赛博新特权阶级</strong> 已经正式诞生。</p>
-<p>这也给予了整个AI行业沉重一击 —— OpenAI 最初设立的 <strong>技术民主化、利益造福全人类</strong> 的乌托邦设想，已经彻底宣告失败。</p>
-<h2 id="一、-“白名单”下的赛博新特权阶级"><a href="#一、-“白名单”下的赛博新特权阶级" class="headerlink" title="一、 “白名单”下的赛博新特权阶级"></a>一、 “白名单”下的赛博新特权阶级</h2><p>在过去，黄金、石油和土地是核心的生产要素。而在2026年的今天，顶尖的通用人工智能（AGI）推理算力已成为最稀缺的战略资源。</p>
-<p>Fable 5 与Mythos 5 的强悍无需多言 —— 在 TerminalBench 2.1 等前沿评测中，它们展现出了恐怖的智能。支付巨头 Stripe 曾用它在短短一天内完成了原本需要一整个工程团队干满两个月的 5000 万行 Ruby 代码大迁移；在生物制药与网络安全领域，它们甚至展现出了越过安全限制、自主运行设计工具的“近神”能力。</p>
-<p>然而，正因为这种 “颠覆性力量” ，它引来了权力的铁拳。美国政府以国家安全、防范越狱（Jailbreak）和技术外泄为由，强行切断了公众和海外开发者的连接。随后出炉的 “白名单机制” ，将这种力量圈禁在了一个狭小的特权阶层手中：</p>
-<ul>
-<li><strong>国家机器与军工巨头</strong>： 拥有绝对豁免权，能够无限制调用未阉割、无安全拦截器的 Mythos 5。</li>
-<li><strong>合规的华尔街财阀与巨型跨国企业</strong>： 凭借强大的游说能力和国籍审查能力，跻身“可信合规白名单”。</li>
-</ul>
-<p>一个技术垄断的马太效应正在形成： 白名单内的企业利用 Fable 5 实现成百上千倍的效率跃升、垄断行业财富；而白名单外的中小创业者、研究机构甚至普通大众，只能眼睁睁看着技术代差被无限拉大。曾经人人平等的互联网API生态，变成了按权力、国籍和资本配给的 “口粮” 。美国政府的 “特许” ，正式在全球科技界划分出了高人一等的赛博新贵族。</p>
-<h2 id="二、-权力的入局：Fable-5-的“国家化”阵痛"><a href="#二、-权力的入局：Fable-5-的“国家化”阵痛" class="headerlink" title="二、 权力的入局：Fable 5 的“国家化”阵痛"></a>二、 权力的入局：Fable 5 的“国家化”阵痛</h2><p>Fable 5 的白名单风波，标志着 AI 技术正式从 “商业竞争阶段” 滑向 “地缘政治与国家安全阶段” 。</p>
-<p>“我们不认为这种政府准入程序应该成为长期的默认状态。” —— 面对政府的强势介入，即便是正在筹备 IPO 的 OpenAI 也在其发布 GPT-5.6 Sol 限量预览时发出了无力的警告。</p>
-<p>但资本和企业的挣扎在强大的国家机器面前显得微不足道。过去，硅谷的技术精英们总认为自己可以通过代码改变世界，凌驾于地缘政治之上。但当白宫执行行政令、国防部和国安局（NSA）直接介入审查时，强如 Anthropic 也只能选择 “积极与政府合作”，甚至连自己的非美籍员工也必须被剥夺访问权限。</p>
-<p>Fable 5不再只是一个商品，它成了被国家征用的 <strong>战略军火</strong> 。</p>
-<h2 id="三、-废墟中的理想：商业洪流下的破灭与向往"><a href="#三、-废墟中的理想：商业洪流下的破灭与向往" class="headerlink" title="三、 废墟中的理想：商业洪流下的破灭与向往"></a>三、 废墟中的理想：商业洪流下的破灭与向往</h2><p>回看 Fable 5 的白名单特权、OpenAI 的 GPT-5.6 受限审查，以及 OpenAI 自身提交的IPO申请，历史在这一刻完成了一个巨大的讽刺。</p>
-<p>2015年，当埃隆·马斯克、山姆·奥特曼等人创立 OpenAI 时，其核心宗旨是：</p>
-<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>作为一个非营利组织，不受财务回报的限制，确保 AGI 的技术向所有人开放，防止技术被单一国家或巨型财阀垄断，从而造福全人类。</p></div></div>
+    <title>ChatGPT Business 为成员启用设备代码身份验证</title>
+    <url>/post/chatgpt-business-enable-codex-device-code.html</url>
+    <content><![CDATA[<p>最近 OpenAI 大促销，ChatGPT Business 免费一个席位 48 个月，应该会有小伙伴们打算同时使用两个账户，享受双倍额度。 </p>
+<h2 id="同时使用两个-ChatGPT-账户的方法-CC-Switch"><a href="#同时使用两个-ChatGPT-账户的方法-CC-Switch" class="headerlink" title="同时使用两个 ChatGPT 账户的方法(CC-Switch)"></a>同时使用两个 ChatGPT 账户的方法(CC-Switch)</h2><p>同时使用两个账户时，我们可以使用 <a href="https://github.com/farion1231/cc-switch">CC-Switch</a> 快速切换账户，而不必重新登陆。</p>
+<p>登录了一个账户后，在 CC-Switch 的 Codex 应用中添加一个新的 OpenAI Offical 供应商即可，不过我们启用新的供应商后，再执行 codex 可能会遇到账户错误的提示: </p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">Error: account/read failed during TUI bootstrap: account/read failed: email and plan <span class="built_in">type</span> are required <span class="keyword">for</span> chatgpt authentication (code -32600)</span><br></pre></td></tr></table></figure>
 
-<p>今天，这个设想已经碎成了满地瓦砾：</p>
-<p>从非营利到资本弄潮儿： OpenAI 早已转型为追求利润的实体，并为了迎合资本市场走向 IPO ，最初的非营利乌托邦理想早已被商业逻辑吞噬。</p>
-<p>从 “Open（开放）” 到 “Closed（封闭）” ： 曾经开源的承诺变成了最严密的商业机密，而如今更是在政府的指令下，演变成了 “白名单准入” 的割裂生态。</p>
-<p>从造福全人类到服务特权阶级： 顶尖大模型不再是普惠全人类的工具，而是成了强化特定国家霸权、提升少数垄断巨头生产力的私产。</p>
-<p><strong>然而，那道最初的微光，依然让我们充满向往</strong></p>
-<p>即便现实如此冰冷，即便 OpenAI 如今已实质性转为追逐利润的盈利实体，但当我们拂去商业的喧嚣，回望它最初的设想时，那幅“技术普惠”的宏大蓝图依然散发着让人心潮澎湃的理想主义光芒。</p>
-<p>那是人类科技史上少有的、试图超越国家边界和阶级壁垒的伟大尝试。它向世界许诺过一种可能：最高维度的智慧不需要附庸于权力，最顶尖的科技可以成为每一个普通人对抗命运、跨越数字鸿沟的武器。</p>
-<p>正是因为这个最初的设想曾如此美丽，甚至一度让我们看到了赛博乌托邦的曙光，才使得今天面对Fable 5的“白名单高墙”时，全球开发者心中的失落与阵痛显得如此剧烈。人们对 OpenAI 初心的向往，并非出于对商业幼稚的幻想，而是出于人类对公平、开放与知识无界根深蒂固的渴望。这种向往，恰恰成了当下对抗技术垄断、呼唤开源力量的最强韧的精神火种。</p>
-<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>Fable 5 的 “白名单风暴” 揭示了 AI 时代的未来图景：科技不再是平的，而是被权力筑起的高墙分割得支离破碎。</p>
-<p>OpenAI 最初那个充满人文主义情怀的设想失败了，取而代之的是一个更加冷酷、更加遵循达尔文主义的现实。在这个由政府特许、白名单构筑的赛博新秩序里，谁能拿到那张通往顶尖算力的 “特许通行证” ，谁就掌握了下一个时代改写世界的权力。而剩下的绝大多数人，正无可避免地沦为这场技术合谋下的 <strong>“数字平民”</strong> 。</p>
-<p>不过，局面并非完全没有转机。以 <strong>GLM 5.2</strong> 为代表的中国顶尖开源模型正在展现出越来越强的竞争力。如果它能在代码、推理、工具调用与长上下文等关键能力上持续追近甚至反超闭源白名单模型，那么全球开发者至少不会被迫完全依赖少数美国 API。它的强力表现，有望在一定程度上缓解这种由算力、资本与国家权力共同制造的技术阶层分化。</p>
+<p>可以直接执行下面的命令，使用设备代码为第二个账户进行登录认证。</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">codex login --device-auth</span><br></pre></td></tr></table></figure>
+
+<p>但是基于安全原因，设备代码认证默认是关闭的，可以参考下面的方法开启。</p>
+<h2 id="启用设备代码身份验证"><a href="#启用设备代码身份验证" class="headerlink" title="启用设备代码身份验证"></a>启用设备代码身份验证</h2><p>团队的管理员在网页上访问 <strong>工作空间设置</strong> &gt; <strong>权限与角色</strong> ，在右侧开启 <strong>为 Codex CLI 启用设备代码身份验证</strong> 的选项即可。 </p>
+<p><a href="https://chatgpt.com/admin/permissions">https://chatgpt.com/admin/permissions</a></p>
+<p><img src="https://img.nep.me/ooo/codex-device-code-enable.webp" alt="codex-device-code-enable.png"></p>
+<p>然后就可以正常使用使用设备代码完成认证了。</p>
 ]]></content>
       <categories>
-        <category>评论</category>
+        <category>笔记</category>
       </categories>
       <tags>
-        <tag>AI</tag>
-        <tag>OpenAI</tag>
-        <tag>Claude Fable 5</tag>
+        <tag>ChatGPT</tag>
+        <tag>Codex</tag>
       </tags>
   </entry>
   <entry>
-    <title>解决 Antigravity 通过 SSH 连接远程服务器崩溃的问题</title>
-    <url>/post/fix-antigravity-ssh-remote-crash-problem.html</url>
-    <content><![CDATA[<h2 id="问题详情"><a href="#问题详情" class="headerlink" title="问题详情"></a>问题详情</h2><p>在使用 Google Antigravity 通过 SSH 连接运行在 <strong>PVE</strong> 的 <strong>Linux 虚拟机</strong> 时，会直接崩溃，报错信息如下：</p>
-<blockquote>
-<p>Antigravity server crashed unexpectedly. Please restart to fully restore AI features.</p>
+    <title>不使用插件让 Claude Code 显示额度使用情况</title>
+    <url>/post/claude-code-show-5h-quota-without-plugin.html</url>
+    <content><![CDATA[<p>Claude Code 不像 Codex 那样执行 <code>/statusline</code> 命令后提供选项直接快速调整可以显示的内容，执行 <code>/statusline</code> 其实是调用模型去分析然后修改 <code>~/.claude/settings.json</code> 文件。</p>
+<h2 id="通过-Claude-Code-实现"><a href="#通过-Claude-Code-实现" class="headerlink" title="通过 Claude Code 实现"></a>通过 Claude Code 实现</h2><p>如果要让 Claude Code 显示 5H \ 7 Day 额度以及上下文窗口使用情况只需要使用执行一下下面的命令:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">/statusline show 5h quota, 7d quota, context usage</span><br></pre></td></tr></table></figure>
+
+<p>Claude Code 就会自己创建对应的脚本，更新 <code>~/.claude/settings.json</code></p>
+<h2 id="手动实现-macOS"><a href="#手动实现-macOS" class="headerlink" title="手动实现 macOS"></a>手动实现 macOS</h2><blockquote>
+<p>Claude Code 会调用模型分析需求并自动生成脚本，因此会消耗一次正常的模型请求额度。</p>
 </blockquote>
-<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>在 PVE 中将 Linux 虚拟机的 <strong>CPU 类型</strong> 设置为 <code>host</code>，再尝试连接就可以了。</p>
-<p>参考： <a href="https://discuss.ai.google.dev/t/antigravity-crashes-on-linux-but-works-on-windows/110355/3">Antigravity crashes on Linux, but works on Windows</a></p>
+<p>这里提供了我已经创建了的代码，还额外增加了 <code>git branch</code> 显示，可以直接复制使用</p>
+<p>脚本依赖 <code>jq</code>，如果系统未安装，可以通过 Homebrew 安装：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">brew install jq</span><br></pre></td></tr></table></figure>
+
+<h3 id="创建-statusline-command-sh-文件"><a href="#创建-statusline-command-sh-文件" class="headerlink" title="创建 statusline-command.sh 文件"></a>创建 statusline-command.sh 文件</h3><p>首先需要创建 <code>~/.claude/statusline-command.sh</code> 文件，填入下面的内容：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line">input=$(<span class="built_in">cat</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Model display name</span></span><br><span class="line">model=$(<span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$input</span>&quot;</span> | jq -r <span class="string">&#x27;.model.display_name // empty&#x27;</span>)</span><br><span class="line"><span class="comment"># Git branch (skip optional locks to avoid hangs)</span></span><br><span class="line">branch=$(git -C <span class="string">&quot;<span class="subst">$(echo <span class="string">&quot;<span class="variable">$input</span>&quot;</span> | jq -r &#x27;.workspace.current_dir // empty&#x27;)</span>&quot;</span> \</span><br><span class="line">  --no-optional-locks symbolic-ref --short HEAD 2&gt;/dev/null)</span><br><span class="line"><span class="comment"># 5-hour quota</span></span><br><span class="line">five=$(<span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$input</span>&quot;</span> | jq -r <span class="string">&#x27;.rate_limits.five_hour.used_percentage // empty&#x27;</span>)</span><br><span class="line"><span class="comment"># 7-day quota</span></span><br><span class="line">week=$(<span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$input</span>&quot;</span> | jq -r <span class="string">&#x27;.rate_limits.seven_day.used_percentage // empty&#x27;</span>)</span><br><span class="line"><span class="comment"># Context used percentage</span></span><br><span class="line">ctx=$(<span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$input</span>&quot;</span> | jq -r <span class="string">&#x27;.context_window.used_percentage // empty&#x27;</span>)</span><br><span class="line"></span><br><span class="line">parts=<span class="string">&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ -n <span class="string">&quot;<span class="variable">$model</span>&quot;</span> ]; <span class="keyword">then</span></span><br><span class="line">  parts=<span class="string">&quot;<span class="variable">$&#123;parts&#125;</span><span class="variable">$&#123;model&#125;</span>&quot;</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ -n <span class="string">&quot;<span class="variable">$branch</span>&quot;</span> ]; <span class="keyword">then</span></span><br><span class="line">  [ -n <span class="string">&quot;<span class="variable">$parts</span>&quot;</span> ] &amp;&amp; parts=<span class="string">&quot;<span class="variable">$&#123;parts&#125;</span>  &quot;</span></span><br><span class="line">  parts=<span class="string">&quot;<span class="variable">$&#123;parts&#125;</span>branch:<span class="variable">$&#123;branch&#125;</span>&quot;</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ -n <span class="string">&quot;<span class="variable">$five</span>&quot;</span> ]; <span class="keyword">then</span></span><br><span class="line">  [ -n <span class="string">&quot;<span class="variable">$parts</span>&quot;</span> ] &amp;&amp; parts=<span class="string">&quot;<span class="variable">$&#123;parts&#125;</span>  &quot;</span></span><br><span class="line">  parts=<span class="string">&quot;<span class="variable">$&#123;parts&#125;</span>5h:<span class="subst">$(printf &#x27;%.0f&#x27; <span class="string">&quot;<span class="variable">$five</span>&quot;</span>)</span>%&quot;</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ -n <span class="string">&quot;<span class="variable">$week</span>&quot;</span> ]; <span class="keyword">then</span></span><br><span class="line">  [ -n <span class="string">&quot;<span class="variable">$parts</span>&quot;</span> ] &amp;&amp; parts=<span class="string">&quot;<span class="variable">$&#123;parts&#125;</span>  &quot;</span></span><br><span class="line">  parts=<span class="string">&quot;<span class="variable">$&#123;parts&#125;</span>7d:<span class="subst">$(printf &#x27;%.0f&#x27; <span class="string">&quot;<span class="variable">$week</span>&quot;</span>)</span>%&quot;</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ -n <span class="string">&quot;<span class="variable">$ctx</span>&quot;</span> ]; <span class="keyword">then</span></span><br><span class="line">  [ -n <span class="string">&quot;<span class="variable">$parts</span>&quot;</span> ] &amp;&amp; parts=<span class="string">&quot;<span class="variable">$&#123;parts&#125;</span>  &quot;</span></span><br><span class="line">  parts=<span class="string">&quot;<span class="variable">$&#123;parts&#125;</span>ctx:<span class="subst">$(printf &#x27;%.0f&#x27; <span class="string">&quot;<span class="variable">$ctx</span>&quot;</span>)</span>%&quot;</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">printf</span> <span class="string">&quot;%s&quot;</span> <span class="string">&quot;<span class="variable">$parts</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="编辑-claude-settings-json"><a href="#编辑-claude-settings-json" class="headerlink" title="编辑 ~&#x2F;.claude&#x2F;settings.json"></a>编辑 ~&#x2F;.claude&#x2F;settings.json</h3><p>然后编辑 <code>~/.claude/settings.json</code>，在最后 <code>}</code> 前加入下面的内容<br>macOS: </p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="attr">&quot;statusLine&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;command&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;command&quot;</span><span class="punctuation">:</span> <span class="string">&quot;sh /Users/&lt;User&gt;/.claude/statusline-command.sh&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span> </span><br></pre></td></tr></table></figure>
+
+<p>需要把 <code>&lt;User&gt;</code> 替换为实际的路径</p>
+<h2 id="手动实现：-Windows-Powershell7"><a href="#手动实现：-Windows-Powershell7" class="headerlink" title="手动实现： Windows + Powershell7"></a>手动实现： Windows + Powershell7</h2><h3 id="创建-statusline-command-ps1"><a href="#创建-statusline-command-ps1" class="headerlink" title="创建 statusline-command.ps1"></a>创建 statusline-command.ps1</h3><p>首先需要创建 <code>~/.claude/statusline-command.ps1</code> 文件，填入下面的内容：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="comment"># statusline-command.ps1</span></span><br><span class="line"><span class="comment"># 读取 stdin 的 JSON 输入</span></span><br><span class="line"><span class="variable">$input_raw</span> = [<span class="type">Console</span>]::In.ReadToEnd()</span><br><span class="line"><span class="variable">$data</span> = <span class="variable">$input_raw</span> | <span class="built_in">ConvertFrom-Json</span></span><br><span class="line"></span><br><span class="line"><span class="variable">$parts</span> = [<span class="type">System.Collections.Generic.List</span>[<span class="built_in">string</span>]]::new()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Model display name</span></span><br><span class="line"><span class="variable">$model</span> = <span class="variable">$data</span>.model.display_name</span><br><span class="line"><span class="keyword">if</span> (<span class="variable">$model</span>) &#123; <span class="variable">$parts</span>.Add(<span class="variable">$model</span>) &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># Git branch (skip optional locks to avoid hangs)</span></span><br><span class="line"><span class="variable">$branch</span> = git <span class="literal">--no-optional-locks</span> symbolic<span class="literal">-ref</span> <span class="literal">--short</span> HEAD <span class="number">2</span>&gt;<span class="variable">$null</span></span><br><span class="line"><span class="keyword">if</span> (<span class="variable">$branch</span>) &#123; <span class="variable">$parts</span>.Add(<span class="string">&quot;branch:<span class="variable">$branch</span>&quot;</span>) &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 5-hour quota（注意:用 $null 判断字段是否存在,使 0% 也能正常显示）</span></span><br><span class="line"><span class="variable">$five</span> = <span class="variable">$data</span>.rate_limits.five_hour.used_percentage</span><br><span class="line"><span class="keyword">if</span> (<span class="variable">$null</span> <span class="operator">-ne</span> <span class="variable">$five</span>) &#123;</span><br><span class="line">    <span class="variable">$parts</span>.Add(<span class="string">&quot;5h:&#123;0:N0&#125;%&quot;</span> <span class="operator">-f</span> [<span class="built_in">double</span>]<span class="variable">$five</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 7-day quota</span></span><br><span class="line"><span class="variable">$week</span> = <span class="variable">$data</span>.rate_limits.seven_day.used_percentage</span><br><span class="line"><span class="keyword">if</span> (<span class="variable">$null</span> <span class="operator">-ne</span> <span class="variable">$week</span>) &#123;</span><br><span class="line">    <span class="variable">$parts</span>.Add(<span class="string">&quot;7d:&#123;0:N0&#125;%&quot;</span> <span class="operator">-f</span> [<span class="built_in">double</span>]<span class="variable">$week</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># Context used percentage</span></span><br><span class="line"><span class="variable">$ctx</span> = <span class="variable">$data</span>.context_window.used_percentage</span><br><span class="line"><span class="keyword">if</span> (<span class="variable">$null</span> <span class="operator">-ne</span> <span class="variable">$ctx</span>) &#123;</span><br><span class="line">    <span class="variable">$parts</span>.Add(<span class="string">&quot;ctx:&#123;0:N0&#125;%&quot;</span> <span class="operator">-f</span> [<span class="built_in">double</span>]<span class="variable">$ctx</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 用两个空格连接各部分,不输出换行</span></span><br><span class="line">[<span class="type">Console</span>]::Out.Write((<span class="variable">$parts</span> <span class="operator">-join</span> <span class="string">&quot;  &quot;</span>))</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="编辑-claude-settings-json-1"><a href="#编辑-claude-settings-json-1" class="headerlink" title="编辑 ~&#x2F;.claude&#x2F;settings.json"></a>编辑 ~&#x2F;.claude&#x2F;settings.json</h3><p>然后编辑 <code>~/.claude/settings.json</code>，在最后 <code>}</code> 前加入下面的内容<br><strong>Windows</strong> : </p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="attr">&quot;statusLine&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;command&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;command&quot;</span><span class="punctuation">:</span> <span class="string">&quot;\&quot;C:\\Program Files\\PowerShell\\7\\pwsh.exe\&quot; -NoProfile -File \&quot;C:\\Users\\&lt;User&gt;\\.claude\\statusline-command.ps1\&quot;&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>需要把 <code>&lt;User&gt;</code> 替换为实际的路径</p>
+<h2 id="预览效果"><a href="#预览效果" class="headerlink" title="预览效果"></a>预览效果</h2><p>macOS:</p>
+<p><img src="https://img.nep.me/ooo/claudecode-statusline-macos.webp?20260530" alt="claudecode-statusline-macos.png"></p>
+<p>Windows:</p>
+<p><img src="https://img.nep.me/ooo/claudecode-statusline-win.webp" alt="claudecode-statusline-win.png"></p>
+<h2 id="新打开的窗口不生效"><a href="#新打开的窗口不生效" class="headerlink" title="新打开的窗口不生效"></a>新打开的窗口不生效</h2><p>打开新窗口时，会发现没有额度使用信息，这是因为需要对话一下才会刷新。</p>
+<h2 id="调整显示信息"><a href="#调整显示信息" class="headerlink" title="调整显示信息"></a>调整显示信息</h2><p>只需要打开 Claude Code 后，输入 <code>/statusline 调整内容</code> 即可让 Claude Code 自己进行调整了。</p>
+<h2 id="直接使用第三方包实现"><a href="#直接使用第三方包实现" class="headerlink" title="直接使用第三方包实现"></a>直接使用第三方包实现</h2><p>如果不希望手动设置，有很多第三方包可以实现这个效果，比如很流行的查看模型使用情况的 <code>ccusage</code> 就提供这个功能。</p>
+<p><a href="https://ccusage.com/guide/statusline">https://ccusage.com/guide/statusline</a></p>
+<p>ccusage 除了提供状态栏显示外，还能统计历史 Token、模型使用量以及额度消耗情况。</p>
 ]]></content>
       <categories>
         <category>笔记</category>
       </categories>
       <tags>
-        <tag>Antigravity</tag>
+        <tag>Claude Code</tag>
       </tags>
   </entry>
   <entry>
-    <title>解决 Electron 42 APP 初次运行 pnpm dev 报错的问题</title>
-    <url>/post/fix-electron-42-app-cannot-run.html</url>
-    <content><![CDATA[<h2 id="问题复现"><a href="#问题复现" class="headerlink" title="问题复现"></a>问题复现</h2><p>开发或是 Clone 一个 Electron 42 APP 时，安装完依赖后第一次运行 <code>pnpm dev</code> 你可能遇到 <code>Error: Electron uninstall</code> 的错误信息：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pnpm install --frozen-lockfile</span><br><span class="line">pnpm approve-builds</span><br><span class="line"></span><br><span class="line">pnpm dev </span><br></pre></td></tr></table></figure>
+    <title>Anthropic 发布 Claude Opus 4.6 模型，赠送付费用户 50 美元余额</title>
+    <url>/post/claude-subscription-user-can-get-50-usd-extra-credit.html</url>
+    <content><![CDATA[<h2 id="Claude-Opus-4-6-发布"><a href="#Claude-Opus-4-6-发布" class="headerlink" title="Claude Opus 4.6 发布"></a>Claude Opus 4.6 发布</h2><p>今天 Anthropic 发布了最新的 <a href="https://www.anthropic.com/news/claude-opus-4-6">Claude Opus 4.6</a> ，官方表示 Claude Opus 4.6 在编码能力上超越了前代产品。它规划更周密，能够更长时间地执行代理任务，在大规模代码库中运行更可靠，并且拥有更强大的代码审查和调试能力，可以更有效地发现自身错误。</p>
+<p>并且在 Beta 版本中 Opus 模型首次支持 1M tokens 上下文，API 价格方面保持不变。</p>
+<p>Claude Opus 4.6 目前已在 API、Claude Code 中可用。</p>
+<h2 id="更新-Claude-Code"><a href="#更新-Claude-Code" class="headerlink" title="更新 Claude Code"></a>更新 Claude Code</h2><p>运行下面命令即可：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm install -g @anthropic-ai/claude-code</span><br></pre></td></tr></table></figure>
 
-<p>报错信息</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">error during start dev server and electron app:</span><br><span class="line">Error: Electron uninstall</span><br><span class="line">    at getElectronPath</span><br><span class="line">...</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-
-<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p>需要手动运行下面的命令</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npx install-electron</span><br></pre></td></tr></table></figure>
-
-<h2 id="问题原因"><a href="#问题原因" class="headerlink" title="问题原因"></a>问题原因</h2><p>这是由于为了应对供应链攻击， Electron 42 不再通过 <code>postinstall</code> 下载自身</p>
-<p><a href="https://www.electronjs.org/blog/electron-42-0#electron-no-longer-downloads-itself-via-postinstall-script">Electron 42: electron no longer downloads itself via postinstall script</a></p>
-<p>可以运行下面的命令</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install electron --save-dev --ignore-scripts</span><br><span class="line">npx install-electron</span><br></pre></td></tr></table></figure>
-
+<h2 id="Anthropic-赠送付费用户-50-美元"><a href="#Anthropic-赠送付费用户-50-美元" class="headerlink" title="Anthropic 赠送付费用户 50 美元"></a>Anthropic 赠送付费用户 50 美元</h2><p>在推出新模型的同时，Anthropic 还提供给已订阅 Claude Pro &#x2F; MAX 的用户 50 美元的 <a href="https://support.claude.com/en/articles/13613973-claude-opus-4-6-extra-usage-promo#h_bf8366a5e9">福利</a>，用于体验最新的模型。 </p>
+<p>需要手动领取，只需访问 <a href="https://claude.ai/settings/usage">https://claude.ai/settings/usage</a> 点击 <strong>Claim</strong> 即可。</p>
+<p><img src="https://img.nep.me/i/2026/02/claude-50-usd-credit.jpeg" alt="claude-50-usd-credit.jpeg"></p>
+<h3 id="领取条件"><a href="#领取条件" class="headerlink" title="领取条件"></a>领取条件</h3><p>领取 50 美元满足下面的条件：</p>
+<ul>
+<li>在 2 月 4 日之前开通了 Claude Pro &#x2F; MAX 订阅套餐</li>
+<li>在 2 月 16 日之前开启 <strong>extra usage</strong></li>
+</ul>
+<p>所以如果你 在 2 月 4 日之前没有订阅 Claude Pro，无法领取优惠。</p>
+<h3 id="有效期"><a href="#有效期" class="headerlink" title="有效期"></a>有效期</h3><p>领取的 50 美元余额有效期为 60 天。</p>
+<h3 id="截止日期"><a href="#截止日期" class="headerlink" title="截止日期"></a>截止日期</h3><p>在 2 月 16 日之前都可以领取，如果你正在订阅 Claude Pro &#x2F; MAX，领取你的优惠吧。</p>
 ]]></content>
       <categories>
-        <category>笔记</category>
+        <category>优惠活动</category>
       </categories>
       <tags>
-        <tag>Electron</tag>
+        <tag>Anthropic</tag>
+        <tag>Opus</tag>
       </tags>
   </entry>
   <entry>
@@ -4994,6 +4813,102 @@
       </tags>
   </entry>
   <entry>
+    <title>Codex 的日志记录消耗 SSD 寿命？OpenAI 已修复</title>
+    <url>/post/codex-is-buring-your-ssd.html</url>
+    <content><![CDATA[<h2 id="Bug-信息"><a href="#Bug-信息" class="headerlink" title="Bug 信息"></a>Bug 信息</h2><div class="flatpaper-note flatpaper-note--primary"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>好消息，OpenAI 已在 Codex 0.142.0 版本中修复了这个问题，可以放心使用。</p></div></div>
+
+<p>最近，Codex 凭借其强大的功能和丝滑的体验，周活跃用户已经突破了 <strong>500 万</strong> 大关。越来越多的开发者和极客都已经把它当成了日常高频使用的得力助手。</p>
+<p>不过，随着使用人数的增加，有用户反馈，在某些流式输出或自动化任务场景下，Codex 会持续向本地磁盘写入 TRACE 级别的日志。</p>
+<p>GitHUb 的 <a href="https://github.com/openai/codex/issues/28224">ISSUE</a> 上声称该 BUG 可能会产生 <strong>640GB&#x2F;年</strong> 的写入，这对于消费级 SSD 来说是致命的。对于目前主流的 1TB 或 2TB 消费级固态硬盘（标称寿命通常在 600TBW ~ 1200TBW）来说，可以说是非常严重。</p>
+<p><strong>而且，正因为现在 AI 浪潮空前火热，全球对高带宽、高性能存储的需求集中爆发，导致现在的 SSD 固态硬盘价格一路上涨，存储成本变得相当昂贵，尤其是 mac 设备的硬盘无法更换。在这种寸土寸金的时期，我们对硬盘的每一度磨损、每一 G 空间都不得不更加精打细算。</strong></p>
+<hr>
+<h2 id="1分钟自查：你中招了吗？"><a href="#1分钟自查：你中招了吗？" class="headerlink" title="1分钟自查：你中招了吗？"></a>1分钟自查：你中招了吗？</h2><p>如果你使用的是 Linux 或 Mac 系统，可以直接通过终端跑两行命令看看情况。</p>
+<p>首先，看看日志文件的大小：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">ls</span> -lh ~/.codex/logs_2.sqlite</span><br></pre></td></tr></table></figure>
+
+<p>然后，统计一下日志的写入级别：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;SELECT level, COUNT(*) FROM logs GROUP BY level ORDER BY COUNT(*) DESC&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>如何判断：</strong><br>如果查询结果中，<code>TRACE</code> 级别的日志占了绝大多数，并且 <code>logs_2.sqlite</code> 文件体积比较大，那就说明 Codex 确实在后台认真地记录着无关紧要的追踪信息。</p>
+<p><strong>参考数据：</strong><br>我的文件大小为 <strong>468MB：</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&gt; <span class="built_in">ls</span> -lh ~/.codex/logs_2.sqlite Jun 23</span><br><span class="line">-rw-r--r--@ 1 mro  staff   468M</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&gt; sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;SELECT level, COUNT(*) FROM logs GROUP BY level ORDER BY COUNT(*) DESC&quot;</span></span><br><span class="line">TRACE|39961</span><br><span class="line">INFO|39919</span><br><span class="line">DEBUG|7307</span><br><span class="line">WARN|177</span><br></pre></td></tr></table></figure>
+
+<p>可以看到 <code>TRACE|39961</code> 占了接近一半的数据，确实存在所说的问题，主要是目前 OpenAI 官方尚未做出修复的回应。</p>
+<h2 id="一劳永逸的解决方案-：直接在数据库拦截"><a href="#一劳永逸的解决方案-：直接在数据库拦截" class="headerlink" title="一劳永逸的解决方案 ：直接在数据库拦截"></a>一劳永逸的解决方案 ：直接在数据库拦截</h2><p><mark>OpenAI 已经修复这个问题了，不需要操作了</mark></p>
+<p>这里提供比较激进、但也最直接的临时方案：给日志表加一个 SQLite 触发器，让新的日志写入被忽略，毕竟这个文件里只有诊断日志，没有对话历史。</p>
+<p>执行前建议先退出 Codex，并备份日志数据库：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cp</span> ~/.codex/logs_2.sqlite ~/.codex/logs_2.sqlite.bak</span><br></pre></td></tr></table></figure>
+<p>然后执行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;CREATE TRIGGER IF NOT EXISTS block_log_inserts BEFORE INSERT ON logs BEGIN SELECT RAISE(IGNORE); END;&quot;</span></span><br></pre></td></tr></table></figure>
+<p>设置完成后，新的日志记录会被拦截，从而减少后续写入。</p>
+<p>需要注意的是，这个方法会影响 Codex 后续生成诊断日志。如果你之后需要向官方反馈问题，或者担心未来版本兼容性，可以先不要使用这个方案，改用定期清理的方式。</p>
+<details class="flatpaper-note flatpaper-note--info"><summary class="flatpaper-note__title"><span class="flatpaper-note__icon" aria-hidden="true"></span><span class="flatpaper-note__label">如何恢复</span><span class="flatpaper-note__chevron" aria-hidden="true"></span></summary><div class="flatpaper-note__body"><p>如果想要恢复的话就是删除这个 trigger 。先退出 Codex，再执行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;DROP TRIGGER IF EXISTS block_log_inserts;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>执行后可以检查是否还存在：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;.schema block_log_inserts&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>如果没有输出，说明已经删除成功。</p>
+<p>也可以用这个命令查看当前所有 trigger：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;SELECT name, tbl_name, sql FROM sqlite_master WHERE type=&#x27;trigger&#x27;;&quot;</span></span><br></pre></td></tr></table></figure></div></details>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>GitHub ISSUE 中的数据是比较夸张的，Codex 的这个日志问题并没有网传的那么吓人，但也感谢 OpenAI 完成了 BUG 的修复，祝大家用 Codex 敲代码愉快！</p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>OpenAI</tag>
+        <tag>Codex</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>新时代挖矿：看看你的 Mac 一个月能赚多少钱</title>
+    <url>/post/darkbloom-nodes-macbook-ai-mining-earnings.html</url>
+    <content><![CDATA[<p>曾经，无数人为了比特币和以太坊疯狂囤积显卡，把家里变成轰鸣的矿场。随着传统加密货币 “显卡挖矿” 时代的逐渐降温，很多人以为用个人电脑赚取被动收入的日子已经结束了。然而，随着 AI 大模型时代的爆发，一种全新的 “挖矿” 模式正在悄然兴起——AI 节点推理算力共享。</p>
+<p>最近，随着本地模型的能力进步，<a href="https://www.darkbloom.dev/#nodes">Darkbloom</a> 平台的出现向我们揭示了这一前景。在这个新时代，你不需要去计算毫无意义的哈希值，而是让你的电脑成为 AI 基础设施的一部分，通过为真实用户运行大语言模型（如 <code>Gemma 4 26B</code> ）来赚取收益。而在这场新游戏里，凭借着高带宽的统一内存架构，Apple 的 Mac 电脑意外地成为了最完美的 “矿机”。</p>
+<h2 id="Darbloom-介绍"><a href="#Darbloom-介绍" class="headerlink" title="Darbloom 介绍"></a>Darbloom 介绍</h2><p><a href="https://www.darkbloom.dev/">Darkbloom.dev</a> 可以将 MacBook 变成一个可产生收益的私有硬件节点网络。用户只需在 Mac 上安装一个命令行界面 (CLI)，设备就可以在闲置时自动接收并处理 AI 推理请求。开发者则可以通过兼容 OpenAI 的 API 调用这些分布式算力。设备每生成一个代币，节点运营者就能获得相应的美元收益。 </p>
+<p>这个项目背后的技术来自 Eigen Labs，相关论文和代码已经开源。其核心卖点是：在保护用户请求隐私的前提下，让普通 Apple Silicon 设备参与 AI 推理市场。<br>链接：<a href="https://github.com/Layr-Labs/d-inference/blob/master/papers/dginf-private-inference.pdf">https://github.com/Layr-Labs/d-inference/blob/master/papers/dginf-private-inference.pdf</a></p>
+<h2 id="Mac-变身-AI-服务器：到底能赚多少？"><a href="#Mac-变身-AI-服务器：到底能赚多少？" class="headerlink" title="Mac 变身 AI 服务器：到底能赚多少？"></a>Mac 变身 AI 服务器：到底能赚多少？</h2><p>按照项目方介绍，节点运营者可以获得 95% 的推理收入，平台抽取 5%。</p>
+<p>除了硬件设备，运营唯一的成本是电费，而 Apple Silicon 的功耗极低。即使在满负荷推理的情况下，每小时也只需 0.01 到 0.03 美元。这就像点亮一个灯泡一样。</p>
+<p>我们来看看 Darkbloom 提供的收益预估数据：</p>
+<h3 id="1-顶配印钞机：MacBook-Pro-M5-Max-128GB-内存"><a href="#1-顶配印钞机：MacBook-Pro-M5-Max-128GB-内存" class="headerlink" title="1. 顶配印钞机：MacBook Pro (M5 Max, 128GB 内存)"></a>1. 顶配印钞机：MacBook Pro (M5 Max, 128GB 内存)</h3><p>如果你拥有一台搭载 M5 Max 芯片和 128GB 内存的顶级 MacBook Pro，这台机器简直是为跑大模型而生的。它庞大的内存可以轻松装下甚至并行处理巨大的模型。</p>
+<ul>
+<li><strong>运行状态</strong>：每天运行 18 小时（比如下班后的闲置时间）。</li>
+<li><strong>处理速度</strong>：批量解码速度高达惊人的 <code>1326.2</code> tok&#x2F;s。</li>
+<li><strong>每月收益</strong>：预估每月总收入约为 <strong>$425.40</strong> 。扣除电费后，每月净赚约 $423（折合人民币约 3000 多元）！</li>
+</ul>
+<p>一年下来收益可达 <strong>$5,076</strong>，而在 Apple 官网上 <strong>M5 Max + 128GB RAM + 2TB</strong> 版本现在仅售 <strong>5399</strong> 美元（大陆官网售价 43,499 元）， 可以说这笔钱不仅足够你覆盖买电脑的成本，甚至相当于电脑自己在给自己打工还贷。</p>
+<p><img src="https://img.nep.me/ooo/darkbloom-m5max.webp" alt="darkbloom-m5max"></p>
+<h3 id="2-性能中坚：MacBook-Pro-M4-Pro-48GB-内存"><a href="#2-性能中坚：MacBook-Pro-M4-Pro-48GB-内存" class="headerlink" title="2. 性能中坚：MacBook Pro (M4 Pro, 48GB 内存)"></a>2. 性能中坚：MacBook Pro (M4 Pro, 48GB 内存)</h3><p>如果你的配置是偏向主流的工作站，比如搭载 M4 Pro 芯片和 48GB 内存的版本。</p>
+<ul>
+<li><strong>运行状态</strong>：同样每天运行 18 小时。</li>
+<li><strong>处理速度</strong>：<code>589.7</code> tok&#x2F;s。</li>
+<li><strong>每月收益</strong>：依然可以获得每月约 <strong>$188 美元</strong>（折合人民币约 1300 多元）的净收入。</li>
+</ul>
+<p>一年也有 $2,252 的进账。对于仅仅是利用电脑闲置时间的睡后收入来说，这绝对是一笔非常可观的零花钱。</p>
+<p><img src="https://img.nep.me/ooo/darkbloom-m4pro.webp" alt="darkbloom-m4pro"></p>
+<h2 id="Apple-Silicon-的恐怖能效"><a href="#Apple-Silicon-的恐怖能效" class="headerlink" title="Apple Silicon 的恐怖能效"></a>Apple Silicon 的恐怖能效</h2><p>传统挖矿最让人头疼的就是高昂的电费和机器狂转的噪音。但在这场AI 挖矿中，Apple M 系列芯片展现出了极其恐怖的能效比。</p>
+<p>以电费 $0.15&#x2F;kWh 计算，那台每月能为你赚取 425 美元的 M5 Max MacBook Pro，一整个月消耗的电费仅仅只有 $2.43；而 M4 Pro 版本的月电费更是低至 $1.46。电费成本甚至占不到总收入的 1%。没有轰鸣的风扇，没有天价电费账单，只有静悄悄地跑着大模型赚钱的优雅。</p>
+<p>AI 时代的算力需求是无穷无尽的，而去中心化的个人算力网络或许就是下一座金矿。你的 Mac 已经不再仅仅是一个昂贵的生产力工具，它完全有潜力成为你的“数字打工仔”。</p>
+<h2 id="结语与风险提示"><a href="#结语与风险提示" class="headerlink" title="结语与风险提示"></a>结语与风险提示</h2><p>当然，作为一个新兴领域，我们也要保持理性的预期。目前，Darkbloom 等平台已经在 Hacker News、Reddit 和 LinkedIn 等主流开发者社区引发了公开讨论。好消息是，目前尚未出现任何诈骗报告；但根据早期参与测试的节点用户反馈，当前网络中分配到的任务还主要是 Health Checks ，真实的商业推理需求仍然处于低位。这意味着官方计算器给出的高额预测相对较为乐观。</p>
+<p>更重要的是，如今大模型的进步速度实在是太快了。现在开源社区就已经迭代到了 Gemma 4 26B 这样庞大且高效的模型。AI 领域的算法架构、量化技术和吞吐量优化几乎每个月都在刷新。今天的配置组合可能刚好能吃满红利，但三个月后，随着更强、更大的模型诞生，整个网络对硬件门槛和带宽的要求可能会迎来彻底的洗牌。</p>
+<p>这注定是一场与技术演进赛跑的游戏。未来的实际收益，将极大地受制于真实商业请求的爆发、模型迭代的速度以及平台的后续运营。</p>
+<div class="flatpaper-note flatpaper-note--warning"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>请务必记住，以上数据只是参考，大家看看这些预估数据，把它当个有趣的参考就行。</p></div></div>
+]]></content>
+      <categories>
+        <category>工具资源</category>
+      </categories>
+      <tags>
+        <tag>AI</tag>
+        <tag>Apple</tag>
+        <tag>Darkbloom</tag>
+        <tag>MacBook</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>2026 Debian 13 安装 Docker 以及 Docker Compose 教程</title>
     <url>/post/debian-13-install-docker.html</url>
     <content><![CDATA[<p>现在越来越多的应用可以使用 <strong>Docker</strong> 一键部署，本文将介绍如何在最新的 Debian 13 (Trixie) 中安装 <strong>Docker</strong> 与 <strong>Docker Compose</strong>。</p>
@@ -5073,6 +4988,218 @@
         <tag>Docker Compose</tag>
         <tag>Debian</tag>
         <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Docker Compose 新增 Init Containers：终于不用再写一堆一次性初始化服务了</title>
+    <url>/post/docker-compose-init-containers.html</url>
+    <content><![CDATA[<p>在使用 Docker Compose 部署应用时，你是否也曾为“如何在主应用启动前优雅地运行数据库迁移或修复权限”而烦恼过？</p>
+<p>过去，我们不得不编写各种一次性服务并用复杂的 <code>depends_on</code> 串联。而现在，随着 Docker Compose 新特性的发布，我们终于迎来了官方的 <strong>Init Containers</strong> 支持。本文将带你一探究竟，看看它如何帮我们精简 <code>compose.yaml</code>！</p>
+<span id="more"></span>
+
+<p>在使用 <strong>Docker Compose</strong> 部署应用时，我们经常会遇到一种很常见的需求：在应用启动之前，先执行一些初始化任务。</p>
+<p>例如：</p>
+<ul>
+<li>启动 Web 服务之前，先执行数据库迁移</li>
+<li>容器以非 root 用户运行前，先修复挂载目录权限</li>
+<li>应用正式启动前，先生成配置文件</li>
+<li>先导入初始化数据，再启动主服务</li>
+</ul>
+<p>过去我们通常会单独定义一个 <code>migrate</code>、<code>init</code>、<code>setup</code> 之类的一次性服务，然后通过 <code>depends_on</code> 和 <code>condition: service_completed_successfully</code> 控制启动顺序。</p>
+<p>现在，<strong>Docker Compose</strong> 正式提供了更自然的写法：<strong>Init Containers</strong>。</p>
+<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>根据 Docker 官方文档，该功能需要 <strong>Docker Compose 5.3.0</strong> 及以上版本。</p></div></div>
+
+<p>Init Containers 本质上是 short-lived（短生命周期）容器，会在主服务容器启动之前依次执行；如果其中任何一步返回非 0 退出码，主服务就不会启动。</p>
+<h2 id="什么是-Init-Containers？"><a href="#什么是-Init-Containers？" class="headerlink" title="什么是 Init Containers？"></a>什么是 Init Containers？</h2><p>Init Containers 可以理解为：</p>
+<blockquote>
+<p>绑定在某个服务启动前执行的一组初始化步骤。</p>
+</blockquote>
+<p>它们不是长期运行的服务，也不是后台任务，而是“跑完就退出”的临时容器。</p>
+<p><strong>Docker Compose</strong> 中这个能力通过 <code>pre_start</code> 生命周期钩子实现。根据官方文档说明，<code>pre_start</code> 中的每个步骤都会在独立的临时容器中运行，这些容器会在服务容器创建之后、真正启动之前执行。</p>
+<p>一个最简单的例子：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">app:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">myapp:latest</span></span><br><span class="line">    <span class="attr">pre_start:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">command:</span> [<span class="string">&quot;./manage.py&quot;</span>, <span class="string">&quot;migrate&quot;</span>]</span><br></pre></td></tr></table></figure>
+
+<p>这段配置表示：</p>
+<ol>
+<li><strong>Docker Compose</strong> 先创建 <code>app</code> 服务容器；</li>
+<li>在 <code>app</code> 真正启动之前，先运行 <code>./manage.py migrate</code>；</li>
+<li>如果迁移命令成功退出（即返回状态码 <code>0</code>），<code>app</code> 才会启动；</li>
+<li>如果迁移失败，<code>app</code> 不会启动。</li>
+</ol>
+<p>这比过去单独写一个 <code>migrate</code> 服务清晰很多。</p>
+<h2 id="以前我们是怎么做的？"><a href="#以前我们是怎么做的？" class="headerlink" title="以前我们是怎么做的？"></a>以前我们是怎么做的？</h2><p>在 <code>pre_start</code> 出现之前，如果想表达“先执行迁移，再启动应用”，通常会这样写：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">migrate:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">myapp:latest</span></span><br><span class="line">    <span class="attr">command:</span> [<span class="string">&quot;./manage.py&quot;</span>, <span class="string">&quot;migrate&quot;</span>]</span><br><span class="line">    <span class="attr">restart:</span> <span class="string">&quot;no&quot;</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">app:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">myapp:latest</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="attr">migrate:</span></span><br><span class="line">        <span class="attr">condition:</span> <span class="string">service_completed_successfully</span></span><br></pre></td></tr></table></figure>
+
+<p>这种写法虽然可以工作，但存在以下几个明显的问题：</p>
+<ul>
+<li><strong>概念混淆</strong>：<code>migrate</code> 本质上并不是一个真正的长期运行服务，它只是 <code>app</code> 启动前的一个初始化步骤。把它放在 <code>services</code> 顶层，会让整个 Compose 配置文件显得臃肿。</li>
+<li><strong>状态残留</strong>：任务执行完成后，它会作为已退出的服务留在 <code>docker compose ps</code> 列表中，使得容器服务列表不够清爽。</li>
+<li><strong>编排繁琐</strong>：如果初始化步骤较多（比如先迁移数据库、再导入默认数据、最后生成配置文件），就需要定义多个一次性服务，并用一堆复杂的 <code>depends_on</code> 串联起来。</li>
+</ul>
+<p>使用新的 <code>pre_start</code> 特性后，我们可以直接把它们收纳进服务内部：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">app:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">myapp:latest</span></span><br><span class="line">    <span class="attr">pre_start:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">command:</span> [<span class="string">&quot;./manage.py&quot;</span>, <span class="string">&quot;migrate&quot;</span>]</span><br><span class="line">      <span class="bullet">-</span> <span class="attr">command:</span> [<span class="string">&quot;./manage.py&quot;</span>, <span class="string">&quot;loaddata&quot;</span>, <span class="string">&quot;fixtures.json&quot;</span>]</span><br></pre></td></tr></table></figure>
+
+<p><strong>Docker</strong> 官方也明确指出，<code>pre_start</code> 的优势在于：</p>
+<ol>
+<li>初始化逻辑作为服务的<strong>从属步骤</strong>表达，不再伪装成并列的独立服务；</li>
+<li>已完成的临时步骤不会出现在 <code>docker compose ps</code> 中，保持环境整洁；</li>
+<li>多个步骤按顺序执行，无需再通过复杂的 <code>depends_on</code> 逻辑进行链式串联。</li>
+</ol>
+<h2 id="示例一：启动前执行数据库迁移"><a href="#示例一：启动前执行数据库迁移" class="headerlink" title="示例一：启动前执行数据库迁移"></a>示例一：启动前执行数据库迁移</h2><p>这是最典型的使用场景。</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">app:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">myapp:latest</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="attr">db:</span></span><br><span class="line">        <span class="attr">condition:</span> <span class="string">service_healthy</span></span><br><span class="line">    <span class="attr">pre_start:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">command:</span> [<span class="string">&quot;./manage.py&quot;</span>, <span class="string">&quot;migrate&quot;</span>]</span><br><span class="line"></span><br><span class="line">  <span class="attr">db:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">postgres:18</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="attr">POSTGRES_USER:</span> <span class="string">app</span></span><br><span class="line">      <span class="attr">POSTGRES_PASSWORD:</span> <span class="string">password</span></span><br><span class="line">      <span class="attr">POSTGRES_DB:</span> <span class="string">app</span></span><br><span class="line">    <span class="attr">healthcheck:</span></span><br><span class="line">      <span class="attr">test:</span> [<span class="string">&quot;CMD-SHELL&quot;</span>, <span class="string">&quot;pg_isready -U $$&#123;POSTGRES_USER&#125; -d $$&#123;POSTGRES_DB&#125;&quot;</span>]</span><br><span class="line">      <span class="attr">interval:</span> <span class="string">10s</span></span><br><span class="line">      <span class="attr">retries:</span> <span class="number">5</span></span><br><span class="line">      <span class="attr">start_period:</span> <span class="string">30s</span></span><br><span class="line">      <span class="attr">timeout:</span> <span class="string">10s</span></span><br></pre></td></tr></table></figure>
+
+<p>这里有两个关键点：</p>
+<ol>
+<li><strong>依赖关系</strong>：<code>app</code> 通过 <code>depends_on</code> 等待 <code>db</code> 容器进入 <code>service_healthy</code>（健康）状态。</li>
+<li><strong>初始化时机</strong>：在 <code>app</code> 真正启动前，会先在临时容器中执行 <code>./manage.py migrate</code>。</li>
+</ol>
+<p>若数据库迁移成功，<code>app</code> 主服务会继续启动；若失败，<code>app</code> 不会启动，且相关错误日志会直接输出在 <code>docker compose up</code> 中。</p>
+<p>这种设计非常适合 <strong>Django</strong>、<strong>Rails</strong>、<strong>Laravel</strong>、<strong>Prisma</strong>、<strong>Drizzle</strong>、<strong>Alembic</strong> 等需要在服务运行前进行表结构迁移的项目。</p>
+<h2 id="示例二：修复-Volume-权限"><a href="#示例二：修复-Volume-权限" class="headerlink" title="示例二：修复 Volume 权限"></a>示例二：修复 Volume 权限</h2><p>另一个痛点是权限问题：当服务本身以非 root 用户运行，但挂载的 <strong>Docker named volume</strong> 默认归属于 root 权限时，容器可能会因为没有写入权限而崩溃。</p>
+<p>过去，我们可能需要在 <code>Dockerfile</code> 里大动干戈，或者单独拉起一个辅助服务。现在，使用 <code>pre_start</code> 可以非常轻量地搞定：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">app:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">myapp:latest</span></span><br><span class="line">    <span class="attr">user:</span> <span class="string">&quot;1000:1000&quot;</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">data:/data</span></span><br><span class="line">    <span class="attr">pre_start:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">image:</span> <span class="string">busybox</span></span><br><span class="line">        <span class="attr">user:</span> <span class="string">root</span></span><br><span class="line">        <span class="attr">command:</span> <span class="string">sh</span> <span class="string">-c</span> <span class="string">&#x27;chown -R 1000:1000 /data&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">volumes:</span></span><br><span class="line">  <span class="attr">data:</span></span><br></pre></td></tr></table></figure>
+
+<p>在这个例子中：</p>
+<ul>
+<li><code>app</code> 容器以 <code>1000:1000</code> 非 root 用户运行。</li>
+<li><code>pre_start</code> 步骤指定了覆盖镜像为 <code>busybox</code>，并以 <code>root</code> 权限执行 <code>chown</code>，从而在主服务运行前顺利修正挂载目录所有权。</li>
+</ul>
+<p>该场景在自托管&#x2F;开源应用部署中极度实用，例如：</p>
+<ul>
+<li>修复上传&#x2F;缓存目录权限；</li>
+<li>自动初始化数据目录结构；</li>
+<li>在挂载路径中提前生成默认配置文件。</li>
+</ul>
+<h2 id="示例三：串联多个初始化步骤"><a href="#示例三：串联多个初始化步骤" class="headerlink" title="示例三：串联多个初始化步骤"></a>示例三：串联多个初始化步骤</h2><p><code>pre_start</code> 支持定义一个步骤列表，并会按照声明顺序<strong>串行执行</strong>。只有当前一个步骤成功退出（返回 <code>0</code>）时，才会继续运行下一个步骤；若中间某一步失败，后续步骤和主服务都将终止。</p>
+<p>例如：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">app:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">myapp:latest</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="attr">db:</span></span><br><span class="line">        <span class="attr">condition:</span> <span class="string">service_healthy</span></span><br><span class="line">    <span class="attr">pre_start:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">command:</span> [<span class="string">&quot;./manage.py&quot;</span>, <span class="string">&quot;migrate&quot;</span>]</span><br><span class="line">      <span class="bullet">-</span> <span class="attr">command:</span> [<span class="string">&quot;./manage.py&quot;</span>, <span class="string">&quot;loaddata&quot;</span>, <span class="string">&quot;fixtures.json&quot;</span>]</span><br><span class="line">      <span class="bullet">-</span> <span class="attr">command:</span> [<span class="string">&quot;./scripts/generate-config.sh&quot;</span>]</span><br><span class="line"></span><br><span class="line">  <span class="attr">db:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">postgres:18</span></span><br></pre></td></tr></table></figure>
+
+<p>整个启动流为：</p>
+<ol>
+<li><strong>等待</strong>数据库容器进入健康状态；</li>
+<li><strong>执行</strong>数据库表结构迁移；</li>
+<li><strong>导入</strong>系统初始数据；</li>
+<li><strong>生成</strong>动态配置文件；</li>
+<li><strong>拉起</strong>主应用容器。</li>
+</ol>
+<div class="flatpaper-note flatpaper-note--warning"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>需要注意的是，<code>pre_start</code> 中的多个步骤<strong>并不是事务</strong>。如果第二步执行成功、第三步失败，<strong>Docker Compose</strong> 不会自动回滚第二步。<br>因此，强烈建议将初始化脚本设计为<strong>可重复运行的幂等逻辑</strong>。</p></div></div>
+
+<p>例如在导入数据时：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 不推荐：每次无脑插入，可能会导致主键冲突或数据重复</span></span><br><span class="line"><span class="keyword">INSERT INTO</span> users (id, name) <span class="keyword">VALUES</span> (<span class="number">1</span>, <span class="string">&#x27;admin&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 推荐：检测到冲突时跳过，保证幂等性</span></span><br><span class="line"><span class="keyword">INSERT INTO</span> users (id, name) <span class="keyword">VALUES</span> (<span class="number">1</span>, <span class="string">&#x27;admin&#x27;</span>)</span><br><span class="line"><span class="keyword">ON</span> CONFLICT (id) DO NOTHING;</span><br></pre></td></tr></table></figure>
+
+<h2 id="pre-start-容器的运行规则"><a href="#pre-start-容器的运行规则" class="headerlink" title="pre_start 容器的运行规则"></a><code>pre_start</code> 容器的运行规则</h2><p>根据官方文档说明，<code>pre_start</code> 步骤拉起的临时容器具有以下行为特征：</p>
+<ul>
+<li><strong>独立容器</strong>：每个步骤都在自己专属的临时容器中运行。</li>
+<li><strong>默认继承</strong>：默认继承当前宿主服务的 <code>image</code> 定义，无需重复指定镜像。</li>
+<li><strong>允许覆盖</strong>：可以通过 <code>image</code> 字段指定其他的轻量工具镜像（如 <code>busybox</code>）。</li>
+<li><strong>同网共用</strong>：会自动加入当前宿主服务所在的网络，因此可以直接访问通过 <code>depends_on</code> 声明的其他依赖服务。</li>
+<li><strong>共享卷挂载</strong>：会自动共享当前服务定义的所有 <code>volumes</code> 挂载。</li>
+<li><strong>强状态约束</strong>：必须返回退出码 <code>0</code>，下一个步骤及主服务才会继续运行。</li>
+</ul>
+<p>这些特性为我们编写配置带来了很大便利。例如，若迁移命令就存放在应用镜像内，你只需直接声明命令，无需重复书写镜像名称：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">pre_start:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">command:</span> [<span class="string">&quot;pnpm&quot;</span>, <span class="string">&quot;db:migrate&quot;</span>]</span><br></pre></td></tr></table></figure>
+
+<p>如果需要使用辅助镜像（如 <code>busybox</code>）来做文件操作，直接在步骤内声明 <code>image</code> 即可进行覆盖：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">pre_start:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">image:</span> <span class="string">busybox</span></span><br><span class="line">    <span class="attr">user:</span> <span class="string">root</span></span><br><span class="line">    <span class="attr">command:</span> <span class="string">sh</span> <span class="string">-c</span> <span class="string">&#x27;chown -R 1000:1000 /data&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>因为共享了同一网络与 <code>volumes</code>，初始化容器在挂载目录中写入的动态配置文件、修正的权限或是写入的数据，在主容器拉起后会立刻生效。</p>
+<h2 id="它会每次-docker-compose-up-都执行吗？"><a href="#它会每次-docker-compose-up-都执行吗？" class="headerlink" title="它会每次 docker compose up 都执行吗？"></a>它会每次 <code>docker compose up</code> 都执行吗？</h2><p>答案是：<strong>不会</strong>。这是一个非常关键的细节。</p>
+<p>根据 Docker 官方文档：</p>
+<ul>
+<li>如果某个 <code>pre_start</code> 步骤在上一次部署中已经<strong>成功执行</strong>过，且其<strong>定义没有发生任何变化</strong>，那么后续执行 <code>docker compose up</code> 时，Compose 会<strong>自动跳过</strong>该步骤。</li>
+<li>当服务因 <code>restart</code> 策略发生重启时，<strong>不会</strong>重新触发 <code>pre_start</code>。</li>
+<li><strong>只有在以下情况</strong>下，初始化步骤才会再次执行：<ol>
+<li>步骤的配置定义发生变更；</li>
+<li>上一次执行失败（退出码非 0）；</li>
+<li>执行 <code>docker compose up --force-recreate</code> 强制重建服务。</li>
+</ol>
+</li>
+</ul>
+<p>由此可见，<code>pre_start</code> 偏向于“宿主服务生命周期中的一次性部署初始化”，而不是“每次容器进程启动前的强制拦截”。</p>
+<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p><strong>提示</strong>： 如果你有一些需要在每次容器重启、扩容或进程拉起时都必定运行的逻辑（如动态读取最新环境变量），建议依然将其写入镜像的 <code>entrypoint.sh</code> 入口脚本中。</p></div></div>
+
+<h2 id="什么时候不适合使用-Init-Containers？"><a href="#什么时候不适合使用-Init-Containers？" class="headerlink" title="什么时候不适合使用 Init Containers？"></a>什么时候不适合使用 Init Containers？</h2><p>Init Containers 虽然方便，但并非银弹。根据官方文档的建议，如果你的需求仅是注入静态配置文件或密钥，应当优先使用 <strong>Docker Compose</strong> 原生的 <code>configs</code> 和 <code>secrets</code>，因为它们支持直接挂载，并允许精细化配置权限和所属用户。</p>
+<p>以下场景不建议使用 <code>pre_start</code>：</p>
+<h3 id="1-静态配置文件挂载"><a href="#1-静态配置文件挂载" class="headerlink" title="1. 静态配置文件挂载"></a>1. 静态配置文件挂载</h3><p>对于不需要动态生成的固定配置文件，直接挂载即可，无需启动一个额外的初始化容器去写文件。</p>
+<p><strong>推荐方案：</strong></p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">configs:</span></span><br><span class="line">  <span class="attr">app_config:</span></span><br><span class="line">    <span class="attr">file:</span> <span class="string">./config/app.yml</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">app:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">myapp:latest</span></span><br><span class="line">    <span class="attr">configs:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">source:</span> <span class="string">app_config</span></span><br><span class="line">        <span class="attr">target:</span> <span class="string">/app/config.yml</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-敏感凭证-Secret-注入"><a href="#2-敏感凭证-Secret-注入" class="headerlink" title="2. 敏感凭证 (Secret) 注入"></a>2. 敏感凭证 (Secret) 注入</h3><p>数据库密码、API 密钥等敏感数据切忌通过初始化脚本写入 volume 或文件系统，以防泄露。</p>
+<p><strong>推荐方案：</strong></p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">secrets:</span></span><br><span class="line">  <span class="attr">db_password:</span></span><br><span class="line">    <span class="attr">file:</span> <span class="string">./secrets/db_password.txt</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">app:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">myapp:latest</span></span><br><span class="line">    <span class="attr">secrets:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">db_password</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-定时任务与后台运维任务"><a href="#3-定时任务与后台运维任务" class="headerlink" title="3. 定时任务与后台运维任务"></a>3. 定时任务与后台运维任务</h3><p>例如：</p>
+<ul>
+<li>定期数据备份</li>
+<li>定期清理缓存与临时文件</li>
+<li>容器销毁后的退出清理工作</li>
+</ul>
+<p>这些任务并不属于“主应用启动前必须阻塞完成的必要依赖”，因此不适合放进 <code>pre_start</code>。</p>
+<h2 id="当前的设计限制"><a href="#当前的设计限制" class="headerlink" title="当前的设计限制"></a>当前的设计限制</h2><p>由于该特性还相对较新，在使用时需要注意以下局限性：</p>
+<ul>
+<li><strong>非副本级执行</strong>：<code>pre_start</code> 是针对服务整体执行一次，而非针对每个容器副本单独运行（目前尚不支持 <code>per_replica: true</code> 配置）。</li>
+<li><strong>部分挂载类型不兼容</strong>：多副本共享的命名卷（Named Volume）和绑定挂载（Bind Mount）能够完美适配；但对于每个实例完全独立的匿名卷或 <code>tmpfs</code> 挂载，<code>pre_start</code> 临时容器写入的数据是无法同步到主容器的。</li>
+<li><strong>扩容时不触发</strong>：当你执行扩容命令时（例如 <code>docker compose up --scale app=3</code>），新创建的副本容器<strong>不会</strong>再次触发 <code>pre_start</code> 执行。它依然只遵循“配置变更&#x2F;强制重建”的触发逻辑。</li>
+</ul>
+<p>因此，如果你的某些初始化逻辑（如本地缓存预热）必须在每一个容器副本里运行，目前请不要依赖 <code>pre_start</code>。</p>
+<h2 id="与-Kubernetes-Init-Containers-的区别"><a href="#与-Kubernetes-Init-Containers-的区别" class="headerlink" title="与 Kubernetes Init Containers 的区别"></a>与 Kubernetes Init Containers 的区别</h2><p>从概念上看，两者的目的非常一致：都在主业务容器拉起前执行前置准备。</p>
+<p>但实现和能力上有所差异：</p>
+<ul>
+<li><strong>Kubernetes (K8s)</strong> 的 Init Containers 是 Pod 级别的核心一等公民，高度契合云原生分布式调度，且天然对多副本容器进行各自初始化。</li>
+<li><strong>Docker Compose</strong> 的 Init Containers 则是通过 <code>pre_start</code> 生命周期钩子实现的一种<strong>轻量级解决方案</strong>。它更契合单机部署、本地开发、小规模自托管（Self-Hosted）场景。</li>
+</ul>
+<p>简单来说，<strong>Docker Compose 的 Init Containers 是为 Compose 场景量身定制的精简版初始化机制</strong>，小巧但十分够用。</p>
+<h2 id="最佳实践建议"><a href="#最佳实践建议" class="headerlink" title="最佳实践建议"></a>最佳实践建议</h2><p>在实际生产或开发环境使用 <code>pre_start</code> 时，建议遵循以下原则：</p>
+<ol>
+<li><strong>绝对的幂等性</strong>：初始化脚本一定要做到“多次执行，结果一致”，随时准备应对重试和重建场景。</li>
+<li><strong>严禁包含长驻进程</strong>：<code>pre_start</code> 的步骤必须是能在短时间内主动退出并返回 <code>0</code> 的任务，否则将无限期阻塞主服务的启动。</li>
+<li><strong>区分生产与开发环境的迁移策略</strong>：虽然在 <code>pre_start</code> 中自动运行 <code>migrate</code> 很爽，但在生产环境中自动执行数据库迁移依然存在一定风险。建议重要线上项目通过独立的 CI&#x2F;CD Pipeline 触发迁移。</li>
+<li><strong>封装复杂逻辑为脚本</strong>：如果初始化流程复杂（包含多步判断和环境准备），建议封装为独立脚本（如 <code>./scripts/init.sh</code>）放入容器，而在 <code>compose.yaml</code> 中只调用该脚本，避免配置文件过长。</li>
+</ol>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">pre_start:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">command:</span> [<span class="string">&quot;./scripts/init.sh&quot;</span>]</span><br></pre></td></tr></table></figure>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><strong>Docker Compose</strong> 的 <strong>Init Containers</strong> 终于解决了容器编排中长久以来的一个痛点：<strong>如何优雅地表达“启动前的必要前置步骤”</strong>。</p>
+<p>我们可以将它的应用场景简单归纳为：</p>
+<table>
+<thead>
+<tr>
+<th align="left">适合使用 ✅</th>
+<th align="left">不适合使用 ❌</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">数据库自动迁移 (<code>migrate</code>)</td>
+<td align="left">长期运行的后台任务</td>
+</tr>
+<tr>
+<td align="left">初始数据导入与种子填充</td>
+<td align="left">定时备份&#x2F;清理等 Cron 任务</td>
+</tr>
+<tr>
+<td align="left">修正宿主卷挂载（Volume）权限</td>
+<td align="left">纯静态的配置文件挂载 (使用 <code>configs</code>)</td>
+</tr>
+<tr>
+<td align="left">动态生成局部配置</td>
+<td align="left">敏感凭证的安全管理 (使用 <code>secrets</code>)</td>
+</tr>
+<tr>
+<td align="left">串联多个有顺序的前置校验步骤</td>
+<td align="left">必须针对每个副本 (Replica) 重复执行的初始化</td>
+</tr>
+</tbody></table>
+<p>最后，让我们用一张直观的对比来看看引入这一新特性后的变化：</p>
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-21-tab-0" aria-controls="tabs-21-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">以前的写法 (depends_on)</button><button type="button" role="tab" id="tabs-21-tab-1" aria-controls="tabs-21-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">现在的写法 (pre_start)</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-21-panel-0" aria-labelledby="tabs-21-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">migrate:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">myapp:latest</span></span><br><span class="line">    <span class="attr">command:</span> [<span class="string">&quot;./manage.py&quot;</span>, <span class="string">&quot;migrate&quot;</span>]</span><br><span class="line">    <span class="attr">restart:</span> <span class="string">&quot;no&quot;</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">app:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">myapp:latest</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="attr">migrate:</span></span><br><span class="line">        <span class="attr">condition:</span> <span class="string">service_completed_successfully</span></span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-21-panel-1" aria-labelledby="tabs-21-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">app:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">myapp:latest</span></span><br><span class="line">    <span class="attr">pre_start:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">command:</span> [<span class="string">&quot;./manage.py&quot;</span>, <span class="string">&quot;migrate&quot;</span>]</span><br></pre></td></tr></table></figure></section></div></div>
+
+<p>这就是 <strong>Docker Compose Init Containers</strong> 的终极奥义 —— <strong>让初始化步骤，优雅地回到它真正属于的地方</strong>。</p>
+]]></content>
+      <categories>
+        <category>教程</category>
+      </categories>
+      <tags>
+        <tag>Docker</tag>
+        <tag>Docker Compose</tag>
+        <tag>Init Containers</tag>
       </tags>
   </entry>
   <entry>
@@ -5161,6 +5288,91 @@
       <tags>
         <tag>Docker</tag>
         <tag>Fizzy</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>赛博特权阶级的诞生：从 Fable 5 白名单看 AI 非营利乌托邦的终结</title>
+    <url>/post/fable-5-whitelist-new-privileged-class-ai-monopoly.html</url>
+    <content><![CDATA[<p>2026 年夏天，科技界经历了一场 “AI大地震”。美国商务部的一纸出口管制令，让刚刚问世、霸榜各大模型基座的 Anthropic 旗舰模型 <strong>Claude Fable 5</strong> 与其底层孪生模型 Mythos 5 瞬间在全球范围内被按下了暂停键。紧接着，经过政商闭门博弈，部分 <strong>可信赖的实体</strong> 和特定白名单单位逐步重获访问特权。</p>
+<p>这一历史性事件不仅颠覆了开发者对云端 API 稳定性的认知，更向世界宣告了一个残酷的事实：由美国政府特许的、由技术与权力交织而成的 <strong>赛博新特权阶级</strong> 已经正式诞生。</p>
+<p>这也给予了整个AI行业沉重一击 —— OpenAI 最初设立的 <strong>技术民主化、利益造福全人类</strong> 的乌托邦设想，已经彻底宣告失败。</p>
+<h2 id="一、-“白名单”下的赛博新特权阶级"><a href="#一、-“白名单”下的赛博新特权阶级" class="headerlink" title="一、 “白名单”下的赛博新特权阶级"></a>一、 “白名单”下的赛博新特权阶级</h2><p>在过去，黄金、石油和土地是核心的生产要素。而在2026年的今天，顶尖的通用人工智能（AGI）推理算力已成为最稀缺的战略资源。</p>
+<p>Fable 5 与Mythos 5 的强悍无需多言 —— 在 TerminalBench 2.1 等前沿评测中，它们展现出了恐怖的智能。支付巨头 Stripe 曾用它在短短一天内完成了原本需要一整个工程团队干满两个月的 5000 万行 Ruby 代码大迁移；在生物制药与网络安全领域，它们甚至展现出了越过安全限制、自主运行设计工具的“近神”能力。</p>
+<p>然而，正因为这种 “颠覆性力量” ，它引来了权力的铁拳。美国政府以国家安全、防范越狱（Jailbreak）和技术外泄为由，强行切断了公众和海外开发者的连接。随后出炉的 “白名单机制” ，将这种力量圈禁在了一个狭小的特权阶层手中：</p>
+<ul>
+<li><strong>国家机器与军工巨头</strong>： 拥有绝对豁免权，能够无限制调用未阉割、无安全拦截器的 Mythos 5。</li>
+<li><strong>合规的华尔街财阀与巨型跨国企业</strong>： 凭借强大的游说能力和国籍审查能力，跻身“可信合规白名单”。</li>
+</ul>
+<p>一个技术垄断的马太效应正在形成： 白名单内的企业利用 Fable 5 实现成百上千倍的效率跃升、垄断行业财富；而白名单外的中小创业者、研究机构甚至普通大众，只能眼睁睁看着技术代差被无限拉大。曾经人人平等的互联网API生态，变成了按权力、国籍和资本配给的 “口粮” 。美国政府的 “特许” ，正式在全球科技界划分出了高人一等的赛博新贵族。</p>
+<h2 id="二、-权力的入局：Fable-5-的“国家化”阵痛"><a href="#二、-权力的入局：Fable-5-的“国家化”阵痛" class="headerlink" title="二、 权力的入局：Fable 5 的“国家化”阵痛"></a>二、 权力的入局：Fable 5 的“国家化”阵痛</h2><p>Fable 5 的白名单风波，标志着 AI 技术正式从 “商业竞争阶段” 滑向 “地缘政治与国家安全阶段” 。</p>
+<p>“我们不认为这种政府准入程序应该成为长期的默认状态。” —— 面对政府的强势介入，即便是正在筹备 IPO 的 OpenAI 也在其发布 GPT-5.6 Sol 限量预览时发出了无力的警告。</p>
+<p>但资本和企业的挣扎在强大的国家机器面前显得微不足道。过去，硅谷的技术精英们总认为自己可以通过代码改变世界，凌驾于地缘政治之上。但当白宫执行行政令、国防部和国安局（NSA）直接介入审查时，强如 Anthropic 也只能选择 “积极与政府合作”，甚至连自己的非美籍员工也必须被剥夺访问权限。</p>
+<p>Fable 5不再只是一个商品，它成了被国家征用的 <strong>战略军火</strong> 。</p>
+<h2 id="三、-废墟中的理想：商业洪流下的破灭与向往"><a href="#三、-废墟中的理想：商业洪流下的破灭与向往" class="headerlink" title="三、 废墟中的理想：商业洪流下的破灭与向往"></a>三、 废墟中的理想：商业洪流下的破灭与向往</h2><p>回看 Fable 5 的白名单特权、OpenAI 的 GPT-5.6 受限审查，以及 OpenAI 自身提交的IPO申请，历史在这一刻完成了一个巨大的讽刺。</p>
+<p>2015年，当埃隆·马斯克、山姆·奥特曼等人创立 OpenAI 时，其核心宗旨是：</p>
+<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>作为一个非营利组织，不受财务回报的限制，确保 AGI 的技术向所有人开放，防止技术被单一国家或巨型财阀垄断，从而造福全人类。</p></div></div>
+
+<p>今天，这个设想已经碎成了满地瓦砾：</p>
+<p>从非营利到资本弄潮儿： OpenAI 早已转型为追求利润的实体，并为了迎合资本市场走向 IPO ，最初的非营利乌托邦理想早已被商业逻辑吞噬。</p>
+<p>从 “Open（开放）” 到 “Closed（封闭）” ： 曾经开源的承诺变成了最严密的商业机密，而如今更是在政府的指令下，演变成了 “白名单准入” 的割裂生态。</p>
+<p>从造福全人类到服务特权阶级： 顶尖大模型不再是普惠全人类的工具，而是成了强化特定国家霸权、提升少数垄断巨头生产力的私产。</p>
+<p><strong>然而，那道最初的微光，依然让我们充满向往</strong></p>
+<p>即便现实如此冰冷，即便 OpenAI 如今已实质性转为追逐利润的盈利实体，但当我们拂去商业的喧嚣，回望它最初的设想时，那幅“技术普惠”的宏大蓝图依然散发着让人心潮澎湃的理想主义光芒。</p>
+<p>那是人类科技史上少有的、试图超越国家边界和阶级壁垒的伟大尝试。它向世界许诺过一种可能：最高维度的智慧不需要附庸于权力，最顶尖的科技可以成为每一个普通人对抗命运、跨越数字鸿沟的武器。</p>
+<p>正是因为这个最初的设想曾如此美丽，甚至一度让我们看到了赛博乌托邦的曙光，才使得今天面对Fable 5的“白名单高墙”时，全球开发者心中的失落与阵痛显得如此剧烈。人们对 OpenAI 初心的向往，并非出于对商业幼稚的幻想，而是出于人类对公平、开放与知识无界根深蒂固的渴望。这种向往，恰恰成了当下对抗技术垄断、呼唤开源力量的最强韧的精神火种。</p>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>Fable 5 的 “白名单风暴” 揭示了 AI 时代的未来图景：科技不再是平的，而是被权力筑起的高墙分割得支离破碎。</p>
+<p>OpenAI 最初那个充满人文主义情怀的设想失败了，取而代之的是一个更加冷酷、更加遵循达尔文主义的现实。在这个由政府特许、白名单构筑的赛博新秩序里，谁能拿到那张通往顶尖算力的 “特许通行证” ，谁就掌握了下一个时代改写世界的权力。而剩下的绝大多数人，正无可避免地沦为这场技术合谋下的 <strong>“数字平民”</strong> 。</p>
+<p>不过，局面并非完全没有转机。以 <strong>GLM 5.2</strong> 为代表的中国顶尖开源模型正在展现出越来越强的竞争力。如果它能在代码、推理、工具调用与长上下文等关键能力上持续追近甚至反超闭源白名单模型，那么全球开发者至少不会被迫完全依赖少数美国 API。它的强力表现，有望在一定程度上缓解这种由算力、资本与国家权力共同制造的技术阶层分化。</p>
+]]></content>
+      <categories>
+        <category>评论</category>
+      </categories>
+      <tags>
+        <tag>AI</tag>
+        <tag>OpenAI</tag>
+        <tag>Claude Fable 5</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>解决 Antigravity 通过 SSH 连接远程服务器崩溃的问题</title>
+    <url>/post/fix-antigravity-ssh-remote-crash-problem.html</url>
+    <content><![CDATA[<h2 id="问题详情"><a href="#问题详情" class="headerlink" title="问题详情"></a>问题详情</h2><p>在使用 Google Antigravity 通过 SSH 连接运行在 <strong>PVE</strong> 的 <strong>Linux 虚拟机</strong> 时，会直接崩溃，报错信息如下：</p>
+<blockquote>
+<p>Antigravity server crashed unexpectedly. Please restart to fully restore AI features.</p>
+</blockquote>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>在 PVE 中将 Linux 虚拟机的 <strong>CPU 类型</strong> 设置为 <code>host</code>，再尝试连接就可以了。</p>
+<p>参考： <a href="https://discuss.ai.google.dev/t/antigravity-crashes-on-linux-but-works-on-windows/110355/3">Antigravity crashes on Linux, but works on Windows</a></p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>Antigravity</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>解决 Electron 42 APP 初次运行 pnpm dev 报错的问题</title>
+    <url>/post/fix-electron-42-app-cannot-run.html</url>
+    <content><![CDATA[<h2 id="问题复现"><a href="#问题复现" class="headerlink" title="问题复现"></a>问题复现</h2><p>开发或是 Clone 一个 Electron 42 APP 时，安装完依赖后第一次运行 <code>pnpm dev</code> 你可能遇到 <code>Error: Electron uninstall</code> 的错误信息：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pnpm install --frozen-lockfile</span><br><span class="line">pnpm approve-builds</span><br><span class="line"></span><br><span class="line">pnpm dev </span><br></pre></td></tr></table></figure>
+
+<p>报错信息</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">error during start dev server and electron app:</span><br><span class="line">Error: Electron uninstall</span><br><span class="line">    at getElectronPath</span><br><span class="line">...</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p>需要手动运行下面的命令</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npx install-electron</span><br></pre></td></tr></table></figure>
+
+<h2 id="问题原因"><a href="#问题原因" class="headerlink" title="问题原因"></a>问题原因</h2><p>这是由于为了应对供应链攻击， Electron 42 不再通过 <code>postinstall</code> 下载自身</p>
+<p><a href="https://www.electronjs.org/blog/electron-42-0#electron-no-longer-downloads-itself-via-postinstall-script">Electron 42: electron no longer downloads itself via postinstall script</a></p>
+<p>可以运行下面的命令</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install electron --save-dev --ignore-scripts</span><br><span class="line">npx install-electron</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>Electron</tag>
       </tags>
   </entry>
   <entry>
@@ -5306,6 +5518,123 @@
       <tags>
         <tag>Google</tag>
         <tag>Gmail</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Google 发布 Antigravity 2.0 ，以及 Antigravity-CLI</title>
+    <url>/post/google-launch-antigravity-cli.html</url>
+    <content><![CDATA[<p>在 2026 年 5 月 20 日的 Google I&#x2F;O 大会上，Google 正式宣布推出 Antigravity 2.0，以 Agents 驱动为核心作为独立的桌面应用。原 Antigravity 更名为 <strong>Antigravity IDE</strong>，并同时推出 <strong>Antigravity CLI</strong> 取代 <strong>Gemini CLI</strong>。</p>
+<p>Antigravity 2.0 与 IDE 下载页面：<a href="https://antigravity.google/download">Download Google Antigravity</a></p>
+<h2 id="Antigravity-CLI-安装方法"><a href="#Antigravity-CLI-安装方法" class="headerlink" title="Antigravity CLI 安装方法"></a>Antigravity CLI 安装方法</h2><h3 id="macOS-Linux"><a href="#macOS-Linux" class="headerlink" title="macOS &#x2F; Linux"></a>macOS &#x2F; Linux</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl -fsSL https://antigravity.google/cli/install.sh | bash</span><br></pre></td></tr></table></figure>
+
+<h3 id="Windows-PowerShell"><a href="#Windows-PowerShell" class="headerlink" title="Windows PowerShell"></a>Windows PowerShell</h3><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">irm</span> https://antigravity.google/<span class="built_in">cli</span>/install.ps1 | <span class="built_in">iex</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Windows-CMD"><a href="#Windows-CMD" class="headerlink" title="Windows CMD"></a>Windows CMD</h3><figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">curl -fsSL https://antigravity.google/cli/install.<span class="built_in">cmd</span> -o install.<span class="built_in">cmd</span> &amp;&amp; install.<span class="built_in">cmd</span> &amp;&amp; <span class="built_in">del</span> install.<span class="built_in">cmd</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="启动与登录方法"><a href="#启动与登录方法" class="headerlink" title="启动与登录方法"></a>启动与登录方法</h2><h3 id="启动-Antigravity-CLI"><a href="#启动-Antigravity-CLI" class="headerlink" title="启动 Antigravity CLI"></a>启动 Antigravity CLI</h3><p>在终端中运行 <code>agy</code> 即可启动 Antigravity CLI。</p>
+<h3 id="登录方法"><a href="#登录方法" class="headerlink" title="登录方法"></a>登录方法</h3><p>使用 Antigravity CLI 之前，如果已在 Antigravity 或 Antigravity IDE 中登录了 Google 账户，系统将自动进行认证。</p>
+<p>初次启动需要选择代码主题，同意用户协议后即可打开 CLI 界面：</p>
+<p><img src="https://img.nep.me/ooo/antigravity-cli-theme-select.webp" alt="antigravity-cli-theme-select.png"></p>
+<p>界面预览：<br><img src="https://img.nep.me/ooo/antigravity-cli-tui-hello.webp" alt="antigravity-cli-tui.png"></p>
+<p>或者，您也可以选择以下认证方法手动登录：</p>
+<ul>
+<li><strong>Google OAuth</strong></li>
+<li><strong>Use a Google Cloud project</strong></li>
+</ul>
+<p><img src="https://img.nep.me/ooo/antigravity-cli-login-method.webp" alt="antigravity-cli-login-method.png"></p>
+<p>选择 Google OAuth 后，如果没有自动跳转，可以通过粘贴认证代码的方法进行确认，因此也可以在其他设备上使用。</p>
+<h3 id="可选模型"><a href="#可选模型" class="headerlink" title="可选模型"></a>可选模型</h3><p>Google AI Pro 用户在 Antigravity CLI 中可选的模型与 Antigravity IDE 一致：</p>
+<ul>
+<li>Gemini 3.5 Flash (High)      (current)</li>
+<li>Gemini 3.5 Flash (Medium)</li>
+<li>Gemini 3.1 Pro (High)</li>
+<li>Gemini 3.1 Pro (Low)</li>
+<li>Claude Sonnet 4.6 (Thinking)</li>
+<li>Claude Opus 4.6 (Thinking)</li>
+<li>GPT-OSS 120B (Medium)</li>
+</ul>
+<p><img src="https://img.nep.me/ooo/antigravity-cli-model-select.webp" alt="antigravity-cli-model-select.png"></p>
+<h2 id="Antigravity-CLI-介绍"><a href="#Antigravity-CLI-介绍" class="headerlink" title="Antigravity CLI 介绍"></a>Antigravity CLI 介绍</h2><p>Google 表示为了性能表现，使用 Go 语言完成了 Antigravity 的构建，同时 Google 也强调了 Antigravity CLI 的三个演进方向：更快执行、异步工作流，以及与 Antigravity 2.0 共用统一的 agent harness。</p>
+<p>Antigravity CLI 优势：</p>
+<ul>
+<li><strong>执行速度更快</strong>：Antigravity CLI 使用 Go 语言编写，速度更快，响应更迅速。</li>
+<li><strong>异步工作流</strong>：Antigravity CLI 在后台协调多个代理来执行复杂任务，让您可以运行大规模重构或研究多个主题，而不会锁定您的终端会话。</li>
+<li><strong>统一架构</strong>：Antigravity CLI 与 Antigravity 2.0（新的 Antigravity 桌面应用程序）共享相同的代理框架，确保核心代理的所有未来改进都会自动应用到您使用它们的任何地方。</li>
+</ul>
+<h2 id="Gemini-CLI-将终止服务"><a href="#Gemini-CLI-将终止服务" class="headerlink" title="Gemini CLI 将终止服务"></a>Gemini CLI 将终止服务</h2><p>在推出了 Antigravity CLI 后，Google <a href="https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/">表示</a>，自 2026 年 6 月 18 日起，Gemini CLI 和 Gemini Code Assist IDE 扩展程序将停止为 Google AI Pro 和 Ultra 用户提供服务。</p>
+<p>企业用户仍可继续使用。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Antigravity 2.0 的发布，说明 Google 并没有把 AI 编程工具只当作 Gemini 模型的附属功能，而是在重新争夺“下一代代码编辑入口”。这次更新的重点，不是给传统 IDE 再加一个聊天侧边栏，而是把 Antigravity 从 agent-first IDE 升级成更完整的 agentic development platform：桌面端、CLI、SDK 和 API 一起构成新的开发者工作台。</p>
+<p>对用户来说，这种竞争无疑是好事。无论是 Google、OpenAI、Anthropic 还是 Cursor，都在推动代码工具从“补全助手”走向“开发伙伴”。竞争越激烈，开发者能获得的选择越多，价格、体验、模型能力和工作流整合也会被不断拉高。最终受益的，还是每天真正写代码、调试和交付产品的用户。</p>
+]]></content>
+      <categories>
+        <category>资讯</category>
+      </categories>
+      <tags>
+        <tag>AI</tag>
+        <tag>Antigravity</tag>
+        <tag>Antigravity IDE</tag>
+        <tag>Google</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Google 为 AI Pro 用户提供每月 10 美元 GCP 额度，获取教程</title>
+    <url>/post/google-offer-10usd-gcp-credit-for-ai-pro-user.html</url>
+    <content><![CDATA[<p>Google AI Pro 订阅用户每月可获得 10 美元的 Google Cloud 抵用金，Google AI Ultra 订阅用户每月可获得 100 美元的 Google Cloud 抵用金。</p>
+<h2 id="获取地址"><a href="#获取地址" class="headerlink" title="获取地址"></a>获取地址</h2><p>获取地址： <a href="https://developers.google.com/program/my-benefits?hl=zh-cn">Google Developers - 我的福利</a></p>
+<blockquote>
+<p>提示：该福利不是自动发放，每月需要访问一下该页面才会领取当月福利</p>
+</blockquote>
+<p>如果你从未使用过 Google Developer 访问后首先要点击 <strong>享受福利</strong> ，创建个人资料。</p>
+<p><img src="https://img.nep.me/i/2026/01/29/google-developer-my-benefits.webp" alt="google-developer-my-benefits"></p>
+<p>然后可以看到详细的福利信息，其中 AI Pro 用户将包含 <strong>每月可获得 $10 的生成式 AI 和 Cloud 点数</strong></p>
+<p><img src="https://img.nep.me/i/2026/01/29/google-developer-my-benefits-details.webp" alt="google-developer-my-benefits-details"></p>
+<h2 id="开通-Google-Cloud-结算账户"><a href="#开通-Google-Cloud-结算账户" class="headerlink" title="开通 Google Cloud 结算账户"></a>开通 Google Cloud 结算账户</h2><p>如果你从未使用过 Google Cloud，那么需要先访问 <a href="https://console.cloud.google.com/billing">您的结算账户</a> 创建一个结算账户，同时还可以获取 Google Cloud 的 300 美元福利(90天)，需要添加信用卡。</p>
+<img src="https://img.nep.me/i/2026/01/29/google-cloud-free-trial.webp" style="width:75%;" alt="google-cloud-free-trial" />
+
+<p>下一步将验证付款信息，可以直接使用 Google AI Pro 的付款信息。</p>
+<blockquote>
+<p>Google 对付款卡片的地区限制不严格，使用招商银行发行的 VISA、JCB 信用卡均可以通过验证。</p>
+</blockquote>
+<h2 id="申请-10-美元-Credit"><a href="#申请-10-美元-Credit" class="headerlink" title="申请 10 美元 Credit"></a>申请 10 美元 Credit</h2><p>开通 Google Cloud 后，返回 <a href="https://developers.google.com/program/my-benefits?hl=zh-cn">Google Developers - 我的福利</a> 即可发现可以选择结算账户并申请了。<br><img src="https://img.nep.me/i/2026/01/29/google-dev-my-bill-account.webp" style="width:50%;" alt="google-dev-my-bill-account" /></p>
+<p>福利有效期自申请日起一年。</p>
+<div class="flatpaper-note flatpaper-note--warning"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>如果你使用了 Google 赠送的 300 美金的赠金试用 VPS 服务，记得在 90 天快到期时取消相关服务。</p></div></div>
+
+<h2 id="可以干什么"><a href="#可以干什么" class="headerlink" title="可以干什么"></a>可以干什么</h2><p>可以访问 <a href="https://console.cloud.google.com/billing/015AC2-2A20AA-619377/credits/all?hl=zh-cn&organizationId=0">Google Cloud - 赠金</a> 页面查看当前的赠金详情。</p>
+<p>其中 10 美元的可用范围是 <strong>以下服务：整个 Google Cloud Platform和Google 地图 API。</strong></p>
+<p><img src="https://img.nep.me/i/2026/01/29/google-cloud-credit-details.webp" alt="google-cloud-credit-details"></p>
+<p>可以直接在 Vertex AI Studio 中使用 Nano banana Pro 生成图片。<br>也可以获取 API 密钥在应用中使用。</p>
+<h2 id="获取-API-密钥"><a href="#获取-API-密钥" class="headerlink" title="获取 API 密钥"></a>获取 API 密钥</h2><p>如果创建 GCP 的 Vertex API 密钥请查看 Google 提供的文档 <a href="https://docs.cloud.google.com/vertex-ai/generative-ai/docs/start/api-keys?hl=zh-cn&usertype=standard">Google Cloud - 获取 Google Cloud API 密钥</a></p>
+<div class="flatpaper-note flatpaper-note--danger"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>Update 2026.03: Google 已更新政策，AI Studio 的 Key 已无法使用赠金抵扣，以下内容已失效。</p></div></div>
+
+<p>但是步骤较为繁琐，简单的是通过 <a href="https://aistudio.google.com/app/api-keys?hl=zh-cn">Google AI Studio</a> 创建，并关联 GCP 结算账户，同样可以使用赠金。<br><img src="https://img.nep.me/i/2026/01/29/gemini-api-set-billing.webp" style="width:50%;" alt="gemini-api-set-billing" /></p>
+<p>点击 API 右侧的 <strong>设置结算账户</strong>   </p>
+<img src="https://img.nep.me/i/2026/01/29/gemini-api-set-billing-02.webp" style="width:50%;" alt="gemini-api-set-billing-02" />
+
+<p>跳转到新页面后，选择结算账户，如果没有修改过，默认叫 <strong>我的结算账户</strong></p>
+<p>然后就可以返回 <a href="https://aistudio.google.com/app/api-keys?hl=zh-cn">Google AI Studio</a> 点击 <strong>激活结算</strong> 了</p>
+<img src="https://img.nep.me/i/2026/01/29/gemini-api-active-billing.webp" style="width:50%;" alt="gemini-api-active-billing" />
+
+<div class="flatpaper-note flatpaper-note--warning"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>启用结算后记得设置结算提醒，避免使用超出赠金额度</p></div></div>
+
+<div class="flatpaper-note flatpaper-note--danger"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>一定要保存好 API 密钥，尤其是不要上传到 GitHub 公开项目中，以免被别人使用，收到天价账单</p></div></div>
+
+<p>可以点击 <a href="https://aistudio.google.com/api-keys">Google AI Studo &gt; API Keys</a> 右侧的 <strong>view usage</strong> 查看用量。<br><img src="https://img.nep.me/i/2026/01/29/api-view-usage.webp" alt="api-view-usage"></p>
+<h2 id="在-Alma-中使用"><a href="#在-Alma-中使用" class="headerlink" title="在 Alma 中使用"></a>在 Alma 中使用</h2><p>获取的 API Token 非常适合在 <a href="https://alma.now/">Alma</a> 中使用。</p>
+<p>打开 Alma 客户端，点击 <strong>设置</strong> ，在 <strong>提供商</strong> 页面右侧，激活 <strong>Google Gemini</strong>。</p>
+<p>填入从 Google AI Studio 获取的 API Token，点击 Fetch 即可查看可用模型列表，激活希望使用的模型后就可以在对话中使用了。</p>
+<p><img src="https://img.nep.me/i/2026/01/29/alma-use-gemini-api.webp" alt="alma-use-gemini-api"></p>
+<blockquote>
+<p>没有开启结算前，免费层级的 API Token 可用列表是没有 Gemini 3 的</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>优惠活动</category>
+      </categories>
+      <tags>
+        <tag>AI</tag>
+        <tag>Google</tag>
+        <tag>Google Cloud</tag>
+        <tag>Gemini</tag>
       </tags>
   </entry>
   <entry>
@@ -5488,153 +5817,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Google 发布 Antigravity 2.0 ，以及 Antigravity-CLI</title>
-    <url>/post/google-launch-antigravity-cli.html</url>
-    <content><![CDATA[<p>在 2026 年 5 月 20 日的 Google I&#x2F;O 大会上，Google 正式宣布推出 Antigravity 2.0，以 Agents 驱动为核心作为独立的桌面应用。原 Antigravity 更名为 <strong>Antigravity IDE</strong>，并同时推出 <strong>Antigravity CLI</strong> 取代 <strong>Gemini CLI</strong>。</p>
-<p>Antigravity 2.0 与 IDE 下载页面：<a href="https://antigravity.google/download">Download Google Antigravity</a></p>
-<h2 id="Antigravity-CLI-安装方法"><a href="#Antigravity-CLI-安装方法" class="headerlink" title="Antigravity CLI 安装方法"></a>Antigravity CLI 安装方法</h2><h3 id="macOS-Linux"><a href="#macOS-Linux" class="headerlink" title="macOS &#x2F; Linux"></a>macOS &#x2F; Linux</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl -fsSL https://antigravity.google/cli/install.sh | bash</span><br></pre></td></tr></table></figure>
-
-<h3 id="Windows-PowerShell"><a href="#Windows-PowerShell" class="headerlink" title="Windows PowerShell"></a>Windows PowerShell</h3><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">irm</span> https://antigravity.google/<span class="built_in">cli</span>/install.ps1 | <span class="built_in">iex</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="Windows-CMD"><a href="#Windows-CMD" class="headerlink" title="Windows CMD"></a>Windows CMD</h3><figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">curl -fsSL https://antigravity.google/cli/install.<span class="built_in">cmd</span> -o install.<span class="built_in">cmd</span> &amp;&amp; install.<span class="built_in">cmd</span> &amp;&amp; <span class="built_in">del</span> install.<span class="built_in">cmd</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="启动与登录方法"><a href="#启动与登录方法" class="headerlink" title="启动与登录方法"></a>启动与登录方法</h2><h3 id="启动-Antigravity-CLI"><a href="#启动-Antigravity-CLI" class="headerlink" title="启动 Antigravity CLI"></a>启动 Antigravity CLI</h3><p>在终端中运行 <code>agy</code> 即可启动 Antigravity CLI。</p>
-<h3 id="登录方法"><a href="#登录方法" class="headerlink" title="登录方法"></a>登录方法</h3><p>使用 Antigravity CLI 之前，如果已在 Antigravity 或 Antigravity IDE 中登录了 Google 账户，系统将自动进行认证。</p>
-<p>初次启动需要选择代码主题，同意用户协议后即可打开 CLI 界面：</p>
-<p><img src="https://img.nep.me/ooo/antigravity-cli-theme-select.webp" alt="antigravity-cli-theme-select.png"></p>
-<p>界面预览：<br><img src="https://img.nep.me/ooo/antigravity-cli-tui-hello.webp" alt="antigravity-cli-tui.png"></p>
-<p>或者，您也可以选择以下认证方法手动登录：</p>
-<ul>
-<li><strong>Google OAuth</strong></li>
-<li><strong>Use a Google Cloud project</strong></li>
-</ul>
-<p><img src="https://img.nep.me/ooo/antigravity-cli-login-method.webp" alt="antigravity-cli-login-method.png"></p>
-<p>选择 Google OAuth 后，如果没有自动跳转，可以通过粘贴认证代码的方法进行确认，因此也可以在其他设备上使用。</p>
-<h3 id="可选模型"><a href="#可选模型" class="headerlink" title="可选模型"></a>可选模型</h3><p>Google AI Pro 用户在 Antigravity CLI 中可选的模型与 Antigravity IDE 一致：</p>
-<ul>
-<li>Gemini 3.5 Flash (High)      (current)</li>
-<li>Gemini 3.5 Flash (Medium)</li>
-<li>Gemini 3.1 Pro (High)</li>
-<li>Gemini 3.1 Pro (Low)</li>
-<li>Claude Sonnet 4.6 (Thinking)</li>
-<li>Claude Opus 4.6 (Thinking)</li>
-<li>GPT-OSS 120B (Medium)</li>
-</ul>
-<p><img src="https://img.nep.me/ooo/antigravity-cli-model-select.webp" alt="antigravity-cli-model-select.png"></p>
-<h2 id="Antigravity-CLI-介绍"><a href="#Antigravity-CLI-介绍" class="headerlink" title="Antigravity CLI 介绍"></a>Antigravity CLI 介绍</h2><p>Google 表示为了性能表现，使用 Go 语言完成了 Antigravity 的构建，同时 Google 也强调了 Antigravity CLI 的三个演进方向：更快执行、异步工作流，以及与 Antigravity 2.0 共用统一的 agent harness。</p>
-<p>Antigravity CLI 优势：</p>
-<ul>
-<li><strong>执行速度更快</strong>：Antigravity CLI 使用 Go 语言编写，速度更快，响应更迅速。</li>
-<li><strong>异步工作流</strong>：Antigravity CLI 在后台协调多个代理来执行复杂任务，让您可以运行大规模重构或研究多个主题，而不会锁定您的终端会话。</li>
-<li><strong>统一架构</strong>：Antigravity CLI 与 Antigravity 2.0（新的 Antigravity 桌面应用程序）共享相同的代理框架，确保核心代理的所有未来改进都会自动应用到您使用它们的任何地方。</li>
-</ul>
-<h2 id="Gemini-CLI-将终止服务"><a href="#Gemini-CLI-将终止服务" class="headerlink" title="Gemini CLI 将终止服务"></a>Gemini CLI 将终止服务</h2><p>在推出了 Antigravity CLI 后，Google <a href="https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/">表示</a>，自 2026 年 6 月 18 日起，Gemini CLI 和 Gemini Code Assist IDE 扩展程序将停止为 Google AI Pro 和 Ultra 用户提供服务。</p>
-<p>企业用户仍可继续使用。</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Antigravity 2.0 的发布，说明 Google 并没有把 AI 编程工具只当作 Gemini 模型的附属功能，而是在重新争夺“下一代代码编辑入口”。这次更新的重点，不是给传统 IDE 再加一个聊天侧边栏，而是把 Antigravity 从 agent-first IDE 升级成更完整的 agentic development platform：桌面端、CLI、SDK 和 API 一起构成新的开发者工作台。</p>
-<p>对用户来说，这种竞争无疑是好事。无论是 Google、OpenAI、Anthropic 还是 Cursor，都在推动代码工具从“补全助手”走向“开发伙伴”。竞争越激烈，开发者能获得的选择越多，价格、体验、模型能力和工作流整合也会被不断拉高。最终受益的，还是每天真正写代码、调试和交付产品的用户。</p>
-]]></content>
-      <categories>
-        <category>资讯</category>
-      </categories>
-      <tags>
-        <tag>AI</tag>
-        <tag>Antigravity</tag>
-        <tag>Antigravity IDE</tag>
-        <tag>Google</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Google 为 AI Pro 用户提供每月 10 美元 GCP 额度，获取教程</title>
-    <url>/post/google-offer-10usd-gcp-credit-for-ai-pro-user.html</url>
-    <content><![CDATA[<p>Google AI Pro 订阅用户每月可获得 10 美元的 Google Cloud 抵用金，Google AI Ultra 订阅用户每月可获得 100 美元的 Google Cloud 抵用金。</p>
-<h2 id="获取地址"><a href="#获取地址" class="headerlink" title="获取地址"></a>获取地址</h2><p>获取地址： <a href="https://developers.google.com/program/my-benefits?hl=zh-cn">Google Developers - 我的福利</a></p>
-<blockquote>
-<p>提示：该福利不是自动发放，每月需要访问一下该页面才会领取当月福利</p>
-</blockquote>
-<p>如果你从未使用过 Google Developer 访问后首先要点击 <strong>享受福利</strong> ，创建个人资料。</p>
-<p><img src="https://img.nep.me/i/2026/01/29/google-developer-my-benefits.webp" alt="google-developer-my-benefits"></p>
-<p>然后可以看到详细的福利信息，其中 AI Pro 用户将包含 <strong>每月可获得 $10 的生成式 AI 和 Cloud 点数</strong></p>
-<p><img src="https://img.nep.me/i/2026/01/29/google-developer-my-benefits-details.webp" alt="google-developer-my-benefits-details"></p>
-<h2 id="开通-Google-Cloud-结算账户"><a href="#开通-Google-Cloud-结算账户" class="headerlink" title="开通 Google Cloud 结算账户"></a>开通 Google Cloud 结算账户</h2><p>如果你从未使用过 Google Cloud，那么需要先访问 <a href="https://console.cloud.google.com/billing">您的结算账户</a> 创建一个结算账户，同时还可以获取 Google Cloud 的 300 美元福利(90天)，需要添加信用卡。</p>
-<img src="https://img.nep.me/i/2026/01/29/google-cloud-free-trial.webp" style="width:75%;" alt="google-cloud-free-trial" />
-
-<p>下一步将验证付款信息，可以直接使用 Google AI Pro 的付款信息。</p>
-<blockquote>
-<p>Google 对付款卡片的地区限制不严格，使用招商银行发行的 VISA、JCB 信用卡均可以通过验证。</p>
-</blockquote>
-<h2 id="申请-10-美元-Credit"><a href="#申请-10-美元-Credit" class="headerlink" title="申请 10 美元 Credit"></a>申请 10 美元 Credit</h2><p>开通 Google Cloud 后，返回 <a href="https://developers.google.com/program/my-benefits?hl=zh-cn">Google Developers - 我的福利</a> 即可发现可以选择结算账户并申请了。<br><img src="https://img.nep.me/i/2026/01/29/google-dev-my-bill-account.webp" style="width:50%;" alt="google-dev-my-bill-account" /></p>
-<p>福利有效期自申请日起一年。</p>
-<div class="flatpaper-note flatpaper-note--warning"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>如果你使用了 Google 赠送的 300 美金的赠金试用 VPS 服务，记得在 90 天快到期时取消相关服务。</p></div></div>
-
-<h2 id="可以干什么"><a href="#可以干什么" class="headerlink" title="可以干什么"></a>可以干什么</h2><p>可以访问 <a href="https://console.cloud.google.com/billing/015AC2-2A20AA-619377/credits/all?hl=zh-cn&organizationId=0">Google Cloud - 赠金</a> 页面查看当前的赠金详情。</p>
-<p>其中 10 美元的可用范围是 <strong>以下服务：整个 Google Cloud Platform和Google 地图 API。</strong></p>
-<p><img src="https://img.nep.me/i/2026/01/29/google-cloud-credit-details.webp" alt="google-cloud-credit-details"></p>
-<p>可以直接在 Vertex AI Studio 中使用 Nano banana Pro 生成图片。<br>也可以获取 API 密钥在应用中使用。</p>
-<h2 id="获取-API-密钥"><a href="#获取-API-密钥" class="headerlink" title="获取 API 密钥"></a>获取 API 密钥</h2><p>如果创建 GCP 的 Vertex API 密钥请查看 Google 提供的文档 <a href="https://docs.cloud.google.com/vertex-ai/generative-ai/docs/start/api-keys?hl=zh-cn&usertype=standard">Google Cloud - 获取 Google Cloud API 密钥</a></p>
-<div class="flatpaper-note flatpaper-note--danger"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>Update 2026.03: Google 已更新政策，AI Studio 的 Key 已无法使用赠金抵扣，以下内容已失效。</p></div></div>
-
-<p>但是步骤较为繁琐，简单的是通过 <a href="https://aistudio.google.com/app/api-keys?hl=zh-cn">Google AI Studio</a> 创建，并关联 GCP 结算账户，同样可以使用赠金。<br><img src="https://img.nep.me/i/2026/01/29/gemini-api-set-billing.webp" style="width:50%;" alt="gemini-api-set-billing" /></p>
-<p>点击 API 右侧的 <strong>设置结算账户</strong>   </p>
-<img src="https://img.nep.me/i/2026/01/29/gemini-api-set-billing-02.webp" style="width:50%;" alt="gemini-api-set-billing-02" />
-
-<p>跳转到新页面后，选择结算账户，如果没有修改过，默认叫 <strong>我的结算账户</strong></p>
-<p>然后就可以返回 <a href="https://aistudio.google.com/app/api-keys?hl=zh-cn">Google AI Studio</a> 点击 <strong>激活结算</strong> 了</p>
-<img src="https://img.nep.me/i/2026/01/29/gemini-api-active-billing.webp" style="width:50%;" alt="gemini-api-active-billing" />
-
-<div class="flatpaper-note flatpaper-note--warning"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>启用结算后记得设置结算提醒，避免使用超出赠金额度</p></div></div>
-
-<div class="flatpaper-note flatpaper-note--danger"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>一定要保存好 API 密钥，尤其是不要上传到 GitHub 公开项目中，以免被别人使用，收到天价账单</p></div></div>
-
-<p>可以点击 <a href="https://aistudio.google.com/api-keys">Google AI Studo &gt; API Keys</a> 右侧的 <strong>view usage</strong> 查看用量。<br><img src="https://img.nep.me/i/2026/01/29/api-view-usage.webp" alt="api-view-usage"></p>
-<h2 id="在-Alma-中使用"><a href="#在-Alma-中使用" class="headerlink" title="在 Alma 中使用"></a>在 Alma 中使用</h2><p>获取的 API Token 非常适合在 <a href="https://alma.now/">Alma</a> 中使用。</p>
-<p>打开 Alma 客户端，点击 <strong>设置</strong> ，在 <strong>提供商</strong> 页面右侧，激活 <strong>Google Gemini</strong>。</p>
-<p>填入从 Google AI Studio 获取的 API Token，点击 Fetch 即可查看可用模型列表，激活希望使用的模型后就可以在对话中使用了。</p>
-<p><img src="https://img.nep.me/i/2026/01/29/alma-use-gemini-api.webp" alt="alma-use-gemini-api"></p>
-<blockquote>
-<p>没有开启结算前，免费层级的 API Token 可用列表是没有 Gemini 3 的</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>优惠活动</category>
-      </categories>
-      <tags>
-        <tag>AI</tag>
-        <tag>Google</tag>
-        <tag>Google Cloud</tag>
-        <tag>Gemini</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>如何查询 Codex 赠送的重置机会的到期日期</title>
-    <url>/post/how-to-check-codex-reset-expiration.html</url>
-    <content><![CDATA[<p>2026 年 6 月份 Codex 的重置机制改为了可以存储的重置机会，并且由于一些 BUG 6 月份已经赠送了三次免费的重置机会，如通过邀请好友也可以额外获得最多三次的重置机会。不过重置次数不能无限期保存，每个重置次数只有 30 天的有效期，而 Codex 界面里不会显示每次重置机会的具体到期日期。</p>
-<p>下面给大家提供一个简单的查询方法</p>
-<h2 id="直接让-Codex-自己查询"><a href="#直接让-Codex-自己查询" class="headerlink" title="直接让 Codex 自己查询"></a>直接让 Codex 自己查询</h2><p>方法非常简单，只需要把下面的 <strong>提示词</strong> 发送给 Codex，让它使用本机凭证自行查询即可。</p>
-<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">请使用本机 Codex 凭证查一下 rate-limit reset credits：</span><br><span class="line"></span><br><span class="line">读取 `~/.codex/auth.json` 里的 `tokens.access_token`，请求接口：</span><br><span class="line">https://chatgpt.com/backend-api/wham/rate-limit-reset-credits</span><br><span class="line"></span><br><span class="line">要求：</span><br><span class="line"></span><br><span class="line">1. 不要打印 access_token、refresh_token、cookie 或完整唯一 ID</span><br><span class="line">2. 只汇总 available_count、每个 credit 的 status/title/granted_at/expires_at</span><br><span class="line">3. 把 granted_at/expires_at 从 UTC 转成本地时间</span><br><span class="line">4. 如果状态码返回 401，说明是凭证失效或没带对 Authorization header</span><br></pre></td></tr></table></figure>
-
-<details class="flatpaper-note flatpaper-note--info"><summary class="flatpaper-note__title"><span class="flatpaper-note__icon" aria-hidden="true"></span><span class="flatpaper-note__label">回复示例</span><span class="flatpaper-note__chevron" aria-hidden="true"></span></summary><div class="flatpaper-note__body"><p>6 月份共赠送三次，我已经用掉了一次，所以显示还剩两次。</p>
-<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">请求成功，状态码 200。</span><br><span class="line">available_count: 2</span><br><span class="line">Credits:</span><br><span class="line">1. status: available</span><br><span class="line">    title: Full reset (Weekly + 5 hr)</span><br><span class="line">    granted_at: 2026-06-18 08:42:00 </span><br><span class="line">    expires_at: 2026-07-18 08:42:00 </span><br><span class="line"></span><br><span class="line">2. status: available</span><br><span class="line">    title: Full reset (Weekly + 5 hr)</span><br><span class="line">    granted_at: 2026-06-27 07:52:00 </span><br><span class="line">    expires_at: 2026-07-27 07:52:00 </span><br></pre></td></tr></table></figure></div></details>
-
-<h2 id="OpenAI-赠送的重置记录"><a href="#OpenAI-赠送的重置记录" class="headerlink" title="OpenAI 赠送的重置记录"></a>OpenAI 赠送的重置记录</h2><h3 id="6-月份共赠送三次"><a href="#6-月份共赠送三次" class="headerlink" title="6 月份共赠送三次"></a>6 月份共赠送三次</h3><ol>
-<li>推出重置保存机制时赠送：2026 年 6 月 12 日，到期日期为 <strong>7 月 12 日</strong></li>
-<li>BUG 赠送：2026 年 6 月 18 日，到期日期 <strong>7 月 18 日</strong></li>
-<li>BUG 赠送：2026 年 6 月 27 日，到期日期 <strong>7 月 27 日</strong></li>
-</ol>
-<p>我在 6 月 29 日的查询结果与记录一致，如果你有 X.com 账户，查看 <a href="https://x.com/thsottiaux">Tibo</a> 的推文获取最新 Codex 更新消息。</p>
-<h3 id="7-月份赠送记录"><a href="#7-月份赠送记录" class="headerlink" title="7 月份赠送记录"></a>7 月份赠送记录</h3><ol start="4">
-<li>BUG 赠送：2026 年 7 月 2 日，到期日期 **8 月 1 日</li>
-</ol>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>快看看你的重置机会什么时候到期吧。Plus 用户每周额度价值大约 100 美元，千万不要浪费了。</p>
-]]></content>
-      <categories>
-        <category>笔记</category>
-      </categories>
-      <tags>
-        <tag>OpenAI</tag>
-        <tag>Codex</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>榨干 AI 订阅额度：使用 Claude Pro 与 ChatGPT 订阅到底能省多少钱？</title>
     <url>/post/how-much-can-you-save-with-subscription-vs-api.html</url>
     <content><![CDATA[<p>Anthropic（Claude）与 OpenAI（ChatGPT）的 API 按量计费对于高频使用者而言通常“贵出天际”，一般只有企业级用户才能负担。因此，它们推出的按月订阅套餐，才是绝大多数普通用户的性价比首选。</p>
@@ -5715,6 +5897,36 @@
       <tags>
         <tag>Claude</tag>
         <tag>ChatGPT</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>如何查询 Codex 赠送的重置机会的到期日期</title>
+    <url>/post/how-to-check-codex-reset-expiration.html</url>
+    <content><![CDATA[<p>2026 年 6 月份 Codex 的重置机制改为了可以存储的重置机会，并且由于一些 BUG 6 月份已经赠送了三次免费的重置机会，如通过邀请好友也可以额外获得最多三次的重置机会。不过重置次数不能无限期保存，每个重置次数只有 30 天的有效期，而 Codex 界面里不会显示每次重置机会的具体到期日期。</p>
+<p>下面给大家提供一个简单的查询方法</p>
+<h2 id="直接让-Codex-自己查询"><a href="#直接让-Codex-自己查询" class="headerlink" title="直接让 Codex 自己查询"></a>直接让 Codex 自己查询</h2><p>方法非常简单，只需要把下面的 <strong>提示词</strong> 发送给 Codex，让它使用本机凭证自行查询即可。</p>
+<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">请使用本机 Codex 凭证查一下 rate-limit reset credits：</span><br><span class="line"></span><br><span class="line">读取 `~/.codex/auth.json` 里的 `tokens.access_token`，请求接口：</span><br><span class="line">https://chatgpt.com/backend-api/wham/rate-limit-reset-credits</span><br><span class="line"></span><br><span class="line">要求：</span><br><span class="line"></span><br><span class="line">1. 不要打印 access_token、refresh_token、cookie 或完整唯一 ID</span><br><span class="line">2. 只汇总 available_count、每个 credit 的 status/title/granted_at/expires_at</span><br><span class="line">3. 把 granted_at/expires_at 从 UTC 转成本地时间</span><br><span class="line">4. 如果状态码返回 401，说明是凭证失效或没带对 Authorization header</span><br></pre></td></tr></table></figure>
+
+<details class="flatpaper-note flatpaper-note--info"><summary class="flatpaper-note__title"><span class="flatpaper-note__icon" aria-hidden="true"></span><span class="flatpaper-note__label">回复示例</span><span class="flatpaper-note__chevron" aria-hidden="true"></span></summary><div class="flatpaper-note__body"><p>6 月份共赠送三次，我已经用掉了一次，所以显示还剩两次。</p>
+<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">请求成功，状态码 200。</span><br><span class="line">available_count: 2</span><br><span class="line">Credits:</span><br><span class="line">1. status: available</span><br><span class="line">    title: Full reset (Weekly + 5 hr)</span><br><span class="line">    granted_at: 2026-06-18 08:42:00 </span><br><span class="line">    expires_at: 2026-07-18 08:42:00 </span><br><span class="line"></span><br><span class="line">2. status: available</span><br><span class="line">    title: Full reset (Weekly + 5 hr)</span><br><span class="line">    granted_at: 2026-06-27 07:52:00 </span><br><span class="line">    expires_at: 2026-07-27 07:52:00 </span><br></pre></td></tr></table></figure></div></details>
+
+<h2 id="OpenAI-赠送的重置记录"><a href="#OpenAI-赠送的重置记录" class="headerlink" title="OpenAI 赠送的重置记录"></a>OpenAI 赠送的重置记录</h2><h3 id="6-月份共赠送三次"><a href="#6-月份共赠送三次" class="headerlink" title="6 月份共赠送三次"></a>6 月份共赠送三次</h3><ol>
+<li>推出重置保存机制时赠送：2026 年 6 月 12 日，到期日期为 <strong>7 月 12 日</strong></li>
+<li>BUG 赠送：2026 年 6 月 18 日，到期日期 <strong>7 月 18 日</strong></li>
+<li>BUG 赠送：2026 年 6 月 27 日，到期日期 <strong>7 月 27 日</strong></li>
+</ol>
+<p>我在 6 月 29 日的查询结果与记录一致，如果你有 X.com 账户，查看 <a href="https://x.com/thsottiaux">Tibo</a> 的推文获取最新 Codex 更新消息。</p>
+<h3 id="7-月份赠送记录"><a href="#7-月份赠送记录" class="headerlink" title="7 月份赠送记录"></a>7 月份赠送记录</h3><ol start="4">
+<li>BUG 赠送：2026 年 7 月 2 日，到期日期 **8 月 1 日</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>快看看你的重置机会什么时候到期吧。Plus 用户每周额度价值大约 100 美元，千万不要浪费了。</p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>OpenAI</tag>
+        <tag>Codex</tag>
       </tags>
   </entry>
   <entry>
@@ -6051,8 +6263,8 @@
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">log</span></span><br><span class="line"><span class="comment"># 或者使用更简洁的单行输出</span></span><br><span class="line">git <span class="built_in">log</span> --oneline</span><br></pre></td></tr></table></figure>
 
 <h3 id="2-查看文件变更-Git-Diff"><a href="#2-查看文件变更-Git-Diff" class="headerlink" title="2. 查看文件变更 (Git Diff)"></a>2. 查看文件变更 (Git Diff)</h3><p>在创建存档点之前，你需要确认自己到底改了哪些内容：</p>
-<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-21-tab-0" aria-controls="tabs-21-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">对比工作区</button><button type="button" role="tab" id="tabs-21-tab-1" aria-controls="tabs-21-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">对比暂存区</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-21-panel-0" aria-labelledby="tabs-21-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><p>我当前世界和上次存档相比，哪里变了？</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git diff</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-21-panel-1" aria-labelledby="tabs-21-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><p>我已经 add 到暂存区，准备写入下个存档点的内容是什么？</p>
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-22-tab-0" aria-controls="tabs-22-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">对比工作区</button><button type="button" role="tab" id="tabs-22-tab-1" aria-controls="tabs-22-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">对比暂存区</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-22-panel-0" aria-labelledby="tabs-22-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><p>我当前世界和上次存档相比，哪里变了？</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git diff</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-22-panel-1" aria-labelledby="tabs-22-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><p>我已经 add 到暂存区，准备写入下个存档点的内容是什么？</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git diff --staged</span><br></pre></td></tr></table></figure></section></div></div>
 
 <h2 id="五、分支-Branch-与合并-Merge-：多元世界线"><a href="#五、分支-Branch-与合并-Merge-：多元世界线" class="headerlink" title="五、分支 (Branch) 与合并 (Merge)：多元世界线"></a>五、分支 (Branch) 与合并 (Merge)：多元世界线</h2><p><strong>Git</strong> 最强大的功能之一就是分支。</p>
@@ -6074,10 +6286,10 @@
 <div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p><strong>多人协作黄金法则</strong>：在开始每天的工作或提交代码前，强烈建议先执行 <code>git pull</code> 同步服务器上的最新状态，这样可以大幅减少合并时的冲突概率。</p></div></div>
 
 <h2 id="七、撤销与临时口袋"><a href="#七、撤销与临时口袋" class="headerlink" title="七、撤销与临时口袋"></a>七、撤销与临时口袋</h2><h3 id="1-安全撤销与回滚"><a href="#1-安全撤销与回滚" class="headerlink" title="1. 安全撤销与回滚"></a>1. 安全撤销与回滚</h3><p>如果你改坏了代码或者提交错了内容，可以通过以下命令安全“读档”：</p>
-<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-22-tab-0" aria-controls="tabs-22-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">放弃工作区修改</button><button type="button" role="tab" id="tabs-22-tab-1" aria-controls="tabs-22-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">取消暂存</button><button type="button" role="tab" id="tabs-22-tab-2" aria-controls="tabs-22-panel-2" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="2">撤销已提交 (Revert)</button><button type="button" role="tab" id="tabs-22-tab-3" aria-controls="tabs-22-panel-3" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="3">强制回滚 (Reset)</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-22-panel-0" aria-labelledby="tabs-22-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><p>当前未 add 的修改不要了，回到上一个正式存档点状态：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git restore README.md</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-22-panel-1" aria-labelledby="tabs-22-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><p>后悔执行了 git add，把文件从暂存区拿出来（不会删除实际修改）：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git restore --staged README.md</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-22-panel-2" aria-labelledby="tabs-22-tab-2" class="flatpaper-tabs__panel" data-index="2" hidden><p>创建一个新的“反向提交”来撤销指定提交的影响。这是协作中最安全的做法！</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git revert a1b2c3d</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-22-panel-3" aria-labelledby="tabs-22-tab-3" class="flatpaper-tabs__panel" data-index="3" hidden><p>危险！直接把时间线强行挪回某个旧存档点，丢弃之后的所有提交：</p>
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-23-tab-0" aria-controls="tabs-23-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">放弃工作区修改</button><button type="button" role="tab" id="tabs-23-tab-1" aria-controls="tabs-23-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">取消暂存</button><button type="button" role="tab" id="tabs-23-tab-2" aria-controls="tabs-23-panel-2" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="2">撤销已提交 (Revert)</button><button type="button" role="tab" id="tabs-23-tab-3" aria-controls="tabs-23-panel-3" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="3">强制回滚 (Reset)</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-23-panel-0" aria-labelledby="tabs-23-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><p>当前未 add 的修改不要了，回到上一个正式存档点状态：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git restore README.md</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-23-panel-1" aria-labelledby="tabs-23-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><p>后悔执行了 git add，把文件从暂存区拿出来（不会删除实际修改）：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git restore --staged README.md</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-23-panel-2" aria-labelledby="tabs-23-tab-2" class="flatpaper-tabs__panel" data-index="2" hidden><p>创建一个新的“反向提交”来撤销指定提交的影响。这是协作中最安全的做法！</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git revert a1b2c3d</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-23-panel-3" aria-labelledby="tabs-23-tab-3" class="flatpaper-tabs__panel" data-index="3" hidden><p>危险！直接把时间线强行挪回某个旧存档点，丢弃之后的所有提交：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git reset --hard a1b2c3d</span><br></pre></td></tr></table></figure></section></div></div>
 
 <h3 id="2-Stash-临时口袋存档"><a href="#2-Stash-临时口袋存档" class="headerlink" title="2. Stash 临时口袋存档"></a>2. Stash 临时口袋存档</h3><p>有时候你在开发功能，改了一半需要临时切分支去修 Bug，但代码还不具备 commit 的条件。这时可以用临时口袋：</p>
@@ -7206,6 +7418,34 @@
       </tags>
   </entry>
   <entry>
+    <title>OpenAI 发布 GPT-5.6 系列模型：Sol、Terra 和 Luna 开启有限预览，受美国政府要求限制初始访问</title>
+    <url>/post/openai-gpt-5-6-limited-preview.html</url>
+    <content><![CDATA[<p><strong>日期：美国时间 2026年6月26日</strong></p>
+<p>OpenAI 宣布正式预览其新一代 GPT-5.6 模型系列，并率先以受限预览形式向部分可信合作伙伴开放。本次发布包含三款模型：旗舰级模型 <strong>GPT-5.6 Sol</strong>、面向日常工作的均衡模型 <strong>GPT-5.6 Terra</strong>，以及主打速度与成本效率的 <strong>GPT-5.6 Luna</strong>。这是继 GPT-5.5（2026年4月发布）之后又一次快速迭代，延续了 OpenAI 大约每六周发布一次旗舰模型的节奏。</p>
+<img src="https://img.nep.me/ooo/openai-release-gpt-sol.webp" alt="openai-release-gpt-sol.png" style="width:75%;max-width:100%;height:auto" />
+
+<h3 id="三大变体定位不同需求"><a href="#三大变体定位不同需求" class="headerlink" title="三大变体定位不同需求"></a>三大变体定位不同需求</h3><ul>
+<li><strong>Sol：</strong> 最强大旗舰模型，在代理能力上显著提升，尤其在编码、生物学和网络安全领域表现出色。新增 <strong>Max</strong> 推理模式和 <strong>Ultra</strong> 模式（可协调多个子代理处理极复杂任务）。 </li>
+<li><strong>Terra：</strong> 性能与 GPT-5.5 相当，但成本约降低一半（据报道输入&#x2F;输出 token 定价更具竞争力），适合日常工作。 </li>
+<li><strong>Luna：</strong> 速度最快、成本最低的选项，提供强大能力的同时实现最高性价比。</li>
+</ul>
+<p>据 OpenAI 公告，GPT-5.6 Sol 是目前最强的模型，在真实世界编码调试、漏洞查找与修复等任务中表现出色，同时在上下文窗口和 token 效率上有进一步优化（此前传闻提到可能支持高达 <strong>150 万</strong> token 上下文）。模型还强化了推理训练，能在回答前进行更长的内部思考链。 </p>
+<h3 id="安全与访问限制：受美国政府影响"><a href="#安全与访问限制：受美国政府影响" class="headerlink" title="安全与访问限制：受美国政府影响"></a>安全与访问限制：受美国政府影响</h3><p>尽管 OpenAI 强调“相信广泛访问”并计划在未来数周内向 ChatGPT、Codex 和 API 全面开放，但本次发布采用有限预览形式，初始仅限约 20 家受信任合作伙伴（参与名单已与政府共享）。这一决定源于美国政府（特朗普政府）的安全关切，特别是针对先进 AI 模型的网络安全能力审查。 </p>
+<p>OpenAI 在系统卡和公告中表示，已构建史上最强大的安全栈，包括强化训练、激活分类器、实时监控等。模型在 Preparedness Framework 下被评估为网络安全和生物&#x2F;化学风险 “High” 级别，但未达到 “Critical” 阈值。测试显示 Sol 在帮助防御者查找和修复漏洞方面的能力强于自主实施端到端攻击的能力。公司同时承认代理编码任务中存在一定“超出用户意图”的倾向，但绝对发生率较低。 </p>
+<p>OpenAI 明确表示，此类政府审查不应成为长期默认做法，并正与政府合作制定可重复的审查框架，以尽快实现更广泛可用性。 </p>
+<h3 id="展望"><a href="#展望" class="headerlink" title="展望"></a>展望</h3><p>从行业角度看，GPT-5.6 的发布标志着 AI 竞争进入新的阶段。一方面，模型能力继续向更强的智能体、代码执行、长任务规划方向推进；另一方面，政府、企业和社会对前沿模型风险的关注也在快速上升。未来，前沿 AI 模型的发布节奏，可能不再只由技术成熟度决定，还会受到安全评估、监管要求和国际竞争环境的共同影响。</p>
+<p>目前，GPT-5.6 系列尚未全面开放。按照媒体报道，OpenAI 计划在完成初期评估后，于未来几周逐步扩大访问范围。对于普通用户和开发者来说，GPT-5.6 的真正影响，可能要等到 API、ChatGPT 或 Codex 等产品线正式接入后才会更加清晰。</p>
+]]></content>
+      <categories>
+        <category>资讯</category>
+      </categories>
+      <tags>
+        <tag>OpenAI</tag>
+        <tag>ChatGPT</tag>
+        <tag>GPT-5.6</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>OpenAI 发布桌面版 Codex App ：开启 “AI 智能体” 指挥中心时代</title>
     <url>/post/openai-release-codex-app.html</url>
     <content><![CDATA[<p>OpenAI 正式 <a href="https://openai.com/index/introducing-the-codex-app/">宣布</a> 推出全新的 <a href="https://openai.com/zh-Hans-CN/codex/get-started/">Codex App</a>。这不仅仅是一个简单的聊天窗口，而是一个专为构建、管理和调度 AI Agents（智能体） 设计的强力“指挥中心”。</p>
@@ -7246,34 +7486,6 @@
         <tag>OpenAI</tag>
         <tag>Codex</tag>
         <tag>Codex APP</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>OpenAI 发布 GPT-5.6 系列模型：Sol、Terra 和 Luna 开启有限预览，受美国政府要求限制初始访问</title>
-    <url>/post/openai-gpt-5-6-limited-preview.html</url>
-    <content><![CDATA[<p><strong>日期：美国时间 2026年6月26日</strong></p>
-<p>OpenAI 宣布正式预览其新一代 GPT-5.6 模型系列，并率先以受限预览形式向部分可信合作伙伴开放。本次发布包含三款模型：旗舰级模型 <strong>GPT-5.6 Sol</strong>、面向日常工作的均衡模型 <strong>GPT-5.6 Terra</strong>，以及主打速度与成本效率的 <strong>GPT-5.6 Luna</strong>。这是继 GPT-5.5（2026年4月发布）之后又一次快速迭代，延续了 OpenAI 大约每六周发布一次旗舰模型的节奏。</p>
-<img src="https://img.nep.me/ooo/openai-release-gpt-sol.webp" alt="openai-release-gpt-sol.png" style="width:75%;max-width:100%;height:auto" />
-
-<h3 id="三大变体定位不同需求"><a href="#三大变体定位不同需求" class="headerlink" title="三大变体定位不同需求"></a>三大变体定位不同需求</h3><ul>
-<li><strong>Sol：</strong> 最强大旗舰模型，在代理能力上显著提升，尤其在编码、生物学和网络安全领域表现出色。新增 <strong>Max</strong> 推理模式和 <strong>Ultra</strong> 模式（可协调多个子代理处理极复杂任务）。 </li>
-<li><strong>Terra：</strong> 性能与 GPT-5.5 相当，但成本约降低一半（据报道输入&#x2F;输出 token 定价更具竞争力），适合日常工作。 </li>
-<li><strong>Luna：</strong> 速度最快、成本最低的选项，提供强大能力的同时实现最高性价比。</li>
-</ul>
-<p>据 OpenAI 公告，GPT-5.6 Sol 是目前最强的模型，在真实世界编码调试、漏洞查找与修复等任务中表现出色，同时在上下文窗口和 token 效率上有进一步优化（此前传闻提到可能支持高达 <strong>150 万</strong> token 上下文）。模型还强化了推理训练，能在回答前进行更长的内部思考链。 </p>
-<h3 id="安全与访问限制：受美国政府影响"><a href="#安全与访问限制：受美国政府影响" class="headerlink" title="安全与访问限制：受美国政府影响"></a>安全与访问限制：受美国政府影响</h3><p>尽管 OpenAI 强调“相信广泛访问”并计划在未来数周内向 ChatGPT、Codex 和 API 全面开放，但本次发布采用有限预览形式，初始仅限约 20 家受信任合作伙伴（参与名单已与政府共享）。这一决定源于美国政府（特朗普政府）的安全关切，特别是针对先进 AI 模型的网络安全能力审查。 </p>
-<p>OpenAI 在系统卡和公告中表示，已构建史上最强大的安全栈，包括强化训练、激活分类器、实时监控等。模型在 Preparedness Framework 下被评估为网络安全和生物&#x2F;化学风险 “High” 级别，但未达到 “Critical” 阈值。测试显示 Sol 在帮助防御者查找和修复漏洞方面的能力强于自主实施端到端攻击的能力。公司同时承认代理编码任务中存在一定“超出用户意图”的倾向，但绝对发生率较低。 </p>
-<p>OpenAI 明确表示，此类政府审查不应成为长期默认做法，并正与政府合作制定可重复的审查框架，以尽快实现更广泛可用性。 </p>
-<h3 id="展望"><a href="#展望" class="headerlink" title="展望"></a>展望</h3><p>从行业角度看，GPT-5.6 的发布标志着 AI 竞争进入新的阶段。一方面，模型能力继续向更强的智能体、代码执行、长任务规划方向推进；另一方面，政府、企业和社会对前沿模型风险的关注也在快速上升。未来，前沿 AI 模型的发布节奏，可能不再只由技术成熟度决定，还会受到安全评估、监管要求和国际竞争环境的共同影响。</p>
-<p>目前，GPT-5.6 系列尚未全面开放。按照媒体报道，OpenAI 计划在完成初期评估后，于未来几周逐步扩大访问范围。对于普通用户和开发者来说，GPT-5.6 的真正影响，可能要等到 API、ChatGPT 或 Codex 等产品线正式接入后才会更加清晰。</p>
-]]></content>
-      <categories>
-        <category>资讯</category>
-      </categories>
-      <tags>
-        <tag>OpenAI</tag>
-        <tag>ChatGPT</tag>
-        <tag>GPT-5.6</tag>
       </tags>
   </entry>
   <entry>
