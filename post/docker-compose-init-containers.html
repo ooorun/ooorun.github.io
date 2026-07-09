@@ -394,7 +394,7 @@
         
           
             <a class="site-info__item" href="/archives/">
-              <strong>77</strong>
+              <strong>78</strong>
               <span>文章</span>
             </a>
           
@@ -408,7 +408,7 @@
         
           
             <a class="site-info__item" href="/tags/">
-              <strong>113</strong>
+              <strong>114</strong>
               <span>标签</span>
             </a>
           
@@ -506,6 +506,13 @@
     <ul class="recent-list">
       
         <li>
+          <a class="recent-item" href="/post/change-vaultwarden-account-email-without-set-smtp.html">
+            <strong>在不设置 SMTP 的情况下修改 Vaultwarden(Bitwarden) 的账户邮箱</strong>
+            <em>2026-07-09</em>
+          </a>
+        </li>
+      
+        <li>
           <a class="recent-item" href="/post/paper-shaders-open-source-webgl-design-effects.html">
             <strong>开源项目: 把酷炫的 WebGL Shader 变成前端组件 - Paper Shaders 介绍</strong>
             <em>2026-07-02</em>
@@ -530,13 +537,6 @@
           <a class="recent-item" href="/post/backends-are-back-vercel-support-dockerfile.html">
             <strong>后端回来了：Vercel 支持直接运行 Dockerfile</strong>
             <em>2026-07-01</em>
-          </a>
-        </li>
-      
-        <li>
-          <a class="recent-item" href="/post/debian-13-install-docker.html">
-            <strong>2026 Debian 13 安装 Docker 以及 Docker Compose 教程</strong>
-            <em>2026-06-30</em>
           </a>
         </li>
       
@@ -787,7 +787,7 @@
 </tr>
 </tbody></table>
 <p>最后，让我们用一张直观的对比来看看引入这一新特性后的变化：</p>
-<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-18-tab-0" aria-controls="tabs-18-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">以前的写法 (depends_on)</button><button type="button" role="tab" id="tabs-18-tab-1" aria-controls="tabs-18-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">现在的写法 (pre_start)</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-18-panel-0" aria-labelledby="tabs-18-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">migrate:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">myapp:latest</span></span><br><span class="line">    <span class="attr">command:</span> [<span class="string">&quot;./manage.py&quot;</span>, <span class="string">&quot;migrate&quot;</span>]</span><br><span class="line">    <span class="attr">restart:</span> <span class="string">&quot;no&quot;</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">app:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">myapp:latest</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="attr">migrate:</span></span><br><span class="line">        <span class="attr">condition:</span> <span class="string">service_completed_successfully</span></span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-18-panel-1" aria-labelledby="tabs-18-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">app:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">myapp:latest</span></span><br><span class="line">    <span class="attr">pre_start:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">command:</span> [<span class="string">&quot;./manage.py&quot;</span>, <span class="string">&quot;migrate&quot;</span>]</span><br></pre></td></tr></table></figure></section></div></div>
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-21-tab-0" aria-controls="tabs-21-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">以前的写法 (depends_on)</button><button type="button" role="tab" id="tabs-21-tab-1" aria-controls="tabs-21-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">现在的写法 (pre_start)</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-21-panel-0" aria-labelledby="tabs-21-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">migrate:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">myapp:latest</span></span><br><span class="line">    <span class="attr">command:</span> [<span class="string">&quot;./manage.py&quot;</span>, <span class="string">&quot;migrate&quot;</span>]</span><br><span class="line">    <span class="attr">restart:</span> <span class="string">&quot;no&quot;</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">app:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">myapp:latest</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="attr">migrate:</span></span><br><span class="line">        <span class="attr">condition:</span> <span class="string">service_completed_successfully</span></span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-21-panel-1" aria-labelledby="tabs-21-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">app:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">myapp:latest</span></span><br><span class="line">    <span class="attr">pre_start:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">command:</span> [<span class="string">&quot;./manage.py&quot;</span>, <span class="string">&quot;migrate&quot;</span>]</span><br></pre></td></tr></table></figure></section></div></div>
 
 <p>这就是 <strong>Docker Compose Init Containers</strong> 的终极奥义 —— <strong>让初始化步骤，优雅地回到它真正属于的地方</strong>。</p>
 
@@ -819,13 +819,13 @@
 
   <nav class="article-actions">
     
-      <span class="article-action article-action--prev is-disabled" aria-disabled="true">
+      <a class="article-action article-action--prev" href="/post/change-vaultwarden-account-email-without-set-smtp.html">
         
 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-arrow-left"></use></svg>
 
         <span class="action-label">上一篇</span>
-        <span class="action-title">没有更早的文章了</span>
-      </span>
+        <span class="action-title">在不设置 SMTP 的情况下修改 Vaultwarden(Bitwarden) 的账户邮箱</span>
+      </a>
     
     
       <a class="article-action article-action--next" href="/post/paper-shaders-open-source-webgl-design-effects.html">
