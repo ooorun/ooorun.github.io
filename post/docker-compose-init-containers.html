@@ -394,7 +394,7 @@
         
           
             <a class="site-info__item" href="/archives/">
-              <strong>79</strong>
+              <strong>80</strong>
               <span>文章</span>
             </a>
           
@@ -408,7 +408,7 @@
         
           
             <a class="site-info__item" href="/tags/">
-              <strong>115</strong>
+              <strong>116</strong>
               <span>标签</span>
             </a>
           
@@ -506,6 +506,13 @@
     <ul class="recent-list">
       
         <li>
+          <a class="recent-item" href="/post/how-to-select-gpt-5-6-model.html">
+            <strong>如何选择 GPT 5.6 不同模型与推理强度？查看 OpenAI Codex 团队的推荐设置</strong>
+            <em>2026-07-12</em>
+          </a>
+        </li>
+      
+        <li>
           <a class="recent-item" href="/post/openai-release-gpt-5-6.html">
             <strong>OpenAI 发布 GPT-5.6 与 ChatGPT Work，重塑 AI 工作模式</strong>
             <em>2026-07-10</em>
@@ -529,13 +536,6 @@
         <li>
           <a class="recent-item" href="/post/is-sonnet-5-worth-using.html">
             <strong>Sonnet 5 已发布，值得用吗？</strong>
-            <em>2026-07-01</em>
-          </a>
-        </li>
-      
-        <li>
-          <a class="recent-item" href="/post/vercel-services-multiple-frameworks-one-project.html">
-            <strong>Vercel Services 发布：一个项目部署 Next.js、FastAPI、Go 和 Astro</strong>
             <em>2026-07-01</em>
           </a>
         </li>
@@ -787,7 +787,7 @@
 </tr>
 </tbody></table>
 <p>最后，让我们用一张直观的对比来看看引入这一新特性后的变化：</p>
-<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-18-tab-0" aria-controls="tabs-18-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">以前的写法 (depends_on)</button><button type="button" role="tab" id="tabs-18-tab-1" aria-controls="tabs-18-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">现在的写法 (pre_start)</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-18-panel-0" aria-labelledby="tabs-18-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">migrate:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">myapp:latest</span></span><br><span class="line">    <span class="attr">command:</span> [<span class="string">&quot;./manage.py&quot;</span>, <span class="string">&quot;migrate&quot;</span>]</span><br><span class="line">    <span class="attr">restart:</span> <span class="string">&quot;no&quot;</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">app:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">myapp:latest</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="attr">migrate:</span></span><br><span class="line">        <span class="attr">condition:</span> <span class="string">service_completed_successfully</span></span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-18-panel-1" aria-labelledby="tabs-18-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">app:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">myapp:latest</span></span><br><span class="line">    <span class="attr">pre_start:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">command:</span> [<span class="string">&quot;./manage.py&quot;</span>, <span class="string">&quot;migrate&quot;</span>]</span><br></pre></td></tr></table></figure></section></div></div>
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-21-tab-0" aria-controls="tabs-21-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">以前的写法 (depends_on)</button><button type="button" role="tab" id="tabs-21-tab-1" aria-controls="tabs-21-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">现在的写法 (pre_start)</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-21-panel-0" aria-labelledby="tabs-21-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">migrate:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">myapp:latest</span></span><br><span class="line">    <span class="attr">command:</span> [<span class="string">&quot;./manage.py&quot;</span>, <span class="string">&quot;migrate&quot;</span>]</span><br><span class="line">    <span class="attr">restart:</span> <span class="string">&quot;no&quot;</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">app:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">myapp:latest</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="attr">migrate:</span></span><br><span class="line">        <span class="attr">condition:</span> <span class="string">service_completed_successfully</span></span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-21-panel-1" aria-labelledby="tabs-21-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">app:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">myapp:latest</span></span><br><span class="line">    <span class="attr">pre_start:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">command:</span> [<span class="string">&quot;./manage.py&quot;</span>, <span class="string">&quot;migrate&quot;</span>]</span><br></pre></td></tr></table></figure></section></div></div>
 
 <p>这就是 <strong>Docker Compose Init Containers</strong> 的终极奥义 —— <strong>让初始化步骤，优雅地回到它真正属于的地方</strong>。</p>
 

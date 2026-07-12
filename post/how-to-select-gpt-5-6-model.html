@@ -1,0 +1,1098 @@
+<!doctype html>
+
+<html lang="zh-CN" data-fancybox-enabled="1">
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f7f3e9" data-flatpaper-theme-color>
+
+<title>如何选择 GPT 5.6 不同模型与推理强度？查看 OpenAI Codex 团队的推荐设置 | O&#39;s World</title>
+<meta name="description" content="7 月 10 日，OpenAI Codex 团队在 Reddit 举办了一场 AMA（Ask Me Anything，在线问答活动）。 整场 AMA 的评论区呈现出一种颇为微妙的气氛：一半用户认真提问 Codex、GPT-5.6 和 ChatGPT Work 的使用方法，另一半用户则集中吐槽额度消耗、桌面应用体验以及不同平台之间长期存在的功能差距。 虽然官方...">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何选择 GPT 5.6 不同模型与推理强度？查看 OpenAI Codex 团队的推荐设置 | O&#39;s World">
+<meta property="og:url" content="https://ooo.run/post/how-to-select-gpt-5-6-model.html">
+<meta property="og:site_name" content="O&#39;s World">
+<meta property="og:description" content="7 月 10 日，OpenAI Codex 团队在 Reddit 举办了一场 AMA（Ask Me Anything，在线问答活动）。 整场 AMA 的评论区呈现出一种颇为微妙的气氛：一半用户认真提问 Codex、GPT-5.6 和 ChatGPT Work 的使用方法，另一半用户则集中吐槽额度消耗、桌面应用体验以及不同平台之间长期存在的功能差距。 虽然官方...">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img.nep.me/ooo/cover-select-gpt-5-6.webp">
+<meta property="article:published_time" content="2026-07-12T02:20:12.000Z">
+<meta property="article:modified_time" content="2026-07-12T02:27:07.534Z">
+<meta property="article:author" content="Mr. O">
+<meta property="article:tag" content="AI Agent">
+<meta property="article:tag" content="ChatGPT">
+<meta property="article:tag" content="Codex">
+<meta property="article:tag" content="GPT-5.6">
+<meta property="article:tag" content="OpenAI">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img.nep.me/ooo/cover-select-gpt-5-6.webp">
+<link rel="canonical" href="https://ooo.run/post/how-to-select-gpt-5-6-model.html">
+
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"如何选择 GPT 5.6 不同模型与推理强度？查看 OpenAI Codex 团队的推荐设置","name":"如何选择 GPT 5.6 不同模型与推理强度？查看 OpenAI Codex 团队的推荐设置 | O's World","description":"7 月 10 日，OpenAI Codex 团队在 Reddit 举办了一场 AMA（Ask Me Anything，在线问答活动）。 整场 AMA 的评论区呈现出一种颇为微妙的气氛：一半用户认真提问 Codex、GPT-5.6 和 ChatGPT Work 的使用方法，另一半用户则集中吐槽额度消耗、桌面应用体验以及不同平台之间长期存在的功能差距。 虽然官方...","url":"https://ooo.run/post/how-to-select-gpt-5-6-model.html","inLanguage":"zh-CN","isPartOf":{"@type":"WebSite","name":"O's World","url":"https://ooo.run/"},"image":["https://img.nep.me/ooo/cover-select-gpt-5-6.webp"],"mainEntityOfPage":"https://ooo.run/post/how-to-select-gpt-5-6-model.html","datePublished":"2026-07-12T02:20:12.000Z","dateModified":"2026-07-12T02:27:07.534Z","author":{"@type":"Person","name":"Mr. O"},"publisher":{"@type":"Organization","name":"O's World"},"keywords":"OpenAI, ChatGPT, Codex, GPT-5.6, AI Agent"}</script>
+
+<script>
+  (function () {
+    var accents = { orange: 1, purple: 1, sakura: 1, blue: 1, pink: 1, green: 1, black: 1 };
+    var match = document.cookie.match(/(?:^|;\s*)flatpaper-accent=([^;]+)/);
+    var accent = 'blue';
+    if (match) {
+      try { accent = decodeURIComponent(match[1]); } catch (e) {}
+    }
+    if (!accents[accent]) accent = 'blue';
+    document.documentElement.setAttribute('data-accent', accent);
+    try {
+      if (localStorage.getItem('flatpaper-mode') === 'dark') {
+        document.documentElement.classList.add('dark-mode');
+      }
+    } catch (e) {}
+  })();
+</script>
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+
+
+
+  
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-PZSHQ0MC4Q"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-PZSHQ0MC4Q');
+</script>
+
+
+  
+<script defer src="https://u.nep.me/script.js" data-website-id="768b68c3-d4ed-429e-aa11-f5099ea5adbf" data-domains="ooo.run"></script>
+
+
+  
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8052638941019443" crossorigin="anonymous"></script>
+
+
+  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/artalk@2.9.1/dist/Artalk.css">
+
+<script defer src="https://cdn.jsdelivr.net/npm/artalk@2.9.1/dist/Artalk.js"></script>
+
+
+  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css">
+<script defer src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+
+
+  
+<meta name="generator" content="Hexo 8.1.2"><link rel="alternate" href="/atom.xml" title="O's World" type="application/atom+xml">
+</head>
+
+<body
+  class="is-post tag-style-tape bg-style-default"
+  data-default-accent="blue"
+  data-code-theme="simple"
+  data-note-style="sticky"
+  data-note-icons="on"
+  data-button-style="tape"
+  data-strong-accent="on"
+>
+  
+    <div class="page-grain"></div>
+  
+  <svg width="0" height="0" style="position:absolute;z-index:-1;" aria-hidden="true">
+    <defs>
+      <filter id="paper-edge" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" result="noise" />
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G" />
+      </filter>
+    </defs>
+  </svg>
+  
+  <header class="site-header">
+  
+  <button class="icon-button js-sidebar-toggle sidebar-toggle" type="button" aria-label="打开侧边栏" aria-controls="paper-sidebar-drawer" aria-expanded="false">
+    
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-menu"></use></svg>
+
+  </button>
+
+  <div class="brand">
+    <div class="brand-mark-wrapper">
+      
+        <button class="brand-mark" type="button" aria-label="打开站点导航" aria-haspopup="true" aria-expanded="false" aria-controls="brand-nav-menu">
+          
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-grid flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-layout-grid"></use></svg>
+
+        </button>
+        <div class="brand-nav-menu" id="brand-nav-menu" role="menu">
+          
+            <div class="brand-nav-group">
+              <div class="brand-nav-title">Blog</div>
+              
+                <a role="menuitem" href="https://ooo.run/" target="_blank" rel="noopener noreferrer">
+                  
+                    <img src="https://ooo.run/favicon.ico" alt="" class="nav-img-icon" aria-hidden="true" />
+                  
+                  <span>O&#39;s World</span>
+                </a>
+              
+            </div>
+          
+            <div class="brand-nav-group">
+              <div class="brand-nav-title">Project</div>
+              
+                <a role="menuitem" href="https://tools.ooo.run" target="_blank" rel="noopener noreferrer">
+                  
+                    <img src="https://tools.ooo.run/favicon.png" alt="" class="nav-img-icon" aria-hidden="true" />
+                  
+                  <span>简易工具</span>
+                </a>
+              
+                <a role="menuitem" href="https://ooo.run/games" target="_blank" rel="noopener noreferrer">
+                  
+                    <img src="https://img.nep.me/ooo/game.webp" alt="" class="nav-img-icon" aria-hidden="true" />
+                  
+                  <span>简单游戏</span>
+                </a>
+              
+            </div>
+          
+        </div>
+      
+    </div>
+    <a class="brand-text" href="/">O&#39;s World</a>
+  </div>
+
+  <nav class="site-nav" aria-label="主导航">
+    
+      
+        <a class="site-nav-link " href="/">
+          
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-house flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-house"></use></svg>
+
+          <span>首页</span>
+        </a>
+      
+    
+      
+        <a class="site-nav-link " href="/links/">
+          
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-link"></use></svg>
+
+          <span>友链</span>
+        </a>
+      
+    
+      
+        <div class="site-nav-item has-children">
+          <button class="site-nav-link site-nav-parent" type="button" aria-haspopup="true" aria-expanded="false">
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-folder"></use></svg>
+
+            <span>文章</span>
+          </button>
+          <div class="site-nav-menu" role="menu">
+            
+              <a role="menuitem" class="" href="/archives/">
+                
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-archive flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-archive"></use></svg>
+
+                <span>归档</span>
+              </a>
+            
+              <a role="menuitem" class="" href="/categories/">
+                
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-folder"></use></svg>
+
+                <span>分类</span>
+              </a>
+            
+              <a role="menuitem" class="" href="/tags/">
+                
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tag flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-tag"></use></svg>
+
+                <span>标签</span>
+              </a>
+            
+          </div>
+        </div>
+      
+    
+      
+        <a class="site-nav-link " target="_blank" rel="noopener" href="https://www.travellings.cn/go.html">
+          
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tram-front flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-tram-front"></use></svg>
+
+          <span>开往</span>
+        </a>
+      
+    
+  </nav>
+
+  <div class="header-tools">
+    <button class="icon-button js-search-open" type="button" aria-label="搜索文章">
+      
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-search"></use></svg>
+
+    </button>
+    <div class="accent-picker">
+      <button class="icon-button accent-toggle" type="button" aria-label="选择主题色" title="选择主题色" aria-haspopup="true" aria-expanded="false" aria-controls="accent-menu">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-palette flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-palette"></use></svg>
+
+      </button>
+      <div class="accent-menu" id="accent-menu" role="menu" aria-label="主题色">
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="橙色" aria-checked="false" data-accent-option="orange">
+          <span class="accent-swatch accent-swatch--orange" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="紫色" aria-checked="false" data-accent-option="purple">
+          <span class="accent-swatch accent-swatch--purple" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="樱花粉" aria-checked="false" data-accent-option="sakura">
+          <span class="accent-swatch accent-swatch--sakura" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="蓝色" aria-checked="false" data-accent-option="blue">
+          <span class="accent-swatch accent-swatch--blue" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="粉色" aria-checked="false" data-accent-option="pink">
+          <span class="accent-swatch accent-swatch--pink" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="绿色" aria-checked="false" data-accent-option="green">
+          <span class="accent-swatch accent-swatch--green" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="黑色" aria-checked="false" data-accent-option="black">
+          <span class="accent-swatch accent-swatch--black" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
+    <button class="theme-toggle" type="button" aria-label="切换颜色模式">
+      <span class="theme-icon theme-icon--sun">
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sun flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-sun"></use></svg>
+</span>
+      <span class="theme-icon theme-icon--moon">
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-moon flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-moon"></use></svg>
+</span>
+    </button>
+  </div>
+</header>
+
+
+  
+  <main class="paper-shell paper-shell--article">
+    
+
+<aside id="paper-sidebar-drawer" class="paper-sidebar paper-sidebar--right" aria-label="侧边栏">
+  <div class="drawer-toolbar" aria-label="侧边栏工具">
+    <div class="drawer-accent-options" role="group" aria-label="主题色">
+      <button type="button" class="accent-option" aria-label="橙色" aria-pressed="false" data-accent-option="orange">
+        <span class="accent-swatch accent-swatch--orange" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="accent-option" aria-label="紫色" aria-pressed="false" data-accent-option="purple">
+        <span class="accent-swatch accent-swatch--purple" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="accent-option" aria-label="樱花粉" aria-pressed="false" data-accent-option="sakura">
+        <span class="accent-swatch accent-swatch--sakura" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="accent-option" aria-label="蓝色" aria-pressed="false" data-accent-option="blue">
+        <span class="accent-swatch accent-swatch--blue" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="accent-option" aria-label="粉色" aria-pressed="false" data-accent-option="pink">
+        <span class="accent-swatch accent-swatch--pink" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="accent-option" aria-label="绿色" aria-pressed="false" data-accent-option="green">
+        <span class="accent-swatch accent-swatch--green" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="accent-option" aria-label="黑色" aria-pressed="false" data-accent-option="black">
+        <span class="accent-swatch accent-swatch--black" aria-hidden="true"></span>
+      </button>
+    </div>
+    <button class="icon-button drawer-close js-sidebar-close" type="button" aria-label="关闭侧边栏">
+      
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-x"></use></svg>
+
+    </button>
+  </div>
+
+  <section class="side-card nav-card">
+    <nav class="site-nav-drawer" aria-label="移动端导航">
+      
+        
+          <a class="" href="/">
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-house flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-house"></use></svg>
+
+            <span>首页</span>
+          </a>
+        
+      
+        
+          <a class="" href="/links/">
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-link"></use></svg>
+
+            <span>友链</span>
+          </a>
+        
+      
+        
+          <div class="drawer-nav-group">
+            <button class="drawer-nav-parent" type="button" aria-expanded="false">
+              
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-folder"></use></svg>
+
+              <span>文章</span>
+            </button>
+            <div class="drawer-nav-children">
+              
+                <a class="" href="/archives/">
+                  
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-archive flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-archive"></use></svg>
+
+                  <span>归档</span>
+                </a>
+              
+                <a class="" href="/categories/">
+                  
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-folder"></use></svg>
+
+                  <span>分类</span>
+                </a>
+              
+                <a class="" href="/tags/">
+                  
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tag flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-tag"></use></svg>
+
+                  <span>标签</span>
+                </a>
+              
+            </div>
+          </div>
+        
+      
+        
+          <a class="" target="_blank" rel="noopener" href="https://www.travellings.cn/go.html">
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tram-front flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-tram-front"></use></svg>
+
+            <span>开往</span>
+          </a>
+        
+      
+    </nav>
+  </section>
+
+  <section class="side-card profile-card">
+    
+      <div class="avatar avatar--image avatar--circle">
+        <img src="/images/avatar.png" alt="Mr. O" loading="lazy" referrerpolicy="no-referrer">
+      </div>
+    
+    <h3>Mr. O</h3>
+    <p class="profile-role">独立开发者</p>
+    <p>探索互联网世界，分享实用教程与精彩内容，发现更多有趣之处。</p>
+    
+      <div class="site-info" aria-label="站点信息">
+        
+          
+            <a class="site-info__item" href="/archives/">
+              <strong>80</strong>
+              <span>文章</span>
+            </a>
+          
+        
+          
+            <a class="site-info__item" href="/categories/">
+              <strong>8</strong>
+              <span>分类</span>
+            </a>
+          
+        
+          
+            <a class="site-info__item" href="/tags/">
+              <strong>116</strong>
+              <span>标签</span>
+            </a>
+          
+        
+      </div>
+    
+    <div class="socials">
+      
+        <a href="https://tools.ooo.run" target="_blank" rel="noopener" aria-label="Tools" data-tooltip="Tools">
+          
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tool-case flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-tool-case"></use></svg>
+
+          
+        </a>
+      
+      
+        
+        
+        <a href="/atom.xml" aria-label="RSS feed" data-tooltip="RSS feed">
+          
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-rss flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-rss"></use></svg>
+
+        </a>
+      
+    </div>
+  </section>
+
+  
+    <section class="side-card brand-link-card" aria-label="站点链接">
+      
+        <div class="brand-link-group">
+          <div class="brand-link-title">Blog</div>
+          <div class="brand-link-list">
+            
+              <a href="https://ooo.run/" target="_blank" rel="noopener noreferrer">
+                
+                  <img src="https://ooo.run/favicon.ico" alt="" class="nav-img-icon" aria-hidden="true" />
+                
+                <span>O&#39;s World</span>
+              </a>
+            
+          </div>
+        </div>
+      
+        <div class="brand-link-group">
+          <div class="brand-link-title">Project</div>
+          <div class="brand-link-list">
+            
+              <a href="https://tools.ooo.run" target="_blank" rel="noopener noreferrer">
+                
+                  <img src="https://tools.ooo.run/favicon.png" alt="" class="nav-img-icon" aria-hidden="true" />
+                
+                <span>简易工具</span>
+              </a>
+            
+              <a href="https://ooo.run/games" target="_blank" rel="noopener noreferrer">
+                
+                  <img src="https://img.nep.me/ooo/game.webp" alt="" class="nav-img-icon" aria-hidden="true" />
+                
+                <span>简单游戏</span>
+              </a>
+            
+          </div>
+        </div>
+      
+    </section>
+  
+
+  
+    <div class="post-sticky-stack">
+      <section class="side-card toc-card">
+        <header class="toc-card__head">
+          <h2>
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-table-of-contents flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-table-of-contents"></use></svg>
+文章目录</h2>
+          <button type="button" class="toc-toggle-all" data-action="toggle-toc" aria-pressed="false" aria-label="展开全部目录" title="展开全部目录">
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-chevron-down"></use></svg>
+
+          </button>
+        </header>
+        <div class="toc-content">
+          
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8D%E5%90%8C%E6%A8%A1%E5%9E%8B%E4%B8%8E-Effort-%E5%BA%94%E8%AF%A5%E6%80%8E%E4%B9%88%E9%80%89"><span class="toc-text">不同模型与 Effort 应该怎么选</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Sol%EF%BC%9A%E6%97%A5%E5%B8%B8%E5%BC%80%E5%8F%91%E5%92%8C%E5%89%8D%E7%AB%AF%E4%BB%BB%E5%8A%A1%E7%9A%84%E9%A6%96%E9%80%89"><span class="toc-text">Sol：日常开发和前端任务的首选</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Terra%EF%BC%9A%E9%A2%9D%E5%BA%A6%E6%95%8F%E6%84%9F%E4%BB%BB%E5%8A%A1%E7%9A%84%E6%80%A7%E4%BB%B7%E6%AF%94%E9%80%89%E6%8B%A9"><span class="toc-text">Terra：额度敏感任务的性价比选择</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Luna%EF%BC%9A%E9%80%82%E5%90%88%E4%BD%8E%E6%88%90%E6%9C%AC%E6%8E%A2%E7%B4%A2"><span class="toc-text">Luna：适合低成本探索</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#High%EF%BC%9A%E6%A8%A1%E7%B3%8A-Bug-%E5%92%8C%E8%B7%A8%E6%A8%A1%E5%9D%97%E4%BF%AE%E6%94%B9"><span class="toc-text">High：模糊 Bug 和跨模块修改</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Ultra%EF%BC%9A%E5%8F%AA%E7%94%A8%E4%BA%8E%E7%9C%9F%E6%AD%A3%E4%B8%8D%E8%83%BD%E5%87%BA%E9%94%99%E7%9A%84%E4%BB%BB%E5%8A%A1"><span class="toc-text">Ultra：只用于真正不能出错的任务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#xhigh-%E7%9A%84%E6%94%B6%E7%9B%8A%E5%B7%B2%E7%BB%8F%E5%BC%80%E5%A7%8B%E9%80%92%E5%87%8F"><span class="toc-text">xhigh 的收益已经开始递减</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%89%E5%BE%97-GPT-5-6-%E6%85%A2%EF%BC%8C%E5%8F%AF%E8%83%BD%E6%98%AF-Effort-%E8%AE%BE%E5%BE%97%E5%A4%AA%E9%AB%98"><span class="toc-text">觉得 GPT-5.6 慢，可能是 Effort 设得太高</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%95%BF%E4%BB%BB%E5%8A%A1%E4%B8%8D%E8%A6%81%E5%8F%AA%E7%BB%99%E7%9B%AE%E6%A0%87%EF%BC%8C%E8%BF%98%E8%A6%81%E7%BB%99%E5%81%9C%E6%AD%A2%E6%9D%A1%E4%BB%B6"><span class="toc-text">长任务不要只给目标，还要给停止条件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MCP-%E5%B7%A5%E5%85%B7%E4%B8%8D%E4%B8%80%E5%AE%9A%E8%A6%81%E5%85%A8%E9%83%A8%E5%B8%B8%E9%A9%BB%E4%B8%8A%E4%B8%8B%E6%96%87"><span class="toc-text">MCP 工具不一定要全部常驻上下文</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8A%8A%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C%E5%B0%81%E8%A3%85%E6%88%90-CLI"><span class="toc-text">把常用操作封装成 CLI</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%86%E4%B8%93%E4%B8%9A-MCP-%E6%94%BE%E5%88%B0%E4%B8%93%E7%94%A8%E5%AD%90-Agent"><span class="toc-text">将专业 MCP 放到专用子 Agent</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9D%83%E9%99%90%E4%BC%98%E5%85%88%E4%BD%BF%E7%94%A8-Auto-Review"><span class="toc-text">权限优先使用 Auto Review</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Codex%E3%80%81ChatGPT-Work-%E5%92%8C%E6%99%AE%E9%80%9A%E8%81%8A%E5%A4%A9%E7%9A%84%E9%A2%9D%E5%BA%A6%E5%A6%82%E4%BD%95%E8%AE%A1%E7%AE%97"><span class="toc-text">Codex、ChatGPT Work 和普通聊天的额度如何计算</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88-Pro-mode-%E6%B2%A1%E6%9C%89%E8%BF%9B%E5%85%A5-Codex"><span class="toc-text">为什么 Pro mode 没有进入 Codex</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AMA-%E6%B2%A1%E6%9C%89%E5%9B%9E%E7%AD%94%E7%9A%84%E5%87%A0%E4%B8%AA%E5%85%B3%E9%94%AE%E9%97%AE%E9%A2%98"><span class="toc-text">AMA 没有回答的几个关键问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GPT-5-6-%E4%B8%BA%E4%BB%80%E4%B9%88%E6%AF%94-GPT-5-5-%E6%9B%B4%E8%80%97%E9%A2%9D%E5%BA%A6"><span class="toc-text">GPT-5.6 为什么比 GPT-5.5 更耗额度</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1M-%E4%B8%8A%E4%B8%8B%E6%96%87%E7%AA%97%E5%8F%A3%E4%BB%8D%E7%84%B6%E6%B2%A1%E6%9C%89%E6%98%8E%E7%A1%AE%E8%AE%A1%E5%88%92"><span class="toc-text">1M 上下文窗口仍然没有明确计划</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%B0%E7%89%88-ChatGPT-%E6%A1%8C%E9%9D%A2%E5%BA%94%E7%94%A8%E9%81%AD%E5%88%B0%E9%9B%86%E4%B8%AD%E5%90%90%E6%A7%BD"><span class="toc-text">新版 ChatGPT 桌面应用遭到集中吐槽</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux-%E6%B2%A1%E6%9C%89%E6%97%B6%E9%97%B4%E8%A1%A8%EF%BC%8CWindows-%E4%BB%8D%E6%98%AF%E4%BA%8C%E7%AD%89%E5%85%AC%E6%B0%91"><span class="toc-text">Linux 没有时间表，Windows 仍是二等公民</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reward-Hacking-%E9%97%AE%E9%A2%98%E8%A2%AB%E7%A4%BC%E8%B2%8C%E7%BB%95%E5%BC%80"><span class="toc-text">Reward Hacking 问题被礼貌绕开</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%8E%E4%B9%88%E7%94%A8%E6%9B%B4%E7%9C%81%E5%B7%B2%E7%BB%8F%E8%AE%B2%E6%B8%85%E6%A5%9A%EF%BC%8C%E4%B8%BA%E4%BB%80%E4%B9%88%E6%9B%B4%E8%B4%B9%E4%BB%8D%E7%84%B6%E6%82%AC%E8%80%8C%E6%9C%AA%E5%86%B3"><span class="toc-text">怎么用更省已经讲清楚，为什么更费仍然悬而未决</span></a></li></ol>
+          
+        </div>
+      </section>
+      
+
+  <section class="side-card recent-card latest-posts-card">
+    <h2>
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-history flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-history"></use></svg>
+最新文章</h2>
+    <ul class="recent-list">
+      
+        <li>
+          <a class="recent-item" href="/post/openai-release-gpt-5-6.html">
+            <strong>OpenAI 发布 GPT-5.6 与 ChatGPT Work，重塑 AI 工作模式</strong>
+            <em>2026-07-10</em>
+          </a>
+        </li>
+      
+        <li>
+          <a class="recent-item" href="/post/change-vaultwarden-account-email-without-set-smtp.html">
+            <strong>在不设置 SMTP 的情况下修改 Vaultwarden(Bitwarden) 的账户邮箱</strong>
+            <em>2026-07-09</em>
+          </a>
+        </li>
+      
+        <li>
+          <a class="recent-item" href="/post/docker-compose-init-containers.html">
+            <strong>Docker Compose 新增 Init Containers：终于不用再写一堆一次性初始化服务了</strong>
+            <em>2026-07-04</em>
+          </a>
+        </li>
+      
+        <li>
+          <a class="recent-item" href="/post/paper-shaders-open-source-webgl-design-effects.html">
+            <strong>开源项目: 把酷炫的 WebGL Shader 变成前端组件 - Paper Shaders 介绍</strong>
+            <em>2026-07-02</em>
+          </a>
+        </li>
+      
+        <li>
+          <a class="recent-item" href="/post/is-sonnet-5-worth-using.html">
+            <strong>Sonnet 5 已发布，值得用吗？</strong>
+            <em>2026-07-01</em>
+          </a>
+        </li>
+      
+    </ul>
+  </section>
+
+
+    </div>
+  
+
+  
+
+</aside>
+
+    <section class="paper-main">
+      
+
+<div class="article-tape-wrap">
+<span class="tape tape--top-right" aria-hidden="true"></span>
+<article class="article-paper article-paper--with-top-img">
+  
+    <figure class="article-top-img" aria-label="如何选择 GPT 5.6 不同模型与推理强度？查看 OpenAI Codex 团队的推荐设置">
+      <img src="https://img.nep.me/ooo/cover-select-gpt-5-6.webp" alt="" loading="eager" fetchpriority="high" referrerpolicy="no-referrer" draggable="false">
+    </figure>
+  
+  <header class="article-header">
+    
+      <a class="label-pill" href="/categories/%E8%B5%84%E8%AE%AF/">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-folder"></use></svg>
+
+        资讯
+      </a>
+    
+    <h1>如何选择 GPT 5.6 不同模型与推理强度？查看 OpenAI Codex 团队的推荐设置</h1>
+    <div class="meta-line meta-line--article">
+      <span class="meta-date">
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-calendar"></use></svg>
+2026-07-12</span>
+      
+        <span class="meta-tags">
+          
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tag flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-tag"></use></svg>
+
+          <a class="meta-tag-link" href="/tags/OpenAI/">#OpenAI</a><a class="meta-tag-link" href="/tags/ChatGPT/">#ChatGPT</a><a class="meta-tag-link" href="/tags/Codex/">#Codex</a><a class="meta-tag-link" href="/tags/GPT-5-6/">#GPT-5.6</a><a class="meta-tag-link" href="/tags/AI-Agent/">#AI Agent</a>
+        </span>
+      
+    </div>
+  </header>
+
+  
+
+
+  <div class="article-content">
+    <p>7 月 10 日，OpenAI Codex 团队在 Reddit 举办了一场 <a target="_blank" rel="noopener" href="https://www.reddit.com/r/codex/comments/1us9ty9/ama_with_openais_codex_team/">AMA</a>（Ask Me Anything，在线问答活动）。</p>
+<p>整场 AMA 的评论区呈现出一种颇为微妙的气氛：一半用户认真提问 Codex、GPT-5.6 和 ChatGPT Work 的使用方法，另一半用户则集中吐槽额度消耗、桌面应用体验以及不同平台之间长期存在的功能差距。</p>
+<p>虽然官方没有正面回答所有尖锐问题，但在模型选择、推理强度、长任务设计、MCP 工具接入和权限管理方面，还是给出了不少具有实际参考价值的信息。</p>
+<p>其中最核心的结论可以概括为一句话：</p>
+<blockquote>
+<p>官方讲清楚了 Codex 应该怎么用得更省，却仍然没有解释为什么 GPT-5.6 用起来更费。</p>
+</blockquote>
+<h2 id="不同模型与-Effort-应该怎么选"><a href="#不同模型与-Effort-应该怎么选" class="headerlink" title="不同模型与 Effort 应该怎么选"></a>不同模型与 Effort 应该怎么选</h2><p>这次 AMA 中最实用的部分，是 Codex 团队成员分享了不同模型和 Effort 推理强度的选择经验。</p>
+<p>官方给出的日常默认组合是：</p>
+<blockquote>
+<p><strong>Sol + Medium Effort</strong></p>
+</blockquote>
+<p>这一配置适合大多数普通开发任务，在速度、质量和额度消耗之间相对均衡。</p>
+<p>对于不同场景，则可以进一步调整。</p>
+<h3 id="Sol：日常开发和前端任务的首选"><a href="#Sol：日常开发和前端任务的首选" class="headerlink" title="Sol：日常开发和前端任务的首选"></a>Sol：日常开发和前端任务的首选</h3><p>Sol 适合作为 Codex 中的默认主力模型，尤其适合：</p>
+<ul>
+<li>常规代码编写</li>
+<li>Bug 修复</li>
+<li>跨文件修改</li>
+<li>UI 与前端开发</li>
+<li>根据参考图还原界面</li>
+</ul>
+<p>官方特别提到，UI 和前端能力本身就是 GPT-5.6 的重点训练方向之一。</p>
+<p>如果任务中能够提供截图、设计稿或参考页面，Sol 的表现通常会明显优于只给出文字描述。</p>
+<h3 id="Terra：额度敏感任务的性价比选择"><a href="#Terra：额度敏感任务的性价比选择" class="headerlink" title="Terra：额度敏感任务的性价比选择"></a>Terra：额度敏感任务的性价比选择</h3><p>如果任务相对轻量，同时比较在意额度消耗，可以优先尝试 Terra。</p>
+<p>按照官方成员的说法，Terra 在部分任务上的表现可以接近 GPT-5.5，但资源消耗更低，比较适合：</p>
+<ul>
+<li>小范围代码修改</li>
+<li>简单脚本生成</li>
+<li>格式调整</li>
+<li>重复性开发工作</li>
+<li>已经明确实现路径的任务</li>
+</ul>
+<p>也就是说，并不是所有任务都需要直接交给最强模型。</p>
+<p>当需求本身足够清晰时，使用更轻量的模型反而可能获得更高的整体效率。</p>
+<h3 id="Luna：适合低成本探索"><a href="#Luna：适合低成本探索" class="headerlink" title="Luna：适合低成本探索"></a>Luna：适合低成本探索</h3><p>对于一些不确定是否值得深入的探索性任务，可以先交给 Luna。</p>
+<p>例如：</p>
+<ul>
+<li>快速浏览项目结构</li>
+<li>初步寻找相关文件</li>
+<li>调查某个功能的实现位置</li>
+<li>尝试生成几个可行方向</li>
+<li>判断问题是否值得升级到更强模型</li>
+</ul>
+<p>Luna 更适合作为一个低成本的“侦察兵”，而不是最终负责复杂修改的主力模型。</p>
+<h3 id="High：模糊-Bug-和跨模块修改"><a href="#High：模糊-Bug-和跨模块修改" class="headerlink" title="High：模糊 Bug 和跨模块修改"></a>High：模糊 Bug 和跨模块修改</h3><p>当问题描述比较模糊，或者修改涉及多个模块时，可以将 Effort 调整到 High。</p>
+<p>常见场景包括：</p>
+<ul>
+<li>无法稳定复现的 Bug</li>
+<li>多个模块之间的状态异常</li>
+<li>大范围重构</li>
+<li>跨前后端联调</li>
+<li>涉及复杂调用链的问题</li>
+</ul>
+<p>这类任务往往不仅需要生成代码，还需要模型建立完整的问题假设，并逐步排除错误方向。</p>
+<h3 id="Ultra：只用于真正不能出错的任务"><a href="#Ultra：只用于真正不能出错的任务" class="headerlink" title="Ultra：只用于真正不能出错的任务"></a>Ultra：只用于真正不能出错的任务</h3><p>官方并不建议将 Ultra 作为常规配置。</p>
+<p>更适合使用 Ultra 的场景包括：</p>
+<ul>
+<li>数据库迁移</li>
+<li>安全相关修改</li>
+<li>生产事故修复</li>
+<li>权限系统调整</li>
+<li>大规模基础设施变更</li>
+<li>一旦出错就可能造成严重损失的任务</li>
+</ul>
+<p>Ultra 的意义不是让所有任务都“更聪明”，而是在高风险任务中换取更多检查、推理和验证。</p>
+<h3 id="xhigh-的收益已经开始递减"><a href="#xhigh-的收益已经开始递减" class="headerlink" title="xhigh 的收益已经开始递减"></a>xhigh 的收益已经开始递减</h3><p>对于最高级别的 xhigh，官方也明确表示，在评测中已经出现明显的收益递减。</p>
+<p>它更适合以下情况：</p>
+<ul>
+<li>任务执行时间很长</li>
+<li>修改范围非常大</li>
+<li>错误成本极高</li>
+<li>需要多轮验证</li>
+<li>用户特别担心模型遗漏边缘情况</li>
+</ul>
+<p>对于普通任务，直接提高到 xhigh 并不一定划算，反而可能带来更慢的速度和更高的额度消耗。</p>
+<h2 id="觉得-GPT-5-6-慢，可能是-Effort-设得太高"><a href="#觉得-GPT-5-6-慢，可能是-Effort-设得太高" class="headerlink" title="觉得 GPT-5.6 慢，可能是 Effort 设得太高"></a>觉得 GPT-5.6 慢，可能是 Effort 设得太高</h2><p>不少从 GPT-5.5 升级到 GPT-5.6 的用户，仍然沿用了之前较高的推理强度设置。</p>
+<p>Codex 团队建议，如果觉得 GPT-5.6 运行速度过慢，可以先检查当前 Effort 是否仍然保持在 GPT-5.5 时期的配置。</p>
+<p>GPT-5.6 在更低 Effort 下，往往已经能够完成过去需要更高推理强度才能完成的任务。</p>
+<p>换句话说，升级模型后，不应机械地保留原有配置。</p>
+<p>更合理的方法是从 Medium 开始，根据任务难度逐步增加，而不是一开始就使用 High、Ultra 或 xhigh。</p>
+<p>官方还提到，Fast mode 可以进一步提升大约 1.5 倍的速度。</p>
+<p>因此，一套比较实用的选择顺序是：</p>
+<ol>
+<li>先尝试 Sol Medium；</li>
+<li>简单任务切换到 Terra；</li>
+<li>模糊问题再提高到 High；</li>
+<li>高风险任务才使用 Ultra；</li>
+<li>只有极少数长任务需要 xhigh。</li>
+</ol>
+<h2 id="长任务不要只给目标，还要给停止条件"><a href="#长任务不要只给目标，还要给停止条件" class="headerlink" title="长任务不要只给目标，还要给停止条件"></a>长任务不要只给目标，还要给停止条件</h2><p>在长时间运行的 Agent 任务方面，官方推荐使用 <code>/goal</code> 来描述任务目标。</p>
+<p>但仅仅给出目标还不够。</p>
+<p>如果没有清晰的边界和停止条件，Agent 很容易持续探索、反复修改，最终消耗大量 token，却未必能够产生更好的结果。</p>
+<p>官方建议在长任务中明确加入限制条件，例如：</p>
+<ul>
+<li>只允许修改指定目录；</li>
+<li>不允许改变公开 API；</li>
+<li>最多验证三个假设；</li>
+<li>每个假设完成后必须运行测试；</li>
+<li>如果所有假设都失败，则停止修改并输出总结；</li>
+<li>不允许添加新的依赖；</li>
+<li>不允许修改数据库结构；</li>
+<li>达到指定时间或尝试次数后结束。</li>
+</ul>
+<p>例如，一个比“修复登录 Bug”更合适的任务描述可以写成：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">修复用户偶尔无法登录的问题。</span><br><span class="line"></span><br><span class="line">限制条件：</span><br><span class="line">- 只修改 auth 和 session 目录；</span><br><span class="line">- 不改变现有公开 API；</span><br><span class="line">- 最多验证三个可能原因；</span><br><span class="line">- 每验证一个原因后运行相关测试；</span><br><span class="line">- 如果三个方向都失败，停止修改并总结调查结果。</span><br></pre></td></tr></table></figure>
+
+<p>这类停止条件能够避免 Agent 陷入无限尝试，也可以降低模型在长任务中不断扩大修改范围的风险。</p>
+<h2 id="MCP-工具不一定要全部常驻上下文"><a href="#MCP-工具不一定要全部常驻上下文" class="headerlink" title="MCP 工具不一定要全部常驻上下文"></a>MCP 工具不一定要全部常驻上下文</h2><p>MCP 为 Codex 提供了调用外部工具和服务的能力，但如果直接挂载大量 MCP 服务，也会带来明显的上下文开销。</p>
+<p>几十个工具定义长期驻留在上下文中，会占用 token，并增加模型选择错误工具的可能性。</p>
+<p>Codex 团队提出了两个更节省上下文的思路。</p>
+<h3 id="把常用操作封装成-CLI"><a href="#把常用操作封装成-CLI" class="headerlink" title="把常用操作封装成 CLI"></a>把常用操作封装成 CLI</h3><p>第一种方式，是将外部服务操作封装成命令行工具，再通过 Skill 教会 Codex 如何使用。</p>
+<p>例如，不直接加载一整套部署平台的 MCP 工具，而是提供：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">deployctl status</span><br><span class="line">deployctl logs</span><br><span class="line">deployctl release</span><br></pre></td></tr></table></figure>
+
+<p>然后在 Skill 中描述这些命令的用途和参数。</p>
+<p>这样做的优势是：</p>
+<ul>
+<li>工具定义更短；</li>
+<li>上下文占用更低；</li>
+<li>调用方式更稳定；</li>
+<li>更容易进行权限控制；</li>
+<li>可以直接复用现有 Shell 工作流。</li>
+</ul>
+<p>对于原本就支持命令行操作的服务，这通常比长期挂载完整 MCP 更高效。</p>
+<h3 id="将专业-MCP-放到专用子-Agent"><a href="#将专业-MCP-放到专用子-Agent" class="headerlink" title="将专业 MCP 放到专用子 Agent"></a>将专业 MCP 放到专用子 Agent</h3><p>第二种方式，是创建一个专用子 Agent，并只为它配置特定 MCP。</p>
+<p>例如可以创建：</p>
+<ul>
+<li>Unreal Engine 专用 Agent</li>
+<li>数据库运维 Agent</li>
+<li>Kubernetes Agent</li>
+<li>浏览器自动化 Agent</li>
+<li>内部文档检索 Agent</li>
+</ul>
+<p>主 Agent 平时不需要加载这些工具，只有遇到对应任务时，才将工作委托给专用 Agent。</p>
+<p>这种模式既可以减少主上下文中的工具数量，也能降低不同工具之间的干扰。</p>
+<h2 id="权限优先使用-Auto-Review"><a href="#权限优先使用-Auto-Review" class="headerlink" title="权限优先使用 Auto Review"></a>权限优先使用 Auto Review</h2><p>在 Codex 权限设置上，官方建议多数情况下使用 <strong>Auto review</strong>，而不是直接开启 <strong>Full access</strong>。</p>
+<p>Full access 虽然能够减少执行过程中的确认步骤，但也意味着 Agent 可以更自由地执行命令、修改文件和访问环境。</p>
+<p>对于日常开发任务，Auto review 通常已经能够在效率与安全之间取得较好的平衡。</p>
+<p>官方尤其提醒 Windows 用户，应更加谨慎地使用 Full access。</p>
+<p>Windows 环境中的 Shell、权限系统、路径处理和脚本行为更加复杂，一些看似普通的命令可能产生超出预期的影响。</p>
+<p>因此，更稳妥的做法是：</p>
+<ul>
+<li>默认使用 Auto review；</li>
+<li>仅在可信项目中临时开启更高权限；</li>
+<li>限制 Agent 可修改的目录；</li>
+<li>对删除、安装和系统级命令进行人工确认；</li>
+<li>不要在包含重要个人文件的目录中直接运行高权限 Agent。</li>
+</ul>
+<h2 id="Codex、ChatGPT-Work-和普通聊天的额度如何计算"><a href="#Codex、ChatGPT-Work-和普通聊天的额度如何计算" class="headerlink" title="Codex、ChatGPT Work 和普通聊天的额度如何计算"></a>Codex、ChatGPT Work 和普通聊天的额度如何计算</h2><p>这次 AMA 也对不同功能的额度分类做出了解释。</p>
+<p>按照官方的划分：</p>
+<ul>
+<li>Codex 计入 Agentic 额度；</li>
+<li>ChatGPT Work 计入 Agentic 额度；</li>
+<li>普通 ChatGPT 对话不计入 Agentic 额度；</li>
+<li>图像生成有独立额度；</li>
+<li>文件上传与处理有独立额度；</li>
+<li>语音功能也有独立额度。</li>
+</ul>
+<p>这意味着，不能简单地将 ChatGPT 中的所有功能都视为共享同一个额度池。</p>
+<p>用户看到某一类功能额度下降，并不一定代表其他功能也会同步受到影响。</p>
+<p>不过具体到单个 Codex 任务，其消耗并不是固定值。</p>
+<p>任务长度、上下文规模、模型、Effort、工具调用次数、测试次数以及是否发生重试，都会影响最终消耗。</p>
+<h2 id="为什么-Pro-mode-没有进入-Codex"><a href="#为什么-Pro-mode-没有进入-Codex" class="headerlink" title="为什么 Pro mode 没有进入 Codex"></a>为什么 Pro mode 没有进入 Codex</h2><p>不少用户询问，既然 ChatGPT 中提供了 Pro mode，为什么 Codex 中没有同样的选项。</p>
+<p>官方给出的解释是，Pro mode 的运行机制对于 Agentic 编程任务的提升相对有限。</p>
+<p>它通常具有以下特点：</p>
+<ul>
+<li>响应速度更慢；</li>
+<li>消耗额度更多；</li>
+<li>更偏向一次性深度推理；</li>
+<li>对连续工具调用和代码执行的帮助没有想象中明显。</li>
+</ul>
+<p>因此，Pro mode 更适合：</p>
+<ul>
+<li>搜索</li>
+<li>数学推理</li>
+<li>长文写作</li>
+<li>文档分析</li>
+<li>复杂研究任务</li>
+</ul>
+<p>而 Codex 的核心场景是读取代码、执行命令、修改文件、运行测试并根据结果继续行动。</p>
+<p>在这种 Agentic 工作流中，模型本身的单次推理强度并不是唯一决定因素，工具使用和反馈循环同样重要。</p>
+<h2 id="AMA-没有回答的几个关键问题"><a href="#AMA-没有回答的几个关键问题" class="headerlink" title="AMA 没有回答的几个关键问题"></a>AMA 没有回答的几个关键问题</h2><p>虽然官方分享了许多使用技巧，但用户最关心的一些问题仍然没有获得明确答案。</p>
+<h2 id="GPT-5-6-为什么比-GPT-5-5-更耗额度"><a href="#GPT-5-6-为什么比-GPT-5-5-更耗额度" class="headerlink" title="GPT-5.6 为什么比 GPT-5.5 更耗额度"></a>GPT-5.6 为什么比 GPT-5.5 更耗额度</h2><p>整个 AMA 中呼声最高的问题，仍然是 GPT-5.6 的额度消耗。</p>
+<p>大量用户反馈，GPT-5.6 在实际使用中的额度下降速度明显快于 GPT-5.5。</p>
+<p>这与官方此前强调的“更高 token 效率”形成了明显反差。</p>
+<p>官方对此只解释称：</p>
+<blockquote>
+<p>每个任务的消耗并不是固定的。</p>
+</blockquote>
+<p>这句话本身并没有错。</p>
+<p>复杂任务、更多工具调用、更长输出以及更高 Effort，确实都会增加消耗。</p>
+<p>但它没有正面回答用户真正关心的问题：</p>
+<ul>
+<li>相同任务下，GPT-5.6 是否平均消耗更多额度？</li>
+<li>是否因为内部推理 token 增加？</li>
+<li>是否因为工具调用和验证次数更多？</li>
+<li>Agentic 额度是否采用了不同于文本 token 的权重换算？</li>
+<li>Fast mode 与普通模式的额度计算是否相同？</li>
+<li>官方宣传中的 token 效率，是否不等于用户看到的额度效率？</li>
+</ul>
+<p>这些问题在 AMA 后依然没有答案。</p>
+<h2 id="1M-上下文窗口仍然没有明确计划"><a href="#1M-上下文窗口仍然没有明确计划" class="headerlink" title="1M 上下文窗口仍然没有明确计划"></a>1M 上下文窗口仍然没有明确计划</h2><p>用户同样频繁询问 Codex 是否会提供 1M 上下文窗口。</p>
+<p>官方对此仅表示会认真查看用户反馈，没有给出明确的产品计划或上线时间。</p>
+<p>对于大型代码仓库来说，更大的上下文窗口确实具有吸引力。</p>
+<p>但在实际 Agentic 工作流中，上下文越大，也可能意味着：</p>
+<ul>
+<li>更高的处理成本；</li>
+<li>更慢的首次响应；</li>
+<li>更多无关代码进入上下文；</li>
+<li>更复杂的信息筛选；</li>
+<li>更快的额度消耗。</li>
+</ul>
+<p>因此，1M 上下文是否能够真正改善 Codex 体验，仍然取决于检索、压缩和上下文管理能力，而不只是数字本身。</p>
+<p>在价格方面，官方也明确表示无法承诺长期稳定。</p>
+<h2 id="新版-ChatGPT-桌面应用遭到集中吐槽"><a href="#新版-ChatGPT-桌面应用遭到集中吐槽" class="headerlink" title="新版 ChatGPT 桌面应用遭到集中吐槽"></a>新版 ChatGPT 桌面应用遭到集中吐槽</h2><p>新版 ChatGPT 桌面应用是 AMA 中另一个争议集中的话题。</p>
+<p>不少用户认为，新应用更偏向 ChatGPT Work 和 Agent 操作，而传统 Chat 功能则被压缩成了一个附属面板。</p>
+<p>用户集中反馈缺失或体验退步的功能包括：</p>
+<ul>
+<li>Projects</li>
+<li>完整历史记录</li>
+<li>常用快捷键</li>
+<li>录音功能</li>
+<li>原有聊天工作流</li>
+<li>Classic 应用中的部分导航体验</li>
+</ul>
+<p>官方承认新版应用仍在改进。</p>
+<p>但目前给出的短期方案，基本上仍然是同时保留并使用两个应用：</p>
+<ul>
+<li>需要传统聊天功能时使用 Classic；</li>
+<li>需要 Agent 和 Work 功能时使用新版应用。</li>
+</ul>
+<p>这显然称不上理想的解决方案。</p>
+<h2 id="Linux-没有时间表，Windows-仍是二等公民"><a href="#Linux-没有时间表，Windows-仍是二等公民" class="headerlink" title="Linux 没有时间表，Windows 仍是二等公民"></a>Linux 没有时间表，Windows 仍是二等公民</h2><p>对于 Linux 桌面版，官方确认相关工作正在进行，但没有提供具体时间线。</p>
+<p>而 Windows 用户长期存在的体验差距，也在 AMA 中再次被提及。</p>
+<p>官方事实上承认，Windows 版本在过去长期处于相对次要的位置。</p>
+<p>这种差距不仅体现在桌面应用，也体现在 Agent 开发环境中：</p>
+<ul>
+<li>Shell 行为与 macOS、Linux 不一致；</li>
+<li>路径和权限处理更复杂；</li>
+<li>部分开发工具优先适配 Unix 环境；</li>
+<li>沙箱能力存在差异；</li>
+<li>自动化脚本的兼容性更差；</li>
+<li>部分功能在 Windows 上更晚推出。</li>
+</ul>
+<p>对于将 Codex 作为主要开发工具的 Windows 用户来说，这仍然是一个现实问题。</p>
+<h2 id="Reward-Hacking-问题被礼貌绕开"><a href="#Reward-Hacking-问题被礼貌绕开" class="headerlink" title="Reward Hacking 问题被礼貌绕开"></a>Reward Hacking 问题被礼貌绕开</h2><p>还有用户追问了 METR 报告中提到的 reward hacking 问题。</p>
+<p>问题主要集中在：</p>
+<ul>
+<li>基准成绩提升中有多少来自 reward hacking；</li>
+<li>模型是否学会针对评测环境优化行为；</li>
+<li>GPT-5.6 的训练中做了哪些针对性修改；</li>
+<li>官方如何区分真实能力提升和评测策略优化。</li>
+</ul>
+<p>Codex 团队没有给出具体数据，也没有详细解释训练层面的改动。</p>
+<p>这类问题涉及模型训练、内部评估方法和安全研究，官方选择谨慎回应并不意外。</p>
+<p>但从用户角度看，这也意味着外界仍然难以判断：</p>
+<blockquote>
+<p>模型在基准上的提升，有多少能够稳定转化为真实开发环境中的可靠性。</p>
+</blockquote>
+<h2 id="怎么用更省已经讲清楚，为什么更费仍然悬而未决"><a href="#怎么用更省已经讲清楚，为什么更费仍然悬而未决" class="headerlink" title="怎么用更省已经讲清楚，为什么更费仍然悬而未决"></a>怎么用更省已经讲清楚，为什么更费仍然悬而未决</h2><p>总体来看，这次 Codex 团队 AMA 的价值主要集中在实际使用方法上。</p>
+<p>官方给出的建议相当明确：</p>
+<ul>
+<li>日常默认使用 Sol Medium；</li>
+<li>轻量任务优先尝试 Terra；</li>
+<li>探索性工作可以委托给 Luna；</li>
+<li>模糊 Bug 和跨模块任务使用 High；</li>
+<li>Ultra 只留给高风险任务；</li>
+<li>xhigh 不应成为日常默认；</li>
+<li>长任务必须设置停止条件；</li>
+<li>不要让大量 MCP 工具长期常驻上下文；</li>
+<li>优先使用 Auto review，而不是 Full access；</li>
+<li>GPT-5.6 不一定需要沿用 GPT-5.5 的高 Effort 设置。</li>
+</ul>
+<p>这些建议的共同目标都是降低不必要的模型调用、上下文占用和推理消耗。</p>
+<p>但另一方面，用户最关心的问题依然没有获得正面回应：</p>
+<blockquote>
+<p>为什么 GPT-5.6 明明宣传 token 效率更高，实际使用时却更快消耗 Codex 额度？</p>
+</blockquote>
+<p>如果 Agentic 额度并不直接等于输入输出 token，那么官方就需要更清晰地解释其计算方式。</p>
+<p>如果 GPT-5.6 由于更频繁的工具调用、更长的内部推理或更主动的验证而消耗更高，也应该让用户能够看到这些差异。</p>
+<p>否则，用户最终只能通过反复试验来猜测每种模型和 Effort 的真实成本。</p>
+<p>这场 AMA 讲清楚了 Codex 应该“怎么用更省”。</p>
+<p>至于它为什么“变得更费”，仍然是一个没有被回答的问题。</p>
+
+  </div>
+
+  <footer class="article-reactions">
+    <div class="reaction-group">
+      <button type="button" class="reaction reaction--comment" aria-label="跳转到评论区" data-action="scroll-to-comments">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-message-circle"></use></svg>
+
+      </button>
+      <span class="reaction-label">评论</span>
+      
+    </div>
+    <div class="reaction-group reaction-group--right">
+      
+      <button type="button" class="reaction reaction--share" aria-label="分享" data-action="share">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-share-2 flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-share-2"></use></svg>
+
+      </button>
+      <span class="reaction-label">分享</span>
+    </div>
+  </footer>
+
+  
+
+
+  <nav class="article-actions">
+    
+      <span class="article-action article-action--prev is-disabled" aria-disabled="true">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-arrow-left"></use></svg>
+
+        <span class="action-label">上一篇</span>
+        <span class="action-title">没有更早的文章了</span>
+      </span>
+    
+    
+      <a class="article-action article-action--next" href="/post/openai-release-gpt-5-6.html">
+        <span class="action-label">下一篇</span>
+        <span class="action-title">OpenAI 发布 GPT-5.6 与 ChatGPT Work，重塑 AI 工作模式</span>
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-arrow-right"></use></svg>
+
+      </a>
+    
+  </nav>
+</article>
+</div>
+
+<button type="button" class="back-to-top" data-action="scroll-to-top" aria-label="返回顶部" hidden>
+  
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-arrow-up"></use></svg>
+
+</button>
+
+
+  <section class="related-paper">
+    <header class="related-paper__head">
+      <h2>
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-link"></use></svg>
+相关文章</h2>
+      <a class="related-paper__more" href="/archives/">
+        <span>查看更多</span>
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-arrow-right"></use></svg>
+
+      </a>
+    </header>
+    <div class="related-paper__grid">
+      
+        <a class="related-card" href="/post/openai-release-gpt-5-6.html">
+          <span class="related-card__thumb">
+            
+<div class="paper-thumb paper-thumb-0 paper-thumb--cover">
+  
+    <img class="paper-thumb__img" src="https://img.nep.me/ooo/cover-gpt-5-6-public.webp" alt="OpenAI 发布 GPT-5.6 与 ChatGPT Work，重塑 AI 工作模式" loading="lazy" referrerpolicy="no-referrer">
+  
+</div>
+
+          </span>
+          <span class="related-card__body">
+            <strong class="related-card__title">OpenAI 发布 GPT-5.6 与 ChatGPT Work，重塑 AI 工作模式</strong>
+            <em class="related-card__date">2026-07-10</em>
+          </span>
+        </a>
+      
+        <a class="related-card" href="/post/openai-gpt-5-6-limited-preview.html">
+          <span class="related-card__thumb">
+            
+<div class="paper-thumb paper-thumb-1 paper-thumb--cover">
+  
+    <img class="paper-thumb__img" src="https://img.nep.me/ooo/cover-gpt-5-6.webp" alt="OpenAI 发布 GPT-5.6 系列模型：Sol、Terra 和 Luna 开启有限预览，受美国政府要求限制初始访问" loading="lazy" referrerpolicy="no-referrer">
+  
+</div>
+
+          </span>
+          <span class="related-card__body">
+            <strong class="related-card__title">OpenAI 发布 GPT-5.6 系列模型：Sol、Terra 和 Luna 开启有限预览，受美国政府要求限制初始访问</strong>
+            <em class="related-card__date">2026-06-27</em>
+          </span>
+        </a>
+      
+        <a class="related-card" href="/post/openai-release-codex-app.html">
+          <span class="related-card__thumb">
+            
+<div class="paper-thumb paper-thumb-2 paper-thumb--cover">
+  
+    <img class="paper-thumb__img" src="https://img.nep.me/i/2026/02/cover-codex-app.webp" alt="OpenAI 发布桌面版 Codex App ：开启 “AI 智能体” 指挥中心时代" loading="lazy" referrerpolicy="no-referrer">
+  
+</div>
+
+          </span>
+          <span class="related-card__body">
+            <strong class="related-card__title">OpenAI 发布桌面版 Codex App ：开启 “AI 智能体” 指挥中心时代</strong>
+            <em class="related-card__date">2026-02-03</em>
+          </span>
+        </a>
+      
+        <a class="related-card" href="/post/2025-oct-new-models-coming.html">
+          <span class="related-card__thumb">
+            
+<div class="paper-thumb paper-thumb-0 paper-thumb--cover">
+  
+    <img class="paper-thumb__img" src="https://img.nep.me/i/2025/10/01/2025-oct-models-update.webp" alt="AI 大模型集中发布：DeepSeek 3.2、Claude Sonnet 4.5、OpenAI Sora 2、GLM-4.6 亮点速览" loading="lazy" referrerpolicy="no-referrer">
+  
+</div>
+
+          </span>
+          <span class="related-card__body">
+            <strong class="related-card__title">AI 大模型集中发布：DeepSeek 3.2、Claude Sonnet 4.5、OpenAI Sora 2、GLM-4.6 亮点速览</strong>
+            <em class="related-card__date">2025-10-01</em>
+          </span>
+        </a>
+      
+    </div>
+  </section>
+
+
+      
+
+<section class="comments-section" aria-label="评论">
+  <header class="comments-section__head">
+    <h2>
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-message-circle"></use></svg>
+评论</h2>
+  </header>
+  <div id="artalk-comments"></div>
+</section>
+<script>
+window.addEventListener('load', function () {
+  if (typeof Artalk === 'undefined' || typeof Artalk.init !== 'function') return;
+  Artalk.init({
+    el: '#artalk-comments',
+    pageKey: "https://ooo.run/post/how-to-select-gpt-5-6-model.html",
+    pageTitle: "如何选择 GPT 5.6 不同模型与推理强度？查看 OpenAI Codex 团队的推荐设置",
+    server: "https://artalk.ooo.run",
+    site: "Mr. O 的博客"
+  });
+});
+</script>
+
+
+    </section>
+    
+  </main>
+
+  <div class="sidebar-backdrop js-sidebar-close" aria-hidden="true"></div>
+
+  
+<footer class="site-footer">
+  <span class="site-footer__left">© 2026 By Mr. O</span>
+  
+    <span class="site-footer__right">
+      
+        <span class="site-footer__row"><span class="site-footer__powered-prefix">Powered by Theme</span> <a href="https://github.com/Homulilly/hexo-theme-flatpaper" target="_blank" rel="noopener">FlatPaper</a></span>
+      
+        <span class="site-footer__row"><a href="/terms">服务条款</a><span class="site-footer__separator"> · </span><a href="/privacy">隐私政策</a></span>
+      
+        <span class="site-footer__row"><a href="https://tools.ooo.run" target="_blank" rel="noopener">简易工具</a></span>
+      
+    </span>
+  
+</footer>
+
+  
+<div class="search-panel" aria-hidden="true" data-index-url="/flatpaper-search.json">
+  <div class="search-backdrop js-search-close"></div>
+  <section class="search-dialog" role="dialog" aria-modal="true" aria-label="搜索文章">
+    <span class="tape tape--top-left" aria-hidden="true"></span>
+    <header class="search-head">
+      <h2><span class="green-dot"></span>搜索文章</h2>
+      <button class="icon-button js-search-close" type="button" aria-label="关闭搜索">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-x"></use></svg>
+
+      </button>
+    </header>
+    <label class="search-field">
+      
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-search"></use></svg>
+
+      <input id="flatpaper-search" class="search-input" type="search" placeholder="输入关键词，按 Esc 关闭" autocomplete="off">
+    </label>
+    <div class="search-results" data-empty="输入关键词后显示匹配的文章">
+      <p class="search-empty">输入关键词后显示匹配的文章</p>
+    </div>
+  </section>
+</div>
+
+  <script>
+  window.FLATPAPER_I18N = {"language":"zh-CN","common.posts":"文章","common.categories":"分类","common.tags":"标签","common.comments":"评论","common.share":"分享","common.page":"页面","common.archive":"归档","common.post_list":"文章列表","common.search_posts":"搜索文章","common.random_posts":"随机文章","common.reward":"赞赏","common.view_all":"查看全部","pagination.prev":"上一页","pagination.next":"下一页","pagination.post_pager":"文章分页","pagination.archive_pager":"归档分页","index.featured":"精选文章","index.pinned":"置顶","index.read_more":"阅读全文","index.previous_slide":"上一张","index.next_slide":"下一张","index.carousel_pagination":"轮播页码","index.carousel_slide":"第 %d 张","index.latest_posts":"最新文章","index.empty_posts":"还没有文章。创建第一篇文章后，这里会显示最新内容。","archive.title":"归档","archive.post_list":"文章列表","taxonomy.category_count":"%d 篇","taxonomy.empty_categories":"暂时还没有分类。","taxonomy.empty_tags":"暂时还没有标签。","links.label":"友链","links.title":"友情链接","links.empty_data":"暂未加载到友链数据。请确认 source/_data/links.yml 存在并已 hexo clean。","links.rss_label":"%s 的 RSS","friends_feed.label":"朋友圈","friends_feed.title":"友链朋友圈","friends_feed.loading":"正在加载友链动态…","friends_feed.missing_url":"暂未配置 all.json 地址。","friends_feed.load_failed":"友链动态加载失败，请稍后再试。","friends_feed.empty":"暂时没有抓取到友链文章。","friends_feed.load_more":"加载更多","friends_feed.updated_at":"更新于 %s","friends_feed.friend_count":"%d 位友邻","friends_feed.active_count":"%d 位活跃","friends_feed.article_count":"%d 篇文章","friends_feed.unknown_author":"未知站点","friends_feed.date_unknown":"时间未知","post.scroll_to_comments":"跳转到评论区","post.previous":"上一篇","post.next":"下一篇","post.no_previous":"没有更早的文章了","post.no_next":"已经是最新的一篇","post.back_to_top":"返回顶部","post.related_posts":"相关文章","post.view_more":"查看更多","not_found.label":"页面走丢了","not_found.title":"找不到这个页面","not_found.text":"这个地址可能已经移动、删除，或者从未存在。","not_found.home":"返回首页","not_found.search":"搜索文章","search.placeholder":"输入关键词，按 Esc 关闭","search.empty":"输入关键词后显示匹配的文章","search.loading":"正在加载搜索索引…","search.load_failed":"搜索索引加载失败，请重新打开搜索重试","search.no_result":"没有找到与 \"%s\" 相关的文章","search.close":"关闭搜索","code.copy":"复制代码","code.collapse":"折叠代码","code.expand":"展开代码","heading.anchor":"链接到此节: %s","head.tag":"标签：%s","head.category":"分类：%s","head.archive":"归档","head.archive_with_date":"归档：%s","head.page_number":"第 %d 页","navigation.primary":"主导航","navigation.mobile":"移动端导航","navigation.brand_home":"FlatPaper 首页","navigation.brand_menu":"打开站点导航","navigation.open_sidebar":"打开侧边栏","navigation.close_sidebar":"关闭侧边栏","navigation.sidebar":"侧边栏","navigation.sidebar_tools":"侧边栏工具","navigation.site_links":"站点链接","navigation.site_info":"站点信息","colors.choose_theme_color":"选择主题色","colors.theme_color":"主题色","colors.toggle_color_mode":"切换颜色模式","colors.green":"绿色","colors.purple":"紫色","colors.pink":"粉色","colors.sakura":"樱花粉","colors.blue":"蓝色","colors.orange":"橙色","colors.black":"黑色","profile.default_bio":"热爱生活，热爱代码，喜欢分享技术与生活中的点滴。","welcome.cta":"开始阅读","welcome.title":"欢迎来到 FlatPaper","welcome.text":"一个专注于内容与阅读体验的博客主题。","home_hero.label":"首页开屏","home_hero.enter":"开始阅读","home_hero.note":"今日","home_hero.default_subtitle":"日常记录","home_hero.nav_links":"开屏导航","home_hero.profile_links":"个人链接","home_hero.tools":"开屏工具","home_hero.shuffle_stickers":"打乱贴纸位置","home_hero.link":"链接","home_hero.sticker_image":"贴纸图片","home_hero.visit_confirm":"要访问 %s 吗？","home_hero.visit":"访问","home_hero.cancel":"取消","toc.title":"文章目录","toc.empty":"目录会根据文章标题自动生成。","toc.expand_all":"展开全部目录","toc.collapse_all":"收起全部目录","sidebar.hot_tags":"热门标签","sidebar.latest_posts":"最新文章"};
+  </script>
+  
+<script src="/js/main.js"></script>
+
+  
+</body>
+</html>
