@@ -1,0 +1,930 @@
+<!doctype html>
+
+<html lang="zh-CN" data-fancybox-enabled="1">
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f7f3e9" data-flatpaper-theme-color>
+
+<title>Jev - 不聊天、不写代码，只负责做决定的 AI | O&#39;s World</title>
+<meta name="description" content="如果一个程序只是想知道“这张工单应该交给哪个部门”，它真的需要大语言模型（LLM）先写一段分析、消耗成百上千个 Token，再由后端代码从生成的文字中提取答案吗？ 针对这一工程痛点，由前 OpenAI 研究员 Diogo Almeida 创立的 TypeSafe AI 带来了一种截然不同的解法——推出面向结构化决策的 System One 模型 Jev：让...">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Jev - 不聊天、不写代码，只负责做决定的 AI | O&#39;s World">
+<meta property="og:url" content="https://ooo.run/post/what-is-jev.html">
+<meta property="og:site_name" content="O&#39;s World">
+<meta property="og:description" content="如果一个程序只是想知道“这张工单应该交给哪个部门”，它真的需要大语言模型（LLM）先写一段分析、消耗成百上千个 Token，再由后端代码从生成的文字中提取答案吗？ 针对这一工程痛点，由前 OpenAI 研究员 Diogo Almeida 创立的 TypeSafe AI 带来了一种截然不同的解法——推出面向结构化决策的 System One 模型 Jev：让...">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img.nep.me/ooo/cover-jev.webp">
+<meta property="article:published_time" content="2026-09-18T06:58:50.000Z">
+<meta property="article:modified_time" content="2026-09-18T07:08:41.779Z">
+<meta property="article:author" content="Mr. O">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="Jev">
+<meta property="article:tag" content="决策模型">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img.nep.me/ooo/cover-jev.webp">
+<link rel="canonical" href="https://ooo.run/post/what-is-jev.html">
+
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Jev - 不聊天、不写代码，只负责做决定的 AI","name":"Jev - 不聊天、不写代码，只负责做决定的 AI | O's World","description":"如果一个程序只是想知道“这张工单应该交给哪个部门”，它真的需要大语言模型（LLM）先写一段分析、消耗成百上千个 Token，再由后端代码从生成的文字中提取答案吗？ 针对这一工程痛点，由前 OpenAI 研究员 Diogo Almeida 创立的 TypeSafe AI 带来了一种截然不同的解法——推出面向结构化决策的 System One 模型 Jev：让...","url":"https://ooo.run/post/what-is-jev.html","inLanguage":"zh-CN","isPartOf":{"@type":"WebSite","name":"O's World","url":"https://ooo.run/"},"image":["https://img.nep.me/ooo/cover-jev.webp"],"mainEntityOfPage":"https://ooo.run/post/what-is-jev.html","datePublished":"2026-09-18T06:58:50.000Z","dateModified":"2026-09-18T07:08:41.779Z","author":{"@type":"Person","name":"Mr. O"},"publisher":{"@type":"Organization","name":"O's World"},"keywords":"AI, Jev, 决策模型"}</script>
+
+<script>
+  (function () {
+    var accents = { orange: 1, purple: 1, sakura: 1, blue: 1, pink: 1, green: 1, black: 1 };
+    var match = document.cookie.match(/(?:^|;\s*)flatpaper-accent=([^;]+)/);
+    var accent = 'blue';
+    if (match) {
+      try { accent = decodeURIComponent(match[1]); } catch (e) {}
+    }
+    if (!accents[accent]) accent = 'blue';
+    document.documentElement.setAttribute('data-accent', accent);
+    try {
+      if (localStorage.getItem('flatpaper-mode') === 'dark') {
+        document.documentElement.classList.add('dark-mode');
+      }
+    } catch (e) {}
+  })();
+</script>
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+
+
+
+  
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-PZSHQ0MC4Q"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-PZSHQ0MC4Q');
+</script>
+
+
+  
+<script defer src="https://u.nep.me/script.js" data-website-id="768b68c3-d4ed-429e-aa11-f5099ea5adbf" data-domains="ooo.run"></script>
+
+
+  
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8052638941019443" crossorigin="anonymous"></script>
+
+
+  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/artalk@2.9.1/dist/Artalk.css">
+
+<script defer src="https://cdn.jsdelivr.net/npm/artalk@2.9.1/dist/Artalk.js"></script>
+
+
+  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css">
+<script defer src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+
+
+  
+<meta name="generator" content="Hexo 8.1.2"><link rel="alternate" href="/atom.xml" title="O's World" type="application/atom+xml">
+</head>
+
+<body
+  class="is-post tag-style-tape bg-style-default"
+  data-default-accent="blue"
+  data-code-theme="simple"
+  data-note-style="sticky"
+  data-note-icons="on"
+  data-button-style="tape"
+  data-strong-accent="on"
+>
+  
+    <div class="page-grain"></div>
+  
+  <svg width="0" height="0" style="position:absolute;z-index:-1;" aria-hidden="true">
+    <defs>
+      <filter id="paper-edge" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" result="noise" />
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G" />
+      </filter>
+    </defs>
+  </svg>
+  
+  <header class="site-header">
+  
+  <button class="icon-button js-sidebar-toggle sidebar-toggle" type="button" aria-label="打开侧边栏" aria-controls="paper-sidebar-drawer" aria-expanded="false">
+    
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-menu"></use></svg>
+
+  </button>
+
+  <div class="brand">
+    <div class="brand-mark-wrapper">
+      
+        <button class="brand-mark" type="button" aria-label="打开站点导航" aria-haspopup="true" aria-expanded="false" aria-controls="brand-nav-menu">
+          
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-grid flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-layout-grid"></use></svg>
+
+        </button>
+        <div class="brand-nav-menu" id="brand-nav-menu" role="menu">
+          
+            <div class="brand-nav-group">
+              <div class="brand-nav-title">Blog</div>
+              
+                <a role="menuitem" href="https://ooo.run/" target="_blank" rel="noopener noreferrer">
+                  
+                    <img src="https://ooo.run/favicon.ico" alt="" class="nav-img-icon" aria-hidden="true" />
+                  
+                  <span>O&#39;s World</span>
+                </a>
+              
+            </div>
+          
+            <div class="brand-nav-group">
+              <div class="brand-nav-title">Project</div>
+              
+                <a role="menuitem" href="https://tools.ooo.run" target="_blank" rel="noopener noreferrer">
+                  
+                    <img src="https://tools.ooo.run/favicon.png" alt="" class="nav-img-icon" aria-hidden="true" />
+                  
+                  <span>简易工具</span>
+                </a>
+              
+            </div>
+          
+        </div>
+      
+    </div>
+    <a class="brand-text" href="/">O&#39;s World</a>
+  </div>
+
+  <nav class="site-nav" aria-label="主导航">
+    
+      
+        <a class="site-nav-link " href="/">
+          
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-house flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-house"></use></svg>
+
+          <span>首页</span>
+        </a>
+      
+    
+      
+        <a class="site-nav-link " href="/links/">
+          
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-link"></use></svg>
+
+          <span>友链</span>
+        </a>
+      
+    
+      
+        <div class="site-nav-item has-children">
+          <button class="site-nav-link site-nav-parent" type="button" aria-haspopup="true" aria-expanded="false">
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-folder"></use></svg>
+
+            <span>文章</span>
+          </button>
+          <div class="site-nav-menu" role="menu">
+            
+              <a role="menuitem" class="" href="/archives/">
+                
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-archive flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-archive"></use></svg>
+
+                <span>归档</span>
+              </a>
+            
+              <a role="menuitem" class="" href="/categories/">
+                
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-folder"></use></svg>
+
+                <span>分类</span>
+              </a>
+            
+              <a role="menuitem" class="" href="/tags/">
+                
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tag flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-tag"></use></svg>
+
+                <span>标签</span>
+              </a>
+            
+          </div>
+        </div>
+      
+    
+      
+        <a class="site-nav-link " target="_blank" rel="noopener" href="https://www.travellings.cn/go.html">
+          
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tram-front flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-tram-front"></use></svg>
+
+          <span>开往</span>
+        </a>
+      
+    
+  </nav>
+
+  <div class="header-tools">
+    <button class="icon-button js-search-open" type="button" aria-label="搜索文章">
+      
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-search"></use></svg>
+
+    </button>
+    <div class="accent-picker">
+      <button class="icon-button accent-toggle" type="button" aria-label="选择主题色" title="选择主题色" aria-haspopup="true" aria-expanded="false" aria-controls="accent-menu">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-palette flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-palette"></use></svg>
+
+      </button>
+      <div class="accent-menu" id="accent-menu" role="menu" aria-label="主题色">
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="橙色" aria-checked="false" data-accent-option="orange">
+          <span class="accent-swatch accent-swatch--orange" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="紫色" aria-checked="false" data-accent-option="purple">
+          <span class="accent-swatch accent-swatch--purple" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="樱花粉" aria-checked="false" data-accent-option="sakura">
+          <span class="accent-swatch accent-swatch--sakura" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="蓝色" aria-checked="false" data-accent-option="blue">
+          <span class="accent-swatch accent-swatch--blue" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="粉色" aria-checked="false" data-accent-option="pink">
+          <span class="accent-swatch accent-swatch--pink" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="绿色" aria-checked="false" data-accent-option="green">
+          <span class="accent-swatch accent-swatch--green" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="黑色" aria-checked="false" data-accent-option="black">
+          <span class="accent-swatch accent-swatch--black" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
+    <button class="theme-toggle" type="button" aria-label="切换颜色模式">
+      <span class="theme-icon theme-icon--sun">
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sun flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-sun"></use></svg>
+</span>
+      <span class="theme-icon theme-icon--moon">
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-moon flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-moon"></use></svg>
+</span>
+    </button>
+  </div>
+</header>
+
+
+  
+  <main class="paper-shell paper-shell--article">
+    
+
+<aside id="paper-sidebar-drawer" class="paper-sidebar paper-sidebar--right" aria-label="侧边栏">
+  <div class="drawer-toolbar" aria-label="侧边栏工具">
+    <div class="drawer-accent-options" role="group" aria-label="主题色">
+      <button type="button" class="accent-option" aria-label="橙色" aria-pressed="false" data-accent-option="orange">
+        <span class="accent-swatch accent-swatch--orange" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="accent-option" aria-label="紫色" aria-pressed="false" data-accent-option="purple">
+        <span class="accent-swatch accent-swatch--purple" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="accent-option" aria-label="樱花粉" aria-pressed="false" data-accent-option="sakura">
+        <span class="accent-swatch accent-swatch--sakura" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="accent-option" aria-label="蓝色" aria-pressed="false" data-accent-option="blue">
+        <span class="accent-swatch accent-swatch--blue" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="accent-option" aria-label="粉色" aria-pressed="false" data-accent-option="pink">
+        <span class="accent-swatch accent-swatch--pink" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="accent-option" aria-label="绿色" aria-pressed="false" data-accent-option="green">
+        <span class="accent-swatch accent-swatch--green" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="accent-option" aria-label="黑色" aria-pressed="false" data-accent-option="black">
+        <span class="accent-swatch accent-swatch--black" aria-hidden="true"></span>
+      </button>
+    </div>
+    <button class="icon-button drawer-close js-sidebar-close" type="button" aria-label="关闭侧边栏">
+      
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-x"></use></svg>
+
+    </button>
+  </div>
+
+  <section class="side-card nav-card">
+    <nav class="site-nav-drawer" aria-label="移动端导航">
+      
+        
+          <a class="" href="/">
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-house flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-house"></use></svg>
+
+            <span>首页</span>
+          </a>
+        
+      
+        
+          <a class="" href="/links/">
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-link"></use></svg>
+
+            <span>友链</span>
+          </a>
+        
+      
+        
+          <div class="drawer-nav-group">
+            <button class="drawer-nav-parent" type="button" aria-expanded="false">
+              
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-folder"></use></svg>
+
+              <span>文章</span>
+            </button>
+            <div class="drawer-nav-children">
+              
+                <a class="" href="/archives/">
+                  
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-archive flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-archive"></use></svg>
+
+                  <span>归档</span>
+                </a>
+              
+                <a class="" href="/categories/">
+                  
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-folder"></use></svg>
+
+                  <span>分类</span>
+                </a>
+              
+                <a class="" href="/tags/">
+                  
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tag flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-tag"></use></svg>
+
+                  <span>标签</span>
+                </a>
+              
+            </div>
+          </div>
+        
+      
+        
+          <a class="" target="_blank" rel="noopener" href="https://www.travellings.cn/go.html">
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tram-front flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-tram-front"></use></svg>
+
+            <span>开往</span>
+          </a>
+        
+      
+    </nav>
+  </section>
+
+  <section class="side-card profile-card">
+    
+      <div class="avatar avatar--image avatar--circle">
+        <img src="/images/avatar.png" alt="Mr. O" loading="lazy" referrerpolicy="no-referrer">
+      </div>
+    
+    <h3>Mr. O</h3>
+    <p class="profile-role">独立开发者</p>
+    <p>探索互联网世界，分享实用教程与精彩内容，发现更多有趣之处。</p>
+    
+      <div class="site-info" aria-label="站点信息">
+        
+          
+            <a class="site-info__item" href="/archives/">
+              <strong>82</strong>
+              <span>文章</span>
+            </a>
+          
+        
+          
+            <a class="site-info__item" href="/categories/">
+              <strong>8</strong>
+              <span>分类</span>
+            </a>
+          
+        
+          
+            <a class="site-info__item" href="/tags/">
+              <strong>118</strong>
+              <span>标签</span>
+            </a>
+          
+        
+      </div>
+    
+    <div class="socials">
+      
+        <a href="https://tools.ooo.run" target="_blank" rel="noopener" aria-label="Tools" data-tooltip="Tools">
+          
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tool-case flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-tool-case"></use></svg>
+
+          
+        </a>
+      
+      
+        
+        
+        <a href="/atom.xml" aria-label="RSS feed" data-tooltip="RSS feed">
+          
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-rss flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-rss"></use></svg>
+
+        </a>
+      
+    </div>
+  </section>
+
+  
+    <section class="side-card brand-link-card" aria-label="站点链接">
+      
+        <div class="brand-link-group">
+          <div class="brand-link-title">Blog</div>
+          <div class="brand-link-list">
+            
+              <a href="https://ooo.run/" target="_blank" rel="noopener noreferrer">
+                
+                  <img src="https://ooo.run/favicon.ico" alt="" class="nav-img-icon" aria-hidden="true" />
+                
+                <span>O&#39;s World</span>
+              </a>
+            
+          </div>
+        </div>
+      
+        <div class="brand-link-group">
+          <div class="brand-link-title">Project</div>
+          <div class="brand-link-list">
+            
+              <a href="https://tools.ooo.run" target="_blank" rel="noopener noreferrer">
+                
+                  <img src="https://tools.ooo.run/favicon.png" alt="" class="nav-img-icon" aria-hidden="true" />
+                
+                <span>简易工具</span>
+              </a>
+            
+          </div>
+        </div>
+      
+    </section>
+  
+
+  
+    <div class="post-sticky-stack">
+      <section class="side-card toc-card">
+        <header class="toc-card__head">
+          <h2>
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-table-of-contents flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-table-of-contents"></use></svg>
+文章目录</h2>
+          <button type="button" class="toc-toggle-all" data-action="toggle-toc" aria-pressed="false" aria-label="展开全部目录" title="展开全部目录">
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-chevron-down"></use></svg>
+
+          </button>
+        </header>
+        <div class="toc-content">
+          
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BD%AF%E4%BB%B6%E9%9C%80%E8%A6%81%E7%9A%84%EF%BC%8C%E5%BE%80%E5%BE%80%E4%B8%8D%E6%98%AF%E4%B8%80%E6%AE%B5%E5%9B%9E%E7%AD%94"><span class="toc-text">软件需要的，往往不是一段回答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E7%A7%8D%E8%BE%93%E5%87%BA%EF%BC%8C%E8%A6%86%E7%9B%96%E4%B8%89%E7%B1%BB%E6%A0%B8%E5%BF%83%E5%88%A4%E6%96%AD"><span class="toc-text">三种输出，覆盖三类核心判断</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Choice%EF%BC%88%E5%8D%95%E9%A1%B9%E9%80%89%E6%8B%A9%EF%BC%89"><span class="toc-text">1. Choice（单项选择）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Score%EF%BC%88%E5%9F%BA%E5%87%86%E8%AF%84%E5%88%86%EF%BC%89"><span class="toc-text">2. Score（基准评分）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-Noul%EF%BC%88%E6%A6%82%E7%8E%87%E5%88%A4%E6%96%AD%EF%BC%89"><span class="toc-text">3. Noul（概率判断）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E5%AE%83%E8%83%BD%E8%BF%99%E4%B9%88%E5%BF%AB%EF%BC%9F"><span class="toc-text">为什么它能这么快？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8E%E4%BC%A0%E7%BB%9F-LLM-%E7%9A%84%E2%80%9C%E7%BB%93%E6%9E%84%E5%8C%96%E8%BE%93%E5%87%BA%E2%80%9D%E6%9C%89%E4%BD%95%E4%B8%8D%E5%90%8C%EF%BC%9F"><span class="toc-text">与传统 LLM 的“结构化输出”有何不同？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AF%94%E2%80%9C%E9%80%89%E4%BB%80%E4%B9%88%E2%80%9D%E6%9B%B4%E9%87%8D%E8%A6%81%E7%9A%84%EF%BC%8C%E6%98%AF%E2%80%9C%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%97%B6%E6%80%8E%E4%B9%88%E5%8A%9E%E2%80%9D"><span class="toc-text">比“选什么”更重要的，是“不确定时怎么办”</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#RLCD%EF%BC%9A%E9%9D%A2%E5%90%91%E6%A0%A1%E5%87%86%E5%86%B3%E7%AD%96%E7%9A%84%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0"><span class="toc-text">RLCD：面向校准决策的强化学习</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E2%80%9C%E5%BF%AB-193-%E5%80%8D%E3%80%81%E4%BE%BF%E5%AE%9C-444-%E5%80%8D%E2%80%9D%EF%BC%8C%E5%BA%94%E8%AF%A5%E6%80%8E%E6%A0%B7%E7%90%86%E8%A7%A3%EF%BC%9F"><span class="toc-text">“快 193 倍、便宜 444 倍”，应该怎样理解？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%BB%B6%E8%BF%9F%E4%B8%8E%E5%93%8D%E5%BA%94%E6%97%B6%E9%97%B4"><span class="toc-text">1. 延迟与响应时间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%87%86%E7%A1%AE%E7%8E%87%E8%AF%84%E4%BC%B0%E6%96%B9%E6%B3%95"><span class="toc-text">2. 准确率评估方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%AE%9A%E4%BB%B7%E4%B8%8E%E6%8E%A8%E7%90%86%E6%88%90%E6%9C%AC"><span class="toc-text">3. 定价与推理成本</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E2%80%9C%E6%B2%A1%E6%9C%89%E5%B9%BB%E8%A7%89%E2%80%9D%EF%BC%8C%E4%B8%8D%E7%AD%89%E4%BA%8E%E2%80%9C%E4%B8%8D%E4%BC%9A%E7%8A%AF%E9%94%99%E2%80%9D"><span class="toc-text">“没有幻觉”，不等于“不会犯错”</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%83%E9%80%82%E5%90%88%E6%94%BE%E5%9C%A8%E5%93%AA%E9%87%8C%EF%BC%9F"><span class="toc-text">它适合放在哪里？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8E%E8%81%8A%E5%A4%A9%E7%AA%97%E5%8F%A3%EF%BC%8C%E8%B5%B0%E5%90%91%E8%BD%AF%E4%BB%B6%E5%86%85%E9%83%A8"><span class="toc-text">从聊天窗口，走向软件内部</span></a></li></ol>
+          
+        </div>
+      </section>
+      
+
+  <section class="side-card recent-card latest-posts-card">
+    <h2>
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-history flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-history"></use></svg>
+最新文章</h2>
+    <ul class="recent-list">
+      
+        <li>
+          <a class="recent-item" href="/post/use-linuxgsm-run-dst-server.html">
+            <strong>在 Debian 上使用 LinuxGSM 运行饥荒联机版服务器</strong>
+            <em>2026-08-13</em>
+          </a>
+        </li>
+      
+        <li>
+          <a class="recent-item" href="/post/how-to-select-gpt-5-6-model.html">
+            <strong>如何选择 GPT 5.6 不同模型与推理强度？查看 OpenAI Codex 团队的推荐设置</strong>
+            <em>2026-07-12</em>
+          </a>
+        </li>
+      
+        <li>
+          <a class="recent-item" href="/post/openai-release-gpt-5-6.html">
+            <strong>OpenAI 发布 GPT-5.6 与 ChatGPT Work，重塑 AI 工作模式</strong>
+            <em>2026-07-10</em>
+          </a>
+        </li>
+      
+        <li>
+          <a class="recent-item" href="/post/change-vaultwarden-account-email-without-set-smtp.html">
+            <strong>在不设置 SMTP 的情况下修改 Vaultwarden(Bitwarden) 的账户邮箱</strong>
+            <em>2026-07-09</em>
+          </a>
+        </li>
+      
+        <li>
+          <a class="recent-item" href="/post/docker-compose-init-containers.html">
+            <strong>Docker Compose 新增 Init Containers：终于不用再写一堆一次性初始化服务了</strong>
+            <em>2026-07-04</em>
+          </a>
+        </li>
+      
+    </ul>
+  </section>
+
+
+    </div>
+  
+
+  
+
+</aside>
+
+    <section class="paper-main">
+      
+
+<div class="article-tape-wrap">
+<span class="tape tape--top-right" aria-hidden="true"></span>
+<article class="article-paper article-paper--with-top-img">
+  
+    <figure class="article-top-img" aria-label="Jev - 不聊天、不写代码，只负责做决定的 AI">
+      <img src="https://img.nep.me/ooo/cover-jev.webp" alt="" loading="eager" fetchpriority="high" referrerpolicy="no-referrer" draggable="false">
+    </figure>
+  
+  <header class="article-header">
+    
+      <a class="label-pill" href="/categories/%E8%B5%84%E8%AE%AF/">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-folder"></use></svg>
+
+        资讯
+      </a>
+    
+    <h1>Jev - 不聊天、不写代码，只负责做决定的 AI</h1>
+    <div class="meta-line meta-line--article">
+      <span class="meta-date">
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-calendar"></use></svg>
+2026-09-18</span>
+      
+        <span class="meta-tags">
+          
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tag flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-tag"></use></svg>
+
+          <a class="meta-tag-link" href="/tags/AI/">#AI</a><a class="meta-tag-link" href="/tags/Jev/">#Jev</a><a class="meta-tag-link" href="/tags/%E5%86%B3%E7%AD%96%E6%A8%A1%E5%9E%8B/">#决策模型</a>
+        </span>
+      
+    </div>
+  </header>
+
+  
+
+
+  <div class="article-content">
+    <p>如果一个程序只是想知道“这张工单应该交给哪个部门”，它真的需要大语言模型（LLM）先写一段分析、消耗成百上千个 Token，再由后端代码从生成的文字中提取答案吗？</p>
+<p>针对这一工程痛点，由前 OpenAI 研究员 Diogo Almeida 创立的 <strong>TypeSafe AI</strong> 带来了一种截然不同的解法——推出面向结构化决策的 System One 模型 <strong>Jev</strong>：让 AI 深度理解语义，但不让它自由发挥，直接返回预定义的选项、评分与概率分布，供后端业务系统直接执行。</p>
+<span id="more"></span>
+
+<p>2026 年 9 月 15 日，TypeSafe AI 宣布完成由 DCVC 领投的 4000 万美元种子轮融资，并正式开放 Jev 的早期访问（同时已集成至 Vercel AI Gateway）。与面向普通用户的对话助手不同，Jev 的首要目标客户是<strong>软件本身</strong>：它不负责聊天，也不负责写代码，而是旨在成为开发者可以嵌入业务流程中的一个高频“语义判断组件”。</p>
+<p>理解 Jev 的关键，不是把它看作“更便宜、缩水的聊天模型”，而是理解它为什么从底层架构上<strong>主动放弃了自由对话与文本生成</strong>。</p>
+<h2 id="软件需要的，往往不是一段回答"><a href="#软件需要的，往往不是一段回答" class="headerlink" title="软件需要的，往往不是一段回答"></a>软件需要的，往往不是一段回答</h2><p>设想一套客服自动化系统收到这样一条用户消息：</p>
+<blockquote>
+<p>“昨天同一笔订单被扣了两次钱，到现在也没有退回来，麻烦尽快处理。”</p>
+</blockquote>
+<p>在业务逻辑层面，系统接下来需要确定的其实只有几个核心问题：</p>
+<ol>
+<li><strong>分类归属</strong>：这属于账单问题还是技术故障？</li>
+<li><strong>意图判断</strong>：客户是否在明确申请退款？</li>
+<li><strong>紧急程度</strong>：是否需要提高处理优先级？</li>
+</ol>
+<p>处理这些问题确实需要理解自然语言，但答案本身<strong>并不开放</strong>。软件往往不需要一封措辞得体的客套回信，也不需要长篇大论的因果剖析；它真正需要的是能直接用于业务分流、分支跳转和数据库更新的结构化数据。</p>
+<p><strong>Jev</strong> 正是为这种场景量身定制。开发者向模型传入当前状态（如客户消息、订单记录和业务规则），并严格限定允许的问题与备选答案。模型直接返回受约束的结构化结果，而不是发散生成的自然语言。</p>
+<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p><strong>System One Model（系统一模型）</strong>：其命名灵感源自认知心理学名著《思考，快与慢》中人类快速、直觉式的“系统 1”判断。这里强调的是<strong>快速、低延迟、高度聚焦</strong>的决策任务，而非指模型复刻了人脑结构，更不代表它适合解决所有需要深度推理的复杂问题。</p></div></div>
+
+<p>一个直观的类比是：<strong>通用聊天模型就像一个可以交流的顾问助手，而 Jev 更像一个嵌入在代码内部、能够读懂语义的判断函数。</strong></p>
+<h2 id="三种输出，覆盖三类核心判断"><a href="#三种输出，覆盖三类核心判断" class="headerlink" title="三种输出，覆盖三类核心判断"></a>三种输出，覆盖三类核心判断</h2><p>Jev 的 API 接口围绕三种基础类型展开：<strong>Choice</strong>、<strong>Score</strong> 与 <strong>Noul</strong>。开发者无需写冗长的 Prompt 笼统要求“帮我分析一下”，而是以强类型的方式明确告诉模型程序需要哪一种数据结构：</p>
+<table>
+<thead>
+<tr>
+<th align="left">类型</th>
+<th align="left">解决的问题</th>
+<th align="left">核心机制</th>
+<th align="left">典型示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>Choice</strong></td>
+<td align="left">单项选择题</td>
+<td align="left">从预设选项（最多 255 项）中选一，返回选项分布与置信度</td>
+<td align="left">这张工单应交给账单、技术还是销售部门？</td>
+</tr>
+<tr>
+<td align="left"><strong>Score</strong></td>
+<td align="left">标尺评分题</td>
+<td align="left">依据预设的有序评价阶梯打分，返回加权后的连续数值（支持小数）</td>
+<td align="left">系统故障是轻微影响、存在替代方案，还是完全阻断业务？</td>
+</tr>
+<tr>
+<td align="left"><strong>Noul</strong></td>
+<td align="left">概率真值题</td>
+<td align="left">针对陈述判断为真的概率（0~1 浮点数），直接反映倾向程度</td>
+<td align="left">客户是否在消息中明确提出了退款诉求？</td>
+</tr>
+</tbody></table>
+<h3 id="1-Choice（单项选择）"><a href="#1-Choice（单项选择）" class="headerlink" title="1. Choice（单项选择）"></a>1. Choice（单项选择）</h3><p><strong>Choice</strong> 适用于分类与路由。它会返回被选中的选项、各个选项的完整概率分布以及一个整体置信度（Confidence）指标。目前单个 Choice 最多支持 255 个选项。由于所有选项必须由开发者事先严格枚举，模型无法凭空创造一个不存在的部门名称或工具标识。</p>
+<h3 id="2-Score（基准评分）"><a href="#2-Score（基准评分）" class="headerlink" title="2. Score（基准评分）"></a>2. Score（基准评分）</h3><p><strong>Score</strong> 适用于带有评价标准的等级打分。开发者需要预先定义有序档位（例如将故障划分为“仅影响外观”、“功能受损但有替代方案”、“关键功能完全不可用”三个等级），而不仅是告诉模型模糊的“打个分”。最终返回的分数通常是小数，因为它是各档位编号按预测概率加权后的数学期望值，并不局限于某个离散的整数档位。</p>
+<h3 id="3-Noul（概率判断）"><a href="#3-Noul（概率判断）" class="headerlink" title="3. Noul（概率判断）"></a>3. Noul（概率判断）</h3><p><strong>Noul</strong> 本质上是带概率输出的布尔判断题。对于“客户是否要求退款”，模型可能直接返回 <code>0.98</code>。数值越接近 <code>1.0</code> 表示断言为真的概率越高，接近 <code>0.0</code> 表示更倾向于“否”，而在 <code>0.5</code> 附近则说明处于模棱两可的不确定区间。由于自身已是直接的概率值，Noul 不再额外返回独立的 confidence 字段。</p>
+<hr>
+<p>这三个类型的核心价值在于：<strong>让调用方软件在发起请求前就确切掌握返回数据的形状（Data Shape）</strong>。后续程序可以直截了当地比较概率、设置阈值、排序或分支跳转，彻底告别了对非结构化文本的脆弱解析与正则匹配。</p>
+<h2 id="为什么它能这么快？"><a href="#为什么它能这么快？" class="headerlink" title="为什么它能这么快？"></a>为什么它能这么快？</h2><p>Jev 的速度与吞吐优势，并不仅是因为“返回的内容变短了”。</p>
+<p>在底层推理机制上，通用大语言模型普遍采用<strong>自回归（Autoregressive）机制</strong>，必须逐个 Token 串行生成字符，即便输出简单的 JSON 也要耗费多次前向传播。而据 TypeSafe 官方介绍，Jev 放弃了逐 Token 文本生成，转而采用<strong>面向结构化决策的并行输出机制</strong>。</p>
+<p>在单次请求中，开发者可以同时声明多个独立的判断问题（例如同时评估部门分类、退款意图与紧急程度），Jev 能够在单次推理中并行完成评估并返回结果。Vercel 在官方接入 Jev 的说明中，也将这一<strong>并行评估能力</strong>列为它与传统语言模型的重要区别。</p>
+<div class="flatpaper-note flatpaper-note--warning"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p><strong>注意事项（并行问题的独立性）</strong>：多个并行声明的问题是基于<strong>同一份输入状态</strong>独立评估的。这意味着第二个问题并不会自动感知第一个问题的决策结果。如果你的业务流程中存在严格的因果依赖关系，仍需由外部业务代码来组织阶段性流转。</p></div></div>
+
+<h3 id="与传统-LLM-的“结构化输出”有何不同？"><a href="#与传统-LLM-的“结构化输出”有何不同？" class="headerlink" title="与传统 LLM 的“结构化输出”有何不同？"></a>与传统 LLM 的“结构化输出”有何不同？</h3><p>这里需要厘清一个常见的认知误区：传统的生成式模型并非只能输出杂乱的自由文本。</p>
+<p>现有前沿模型（如 OpenAI GPT-4o、Anthropic Claude）已经支持 <strong>Structured Outputs（结构化输出）</strong>，通过强制约束 JSON Schema 来保证输出符合指定格式。</p>
+<p>然而，传统模型的本质依然是<strong>在语法掩码约束下逐个 Token 串行生成文本</strong>，计算开销与延迟依然受制于自回归机制。同时官方也明确提醒：<strong>格式合规（Syntactically Valid）并不等于内容真实正确（Semantically Accurate）</strong>。</p>
+<p>因此，Jev 的差异化不在于“终于让 AI 学会了返回 JSON”，而是<strong>从底层架构彻底剥离了自由文本生成的包袱</strong>，用更聚焦的有限答案空间，换取极限的吞吐效率、极低的时延与原生的校准概率。</p>
+<h2 id="比“选什么”更重要的，是“不确定时怎么办”"><a href="#比“选什么”更重要的，是“不确定时怎么办”" class="headerlink" title="比“选什么”更重要的，是“不确定时怎么办”"></a>比“选什么”更重要的，是“不确定时怎么办”</h2><p>假设系统在两次工单分类判断中，最终都将最高概率给到了“账单部门”，但其详细的概率分布如下：</p>
+<ul>
+<li><strong>工单 A</strong>：账单 98%，技术 1%，销售 1%</li>
+<li><strong>工单 B</strong>：账单 40%，技术 35%，销售 25%</li>
+</ul>
+<p>两次判断的最高概率选项虽然相同，但任何健壮的软件系统都<strong>绝不应该</strong>对它们采取完全一样的处理方式：工单 A 可以直接由自动化流水线秒级派单，而工单 B 显然处于高争议状态，更适合打上待确认标记或转交人工介入。</p>
+<p>这就是 Jev 将<strong>概率分布与不确定性</strong>置于核心地位的原因。</p>
+<h3 id="RLCD：面向校准决策的强化学习"><a href="#RLCD：面向校准决策的强化学习" class="headerlink" title="RLCD：面向校准决策的强化学习"></a>RLCD：面向校准决策的强化学习</h3><p>传统聊天模型的 RLHF（基于人类反馈的强化学习）更侧重优化回复的顺畅度与人类偏好，这有时容易导致模型在不确定时表现出盲目的过度自信。</p>
+<p>针对这一痛点，TypeSafe 采用了专门的训练方法 <strong>RLCD（Reinforcement Learning for Calibrated Decisions，面向校准决策的强化学习）</strong>。其核心目标不仅是选出高概率答案，更在于<strong>让输出的概率分布与真实世界的统计分布相校准（Calibrated）</strong>。</p>
+<p>所谓<strong>校准</strong>，可以用一个统计场景来说明：</p>
+<blockquote>
+<p>如果模型对 1000 条客服消息给出的“退款意图”概率均为 80%，那么在事后人工复核中，这 1000 条消息里实际属于退款请求的比例也应该非常接近 80%。</p>
+</blockquote>
+<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p><strong>正确理解 Confidence 指标</strong>：需要特别注意，Jev 在 Choice 和 Score 中返回的 <code>confidence</code> <strong>并不等同于“这次回答绝对正确的概率”</strong>。它是根据返回的概率分布计算出的集中度概括指标，用来反映判断是明确集中还是高度分散。在实际业务落地中，开发者仍需拿真实业务样本进行基准验证，以此确定自动化分流与人工复核的阈值分界线。</p></div></div>
+
+<p>对自动化系统来说，真正有用的不是一个永远表现得无比自信的模型，而是一个<strong>能够准确量化自身不确定性、方便程序妥善兜底</strong>的模型。</p>
+<h2 id="“快-193-倍、便宜-444-倍”，应该怎样理解？"><a href="#“快-193-倍、便宜-444-倍”，应该怎样理解？" class="headerlink" title="“快 193 倍、便宜 444 倍”，应该怎样理解？"></a>“快 193 倍、便宜 444 倍”，应该怎样理解？</h2><p>在 TypeSafe 官网的宣传中，一组对比数据格外吸睛：在其 System One 工作流基准测试中，Jev 相比对照前沿模型实现了约 <strong>193.6 倍的速度提升</strong> 和 <strong>444.6 倍的成本优势</strong>。</p>
+<p>这些数字来自特定工作流比较，我们需要结合具体工程条件客观审视：</p>
+<h3 id="1-延迟与响应时间"><a href="#1-延迟与响应时间" class="headerlink" title="1. 延迟与响应时间"></a>1. 延迟与响应时间</h3><p>官方公开介绍给出的端到端响应时间通常在 <strong>70 ~ 500 毫秒</strong> 之间。官方也坦承，上百倍的极端改善倍数往往处于特定长文本、高推理对比场景的较高端。测试网络节点、输入文本长度、对照模型的推理配置以及是否要求对照模型输出完整 Logprobs 等，都会显著影响实际对比倍率。</p>
+<h3 id="2-准确率评估方法"><a href="#2-准确率评估方法" class="headerlink" title="2. 准确率评估方法"></a>2. 准确率评估方法</h3><p>在 TypeSafe 的工作流评测中，基准参考并非全量来自于独立专家的人工标注，而是采用其他多款前沿强模型的共识汇总。因此，它能够有力展示在特定流程中的相对表现，但不能简单等同于在所有未知垂直场景下都具备普适的准确率。</p>
+<p>科技媒体 Every 的一项独立初测提供了直观的侧面参考：在针对 12 段合成文本进行写作问题检查时：</p>
+<ul>
+<li><strong>耗时对比</strong>：Jev 每段的中位耗时为 <strong>0.35 秒</strong>，对照的 Claude Fable 5.1 在高推理设置下为 <strong>8.83 秒</strong>，相差约 25 倍；</li>
+<li><strong>检出效果</strong>：在预设的 7 处问题中，Jev 找到了 6 处，对照模型找到了全部 7 处。</li>
+</ul>
+<p>这一样本虽小，但清晰体现了实际工程中的核心取舍：<strong>是用极低延迟和成本换取高并发吞吐，还是用漫长的深度推理等待换取边际精度的极致提升。</strong></p>
+<h3 id="3-定价与推理成本"><a href="#3-定价与推理成本" class="headerlink" title="3. 定价与推理成本"></a>3. 定价与推理成本</h3><p>在计费方面，截至 2026 年 9 月，官方文档公布的标准费用极低：</p>
+<ul>
+<li><strong>输入费用</strong>：**$0.042 &#x2F; 百万 Token**</li>
+<li><strong>输出费用</strong>：<strong>完全免费</strong></li>
+</ul>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[成本估算示例]</span><br><span class="line">假设每次业务请求消耗 1,000 个输入 Token：</span><br><span class="line">调用 100 万次 = 10 亿输入 Token</span><br><span class="line">纯模型调用费用仅为： 1,000 × $0.042 = $42 美元</span><br></pre></td></tr></table></figure>
+
+<p>对于日均数百万次的高频小判断任务，这种成本结构极具吸引力。但在生产环境中，更全面的考量还应包括网络通信、数据清洗、重试逻辑以及异常情况的人工介入成本。</p>
+<h2 id="“没有幻觉”，不等于“不会犯错”"><a href="#“没有幻觉”，不等于“不会犯错”" class="headerlink" title="“没有幻觉”，不等于“不会犯错”"></a>“没有幻觉”，不等于“不会犯错”</h2><p>这是理解与落地 Jev 时必须守住的一道边界。</p>
+<p>TypeSafe 所强调的“类型安全”与“零幻觉”，其严谨含义是：<strong>输出被严格限定在预先定义的答案空间与数据结构中</strong>。<br>比如，在候选项仅有 <code>billing</code>、<code>tech</code> 与 <code>sales</code> 时，Jev 在机制上绝不会凭空捏造一个诸如“量子事务部”的不存在字段。</p>
+<p><strong>它保证了绝不跳出答题卡，但并不保证每道题都答对。</strong></p>
+<p>它依然可能误将技术故障判定为账单问题，也可能低估一张紧急工单的严重程度。</p>
+<p>更进一步，在系统工程设计上：<strong>即便模型准确识别出“客户希望退款”，程序也绝不能据此直接触发支付网关退款。</strong><br>后续操作依然必须由严谨的业务规则把关：订单是否存在？交易是否重复？是否在退款时限内？操作人员是否有授权？</p>
+<p>一种合理的系统架构设计是：</p>
+<ul>
+<li><strong>模型负责语义识别</strong>：处理非结构化自然语言中的主观性与模糊性；</li>
+<li><strong>代码负责规则与执行</strong>：核验记录、执行状态机、调用业务 API；</li>
+<li><strong>异常机制负责兜底</strong>：低置信度结果自动进入人工复核或交由高推理模型二审。</li>
+</ul>
+<h2 id="它适合放在哪里？"><a href="#它适合放在哪里？" class="headerlink" title="它适合放在哪里？"></a>它适合放在哪里？</h2><p>Jev 更适合成为现有软件流水线中的一个高频节点，而不是独自包揽全流程任务：</p>
+<ul>
+<li><strong>智能请求路由（Router）</strong>：客服系统的工单分派、社区发帖的违规预审、多 Agent 架构中决定下一步调度哪个专用工具或 Subagent。</li>
+<li><strong>Agent 执行控制（Controller）</strong>：判断当前工具执行结果是“成功”、“需要重试”还是“陷入死循环需人工接入”，驱动决策状态机。</li>
+<li><strong>内容与合规质检（Evaluator）</strong>：作为低成本的裁判模型（LLM-as-a-Judge），批量检查生成式模型的输出是否符合既定规范。</li>
+</ul>
+<p>相反，如果任务目标是<strong>写一封邮件、生成一段业务代码或向用户详细推导判断依据</strong>，这些场景依然属于生成式模型的绝对领域。同时，Jev 当前仅接收文本形态的输入（如字符串、JSON 对象或文本数组），无法直接输入图像、音频等多模态数据，多模态内容需先经过转换。</p>
+<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p><strong>推荐的系统协作范式</strong>：</p>
+<ul>
+<li><strong>传统确定性代码</strong>：负责硬规则、权限校验与实际事务执行；</li>
+<li><strong>Jev（决策模型）</strong>：负责高频、低延迟、强类型化的语义判断与状态分流；</li>
+<li><strong>生成式 LLM</strong>：负责长程推理、内容创作与人机交互；</li>
+<li><strong>人工专家</strong>：负责关键审批与疑难边缘案例兜底。</li>
+</ul></div></div>
+
+<h2 id="从聊天窗口，走向软件内部"><a href="#从聊天窗口，走向软件内部" class="headerlink" title="从聊天窗口，走向软件内部"></a>从聊天窗口，走向软件内部</h2><p>“Jev” 这个名字取自英国经济学家威廉·斯坦利·杰文斯（William Stanley Jevons）以及著名的<strong>杰文斯悖论（Jevons Paradox）</strong>：</p>
+<blockquote>
+<p>当某种资源的使用效率大幅提升、成本显著下降时，该资源的总消耗量往往不仅不会减少，反而会因为应用边界的指数级扩张而大幅激增。</p>
+</blockquote>
+<p>TypeSafe 借此表达了对 AI 普及路径的深刻预期：当可靠的语义判断变得足够轻巧、响应时间进入几十毫秒量级、调用成本低至几乎可以忽略不计，开发者会毫不犹豫地把它嵌入到成千上万个以往根本不舍得用 AI 的日常代码分支中。</p>
+<p>通用对话助手能否让人满意，往往取决于它能否把长篇大论写得生动可信；而软件底层的判断组件，衡量标准则完全不同：<strong>延迟是否够低、成本是否可控、接口是否足够强类型安全，以及系统能否在其产生疑虑时平稳降级</strong>。</p>
+<p>Jev 不需要证明自己“比会聊天的模型更高级”。它只需要在那些数以亿计、候选项明确、却必须读懂人话的后台分支里，证明自己是那个比通用模型更轻巧、更可靠的“语义判断函数”。</p>
+<p>它真正具有启发性的地方，正是<strong>让 AI 走出人机对话的窗口，静默地沉淀为现代软件系统内部随处可调用的基础设施</strong>。</p>
+
+  </div>
+
+  <footer class="article-reactions">
+    <div class="reaction-group">
+      <button type="button" class="reaction reaction--comment" aria-label="跳转到评论区" data-action="scroll-to-comments">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-message-circle"></use></svg>
+
+      </button>
+      <span class="reaction-label">评论</span>
+      
+    </div>
+    <div class="reaction-group reaction-group--right">
+      
+      <button type="button" class="reaction reaction--share" aria-label="分享" data-action="share">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-share-2 flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-share-2"></use></svg>
+
+      </button>
+      <span class="reaction-label">分享</span>
+    </div>
+  </footer>
+
+  
+
+
+  <nav class="article-actions">
+    
+      <span class="article-action article-action--prev is-disabled" aria-disabled="true">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-arrow-left"></use></svg>
+
+        <span class="action-label">上一篇</span>
+        <span class="action-title">没有更早的文章了</span>
+      </span>
+    
+    
+      <a class="article-action article-action--next" href="/post/use-linuxgsm-run-dst-server.html">
+        <span class="action-label">下一篇</span>
+        <span class="action-title">在 Debian 上使用 LinuxGSM 运行饥荒联机版服务器</span>
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-arrow-right"></use></svg>
+
+      </a>
+    
+  </nav>
+</article>
+</div>
+
+<button type="button" class="back-to-top" data-action="scroll-to-top" aria-label="返回顶部" hidden>
+  
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-arrow-up"></use></svg>
+
+</button>
+
+
+  <section class="related-paper">
+    <header class="related-paper__head">
+      <h2>
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-link"></use></svg>
+相关文章</h2>
+      <a class="related-paper__more" href="/archives/">
+        <span>查看更多</span>
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-arrow-right"></use></svg>
+
+      </a>
+    </header>
+    <div class="related-paper__grid">
+      
+        <a class="related-card" href="/post/openai-release-gpt-5-6.html">
+          <span class="related-card__thumb">
+            
+<div class="paper-thumb paper-thumb-0 paper-thumb--cover">
+  
+    <img class="paper-thumb__img" src="https://img.nep.me/ooo/cover-gpt-5-6-public.webp" alt="OpenAI 发布 GPT-5.6 与 ChatGPT Work，重塑 AI 工作模式" loading="lazy" referrerpolicy="no-referrer">
+  
+</div>
+
+          </span>
+          <span class="related-card__body">
+            <strong class="related-card__title">OpenAI 发布 GPT-5.6 与 ChatGPT Work，重塑 AI 工作模式</strong>
+            <em class="related-card__date">2026-07-10</em>
+          </span>
+        </a>
+      
+        <a class="related-card" href="/post/is-sonnet-5-worth-using.html">
+          <span class="related-card__thumb">
+            
+<div class="paper-thumb paper-thumb-1 paper-thumb--cover">
+  
+    <img class="paper-thumb__img" src="https://img.nep.me/ooo/cover-sonnet5.webp" alt="Sonnet 5 已发布，值得用吗？" loading="lazy" referrerpolicy="no-referrer">
+  
+</div>
+
+          </span>
+          <span class="related-card__body">
+            <strong class="related-card__title">Sonnet 5 已发布，值得用吗？</strong>
+            <em class="related-card__date">2026-07-01</em>
+          </span>
+        </a>
+      
+        <a class="related-card" href="/post/anthropic-releases-claude-fable-5.html">
+          <span class="related-card__thumb">
+            
+<div class="paper-thumb paper-thumb-2 paper-thumb--cover">
+  
+    <img class="paper-thumb__img" src="https://img.nep.me/ooo/cover-claude-fable5.webp" alt="Anthropic 发布 Claude Fable 5：首个公开 Mythos-class 模型亮相，但充满限制" loading="lazy" referrerpolicy="no-referrer">
+  
+</div>
+
+          </span>
+          <span class="related-card__body">
+            <strong class="related-card__title">Anthropic 发布 Claude Fable 5：首个公开 Mythos-class 模型亮相，但充满限制</strong>
+            <em class="related-card__date">2026-06-10</em>
+          </span>
+        </a>
+      
+        <a class="related-card" href="/post/google-launch-antigravity-cli.html">
+          <span class="related-card__thumb">
+            
+<div class="paper-thumb paper-thumb-0 paper-thumb--cover">
+  
+    <img class="paper-thumb__img" src="https://img.nep.me/ooo/cover-antigravity.webp" alt="Google 发布 Antigravity 2.0 ，以及 Antigravity-CLI" loading="lazy" referrerpolicy="no-referrer">
+  
+</div>
+
+          </span>
+          <span class="related-card__body">
+            <strong class="related-card__title">Google 发布 Antigravity 2.0 ，以及 Antigravity-CLI</strong>
+            <em class="related-card__date">2026-05-20</em>
+          </span>
+        </a>
+      
+    </div>
+  </section>
+
+
+      
+
+<section class="comments-section" aria-label="评论">
+  <header class="comments-section__head">
+    <h2>
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-message-circle"></use></svg>
+评论</h2>
+  </header>
+  <div id="artalk-comments"></div>
+</section>
+<script>
+window.addEventListener('load', function () {
+  if (typeof Artalk === 'undefined' || typeof Artalk.init !== 'function') return;
+  Artalk.init({
+    el: '#artalk-comments',
+    pageKey: "https://ooo.run/post/what-is-jev.html",
+    pageTitle: "Jev - 不聊天、不写代码，只负责做决定的 AI",
+    server: "https://artalk.ooo.run",
+    site: "Mr. O 的博客"
+  });
+});
+</script>
+
+
+    </section>
+    
+  </main>
+
+  <div class="sidebar-backdrop js-sidebar-close" aria-hidden="true"></div>
+
+  
+<footer class="site-footer">
+  <span class="site-footer__left">© 2026 By Mr. O</span>
+  
+    <span class="site-footer__right">
+      
+        <span class="site-footer__row"><span class="site-footer__powered-prefix">Powered by Theme</span> <a href="https://github.com/Homulilly/hexo-theme-flatpaper" target="_blank" rel="noopener">FlatPaper</a></span>
+      
+        <span class="site-footer__row"><a href="/terms">服务条款</a><span class="site-footer__separator"> · </span><a href="/privacy">隐私政策</a></span>
+      
+        <span class="site-footer__row"><a href="https://tools.ooo.run" target="_blank" rel="noopener">简易工具</a><span class="site-footer__separator"> · </span><a href="https://endfield.ooo.run" target="_blank" rel="noopener">终末地基质工具箱</a><span class="site-footer__separator"> · </span><a href="https://projectrx.ooo.run" target="_blank" rel="noopener">Projec RX 资料站</a></span>
+      
+    </span>
+  
+</footer>
+
+  
+<div class="search-panel" aria-hidden="true" data-index-url="/flatpaper-search.json">
+  <div class="search-backdrop js-search-close"></div>
+  <section class="search-dialog" role="dialog" aria-modal="true" aria-label="搜索文章">
+    <span class="tape tape--top-left" aria-hidden="true"></span>
+    <header class="search-head">
+      <h2><span class="green-dot"></span>搜索文章</h2>
+      <button class="icon-button js-search-close" type="button" aria-label="关闭搜索">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-x"></use></svg>
+
+      </button>
+    </header>
+    <label class="search-field">
+      
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-search"></use></svg>
+
+      <input id="flatpaper-search" class="search-input" type="search" placeholder="输入关键词，按 Esc 关闭" autocomplete="off">
+    </label>
+    <div class="search-results" data-empty="输入关键词后显示匹配的文章">
+      <p class="search-empty">输入关键词后显示匹配的文章</p>
+    </div>
+  </section>
+</div>
+
+  <script>
+  window.FLATPAPER_I18N = {"language":"zh-CN","common.posts":"文章","common.categories":"分类","common.tags":"标签","common.comments":"评论","common.share":"分享","common.page":"页面","common.archive":"归档","common.post_list":"文章列表","common.search_posts":"搜索文章","common.random_posts":"随机文章","common.reward":"赞赏","common.view_all":"查看全部","pagination.prev":"上一页","pagination.next":"下一页","pagination.post_pager":"文章分页","pagination.archive_pager":"归档分页","index.featured":"精选文章","index.pinned":"置顶","index.read_more":"阅读全文","index.previous_slide":"上一张","index.next_slide":"下一张","index.carousel_pagination":"轮播页码","index.carousel_slide":"第 %d 张","index.latest_posts":"最新文章","index.empty_posts":"还没有文章。创建第一篇文章后，这里会显示最新内容。","archive.title":"归档","archive.post_list":"文章列表","taxonomy.category_count":"%d 篇","taxonomy.empty_categories":"暂时还没有分类。","taxonomy.empty_tags":"暂时还没有标签。","links.label":"友链","links.title":"友情链接","links.empty_data":"暂未加载到友链数据。请确认 source/_data/links.yml 存在并已 hexo clean。","links.rss_label":"%s 的 RSS","friends_feed.label":"朋友圈","friends_feed.title":"友链朋友圈","friends_feed.loading":"正在加载友链动态…","friends_feed.missing_url":"暂未配置 all.json 地址。","friends_feed.load_failed":"友链动态加载失败，请稍后再试。","friends_feed.empty":"暂时没有抓取到友链文章。","friends_feed.load_more":"加载更多","friends_feed.updated_at":"更新于 %s","friends_feed.friend_count":"%d 位友邻","friends_feed.active_count":"%d 位活跃","friends_feed.article_count":"%d 篇文章","friends_feed.unknown_author":"未知站点","friends_feed.date_unknown":"时间未知","post.scroll_to_comments":"跳转到评论区","post.previous":"上一篇","post.next":"下一篇","post.no_previous":"没有更早的文章了","post.no_next":"已经是最新的一篇","post.back_to_top":"返回顶部","post.related_posts":"相关文章","post.view_more":"查看更多","not_found.label":"页面走丢了","not_found.title":"找不到这个页面","not_found.text":"这个地址可能已经移动、删除，或者从未存在。","not_found.home":"返回首页","not_found.search":"搜索文章","search.placeholder":"输入关键词，按 Esc 关闭","search.empty":"输入关键词后显示匹配的文章","search.loading":"正在加载搜索索引…","search.load_failed":"搜索索引加载失败，请重新打开搜索重试","search.no_result":"没有找到与 \"%s\" 相关的文章","search.close":"关闭搜索","code.copy":"复制代码","code.collapse":"折叠代码","code.expand":"展开代码","heading.anchor":"链接到此节: %s","head.tag":"标签：%s","head.category":"分类：%s","head.archive":"归档","head.archive_with_date":"归档：%s","head.page_number":"第 %d 页","navigation.primary":"主导航","navigation.mobile":"移动端导航","navigation.brand_home":"FlatPaper 首页","navigation.brand_menu":"打开站点导航","navigation.open_sidebar":"打开侧边栏","navigation.close_sidebar":"关闭侧边栏","navigation.sidebar":"侧边栏","navigation.sidebar_tools":"侧边栏工具","navigation.site_links":"站点链接","navigation.site_info":"站点信息","colors.choose_theme_color":"选择主题色","colors.theme_color":"主题色","colors.toggle_color_mode":"切换颜色模式","colors.green":"绿色","colors.purple":"紫色","colors.pink":"粉色","colors.sakura":"樱花粉","colors.blue":"蓝色","colors.orange":"橙色","colors.black":"黑色","profile.default_bio":"热爱生活，热爱代码，喜欢分享技术与生活中的点滴。","welcome.cta":"开始阅读","welcome.title":"欢迎来到 FlatPaper","welcome.text":"一个专注于内容与阅读体验的博客主题。","home_hero.label":"首页开屏","home_hero.enter":"开始阅读","home_hero.note":"今日","home_hero.default_subtitle":"日常记录","home_hero.nav_links":"开屏导航","home_hero.profile_links":"个人链接","home_hero.tools":"开屏工具","home_hero.shuffle_stickers":"打乱贴纸位置","home_hero.link":"链接","home_hero.sticker_image":"贴纸图片","home_hero.visit_confirm":"要访问 %s 吗？","home_hero.visit":"访问","home_hero.cancel":"取消","toc.title":"文章目录","toc.empty":"目录会根据文章标题自动生成。","toc.expand_all":"展开全部目录","toc.collapse_all":"收起全部目录","sidebar.hot_tags":"热门标签","sidebar.latest_posts":"最新文章"};
+  </script>
+  
+<script src="/js/main.js"></script>
+
+  
+</body>
+</html>

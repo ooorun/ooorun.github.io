@@ -1,0 +1,863 @@
+<!doctype html>
+
+<html lang="zh-CN" data-fancybox-enabled="1">
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f7f3e9" data-flatpaper-theme-color>
+
+<title>在 Debian 上使用 LinuxGSM 运行饥荒联机版服务器 | O&#39;s World</title>
+<meta name="description" content="系统环境一个全新的 Debian 13 服务器 123456root@DST:~# lsb_release -aNo LSB modules are available.Distributor ID: DebianDescription: Debian GNU&#x2F;Linux 13 (trixie)Release: 13Codename: trixie 1. 创...">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在 Debian 上使用 LinuxGSM 运行饥荒联机版服务器 | O&#39;s World">
+<meta property="og:url" content="https://ooo.run/post/use-linuxgsm-run-dst-server.html">
+<meta property="og:site_name" content="O&#39;s World">
+<meta property="og:description" content="系统环境一个全新的 Debian 13 服务器 123456root@DST:~# lsb_release -aNo LSB modules are available.Distributor ID: DebianDescription: Debian GNU&#x2F;Linux 13 (trixie)Release: 13Codename: trixie 1. 创...">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-08-13T10:35:46.000Z">
+<meta property="article:modified_time" content="2026-08-13T11:42:12.534Z">
+<meta property="article:author" content="Mr. O">
+<meta property="article:tag" content="Docker 教程, Hexo 博客, 独立开发, Self-hosted, 实用工具, 技术分享, AI 工具, 开源项目">
+<meta name="twitter:card" content="summary">
+<link rel="canonical" href="https://ooo.run/post/use-linuxgsm-run-dst-server.html">
+
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"在 Debian 上使用 LinuxGSM 运行饥荒联机版服务器","name":"在 Debian 上使用 LinuxGSM 运行饥荒联机版服务器 | O's World","description":"系统环境一个全新的 Debian 13 服务器 123456root@DST:~# lsb_release -aNo LSB modules are available.Distributor ID: DebianDescription: Debian GNU/Linux 13 (trixie)Release: 13Codename: trixie 1. 创...","url":"https://ooo.run/post/use-linuxgsm-run-dst-server.html","inLanguage":"zh-CN","isPartOf":{"@type":"WebSite","name":"O's World","url":"https://ooo.run/"},"mainEntityOfPage":"https://ooo.run/post/use-linuxgsm-run-dst-server.html","datePublished":"2026-08-13T10:35:46.000Z","dateModified":"2026-08-13T11:42:12.534Z","author":{"@type":"Person","name":"Mr. O"},"publisher":{"@type":"Organization","name":"O's World"}}</script>
+
+<script>
+  (function () {
+    var accents = { orange: 1, purple: 1, sakura: 1, blue: 1, pink: 1, green: 1, black: 1 };
+    var match = document.cookie.match(/(?:^|;\s*)flatpaper-accent=([^;]+)/);
+    var accent = 'blue';
+    if (match) {
+      try { accent = decodeURIComponent(match[1]); } catch (e) {}
+    }
+    if (!accents[accent]) accent = 'blue';
+    document.documentElement.setAttribute('data-accent', accent);
+    try {
+      if (localStorage.getItem('flatpaper-mode') === 'dark') {
+        document.documentElement.classList.add('dark-mode');
+      }
+    } catch (e) {}
+  })();
+</script>
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+
+
+
+  
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-PZSHQ0MC4Q"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-PZSHQ0MC4Q');
+</script>
+
+
+  
+<script defer src="https://u.nep.me/script.js" data-website-id="768b68c3-d4ed-429e-aa11-f5099ea5adbf" data-domains="ooo.run"></script>
+
+
+  
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8052638941019443" crossorigin="anonymous"></script>
+
+
+  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/artalk@2.9.1/dist/Artalk.css">
+
+<script defer src="https://cdn.jsdelivr.net/npm/artalk@2.9.1/dist/Artalk.js"></script>
+
+
+  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css">
+<script defer src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+
+
+  
+<meta name="generator" content="Hexo 8.1.2"><link rel="alternate" href="/atom.xml" title="O's World" type="application/atom+xml">
+</head>
+
+<body
+  class="is-post tag-style-tape bg-style-default"
+  data-default-accent="blue"
+  data-code-theme="simple"
+  data-note-style="sticky"
+  data-note-icons="on"
+  data-button-style="tape"
+  data-strong-accent="on"
+>
+  
+    <div class="page-grain"></div>
+  
+  <svg width="0" height="0" style="position:absolute;z-index:-1;" aria-hidden="true">
+    <defs>
+      <filter id="paper-edge" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" result="noise" />
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G" />
+      </filter>
+    </defs>
+  </svg>
+  
+  <header class="site-header">
+  
+  <button class="icon-button js-sidebar-toggle sidebar-toggle" type="button" aria-label="打开侧边栏" aria-controls="paper-sidebar-drawer" aria-expanded="false">
+    
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-menu"></use></svg>
+
+  </button>
+
+  <div class="brand">
+    <div class="brand-mark-wrapper">
+      
+        <button class="brand-mark" type="button" aria-label="打开站点导航" aria-haspopup="true" aria-expanded="false" aria-controls="brand-nav-menu">
+          
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-grid flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-layout-grid"></use></svg>
+
+        </button>
+        <div class="brand-nav-menu" id="brand-nav-menu" role="menu">
+          
+            <div class="brand-nav-group">
+              <div class="brand-nav-title">Blog</div>
+              
+                <a role="menuitem" href="https://ooo.run/" target="_blank" rel="noopener noreferrer">
+                  
+                    <img src="https://ooo.run/favicon.ico" alt="" class="nav-img-icon" aria-hidden="true" />
+                  
+                  <span>O&#39;s World</span>
+                </a>
+              
+            </div>
+          
+            <div class="brand-nav-group">
+              <div class="brand-nav-title">Project</div>
+              
+                <a role="menuitem" href="https://tools.ooo.run" target="_blank" rel="noopener noreferrer">
+                  
+                    <img src="https://tools.ooo.run/favicon.png" alt="" class="nav-img-icon" aria-hidden="true" />
+                  
+                  <span>简易工具</span>
+                </a>
+              
+            </div>
+          
+        </div>
+      
+    </div>
+    <a class="brand-text" href="/">O&#39;s World</a>
+  </div>
+
+  <nav class="site-nav" aria-label="主导航">
+    
+      
+        <a class="site-nav-link " href="/">
+          
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-house flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-house"></use></svg>
+
+          <span>首页</span>
+        </a>
+      
+    
+      
+        <a class="site-nav-link " href="/links/">
+          
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-link"></use></svg>
+
+          <span>友链</span>
+        </a>
+      
+    
+      
+        <div class="site-nav-item has-children">
+          <button class="site-nav-link site-nav-parent" type="button" aria-haspopup="true" aria-expanded="false">
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-folder"></use></svg>
+
+            <span>文章</span>
+          </button>
+          <div class="site-nav-menu" role="menu">
+            
+              <a role="menuitem" class="" href="/archives/">
+                
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-archive flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-archive"></use></svg>
+
+                <span>归档</span>
+              </a>
+            
+              <a role="menuitem" class="" href="/categories/">
+                
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-folder"></use></svg>
+
+                <span>分类</span>
+              </a>
+            
+              <a role="menuitem" class="" href="/tags/">
+                
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tag flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-tag"></use></svg>
+
+                <span>标签</span>
+              </a>
+            
+          </div>
+        </div>
+      
+    
+      
+        <a class="site-nav-link " target="_blank" rel="noopener" href="https://www.travellings.cn/go.html">
+          
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tram-front flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-tram-front"></use></svg>
+
+          <span>开往</span>
+        </a>
+      
+    
+  </nav>
+
+  <div class="header-tools">
+    <button class="icon-button js-search-open" type="button" aria-label="搜索文章">
+      
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-search"></use></svg>
+
+    </button>
+    <div class="accent-picker">
+      <button class="icon-button accent-toggle" type="button" aria-label="选择主题色" title="选择主题色" aria-haspopup="true" aria-expanded="false" aria-controls="accent-menu">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-palette flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-palette"></use></svg>
+
+      </button>
+      <div class="accent-menu" id="accent-menu" role="menu" aria-label="主题色">
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="橙色" aria-checked="false" data-accent-option="orange">
+          <span class="accent-swatch accent-swatch--orange" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="紫色" aria-checked="false" data-accent-option="purple">
+          <span class="accent-swatch accent-swatch--purple" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="樱花粉" aria-checked="false" data-accent-option="sakura">
+          <span class="accent-swatch accent-swatch--sakura" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="蓝色" aria-checked="false" data-accent-option="blue">
+          <span class="accent-swatch accent-swatch--blue" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="粉色" aria-checked="false" data-accent-option="pink">
+          <span class="accent-swatch accent-swatch--pink" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="绿色" aria-checked="false" data-accent-option="green">
+          <span class="accent-swatch accent-swatch--green" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="黑色" aria-checked="false" data-accent-option="black">
+          <span class="accent-swatch accent-swatch--black" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
+    <button class="theme-toggle" type="button" aria-label="切换颜色模式">
+      <span class="theme-icon theme-icon--sun">
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sun flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-sun"></use></svg>
+</span>
+      <span class="theme-icon theme-icon--moon">
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-moon flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-moon"></use></svg>
+</span>
+    </button>
+  </div>
+</header>
+
+
+  
+  <main class="paper-shell paper-shell--article">
+    
+
+<aside id="paper-sidebar-drawer" class="paper-sidebar paper-sidebar--right" aria-label="侧边栏">
+  <div class="drawer-toolbar" aria-label="侧边栏工具">
+    <div class="drawer-accent-options" role="group" aria-label="主题色">
+      <button type="button" class="accent-option" aria-label="橙色" aria-pressed="false" data-accent-option="orange">
+        <span class="accent-swatch accent-swatch--orange" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="accent-option" aria-label="紫色" aria-pressed="false" data-accent-option="purple">
+        <span class="accent-swatch accent-swatch--purple" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="accent-option" aria-label="樱花粉" aria-pressed="false" data-accent-option="sakura">
+        <span class="accent-swatch accent-swatch--sakura" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="accent-option" aria-label="蓝色" aria-pressed="false" data-accent-option="blue">
+        <span class="accent-swatch accent-swatch--blue" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="accent-option" aria-label="粉色" aria-pressed="false" data-accent-option="pink">
+        <span class="accent-swatch accent-swatch--pink" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="accent-option" aria-label="绿色" aria-pressed="false" data-accent-option="green">
+        <span class="accent-swatch accent-swatch--green" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="accent-option" aria-label="黑色" aria-pressed="false" data-accent-option="black">
+        <span class="accent-swatch accent-swatch--black" aria-hidden="true"></span>
+      </button>
+    </div>
+    <button class="icon-button drawer-close js-sidebar-close" type="button" aria-label="关闭侧边栏">
+      
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-x"></use></svg>
+
+    </button>
+  </div>
+
+  <section class="side-card nav-card">
+    <nav class="site-nav-drawer" aria-label="移动端导航">
+      
+        
+          <a class="" href="/">
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-house flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-house"></use></svg>
+
+            <span>首页</span>
+          </a>
+        
+      
+        
+          <a class="" href="/links/">
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-link"></use></svg>
+
+            <span>友链</span>
+          </a>
+        
+      
+        
+          <div class="drawer-nav-group">
+            <button class="drawer-nav-parent" type="button" aria-expanded="false">
+              
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-folder"></use></svg>
+
+              <span>文章</span>
+            </button>
+            <div class="drawer-nav-children">
+              
+                <a class="" href="/archives/">
+                  
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-archive flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-archive"></use></svg>
+
+                  <span>归档</span>
+                </a>
+              
+                <a class="" href="/categories/">
+                  
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-folder"></use></svg>
+
+                  <span>分类</span>
+                </a>
+              
+                <a class="" href="/tags/">
+                  
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tag flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-tag"></use></svg>
+
+                  <span>标签</span>
+                </a>
+              
+            </div>
+          </div>
+        
+      
+        
+          <a class="" target="_blank" rel="noopener" href="https://www.travellings.cn/go.html">
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tram-front flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-tram-front"></use></svg>
+
+            <span>开往</span>
+          </a>
+        
+      
+    </nav>
+  </section>
+
+  <section class="side-card profile-card">
+    
+      <div class="avatar avatar--image avatar--circle">
+        <img src="/images/avatar.png" alt="Mr. O" loading="lazy" referrerpolicy="no-referrer">
+      </div>
+    
+    <h3>Mr. O</h3>
+    <p class="profile-role">独立开发者</p>
+    <p>探索互联网世界，分享实用教程与精彩内容，发现更多有趣之处。</p>
+    
+      <div class="site-info" aria-label="站点信息">
+        
+          
+            <a class="site-info__item" href="/archives/">
+              <strong>82</strong>
+              <span>文章</span>
+            </a>
+          
+        
+          
+            <a class="site-info__item" href="/categories/">
+              <strong>8</strong>
+              <span>分类</span>
+            </a>
+          
+        
+          
+            <a class="site-info__item" href="/tags/">
+              <strong>118</strong>
+              <span>标签</span>
+            </a>
+          
+        
+      </div>
+    
+    <div class="socials">
+      
+        <a href="https://tools.ooo.run" target="_blank" rel="noopener" aria-label="Tools" data-tooltip="Tools">
+          
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tool-case flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-tool-case"></use></svg>
+
+          
+        </a>
+      
+      
+        
+        
+        <a href="/atom.xml" aria-label="RSS feed" data-tooltip="RSS feed">
+          
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-rss flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-rss"></use></svg>
+
+        </a>
+      
+    </div>
+  </section>
+
+  
+    <section class="side-card brand-link-card" aria-label="站点链接">
+      
+        <div class="brand-link-group">
+          <div class="brand-link-title">Blog</div>
+          <div class="brand-link-list">
+            
+              <a href="https://ooo.run/" target="_blank" rel="noopener noreferrer">
+                
+                  <img src="https://ooo.run/favicon.ico" alt="" class="nav-img-icon" aria-hidden="true" />
+                
+                <span>O&#39;s World</span>
+              </a>
+            
+          </div>
+        </div>
+      
+        <div class="brand-link-group">
+          <div class="brand-link-title">Project</div>
+          <div class="brand-link-list">
+            
+              <a href="https://tools.ooo.run" target="_blank" rel="noopener noreferrer">
+                
+                  <img src="https://tools.ooo.run/favicon.png" alt="" class="nav-img-icon" aria-hidden="true" />
+                
+                <span>简易工具</span>
+              </a>
+            
+          </div>
+        </div>
+      
+    </section>
+  
+
+  
+    <div class="post-sticky-stack">
+      <section class="side-card toc-card">
+        <header class="toc-card__head">
+          <h2>
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-table-of-contents flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-table-of-contents"></use></svg>
+文章目录</h2>
+          <button type="button" class="toc-toggle-all" data-action="toggle-toc" aria-pressed="false" aria-label="展开全部目录" title="展开全部目录">
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-chevron-down"></use></svg>
+
+          </button>
+        </header>
+        <div class="toc-content">
+          
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E7%8E%AF%E5%A2%83"><span class="toc-text">系统环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%88%9B%E5%BB%BA%E4%B8%93%E7%94%A8%E7%94%A8%E6%88%B7"><span class="toc-text">1. 创建专用用户</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E4%B8%8B%E8%BD%BD-LinuxGSM"><span class="toc-text">2. 下载 LinuxGSM</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%BB%BA%E7%AB%8B%E5%9C%B0%E9%9D%A2%E5%92%8C%E6%B4%9E%E7%A9%B4%E4%B8%A4%E4%B8%AA%E5%AE%9E%E4%BE%8B"><span class="toc-text">3. 建立地面和洞穴两个实例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E9%85%8D%E7%BD%AE%E5%9C%B0%E9%9D%A2-Master"><span class="toc-text">4. 配置地面 Master</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E9%85%8D%E7%BD%AE%E6%B4%9E%E7%A9%B4"><span class="toc-text">5. 配置洞穴</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E8%8E%B7%E5%8F%96-Klei-Token"><span class="toc-text">6. 获取 Klei Token</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E5%AE%89%E8%A3%85%E4%B8%A4%E4%B8%AA%E5%AE%9E%E4%BE%8B"><span class="toc-text">7. 安装两个实例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-%E7%BC%96%E8%BE%91-cluster-ini"><span class="toc-text">8. 编辑 cluster.ini</span></a></li></ol>
+          
+        </div>
+      </section>
+      
+
+  <section class="side-card recent-card latest-posts-card">
+    <h2>
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-history flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-history"></use></svg>
+最新文章</h2>
+    <ul class="recent-list">
+      
+        <li>
+          <a class="recent-item" href="/post/what-is-jev.html">
+            <strong>Jev - 不聊天、不写代码，只负责做决定的 AI</strong>
+            <em>2026-09-18</em>
+          </a>
+        </li>
+      
+        <li>
+          <a class="recent-item" href="/post/how-to-select-gpt-5-6-model.html">
+            <strong>如何选择 GPT 5.6 不同模型与推理强度？查看 OpenAI Codex 团队的推荐设置</strong>
+            <em>2026-07-12</em>
+          </a>
+        </li>
+      
+        <li>
+          <a class="recent-item" href="/post/openai-release-gpt-5-6.html">
+            <strong>OpenAI 发布 GPT-5.6 与 ChatGPT Work，重塑 AI 工作模式</strong>
+            <em>2026-07-10</em>
+          </a>
+        </li>
+      
+        <li>
+          <a class="recent-item" href="/post/change-vaultwarden-account-email-without-set-smtp.html">
+            <strong>在不设置 SMTP 的情况下修改 Vaultwarden(Bitwarden) 的账户邮箱</strong>
+            <em>2026-07-09</em>
+          </a>
+        </li>
+      
+        <li>
+          <a class="recent-item" href="/post/docker-compose-init-containers.html">
+            <strong>Docker Compose 新增 Init Containers：终于不用再写一堆一次性初始化服务了</strong>
+            <em>2026-07-04</em>
+          </a>
+        </li>
+      
+    </ul>
+  </section>
+
+
+    </div>
+  
+
+  
+
+</aside>
+
+    <section class="paper-main">
+      
+
+<div class="article-tape-wrap">
+<span class="tape tape--top-right" aria-hidden="true"></span>
+<article class="article-paper">
+  
+  <header class="article-header">
+    
+    <h1>在 Debian 上使用 LinuxGSM 运行饥荒联机版服务器</h1>
+    <div class="meta-line meta-line--article">
+      <span class="meta-date">
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-calendar"></use></svg>
+2026-08-13</span>
+      
+    </div>
+  </header>
+
+  
+
+
+  <div class="article-content">
+    <h2 id="系统环境"><a href="#系统环境" class="headerlink" title="系统环境"></a>系统环境</h2><p>一个全新的 Debian 13 服务器</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">root@DST:~# lsb_release -a</span><br><span class="line">No LSB modules are available.</span><br><span class="line">Distributor ID:	Debian</span><br><span class="line">Description:	Debian GNU/Linux 13 (trixie)</span><br><span class="line">Release:	13</span><br><span class="line">Codename:	trixie</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-创建专用用户"><a href="#1-创建专用用户" class="headerlink" title="1. 创建专用用户"></a>1. 创建专用用户</h2><p>不要直接用 root 跑 LinuxGSM。官方也明确指出，用 root 运行游戏服本身容易遇到权限问题。</p>
+<p>使用 root 用户执行下面的命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">adduser dstserver</span><br><span class="line">su - dstserver</span><br></pre></td></tr></table></figure>
+
+<details class="flatpaper-note flatpaper-note--info"><summary class="flatpaper-note__title"><span class="flatpaper-note__icon" aria-hidden="true"></span><span class="flatpaper-note__label">sudo相关</span><span class="flatpaper-note__chevron" aria-hidden="true"></span></summary><div class="flatpaper-note__body"><p>普通用户可以使用 <code>sudo</code> 命令执行，如果提示 <code>-bash: sudo: command not found</code> 可以使用下面的命令解决</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 切换到 root 用户</span></span><br><span class="line">su -</span><br><span class="line"></span><br><span class="line">apt update</span><br><span class="line">apt install <span class="built_in">sudo</span></span><br><span class="line"></span><br><span class="line">usermod -aG <span class="built_in">sudo</span> YOUR_USERNAME</span><br></pre></td></tr></table></figure>
+
+<p>然后退出终端重新登录确认是否生效</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dstserver@DST:~$ <span class="built_in">sudo</span> <span class="built_in">whoami</span></span><br><span class="line">[<span class="built_in">sudo</span>] password <span class="keyword">for</span> dstserver: </span><br><span class="line">root</span><br></pre></td></tr></table></figure></div></details>
+
+<p>然后更新环境，安装几个基础工具：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt update</span><br><span class="line"><span class="built_in">sudo</span> apt install -y curl wget tar bzip2 gzip unzip tmux jq vim </span><br></pre></td></tr></table></figure>
+
+<h2 id="2-下载-LinuxGSM"><a href="#2-下载-LinuxGSM" class="headerlink" title="2. 下载 LinuxGSM"></a>2. 下载 LinuxGSM</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /home/dstserver</span><br><span class="line"></span><br><span class="line">curl -Lo linuxgsm.sh https://linuxgsm.sh</span><br><span class="line"><span class="built_in">chmod</span> +x linuxgsm.sh</span><br><span class="line">bash linuxgsm.sh dstserver</span><br></pre></td></tr></table></figure>
+
+<p>这是 LinuxGSM 官方给 DST 的当前安装方式。</p>
+<p>现在目录里应该出现：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dstserver@DST:~$ <span class="built_in">ls</span></span><br><span class="line">dstserver  lgsm  linuxgsm.sh</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-建立地面和洞穴两个实例"><a href="#3-建立地面和洞穴两个实例" class="headerlink" title="3. 建立地面和洞穴两个实例"></a>3. 建立地面和洞穴两个实例</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cp</span> dstserver dstserver-1</span><br><span class="line"><span class="built_in">cp</span> dstserver dstserver-2</span><br></pre></td></tr></table></figure>
+
+<p>后面我们使用：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dstserver-1 = 地面 Master</span><br><span class="line">dstserver-2 = 洞穴 Caves</span><br></pre></td></tr></table></figure>
+
+<p>首次运行后，LinuxGSM 会为不同实例生成各自配置；LinuxGSM 官方的多实例机制本身就是 “每个实例对应自己的脚本和 instance config” 。</p>
+<h2 id="4-配置地面-Master"><a href="#4-配置地面-Master" class="headerlink" title="4. 配置地面 Master"></a>4. 配置地面 Master</h2><p>先执行一次：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./dstserver-1</span><br></pre></td></tr></table></figure>
+<p>LinuxGSM 会初始化相关文件。</p>
+<p>配置一般位于：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~/lgsm/config-lgsm/dstserver/</span><br></pre></td></tr></table></figure>
+
+<p>先看看：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ls</span> ~/lgsm/config-lgsm/dstserver/</span><br></pre></td></tr></table></figure>
+
+<p>你应该能看到类似：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">_default.cfg</span><br><span class="line">common.cfg</span><br><span class="line">dstserver-1.cfg</span><br></pre></td></tr></table></figure>
+<p>不要修改 <code>_default.cfg</code>，因为 LinuxGSM 更新时可能覆盖它。官方推荐把自定义值放进实例自己的 <code>.cfg</code>。</p>
+<p>编辑：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim ~/lgsm/config-lgsm/dstserver/dstserver-1.cfg</span><br></pre></td></tr></table></figure>
+<p>加入：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sharding=&quot;true&quot;</span><br><span class="line">master=&quot;true&quot;</span><br><span class="line">shard=&quot;Master&quot;</span><br><span class="line">cluster=&quot;Cluster_1&quot;</span><br><span class="line">cave=&quot;false&quot;</span><br></pre></td></tr></table></figure>
+<p>这几个参数就是 LinuxGSM 官方 DST 双分片示例给出的 Master 配置。</p>
+<h2 id="5-配置洞穴"><a href="#5-配置洞穴" class="headerlink" title="5. 配置洞穴"></a>5. 配置洞穴</h2><p>执行一次：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./dstserver-2</span><br></pre></td></tr></table></figure>
+
+<p>然后：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim ~/lgsm/config-lgsm/dstserver/dstserver-2.cfg</span><br></pre></td></tr></table></figure>
+
+<p>加入：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sharding=&quot;true&quot;</span><br><span class="line">master=&quot;false&quot;</span><br><span class="line">shard=&quot;Caves&quot;</span><br><span class="line">cluster=&quot;Cluster_1&quot;</span><br><span class="line">cave=&quot;true&quot;</span><br></pre></td></tr></table></figure>
+
+<p>官方说明 cave&#x3D;”true” 会让 LinuxGSM 在安装时自动给该 shard 生成洞穴世界配置。</p>
+<p>这一步最好在执行 <code>install</code> 之前配置好。</p>
+<p>因为 LinuxGSM 官方特别提醒：这些安装变量应该在 dstserver-1 &#x2F; dstserver-2 install 前设置，尤其 cave 会影响世界生成文件。</p>
+<h2 id="6-获取-Klei-Token"><a href="#6-获取-Klei-Token" class="headerlink" title="6. 获取 Klei Token"></a>6. 获取 Klei Token</h2><p>DST 专服必须有 <code>Klei Authentication Token</code> 。</p>
+<p>可以查看： <a href="%60https://docs.linuxgsm.com/game-servers/dont-starve-together#authentication-token%60">LinuxGSM - DST Authentication Token</a></p>
+<p>去 Klei Account 登录：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">accounts.klei.com</span><br></pre></td></tr></table></figure>
+
+<p>访问 <a target="_blank" rel="noopener" href="https://accounts.klei.com/account/game/servers?game=DontStarveTogether">服务器 - DontStarveTogether</a></p>
+<p>创建一个 <code>Dedicated Server Token</code>。</p>
+<p>在下一步安装时需要填入使用。</p>
+<h2 id="7-安装两个实例"><a href="#7-安装两个实例" class="headerlink" title="7. 安装两个实例"></a>7. 安装两个实例</h2><p>先安装地面：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./dstserver-1 install</span><br></pre></td></tr></table></figure>
+<p>按照提示操作。</p>
+<p>在 Cluster Token 的部分输入第六步获取的 Token</p>
+<p>再安装洞穴：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./dstserver-2 install</span><br></pre></td></tr></table></figure>
+<p>服务器文件实际上可以共享，因此不会简单复制两份完整 DST。</p>
+<p>LinuxGSM 会通过 SteamCMD 自动下载安装。</p>
+<h2 id="8-编辑-cluster-ini"><a href="#8-编辑-cluster-ini" class="headerlink" title="8. 编辑 cluster.ini"></a>8. 编辑 cluster.ini</h2><p>编辑文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim ~/.klei/DoNotStarveTogether/Cluster_1/cluster.ini</span><br></pre></td></tr></table></figure>
+
+<p>例如：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[GAMEPLAY]</span></span><br><span class="line"><span class="attr">game_mode</span> = survival</span><br><span class="line"><span class="attr">max_players</span> = <span class="number">6</span></span><br><span class="line"><span class="attr">pvp</span> = <span class="literal">false</span></span><br><span class="line"><span class="attr">pause_when_empty</span> = <span class="literal">true</span></span><br><span class="line"><span class="attr">vote_enable</span> = <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="section">[NETWORK]</span></span><br><span class="line"><span class="attr">cluster_name</span> = 我的DST服务器</span><br><span class="line"><span class="attr">cluster_description</span> = Debian LinuxGSM Server</span><br><span class="line"><span class="attr">cluster_password</span> = <span class="number">123456</span></span><br><span class="line"><span class="attr">cluster_intention</span> = cooperative</span><br><span class="line"><span class="attr">tick_rate</span> = <span class="number">15</span></span><br><span class="line"></span><br><span class="line"><span class="section">[MISC]</span></span><br><span class="line"><span class="attr">console_enabled</span> = <span class="literal">true</span></span><br><span class="line"><span class="attr">max_snapshots</span> = <span class="number">6</span></span><br><span class="line"></span><br><span class="line"><span class="section">[SHARD]</span></span><br><span class="line"><span class="attr">shard_enabled</span> = <span class="literal">true</span></span><br><span class="line"><span class="attr">bind_ip</span> = <span class="number">127.0</span>.<span class="number">0.1</span></span><br><span class="line"><span class="attr">master_ip</span> = <span class="number">127.0</span>.<span class="number">0.1</span></span><br><span class="line"><span class="attr">master_port</span> = <span class="number">10888</span></span><br><span class="line"><span class="attr">cluster_key</span> = dstcluster</span><br></pre></td></tr></table></figure>
+
+<p>这里非常重要的是：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[SHARD]</span></span><br><span class="line"><span class="attr">shard_enabled</span> = <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p>否则 Master 和 Caves 会变成两个独立服务器，而不是同一个世界里的地面和洞穴。LinuxGSM 官方 DST 文档也特别指出这一点。</p>
+<ol start="9">
+<li>配置两个 shard 的端口</li>
+</ol>
+<p>Master：</p>
+<p>mkdir -p ~&#x2F;.klei&#x2F;DoNotStarveTogether&#x2F;Cluster_1&#x2F;Master<br>nano ~&#x2F;.klei&#x2F;DoNotStarveTogether&#x2F;Cluster_1&#x2F;Master&#x2F;server.ini</p>
+<p>填：</p>
+<p>[NETWORK]<br>server_port &#x3D; 11000</p>
+<p>[SHARD]<br>is_master &#x3D; true</p>
+<p>[STEAM]<br>authentication_port &#x3D; 8768<br>master_server_port &#x3D; 27018</p>
+<p>LinuxGSM 官方示例也是 Master 使用：</p>
+<p>server_port      &#x3D; 11000<br>authentication   &#x3D; 8768<br>master_server    &#x3D; 27018</p>
+<p>洞穴：</p>
+<p>mkdir -p ~&#x2F;.klei&#x2F;DoNotStarveTogether&#x2F;Cluster_1&#x2F;Caves<br>nano ~&#x2F;.klei&#x2F;DoNotStarveTogether&#x2F;Cluster_1&#x2F;Caves&#x2F;server.ini</p>
+<p>填：</p>
+<p>[NETWORK]<br>server_port &#x3D; 11001</p>
+<p>[SHARD]<br>is_master &#x3D; false<br>name &#x3D; Caves</p>
+<p>[STEAM]<br>authentication_port &#x3D; 8769<br>master_server_port &#x3D; 27019</p>
+<p>LinuxGSM 官方示例给 Caves 使用不同的 11001 &#x2F; 8769 &#x2F; 27019，避免两个实例端口冲突。</p>
+<ol start="10">
+<li>检查洞穴世界配置</li>
+</ol>
+<p>如果前面在安装前正确设置：</p>
+<p>cave&#x3D;”true”</p>
+<p>LinuxGSM 应该已经自动生成：</p>
+<p>~&#x2F;.klei&#x2F;DoNotStarveTogether&#x2F;Cluster_1&#x2F;Caves&#x2F;worldgenoverride.lua</p>
+<p>可以检查：</p>
+<p>cat ~&#x2F;.klei&#x2F;DoNotStarveTogether&#x2F;Cluster_1&#x2F;Caves&#x2F;worldgenoverride.lua</p>
+<p>官方当前生成的配置类似：</p>
+<p>return {<br>    override_enabled &#x3D; true,<br>    preset &#x3D; “DST_CAVE”,<br>}</p>
+<p>LinuxGSM 文档明确说明，这个文件就是让 Caves 实例生成真正洞穴而非第二张地表地图的关键。</p>
+<ol start="11">
+<li>启动服务器</li>
+</ol>
+<p>启动地面：</p>
+<p>.&#x2F;dstserver-1 start</p>
+<p>启动洞穴：</p>
+<p>.&#x2F;dstserver-2 start</p>
+<p>启动顺序其实无所谓，因为洞穴 shard 连不到 Master 时会自动重试。</p>
+<p>查看状态：</p>
+<p>.&#x2F;dstserver-1 details<br>.&#x2F;dstserver-2 details</p>
+<p>LinuxGSM 的 details 会显示端口、配置路径、运行状态等信息。</p>
+<ol start="12">
+<li>看实时控制台</li>
+</ol>
+<p>地面：</p>
+<p>.&#x2F;dstserver-1 console</p>
+<p>洞穴：</p>
+<p>.&#x2F;dstserver-2 console</p>
+<p>退出控制台：</p>
+<p>Ctrl+B<br>然后按 D</p>
+<p>不要按 Ctrl+C，因为可能直接终止服务器进程。LinuxGSM 官方文档也特别提醒了这一点。</p>
+<ol start="13">
+<li>常用管理命令</li>
+</ol>
+<p>以后基本就是这些：</p>
+<p>.&#x2F;dstserver-1 start<br>.&#x2F;dstserver-1 stop<br>.&#x2F;dstserver-1 restart<br>.&#x2F;dstserver-1 console<br>.&#x2F;dstserver-1 details</p>
+<p>洞穴同理：</p>
+<p>.&#x2F;dstserver-2 start<br>.&#x2F;dstserver-2 stop<br>.&#x2F;dstserver-2 restart<br>.&#x2F;dstserver-2 console<br>.&#x2F;dstserver-2 details</p>
+<p>升级 DST：</p>
+<p>.&#x2F;dstserver-1 update</p>
+<p>强制 SteamCMD 更新：</p>
+<p>.&#x2F;dstserver-1 force-update</p>
+<p>验证服务器文件：</p>
+<p>.&#x2F;dstserver-1 validate</p>
+<p>备份：</p>
+<p>.&#x2F;dstserver-1 backup</p>
+<p>这些都是 LinuxGSM 自带的标准管理功能。</p>
+<ol start="14">
+<li>开放防火墙</li>
+</ol>
+<p>如果启用了 UFW：</p>
+<p>sudo ufw allow 11000&#x2F;udp<br>sudo ufw allow 11001&#x2F;udp</p>
+<p>如果是阿里云、腾讯云、AWS、Oracle 等 VPS，还要在云服务器安全组里开放 UDP：</p>
+<p>11000<br>11001</p>
+<p>一般：</p>
+<p>11000 → Master<br>11001 → Caves<br>15. 自动监控崩服</p>
+<p>LinuxGSM 有 monitor 功能，可以检测服务器挂掉并重启。官方建议通过 cron 周期执行。</p>
+<p>编辑：</p>
+<p>crontab -e</p>
+<p>例如：</p>
+<p>*&#x2F;5 * * * * &#x2F;home&#x2F;dstserver&#x2F;dstserver-1 monitor &gt; &#x2F;dev&#x2F;null 2&gt;&amp;1<br>*&#x2F;5 * * * * &#x2F;home&#x2F;dstserver&#x2F;dstserver-2 monitor &gt; &#x2F;dev&#x2F;null 2&gt;&amp;1</p>
+<p>这样每 5 分钟检查一次。</p>
+<p>还可以自动检查更新：</p>
+<p>*&#x2F;30 * * * * &#x2F;home&#x2F;dstserver&#x2F;dstserver-1 update &gt; &#x2F;dev&#x2F;null 2&gt;&amp;1</p>
+<p>LinuxGSM 官方 DST 页面本身也推荐使用 cron 执行 monitor 和 update。</p>
+
+  </div>
+
+  <footer class="article-reactions">
+    <div class="reaction-group">
+      <button type="button" class="reaction reaction--comment" aria-label="跳转到评论区" data-action="scroll-to-comments">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-message-circle"></use></svg>
+
+      </button>
+      <span class="reaction-label">评论</span>
+      
+    </div>
+    <div class="reaction-group reaction-group--right">
+      
+      <button type="button" class="reaction reaction--share" aria-label="分享" data-action="share">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-share-2 flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-share-2"></use></svg>
+
+      </button>
+      <span class="reaction-label">分享</span>
+    </div>
+  </footer>
+
+  
+
+
+  <nav class="article-actions">
+    
+      <a class="article-action article-action--prev" href="/post/what-is-jev.html">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-arrow-left"></use></svg>
+
+        <span class="action-label">上一篇</span>
+        <span class="action-title">Jev - 不聊天、不写代码，只负责做决定的 AI</span>
+      </a>
+    
+    
+      <a class="article-action article-action--next" href="/post/how-to-select-gpt-5-6-model.html">
+        <span class="action-label">下一篇</span>
+        <span class="action-title">如何选择 GPT 5.6 不同模型与推理强度？查看 OpenAI Codex 团队的推荐设置</span>
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-arrow-right"></use></svg>
+
+      </a>
+    
+  </nav>
+</article>
+</div>
+
+<button type="button" class="back-to-top" data-action="scroll-to-top" aria-label="返回顶部" hidden>
+  
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-arrow-up"></use></svg>
+
+</button>
+
+
+
+      
+
+<section class="comments-section" aria-label="评论">
+  <header class="comments-section__head">
+    <h2>
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-message-circle"></use></svg>
+评论</h2>
+  </header>
+  <div id="artalk-comments"></div>
+</section>
+<script>
+window.addEventListener('load', function () {
+  if (typeof Artalk === 'undefined' || typeof Artalk.init !== 'function') return;
+  Artalk.init({
+    el: '#artalk-comments',
+    pageKey: "https://ooo.run/post/use-linuxgsm-run-dst-server.html",
+    pageTitle: "在 Debian 上使用 LinuxGSM 运行饥荒联机版服务器",
+    server: "https://artalk.ooo.run",
+    site: "Mr. O 的博客"
+  });
+});
+</script>
+
+
+    </section>
+    
+  </main>
+
+  <div class="sidebar-backdrop js-sidebar-close" aria-hidden="true"></div>
+
+  
+<footer class="site-footer">
+  <span class="site-footer__left">© 2026 By Mr. O</span>
+  
+    <span class="site-footer__right">
+      
+        <span class="site-footer__row"><span class="site-footer__powered-prefix">Powered by Theme</span> <a href="https://github.com/Homulilly/hexo-theme-flatpaper" target="_blank" rel="noopener">FlatPaper</a></span>
+      
+        <span class="site-footer__row"><a href="/terms">服务条款</a><span class="site-footer__separator"> · </span><a href="/privacy">隐私政策</a></span>
+      
+        <span class="site-footer__row"><a href="https://tools.ooo.run" target="_blank" rel="noopener">简易工具</a><span class="site-footer__separator"> · </span><a href="https://endfield.ooo.run" target="_blank" rel="noopener">终末地基质工具箱</a><span class="site-footer__separator"> · </span><a href="https://projectrx.ooo.run" target="_blank" rel="noopener">Projec RX 资料站</a></span>
+      
+    </span>
+  
+</footer>
+
+  
+<div class="search-panel" aria-hidden="true" data-index-url="/flatpaper-search.json">
+  <div class="search-backdrop js-search-close"></div>
+  <section class="search-dialog" role="dialog" aria-modal="true" aria-label="搜索文章">
+    <span class="tape tape--top-left" aria-hidden="true"></span>
+    <header class="search-head">
+      <h2><span class="green-dot"></span>搜索文章</h2>
+      <button class="icon-button js-search-close" type="button" aria-label="关闭搜索">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-x"></use></svg>
+
+      </button>
+    </header>
+    <label class="search-field">
+      
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-search"></use></svg>
+
+      <input id="flatpaper-search" class="search-input" type="search" placeholder="输入关键词，按 Esc 关闭" autocomplete="off">
+    </label>
+    <div class="search-results" data-empty="输入关键词后显示匹配的文章">
+      <p class="search-empty">输入关键词后显示匹配的文章</p>
+    </div>
+  </section>
+</div>
+
+  <script>
+  window.FLATPAPER_I18N = {"language":"zh-CN","common.posts":"文章","common.categories":"分类","common.tags":"标签","common.comments":"评论","common.share":"分享","common.page":"页面","common.archive":"归档","common.post_list":"文章列表","common.search_posts":"搜索文章","common.random_posts":"随机文章","common.reward":"赞赏","common.view_all":"查看全部","pagination.prev":"上一页","pagination.next":"下一页","pagination.post_pager":"文章分页","pagination.archive_pager":"归档分页","index.featured":"精选文章","index.pinned":"置顶","index.read_more":"阅读全文","index.previous_slide":"上一张","index.next_slide":"下一张","index.carousel_pagination":"轮播页码","index.carousel_slide":"第 %d 张","index.latest_posts":"最新文章","index.empty_posts":"还没有文章。创建第一篇文章后，这里会显示最新内容。","archive.title":"归档","archive.post_list":"文章列表","taxonomy.category_count":"%d 篇","taxonomy.empty_categories":"暂时还没有分类。","taxonomy.empty_tags":"暂时还没有标签。","links.label":"友链","links.title":"友情链接","links.empty_data":"暂未加载到友链数据。请确认 source/_data/links.yml 存在并已 hexo clean。","links.rss_label":"%s 的 RSS","friends_feed.label":"朋友圈","friends_feed.title":"友链朋友圈","friends_feed.loading":"正在加载友链动态…","friends_feed.missing_url":"暂未配置 all.json 地址。","friends_feed.load_failed":"友链动态加载失败，请稍后再试。","friends_feed.empty":"暂时没有抓取到友链文章。","friends_feed.load_more":"加载更多","friends_feed.updated_at":"更新于 %s","friends_feed.friend_count":"%d 位友邻","friends_feed.active_count":"%d 位活跃","friends_feed.article_count":"%d 篇文章","friends_feed.unknown_author":"未知站点","friends_feed.date_unknown":"时间未知","post.scroll_to_comments":"跳转到评论区","post.previous":"上一篇","post.next":"下一篇","post.no_previous":"没有更早的文章了","post.no_next":"已经是最新的一篇","post.back_to_top":"返回顶部","post.related_posts":"相关文章","post.view_more":"查看更多","not_found.label":"页面走丢了","not_found.title":"找不到这个页面","not_found.text":"这个地址可能已经移动、删除，或者从未存在。","not_found.home":"返回首页","not_found.search":"搜索文章","search.placeholder":"输入关键词，按 Esc 关闭","search.empty":"输入关键词后显示匹配的文章","search.loading":"正在加载搜索索引…","search.load_failed":"搜索索引加载失败，请重新打开搜索重试","search.no_result":"没有找到与 \"%s\" 相关的文章","search.close":"关闭搜索","code.copy":"复制代码","code.collapse":"折叠代码","code.expand":"展开代码","heading.anchor":"链接到此节: %s","head.tag":"标签：%s","head.category":"分类：%s","head.archive":"归档","head.archive_with_date":"归档：%s","head.page_number":"第 %d 页","navigation.primary":"主导航","navigation.mobile":"移动端导航","navigation.brand_home":"FlatPaper 首页","navigation.brand_menu":"打开站点导航","navigation.open_sidebar":"打开侧边栏","navigation.close_sidebar":"关闭侧边栏","navigation.sidebar":"侧边栏","navigation.sidebar_tools":"侧边栏工具","navigation.site_links":"站点链接","navigation.site_info":"站点信息","colors.choose_theme_color":"选择主题色","colors.theme_color":"主题色","colors.toggle_color_mode":"切换颜色模式","colors.green":"绿色","colors.purple":"紫色","colors.pink":"粉色","colors.sakura":"樱花粉","colors.blue":"蓝色","colors.orange":"橙色","colors.black":"黑色","profile.default_bio":"热爱生活，热爱代码，喜欢分享技术与生活中的点滴。","welcome.cta":"开始阅读","welcome.title":"欢迎来到 FlatPaper","welcome.text":"一个专注于内容与阅读体验的博客主题。","home_hero.label":"首页开屏","home_hero.enter":"开始阅读","home_hero.note":"今日","home_hero.default_subtitle":"日常记录","home_hero.nav_links":"开屏导航","home_hero.profile_links":"个人链接","home_hero.tools":"开屏工具","home_hero.shuffle_stickers":"打乱贴纸位置","home_hero.link":"链接","home_hero.sticker_image":"贴纸图片","home_hero.visit_confirm":"要访问 %s 吗？","home_hero.visit":"访问","home_hero.cancel":"取消","toc.title":"文章目录","toc.empty":"目录会根据文章标题自动生成。","toc.expand_all":"展开全部目录","toc.collapse_all":"收起全部目录","sidebar.hot_tags":"热门标签","sidebar.latest_posts":"最新文章"};
+  </script>
+  
+<script src="/js/main.js"></script>
+
+  
+</body>
+</html>
