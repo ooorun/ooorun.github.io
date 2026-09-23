@@ -221,6 +221,91 @@
       </tags>
   </entry>
   <entry>
+    <title>如何使用 SSH key 连接 GitHub</title>
+    <url>/post/how-to-add-ssh-key-to-github.html</url>
+    <content><![CDATA[<p>如果需要频繁的进行 GitHub pull&#x2F;push 操作，使用 SSH key 绑定到 GitHub 会更加方便，绑定后将使用公钥加密来验证用户身份，比传统的用户名和密码方式更安全。  </p>
+<p>本文命令与截图对应下面的系统版本，需要先安装 <a href="https://git-scm.com/downloads">Git</a></p>
+<ul>
+<li><strong>Windows 11</strong> : 一般安装 <code>64-bit Git for Windows Setup</code>, 安装选项全部<strong>默认</strong>即可</li>
+<li><strong>macOS 15.1</strong> : 更推荐通过安装 <a href="https://brew.sh/">Homebrew</a> 获取 Git 程序，查看 <a href="https://ooo.run/post/how-to-install-homebrew-on-macos.html">如何在 macOS 中安装 Homebrew </a></li>
+</ul>
+<h2 id="打开终端程序"><a href="#打开终端程序" class="headerlink" title="打开终端程序"></a>打开终端程序</h2><h3 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h3><ul>
+<li>右键点击开始菜单，选择终端</li>
+<li>或是按 <code>Windows + R</code> 快捷键打开 <strong>运行</strong> 窗口，输入 <code>cmd</code> ，回车打开</li>
+</ul>
+<h3 id="macOS"><a href="#macOS" class="headerlink" title="macOS"></a>macOS</h3><ul>
+<li>启动台 &gt; 其他 &gt; 终端</li>
+<li><strong>启动台</strong> 或是　<code>Commond⌘ + 空格</code> 打开聚焦搜索，搜索 <strong>终端</strong> 或是 <strong>Terminal</strong></li>
+</ul>
+<p>安装 Git 后，使用 <code>git -v</code> 测试，如果安装成功会显示版本号</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt; git -v</span><br><span class="line">git version 2.47.1</span><br></pre></td></tr></table></figure>
+<p>然后设置 Git 的个人信息</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;yourname&quot;</span></span><br><span class="line">git config --global user.email <span class="string">&quot;your_email@example.com&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="测试一下-github-com"><a href="#测试一下-github-com" class="headerlink" title="测试一下 github.com"></a>测试一下 github.com</h2><div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>Windows 10 用户可以使用 Git Bash</p></div></div>
+<div class="flatpaper-note flatpaper-note--warning"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>测试时会自动创建 <code>.ssh</code> 文件夹，因此你也需要测试一下</p></div></div>
+
+<p>打开终端程序，运行测试命令，如果是第一次运行，需要输入 <code>yes</code> 确认</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure>
+
+<p>我们没有添加过 SSH key，会提示 <code>Permission denied (publickey).</code></p>
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-4-tab-0" aria-controls="tabs-4-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">Windows</button><button type="button" role="tab" id="tabs-4-tab-1" aria-controls="tabs-4-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">macOS</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-4-panel-0" aria-labelledby="tabs-4-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><p><img src="https://img.nep.me/i/2024/12/13/122owl6-2.webp"></p></section><section role="tabpanel" id="tabs-4-panel-1" aria-labelledby="tabs-4-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><p><img src="https://img.nep.me/i/2024/12/13/124oz3l-2.webp"></p></section></div></div>
+
+<h2 id="创建-SSH-Key"><a href="#创建-SSH-Key" class="headerlink" title="创建 SSH Key"></a>创建 SSH Key</h2><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> .ssh</span><br><span class="line"></span><br><span class="line">ssh-keygen -t rsa -C <span class="string">&quot;your_email@example.com&quot;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">C:\Users\ME\.ssh&gt;ssh-keygen -t rsa</span><br><span class="line"></span><br><span class="line">Generating public/private rsa key pair.</span><br><span class="line"><span class="comment"># 设置保存文件名，留空则为 id_rsa</span></span><br><span class="line">Enter file <span class="keyword">in</span> <span class="built_in">which</span> to save the key (C:\Users\ME/.ssh/id_rsa):</span><br><span class="line"><span class="comment"># 设置密码，留空则是没有密码</span></span><br><span class="line">Enter passphrase (empty <span class="keyword">for</span> no passphrase):</span><br><span class="line"><span class="comment"># 确认密码</span></span><br><span class="line">Enter same passphrase again:</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成的私钥</span></span><br><span class="line">Your identification has been saved <span class="keyword">in</span> C:\Users\ME/.ssh/id_rsa</span><br><span class="line"><span class="comment"># 生成的公钥</span></span><br><span class="line">Your public key has been saved <span class="keyword">in</span> C:\Users\ME/.ssh/id_rsa.pub</span><br></pre></td></tr></table></figure>
+<div class="flatpaper-note flatpaper-note--warning"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p><code>.pub</code> 后缀的是公钥，可以公开，<strong>私钥相当于个人密码，要小心保存</strong></p></div></div>
+
+<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>git 默认会查找名称为 <code>id_rsa</code> 的 SSH key </p></div></div>
+
+<div class="flatpaper-note flatpaper-note--primary"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>如果设置了文件名称，或是生成其他格式的 SSH key 可以查看后文的配合 <code>SSH config</code> 的部分</p></div></div>
+
+<div class="flatpaper-note flatpaper-note--default"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>rsa 格式的 key 内容很长，使用 <code>ssh-keygen -t ed25519</code> 生成 <code>ed25519</code> 格式的 key，更简洁，更安全</p></div></div>
+
+<h2 id="添加公钥到-GitHub"><a href="#添加公钥到-GitHub" class="headerlink" title="添加公钥到 GitHub"></a>添加公钥到 GitHub</h2><p>使用命令或是文本编辑器查看公钥的内容</p>
+<ul>
+<li>Windows 使用 <code>type id_rsa.pub</code> </li>
+<li>macOS &#x2F; Linux 使用 <code>cat id_rsa.pub</code></li>
+</ul>
+<p>访问 <a href="https://github.com/settings/keys">Github - SSH Keys</a>，点击右上角 <strong>New SSH key</strong>。<br>手动访问路径：右上角点击 <strong>头像</strong> &gt; <strong>Settings</strong> &gt; <strong>SSH and GPG keys</strong> &gt; <strong>New SSH key</strong></p>
+<p><img src="https://img.nep.me/i/2024/12/13/12s8co0-2.webp" alt="github-add-ssh-key"></p>
+<ul>
+<li><strong>Title</strong>：取个备注名字</li>
+<li><strong>Key type</strong>：不需要修改，保持默认 <strong>Authentication Key</strong></li>
+<li><strong>Key</strong>：粘贴 <code>id_rsa.pub</code> 对应的文本内容</li>
+<li>点击 <code>Add SSH key</code> 保存</li>
+</ul>
+<p><img src="https://img.nep.me/i/2024/12/13/12sain9-2.webp" alt="github-add-ssh-key-details"></p>
+<p>添加成功会在列表显示<br><img src="https://img.nep.me/i/2024/12/13/12vf7u0-2.webp" alt="github-add-ssh-key-done"></p>
+<p>此时我们再执行测试命令，就会获得成功的欢迎提示。 </p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt;ssh -T git@github.com</span><br><span class="line">Hi &lt;Your username&gt;! You<span class="string">&#x27;ve successfully authenticated, but GitHub does not provide shell access.</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="配合-SSH-config-使用"><a href="#配合-SSH-config-使用" class="headerlink" title="配合 SSH config 使用"></a>配合 SSH config 使用</h2><p>如果我们的私钥的名称不是 <code>id_rsa</code> ，我们将仍然无法成功连接 GitHub ，你可以将私钥修改文件名后再试试 </p>
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-5-tab-0" aria-controls="tabs-5-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">Windows</button><button type="button" role="tab" id="tabs-5-tab-1" aria-controls="tabs-5-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">macOS&amp;Linux</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-5-panel-0" aria-labelledby="tabs-5-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt; rename id_rsa id_mysshkey</span><br><span class="line"></span><br><span class="line">&gt; ssh -T git@github.com</span><br><span class="line">git@github.com: Permission denied (publickey).</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-5-panel-1" aria-labelledby="tabs-5-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt; <span class="built_in">mv</span> id_rsa id_mysshkey</span><br><span class="line"></span><br><span class="line">&gt; ssh -T git@github.com</span><br><span class="line">git@github.com: Permission denied (publickey).</span><br></pre></td></tr></table></figure></section></div></div>
+
+<p>这时我们可以通过在 <code>.ssh</code> 文件夹中创建一个 <code>config</code> 文件，填入下面的内容来告诉 git 程序在哪里找到密钥</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Host github.com</span><br><span class="line">    HostName github.com</span><br><span class="line">    User git</span><br><span class="line">    IdentityFile ~/.ssh/id_mysshkey</span><br></pre></td></tr></table></figure>
+
+<p>其中 <code>IdentityFile</code> 部分填写私钥的路径， <code>~</code> 代表用户 Home 目录</p>
+<ul>
+<li>Windows 相当于 <code>C:\Users\&lt;username&gt;\</code></li>
+<li>macOS 相当于 <code>/Users/&lt;username&gt;/</code></li>
+<li>Linux 相当于 <code>/root/</code> 或是 <code>/home/&lt;username&gt;/</code></li>
+</ul>
+<p>再进行测试，发现又能显示成功的欢迎消息。  </p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt;ssh -T git@github.com</span><br><span class="line">Hi &lt;Your username&gt;! You<span class="string">&#x27;ve successfully authenticated, but GitHub does not provide shell access.</span></span><br></pre></td></tr></table></figure>
+
+<p>以后就可以很方便的使用 Git 了！</p>
+]]></content>
+      <categories>
+        <category>教程</category>
+      </categories>
+      <tags>
+        <tag>GitHub</tag>
+        <tag>SSH</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>为 Hexo 博客添加评论系统，Giscus or Twikoo or Arttalk or Disqus</title>
     <url>/post/how-to-add-comment-system-for-static-blog.html</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>静态博客系统不像 Wordpress 一样自带评论系统，不过由于使用静态博客的人越来越多，社区已经有了多种评论系统可以供我们选择。</p>
@@ -277,7 +362,7 @@
 <h3 id="Artalk-介绍"><a href="#Artalk-介绍" class="headerlink" title="Artalk 介绍"></a>Artalk 介绍</h3><p><a href="https://artalk.js.org/">Artalk</a> 同样是一款简单易用但功能丰富的评论系统，与 Twikoo 项目，Artalk 国际化更加友好，支持更多的语言，但是无法使用第三方云服务托管。</p>
 <p>如果你也有一台 VPS 服务器，那么 Twikoo 和 Artalk 都是不错的选择，可以对比一下具体的功能与界面样式再做选择。 </p>
 <h3 id="创建-docker-compose-yml"><a href="#创建-docker-compose-yml" class="headerlink" title="创建 docker-compose.yml"></a>创建 docker-compose.yml</h3><p>首先创建一个工作目录，然后在文件夹内创建 <code>docker-compose.yml</code> 文件，填入下面的内容</p>
-<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-4-tab-0" aria-controls="tabs-4-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">Twikoo</button><button type="button" role="tab" id="tabs-4-tab-1" aria-controls="tabs-4-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">Artalk</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-4-panel-0" aria-labelledby="tabs-4-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">twikoo:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">imaegoo/twikoo:latest</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">twikoo</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="comment"># 本机设置 Nginx 反代后可以设置为 - 127.0.0.1:8080:8080 关闭公网访问</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">8080</span><span class="string">:8080</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="comment"># 数据存放路径:容器内路径</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/var/www/twikoo/data:/app/data</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-4-panel-1" aria-labelledby="tabs-4-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">artalk:</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">artalk</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">artalk/artalk-go</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">unless-stopped</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">8080</span><span class="string">:23366</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/opt/artalk/data:/data</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">TZ=Asia/Shanghai</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">ATK_LOCALE=zh-CN</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">ATK_SITE_DEFAULT=Artalk</span> <span class="string">的博客</span></span><br><span class="line">      <span class="comment"># 填写博客域名</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">ATK_SITE_URL=https://your_domain</span></span><br></pre></td></tr></table></figure></section></div></div>
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-6-tab-0" aria-controls="tabs-6-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">Twikoo</button><button type="button" role="tab" id="tabs-6-tab-1" aria-controls="tabs-6-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">Artalk</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-6-panel-0" aria-labelledby="tabs-6-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">twikoo:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">imaegoo/twikoo:latest</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">twikoo</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="comment"># 本机设置 Nginx 反代后可以设置为 - 127.0.0.1:8080:8080 关闭公网访问</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">8080</span><span class="string">:8080</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="comment"># 数据存放路径:容器内路径</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/var/www/twikoo/data:/app/data</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-6-panel-1" aria-labelledby="tabs-6-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">artalk:</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">artalk</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">artalk/artalk-go</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">unless-stopped</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">8080</span><span class="string">:23366</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/opt/artalk/data:/data</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">TZ=Asia/Shanghai</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">ATK_LOCALE=zh-CN</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">ATK_SITE_DEFAULT=Artalk</span> <span class="string">的博客</span></span><br><span class="line">      <span class="comment"># 填写博客域名</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">ATK_SITE_URL=https://your_domain</span></span><br></pre></td></tr></table></figure></section></div></div>
 
 <h3 id="启动服务"><a href="#启动服务" class="headerlink" title="启动服务"></a>启动服务</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 拉取、更新镜像</span></span><br><span class="line">docker compose pull</span><br><span class="line"><span class="comment"># 启动后台</span></span><br><span class="line">docker compose up -d</span><br><span class="line"></span><br><span class="line"><span class="comment"># 常用命令</span></span><br><span class="line">docker compose stop     <span class="comment"># 暂停容器</span></span><br><span class="line">docker compose down     <span class="comment"># 删除容器</span></span><br><span class="line">docker compose restart  <span class="comment"># 重启容器</span></span><br></pre></td></tr></table></figure>
 
@@ -290,11 +375,11 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#123;&quot;code&quot;:100,&quot;message&quot;:&quot;Twikoo 云函数运行正常，...&quot;,&quot;version&quot;:&quot;1.x.x&quot;&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="测试-Artalk"><a href="#测试-Artalk" class="headerlink" title="测试 Artalk"></a>测试 Artalk</h3><p>访问使用的域名，如果成功 Artalk 会显示登录界面<br><img src="https://img.nep.me/i/2024/12/15/agkca0-2.webp" style="width:50%;" alt="image" /></p>
 <h3 id="在主题中启用"><a href="#在主题中启用" class="headerlink" title="在主题中启用"></a>在主题中启用</h3><p>编辑 Hexo 目录下的 <code>_config.butterfly.yml</code> 文件： </p>
-<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-5-tab-0" aria-controls="tabs-5-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">Twikoo</button><button type="button" role="tab" id="tabs-5-tab-1" aria-controls="tabs-5-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">Artalk</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-5-panel-0" aria-labelledby="tabs-5-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">comments:</span>  </span><br><span class="line">  <span class="comment"># 设置为 twikoo</span></span><br><span class="line">  <span class="attr">use:</span> <span class="string">twikoo</span></span><br><span class="line"></span><br><span class="line"><span class="attr">twikoo:</span></span><br><span class="line">  <span class="comment"># envId 填写你的域名</span></span><br><span class="line">  <span class="attr">envId:</span> <span class="string">https://twikoo.example.com</span></span><br><span class="line">  <span class="attr">region:</span></span><br><span class="line">  <span class="attr">visitor:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">option:</span></span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-5-panel-1" aria-labelledby="tabs-5-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">comments:</span>  </span><br><span class="line">  <span class="comment"># 设置为 artalk</span></span><br><span class="line">  <span class="attr">use:</span> <span class="string">artalk</span></span><br><span class="line"></span><br><span class="line"><span class="attr">artalk:</span></span><br><span class="line">  <span class="comment"># server 填 artalk 的域名</span></span><br><span class="line">  <span class="attr">server:</span> <span class="string">https://artalk.example.com</span></span><br><span class="line">  <span class="comment"># site ATK_SITE_DEFAULT 设置的内容，不是博客域名，不能包含引号</span></span><br><span class="line">  <span class="attr">site:</span> <span class="string">Artalk</span> <span class="string">的博客</span></span><br><span class="line">  <span class="comment"># Use Artalk visitor count as the page view count</span></span><br><span class="line">  <span class="attr">visitor:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">option:</span></span><br></pre></td></tr></table></figure></section></div></div>
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-7-tab-0" aria-controls="tabs-7-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">Twikoo</button><button type="button" role="tab" id="tabs-7-tab-1" aria-controls="tabs-7-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">Artalk</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-7-panel-0" aria-labelledby="tabs-7-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">comments:</span>  </span><br><span class="line">  <span class="comment"># 设置为 twikoo</span></span><br><span class="line">  <span class="attr">use:</span> <span class="string">twikoo</span></span><br><span class="line"></span><br><span class="line"><span class="attr">twikoo:</span></span><br><span class="line">  <span class="comment"># envId 填写你的域名</span></span><br><span class="line">  <span class="attr">envId:</span> <span class="string">https://twikoo.example.com</span></span><br><span class="line">  <span class="attr">region:</span></span><br><span class="line">  <span class="attr">visitor:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">option:</span></span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-7-panel-1" aria-labelledby="tabs-7-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">comments:</span>  </span><br><span class="line">  <span class="comment"># 设置为 artalk</span></span><br><span class="line">  <span class="attr">use:</span> <span class="string">artalk</span></span><br><span class="line"></span><br><span class="line"><span class="attr">artalk:</span></span><br><span class="line">  <span class="comment"># server 填 artalk 的域名</span></span><br><span class="line">  <span class="attr">server:</span> <span class="string">https://artalk.example.com</span></span><br><span class="line">  <span class="comment"># site ATK_SITE_DEFAULT 设置的内容，不是博客域名，不能包含引号</span></span><br><span class="line">  <span class="attr">site:</span> <span class="string">Artalk</span> <span class="string">的博客</span></span><br><span class="line">  <span class="comment"># Use Artalk visitor count as the page view count</span></span><br><span class="line">  <span class="attr">visitor:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">option:</span></span><br></pre></td></tr></table></figure></section></div></div>
 
 <h3 id="预览"><a href="#预览" class="headerlink" title="预览"></a>预览</h3><p>运行命令在网站查看评论预览</p>
 <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">hexo g</span><br><span class="line">hexo s</span><br><span class="line"></span><br><span class="line"><span class="comment"># Artalk 默认需要推送到服务器才可以预览</span></span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure>
-<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-6-tab-0" aria-controls="tabs-6-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">Twikoo</button><button type="button" role="tab" id="tabs-6-tab-1" aria-controls="tabs-6-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">Artalk</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-6-panel-0" aria-labelledby="tabs-6-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><p><img src="https://img.nep.me/i/2024/12/14/5cyu50-2.webp" alt="Twikoo Preview"></p></section><section role="tabpanel" id="tabs-6-panel-1" aria-labelledby="tabs-6-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><p><img src="https://img.nep.me/i/2024/12/15/c38ctz-2.webp" alt="Artalk Preview"></p></section></div></div>
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-8-tab-0" aria-controls="tabs-8-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">Twikoo</button><button type="button" role="tab" id="tabs-8-tab-1" aria-controls="tabs-8-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">Artalk</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-8-panel-0" aria-labelledby="tabs-8-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><p><img src="https://img.nep.me/i/2024/12/14/5cyu50-2.webp" alt="Twikoo Preview"></p></section><section role="tabpanel" id="tabs-8-panel-1" aria-labelledby="tabs-8-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><p><img src="https://img.nep.me/i/2024/12/15/c38ctz-2.webp" alt="Artalk Preview"></p></section></div></div>
 
 <h3 id="设置面板"><a href="#设置面板" class="headerlink" title="设置面板"></a>设置面板</h3><p>Twikoo：<br>第一次打开 Twikoo 面板，需要设置 <strong>密码</strong> ，然后进入面板可以导入评论、设置站点信息、SMTP 邮件发送、消息推送等功能。</p>
 <p>Artalk：<br>Artalk 则是访问自己的域名，使用管理员账户登陆后台进行设置，同样可以设置SMTP 邮件发送、消息推送等功能。</p>
@@ -319,91 +404,6 @@
         <tag>Twikoo</tag>
         <tag>Artalk</tag>
         <tag>Giscus</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>如何使用 SSH key 连接 GitHub</title>
-    <url>/post/how-to-add-ssh-key-to-github.html</url>
-    <content><![CDATA[<p>如果需要频繁的进行 GitHub pull&#x2F;push 操作，使用 SSH key 绑定到 GitHub 会更加方便，绑定后将使用公钥加密来验证用户身份，比传统的用户名和密码方式更安全。  </p>
-<p>本文命令与截图对应下面的系统版本，需要先安装 <a href="https://git-scm.com/downloads">Git</a></p>
-<ul>
-<li><strong>Windows 11</strong> : 一般安装 <code>64-bit Git for Windows Setup</code>, 安装选项全部<strong>默认</strong>即可</li>
-<li><strong>macOS 15.1</strong> : 更推荐通过安装 <a href="https://brew.sh/">Homebrew</a> 获取 Git 程序，查看 <a href="https://ooo.run/post/how-to-install-homebrew-on-macos.html">如何在 macOS 中安装 Homebrew </a></li>
-</ul>
-<h2 id="打开终端程序"><a href="#打开终端程序" class="headerlink" title="打开终端程序"></a>打开终端程序</h2><h3 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h3><ul>
-<li>右键点击开始菜单，选择终端</li>
-<li>或是按 <code>Windows + R</code> 快捷键打开 <strong>运行</strong> 窗口，输入 <code>cmd</code> ，回车打开</li>
-</ul>
-<h3 id="macOS"><a href="#macOS" class="headerlink" title="macOS"></a>macOS</h3><ul>
-<li>启动台 &gt; 其他 &gt; 终端</li>
-<li><strong>启动台</strong> 或是　<code>Commond⌘ + 空格</code> 打开聚焦搜索，搜索 <strong>终端</strong> 或是 <strong>Terminal</strong></li>
-</ul>
-<p>安装 Git 后，使用 <code>git -v</code> 测试，如果安装成功会显示版本号</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt; git -v</span><br><span class="line">git version 2.47.1</span><br></pre></td></tr></table></figure>
-<p>然后设置 Git 的个人信息</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;yourname&quot;</span></span><br><span class="line">git config --global user.email <span class="string">&quot;your_email@example.com&quot;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="测试一下-github-com"><a href="#测试一下-github-com" class="headerlink" title="测试一下 github.com"></a>测试一下 github.com</h2><div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>Windows 10 用户可以使用 Git Bash</p></div></div>
-<div class="flatpaper-note flatpaper-note--warning"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>测试时会自动创建 <code>.ssh</code> 文件夹，因此你也需要测试一下</p></div></div>
-
-<p>打开终端程序，运行测试命令，如果是第一次运行，需要输入 <code>yes</code> 确认</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure>
-
-<p>我们没有添加过 SSH key，会提示 <code>Permission denied (publickey).</code></p>
-<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-7-tab-0" aria-controls="tabs-7-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">Windows</button><button type="button" role="tab" id="tabs-7-tab-1" aria-controls="tabs-7-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">macOS</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-7-panel-0" aria-labelledby="tabs-7-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><p><img src="https://img.nep.me/i/2024/12/13/122owl6-2.webp"></p></section><section role="tabpanel" id="tabs-7-panel-1" aria-labelledby="tabs-7-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><p><img src="https://img.nep.me/i/2024/12/13/124oz3l-2.webp"></p></section></div></div>
-
-<h2 id="创建-SSH-Key"><a href="#创建-SSH-Key" class="headerlink" title="创建 SSH Key"></a>创建 SSH Key</h2><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> .ssh</span><br><span class="line"></span><br><span class="line">ssh-keygen -t rsa -C <span class="string">&quot;your_email@example.com&quot;</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">C:\Users\ME\.ssh&gt;ssh-keygen -t rsa</span><br><span class="line"></span><br><span class="line">Generating public/private rsa key pair.</span><br><span class="line"><span class="comment"># 设置保存文件名，留空则为 id_rsa</span></span><br><span class="line">Enter file <span class="keyword">in</span> <span class="built_in">which</span> to save the key (C:\Users\ME/.ssh/id_rsa):</span><br><span class="line"><span class="comment"># 设置密码，留空则是没有密码</span></span><br><span class="line">Enter passphrase (empty <span class="keyword">for</span> no passphrase):</span><br><span class="line"><span class="comment"># 确认密码</span></span><br><span class="line">Enter same passphrase again:</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成的私钥</span></span><br><span class="line">Your identification has been saved <span class="keyword">in</span> C:\Users\ME/.ssh/id_rsa</span><br><span class="line"><span class="comment"># 生成的公钥</span></span><br><span class="line">Your public key has been saved <span class="keyword">in</span> C:\Users\ME/.ssh/id_rsa.pub</span><br></pre></td></tr></table></figure>
-<div class="flatpaper-note flatpaper-note--warning"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p><code>.pub</code> 后缀的是公钥，可以公开，<strong>私钥相当于个人密码，要小心保存</strong></p></div></div>
-
-<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>git 默认会查找名称为 <code>id_rsa</code> 的 SSH key </p></div></div>
-
-<div class="flatpaper-note flatpaper-note--primary"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>如果设置了文件名称，或是生成其他格式的 SSH key 可以查看后文的配合 <code>SSH config</code> 的部分</p></div></div>
-
-<div class="flatpaper-note flatpaper-note--default"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>rsa 格式的 key 内容很长，使用 <code>ssh-keygen -t ed25519</code> 生成 <code>ed25519</code> 格式的 key，更简洁，更安全</p></div></div>
-
-<h2 id="添加公钥到-GitHub"><a href="#添加公钥到-GitHub" class="headerlink" title="添加公钥到 GitHub"></a>添加公钥到 GitHub</h2><p>使用命令或是文本编辑器查看公钥的内容</p>
-<ul>
-<li>Windows 使用 <code>type id_rsa.pub</code> </li>
-<li>macOS &#x2F; Linux 使用 <code>cat id_rsa.pub</code></li>
-</ul>
-<p>访问 <a href="https://github.com/settings/keys">Github - SSH Keys</a>，点击右上角 <strong>New SSH key</strong>。<br>手动访问路径：右上角点击 <strong>头像</strong> &gt; <strong>Settings</strong> &gt; <strong>SSH and GPG keys</strong> &gt; <strong>New SSH key</strong></p>
-<p><img src="https://img.nep.me/i/2024/12/13/12s8co0-2.webp" alt="github-add-ssh-key"></p>
-<ul>
-<li><strong>Title</strong>：取个备注名字</li>
-<li><strong>Key type</strong>：不需要修改，保持默认 <strong>Authentication Key</strong></li>
-<li><strong>Key</strong>：粘贴 <code>id_rsa.pub</code> 对应的文本内容</li>
-<li>点击 <code>Add SSH key</code> 保存</li>
-</ul>
-<p><img src="https://img.nep.me/i/2024/12/13/12sain9-2.webp" alt="github-add-ssh-key-details"></p>
-<p>添加成功会在列表显示<br><img src="https://img.nep.me/i/2024/12/13/12vf7u0-2.webp" alt="github-add-ssh-key-done"></p>
-<p>此时我们再执行测试命令，就会获得成功的欢迎提示。 </p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt;ssh -T git@github.com</span><br><span class="line">Hi &lt;Your username&gt;! You<span class="string">&#x27;ve successfully authenticated, but GitHub does not provide shell access.</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="配合-SSH-config-使用"><a href="#配合-SSH-config-使用" class="headerlink" title="配合 SSH config 使用"></a>配合 SSH config 使用</h2><p>如果我们的私钥的名称不是 <code>id_rsa</code> ，我们将仍然无法成功连接 GitHub ，你可以将私钥修改文件名后再试试 </p>
-<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-8-tab-0" aria-controls="tabs-8-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">Windows</button><button type="button" role="tab" id="tabs-8-tab-1" aria-controls="tabs-8-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">macOS&amp;Linux</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-8-panel-0" aria-labelledby="tabs-8-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt; rename id_rsa id_mysshkey</span><br><span class="line"></span><br><span class="line">&gt; ssh -T git@github.com</span><br><span class="line">git@github.com: Permission denied (publickey).</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-8-panel-1" aria-labelledby="tabs-8-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt; <span class="built_in">mv</span> id_rsa id_mysshkey</span><br><span class="line"></span><br><span class="line">&gt; ssh -T git@github.com</span><br><span class="line">git@github.com: Permission denied (publickey).</span><br></pre></td></tr></table></figure></section></div></div>
-
-<p>这时我们可以通过在 <code>.ssh</code> 文件夹中创建一个 <code>config</code> 文件，填入下面的内容来告诉 git 程序在哪里找到密钥</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Host github.com</span><br><span class="line">    HostName github.com</span><br><span class="line">    User git</span><br><span class="line">    IdentityFile ~/.ssh/id_mysshkey</span><br></pre></td></tr></table></figure>
-
-<p>其中 <code>IdentityFile</code> 部分填写私钥的路径， <code>~</code> 代表用户 Home 目录</p>
-<ul>
-<li>Windows 相当于 <code>C:\Users\&lt;username&gt;\</code></li>
-<li>macOS 相当于 <code>/Users/&lt;username&gt;/</code></li>
-<li>Linux 相当于 <code>/root/</code> 或是 <code>/home/&lt;username&gt;/</code></li>
-</ul>
-<p>再进行测试，发现又能显示成功的欢迎消息。  </p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt;ssh -T git@github.com</span><br><span class="line">Hi &lt;Your username&gt;! You<span class="string">&#x27;ve successfully authenticated, but GitHub does not provide shell access.</span></span><br></pre></td></tr></table></figure>
-
-<p>以后就可以很方便的使用 Git 了！</p>
-]]></content>
-      <categories>
-        <category>教程</category>
-      </categories>
-      <tags>
-        <tag>GitHub</tag>
-        <tag>SSH</tag>
       </tags>
   </entry>
   <entry>
@@ -830,8 +830,8 @@
         <category>教程</category>
       </categories>
       <tags>
-        <tag>Hexo</tag>
         <tag>GitHub</tag>
+        <tag>Hexo</tag>
       </tags>
   </entry>
   <entry>
@@ -3794,6 +3794,50 @@
       </tags>
   </entry>
   <entry>
+    <title>在不设置 SMTP 的情况下修改 Vaultwarden(Bitwarden) 的账户邮箱</title>
+    <url>/post/change-vaultwarden-account-email-without-set-smtp.html</url>
+    <content><![CDATA[<p>Vaultwarden 更改登录邮箱时，默认需要向新邮箱发送验证码进行验证，如果没配置 SMTP，验证码不会真正发出。但在 <code>LOG_LEVEL=debug</code> 时会把验证码打印到日志里。如果你也只是个人使用，且不想设置 SMTP，可以查看下面的方法获取验证码，完成修改。</p>
+<blockquote>
+<p>本教程适用于使用 Docker 部署的 Vaultwarden</p>
+</blockquote>
+<div class="flatpaper-note flatpaper-note--danger"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>更改账户邮箱会导致所有会话失效，需要重新登录</p></div></div>
+
+<h2 id="1-临时开启-debug-日志"><a href="#1-临时开启-debug-日志" class="headerlink" title="1. 临时开启 debug 日志"></a>1. 临时开启 debug 日志</h2><p>Docker Compose 里给 <code>vaultwarden</code> 加上：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">environment:</span></span><br><span class="line">  <span class="attr">LOG_LEVEL:</span> <span class="string">debug</span></span><br><span class="line">  <span class="attr">EXTENDED_LOGGING:</span> <span class="string">&quot;true&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>然后重启：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker compose up -d</span><br></pre></td></tr></table></figure>
+
+<p>如果你是 <code>docker run</code> ，加：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">-e LOG_LEVEL=debug \</span><br><span class="line">-e EXTENDED_LOGGING=<span class="literal">true</span> \</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-重新触发一次“更改邮箱”"><a href="#2-重新触发一次“更改邮箱”" class="headerlink" title="2. 重新触发一次“更改邮箱”"></a>2. 重新触发一次“更改邮箱”</h2><p>在网页端再次提交更改邮箱，让 Vaultwarden 重新生成验证码。</p>
+<h2 id="3-查看-Docker-日志"><a href="#3-查看-Docker-日志" class="headerlink" title="3. 查看 Docker 日志"></a>3. 查看 Docker 日志</h2><p>容器名如果叫 <code>vaultwarden</code> ：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker logs vaultwarden 2&gt;&amp;1 | grep -i <span class="string">&quot;email&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>输出的日志大概会是类似：</p>
+<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">...[vaultwarden::api::core::accounts][DEBUG] Email change ... email (...) with token (123456)</span><br></pre></td></tr></table></figure>
+
+<p>日志末尾括号中的六位数字，就是需要填写的验证码。</p>
+<h2 id="4-完成后改回正常日志级别"><a href="#4-完成后改回正常日志级别" class="headerlink" title="4. 完成后改回正常日志级别"></a>4. 完成后改回正常日志级别</h2><p>查到验证码并完成更改后，建议改回：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">LOG_LEVEL:</span> <span class="string">info</span></span><br></pre></td></tr></table></figure>
+
+<p>或：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">LOG_LEVEL:</span> <span class="string">warn</span></span><br></pre></td></tr></table></figure>
+<p>然后重启。 <code>debug</code> 日志可能暴露敏感信息，不建议长期打开。</p>
+<h2 id="5-长期建议：配置-SMTP"><a href="#5-长期建议：配置-SMTP" class="headerlink" title="5. 长期建议：配置 SMTP"></a>5. 长期建议：配置 SMTP</h2><p>如果以后还会用邮箱验证、邀请、2FA 邮件等功能，最好配置 SMTP。 <strong>Vaultwarden</strong> 常用的 SMTP 配置项包括：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">SMTP_HOST:</span> <span class="string">smtp.example.com</span></span><br><span class="line"><span class="attr">SMTP_FROM:</span> <span class="string">vaultwarden@example.com</span></span><br><span class="line"><span class="attr">SMTP_PORT:</span> <span class="number">587</span></span><br><span class="line"><span class="attr">SMTP_SECURITY:</span> <span class="string">starttls</span></span><br><span class="line"><span class="attr">SMTP_USERNAME:</span> <span class="string">vaultwarden@example.com</span></span><br><span class="line"><span class="attr">SMTP_PASSWORD:</span> <span class="string">your_password</span></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>教程</category>
+      </categories>
+      <tags>
+        <tag>Docker</tag>
+        <tag>Bitwarden</tag>
+        <tag>Vaultwarden</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>后端回来了：Vercel 支持直接运行 Dockerfile</title>
     <url>/post/backends-are-back-vercel-support-dockerfile.html</url>
     <content><![CDATA[<p>你是否也想过用部署前端的丝滑体验来部署后端 Docker 服务？<strong>Vercel</strong> 近日正式支持直接运行 <strong>Dockerfile</strong>！本文我们将深入解析这一重磅更新、适用场景以及 Fluid Compute 底层机制。</p>
@@ -3993,50 +4037,6 @@
       </tags>
   </entry>
   <entry>
-    <title>在不设置 SMTP 的情况下修改 Vaultwarden(Bitwarden) 的账户邮箱</title>
-    <url>/post/change-vaultwarden-account-email-without-set-smtp.html</url>
-    <content><![CDATA[<p>Vaultwarden 更改登录邮箱时，默认需要向新邮箱发送验证码进行验证，如果没配置 SMTP，验证码不会真正发出。但在 <code>LOG_LEVEL=debug</code> 时会把验证码打印到日志里。如果你也只是个人使用，且不想设置 SMTP，可以查看下面的方法获取验证码，完成修改。</p>
-<blockquote>
-<p>本教程适用于使用 Docker 部署的 Vaultwarden</p>
-</blockquote>
-<div class="flatpaper-note flatpaper-note--danger"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>更改账户邮箱会导致所有会话失效，需要重新登录</p></div></div>
-
-<h2 id="1-临时开启-debug-日志"><a href="#1-临时开启-debug-日志" class="headerlink" title="1. 临时开启 debug 日志"></a>1. 临时开启 debug 日志</h2><p>Docker Compose 里给 <code>vaultwarden</code> 加上：</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">environment:</span></span><br><span class="line">  <span class="attr">LOG_LEVEL:</span> <span class="string">debug</span></span><br><span class="line">  <span class="attr">EXTENDED_LOGGING:</span> <span class="string">&quot;true&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>然后重启：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker compose up -d</span><br></pre></td></tr></table></figure>
-
-<p>如果你是 <code>docker run</code> ，加：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">-e LOG_LEVEL=debug \</span><br><span class="line">-e EXTENDED_LOGGING=<span class="literal">true</span> \</span><br></pre></td></tr></table></figure>
-
-<h2 id="2-重新触发一次“更改邮箱”"><a href="#2-重新触发一次“更改邮箱”" class="headerlink" title="2. 重新触发一次“更改邮箱”"></a>2. 重新触发一次“更改邮箱”</h2><p>在网页端再次提交更改邮箱，让 Vaultwarden 重新生成验证码。</p>
-<h2 id="3-查看-Docker-日志"><a href="#3-查看-Docker-日志" class="headerlink" title="3. 查看 Docker 日志"></a>3. 查看 Docker 日志</h2><p>容器名如果叫 <code>vaultwarden</code> ：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker logs vaultwarden 2&gt;&amp;1 | grep -i <span class="string">&quot;email&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>输出的日志大概会是类似：</p>
-<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">...[vaultwarden::api::core::accounts][DEBUG] Email change ... email (...) with token (123456)</span><br></pre></td></tr></table></figure>
-
-<p>日志末尾括号中的六位数字，就是需要填写的验证码。</p>
-<h2 id="4-完成后改回正常日志级别"><a href="#4-完成后改回正常日志级别" class="headerlink" title="4. 完成后改回正常日志级别"></a>4. 完成后改回正常日志级别</h2><p>查到验证码并完成更改后，建议改回：</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">LOG_LEVEL:</span> <span class="string">info</span></span><br></pre></td></tr></table></figure>
-
-<p>或：</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">LOG_LEVEL:</span> <span class="string">warn</span></span><br></pre></td></tr></table></figure>
-<p>然后重启。 <code>debug</code> 日志可能暴露敏感信息，不建议长期打开。</p>
-<h2 id="5-长期建议：配置-SMTP"><a href="#5-长期建议：配置-SMTP" class="headerlink" title="5. 长期建议：配置 SMTP"></a>5. 长期建议：配置 SMTP</h2><p>如果以后还会用邮箱验证、邀请、2FA 邮件等功能，最好配置 SMTP。 <strong>Vaultwarden</strong> 常用的 SMTP 配置项包括：</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">SMTP_HOST:</span> <span class="string">smtp.example.com</span></span><br><span class="line"><span class="attr">SMTP_FROM:</span> <span class="string">vaultwarden@example.com</span></span><br><span class="line"><span class="attr">SMTP_PORT:</span> <span class="number">587</span></span><br><span class="line"><span class="attr">SMTP_SECURITY:</span> <span class="string">starttls</span></span><br><span class="line"><span class="attr">SMTP_USERNAME:</span> <span class="string">vaultwarden@example.com</span></span><br><span class="line"><span class="attr">SMTP_PASSWORD:</span> <span class="string">your_password</span></span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>教程</category>
-      </categories>
-      <tags>
-        <tag>Docker</tag>
-        <tag>Bitwarden</tag>
-        <tag>Vaultwarden</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>ChatGPT Business 为成员启用设备代码身份验证</title>
     <url>/post/chatgpt-business-enable-codex-device-code.html</url>
     <content><![CDATA[<p>最近 OpenAI 大促销，ChatGPT Business 免费一个席位 48 个月，应该会有小伙伴们打算同时使用两个账户，享受双倍额度。 </p>
@@ -4134,6 +4134,58 @@
       <tags>
         <tag>Anthropic</tag>
         <tag>Opus</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Codex 的日志记录消耗 SSD 寿命？OpenAI 已修复</title>
+    <url>/post/codex-is-buring-your-ssd.html</url>
+    <content><![CDATA[<h2 id="Bug-信息"><a href="#Bug-信息" class="headerlink" title="Bug 信息"></a>Bug 信息</h2><div class="flatpaper-note flatpaper-note--primary"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>好消息，OpenAI 已在 Codex 0.142.0 版本中修复了这个问题，可以放心使用。</p></div></div>
+
+<p>最近，Codex 凭借其强大的功能和丝滑的体验，周活跃用户已经突破了 <strong>500 万</strong> 大关。越来越多的开发者和极客都已经把它当成了日常高频使用的得力助手。</p>
+<p>不过，随着使用人数的增加，有用户反馈，在某些流式输出或自动化任务场景下，Codex 会持续向本地磁盘写入 TRACE 级别的日志。</p>
+<p>GitHUb 的 <a href="https://github.com/openai/codex/issues/28224">ISSUE</a> 上声称该 BUG 可能会产生 <strong>640GB&#x2F;年</strong> 的写入，这对于消费级 SSD 来说是致命的。对于目前主流的 1TB 或 2TB 消费级固态硬盘（标称寿命通常在 600TBW ~ 1200TBW）来说，可以说是非常严重。</p>
+<p><strong>而且，正因为现在 AI 浪潮空前火热，全球对高带宽、高性能存储的需求集中爆发，导致现在的 SSD 固态硬盘价格一路上涨，存储成本变得相当昂贵，尤其是 mac 设备的硬盘无法更换。在这种寸土寸金的时期，我们对硬盘的每一度磨损、每一 G 空间都不得不更加精打细算。</strong></p>
+<hr>
+<h2 id="1分钟自查：你中招了吗？"><a href="#1分钟自查：你中招了吗？" class="headerlink" title="1分钟自查：你中招了吗？"></a>1分钟自查：你中招了吗？</h2><p>如果你使用的是 Linux 或 Mac 系统，可以直接通过终端跑两行命令看看情况。</p>
+<p>首先，看看日志文件的大小：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">ls</span> -lh ~/.codex/logs_2.sqlite</span><br></pre></td></tr></table></figure>
+
+<p>然后，统计一下日志的写入级别：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;SELECT level, COUNT(*) FROM logs GROUP BY level ORDER BY COUNT(*) DESC&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>如何判断：</strong><br>如果查询结果中，<code>TRACE</code> 级别的日志占了绝大多数，并且 <code>logs_2.sqlite</code> 文件体积比较大，那就说明 Codex 确实在后台认真地记录着无关紧要的追踪信息。</p>
+<p><strong>参考数据：</strong><br>我的文件大小为 <strong>468MB：</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&gt; <span class="built_in">ls</span> -lh ~/.codex/logs_2.sqlite Jun 23</span><br><span class="line">-rw-r--r--@ 1 mro  staff   468M</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&gt; sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;SELECT level, COUNT(*) FROM logs GROUP BY level ORDER BY COUNT(*) DESC&quot;</span></span><br><span class="line">TRACE|39961</span><br><span class="line">INFO|39919</span><br><span class="line">DEBUG|7307</span><br><span class="line">WARN|177</span><br></pre></td></tr></table></figure>
+
+<p>可以看到 <code>TRACE|39961</code> 占了接近一半的数据，确实存在所说的问题，主要是目前 OpenAI 官方尚未做出修复的回应。</p>
+<h2 id="一劳永逸的解决方案-：直接在数据库拦截"><a href="#一劳永逸的解决方案-：直接在数据库拦截" class="headerlink" title="一劳永逸的解决方案 ：直接在数据库拦截"></a>一劳永逸的解决方案 ：直接在数据库拦截</h2><p><mark>OpenAI 已经修复这个问题了，不需要操作了</mark></p>
+<p>这里提供比较激进、但也最直接的临时方案：给日志表加一个 SQLite 触发器，让新的日志写入被忽略，毕竟这个文件里只有诊断日志，没有对话历史。</p>
+<p>执行前建议先退出 Codex，并备份日志数据库：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cp</span> ~/.codex/logs_2.sqlite ~/.codex/logs_2.sqlite.bak</span><br></pre></td></tr></table></figure>
+<p>然后执行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;CREATE TRIGGER IF NOT EXISTS block_log_inserts BEFORE INSERT ON logs BEGIN SELECT RAISE(IGNORE); END;&quot;</span></span><br></pre></td></tr></table></figure>
+<p>设置完成后，新的日志记录会被拦截，从而减少后续写入。</p>
+<p>需要注意的是，这个方法会影响 Codex 后续生成诊断日志。如果你之后需要向官方反馈问题，或者担心未来版本兼容性，可以先不要使用这个方案，改用定期清理的方式。</p>
+<details class="flatpaper-note flatpaper-note--info"><summary class="flatpaper-note__title"><span class="flatpaper-note__icon" aria-hidden="true"></span><span class="flatpaper-note__label">如何恢复</span><span class="flatpaper-note__chevron" aria-hidden="true"></span></summary><div class="flatpaper-note__body"><p>如果想要恢复的话就是删除这个 trigger 。先退出 Codex，再执行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;DROP TRIGGER IF EXISTS block_log_inserts;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>执行后可以检查是否还存在：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;.schema block_log_inserts&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>如果没有输出，说明已经删除成功。</p>
+<p>也可以用这个命令查看当前所有 trigger：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;SELECT name, tbl_name, sql FROM sqlite_master WHERE type=&#x27;trigger&#x27;;&quot;</span></span><br></pre></td></tr></table></figure></div></details>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>GitHub ISSUE 中的数据是比较夸张的，Codex 的这个日志问题并没有网传的那么吓人，但也感谢 OpenAI 完成了 BUG 的修复，祝大家用 Codex 敲代码愉快！</p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>OpenAI</tag>
+        <tag>Codex</tag>
       </tags>
   </entry>
   <entry>
@@ -4854,58 +4906,6 @@
       </categories>
       <tags>
         <tag>Cloudflare</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Codex 的日志记录消耗 SSD 寿命？OpenAI 已修复</title>
-    <url>/post/codex-is-buring-your-ssd.html</url>
-    <content><![CDATA[<h2 id="Bug-信息"><a href="#Bug-信息" class="headerlink" title="Bug 信息"></a>Bug 信息</h2><div class="flatpaper-note flatpaper-note--primary"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>好消息，OpenAI 已在 Codex 0.142.0 版本中修复了这个问题，可以放心使用。</p></div></div>
-
-<p>最近，Codex 凭借其强大的功能和丝滑的体验，周活跃用户已经突破了 <strong>500 万</strong> 大关。越来越多的开发者和极客都已经把它当成了日常高频使用的得力助手。</p>
-<p>不过，随着使用人数的增加，有用户反馈，在某些流式输出或自动化任务场景下，Codex 会持续向本地磁盘写入 TRACE 级别的日志。</p>
-<p>GitHUb 的 <a href="https://github.com/openai/codex/issues/28224">ISSUE</a> 上声称该 BUG 可能会产生 <strong>640GB&#x2F;年</strong> 的写入，这对于消费级 SSD 来说是致命的。对于目前主流的 1TB 或 2TB 消费级固态硬盘（标称寿命通常在 600TBW ~ 1200TBW）来说，可以说是非常严重。</p>
-<p><strong>而且，正因为现在 AI 浪潮空前火热，全球对高带宽、高性能存储的需求集中爆发，导致现在的 SSD 固态硬盘价格一路上涨，存储成本变得相当昂贵，尤其是 mac 设备的硬盘无法更换。在这种寸土寸金的时期，我们对硬盘的每一度磨损、每一 G 空间都不得不更加精打细算。</strong></p>
-<hr>
-<h2 id="1分钟自查：你中招了吗？"><a href="#1分钟自查：你中招了吗？" class="headerlink" title="1分钟自查：你中招了吗？"></a>1分钟自查：你中招了吗？</h2><p>如果你使用的是 Linux 或 Mac 系统，可以直接通过终端跑两行命令看看情况。</p>
-<p>首先，看看日志文件的大小：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">ls</span> -lh ~/.codex/logs_2.sqlite</span><br></pre></td></tr></table></figure>
-
-<p>然后，统计一下日志的写入级别：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;SELECT level, COUNT(*) FROM logs GROUP BY level ORDER BY COUNT(*) DESC&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>如何判断：</strong><br>如果查询结果中，<code>TRACE</code> 级别的日志占了绝大多数，并且 <code>logs_2.sqlite</code> 文件体积比较大，那就说明 Codex 确实在后台认真地记录着无关紧要的追踪信息。</p>
-<p><strong>参考数据：</strong><br>我的文件大小为 <strong>468MB：</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&gt; <span class="built_in">ls</span> -lh ~/.codex/logs_2.sqlite Jun 23</span><br><span class="line">-rw-r--r--@ 1 mro  staff   468M</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&gt; sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;SELECT level, COUNT(*) FROM logs GROUP BY level ORDER BY COUNT(*) DESC&quot;</span></span><br><span class="line">TRACE|39961</span><br><span class="line">INFO|39919</span><br><span class="line">DEBUG|7307</span><br><span class="line">WARN|177</span><br></pre></td></tr></table></figure>
-
-<p>可以看到 <code>TRACE|39961</code> 占了接近一半的数据，确实存在所说的问题，主要是目前 OpenAI 官方尚未做出修复的回应。</p>
-<h2 id="一劳永逸的解决方案-：直接在数据库拦截"><a href="#一劳永逸的解决方案-：直接在数据库拦截" class="headerlink" title="一劳永逸的解决方案 ：直接在数据库拦截"></a>一劳永逸的解决方案 ：直接在数据库拦截</h2><p><mark>OpenAI 已经修复这个问题了，不需要操作了</mark></p>
-<p>这里提供比较激进、但也最直接的临时方案：给日志表加一个 SQLite 触发器，让新的日志写入被忽略，毕竟这个文件里只有诊断日志，没有对话历史。</p>
-<p>执行前建议先退出 Codex，并备份日志数据库：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cp</span> ~/.codex/logs_2.sqlite ~/.codex/logs_2.sqlite.bak</span><br></pre></td></tr></table></figure>
-<p>然后执行：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;CREATE TRIGGER IF NOT EXISTS block_log_inserts BEFORE INSERT ON logs BEGIN SELECT RAISE(IGNORE); END;&quot;</span></span><br></pre></td></tr></table></figure>
-<p>设置完成后，新的日志记录会被拦截，从而减少后续写入。</p>
-<p>需要注意的是，这个方法会影响 Codex 后续生成诊断日志。如果你之后需要向官方反馈问题，或者担心未来版本兼容性，可以先不要使用这个方案，改用定期清理的方式。</p>
-<details class="flatpaper-note flatpaper-note--info"><summary class="flatpaper-note__title"><span class="flatpaper-note__icon" aria-hidden="true"></span><span class="flatpaper-note__label">如何恢复</span><span class="flatpaper-note__chevron" aria-hidden="true"></span></summary><div class="flatpaper-note__body"><p>如果想要恢复的话就是删除这个 trigger 。先退出 Codex，再执行：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;DROP TRIGGER IF EXISTS block_log_inserts;&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>执行后可以检查是否还存在：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;.schema block_log_inserts&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>如果没有输出，说明已经删除成功。</p>
-<p>也可以用这个命令查看当前所有 trigger：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;SELECT name, tbl_name, sql FROM sqlite_master WHERE type=&#x27;trigger&#x27;;&quot;</span></span><br></pre></td></tr></table></figure></div></details>
-
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>GitHub ISSUE 中的数据是比较夸张的，Codex 的这个日志问题并没有网传的那么吓人，但也感谢 OpenAI 完成了 BUG 的修复，祝大家用 Codex 敲代码愉快！</p>
-]]></content>
-      <categories>
-        <category>笔记</category>
-      </categories>
-      <tags>
-        <tag>OpenAI</tag>
-        <tag>Codex</tag>
       </tags>
   </entry>
   <entry>
@@ -5744,62 +5744,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Google 发布 Antigravity 2.0 ，以及 Antigravity-CLI</title>
-    <url>/post/google-launch-antigravity-cli.html</url>
-    <content><![CDATA[<p>在 2026 年 5 月 20 日的 Google I&#x2F;O 大会上，Google 正式宣布推出 Antigravity 2.0，以 Agents 驱动为核心作为独立的桌面应用。原 Antigravity 更名为 <strong>Antigravity IDE</strong>，并同时推出 <strong>Antigravity CLI</strong> 取代 <strong>Gemini CLI</strong>。</p>
-<p>Antigravity 2.0 与 IDE 下载页面：<a href="https://antigravity.google/download">Download Google Antigravity</a></p>
-<h2 id="Antigravity-CLI-安装方法"><a href="#Antigravity-CLI-安装方法" class="headerlink" title="Antigravity CLI 安装方法"></a>Antigravity CLI 安装方法</h2><h3 id="macOS-Linux"><a href="#macOS-Linux" class="headerlink" title="macOS &#x2F; Linux"></a>macOS &#x2F; Linux</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl -fsSL https://antigravity.google/cli/install.sh | bash</span><br></pre></td></tr></table></figure>
-
-<h3 id="Windows-PowerShell"><a href="#Windows-PowerShell" class="headerlink" title="Windows PowerShell"></a>Windows PowerShell</h3><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">irm</span> https://antigravity.google/<span class="built_in">cli</span>/install.ps1 | <span class="built_in">iex</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="Windows-CMD"><a href="#Windows-CMD" class="headerlink" title="Windows CMD"></a>Windows CMD</h3><figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">curl -fsSL https://antigravity.google/cli/install.<span class="built_in">cmd</span> -o install.<span class="built_in">cmd</span> &amp;&amp; install.<span class="built_in">cmd</span> &amp;&amp; <span class="built_in">del</span> install.<span class="built_in">cmd</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="启动与登录方法"><a href="#启动与登录方法" class="headerlink" title="启动与登录方法"></a>启动与登录方法</h2><h3 id="启动-Antigravity-CLI"><a href="#启动-Antigravity-CLI" class="headerlink" title="启动 Antigravity CLI"></a>启动 Antigravity CLI</h3><p>在终端中运行 <code>agy</code> 即可启动 Antigravity CLI。</p>
-<h3 id="登录方法"><a href="#登录方法" class="headerlink" title="登录方法"></a>登录方法</h3><p>使用 Antigravity CLI 之前，如果已在 Antigravity 或 Antigravity IDE 中登录了 Google 账户，系统将自动进行认证。</p>
-<p>初次启动需要选择代码主题，同意用户协议后即可打开 CLI 界面：</p>
-<p><img src="https://img.nep.me/ooo/antigravity-cli-theme-select.webp" alt="antigravity-cli-theme-select.png"></p>
-<p>界面预览：<br><img src="https://img.nep.me/ooo/antigravity-cli-tui-hello.webp" alt="antigravity-cli-tui.png"></p>
-<p>或者，您也可以选择以下认证方法手动登录：</p>
-<ul>
-<li><strong>Google OAuth</strong></li>
-<li><strong>Use a Google Cloud project</strong></li>
-</ul>
-<p><img src="https://img.nep.me/ooo/antigravity-cli-login-method.webp" alt="antigravity-cli-login-method.png"></p>
-<p>选择 Google OAuth 后，如果没有自动跳转，可以通过粘贴认证代码的方法进行确认，因此也可以在其他设备上使用。</p>
-<h3 id="可选模型"><a href="#可选模型" class="headerlink" title="可选模型"></a>可选模型</h3><p>Google AI Pro 用户在 Antigravity CLI 中可选的模型与 Antigravity IDE 一致：</p>
-<ul>
-<li>Gemini 3.5 Flash (High)      (current)</li>
-<li>Gemini 3.5 Flash (Medium)</li>
-<li>Gemini 3.1 Pro (High)</li>
-<li>Gemini 3.1 Pro (Low)</li>
-<li>Claude Sonnet 4.6 (Thinking)</li>
-<li>Claude Opus 4.6 (Thinking)</li>
-<li>GPT-OSS 120B (Medium)</li>
-</ul>
-<p><img src="https://img.nep.me/ooo/antigravity-cli-model-select.webp" alt="antigravity-cli-model-select.png"></p>
-<h2 id="Antigravity-CLI-介绍"><a href="#Antigravity-CLI-介绍" class="headerlink" title="Antigravity CLI 介绍"></a>Antigravity CLI 介绍</h2><p>Google 表示为了性能表现，使用 Go 语言完成了 Antigravity 的构建，同时 Google 也强调了 Antigravity CLI 的三个演进方向：更快执行、异步工作流，以及与 Antigravity 2.0 共用统一的 agent harness。</p>
-<p>Antigravity CLI 优势：</p>
-<ul>
-<li><strong>执行速度更快</strong>：Antigravity CLI 使用 Go 语言编写，速度更快，响应更迅速。</li>
-<li><strong>异步工作流</strong>：Antigravity CLI 在后台协调多个代理来执行复杂任务，让您可以运行大规模重构或研究多个主题，而不会锁定您的终端会话。</li>
-<li><strong>统一架构</strong>：Antigravity CLI 与 Antigravity 2.0（新的 Antigravity 桌面应用程序）共享相同的代理框架，确保核心代理的所有未来改进都会自动应用到您使用它们的任何地方。</li>
-</ul>
-<h2 id="Gemini-CLI-将终止服务"><a href="#Gemini-CLI-将终止服务" class="headerlink" title="Gemini CLI 将终止服务"></a>Gemini CLI 将终止服务</h2><p>在推出了 Antigravity CLI 后，Google <a href="https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/">表示</a>，自 2026 年 6 月 18 日起，Gemini CLI 和 Gemini Code Assist IDE 扩展程序将停止为 Google AI Pro 和 Ultra 用户提供服务。</p>
-<p>企业用户仍可继续使用。</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Antigravity 2.0 的发布，说明 Google 并没有把 AI 编程工具只当作 Gemini 模型的附属功能，而是在重新争夺“下一代代码编辑入口”。这次更新的重点，不是给传统 IDE 再加一个聊天侧边栏，而是把 Antigravity 从 agent-first IDE 升级成更完整的 agentic development platform：桌面端、CLI、SDK 和 API 一起构成新的开发者工作台。</p>
-<p>对用户来说，这种竞争无疑是好事。无论是 Google、OpenAI、Anthropic 还是 Cursor，都在推动代码工具从“补全助手”走向“开发伙伴”。竞争越激烈，开发者能获得的选择越多，价格、体验、模型能力和工作流整合也会被不断拉高。最终受益的，还是每天真正写代码、调试和交付产品的用户。</p>
-]]></content>
-      <categories>
-        <category>资讯</category>
-      </categories>
-      <tags>
-        <tag>AI</tag>
-        <tag>Antigravity</tag>
-        <tag>Antigravity IDE</tag>
-        <tag>Google</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Google 为 AI Pro 用户提供每月 10 美元 GCP 额度，获取教程</title>
     <url>/post/google-offer-10usd-gcp-credit-for-ai-pro-user.html</url>
     <content><![CDATA[<p>Google AI Pro 订阅用户每月可获得 10 美元的 Google Cloud 抵用金，Google AI Ultra 订阅用户每月可获得 100 美元的 Google Cloud 抵用金。</p>
@@ -5858,6 +5802,62 @@
         <tag>Google</tag>
         <tag>Google Cloud</tag>
         <tag>Gemini</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Google 发布 Antigravity 2.0 ，以及 Antigravity-CLI</title>
+    <url>/post/google-launch-antigravity-cli.html</url>
+    <content><![CDATA[<p>在 2026 年 5 月 20 日的 Google I&#x2F;O 大会上，Google 正式宣布推出 Antigravity 2.0，以 Agents 驱动为核心作为独立的桌面应用。原 Antigravity 更名为 <strong>Antigravity IDE</strong>，并同时推出 <strong>Antigravity CLI</strong> 取代 <strong>Gemini CLI</strong>。</p>
+<p>Antigravity 2.0 与 IDE 下载页面：<a href="https://antigravity.google/download">Download Google Antigravity</a></p>
+<h2 id="Antigravity-CLI-安装方法"><a href="#Antigravity-CLI-安装方法" class="headerlink" title="Antigravity CLI 安装方法"></a>Antigravity CLI 安装方法</h2><h3 id="macOS-Linux"><a href="#macOS-Linux" class="headerlink" title="macOS &#x2F; Linux"></a>macOS &#x2F; Linux</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl -fsSL https://antigravity.google/cli/install.sh | bash</span><br></pre></td></tr></table></figure>
+
+<h3 id="Windows-PowerShell"><a href="#Windows-PowerShell" class="headerlink" title="Windows PowerShell"></a>Windows PowerShell</h3><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">irm</span> https://antigravity.google/<span class="built_in">cli</span>/install.ps1 | <span class="built_in">iex</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Windows-CMD"><a href="#Windows-CMD" class="headerlink" title="Windows CMD"></a>Windows CMD</h3><figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">curl -fsSL https://antigravity.google/cli/install.<span class="built_in">cmd</span> -o install.<span class="built_in">cmd</span> &amp;&amp; install.<span class="built_in">cmd</span> &amp;&amp; <span class="built_in">del</span> install.<span class="built_in">cmd</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="启动与登录方法"><a href="#启动与登录方法" class="headerlink" title="启动与登录方法"></a>启动与登录方法</h2><h3 id="启动-Antigravity-CLI"><a href="#启动-Antigravity-CLI" class="headerlink" title="启动 Antigravity CLI"></a>启动 Antigravity CLI</h3><p>在终端中运行 <code>agy</code> 即可启动 Antigravity CLI。</p>
+<h3 id="登录方法"><a href="#登录方法" class="headerlink" title="登录方法"></a>登录方法</h3><p>使用 Antigravity CLI 之前，如果已在 Antigravity 或 Antigravity IDE 中登录了 Google 账户，系统将自动进行认证。</p>
+<p>初次启动需要选择代码主题，同意用户协议后即可打开 CLI 界面：</p>
+<p><img src="https://img.nep.me/ooo/antigravity-cli-theme-select.webp" alt="antigravity-cli-theme-select.png"></p>
+<p>界面预览：<br><img src="https://img.nep.me/ooo/antigravity-cli-tui-hello.webp" alt="antigravity-cli-tui.png"></p>
+<p>或者，您也可以选择以下认证方法手动登录：</p>
+<ul>
+<li><strong>Google OAuth</strong></li>
+<li><strong>Use a Google Cloud project</strong></li>
+</ul>
+<p><img src="https://img.nep.me/ooo/antigravity-cli-login-method.webp" alt="antigravity-cli-login-method.png"></p>
+<p>选择 Google OAuth 后，如果没有自动跳转，可以通过粘贴认证代码的方法进行确认，因此也可以在其他设备上使用。</p>
+<h3 id="可选模型"><a href="#可选模型" class="headerlink" title="可选模型"></a>可选模型</h3><p>Google AI Pro 用户在 Antigravity CLI 中可选的模型与 Antigravity IDE 一致：</p>
+<ul>
+<li>Gemini 3.5 Flash (High)      (current)</li>
+<li>Gemini 3.5 Flash (Medium)</li>
+<li>Gemini 3.1 Pro (High)</li>
+<li>Gemini 3.1 Pro (Low)</li>
+<li>Claude Sonnet 4.6 (Thinking)</li>
+<li>Claude Opus 4.6 (Thinking)</li>
+<li>GPT-OSS 120B (Medium)</li>
+</ul>
+<p><img src="https://img.nep.me/ooo/antigravity-cli-model-select.webp" alt="antigravity-cli-model-select.png"></p>
+<h2 id="Antigravity-CLI-介绍"><a href="#Antigravity-CLI-介绍" class="headerlink" title="Antigravity CLI 介绍"></a>Antigravity CLI 介绍</h2><p>Google 表示为了性能表现，使用 Go 语言完成了 Antigravity 的构建，同时 Google 也强调了 Antigravity CLI 的三个演进方向：更快执行、异步工作流，以及与 Antigravity 2.0 共用统一的 agent harness。</p>
+<p>Antigravity CLI 优势：</p>
+<ul>
+<li><strong>执行速度更快</strong>：Antigravity CLI 使用 Go 语言编写，速度更快，响应更迅速。</li>
+<li><strong>异步工作流</strong>：Antigravity CLI 在后台协调多个代理来执行复杂任务，让您可以运行大规模重构或研究多个主题，而不会锁定您的终端会话。</li>
+<li><strong>统一架构</strong>：Antigravity CLI 与 Antigravity 2.0（新的 Antigravity 桌面应用程序）共享相同的代理框架，确保核心代理的所有未来改进都会自动应用到您使用它们的任何地方。</li>
+</ul>
+<h2 id="Gemini-CLI-将终止服务"><a href="#Gemini-CLI-将终止服务" class="headerlink" title="Gemini CLI 将终止服务"></a>Gemini CLI 将终止服务</h2><p>在推出了 Antigravity CLI 后，Google <a href="https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/">表示</a>，自 2026 年 6 月 18 日起，Gemini CLI 和 Gemini Code Assist IDE 扩展程序将停止为 Google AI Pro 和 Ultra 用户提供服务。</p>
+<p>企业用户仍可继续使用。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Antigravity 2.0 的发布，说明 Google 并没有把 AI 编程工具只当作 Gemini 模型的附属功能，而是在重新争夺“下一代代码编辑入口”。这次更新的重点，不是给传统 IDE 再加一个聊天侧边栏，而是把 Antigravity 从 agent-first IDE 升级成更完整的 agentic development platform：桌面端、CLI、SDK 和 API 一起构成新的开发者工作台。</p>
+<p>对用户来说，这种竞争无疑是好事。无论是 Google、OpenAI、Anthropic 还是 Cursor，都在推动代码工具从“补全助手”走向“开发伙伴”。竞争越激烈，开发者能获得的选择越多，价格、体验、模型能力和工作流整合也会被不断拉高。最终受益的，还是每天真正写代码、调试和交付产品的用户。</p>
+]]></content>
+      <categories>
+        <category>资讯</category>
+      </categories>
+      <tags>
+        <tag>AI</tag>
+        <tag>Antigravity</tag>
+        <tag>Antigravity IDE</tag>
+        <tag>Google</tag>
       </tags>
   </entry>
   <entry>
@@ -8191,179 +8191,6 @@
       <tags>
         <tag>Claude Fable 5</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>在 Debian 上使用 LinuxGSM 运行饥荒联机版服务器</title>
-    <url>/post/use-linuxgsm-run-dst-server.html</url>
-    <content><![CDATA[<h2 id="系统环境"><a href="#系统环境" class="headerlink" title="系统环境"></a>系统环境</h2><p>一个全新的 Debian 13 服务器</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">root@DST:~# lsb_release -a</span><br><span class="line">No LSB modules are available.</span><br><span class="line">Distributor ID:	Debian</span><br><span class="line">Description:	Debian GNU/Linux 13 (trixie)</span><br><span class="line">Release:	13</span><br><span class="line">Codename:	trixie</span><br></pre></td></tr></table></figure>
-
-<h2 id="1-创建专用用户"><a href="#1-创建专用用户" class="headerlink" title="1. 创建专用用户"></a>1. 创建专用用户</h2><p>不要直接用 root 跑 LinuxGSM。官方也明确指出，用 root 运行游戏服本身容易遇到权限问题。</p>
-<p>使用 root 用户执行下面的命令：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">adduser dstserver</span><br><span class="line">su - dstserver</span><br></pre></td></tr></table></figure>
-
-<details class="flatpaper-note flatpaper-note--info"><summary class="flatpaper-note__title"><span class="flatpaper-note__icon" aria-hidden="true"></span><span class="flatpaper-note__label">sudo相关</span><span class="flatpaper-note__chevron" aria-hidden="true"></span></summary><div class="flatpaper-note__body"><p>普通用户可以使用 <code>sudo</code> 命令执行，如果提示 <code>-bash: sudo: command not found</code> 可以使用下面的命令解决</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 切换到 root 用户</span></span><br><span class="line">su -</span><br><span class="line"></span><br><span class="line">apt update</span><br><span class="line">apt install <span class="built_in">sudo</span></span><br><span class="line"></span><br><span class="line">usermod -aG <span class="built_in">sudo</span> YOUR_USERNAME</span><br></pre></td></tr></table></figure>
-
-<p>然后退出终端重新登录确认是否生效</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">dstserver@DST:~$ <span class="built_in">sudo</span> <span class="built_in">whoami</span></span><br><span class="line">[<span class="built_in">sudo</span>] password <span class="keyword">for</span> dstserver: </span><br><span class="line">root</span><br></pre></td></tr></table></figure></div></details>
-
-<p>然后更新环境，安装几个基础工具：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt update</span><br><span class="line"><span class="built_in">sudo</span> apt install -y curl wget tar bzip2 gzip unzip tmux jq vim </span><br></pre></td></tr></table></figure>
-
-<h2 id="2-下载-LinuxGSM"><a href="#2-下载-LinuxGSM" class="headerlink" title="2. 下载 LinuxGSM"></a>2. 下载 LinuxGSM</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /home/dstserver</span><br><span class="line"></span><br><span class="line">curl -Lo linuxgsm.sh https://linuxgsm.sh</span><br><span class="line"><span class="built_in">chmod</span> +x linuxgsm.sh</span><br><span class="line">bash linuxgsm.sh dstserver</span><br></pre></td></tr></table></figure>
-
-<p>这是 LinuxGSM 官方给 DST 的当前安装方式。</p>
-<p>现在目录里应该出现：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">dstserver@DST:~$ <span class="built_in">ls</span></span><br><span class="line">dstserver  lgsm  linuxgsm.sh</span><br></pre></td></tr></table></figure>
-
-<h2 id="3-建立地面和洞穴两个实例"><a href="#3-建立地面和洞穴两个实例" class="headerlink" title="3. 建立地面和洞穴两个实例"></a>3. 建立地面和洞穴两个实例</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cp</span> dstserver dstserver-1</span><br><span class="line"><span class="built_in">cp</span> dstserver dstserver-2</span><br></pre></td></tr></table></figure>
-
-<p>后面我们使用：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">dstserver-1 = 地面 Master</span><br><span class="line">dstserver-2 = 洞穴 Caves</span><br></pre></td></tr></table></figure>
-
-<p>首次运行后，LinuxGSM 会为不同实例生成各自配置；LinuxGSM 官方的多实例机制本身就是 “每个实例对应自己的脚本和 instance config” 。</p>
-<h2 id="4-配置地面-Master"><a href="#4-配置地面-Master" class="headerlink" title="4. 配置地面 Master"></a>4. 配置地面 Master</h2><p>先执行一次：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">./dstserver-1</span><br></pre></td></tr></table></figure>
-<p>LinuxGSM 会初始化相关文件。</p>
-<p>配置一般位于：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">~/lgsm/config-lgsm/dstserver/</span><br></pre></td></tr></table></figure>
-
-<p>先看看：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">ls</span> ~/lgsm/config-lgsm/dstserver/</span><br></pre></td></tr></table></figure>
-
-<p>你应该能看到类似：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">_default.cfg</span><br><span class="line">common.cfg</span><br><span class="line">dstserver-1.cfg</span><br></pre></td></tr></table></figure>
-<p>不要修改 <code>_default.cfg</code>，因为 LinuxGSM 更新时可能覆盖它。官方推荐把自定义值放进实例自己的 <code>.cfg</code>。</p>
-<p>编辑：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vim ~/lgsm/config-lgsm/dstserver/dstserver-1.cfg</span><br></pre></td></tr></table></figure>
-<p>加入：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sharding=&quot;true&quot;</span><br><span class="line">master=&quot;true&quot;</span><br><span class="line">shard=&quot;Master&quot;</span><br><span class="line">cluster=&quot;Cluster_1&quot;</span><br><span class="line">cave=&quot;false&quot;</span><br></pre></td></tr></table></figure>
-<p>这几个参数就是 LinuxGSM 官方 DST 双分片示例给出的 Master 配置。</p>
-<h2 id="5-配置洞穴"><a href="#5-配置洞穴" class="headerlink" title="5. 配置洞穴"></a>5. 配置洞穴</h2><p>执行一次：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">./dstserver-2</span><br></pre></td></tr></table></figure>
-
-<p>然后：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vim ~/lgsm/config-lgsm/dstserver/dstserver-2.cfg</span><br></pre></td></tr></table></figure>
-
-<p>加入：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sharding=&quot;true&quot;</span><br><span class="line">master=&quot;false&quot;</span><br><span class="line">shard=&quot;Caves&quot;</span><br><span class="line">cluster=&quot;Cluster_1&quot;</span><br><span class="line">cave=&quot;true&quot;</span><br></pre></td></tr></table></figure>
-
-<p>官方说明 cave&#x3D;”true” 会让 LinuxGSM 在安装时自动给该 shard 生成洞穴世界配置。</p>
-<p>这一步最好在执行 <code>install</code> 之前配置好。</p>
-<p>因为 LinuxGSM 官方特别提醒：这些安装变量应该在 dstserver-1 &#x2F; dstserver-2 install 前设置，尤其 cave 会影响世界生成文件。</p>
-<h2 id="6-获取-Klei-Token"><a href="#6-获取-Klei-Token" class="headerlink" title="6. 获取 Klei Token"></a>6. 获取 Klei Token</h2><p>DST 专服必须有 <code>Klei Authentication Token</code> 。</p>
-<p>可以查看： <a href="%60https://docs.linuxgsm.com/game-servers/dont-starve-together#authentication-token%60">LinuxGSM - DST Authentication Token</a></p>
-<p>去 Klei Account 登录：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">accounts.klei.com</span><br></pre></td></tr></table></figure>
-
-<p>访问 <a href="https://accounts.klei.com/account/game/servers?game=DontStarveTogether">服务器 - DontStarveTogether</a></p>
-<p>创建一个 <code>Dedicated Server Token</code>。</p>
-<p>在下一步安装时需要填入使用。</p>
-<h2 id="7-安装两个实例"><a href="#7-安装两个实例" class="headerlink" title="7. 安装两个实例"></a>7. 安装两个实例</h2><p>先安装地面：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">./dstserver-1 install</span><br></pre></td></tr></table></figure>
-<p>按照提示操作。</p>
-<p>在 Cluster Token 的部分输入第六步获取的 Token</p>
-<p>再安装洞穴：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">./dstserver-2 install</span><br></pre></td></tr></table></figure>
-<p>服务器文件实际上可以共享，因此不会简单复制两份完整 DST。</p>
-<p>LinuxGSM 会通过 SteamCMD 自动下载安装。</p>
-<h2 id="8-编辑-cluster-ini"><a href="#8-编辑-cluster-ini" class="headerlink" title="8. 编辑 cluster.ini"></a>8. 编辑 cluster.ini</h2><p>编辑文件</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vim ~/.klei/DoNotStarveTogether/Cluster_1/cluster.ini</span><br></pre></td></tr></table></figure>
-
-<p>例如：</p>
-<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="section">[GAMEPLAY]</span></span><br><span class="line"><span class="attr">game_mode</span> = survival</span><br><span class="line"><span class="attr">max_players</span> = <span class="number">6</span></span><br><span class="line"><span class="attr">pvp</span> = <span class="literal">false</span></span><br><span class="line"><span class="attr">pause_when_empty</span> = <span class="literal">true</span></span><br><span class="line"><span class="attr">vote_enable</span> = <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="section">[NETWORK]</span></span><br><span class="line"><span class="attr">cluster_name</span> = 我的DST服务器</span><br><span class="line"><span class="attr">cluster_description</span> = Debian LinuxGSM Server</span><br><span class="line"><span class="attr">cluster_password</span> = <span class="number">123456</span></span><br><span class="line"><span class="attr">cluster_intention</span> = cooperative</span><br><span class="line"><span class="attr">tick_rate</span> = <span class="number">15</span></span><br><span class="line"></span><br><span class="line"><span class="section">[MISC]</span></span><br><span class="line"><span class="attr">console_enabled</span> = <span class="literal">true</span></span><br><span class="line"><span class="attr">max_snapshots</span> = <span class="number">6</span></span><br><span class="line"></span><br><span class="line"><span class="section">[SHARD]</span></span><br><span class="line"><span class="attr">shard_enabled</span> = <span class="literal">true</span></span><br><span class="line"><span class="attr">bind_ip</span> = <span class="number">127.0</span>.<span class="number">0.1</span></span><br><span class="line"><span class="attr">master_ip</span> = <span class="number">127.0</span>.<span class="number">0.1</span></span><br><span class="line"><span class="attr">master_port</span> = <span class="number">10888</span></span><br><span class="line"><span class="attr">cluster_key</span> = dstcluster</span><br></pre></td></tr></table></figure>
-
-<p>这里非常重要的是：</p>
-<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="section">[SHARD]</span></span><br><span class="line"><span class="attr">shard_enabled</span> = <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-
-<p>否则 Master 和 Caves 会变成两个独立服务器，而不是同一个世界里的地面和洞穴。LinuxGSM 官方 DST 文档也特别指出这一点。</p>
-<ol start="9">
-<li>配置两个 shard 的端口</li>
-</ol>
-<p>Master：</p>
-<p>mkdir -p ~&#x2F;.klei&#x2F;DoNotStarveTogether&#x2F;Cluster_1&#x2F;Master<br>nano ~&#x2F;.klei&#x2F;DoNotStarveTogether&#x2F;Cluster_1&#x2F;Master&#x2F;server.ini</p>
-<p>填：</p>
-<p>[NETWORK]<br>server_port &#x3D; 11000</p>
-<p>[SHARD]<br>is_master &#x3D; true</p>
-<p>[STEAM]<br>authentication_port &#x3D; 8768<br>master_server_port &#x3D; 27018</p>
-<p>LinuxGSM 官方示例也是 Master 使用：</p>
-<p>server_port      &#x3D; 11000<br>authentication   &#x3D; 8768<br>master_server    &#x3D; 27018</p>
-<p>洞穴：</p>
-<p>mkdir -p ~&#x2F;.klei&#x2F;DoNotStarveTogether&#x2F;Cluster_1&#x2F;Caves<br>nano ~&#x2F;.klei&#x2F;DoNotStarveTogether&#x2F;Cluster_1&#x2F;Caves&#x2F;server.ini</p>
-<p>填：</p>
-<p>[NETWORK]<br>server_port &#x3D; 11001</p>
-<p>[SHARD]<br>is_master &#x3D; false<br>name &#x3D; Caves</p>
-<p>[STEAM]<br>authentication_port &#x3D; 8769<br>master_server_port &#x3D; 27019</p>
-<p>LinuxGSM 官方示例给 Caves 使用不同的 11001 &#x2F; 8769 &#x2F; 27019，避免两个实例端口冲突。</p>
-<ol start="10">
-<li>检查洞穴世界配置</li>
-</ol>
-<p>如果前面在安装前正确设置：</p>
-<p>cave&#x3D;”true”</p>
-<p>LinuxGSM 应该已经自动生成：</p>
-<p>~&#x2F;.klei&#x2F;DoNotStarveTogether&#x2F;Cluster_1&#x2F;Caves&#x2F;worldgenoverride.lua</p>
-<p>可以检查：</p>
-<p>cat ~&#x2F;.klei&#x2F;DoNotStarveTogether&#x2F;Cluster_1&#x2F;Caves&#x2F;worldgenoverride.lua</p>
-<p>官方当前生成的配置类似：</p>
-<p>return {<br>    override_enabled &#x3D; true,<br>    preset &#x3D; “DST_CAVE”,<br>}</p>
-<p>LinuxGSM 文档明确说明，这个文件就是让 Caves 实例生成真正洞穴而非第二张地表地图的关键。</p>
-<ol start="11">
-<li>启动服务器</li>
-</ol>
-<p>启动地面：</p>
-<p>.&#x2F;dstserver-1 start</p>
-<p>启动洞穴：</p>
-<p>.&#x2F;dstserver-2 start</p>
-<p>启动顺序其实无所谓，因为洞穴 shard 连不到 Master 时会自动重试。</p>
-<p>查看状态：</p>
-<p>.&#x2F;dstserver-1 details<br>.&#x2F;dstserver-2 details</p>
-<p>LinuxGSM 的 details 会显示端口、配置路径、运行状态等信息。</p>
-<ol start="12">
-<li>看实时控制台</li>
-</ol>
-<p>地面：</p>
-<p>.&#x2F;dstserver-1 console</p>
-<p>洞穴：</p>
-<p>.&#x2F;dstserver-2 console</p>
-<p>退出控制台：</p>
-<p>Ctrl+B<br>然后按 D</p>
-<p>不要按 Ctrl+C，因为可能直接终止服务器进程。LinuxGSM 官方文档也特别提醒了这一点。</p>
-<ol start="13">
-<li>常用管理命令</li>
-</ol>
-<p>以后基本就是这些：</p>
-<p>.&#x2F;dstserver-1 start<br>.&#x2F;dstserver-1 stop<br>.&#x2F;dstserver-1 restart<br>.&#x2F;dstserver-1 console<br>.&#x2F;dstserver-1 details</p>
-<p>洞穴同理：</p>
-<p>.&#x2F;dstserver-2 start<br>.&#x2F;dstserver-2 stop<br>.&#x2F;dstserver-2 restart<br>.&#x2F;dstserver-2 console<br>.&#x2F;dstserver-2 details</p>
-<p>升级 DST：</p>
-<p>.&#x2F;dstserver-1 update</p>
-<p>强制 SteamCMD 更新：</p>
-<p>.&#x2F;dstserver-1 force-update</p>
-<p>验证服务器文件：</p>
-<p>.&#x2F;dstserver-1 validate</p>
-<p>备份：</p>
-<p>.&#x2F;dstserver-1 backup</p>
-<p>这些都是 LinuxGSM 自带的标准管理功能。</p>
-<ol start="14">
-<li>开放防火墙</li>
-</ol>
-<p>如果启用了 UFW：</p>
-<p>sudo ufw allow 11000&#x2F;udp<br>sudo ufw allow 11001&#x2F;udp</p>
-<p>如果是阿里云、腾讯云、AWS、Oracle 等 VPS，还要在云服务器安全组里开放 UDP：</p>
-<p>11000<br>11001</p>
-<p>一般：</p>
-<p>11000 → Master<br>11001 → Caves<br>15. 自动监控崩服</p>
-<p>LinuxGSM 有 monitor 功能，可以检测服务器挂掉并重启。官方建议通过 cron 周期执行。</p>
-<p>编辑：</p>
-<p>crontab -e</p>
-<p>例如：</p>
-<p>*&#x2F;5 * * * * &#x2F;home&#x2F;dstserver&#x2F;dstserver-1 monitor &gt; &#x2F;dev&#x2F;null 2&gt;&amp;1<br>*&#x2F;5 * * * * &#x2F;home&#x2F;dstserver&#x2F;dstserver-2 monitor &gt; &#x2F;dev&#x2F;null 2&gt;&amp;1</p>
-<p>这样每 5 分钟检查一次。</p>
-<p>还可以自动检查更新：</p>
-<p>*&#x2F;30 * * * * &#x2F;home&#x2F;dstserver&#x2F;dstserver-1 update &gt; &#x2F;dev&#x2F;null 2&gt;&amp;1</p>
-<p>LinuxGSM 官方 DST 页面本身也推荐使用 cron 执行 monitor 和 update。</p>
-]]></content>
   </entry>
   <entry>
     <title>在 pnpm 中设置 minimumReleaseAge，远离供应链攻击</title>
