@@ -192,7 +192,8 @@ img {
 button {
   font-family: inherit;
 }
-.page-grain {
+body.bg-style-default::after {
+  content: "";
   position: fixed;
   inset: 0;
   z-index: -1;
@@ -6318,6 +6319,12 @@ img.friends-feed-card__avatar {
 }
 .paper-sidebar .ad-slot--sidebar {
   margin: 1rem 0 0;
+}
+@media (min-width: 1200px) {
+  body > .google-auto-placed {
+    width: min(94vw, 1300px) !important;
+    margin-inline: auto !important;
+  }
 }
 body[data-button-style="tape"] .brand-mark,
 body[data-button-style="tape"] .icon-button,
