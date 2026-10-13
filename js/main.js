@@ -1,4 +1,26 @@
 (function () {
+  // ---- Reveal-on-scroll ----
+  // Deliberately first in this IIFE: `.reveal` elements start hidden once the
+  // head script has set html.reveal-ready, so a later failure in here must not
+  // be what decides whether the page has visible content.
+  (function initReveal() {
+    var root = document.documentElement;
+    if (!root.classList.contains('reveal-ready')) return;
+    if (!('IntersectionObserver' in window)) { root.classList.remove('reveal-ready'); return; }
+    // Tells the head script's safety timeout that the observer is wired up.
+    window.flatpaperRevealReady = true;
+    var targets = document.querySelectorAll('.reveal');
+    if (!targets.length) return;
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-revealed');
+        observer.unobserve(entry.target);
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
+    for (var i = 0; i < targets.length; i++) observer.observe(targets[i]);
+  })();
+
   // Safe storage wrapper: Safari private mode, sandboxed iframes, or strict
   // enterprise policies make raw localStorage access throw SecurityError,
   // which would otherwise abort this entire IIFE.
@@ -523,6 +545,443 @@
 
   renderFriendsFeed();
 
+  // ---- Guestbook wall: re-render this page's comments as paper stickers ----
+  function renderGuestbookWall() {
+    document.querySelectorAll('.guestbook-wall[data-guestbook-system]').forEach(function (wall) {
+      var system = String(wall.dataset.guestbookSystem || '').toLowerCase();
+      var state = wall.querySelector('[data-guestbook-state]');
+      var list = wall.querySelector('[data-guestbook-list]');
+      var more = wall.querySelector('[data-guestbook-more]');
+      var summary = wall.querySelector('.guestbook-wall__summary');
+      var sortBtn = wall.querySelector('[data-guestbook-sort]');
+      if (!state || !list || !more) return;
+
+      var avatarFallback = safeRemoteUrl(wall.dataset.avatarFallback, 'image');
+      var pageSize = parseInt(wall.dataset.pageSize, 10);
+      if (!pageSize || pageSize < 1) pageSize = 12;
+      var shown = 0;
+      var messages = [];
+      var originalMessages = [];
+      var isRandom = true;
+      var truncated = false;
+
+      function shuffleArray(array) {
+        var a = array.slice();
+        for (var i = a.length - 1; i > 0; i--) {
+          var j = Math.floor(Math.random() * (i + 1));
+          var temp = a[i];
+          a[i] = a[j];
+          a[j] = temp;
+        }
+        return a;
+      }
+
+      function updateSortButton() {
+        if (!sortBtn) return;
+        sortBtn.hidden = false;
+        var iconTime = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 4px; vertical-align: middle;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>';
+        var iconShuffle = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 4px; vertical-align: middle;"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg>';
+        sortBtn.innerHTML = (isRandom ? iconTime : iconShuffle) + '<span>' + (isRandom ? t('guestbook.sort_time') : t('guestbook.sort_random')) + '</span>';
+      }
+
+      if (sortBtn) {
+        sortBtn.addEventListener('click', function () {
+          isRandom = !isRandom;
+          messages = isRandom ? shuffleArray(originalMessages) : originalMessages.slice();
+          list.classList.toggle('guestbook-wall__list--grid', !isRandom);
+          list.innerHTML = '';
+          shown = 0;
+          updateSortButton();
+          renderNext();
+        });
+      }
+      // Where the real comment section below mounts; fallback jump target.
+      var mountId = system === 'artalk' ? 'artalk-comments' : 'tcomment';
+
+      // Card look (envelope color + tilt) is derived from a hash of the
+      // comment id: stable across reloads (no layout jumps), still "random"
+      // across the wall. Paper palettes live in guestbook.styl (--p0..--p4).
+      var PAPER_COUNT = 5;
+      var ROTATION_COUNT = 8;
+
+      function setState(message, isError) {
+        state.textContent = message || '';
+        state.hidden = !message;
+        state.classList.toggle('is-error', !!isError);
+      }
+
+      function hashSeed(text) {
+        var hash = 5381;
+        var source = String(text || '');
+        for (var i = 0; i < source.length; i++) {
+          hash = ((hash << 5) + hash + source.charCodeAt(i)) >>> 0;
+        }
+        return hash;
+      }
+
+      function formatDate(created) {
+        if (!created) return '';
+        var date = new Date(created);
+        if (isNaN(date.getTime())) return '';
+        try {
+          return date.toLocaleDateString(document.documentElement.lang || undefined, { year: 'numeric', month: 'short', day: 'numeric' });
+        } catch (e) {
+          return date.toISOString().slice(0, 10);
+        }
+      }
+
+      function normalizeCommentImage(src, isEmotion) {
+        var safeSrc = safeRemoteUrl(src, 'image');
+        if (!safeSrc) return null;
+        return { src: safeSrc, isEmotion: !!isEmotion };
+      }
+
+      function fallbackAvatar(nick) {
+        var span = document.createElement('span');
+        span.className = 'guestbook-card__avatar guestbook-card__avatar--text';
+        span.setAttribute('aria-hidden', 'true');
+        var glyph = Array.from(String(nick || '').trim())[0] || '✿';
+        span.textContent = glyph.toLocaleUpperCase ? glyph.toLocaleUpperCase() : glyph;
+        return span;
+      }
+
+      function stampAvatar(avatar) {
+        var stamp = document.createElement('span');
+        stamp.className = 'guestbook-card__stamp';
+        stamp.setAttribute('aria-hidden', 'true');
+        stamp.appendChild(avatar);
+        return stamp;
+      }
+
+      function jumpToComment(anchorId) {
+        var target = anchorId ? document.getElementById(anchorId) : null;
+        var precise = !!target;
+        if (!target) target = document.getElementById(mountId);
+        if (!target) return;
+        var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
+        if (precise) {
+          target.classList.add('guestbook-jump-target');
+          window.setTimeout(function () {
+            target.classList.remove('guestbook-jump-target');
+          }, 1600);
+        }
+      }
+
+      function createCard(message) {
+        var seed = hashSeed(message.anchorId || message.nick + message.created);
+        var item = document.createElement('li');
+        item.className = 'guestbook-card-wrap';
+
+        var card = document.createElement('div');
+        // Tilt is derived purely from the comment's seed so a card keeps the
+        // same angle across reloads/re-sorts (no layout jumps); paper color
+        // and translation below are likewise seed-only.
+        var rotationIndex = seed % ROTATION_COUNT;
+        card.className = 'guestbook-card guestbook-card--p' + (seed % PAPER_COUNT) + ' guestbook-card--r' + rotationIndex;
+
+        // Add random small translation to make it look slightly imperfect but avoid heavy overlaps
+        var tx = (seed % 7) - 3; // -3 to 3
+        var ty = ((seed * 7) % 7) - 3; // -3 to 3
+        card.style.setProperty('--gb-tx', tx + 'px');
+        card.style.setProperty('--gb-ty', ty + 'px');
+
+        var meta = document.createElement('div');
+        meta.className = 'guestbook-card__meta';
+
+        if (message.avatar) {
+          var img = document.createElement('img');
+          img.className = 'guestbook-card__avatar';
+          img.src = message.avatar;
+          img.alt = '';
+          img.loading = 'lazy';
+          img.referrerPolicy = 'no-referrer';
+          img.addEventListener('error', function () {
+            if (avatarFallback && img.dataset.flatpaperAvatarFallback !== '1' && img.src !== avatarFallback) {
+              img.dataset.flatpaperAvatarFallback = '1';
+              img.src = avatarFallback;
+              return;
+            }
+            if (img.parentNode) img.parentNode.replaceChild(fallbackAvatar(message.nick), img);
+          });
+          meta.appendChild(stampAvatar(img));
+        } else {
+          meta.appendChild(stampAvatar(fallbackAvatar(message.nick)));
+        }
+
+        var who = document.createElement('div');
+        who.className = 'guestbook-card__who';
+        var nick = document.createElement('span');
+        nick.className = 'guestbook-card__nick';
+        nick.textContent = message.nick;
+        who.appendChild(nick);
+        var dateLabel = formatDate(message.created);
+        if (dateLabel) {
+          var time = document.createElement('time');
+          time.className = 'guestbook-card__date';
+          time.textContent = dateLabel;
+          time.dateTime = new Date(message.created).toISOString();
+          if (message.relativeTime) time.title = message.relativeTime;
+          who.appendChild(time);
+        }
+        meta.appendChild(who);
+
+        card.appendChild(meta);
+
+        if (message.text) {
+          var text = document.createElement('p');
+          text.className = 'guestbook-card__text';
+          text.textContent = message.text;
+          card.appendChild(text);
+        }
+
+        if (message.images && message.images.length > 0) {
+          var imgContainer = document.createElement('div');
+          imgContainer.className = 'guestbook-card__images';
+          var hasFancybox = document.documentElement.getAttribute('data-fancybox-enabled') === '1';
+          message.images.forEach(function (imgData) {
+            var src = safeRemoteUrl(typeof imgData === 'string' ? imgData : imgData.src, 'image');
+            if (!src) return;
+            var isEmotion = typeof imgData === 'object' && imgData.isEmotion;
+            var img = document.createElement('img');
+            img.src = src;
+            img.alt = '';
+            img.loading = 'lazy';
+            img.referrerPolicy = 'no-referrer';
+            img.className = isEmotion ? 'guestbook-card__image guestbook-card__image--emotion' : 'guestbook-card__image';
+            if (hasFancybox && !isEmotion) {
+              var a = document.createElement('a');
+              a.href = src;
+              a.setAttribute('data-fancybox', 'guestbook-wall');
+              a.appendChild(img);
+              imgContainer.appendChild(a);
+            } else {
+              imgContainer.appendChild(img);
+            }
+          });
+          card.appendChild(imgContainer);
+        }
+
+        var jump = document.createElement('a');
+        jump.className = 'guestbook-card__jump';
+        jump.href = '#' + mountId;
+        jump.textContent = t('guestbook.jump_to_comment');
+        jump.addEventListener('click', function (event) {
+          event.preventDefault();
+          jumpToComment(message.anchorId);
+        });
+
+        card.appendChild(jump);
+
+        // Add a hand-drawn doodle to roughly 50% of the cards based on hash seed
+        if (seed % 2 === 0) {
+          var doodles = [
+            '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.5c-4.5-4-9-8-9-12.5 0-2.5 2-4.5 4.5-4.5 2 0 3.5 1.5 4.5 3 1-1.5 2.5-3 4.5-3 2.5 0 4.5 2 4.5 4.5 0 4.5-4.5 8.5-9 12.5z"/></svg>', // heart
+            '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.5 7h7l-5.5 4.5 2 7.5-6-5-6 5 2-7.5-5.5-4.5h7z"/></svg>', // star
+            '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>', // smiley
+            '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6l6 6-6 6"/></svg>' // arrow
+          ];
+          var doodleIndex = (seed % 11) % doodles.length;
+          var posIndex = (seed % 17) % 5;
+          var doodleWrapper = document.createElement('div');
+          doodleWrapper.className = 'guestbook-card__doodle guestbook-card__doodle--pos' + posIndex;
+          doodleWrapper.setAttribute('aria-hidden', 'true');
+          doodleWrapper.innerHTML = doodles[doodleIndex];
+          card.appendChild(doodleWrapper);
+        }
+
+        item.appendChild(card);
+        return item;
+      }
+
+      function renderNext() {
+        var next = messages.slice(shown, shown + pageSize);
+        next.forEach(function (message) {
+          list.appendChild(createCard(message));
+        });
+        shown += next.length;
+        more.hidden = shown >= messages.length;
+      }
+
+      function updateSummary(total) {
+        var totalEl = wall.querySelector('[data-guestbook-stat="total"]');
+        if (totalEl && typeof total === 'number') totalEl.textContent = t('guestbook.total_count', total);
+        var shownEl = wall.querySelector('[data-guestbook-stat="shown"]');
+        if (shownEl && truncated) {
+          shownEl.textContent = t('guestbook.latest_note', messages.length);
+          shownEl.hidden = false;
+        }
+        if (summary) summary.hidden = false;
+      }
+
+      // Each adapter resolves to { messages, total, truncated }: normalized
+      // top-level comments (newest first, text-only so the wall never
+      // re-parses visitor HTML) plus a reply-inclusive total for the summary.
+      var adapters = {
+        twikoo: function () {
+          var envId = wall.dataset.guestbookEnv;
+          if (!envId) return Promise.reject(new Error('twikoo: missing envId'));
+          // The Twikoo SDK loads with `defer` from a CDN while main.js runs at
+          // the end of <body>, so the global may not exist yet — poll instead
+          // of assuming script order.
+          return new Promise(function (resolve, reject) {
+            var waited = 0;
+            (function poll() {
+              if (window.twikoo && typeof window.twikoo.getRecentComments === 'function') {
+                resolve();
+                return;
+              }
+              waited += 250;
+              if (waited >= 15000) {
+                reject(new Error('twikoo: sdk timeout'));
+                return;
+              }
+              window.setTimeout(poll, 250);
+            })();
+          }).then(function () {
+            // Twikoo keys comments by location.pathname (its default pageKey),
+            // so the live pathname keeps the wall and the comment box below
+            // reading the same bucket.
+            var pageKey = window.location.pathname || '/';
+            return window.twikoo.getRecentComments({
+              envId: envId,
+              urls: [pageKey],
+              pageSize: 100,
+              includeReply: false
+            }).then(function (raw) {
+              var items = Array.isArray(raw) ? raw : [];
+              var normalized = items.map(function (item) {
+                // Parse the comment HTML with DOMParser rather than assigning
+                // to a live element's innerHTML: the resulting document has no
+                // browsing context, so <img src=x onerror=…> and other inline
+                // handlers never fire while we extract text/images.
+                var doc = new DOMParser().parseFromString(String(item.comment || ''), 'text/html');
+                var images = [];
+                Array.from(doc.querySelectorAll('img')).forEach(function (img) {
+                  var cls = img.className || '';
+                  var src = img.getAttribute('src') || '';
+                  var isEmotion = cls.indexOf('emotion') !== -1 || cls.indexOf('sticker') !== -1 || src.indexOf('bilibili') !== -1 || src.indexOf('tieba') !== -1;
+                  var image = normalizeCommentImage(src, isEmotion);
+                  if (image) images.push(image);
+                });
+                var text = (doc.body.textContent || '').trim();
+                if (!text && !images.length) return null;
+                var created = item.created;
+                if (typeof created !== 'number') created = parseInt(created, 10) || 0;
+                return {
+                  anchorId: String(item.id || ''),
+                  nick: String(item.nick || '').trim() || t('guestbook.anonymous'),
+                  avatar: safeRemoteUrl(item.avatar, 'image'),
+                  text: text,
+                  images: images,
+                  created: created,
+                  relativeTime: String(item.relativeTime || '')
+                };
+              }).filter(Boolean);
+              var result = { messages: normalized, total: normalized.length, truncated: items.length >= 100 };
+              if (typeof window.twikoo.getCommentsCount !== 'function') return result;
+              return window.twikoo.getCommentsCount({ envId: envId, urls: [pageKey], includeReply: true })
+                .then(function (counts) {
+                  var entry = Array.isArray(counts) ? counts[0] : null;
+                  if (entry && typeof entry.count === 'number') result.total = entry.count;
+                  return result;
+                })
+                .catch(function () { return result; });
+            });
+          });
+        },
+        artalk: function () {
+          var server = safeRemoteUrl(wall.dataset.guestbookServer);
+          if (!server) return Promise.reject(new Error('artalk: missing server'));
+          // Artalk buckets comments by the pageKey passed at init — the theme
+          // inits it with the page permalink, echoed here via data attribute.
+          var pageKey = wall.dataset.guestbookKey || window.location.pathname || '/';
+          var site = wall.dataset.guestbookSite || '';
+          var query = 'page_key=' + encodeURIComponent(pageKey)
+            + (site ? '&site_name=' + encodeURIComponent(site) : '')
+            + '&limit=100&offset=0&flat_mode=0&sort_by=date_desc';
+          return fetch(server.replace(/\/+$/, '') + '/api/v2/comments?' + query, {
+            headers: { Accept: 'application/json' }
+          }).then(function (response) {
+            if (!response.ok) throw new Error('HTTP ' + response.status);
+            return response.json();
+          }).then(function (payload) {
+            var items = payload && Array.isArray(payload.comments) ? payload.comments : [];
+            var normalized = items.map(function (item) {
+              if (!item || item.rid || item.is_pending) return null;
+              var contentStr = String(item.content || '').trim();
+              var images = [];
+
+              // Markdown images: pure string matching, no DOM/resource load.
+              var mdRegex = /!\[.*?\]\((.*?)\)/g;
+              var match;
+              while ((match = mdRegex.exec(contentStr)) !== null) {
+                var mdImage = normalizeCommentImage(match[1], false);
+                if (mdImage) images.push(mdImage);
+              }
+
+              // HTML images + text: parse via DOMParser so inline event
+              // handlers on any embedded HTML can't fire (see Twikoo adapter).
+              var doc = new DOMParser().parseFromString(contentStr, 'text/html');
+              Array.from(doc.querySelectorAll('img')).forEach(function (imgEl) {
+                var cls = imgEl.className || '';
+                var src = imgEl.getAttribute('src') || '';
+                var isEmotion = cls.indexOf('emotion') !== -1 || cls.indexOf('sticker') !== -1 || src.indexOf('bilibili') !== -1;
+                var htmlImage = normalizeCommentImage(src, isEmotion);
+                if (htmlImage) images.push(htmlImage);
+              });
+
+              // textContent still holds literal markdown image syntax; drop it.
+              var text = (doc.body.textContent || '').replace(/!\[.*?\]\(.*?\)/g, '').trim();
+
+              if (!text && !images.length) return null;
+              var created = Date.parse(String(item.date || '').replace(/\//g, '-').replace(' ', 'T')) || 0;
+              return {
+                anchorId: 'atk-comment-' + item.id,
+                nick: String(item.nick || '').trim() || t('guestbook.anonymous'),
+                avatar: '',
+                text: text,
+                images: images,
+                created: created,
+                relativeTime: ''
+              };
+            }).filter(Boolean);
+            return {
+              messages: normalized,
+              total: typeof payload.count === 'number' ? payload.count : normalized.length,
+              truncated: typeof payload.roots_count === 'number' && payload.roots_count > normalized.length
+            };
+          });
+        }
+      };
+      if (!adapters[system]) return;
+
+      more.addEventListener('click', renderNext);
+      setState(t('guestbook.loading'));
+
+      adapters[system]().then(function (result) {
+        originalMessages = result.messages || [];
+        messages = isRandom ? shuffleArray(originalMessages) : originalMessages.slice();
+        truncated = !!result.truncated;
+        list.innerHTML = '';
+        shown = 0;
+        if (!messages.length) {
+          setState(t('guestbook.empty'));
+          return;
+        }
+        setState('');
+        list.classList.toggle('guestbook-wall__list--grid', !isRandom);
+        updateSortButton();
+        renderNext();
+        updateSummary(result.total);
+      }).catch(function () {
+        setState(t('guestbook.load_failed'), true);
+      });
+    });
+  }
+
+  renderGuestbookWall();
+
   // ---- Home hero: scroll affordance and draggable scrapbook stickers ----
   (function () {
     var hero = document.querySelector('.home-hero');
@@ -668,6 +1127,74 @@
     var scrollLinks = hero.querySelectorAll('[data-hero-scroll]');
     applyRandomHeroImage();
     applyRandomHeroCtaBackground();
+
+    // ---- Hero photo: blur-up handoff ----
+    // Must stay after applyRandomHeroImage(): that call may have rewritten
+    // --hero-bg-image, and the preload below has to watch the photo that
+    // actually ends up on screen. Should the rotation ever become a runtime
+    // loop, every change would need to restart this check behind a generation
+    // token.
+    (function initHeroBlurUp() {
+      var lqip = hero.querySelector('.hero-lqip');
+      var media = hero.querySelector('.home-hero__media');
+      if (!lqip) return;
+      // Releases the inline script's hide-it-back timeout.
+      window.flatpaperHeroProgressive = true;
+      var settled = false;
+      function reveal() {
+        if (settled) return;
+        settled = true;
+        lqip.classList.add('is-done');
+      }
+      lqip.addEventListener('transitionend', function () {
+        if (lqip.parentNode) lqip.parentNode.removeChild(lqip);
+      });
+      // mobile_image: false hides both layers on phones — nothing to wait for,
+      // and no reason to fetch the photo.
+      if (!media || getComputedStyle(lqip).display === 'none') { reveal(); return; }
+      var match = /url\(["']?([^"')]+)["']?\)/.exec(getComputedStyle(media).backgroundImage || '');
+      if (!match) { reveal(); return; }
+      var img = new Image();
+      // Loaded, broken and hung all leave through the same door: the
+      // placeholder must never be what's left covering the photo.
+      img.onload = reveal;
+      img.onerror = reveal;
+      img.src = match[1];
+      if (img.complete) reveal();
+      setTimeout(reveal, 8000);
+    })();
+
+    // ---- Hero scroll exit ----
+    // Both variables land on the photo layer, which sits below the stickers
+    // and the profile card: putting the fade on the section itself would apply
+    // it to the whole subtree and drag the content out with the backdrop.
+    (function initHeroScrollExit() {
+      if (!hero.classList.contains('home-hero--progressive')) return;
+      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      var ticking = false;
+      function update() {
+        ticking = false;
+        var rect = hero.getBoundingClientRect();
+        var height = Math.max(rect.height, 1);
+        // Same values as upstream (scale 1 -> 1.1, opacity 1 -> 0) but read
+        // off the hero's own rect instead of scrollY / innerHeight, which is
+        // equivalent while the hero is a full-viewport block at the top of the
+        // page and correct when it is not. The upstream per-frame
+        // blur(process * 10px) is left out: a full-viewport filter has to be
+        // re-rasterised every frame.
+        var progress = Math.max(0, Math.min(1, -rect.top / height));
+        hero.style.setProperty('--hero-media-scale', (1 + progress * 0.1).toFixed(3));
+        hero.style.setProperty('--hero-media-opacity', (1 - progress).toFixed(3));
+      }
+      function schedule() {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(update);
+      }
+      window.addEventListener('scroll', schedule, { passive: true });
+      window.addEventListener('resize', schedule);
+      update();
+    })();
     var heroSocialLinks = hero.querySelector('.home-hero__links');
     function syncClippedHeroLinks() {
       if (!heroSocialLinks) return;
@@ -1708,6 +2235,7 @@
     window.addEventListener('load', function () {
       if (typeof window.Fancybox !== 'undefined') {
         window.Fancybox.bind('[data-fancybox="gallery"]');
+        window.Fancybox.bind('[data-fancybox="guestbook-wall"]');
       }
     });
   }
@@ -1731,6 +2259,255 @@
       window.requestAnimationFrame(syncBackToTop);
     }, { passive: true });
     syncBackToTop();
+  }
+
+  // ---- Stacked album ({% stackalbum %} / {% stackalbumnav %}) ----
+  // Markup ships unstacked (every photo visible, ordinary blocks); this turns
+  // it into a deck. scripts/stackalbum.js renders it, stack-album.styl styles
+  // both states.
+  (function initStackAlbums() {
+    var decks = document.querySelectorAll('.fp-stack');
+    if (!decks.length) return;
+
+    // Article decks fan out further and lift higher than the small nav deck.
+    var ARTICLE = { offset: 10, rotation: 1.6, rotationMax: 6, lift: 46 };
+    var NAV = { offset: 6, rotation: 1.2, rotationMax: 4, lift: 0 };
+
+    // One-shot retry for hotlink-protected hosts. The markup already carries
+    // referrerpolicy="no-referrer", so this only covers an error that predates
+    // it — a 403 sitting in the HTTP cache from an earlier request. Bound per
+    // album image rather than sweeping every img on the page: rewriting the
+    // src of pictures that have nothing to do with an album is not this
+    // component's business.
+    function bindRetry(img) {
+      img.addEventListener('error', function () {
+        if (img.getAttribute('data-fp-retried')) return;
+        img.setAttribute('data-fp-retried', '1');
+        img.setAttribute('referrerpolicy', 'no-referrer');
+        var src = img.getAttribute('src');
+        img.setAttribute('src', '');
+        img.setAttribute('src', src);
+      });
+    }
+
+    // The author's `data-orient` wins; an unmarked photo is classified by its
+    // own aspect ratio once it has decoded.
+    function applyOrientation(card, img) {
+      var value = card.getAttribute('data-orient');
+      if (!value) value = (img.naturalWidth || 0) > (img.naturalHeight || 0) ? 'h' : 'v';
+      card.classList.toggle('fp-stack__card--h', value === 'h');
+      card.classList.toggle('fp-stack__card--v', value === 'v');
+    }
+
+    // Footprint of a card once rotated, read off the element instead of
+    // hard-coded: the sizes live in the stylesheet's custom properties, and a
+    // second copy here would silently disagree the moment they change.
+    function metrics(state, card, index) {
+      var width = card.offsetWidth || 0;
+      var height = card.offsetHeight || 0;
+      var angle = Math.min(index * state.cfg.rotation, state.cfg.rotationMax) * Math.PI / 180;
+      var cos = Math.abs(Math.cos(angle));
+      var sin = Math.abs(Math.sin(angle));
+      return {
+        width: width * cos + height * sin,
+        height: height * cos + width * sin,
+        offset: index * state.cfg.offset
+      };
+    }
+
+    function layout(state) {
+      var cards = state.cards;
+      var count = cards.length;
+      var widest = 0;
+      var reach = 0;
+      var sizes = [];
+      for (var i = 0; i < count; i++) {
+        var m = metrics(state, cards[i], i);
+        sizes.push(m);
+        widest = Math.max(widest, m.width);
+        // Cards are centred and pushed down, so the deck has to cover the
+        // lowest bottom edge and the highest top edge.
+        reach = Math.max(reach, m.offset + m.height / 2, m.height / 2 - m.offset);
+      }
+
+      // Shrink only when the cards genuinely have nowhere to go. Measuring the
+      // room the deck sits in (rather than switching on a pixel breakpoint)
+      // means a narrow sidebar or a tablet column scales just as a phone does,
+      // and a wide article column keeps the cards at full size with their
+      // rotated corners spilling slightly past the container, as designed.
+      var parent = state.deck.parentNode;
+      var room = Math.max(state.deck.clientWidth, (parent && parent.clientWidth) || 0);
+      state.scale = (room > 0 && widest > 0) ? Math.min(1, room / widest) : 1;
+
+      var declared = parseFloat(getComputedStyle(state.deck).getPropertyValue('--fp-stack-h')) || 0;
+      state.deck.style.height = (Math.max(declared, reach * 2) * state.scale) + 'px';
+
+      for (var j = 0; j < count; j++) {
+        var card = cards[j];
+        var rotation = (j % 2 === 0 ? 1 : -1) * Math.min(j * state.cfg.rotation, state.cfg.rotationMax);
+        card.style.transform = 'translate(-50%, -50%)' +
+          ' translateY(' + (sizes[j].offset * state.scale) + 'px)' +
+          ' rotate(' + rotation + 'deg)' +
+          ' scale(' + state.scale + ')';
+        card.style.zIndex = String(count - j);
+        card.classList.toggle('is-top', j === 0);
+      }
+    }
+
+    // Lift the top card, then drop it to the back of the pile.
+    function advance(state) {
+      if (state.animating) return;
+      var top = state.cards[0];
+      if (!top) return;
+      state.animating = true;
+      top.classList.add('is-taking');
+
+      var lifted = state.scale * 1.05;
+      // The pop only needs clamping when the deck is already scaled down —
+      // that is the case where 5% more would push the card out of view.
+      if (state.scale < 1) {
+        var m = metrics(state, top, 0);
+        var parent = state.deck.parentNode;
+        var room = Math.max(state.deck.clientWidth, (parent && parent.clientWidth) || 0);
+        if (room > 0 && m.width > 0) lifted = Math.min(lifted, room / m.width);
+      }
+      top.style.transform = 'translate(-50%, -50%)' +
+        ' translateY(' + (-state.cfg.lift * state.scale) + 'px) rotate(0deg) scale(' + lifted + ')';
+
+      var timer;
+      function settle(event) {
+        // Width/height also transition; only the travel marks the end.
+        if (event && event.propertyName !== 'transform') return;
+        top.removeEventListener('transitionend', settle);
+        clearTimeout(timer);
+        top.classList.remove('is-taking');
+        state.cards.push(state.cards.shift());
+        layout(state);
+        state.animating = false;
+      }
+      top.addEventListener('transitionend', settle);
+      // Fallback for a transitionend that never arrives (reduced motion turns
+      // the transition off entirely, and a backgrounded tab can drop it).
+      timer = setTimeout(settle, 700);
+    }
+
+    function build(deck, cfg) {
+      var cards = [].slice.call(deck.querySelectorAll('.fp-stack__card'));
+      if (cards.length < 2) return null;
+      var state = {
+        deck: deck,
+        cards: cards,
+        order: cards.slice(),
+        cfg: cfg,
+        scale: 1,
+        animating: false
+      };
+      deck.classList.add('is-stacked');
+
+      cards.forEach(function (card) {
+        var img = card.querySelector('img');
+        if (!img) return;
+        bindRetry(img);
+        if (img.complete) applyOrientation(card, img);
+        else img.addEventListener('load', function () {
+          applyOrientation(card, img);
+          layout(state);
+        });
+      });
+
+      var ticking = false;
+      window.addEventListener('resize', function () {
+        if (ticking || state.animating) return;
+        ticking = true;
+        requestAnimationFrame(function () {
+          ticking = false;
+          layout(state);
+        });
+      });
+
+      layout(state);
+      return state;
+    }
+
+    for (var i = 0; i < decks.length; i++) {
+      var deck = decks[i];
+      var nav = deck.classList.contains('fp-stack--nav') ? deck.closest('.fp-stacknav') : null;
+      var state = build(deck, nav ? NAV : ARTICLE);
+      if (!state) continue;
+
+      if (!nav) {
+        (function (state) {
+          state.deck.addEventListener('click', function (event) {
+            var card = event.target && event.target.closest ? event.target.closest('.fp-stack__card') : null;
+            if (card !== state.cards[0]) return;
+            if (!card.classList.contains('is-taking')) advance(state);
+          });
+          // Only the top photo is legible in the deck, so without this the
+          // rest are unreachable for anyone not using a pointer.
+          state.deck.setAttribute('tabindex', '0');
+          state.deck.addEventListener('keydown', function (event) {
+            // Enter and ArrowRight only. Space is deliberately not bound: on a
+            // focused element it is the page-scroll key, and swallowing it
+            // would cost more than this shortcut is worth.
+            if (event.key !== 'Enter' && event.key !== 'ArrowRight') return;
+            event.preventDefault();
+            advance(state);
+          });
+        })(state);
+        continue;
+      }
+
+      // Nav deck: the title list drives it. Hovering or focusing a title
+      // flips that cover to the top; leaving restores the configured order.
+      (function (state, nav) {
+        var links = nav.querySelectorAll('.fp-stacknav__list [data-fp-stack-index]');
+        for (var k = 0; k < links.length; k++) {
+          (function (link) {
+            var index = parseInt(link.getAttribute('data-fp-stack-index'), 10);
+            if (!isFinite(index) || index < 0 || index >= state.order.length) return;
+            function bring() {
+              var target = state.order[index];
+              // Look the card up in the CURRENT order, never by its original
+              // position: one missed restore (a touch tap, the pointer leaving
+              // the window, a removed node) would otherwise flip whichever
+              // cover happens to sit at that index.
+              var at = state.cards.indexOf(target);
+              if (at < 1) return;
+              state.cards.splice(at, 1);
+              state.cards.unshift(target);
+              layout(state);
+            }
+            function restore() {
+              state.cards = state.order.slice();
+              layout(state);
+            }
+            link.addEventListener('mouseenter', bring);
+            link.addEventListener('mouseleave', restore);
+            link.addEventListener('focus', bring);
+            link.addEventListener('blur', restore);
+          })(links[k]);
+        }
+      })(state, nav);
+    }
+  })();
+
+  // ---- Reward list: RMB-note tier badges ----
+  // Scan .reward-list__amount and derive a tier class from the amount text
+  // (¥100 -> --100, ¥50 -> --50, ...). Explicit tier classes in markup win.
+  var rewardAmounts = document.querySelectorAll('.reward-list__amount');
+  var rewardTiers = ['100', '50', '20', '10', '5', '1'];
+  for (var r = 0; r < rewardAmounts.length; r++) {
+    var amountEl = rewardAmounts[r];
+    if (amountEl.className.indexOf('reward-list__amount--') > -1) continue;
+    var amountMatch = (amountEl.textContent || '').match(/(\d+(?:\.\d+)?)/);
+    var amountValue = amountMatch ? parseFloat(amountMatch[1]) : NaN;
+    if (!isFinite(amountValue)) continue;
+    for (var ti = 0; ti < rewardTiers.length; ti++) {
+      if (amountValue >= parseInt(rewardTiers[ti], 10)) {
+        amountEl.classList.add('reward-list__amount--' + rewardTiers[ti]);
+        break;
+      }
+    }
   }
 
   bindGlobalOnce();
