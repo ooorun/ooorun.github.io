@@ -86,141 +86,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Docker 项目，使用 EasyImage 轻松搭建个人图床</title>
-    <url>/post/docker-project-easy-images.html</url>
-    <content><![CDATA[<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>我们有时需要上传一些图片用于个人博客，或是其他项目分享，如果你也像我一样更加希望图片存放在自己的服务器上而不是第三方平台上，那么推荐搭建一个属于自己的图床。  </p>
-<p>本文将介绍如何使用 Docker 快速部署一个基于 EasyImage 2 的图床服务。 </p>
-<h3 id="EasyImage-特点"><a href="#EasyImage-特点" class="headerlink" title="EasyImage 特点"></a>EasyImage 特点</h3><p><strong>EasyImage</strong> 简单强大，无数据库非常适合小服务器。  </p>
-<ul>
-<li>支持WebP格式转换</li>
-<li>支持仅登录后上传</li>
-<li>支持设置图片质量</li>
-<li>支持文字&#x2F;图片水印</li>
-<li>支持设置图片指定宽&#x2F;高</li>
-<li>支持上传图片转换为指定格式</li>
-<li>支持限制最低宽度&#x2F;高度上传</li>
-<li>支持API</li>
-<li>在线管理图片</li>
-<li>等更多功能</li>
-</ul>
-<h2 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h2><p>本文的命令适用于 Debian 12，并且需要在 root 用户下完成，请使用 <code>sudo -i</code> 或 <code>su root</code> 切换到 root 用户进行操作。</p>
-<h3 id="安装-Docker"><a href="#安装-Docker" class="headerlink" title="安装 Docker"></a>安装 Docker</h3><p>如果还未安装 Docker 与 Docker Compose 可以查看: </p>
-<ul>
-<li><a href="https://ooo.run/post/debian-install-docker.html">在 Debian 12 中安装 Docker 以及 Docker Compose</a></li>
-<li><a href="https://ref.ooo.run/docs/docker">Docker 备忘清单</a></li>
-<li><a href="https://ref.ooo.run/docs/docker-compose">Docker Compose 备忘清单</a></li>
-</ul>
-<p>首先需要更新和安装软件：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">apt update</span><br><span class="line">apt upgrade -y</span><br><span class="line">apt install curl vim wget gnupg dpkg apt-transport-https lsb-release ca-certificates</span><br></pre></td></tr></table></figure>
-
-<p>然后加入 Docker 的 GPG 公钥和 apt 源：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">curl -sSL https://download.docker.com/linux/debian/gpg | gpg --dearmor &gt; /usr/share/keyrings/docker-ce.gpg</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;deb [arch=<span class="subst">$(dpkg --print-architecture)</span> signed-by=/usr/share/keyrings/docker-ce.gpg] https://download.docker.com/linux/debian <span class="subst">$(lsb_release -sc)</span> stable&quot;</span> &gt; /etc/apt/sources.list.d/docker.list</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>中国大陆的机器可以用清华 TUNA 的国内源：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">curl -sS https://download.docker.com/linux/debian/gpg | gpg --dearmor &gt; /usr/share/keyrings/docker-ce.gpg</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;deb [arch=<span class="subst">$(dpkg --print-architecture)</span> signed-by=/usr/share/keyrings/docker-ce.gpg] https://mirrors.tuna.tsinghua.edu.cn/docker-ce/linux/debian <span class="subst">$(lsb_release -sc)</span> stable&quot;</span> &gt; /etc/apt/sources.list.d/docker.list</span><br></pre></td></tr></table></figure>
-
-<p>然后更新系统后即可安装 Docker CE 和 Docker Compose 插件：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">apt update</span><br><span class="line">apt install docker-ce docker-ce-cli containerd.io docker-compose-plugin</span><br></pre></td></tr></table></figure>
-
-<p>此时可以使用 <code>docker version</code> 命令检查是否安装成功：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">root@debian ~ <span class="comment"># docker version</span></span><br><span class="line">Client: Docker Engine - Community</span><br><span class="line"> Version:           27.3.1</span><br><span class="line"> API version:       1.47</span><br><span class="line"> Go version:        go1.22.7</span><br><span class="line"> Git commit:        ce12230</span><br><span class="line"> Built:             Fri Sep 20 11:41:11 2024</span><br><span class="line"> OS/Arch:           linux/amd64</span><br><span class="line"> Context:           default</span><br><span class="line"></span><br><span class="line">Server: Docker Engine - Community</span><br><span class="line"> Engine:</span><br><span class="line">  Version:          27.3.1</span><br><span class="line">  API version:      1.47 (minimum version 1.24)</span><br><span class="line">  Go version:       go1.22.7</span><br><span class="line">  Git commit:       41ca978</span><br><span class="line">  Built:            Fri Sep 20 11:41:11 2024</span><br><span class="line">  OS/Arch:          linux/amd64</span><br><span class="line">  Experimental:     <span class="literal">false</span></span><br><span class="line"> containerd:</span><br><span class="line">  Version:          1.7.22</span><br><span class="line">  GitCommit:        7f7fdf5fed64eb6a7caf99b3e12efcf9d60e311c</span><br><span class="line"> runc:</span><br><span class="line">  Version:          1.1.14</span><br><span class="line">  GitCommit:        v1.1.14-0-g2c9f560</span><br><span class="line"> docker-init:</span><br><span class="line">  Version:          0.19.0</span><br><span class="line">  GitCommit:        de40ad0</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">root@debian ~ <span class="comment"># docker compose version</span></span><br><span class="line">Docker Compose version v2.29.7</span><br></pre></td></tr></table></figure>
-
-<p>参考：<a href="https://u.sb/debian-install-docker/">Debian 12 &#x2F; Ubuntu 24.04 安装 Docker 以及 Docker Compose 教程</a></p>
-<h3 id="创建-docker-compose-yaml"><a href="#创建-docker-compose-yaml" class="headerlink" title="创建 docker-compose.yaml"></a>创建 docker-compose.yaml</h3><p>使用 <code>docker compose</code> 管理 Docker 项目不必去记复杂的 docker run 命令，并且可以把不同的项目放在一起管理，更加的方便。 </p>
-<p>首先选择一个合适的地方比如 <code>/root/docker-project/</code> 在其中创建项目文件夹，在项目文件夹中创建 <code>docker-compose.yaml</code> 。</p>
-<p>然后填写下面的内容  </p>
-<figure class="highlight yaml"><figcaption><span>docker-compose.yaml</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">easyimage:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">ddsderek/easyimage:latest</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">easyimage</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&#x27;8080:80&#x27;</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">TZ=Asia/Shanghai</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">PUID=1000</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">PGID=1000</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">DEBUG=false</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&#x27;/root/data/docker_data/easyimage/config:/app/web/config&#x27;</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&#x27;/root/data/docker_data/easyimage/i:/app/web/i&#x27;</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">unless-stopped</span></span><br></pre></td></tr></table></figure>
-
-<p>在 <code>docker-compose.yaml</code> 的配置中，<code>:</code> 前面对应主机，后面对应 docker 容器。  </p>
-<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>docker compose 的命令需要在 <code>docker-compose.yaml</code> 同目录下运行</p></div></div>
-
-<p>在这个配置中，我们将使用 <code>http://服务器ip:8080</code> 访问项目，实际数据存储于服务器的 <code>/root/data/docker_data/easyimage</code> 目录下。</p>
-<h3 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h3><p>首先使用下面的命令拉取镜像</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">docker compose pull</span><br></pre></td></tr></table></figure>
-<p>然后启动镜像</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">root@debian ~ <span class="comment"># docker compose up -d</span></span><br><span class="line">[+] Running 2/2</span><br><span class="line"> ✔ Network easyimages_default  Created                                                                            </span><br><span class="line"> ✔ Container easyimage         Starte</span><br></pre></td></tr></table></figure>
-<p>没有报错就表示成功启动，访问 <code>http://服务器ip:8080</code> 即可显示 <strong>EasyIamge 2.0 安装环境检测</strong> ，可以点击下一步继续<br><img src="https://img.nep.me/i/2024/12/13/3mm233.webp" alt="docker-easyimages-install-check"></p>
-<p>不过如果我们拥有域名，且希望设置 Nginx 反代，可以先终止 docker 项目，进行 Nginx 的设置。</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">docker compose down</span><br></pre></td></tr></table></figure>
-
-<h3 id="设置-Nginx-反代"><a href="#设置-Nginx-反代" class="headerlink" title="设置 Nginx 反代"></a>设置 Nginx 反代</h3><p>推荐使用 Nginx Proxy Manager 进行设置，或是手动填写配置文件的反代部分。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">location ^~ /</span><br><span class="line">    &#123;</span><br><span class="line">        proxy_pass http://127.0.0.1:8080;</span><br><span class="line">        proxy_set_header Host $host;</span><br><span class="line">        proxy_set_header X-Real-IP $remote_addr;</span><br><span class="line">        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">        proxy_set_header REMOTE-HOST $remote_addr;</span><br><span class="line"></span><br><span class="line">        set $connection_upgrade &#x27;&#x27;;</span><br><span class="line">        if ($http_upgrade) &#123;</span><br><span class="line">            set $connection_upgrade &#x27;upgrade&#x27;;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        proxy_set_header Upgrade $http_upgrade;</span><br><span class="line">        proxy_set_header Connection $connection_upgrade;</span><br><span class="line">        proxy_http_version 1.1;</span><br><span class="line">        # 上传文件大小限制</span><br><span class="line">        client_max_body_size 10m;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p>测试并重载 Nginx 配置 </p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">nginx -t</span><br><span class="line">nginx -s reload</span><br></pre></td></tr></table></figure>
-
-<p>然后我们可以将 <code>docker-compose.yaml</code> 中的端口部分修改如下，不再将 8080 暴露在公网。</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">ports:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">&#x27;127.0.0.1:8080:80&#x27;</span></span><br></pre></td></tr></table></figure>
-
-<p>重新启动镜像，访问 <code>https://你的域名</code> 在进行设置。 </p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">docker compose up -d</span><br></pre></td></tr></table></figure>
-
-<p>点击下一步， 在 <strong>EasyIamge 2.0 网站基础配置</strong> </p>
-<ul>
-<li>设置域名网站域名记得改为 <code>https://</code></li>
-<li>设置管理账号，<strong>修改为自己想用的账户密码</strong><br><img src="https://img.nep.me/i/2024/12/13/3r6n2e.webp" alt="docker-easyimages-install-config"></li>
-</ul>
-<p>设置完成后会跳转到登陆界面，即可登陆账户。</p>
-<p><img src="https://img.nep.me/i/2024/12/13/3vdqut.webp" alt="docker-easyimages-login"></p>
-<h2 id="设置调整"><a href="#设置调整" class="headerlink" title="设置调整"></a>设置调整</h2><p>由于我们是个人使用，可以进行一些安全调整，前往 <strong>设置</strong> 调整下面内容</p>
-<ul>
-<li><strong>图床安全</strong> &gt; 开启 <strong>登陆上传</strong> 与 <strong>验证码</strong></li>
-<li><strong>API设置</strong> &gt; 禁用已有 Token ，如果需要添加一个新的。</li>
-</ul>
-<p><img src="https://img.nep.me/i/2024/12/13/56enwr.webp" alt="docker-easyimages-safe"></p>
-<p>节省存储空间可以在 <strong>上传设置</strong> 中将 <strong>上传图片格式转换</strong> 设置为 <code>WEBP</code>，现在 webp 已足够流行，不必担心兼容问题。 </p>
-<h2 id="配合-PicGo-上传"><a href="#配合-PicGo-上传" class="headerlink" title="配合 PicGo 上传"></a>配合 PicGo 上传</h2><p>上传时每次打开网页也比较麻烦，EasyImages 支持 API 上传，因此可以安装 PicGo</p>
-<h3 id="开启-API-上传功能"><a href="#开启-API-上传功能" class="headerlink" title="开启 API 上传功能"></a>开启 API 上传功能</h3><p>登录图床后台 &gt; <strong>图床安全</strong> &gt; <strong>高级设置</strong> &gt; <strong>开启API上传</strong></p>
-<h3 id="下载-PicGo"><a href="#下载-PicGo" class="headerlink" title="下载 PicGo"></a>下载 PicGo</h3><p>访问 <a href="https://github.com/Molunerfinn/PicGo/releases">https://github.com/Molunerfinn/PicGo/releases</a> 下载</p>
-<p>macOS 打开时提示损坏，打开终端执行下面的命令，回车后输入电脑账户密码授权</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> xattr -d com.apple.quarantine /Applications/PicGo.app/</span><br></pre></td></tr></table></figure>
-
-<h3 id="安装-web-uploader-插件"><a href="#安装-web-uploader-插件" class="headerlink" title="安装 web-uploader 插件"></a>安装 web-uploader 插件</h3><p>参考 <a href="https://github.com/icret/EasyImages2.0/blob/master/docs/%E4%BD%BF%E7%94%A8PicGo%E4%B8%8A%E4%BC%A0.md">使用PicGo上传.md</a></p>
-<p>打开 PicGo ，插件设置搜索 <code>web-uploader</code>，安装第一个<br><img src="https://img.nep.me/i/2024/12/13/5kdmyw.webp" alt="docker-easyimage-picgo-search-plugin"></p>
-<p>点击左侧图床设置，找到自定义Web图床，添加一个。  </p>
-<p>配置页面：</p>
-<ul>
-<li><strong>图床配置名</strong>：取个名字</li>
-<li><strong>API地址</strong>：图床后台 &gt; <strong>设置</strong> &gt; <strong>API设置</strong> 页面获取</li>
-<li><strong>POST参数名</strong>：<code>image</code></li>
-<li><strong>JSON路径</strong>：<code>url</code></li>
-<li>自定义请求头： 留空不填</li>
-<li><strong>自定义Body</strong>： <code>&#123;&quot;token&quot;:&quot;your token&quot;&#125;</code> token 在图床后台 &gt; <strong>设置</strong> &gt; <strong>API设置</strong> 页面获取</li>
-</ul>
-<p><img src="https://img.nep.me/i/2024/12/13/6u87f6-2.webp" alt="docker-easyimage-picgo-config"></p>
-<p>然后返回上传区，图片上传选择刚刚添加自定义图传，就可以使用 PicGo 上传了。  </p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>EasyImage 简单易用，无需数据库，配置要求与资源占用都非常低，非常适合拿来当作个人图床。 </p>
-<p>不过正是由于没有数据库，无法保存文件名称（可以在设置中打开日志记录）以及设置相册分组。</p>
-<h2 id="错误信息"><a href="#错误信息" class="headerlink" title="错误信息"></a>错误信息</h2><h3 id="Nginx-413-上传失败"><a href="#Nginx-413-上传失败" class="headerlink" title="Nginx 413 上传失败"></a>Nginx 413 上传失败</h3><p>如果上传失败，浏览器 Console 信息提示 413 ,可以在 Nginx 反代设置中，调整大小限制。 </p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">client_max_body_size 10m;</span><br></pre></td></tr></table></figure>
-
-<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><h3 id="删除图片"><a href="#删除图片" class="headerlink" title="删除图片"></a>删除图片</h3><p>登录图床后台 &gt; <strong>文件管理</strong> &gt; <strong>删除文件</strong> &gt; <strong>删除单张图片</strong> 可以通过图片链接快速删除特定图片。  </p>
-<p>或是使用文件管理进行删除。 </p>
-<h3 id="未来的备份与迁移"><a href="#未来的备份与迁移" class="headerlink" title="未来的备份与迁移"></a>未来的备份与迁移</h3><p>如果未来需要更换机器或是不再使用 EasyImage ，只需备份网站配置 <code>/i/</code> 的中文件夹即可，所有的图片都存放在这里。</p>
-<h3 id="后台与图片使用不同的域名"><a href="#后台与图片使用不同的域名" class="headerlink" title="后台与图片使用不同的域名"></a>后台与图片使用不同的域名</h3><p>由于 EasyImage 的图片是本地文件存储的，在网站的设置中，我们可以为很简单的为 网站 和 图片 指定不同的域名，比如：</p>
-<ul>
-<li><strong>网站域名</strong>： <code>https://upload.example.com</code></li>
-<li><strong>图片域名</strong>： <code>https://img.example.com</code></li>
-</ul>
-<p>此时我们可以在 <code>docker-compose.yaml</code> 中将目录映射修改为下面的形式：</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">volumes:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">&#x27;/var/www/img.example.com/config:/app/web/config&#x27;</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">&#x27;/var/www/img.example.com/i:/app/web/i&#x27;</span></span><br></pre></td></tr></table></figure>
-
-<p>然后在主机中的 Nginx 中将 <code>https://img.example.com</code> 的 root 目录设置为 <code>/var/www/img.example.com</code> 就可以了 </p>
-<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">80</span>;</span><br><span class="line">    <span class="attribute">server_name</span> img.example.com;</span><br><span class="line">    <span class="attribute">return</span> <span class="number">301</span> https://img.example.com<span class="variable">$request_uri</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">443</span> ssl http2;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">root</span> /var/www/img.example.com;</span><br><span class="line">    <span class="attribute">index</span> index.html index.htm index.nginx-debian.html;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">server_name</span> img.example.com;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># ssl config</span></span><br><span class="line">    <span class="comment"># ...</span></span><br><span class="line">    </span><br><span class="line">    <span class="section">location</span> / &#123;</span><br><span class="line">        <span class="attribute">try_files</span> <span class="variable">$uri</span> <span class="variable">$uri</span>/ =<span class="number">404</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 禁止访问 /config 路径，或直接将 config 的映射设置为其他的路径</span></span><br><span class="line">    <span class="section">location</span> <span class="regexp">~* /config</span> &#123;</span><br><span class="line">        <span class="attribute">deny</span> all;</span><br><span class="line">        <span class="attribute">return</span> <span class="number">403</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>教程</category>
-      </categories>
-      <tags>
-        <tag>Docker</tag>
-        <tag>Docker Compose</tag>
-        <tag>EasyImage</tag>
-        <tag>图床</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>为 Hexo 博客添加评论系统，Giscus or Twikoo or Arttalk or Disqus</title>
     <url>/post/how-to-add-comment-system-for-static-blog.html</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>静态博客系统不像 Wordpress 一样自带评论系统，不过由于使用静态博客的人越来越多，社区已经有了多种评论系统可以供我们选择。</p>
@@ -404,6 +269,141 @@
       <tags>
         <tag>GitHub</tag>
         <tag>SSH</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Docker 项目，使用 EasyImage 轻松搭建个人图床</title>
+    <url>/post/docker-project-easy-images.html</url>
+    <content><![CDATA[<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>我们有时需要上传一些图片用于个人博客，或是其他项目分享，如果你也像我一样更加希望图片存放在自己的服务器上而不是第三方平台上，那么推荐搭建一个属于自己的图床。  </p>
+<p>本文将介绍如何使用 Docker 快速部署一个基于 EasyImage 2 的图床服务。 </p>
+<h3 id="EasyImage-特点"><a href="#EasyImage-特点" class="headerlink" title="EasyImage 特点"></a>EasyImage 特点</h3><p><strong>EasyImage</strong> 简单强大，无数据库非常适合小服务器。  </p>
+<ul>
+<li>支持WebP格式转换</li>
+<li>支持仅登录后上传</li>
+<li>支持设置图片质量</li>
+<li>支持文字&#x2F;图片水印</li>
+<li>支持设置图片指定宽&#x2F;高</li>
+<li>支持上传图片转换为指定格式</li>
+<li>支持限制最低宽度&#x2F;高度上传</li>
+<li>支持API</li>
+<li>在线管理图片</li>
+<li>等更多功能</li>
+</ul>
+<h2 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h2><p>本文的命令适用于 Debian 12，并且需要在 root 用户下完成，请使用 <code>sudo -i</code> 或 <code>su root</code> 切换到 root 用户进行操作。</p>
+<h3 id="安装-Docker"><a href="#安装-Docker" class="headerlink" title="安装 Docker"></a>安装 Docker</h3><p>如果还未安装 Docker 与 Docker Compose 可以查看: </p>
+<ul>
+<li><a href="https://ooo.run/post/debian-install-docker.html">在 Debian 12 中安装 Docker 以及 Docker Compose</a></li>
+<li><a href="https://ref.ooo.run/docs/docker">Docker 备忘清单</a></li>
+<li><a href="https://ref.ooo.run/docs/docker-compose">Docker Compose 备忘清单</a></li>
+</ul>
+<p>首先需要更新和安装软件：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">apt update</span><br><span class="line">apt upgrade -y</span><br><span class="line">apt install curl vim wget gnupg dpkg apt-transport-https lsb-release ca-certificates</span><br></pre></td></tr></table></figure>
+
+<p>然后加入 Docker 的 GPG 公钥和 apt 源：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">curl -sSL https://download.docker.com/linux/debian/gpg | gpg --dearmor &gt; /usr/share/keyrings/docker-ce.gpg</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;deb [arch=<span class="subst">$(dpkg --print-architecture)</span> signed-by=/usr/share/keyrings/docker-ce.gpg] https://download.docker.com/linux/debian <span class="subst">$(lsb_release -sc)</span> stable&quot;</span> &gt; /etc/apt/sources.list.d/docker.list</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>中国大陆的机器可以用清华 TUNA 的国内源：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">curl -sS https://download.docker.com/linux/debian/gpg | gpg --dearmor &gt; /usr/share/keyrings/docker-ce.gpg</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;deb [arch=<span class="subst">$(dpkg --print-architecture)</span> signed-by=/usr/share/keyrings/docker-ce.gpg] https://mirrors.tuna.tsinghua.edu.cn/docker-ce/linux/debian <span class="subst">$(lsb_release -sc)</span> stable&quot;</span> &gt; /etc/apt/sources.list.d/docker.list</span><br></pre></td></tr></table></figure>
+
+<p>然后更新系统后即可安装 Docker CE 和 Docker Compose 插件：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">apt update</span><br><span class="line">apt install docker-ce docker-ce-cli containerd.io docker-compose-plugin</span><br></pre></td></tr></table></figure>
+
+<p>此时可以使用 <code>docker version</code> 命令检查是否安装成功：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">root@debian ~ <span class="comment"># docker version</span></span><br><span class="line">Client: Docker Engine - Community</span><br><span class="line"> Version:           27.3.1</span><br><span class="line"> API version:       1.47</span><br><span class="line"> Go version:        go1.22.7</span><br><span class="line"> Git commit:        ce12230</span><br><span class="line"> Built:             Fri Sep 20 11:41:11 2024</span><br><span class="line"> OS/Arch:           linux/amd64</span><br><span class="line"> Context:           default</span><br><span class="line"></span><br><span class="line">Server: Docker Engine - Community</span><br><span class="line"> Engine:</span><br><span class="line">  Version:          27.3.1</span><br><span class="line">  API version:      1.47 (minimum version 1.24)</span><br><span class="line">  Go version:       go1.22.7</span><br><span class="line">  Git commit:       41ca978</span><br><span class="line">  Built:            Fri Sep 20 11:41:11 2024</span><br><span class="line">  OS/Arch:          linux/amd64</span><br><span class="line">  Experimental:     <span class="literal">false</span></span><br><span class="line"> containerd:</span><br><span class="line">  Version:          1.7.22</span><br><span class="line">  GitCommit:        7f7fdf5fed64eb6a7caf99b3e12efcf9d60e311c</span><br><span class="line"> runc:</span><br><span class="line">  Version:          1.1.14</span><br><span class="line">  GitCommit:        v1.1.14-0-g2c9f560</span><br><span class="line"> docker-init:</span><br><span class="line">  Version:          0.19.0</span><br><span class="line">  GitCommit:        de40ad0</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">root@debian ~ <span class="comment"># docker compose version</span></span><br><span class="line">Docker Compose version v2.29.7</span><br></pre></td></tr></table></figure>
+
+<p>参考：<a href="https://u.sb/debian-install-docker/">Debian 12 &#x2F; Ubuntu 24.04 安装 Docker 以及 Docker Compose 教程</a></p>
+<h3 id="创建-docker-compose-yaml"><a href="#创建-docker-compose-yaml" class="headerlink" title="创建 docker-compose.yaml"></a>创建 docker-compose.yaml</h3><p>使用 <code>docker compose</code> 管理 Docker 项目不必去记复杂的 docker run 命令，并且可以把不同的项目放在一起管理，更加的方便。 </p>
+<p>首先选择一个合适的地方比如 <code>/root/docker-project/</code> 在其中创建项目文件夹，在项目文件夹中创建 <code>docker-compose.yaml</code> 。</p>
+<p>然后填写下面的内容  </p>
+<figure class="highlight yaml"><figcaption><span>docker-compose.yaml</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">easyimage:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">ddsderek/easyimage:latest</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">easyimage</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&#x27;8080:80&#x27;</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">TZ=Asia/Shanghai</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">PUID=1000</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">PGID=1000</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">DEBUG=false</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&#x27;/root/data/docker_data/easyimage/config:/app/web/config&#x27;</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&#x27;/root/data/docker_data/easyimage/i:/app/web/i&#x27;</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">unless-stopped</span></span><br></pre></td></tr></table></figure>
+
+<p>在 <code>docker-compose.yaml</code> 的配置中，<code>:</code> 前面对应主机，后面对应 docker 容器。  </p>
+<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>docker compose 的命令需要在 <code>docker-compose.yaml</code> 同目录下运行</p></div></div>
+
+<p>在这个配置中，我们将使用 <code>http://服务器ip:8080</code> 访问项目，实际数据存储于服务器的 <code>/root/data/docker_data/easyimage</code> 目录下。</p>
+<h3 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h3><p>首先使用下面的命令拉取镜像</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">docker compose pull</span><br></pre></td></tr></table></figure>
+<p>然后启动镜像</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">root@debian ~ <span class="comment"># docker compose up -d</span></span><br><span class="line">[+] Running 2/2</span><br><span class="line"> ✔ Network easyimages_default  Created                                                                            </span><br><span class="line"> ✔ Container easyimage         Starte</span><br></pre></td></tr></table></figure>
+<p>没有报错就表示成功启动，访问 <code>http://服务器ip:8080</code> 即可显示 <strong>EasyIamge 2.0 安装环境检测</strong> ，可以点击下一步继续<br><img src="https://img.nep.me/i/2024/12/13/3mm233.webp" alt="docker-easyimages-install-check"></p>
+<p>不过如果我们拥有域名，且希望设置 Nginx 反代，可以先终止 docker 项目，进行 Nginx 的设置。</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">docker compose down</span><br></pre></td></tr></table></figure>
+
+<h3 id="设置-Nginx-反代"><a href="#设置-Nginx-反代" class="headerlink" title="设置 Nginx 反代"></a>设置 Nginx 反代</h3><p>推荐使用 Nginx Proxy Manager 进行设置，或是手动填写配置文件的反代部分。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">location ^~ /</span><br><span class="line">    &#123;</span><br><span class="line">        proxy_pass http://127.0.0.1:8080;</span><br><span class="line">        proxy_set_header Host $host;</span><br><span class="line">        proxy_set_header X-Real-IP $remote_addr;</span><br><span class="line">        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">        proxy_set_header REMOTE-HOST $remote_addr;</span><br><span class="line"></span><br><span class="line">        set $connection_upgrade &#x27;&#x27;;</span><br><span class="line">        if ($http_upgrade) &#123;</span><br><span class="line">            set $connection_upgrade &#x27;upgrade&#x27;;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        proxy_set_header Upgrade $http_upgrade;</span><br><span class="line">        proxy_set_header Connection $connection_upgrade;</span><br><span class="line">        proxy_http_version 1.1;</span><br><span class="line">        # 上传文件大小限制</span><br><span class="line">        client_max_body_size 10m;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>测试并重载 Nginx 配置 </p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">nginx -t</span><br><span class="line">nginx -s reload</span><br></pre></td></tr></table></figure>
+
+<p>然后我们可以将 <code>docker-compose.yaml</code> 中的端口部分修改如下，不再将 8080 暴露在公网。</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">ports:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">&#x27;127.0.0.1:8080:80&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>重新启动镜像，访问 <code>https://你的域名</code> 在进行设置。 </p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">docker compose up -d</span><br></pre></td></tr></table></figure>
+
+<p>点击下一步， 在 <strong>EasyIamge 2.0 网站基础配置</strong> </p>
+<ul>
+<li>设置域名网站域名记得改为 <code>https://</code></li>
+<li>设置管理账号，<strong>修改为自己想用的账户密码</strong><br><img src="https://img.nep.me/i/2024/12/13/3r6n2e.webp" alt="docker-easyimages-install-config"></li>
+</ul>
+<p>设置完成后会跳转到登陆界面，即可登陆账户。</p>
+<p><img src="https://img.nep.me/i/2024/12/13/3vdqut.webp" alt="docker-easyimages-login"></p>
+<h2 id="设置调整"><a href="#设置调整" class="headerlink" title="设置调整"></a>设置调整</h2><p>由于我们是个人使用，可以进行一些安全调整，前往 <strong>设置</strong> 调整下面内容</p>
+<ul>
+<li><strong>图床安全</strong> &gt; 开启 <strong>登陆上传</strong> 与 <strong>验证码</strong></li>
+<li><strong>API设置</strong> &gt; 禁用已有 Token ，如果需要添加一个新的。</li>
+</ul>
+<p><img src="https://img.nep.me/i/2024/12/13/56enwr.webp" alt="docker-easyimages-safe"></p>
+<p>节省存储空间可以在 <strong>上传设置</strong> 中将 <strong>上传图片格式转换</strong> 设置为 <code>WEBP</code>，现在 webp 已足够流行，不必担心兼容问题。 </p>
+<h2 id="配合-PicGo-上传"><a href="#配合-PicGo-上传" class="headerlink" title="配合 PicGo 上传"></a>配合 PicGo 上传</h2><p>上传时每次打开网页也比较麻烦，EasyImages 支持 API 上传，因此可以安装 PicGo</p>
+<h3 id="开启-API-上传功能"><a href="#开启-API-上传功能" class="headerlink" title="开启 API 上传功能"></a>开启 API 上传功能</h3><p>登录图床后台 &gt; <strong>图床安全</strong> &gt; <strong>高级设置</strong> &gt; <strong>开启API上传</strong></p>
+<h3 id="下载-PicGo"><a href="#下载-PicGo" class="headerlink" title="下载 PicGo"></a>下载 PicGo</h3><p>访问 <a href="https://github.com/Molunerfinn/PicGo/releases">https://github.com/Molunerfinn/PicGo/releases</a> 下载</p>
+<p>macOS 打开时提示损坏，打开终端执行下面的命令，回车后输入电脑账户密码授权</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> xattr -d com.apple.quarantine /Applications/PicGo.app/</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装-web-uploader-插件"><a href="#安装-web-uploader-插件" class="headerlink" title="安装 web-uploader 插件"></a>安装 web-uploader 插件</h3><p>参考 <a href="https://github.com/icret/EasyImages2.0/blob/master/docs/%E4%BD%BF%E7%94%A8PicGo%E4%B8%8A%E4%BC%A0.md">使用PicGo上传.md</a></p>
+<p>打开 PicGo ，插件设置搜索 <code>web-uploader</code>，安装第一个<br><img src="https://img.nep.me/i/2024/12/13/5kdmyw.webp" alt="docker-easyimage-picgo-search-plugin"></p>
+<p>点击左侧图床设置，找到自定义Web图床，添加一个。  </p>
+<p>配置页面：</p>
+<ul>
+<li><strong>图床配置名</strong>：取个名字</li>
+<li><strong>API地址</strong>：图床后台 &gt; <strong>设置</strong> &gt; <strong>API设置</strong> 页面获取</li>
+<li><strong>POST参数名</strong>：<code>image</code></li>
+<li><strong>JSON路径</strong>：<code>url</code></li>
+<li>自定义请求头： 留空不填</li>
+<li><strong>自定义Body</strong>： <code>&#123;&quot;token&quot;:&quot;your token&quot;&#125;</code> token 在图床后台 &gt; <strong>设置</strong> &gt; <strong>API设置</strong> 页面获取</li>
+</ul>
+<p><img src="https://img.nep.me/i/2024/12/13/6u87f6-2.webp" alt="docker-easyimage-picgo-config"></p>
+<p>然后返回上传区，图片上传选择刚刚添加自定义图传，就可以使用 PicGo 上传了。  </p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>EasyImage 简单易用，无需数据库，配置要求与资源占用都非常低，非常适合拿来当作个人图床。 </p>
+<p>不过正是由于没有数据库，无法保存文件名称（可以在设置中打开日志记录）以及设置相册分组。</p>
+<h2 id="错误信息"><a href="#错误信息" class="headerlink" title="错误信息"></a>错误信息</h2><h3 id="Nginx-413-上传失败"><a href="#Nginx-413-上传失败" class="headerlink" title="Nginx 413 上传失败"></a>Nginx 413 上传失败</h3><p>如果上传失败，浏览器 Console 信息提示 413 ,可以在 Nginx 反代设置中，调整大小限制。 </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">client_max_body_size 10m;</span><br></pre></td></tr></table></figure>
+
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><h3 id="删除图片"><a href="#删除图片" class="headerlink" title="删除图片"></a>删除图片</h3><p>登录图床后台 &gt; <strong>文件管理</strong> &gt; <strong>删除文件</strong> &gt; <strong>删除单张图片</strong> 可以通过图片链接快速删除特定图片。  </p>
+<p>或是使用文件管理进行删除。 </p>
+<h3 id="未来的备份与迁移"><a href="#未来的备份与迁移" class="headerlink" title="未来的备份与迁移"></a>未来的备份与迁移</h3><p>如果未来需要更换机器或是不再使用 EasyImage ，只需备份网站配置 <code>/i/</code> 的中文件夹即可，所有的图片都存放在这里。</p>
+<h3 id="后台与图片使用不同的域名"><a href="#后台与图片使用不同的域名" class="headerlink" title="后台与图片使用不同的域名"></a>后台与图片使用不同的域名</h3><p>由于 EasyImage 的图片是本地文件存储的，在网站的设置中，我们可以为很简单的为 网站 和 图片 指定不同的域名，比如：</p>
+<ul>
+<li><strong>网站域名</strong>： <code>https://upload.example.com</code></li>
+<li><strong>图片域名</strong>： <code>https://img.example.com</code></li>
+</ul>
+<p>此时我们可以在 <code>docker-compose.yaml</code> 中将目录映射修改为下面的形式：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">volumes:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">&#x27;/var/www/img.example.com/config:/app/web/config&#x27;</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">&#x27;/var/www/img.example.com/i:/app/web/i&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>然后在主机中的 Nginx 中将 <code>https://img.example.com</code> 的 root 目录设置为 <code>/var/www/img.example.com</code> 就可以了 </p>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">80</span>;</span><br><span class="line">    <span class="attribute">server_name</span> img.example.com;</span><br><span class="line">    <span class="attribute">return</span> <span class="number">301</span> https://img.example.com<span class="variable">$request_uri</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">443</span> ssl http2;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">root</span> /var/www/img.example.com;</span><br><span class="line">    <span class="attribute">index</span> index.html index.htm index.nginx-debian.html;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">server_name</span> img.example.com;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># ssl config</span></span><br><span class="line">    <span class="comment"># ...</span></span><br><span class="line">    </span><br><span class="line">    <span class="section">location</span> / &#123;</span><br><span class="line">        <span class="attribute">try_files</span> <span class="variable">$uri</span> <span class="variable">$uri</span>/ =<span class="number">404</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 禁止访问 /config 路径，或直接将 config 的映射设置为其他的路径</span></span><br><span class="line">    <span class="section">location</span> <span class="regexp">~* /config</span> &#123;</span><br><span class="line">        <span class="attribute">deny</span> all;</span><br><span class="line">        <span class="attribute">return</span> <span class="number">403</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>教程</category>
+      </categories>
+      <tags>
+        <tag>Docker</tag>
+        <tag>Docker Compose</tag>
+        <tag>EasyImage</tag>
+        <tag>图床</tag>
       </tags>
   </entry>
   <entry>
@@ -1588,38 +1588,6 @@
       </tags>
   </entry>
   <entry>
-    <title>OpenAI 发布两款高性能开源人工智能模型 GPT-OSS-20B 与 GPT-OSS-120B</title>
-    <url>/post/news-openai-releae-gpt-oss-model.html</url>
-    <content><![CDATA[<p><strong>旧金山 – 2025年8月6日</strong> – OpenAI今日宣布推出两款采用混合专家（MoE）架构的开源推理模型：<strong>GPT-OSS-120B</strong> 和 <strong>GPT-OSS-20B</strong> 。 </p>
-<p>这两款模型使用  Apache 2.0 开源许可证发布，允许开发者和研究人员免费使用、修改和分发。</p>
-<p>新模型专注于思维链（Chain-of-Thought）推理，旨在通过将复杂任务分解为更小的步骤来提升结果的准确性。根据 OpenAI 的基准测试，<strong>GPT-OSS-20B</strong> 的性能可与 <code>o4-mini</code> 相媲美，而 <strong>GPT-OSS-120B</strong> 的性能则与 <code>o3-mini</code> 相当。</p>
-<p>OpenAI CEO 萨姆·奥尔特曼表示：</p>
-<blockquote>
-<p>“我们很高兴能将这些模型交到全世界更多人的手中。它们不会取代现有的GPT模型，而是作为一种补充，推动人工智能领域的创新与协作。”</p>
-</blockquote>
-<p>此次发布的一大亮点是其在本地设备上的运行能力。GPT-OSS-20B 等较小尺寸的模型经过优化，可在笔记本电脑甚至智能手机上高效运行。在 M4 芯片的 MacBook 上，20B 模型的推理速度可达每秒30-40个token。</p>
-<p><strong>相关链接:</strong></p>
-<ul>
-<li><strong>模型信息:</strong> <a href="https://openai.com/zh-Hans-CN/open-models/">https://openai.com/zh-Hans-CN/open-models/</a></li>
-<li><strong>模型下载:</strong> <a href="https://huggingface.co/openai">https://huggingface.co/openai</a></li>
-</ul>
-<p><strong>本地运行 GPT-OSS-20B</strong><br><a href="https://ollama.com/download">ollama</a> 上 GPT-OSS-20B 模型大小为 14GB ，一键运行命令如下：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">ollama run gpt-oss:20b </span><br></pre></td></tr></table></figure>
-
-<p>图形界面则可以使用 <a href="https://lmstudio.ai/">LM Studio</a></p>
-<p><img src="https://img.nep.me/i/2025/08/06/lmstudio-run-gpt-oss-20b.webp" alt="LM Studio run GPT-OSS-20B"></p>
-]]></content>
-      <categories>
-        <category>资讯</category>
-      </categories>
-      <tags>
-        <tag>AI</tag>
-        <tag>大模型</tag>
-        <tag>OpenAI</tag>
-        <tag>开源</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>OpenAI 发布 GPT-5，新一代人工智能模型正式亮相</title>
     <url>/post/news-openai-released-gpt-5.html</url>
     <content><![CDATA[<p><strong>2025 年 8 月 7 日</strong> — OpenAI 正式推出最新旗舰级人工智能模型 <strong>GPT-5</strong>，即日起面向 ChatGPT 用户与开发者开放。该模型在推理、编程与创意生成等方面全面升级，Open AI 称之为迄今最强的通用 AI 模型之一。</p>
@@ -1701,6 +1669,38 @@
       </tags>
   </entry>
   <entry>
+    <title>OpenAI 发布两款高性能开源人工智能模型 GPT-OSS-20B 与 GPT-OSS-120B</title>
+    <url>/post/news-openai-releae-gpt-oss-model.html</url>
+    <content><![CDATA[<p><strong>旧金山 – 2025年8月6日</strong> – OpenAI今日宣布推出两款采用混合专家（MoE）架构的开源推理模型：<strong>GPT-OSS-120B</strong> 和 <strong>GPT-OSS-20B</strong> 。 </p>
+<p>这两款模型使用  Apache 2.0 开源许可证发布，允许开发者和研究人员免费使用、修改和分发。</p>
+<p>新模型专注于思维链（Chain-of-Thought）推理，旨在通过将复杂任务分解为更小的步骤来提升结果的准确性。根据 OpenAI 的基准测试，<strong>GPT-OSS-20B</strong> 的性能可与 <code>o4-mini</code> 相媲美，而 <strong>GPT-OSS-120B</strong> 的性能则与 <code>o3-mini</code> 相当。</p>
+<p>OpenAI CEO 萨姆·奥尔特曼表示：</p>
+<blockquote>
+<p>“我们很高兴能将这些模型交到全世界更多人的手中。它们不会取代现有的GPT模型，而是作为一种补充，推动人工智能领域的创新与协作。”</p>
+</blockquote>
+<p>此次发布的一大亮点是其在本地设备上的运行能力。GPT-OSS-20B 等较小尺寸的模型经过优化，可在笔记本电脑甚至智能手机上高效运行。在 M4 芯片的 MacBook 上，20B 模型的推理速度可达每秒30-40个token。</p>
+<p><strong>相关链接:</strong></p>
+<ul>
+<li><strong>模型信息:</strong> <a href="https://openai.com/zh-Hans-CN/open-models/">https://openai.com/zh-Hans-CN/open-models/</a></li>
+<li><strong>模型下载:</strong> <a href="https://huggingface.co/openai">https://huggingface.co/openai</a></li>
+</ul>
+<p><strong>本地运行 GPT-OSS-20B</strong><br><a href="https://ollama.com/download">ollama</a> 上 GPT-OSS-20B 模型大小为 14GB ，一键运行命令如下：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">ollama run gpt-oss:20b </span><br></pre></td></tr></table></figure>
+
+<p>图形界面则可以使用 <a href="https://lmstudio.ai/">LM Studio</a></p>
+<p><img src="https://img.nep.me/i/2025/08/06/lmstudio-run-gpt-oss-20b.webp" alt="LM Studio run GPT-OSS-20B"></p>
+]]></content>
+      <categories>
+        <category>资讯</category>
+      </categories>
+      <tags>
+        <tag>AI</tag>
+        <tag>大模型</tag>
+        <tag>OpenAI</tag>
+        <tag>开源</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>OpenAI Codex CLI 现已支持使用 ChatGPT 账户登录，默认模型 GPT-5</title>
     <url>/post/openai-codex-support-login-by-chatgpt-plus.html</url>
     <content><![CDATA[<p>Claude 的终端编程助手 Claude Code 越来越火，Google 的 Gemini CLI 也凭借免费额度占领一定的市场份额，这种事情怎么能少了当今 AI 的领头羊 OpenAI 的身影。<br>如今，在 OpenAI 发布 GPT-5 后，Codex CLI 终于支持使用 ChatGPT 账户（Plus &#x2F; Pro）直接登录，并将默认模型切换为 GPT-5。</p>
@@ -1766,49 +1766,6 @@
       </tags>
   </entry>
   <entry>
-    <title>在 Google AI Studio 中免费体验 Nano Banana(Gemini 2.5 Flash Image)</title>
-    <url>/post/try-gemini-flash-image-preview.html</url>
-    <content><![CDATA[<p>Google 发布了预览版本的 Gemini 2.5 Flash Image Preview，一个图像生成与编辑模型，可以进行对话式的编辑或是图像合成，现已在 Google 的各种服务中中提供。</p>
-<p>可以直接打开 <a href="https://gemini.google/">Gemini APP</a> 或是访问 <a href="https://aistudio.google.com/prompts/new_chat?model=gemini-2.5-flash-image-preview">Google AI Studio</a> 免费体验。</p>
-<blockquote>
-<p>更新：现在可以直接在 X(Twitter) 上 <a href="https://x.com/NanoBanana/with_replies">@NanoBanana</a> 来生成图片了</p>
-</blockquote>
-<p>访问 Google AI Studio 后可以看到右上角的模型为 <code>Gemini 2.5 Flash Image Preview</code>。</p>
-<blockquote>
-<p>更新：现在已经直接显示为 Nano Banana 了</p>
-</blockquote>
-<img src="https://img.nep.me/i/2025/09/01/google-ai-studio-web-nano.webp" style="width:85%;" alt="google-ai-studio-web" />
-
-<p>如果需要上传图片，只需要点击对话框右侧的 <code>+</code> 或是直接拖动图片到输入框，不如就试试现在比较火的生成手办图片的 prompts 吧：</p>
-<blockquote>
-<p>Use the nano-banana model to create a 1&#x2F;7 scale commercialized figure of thecharacter in the illustration, in a realistic style and environment. Place the figure on a computer desk, using a circular transparent acrylic base without any text.On the computer screen, display the ZBrush modeling process of the figure. Next to the computer screen, place a BANDAI-style toy packaging box printed with the original artwork.</p>
-</blockquote>
-<img src="https://img.nep.me/i/2025/08/28/gemini-flash-images-figure.webp" style="width:50%;" alt="google-ai-studio-prompts" />
-
-<p>提示词来源 <a href="https://x.com/YunFeng_cc/status/1960595391461908528">雲風Cloudwind @ x.com</a></p>
-<blockquote>
-<p>实测效果也没有那么稳定，有时需要抽卡</p>
-</blockquote>
-<p>Gemini 2.5 Flash Image Preview 主要特色：</p>
-<ul>
-<li>在多个提示和图像中 <strong>保持角色的一致性</strong>：一致性非常强，所以非常适合编辑图片。</li>
-<li>使用 <strong>自然语言</strong> 有针对性的编辑&#x2F;替换对象： 不需要写专业的提示词，一句话就能编辑图片，当然专业准确的提示器效果更好。</li>
-<li>基于前面两个特性，可以将多个图像根据提示词进行 <strong>合成</strong>。</li>
-<li>准确呈现图像中的文本： <strong>仅限英文</strong> ，中文效果不好。</li>
-<li>每 100 万个输出令牌 30 美元（1 幅图像约 0.039 美分）。</li>
-</ul>
-<p>上传或是生成的图片都会保存在 <strong>Google 云端硬盘</strong> &gt; <strong>我的云端硬盘</strong> &gt; <strong>Google AI Studio</strong> 文件夹内。</p>
-]]></content>
-      <categories>
-        <category>资讯</category>
-      </categories>
-      <tags>
-        <tag>AI</tag>
-        <tag>图像生成</tag>
-        <tag>Nano Banana</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>使用 ccusage 查看 Claude Code 用量</title>
     <url>/post/use-ccusage-check-claude-code-cost.html</url>
     <content><![CDATA[<p>如果你是通过 Claude Pro 或是 Max 订阅使用的 Claude Code，通过 <code>/cost</code> 会得到无需关注消耗的提示   </p>
@@ -1850,6 +1807,49 @@
       </categories>
       <tags>
         <tag>Claude Code</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>在 Google AI Studio 中免费体验 Nano Banana(Gemini 2.5 Flash Image)</title>
+    <url>/post/try-gemini-flash-image-preview.html</url>
+    <content><![CDATA[<p>Google 发布了预览版本的 Gemini 2.5 Flash Image Preview，一个图像生成与编辑模型，可以进行对话式的编辑或是图像合成，现已在 Google 的各种服务中中提供。</p>
+<p>可以直接打开 <a href="https://gemini.google/">Gemini APP</a> 或是访问 <a href="https://aistudio.google.com/prompts/new_chat?model=gemini-2.5-flash-image-preview">Google AI Studio</a> 免费体验。</p>
+<blockquote>
+<p>更新：现在可以直接在 X(Twitter) 上 <a href="https://x.com/NanoBanana/with_replies">@NanoBanana</a> 来生成图片了</p>
+</blockquote>
+<p>访问 Google AI Studio 后可以看到右上角的模型为 <code>Gemini 2.5 Flash Image Preview</code>。</p>
+<blockquote>
+<p>更新：现在已经直接显示为 Nano Banana 了</p>
+</blockquote>
+<img src="https://img.nep.me/i/2025/09/01/google-ai-studio-web-nano.webp" style="width:85%;" alt="google-ai-studio-web" />
+
+<p>如果需要上传图片，只需要点击对话框右侧的 <code>+</code> 或是直接拖动图片到输入框，不如就试试现在比较火的生成手办图片的 prompts 吧：</p>
+<blockquote>
+<p>Use the nano-banana model to create a 1&#x2F;7 scale commercialized figure of thecharacter in the illustration, in a realistic style and environment. Place the figure on a computer desk, using a circular transparent acrylic base without any text.On the computer screen, display the ZBrush modeling process of the figure. Next to the computer screen, place a BANDAI-style toy packaging box printed with the original artwork.</p>
+</blockquote>
+<img src="https://img.nep.me/i/2025/08/28/gemini-flash-images-figure.webp" style="width:50%;" alt="google-ai-studio-prompts" />
+
+<p>提示词来源 <a href="https://x.com/YunFeng_cc/status/1960595391461908528">雲風Cloudwind @ x.com</a></p>
+<blockquote>
+<p>实测效果也没有那么稳定，有时需要抽卡</p>
+</blockquote>
+<p>Gemini 2.5 Flash Image Preview 主要特色：</p>
+<ul>
+<li>在多个提示和图像中 <strong>保持角色的一致性</strong>：一致性非常强，所以非常适合编辑图片。</li>
+<li>使用 <strong>自然语言</strong> 有针对性的编辑&#x2F;替换对象： 不需要写专业的提示词，一句话就能编辑图片，当然专业准确的提示器效果更好。</li>
+<li>基于前面两个特性，可以将多个图像根据提示词进行 <strong>合成</strong>。</li>
+<li>准确呈现图像中的文本： <strong>仅限英文</strong> ，中文效果不好。</li>
+<li>每 100 万个输出令牌 30 美元（1 幅图像约 0.039 美分）。</li>
+</ul>
+<p>上传或是生成的图片都会保存在 <strong>Google 云端硬盘</strong> &gt; <strong>我的云端硬盘</strong> &gt; <strong>Google AI Studio</strong> 文件夹内。</p>
+]]></content>
+      <categories>
+        <category>资讯</category>
+      </categories>
+      <tags>
+        <tag>AI</tag>
+        <tag>图像生成</tag>
+        <tag>Nano Banana</tag>
       </tags>
   </entry>
   <entry>
@@ -2125,6 +2125,82 @@
       </tags>
   </entry>
   <entry>
+    <title>使用 Docker 快速部署 Memos 个人笔记系统</title>
+    <url>/post/use-docker-run-memeos.html</url>
+    <content><![CDATA[<h2 id="Memos-简介"><a href="#Memos-简介" class="headerlink" title="Memos 简介"></a>Memos 简介</h2><p>Memos 是一款开源的轻量级笔记服务，它允许你像发微博或推特一样，轻松记录每一个灵感和想法。由于其开源、支持 Docker 部署的特性，我们可以用它来搭建一个完全由自己掌控的私有化笔记系统。</p>
+<p>Memos 的核心功能包括：</p>
+<ul>
+<li><strong>Markdown</strong> 语法支持</li>
+<li><strong>标签 (Tag)</strong> 管理</li>
+<li><strong>任务列表 (Task)</strong> 支持</li>
+<li><strong>公开&#x2F;私密</strong> 笔记权限设置</li>
+<li><strong>多用户</strong> 协同使用</li>
+</ul>
+<p>在开始部署之前，你可以访问官方的 <a href="https://demo.usememos.com/">Memos Live Demo</a> 来快速体验一下。</p>
+<p>本教程将指导你如何使用 Docker Compose 快速部署一个安全、私有的 Memos 实例，让你在快速拥有属于自己的笔记管理系统。</p>
+<h2 id="一、环境准备"><a href="#一、环境准备" class="headerlink" title="一、环境准备"></a>一、环境准备</h2><p>在开始前，需要我们有一个自己的 VPS 或是支持 Docker 容器的 NAS 系统。</p>
+<h3 id="1-安装-Docker-和-Docker-Compose"><a href="#1-安装-Docker-和-Docker-Compose" class="headerlink" title="1. 安装 Docker 和 Docker Compose"></a>1. 安装 Docker 和 Docker Compose</h3><p>如果你的服务器尚未安装 Docker 和 Docker Compose ，可以参考以下教程：</p>
+<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p><strong>延伸阅读:</strong> <a href="https://ooo.run/post/debian-install-docker.html">在 Debian 12 中安装 Docker 以及 Docker Compose</a></p></div></div>
+
+<h3 id="2-创建项目目录"><a href="#2-创建项目目录" class="headerlink" title="2. 创建项目目录"></a>2. 创建项目目录</h3><p>为 Memos 创建一个专用的目录，用于存放配置文件和数据。</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p /opt/memos &amp;&amp; <span class="built_in">cd</span> /opt/memos</span><br></pre></td></tr></table></figure>
+
+<h2 id="二、使用-Docker-Compose-部署-Memos"><a href="#二、使用-Docker-Compose-部署-Memos" class="headerlink" title="二、使用 Docker Compose 部署 Memos"></a>二、使用 Docker Compose 部署 Memos</h2><h3 id="创建-docker-compose-yml-文件"><a href="#创建-docker-compose-yml-文件" class="headerlink" title="创建 docker-compose.yml 文件"></a>创建 <code>docker-compose.yml</code> 文件</h3><p>在项目目录 (<code>/opt/memos</code>) 中，创建一个名为 <code>docker-compose.yml</code> 的文件。</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">vim docker-compose.yml</span><br></pre></td></tr></table></figure>
+
+<p>将以下内容粘贴到文件中：</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">memos:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">neosmemo/memos:latest</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">memos</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">5230</span><span class="string">:5230</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./data:/var/opt/memos</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">MEMOS_MODE=prod</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">MEMOS_PORT=5230</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>配置解析:</strong></p>
+<ul>
+<li><code>ports</code>: 将 Memos 的 Web 界面映射到主机的 5230 端口</li>
+<li><code>volumes</code>: 将 Memos 的数据存储在 <code>docker-compose.yml</code> 相同目录下的 <code>data</code> 文件夹中，确保容器重建后数据不丢失</li>
+</ul>
+<blockquote>
+<p>未来如果需要备份或是迁移，直接打包复制 <code>/opt/data</code> 文件夹即可。</p>
+</blockquote>
+<h3 id="启动-Memos-服务"><a href="#启动-Memos-服务" class="headerlink" title="启动 Memos 服务"></a>启动 Memos 服务</h3><p>在 <code>docker-compose.yml</code> 文件所在目录中，执行以下命令来拉取镜像并启动服务：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">docker compose up -d</span><br></pre></td></tr></table></figure>
+
+<p>然后打开浏览器，访问 <code>http://&lt;你的服务器IP&gt;:5230</code> 即可访问 Memos 的 Web 界面，第一次打开会让我们注册管理员账户（网页默认显示英文，可以在底部切换语言）。</p>
+<p><img src="https://img.nep.me/i/2025/08/18/memos-signup.webp" alt="memos-signup"></p>
+<h2 id="三、安全设置"><a href="#三、安全设置" class="headerlink" title="三、安全设置"></a>三、安全设置</h2><p>对于一个私有笔记系统，安全同样重要，如果我们只是个人使用，可以关闭注册。</p>
+<h3 id="1-禁用用户注册"><a href="#1-禁用用户注册" class="headerlink" title="1. 禁用用户注册"></a>1. 禁用用户注册</h3><p>登录到 Memos 后，进入管理员设置：</p>
+<ul>
+<li>点击左侧边栏的设置按钮</li>
+<li>选择 <strong>系统</strong></li>
+<li>打开 <code>Disallow user registration</code> 的选项</li>
+</ul>
+<h3 id="2-（强烈推荐）使用反向代理"><a href="#2-（强烈推荐）使用反向代理" class="headerlink" title="2. （强烈推荐）使用反向代理"></a>2. （强烈推荐）使用反向代理</h3><p>直接暴露 Web 端口到公网是不安全的。推荐使用 Nginx 或其他反向代理工具来提供 Web 服务，并且使用 HTTPS 访问。</p>
+<p><code>1</code> <strong>修改端口映射</strong>: 将 Memos 的 Web 端口限制为仅限本机访问。<br>修改 <code>docker-compose.yml</code> 文件中的 <code>ports</code> 部分：</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">ports:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">&quot;127.0.0.1:5230:5230&quot;</span> <span class="comment"># 仅允许本地访问</span></span><br></pre></td></tr></table></figure>
+
+<p><code>2</code> <strong>重启服务</strong>:</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">docker compose down</span><br><span class="line">docker compose up -d</span><br></pre></td></tr></table></figure>
+
+<p><code>3</code> <strong>配置反向代理</strong>: 在你的反向代理工具中，设置一个代理规则，将 <code>memos.yourdomain.com</code> 的流量转发到 <code>http://127.0.0.1:5230</code>。</p>
+<p><strong>Nginx 示例（仅反代部分）</strong></p>
+<p>以下示例将域名 <code>memos.example.com</code> 的 HTTP 流量反代到本机的 <code>127.0.0.1:5230</code>。</p>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="section">location</span> / &#123;</span><br><span class="line">    <span class="attribute">proxy_pass</span> http://127.0.0.1:5230/;</span><br><span class="line">    </span><br><span class="line">    <span class="attribute">rewrite</span><span class="regexp"> ^/(.*)$</span> /<span class="variable">$1</span> <span class="literal">break</span>;</span><br><span class="line">    <span class="attribute">proxy_redirect</span> <span class="literal">off</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> Host <span class="variable">$host</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> X-Forwarded-Proto <span class="variable">$scheme</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> X-Real-IP <span class="variable">$remote_addr</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> Upgrade-Insecure-Requests <span class="number">1</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> X-Forwarded-Proto https;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>测试并重载 Nginx 配置：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">nginx -t</span><br><span class="line">nginx -s reload </span><br></pre></td></tr></table></figure>
+
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>恭喜！通过本教程，你已经成功地为自己搭建了一个功能强大且完全私有的个人笔记系统。Memos 以其轻量级的设计和对 Markdown 的良好支持，成为了记录想法、管理任务和构建个人知识库的绝佳工具。</p>
+<p>现在，你可以开始自由地记录你的每一个灵感，而无需担心数据隐私问题。由于我们使用了 Docker Compose，未来的维护和升级也将变得异常简单。</p>
+<p>希望这个全新的笔记系统能为你的学习和工作带来便利。</p>
+]]></content>
+      <categories>
+        <category>教程</category>
+      </categories>
+      <tags>
+        <tag>Docker</tag>
+        <tag>Docker Compose</tag>
+        <tag>Self-hosted</tag>
+        <tag>Memos</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>使用 Gitea 与 Docker Compose 轻松自建你的私人 Git 服务器</title>
     <url>/post/use-docker-run-gitea.html</url>
     <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>想要一个完全由你掌控的私人代码仓库吗？Gitea 是一个轻量级、高性能的自托管 Git 服务，功能强大且资源占用极低，甚至可以在树莓派上流畅运行。</p>
@@ -2214,208 +2290,6 @@
         <tag>Docker</tag>
         <tag>Docker Compose</tag>
         <tag>Self-hosted</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>使用 Docker 快速部署 Memos 个人笔记系统</title>
-    <url>/post/use-docker-run-memeos.html</url>
-    <content><![CDATA[<h2 id="Memos-简介"><a href="#Memos-简介" class="headerlink" title="Memos 简介"></a>Memos 简介</h2><p>Memos 是一款开源的轻量级笔记服务，它允许你像发微博或推特一样，轻松记录每一个灵感和想法。由于其开源、支持 Docker 部署的特性，我们可以用它来搭建一个完全由自己掌控的私有化笔记系统。</p>
-<p>Memos 的核心功能包括：</p>
-<ul>
-<li><strong>Markdown</strong> 语法支持</li>
-<li><strong>标签 (Tag)</strong> 管理</li>
-<li><strong>任务列表 (Task)</strong> 支持</li>
-<li><strong>公开&#x2F;私密</strong> 笔记权限设置</li>
-<li><strong>多用户</strong> 协同使用</li>
-</ul>
-<p>在开始部署之前，你可以访问官方的 <a href="https://demo.usememos.com/">Memos Live Demo</a> 来快速体验一下。</p>
-<p>本教程将指导你如何使用 Docker Compose 快速部署一个安全、私有的 Memos 实例，让你在快速拥有属于自己的笔记管理系统。</p>
-<h2 id="一、环境准备"><a href="#一、环境准备" class="headerlink" title="一、环境准备"></a>一、环境准备</h2><p>在开始前，需要我们有一个自己的 VPS 或是支持 Docker 容器的 NAS 系统。</p>
-<h3 id="1-安装-Docker-和-Docker-Compose"><a href="#1-安装-Docker-和-Docker-Compose" class="headerlink" title="1. 安装 Docker 和 Docker Compose"></a>1. 安装 Docker 和 Docker Compose</h3><p>如果你的服务器尚未安装 Docker 和 Docker Compose ，可以参考以下教程：</p>
-<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p><strong>延伸阅读:</strong> <a href="https://ooo.run/post/debian-install-docker.html">在 Debian 12 中安装 Docker 以及 Docker Compose</a></p></div></div>
-
-<h3 id="2-创建项目目录"><a href="#2-创建项目目录" class="headerlink" title="2. 创建项目目录"></a>2. 创建项目目录</h3><p>为 Memos 创建一个专用的目录，用于存放配置文件和数据。</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p /opt/memos &amp;&amp; <span class="built_in">cd</span> /opt/memos</span><br></pre></td></tr></table></figure>
-
-<h2 id="二、使用-Docker-Compose-部署-Memos"><a href="#二、使用-Docker-Compose-部署-Memos" class="headerlink" title="二、使用 Docker Compose 部署 Memos"></a>二、使用 Docker Compose 部署 Memos</h2><h3 id="创建-docker-compose-yml-文件"><a href="#创建-docker-compose-yml-文件" class="headerlink" title="创建 docker-compose.yml 文件"></a>创建 <code>docker-compose.yml</code> 文件</h3><p>在项目目录 (<code>/opt/memos</code>) 中，创建一个名为 <code>docker-compose.yml</code> 的文件。</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">vim docker-compose.yml</span><br></pre></td></tr></table></figure>
-
-<p>将以下内容粘贴到文件中：</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">memos:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">neosmemo/memos:latest</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">memos</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">5230</span><span class="string">:5230</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./data:/var/opt/memos</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">MEMOS_MODE=prod</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">MEMOS_PORT=5230</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>配置解析:</strong></p>
-<ul>
-<li><code>ports</code>: 将 Memos 的 Web 界面映射到主机的 5230 端口</li>
-<li><code>volumes</code>: 将 Memos 的数据存储在 <code>docker-compose.yml</code> 相同目录下的 <code>data</code> 文件夹中，确保容器重建后数据不丢失</li>
-</ul>
-<blockquote>
-<p>未来如果需要备份或是迁移，直接打包复制 <code>/opt/data</code> 文件夹即可。</p>
-</blockquote>
-<h3 id="启动-Memos-服务"><a href="#启动-Memos-服务" class="headerlink" title="启动 Memos 服务"></a>启动 Memos 服务</h3><p>在 <code>docker-compose.yml</code> 文件所在目录中，执行以下命令来拉取镜像并启动服务：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">docker compose up -d</span><br></pre></td></tr></table></figure>
-
-<p>然后打开浏览器，访问 <code>http://&lt;你的服务器IP&gt;:5230</code> 即可访问 Memos 的 Web 界面，第一次打开会让我们注册管理员账户（网页默认显示英文，可以在底部切换语言）。</p>
-<p><img src="https://img.nep.me/i/2025/08/18/memos-signup.webp" alt="memos-signup"></p>
-<h2 id="三、安全设置"><a href="#三、安全设置" class="headerlink" title="三、安全设置"></a>三、安全设置</h2><p>对于一个私有笔记系统，安全同样重要，如果我们只是个人使用，可以关闭注册。</p>
-<h3 id="1-禁用用户注册"><a href="#1-禁用用户注册" class="headerlink" title="1. 禁用用户注册"></a>1. 禁用用户注册</h3><p>登录到 Memos 后，进入管理员设置：</p>
-<ul>
-<li>点击左侧边栏的设置按钮</li>
-<li>选择 <strong>系统</strong></li>
-<li>打开 <code>Disallow user registration</code> 的选项</li>
-</ul>
-<h3 id="2-（强烈推荐）使用反向代理"><a href="#2-（强烈推荐）使用反向代理" class="headerlink" title="2. （强烈推荐）使用反向代理"></a>2. （强烈推荐）使用反向代理</h3><p>直接暴露 Web 端口到公网是不安全的。推荐使用 Nginx 或其他反向代理工具来提供 Web 服务，并且使用 HTTPS 访问。</p>
-<p><code>1</code> <strong>修改端口映射</strong>: 将 Memos 的 Web 端口限制为仅限本机访问。<br>修改 <code>docker-compose.yml</code> 文件中的 <code>ports</code> 部分：</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">ports:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">&quot;127.0.0.1:5230:5230&quot;</span> <span class="comment"># 仅允许本地访问</span></span><br></pre></td></tr></table></figure>
-
-<p><code>2</code> <strong>重启服务</strong>:</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">docker compose down</span><br><span class="line">docker compose up -d</span><br></pre></td></tr></table></figure>
-
-<p><code>3</code> <strong>配置反向代理</strong>: 在你的反向代理工具中，设置一个代理规则，将 <code>memos.yourdomain.com</code> 的流量转发到 <code>http://127.0.0.1:5230</code>。</p>
-<p><strong>Nginx 示例（仅反代部分）</strong></p>
-<p>以下示例将域名 <code>memos.example.com</code> 的 HTTP 流量反代到本机的 <code>127.0.0.1:5230</code>。</p>
-<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="section">location</span> / &#123;</span><br><span class="line">    <span class="attribute">proxy_pass</span> http://127.0.0.1:5230/;</span><br><span class="line">    </span><br><span class="line">    <span class="attribute">rewrite</span><span class="regexp"> ^/(.*)$</span> /<span class="variable">$1</span> <span class="literal">break</span>;</span><br><span class="line">    <span class="attribute">proxy_redirect</span> <span class="literal">off</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> Host <span class="variable">$host</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> X-Forwarded-Proto <span class="variable">$scheme</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> X-Real-IP <span class="variable">$remote_addr</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> Upgrade-Insecure-Requests <span class="number">1</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> X-Forwarded-Proto https;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>测试并重载 Nginx 配置：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">nginx -t</span><br><span class="line">nginx -s reload </span><br></pre></td></tr></table></figure>
-
-<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>恭喜！通过本教程，你已经成功地为自己搭建了一个功能强大且完全私有的个人笔记系统。Memos 以其轻量级的设计和对 Markdown 的良好支持，成为了记录想法、管理任务和构建个人知识库的绝佳工具。</p>
-<p>现在，你可以开始自由地记录你的每一个灵感，而无需担心数据隐私问题。由于我们使用了 Docker Compose，未来的维护和升级也将变得异常简单。</p>
-<p>希望这个全新的笔记系统能为你的学习和工作带来便利。</p>
-]]></content>
-      <categories>
-        <category>教程</category>
-      </categories>
-      <tags>
-        <tag>Docker</tag>
-        <tag>Docker Compose</tag>
-        <tag>Self-hosted</tag>
-        <tag>Memos</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>使用 Docker 与 Wallos 快速搭建个人订阅管理系统</title>
-    <url>/post/use-docker-run-wallos.html</url>
-    <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>在数字化时代，我们订阅的服务越来越多：Netflix、Spotify、Youtube Premium、各种云存储服务或是网站会员等等。这些订阅费用看似不多，但累积起来却是一笔不小的开支。有时，我们会忘记自己订阅了什么，导致为不再使用的服务继续付费。</p>
-<p>今天介绍的 <strong>Wallos</strong> 可以解决这个问题，它是一款轻量、<strong>自托管（self-hosted）</strong> 的个人订阅管理应用，界面美观，功能强大。</p>
-<p>而且部署起来非常简单！只要你有 Docker，几分钟就能搞定。它对硬件要求极低，无论是树莓派、NAS 还是云端服务器，都能稳定运行。</p>
-<p>在开始前，可以在这里查看在线演示：<a href="https://demo.wallosapp.com/">https://demo.wallosapp.com</a>（用户名：demo，密码：demo）</p>
-<p><img src="https://img.nep.me/i/2025/09/12/wallos-desktop.webp" alt="wallos-desktop"></p>
-<h2 id="Wallos-主要特点"><a href="#Wallos-主要特点" class="headerlink" title="Wallos 主要特点"></a>Wallos 主要特点</h2><p><strong>Wallos</strong> 是一款使用 PHP 编写的开源个人订阅管理应用：<a href="https://github.com/ellite/Wallos">GitHub 项目地址</a>，目前已经获得 6k 的 Star。</p>
-<ul>
-<li><strong>开源 &amp; 自托管</strong>：专为隐私与数据自主而设计</li>
-<li><strong>轻量 &amp; 快速</strong>：基于 SQLite 数据库，性能优化</li>
-<li><strong>安装简单</strong>：完整支持 Docker 部署</li>
-<li><strong>现代且友好的用户界面</strong>：响应式设计，支持移动端访问</li>
-<li><strong>强大的订阅管理功能</strong>：<ul>
-<li>订阅分类管理和自定义标签</li>
-<li>多货币支持和自动汇率转换</li>
-<li>自动 Logo 搜索功能</li>
-<li>支付周期跟踪（月付、年付等）</li>
-<li>订阅统计和可视化图表</li>
-</ul>
-</li>
-<li><strong>智能通知系统</strong>：支持邮件、Discord、Telegram、Pushover 等多种通知方式</li>
-<li><strong>多语言支持</strong>：支持超过 21 种语言</li>
-<li><strong>AI</strong> 分析：支持 AI 推荐分析（需要自己提供 API Key）</li>
-</ul>
-<p>我们将使用 <strong>Docker</strong> 与 <strong>Docker Compose</strong> 来快速搭建 Wallos。</p>
-<h2 id="一、环境准备"><a href="#一、环境准备" class="headerlink" title="一、环境准备"></a>一、环境准备</h2><p>在开始之前，需要拥有一个自己的 VPS 或是支持 Docker 容器的 NAS 系统。</p>
-<h3 id="1-安装-Docker-和-Docker-Compose"><a href="#1-安装-Docker-和-Docker-Compose" class="headerlink" title="1. 安装 Docker 和 Docker Compose"></a>1. 安装 Docker 和 Docker Compose</h3><p>这是我们容器化部署的基础。如果你的服务器尚未安装，可以参考以下教程。</p>
-<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p><strong>延伸阅读:</strong> <a href="https://ooo.run/post/debian-install-docker.html" target="_blank">在 Debian 中安装 Docker 以及 Docker Compose</a></p></div></div>
-
-<h3 id="2-准备域名（可选）"><a href="#2-准备域名（可选）" class="headerlink" title="2. 准备域名（可选）"></a>2. 准备域名（可选）</h3><p>为了通过 HTTPS 安全地访问你的订阅管理系统，你可以准备一个域名，并将其解析到你的服务器 IP。当然，你也可以直接通过 IP 地址访问。</p>
-<h3 id="3-创建项目目录"><a href="#3-创建项目目录" class="headerlink" title="3. 创建项目目录"></a>3. 创建项目目录</h3><p>为 Wallos 创建一个专用的目录，用于存放配置文件和数据。</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p /opt/wallos</span><br><span class="line"><span class="built_in">cd</span> /opt/wallos</span><br></pre></td></tr></table></figure>
-
-<h2 id="二、使用-Docker-Compose-部署"><a href="#二、使用-Docker-Compose-部署" class="headerlink" title="二、使用 Docker Compose 部署"></a>二、使用 Docker Compose 部署</h2><h3 id="创建-compose-yml-文件"><a href="#创建-compose-yml-文件" class="headerlink" title="创建 compose.yml 文件"></a>创建 <code>compose.yml</code> 文件</h3><p>在项目目录 (<code>/opt/wallos</code>) 中，创建一个名为 <code>compose.yml</code> 的文件。</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">vim compose.yml</span><br></pre></td></tr></table></figure>
-
-<p>填入下面的内容：</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">wallos:</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">wallos</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">bellamy/wallos:latest</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;127.0.0.1:8282:80&quot;</span> <span class="comment"># 仅监听本地端口，由反向代理访问</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="attr">TZ:</span> <span class="string">&#x27;Asia/Shanghai&#x27;</span> <span class="comment"># 设置时区</span></span><br><span class="line">    <span class="comment"># Volumes store your data between container upgrades</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&#x27;./db:/var/www/html/db&#x27;</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&#x27;./logos:/var/www/html/images/uploads/logos&#x27;</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">unless-stopped</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>配置解析:</strong></p>
-<ul>
-<li><code>ports</code>: 将容器的 80 端口映射到主机的 <code>127.0.0.1:8282</code>。<strong>127.0.0.1</strong> 表示 Wallos 只能通过本机（或反向代理）访问，增强安全性。</li>
-<li><code>environment</code>:<ul>
-<li><code>TZ</code>: 设置时区为中国时区（Asia&#x2F;Shanghai）。</li>
-</ul>
-</li>
-<li><code>volumes</code>: 将 Wallos 的数据库文件和 logo 图片持久化存储在主机当前目录下，确保容器更新或重建后数据不会丢失。</li>
-</ul>
-<blockquote>
-<p><code>ports</code> 可以先设置为 <code>&quot;8282:80&quot;</code>，在容器启动后确认可以正常访问再设置为 <code>&quot;127.0.0.1:8282:80&quot;</code></p>
-</blockquote>
-<h3 id="启动服务"><a href="#启动服务" class="headerlink" title="启动服务"></a>启动服务</h3><p>在 <code>compose.yml</code> 文件所在目录中，执行以下命令来拉取镜像并启动服务：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">docker compose up -d</span><br></pre></td></tr></table></figure>
-
-<p>启动成功后，可以通过以下命令查看运行状态：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">docker compose ps</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>在 ports 设置中如果未指定为 127.0.0.1:8282 则可以访问 <a href="http://ip:8282/">http://ip:8282</a> 进行访问 Wallos 的 Web 界面</p>
-</blockquote>
-<h2 id="三、配置-Nginx-反向代理"><a href="#三、配置-Nginx-反向代理" class="headerlink" title="三、配置 Nginx 反向代理"></a>三、配置 Nginx 反向代理</h2><p>为了安全地通过 HTTPS 访问你的订阅管理系统，强烈建议使用 Nginx 等反向代理工具。</p>
-<p>以下是一个 Nginx 的配置示例。你需要为你的域名申请一个 SSL 证书（例如通过 Let’s Encrypt）。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># /etc/nginx/sites-available/wallos.yourdomain.com.conf</span><br><span class="line">server &#123;</span><br><span class="line">    listen 80;</span><br><span class="line">    server_name wallos.yourdomain.com;</span><br><span class="line"></span><br><span class="line">    # 将所有 HTTP 请求重定向到 HTTPS</span><br><span class="line">    location / &#123;</span><br><span class="line">        return 301 https://$host$request_uri;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">server &#123;</span><br><span class="line">    listen 443 ssl http2;</span><br><span class="line">    server_name wallos.yourdomain.com;</span><br><span class="line"></span><br><span class="line">    # SSL 证书路径 (请替换为你的实际路径)</span><br><span class="line">    ssl_certificate /path/to/your/fullchain.pem;</span><br><span class="line">    ssl_certificate_key /path/to/your/privkey.pem;</span><br><span class="line"></span><br><span class="line">    # 安全相关的 SSL 设置 (推荐)</span><br><span class="line">    ssl_protocols TLSv1.2 TLSv1.3;</span><br><span class="line">    ssl_ciphers &#x27;ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384&#x27;;</span><br><span class="line">    ssl_prefer_server_ciphers off;</span><br><span class="line"></span><br><span class="line">    location / &#123;</span><br><span class="line">        proxy_pass http://127.0.0.1:8282;</span><br><span class="line">        proxy_set_header Host $host;</span><br><span class="line">        proxy_set_header X-Real-IP $remote_addr;</span><br><span class="line">        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">        proxy_set_header X-Forwarded-Proto $scheme;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>注意：</strong></p>
-<ul>
-<li>将 <code>wallos.yourdomain.com</code> 替换为你的实际域名。</li>
-<li>将 SSL 证书路径 <code>/path/to/your/fullchain.pem</code> 和 <code>/path/to/your/privkey.pem</code> 替换为你的证书文件实际存放的路径。</li>
-</ul>
-<p>测试并重载 Nginx 配置：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">nginx -t</span><br><span class="line">nginx -s reload</span><br></pre></td></tr></table></figure>
-
-<h2 id="四、开始使用"><a href="#四、开始使用" class="headerlink" title="四、开始使用"></a>四、开始使用</h2><p>现在，你可以通过浏览器访问 <code>https://wallos.yourdomain.com</code> 或 <code>http://your-server-ip:8282</code> 来打开你的订阅管理系统了。</p>
-<p>首次访问时，Wallos 会自动进入初始化界面，按照提示完成基本配置即可。</p>
-<h3 id="基本配置"><a href="#基本配置" class="headerlink" title="基本配置"></a>基本配置</h3><ol>
-<li><strong>创建管理员账户</strong>：设置用户名和密码</li>
-<li><strong>货币设置</strong>：选择主要货币和汇率 API（ Fixer 与 ApiLayer 都提供每月 100 次的 API 额度，足够我们使用）</li>
-<li><strong>通知配置</strong>：根据需要配置邮件或其他通知方式</li>
-</ol>
-<h3 id="添加订阅服务"><a href="#添加订阅服务" class="headerlink" title="添加订阅服务"></a>添加订阅服务</h3><p>配置完成后，你可以开始添加第一个订阅服务：</p>
-<ol>
-<li>点击 “Add Subscription” 按钮</li>
-<li>输入服务名称（Wallos 可以点击搜索按钮从网络中获取对应的 Logo）</li>
-<li>设置价格和付费周期</li>
-<li>选择分类和标签</li>
-<li>设置下次扣费日期</li>
-</ol>
-<h2 id="五、高级功能配置"><a href="#五、高级功能配置" class="headerlink" title="五、高级功能配置"></a>五、高级功能配置</h2><h3 id="1-汇率-API-配置"><a href="#1-汇率-API-配置" class="headerlink" title="1. 汇率 API 配置"></a>1. 汇率 API 配置</h3><p>如果你使用多种货币的订阅服务，建议配置 Fixer API 来获取实时汇率：</p>
-<ol>
-<li>访问 <a href="https://fixer.io/">Fixer.io</a> 注册免费账户</li>
-<li>获取 API Key</li>
-<li>在 Wallos 设置中配置 API Key</li>
-</ol>
-<h3 id="2-通知设置"><a href="#2-通知设置" class="headerlink" title="2. 通知设置"></a>2. 通知设置</h3><p>Wallos 支持多种通知方式，可以在订阅即将到期时提醒你：</p>
-<ul>
-<li><strong>邮件通知</strong>：配置 SMTP 服务器</li>
-<li><strong>Telegram 通知</strong>：通过 Bot API 发送消息</li>
-<li><strong>Discord 通知</strong>：通过 Webhook 发送消息</li>
-<li><strong>Pushover 通知</strong>：移动端推送通知</li>
-</ul>
-<h2 id="六、数据备份与恢复"><a href="#六、数据备份与恢复" class="headerlink" title="六、数据备份与恢复"></a>六、数据备份与恢复</h2><p>由于所有数据存储在 SQLite 数据库中，备份非常简单：</p>
-<h3 id="备份数据"><a href="#备份数据" class="headerlink" title="备份数据"></a>备份数据</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /opt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 备份整个目录</span></span><br><span class="line">tar -czf wallos-backup-$(<span class="built_in">date</span> +%Y%m%d).tar.gz ./wallos</span><br></pre></td></tr></table></figure>
-
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>通过 Docker 和 Wallos，我们只用了几分钟就搭建起一个功能全面、界面美观的个人订阅管理系统。相比于市面上的商业订阅管理应用，自托管方案不仅免费，还从根本上保障了你的财务数据隐私。</p>
-<p>Wallos 的优势在于：</p>
-<ul>
-<li><strong>完全免费</strong>且<strong>开源透明</strong></li>
-<li><strong>数据隐私</strong>得到充分保障</li>
-<li><strong>功能丰富</strong>，支持多货币、AI 分析、多种通知方式</li>
-<li><strong>界面友好</strong>，支持移动端访问</li>
-<li><strong>部署简单</strong>，维护成本低</li>
-</ul>
-<p>开始使用 Wallos 来管理你的订阅服务，告别被遗忘的订阅费用吧！</p>
-]]></content>
-      <categories>
-        <category>教程</category>
-      </categories>
-      <tags>
-        <tag>Docker</tag>
-        <tag>Docker Compose</tag>
-        <tag>Self-hosted</tag>
-        <tag>Wallos</tag>
       </tags>
   </entry>
   <entry>
@@ -2594,6 +2468,132 @@
       </tags>
   </entry>
   <entry>
+    <title>使用 Docker 与 Wallos 快速搭建个人订阅管理系统</title>
+    <url>/post/use-docker-run-wallos.html</url>
+    <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>在数字化时代，我们订阅的服务越来越多：Netflix、Spotify、Youtube Premium、各种云存储服务或是网站会员等等。这些订阅费用看似不多，但累积起来却是一笔不小的开支。有时，我们会忘记自己订阅了什么，导致为不再使用的服务继续付费。</p>
+<p>今天介绍的 <strong>Wallos</strong> 可以解决这个问题，它是一款轻量、<strong>自托管（self-hosted）</strong> 的个人订阅管理应用，界面美观，功能强大。</p>
+<p>而且部署起来非常简单！只要你有 Docker，几分钟就能搞定。它对硬件要求极低，无论是树莓派、NAS 还是云端服务器，都能稳定运行。</p>
+<p>在开始前，可以在这里查看在线演示：<a href="https://demo.wallosapp.com/">https://demo.wallosapp.com</a>（用户名：demo，密码：demo）</p>
+<p><img src="https://img.nep.me/i/2025/09/12/wallos-desktop.webp" alt="wallos-desktop"></p>
+<h2 id="Wallos-主要特点"><a href="#Wallos-主要特点" class="headerlink" title="Wallos 主要特点"></a>Wallos 主要特点</h2><p><strong>Wallos</strong> 是一款使用 PHP 编写的开源个人订阅管理应用：<a href="https://github.com/ellite/Wallos">GitHub 项目地址</a>，目前已经获得 6k 的 Star。</p>
+<ul>
+<li><strong>开源 &amp; 自托管</strong>：专为隐私与数据自主而设计</li>
+<li><strong>轻量 &amp; 快速</strong>：基于 SQLite 数据库，性能优化</li>
+<li><strong>安装简单</strong>：完整支持 Docker 部署</li>
+<li><strong>现代且友好的用户界面</strong>：响应式设计，支持移动端访问</li>
+<li><strong>强大的订阅管理功能</strong>：<ul>
+<li>订阅分类管理和自定义标签</li>
+<li>多货币支持和自动汇率转换</li>
+<li>自动 Logo 搜索功能</li>
+<li>支付周期跟踪（月付、年付等）</li>
+<li>订阅统计和可视化图表</li>
+</ul>
+</li>
+<li><strong>智能通知系统</strong>：支持邮件、Discord、Telegram、Pushover 等多种通知方式</li>
+<li><strong>多语言支持</strong>：支持超过 21 种语言</li>
+<li><strong>AI</strong> 分析：支持 AI 推荐分析（需要自己提供 API Key）</li>
+</ul>
+<p>我们将使用 <strong>Docker</strong> 与 <strong>Docker Compose</strong> 来快速搭建 Wallos。</p>
+<h2 id="一、环境准备"><a href="#一、环境准备" class="headerlink" title="一、环境准备"></a>一、环境准备</h2><p>在开始之前，需要拥有一个自己的 VPS 或是支持 Docker 容器的 NAS 系统。</p>
+<h3 id="1-安装-Docker-和-Docker-Compose"><a href="#1-安装-Docker-和-Docker-Compose" class="headerlink" title="1. 安装 Docker 和 Docker Compose"></a>1. 安装 Docker 和 Docker Compose</h3><p>这是我们容器化部署的基础。如果你的服务器尚未安装，可以参考以下教程。</p>
+<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p><strong>延伸阅读:</strong> <a href="https://ooo.run/post/debian-install-docker.html" target="_blank">在 Debian 中安装 Docker 以及 Docker Compose</a></p></div></div>
+
+<h3 id="2-准备域名（可选）"><a href="#2-准备域名（可选）" class="headerlink" title="2. 准备域名（可选）"></a>2. 准备域名（可选）</h3><p>为了通过 HTTPS 安全地访问你的订阅管理系统，你可以准备一个域名，并将其解析到你的服务器 IP。当然，你也可以直接通过 IP 地址访问。</p>
+<h3 id="3-创建项目目录"><a href="#3-创建项目目录" class="headerlink" title="3. 创建项目目录"></a>3. 创建项目目录</h3><p>为 Wallos 创建一个专用的目录，用于存放配置文件和数据。</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p /opt/wallos</span><br><span class="line"><span class="built_in">cd</span> /opt/wallos</span><br></pre></td></tr></table></figure>
+
+<h2 id="二、使用-Docker-Compose-部署"><a href="#二、使用-Docker-Compose-部署" class="headerlink" title="二、使用 Docker Compose 部署"></a>二、使用 Docker Compose 部署</h2><h3 id="创建-compose-yml-文件"><a href="#创建-compose-yml-文件" class="headerlink" title="创建 compose.yml 文件"></a>创建 <code>compose.yml</code> 文件</h3><p>在项目目录 (<code>/opt/wallos</code>) 中，创建一个名为 <code>compose.yml</code> 的文件。</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">vim compose.yml</span><br></pre></td></tr></table></figure>
+
+<p>填入下面的内容：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">wallos:</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">wallos</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">bellamy/wallos:latest</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;127.0.0.1:8282:80&quot;</span> <span class="comment"># 仅监听本地端口，由反向代理访问</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="attr">TZ:</span> <span class="string">&#x27;Asia/Shanghai&#x27;</span> <span class="comment"># 设置时区</span></span><br><span class="line">    <span class="comment"># Volumes store your data between container upgrades</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&#x27;./db:/var/www/html/db&#x27;</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&#x27;./logos:/var/www/html/images/uploads/logos&#x27;</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">unless-stopped</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>配置解析:</strong></p>
+<ul>
+<li><code>ports</code>: 将容器的 80 端口映射到主机的 <code>127.0.0.1:8282</code>。<strong>127.0.0.1</strong> 表示 Wallos 只能通过本机（或反向代理）访问，增强安全性。</li>
+<li><code>environment</code>:<ul>
+<li><code>TZ</code>: 设置时区为中国时区（Asia&#x2F;Shanghai）。</li>
+</ul>
+</li>
+<li><code>volumes</code>: 将 Wallos 的数据库文件和 logo 图片持久化存储在主机当前目录下，确保容器更新或重建后数据不会丢失。</li>
+</ul>
+<blockquote>
+<p><code>ports</code> 可以先设置为 <code>&quot;8282:80&quot;</code>，在容器启动后确认可以正常访问再设置为 <code>&quot;127.0.0.1:8282:80&quot;</code></p>
+</blockquote>
+<h3 id="启动服务"><a href="#启动服务" class="headerlink" title="启动服务"></a>启动服务</h3><p>在 <code>compose.yml</code> 文件所在目录中，执行以下命令来拉取镜像并启动服务：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">docker compose up -d</span><br></pre></td></tr></table></figure>
+
+<p>启动成功后，可以通过以下命令查看运行状态：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">docker compose ps</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>在 ports 设置中如果未指定为 127.0.0.1:8282 则可以访问 <a href="http://ip:8282/">http://ip:8282</a> 进行访问 Wallos 的 Web 界面</p>
+</blockquote>
+<h2 id="三、配置-Nginx-反向代理"><a href="#三、配置-Nginx-反向代理" class="headerlink" title="三、配置 Nginx 反向代理"></a>三、配置 Nginx 反向代理</h2><p>为了安全地通过 HTTPS 访问你的订阅管理系统，强烈建议使用 Nginx 等反向代理工具。</p>
+<p>以下是一个 Nginx 的配置示例。你需要为你的域名申请一个 SSL 证书（例如通过 Let’s Encrypt）。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># /etc/nginx/sites-available/wallos.yourdomain.com.conf</span><br><span class="line">server &#123;</span><br><span class="line">    listen 80;</span><br><span class="line">    server_name wallos.yourdomain.com;</span><br><span class="line"></span><br><span class="line">    # 将所有 HTTP 请求重定向到 HTTPS</span><br><span class="line">    location / &#123;</span><br><span class="line">        return 301 https://$host$request_uri;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">server &#123;</span><br><span class="line">    listen 443 ssl http2;</span><br><span class="line">    server_name wallos.yourdomain.com;</span><br><span class="line"></span><br><span class="line">    # SSL 证书路径 (请替换为你的实际路径)</span><br><span class="line">    ssl_certificate /path/to/your/fullchain.pem;</span><br><span class="line">    ssl_certificate_key /path/to/your/privkey.pem;</span><br><span class="line"></span><br><span class="line">    # 安全相关的 SSL 设置 (推荐)</span><br><span class="line">    ssl_protocols TLSv1.2 TLSv1.3;</span><br><span class="line">    ssl_ciphers &#x27;ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384&#x27;;</span><br><span class="line">    ssl_prefer_server_ciphers off;</span><br><span class="line"></span><br><span class="line">    location / &#123;</span><br><span class="line">        proxy_pass http://127.0.0.1:8282;</span><br><span class="line">        proxy_set_header Host $host;</span><br><span class="line">        proxy_set_header X-Real-IP $remote_addr;</span><br><span class="line">        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">        proxy_set_header X-Forwarded-Proto $scheme;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意：</strong></p>
+<ul>
+<li>将 <code>wallos.yourdomain.com</code> 替换为你的实际域名。</li>
+<li>将 SSL 证书路径 <code>/path/to/your/fullchain.pem</code> 和 <code>/path/to/your/privkey.pem</code> 替换为你的证书文件实际存放的路径。</li>
+</ul>
+<p>测试并重载 Nginx 配置：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">nginx -t</span><br><span class="line">nginx -s reload</span><br></pre></td></tr></table></figure>
+
+<h2 id="四、开始使用"><a href="#四、开始使用" class="headerlink" title="四、开始使用"></a>四、开始使用</h2><p>现在，你可以通过浏览器访问 <code>https://wallos.yourdomain.com</code> 或 <code>http://your-server-ip:8282</code> 来打开你的订阅管理系统了。</p>
+<p>首次访问时，Wallos 会自动进入初始化界面，按照提示完成基本配置即可。</p>
+<h3 id="基本配置"><a href="#基本配置" class="headerlink" title="基本配置"></a>基本配置</h3><ol>
+<li><strong>创建管理员账户</strong>：设置用户名和密码</li>
+<li><strong>货币设置</strong>：选择主要货币和汇率 API（ Fixer 与 ApiLayer 都提供每月 100 次的 API 额度，足够我们使用）</li>
+<li><strong>通知配置</strong>：根据需要配置邮件或其他通知方式</li>
+</ol>
+<h3 id="添加订阅服务"><a href="#添加订阅服务" class="headerlink" title="添加订阅服务"></a>添加订阅服务</h3><p>配置完成后，你可以开始添加第一个订阅服务：</p>
+<ol>
+<li>点击 “Add Subscription” 按钮</li>
+<li>输入服务名称（Wallos 可以点击搜索按钮从网络中获取对应的 Logo）</li>
+<li>设置价格和付费周期</li>
+<li>选择分类和标签</li>
+<li>设置下次扣费日期</li>
+</ol>
+<h2 id="五、高级功能配置"><a href="#五、高级功能配置" class="headerlink" title="五、高级功能配置"></a>五、高级功能配置</h2><h3 id="1-汇率-API-配置"><a href="#1-汇率-API-配置" class="headerlink" title="1. 汇率 API 配置"></a>1. 汇率 API 配置</h3><p>如果你使用多种货币的订阅服务，建议配置 Fixer API 来获取实时汇率：</p>
+<ol>
+<li>访问 <a href="https://fixer.io/">Fixer.io</a> 注册免费账户</li>
+<li>获取 API Key</li>
+<li>在 Wallos 设置中配置 API Key</li>
+</ol>
+<h3 id="2-通知设置"><a href="#2-通知设置" class="headerlink" title="2. 通知设置"></a>2. 通知设置</h3><p>Wallos 支持多种通知方式，可以在订阅即将到期时提醒你：</p>
+<ul>
+<li><strong>邮件通知</strong>：配置 SMTP 服务器</li>
+<li><strong>Telegram 通知</strong>：通过 Bot API 发送消息</li>
+<li><strong>Discord 通知</strong>：通过 Webhook 发送消息</li>
+<li><strong>Pushover 通知</strong>：移动端推送通知</li>
+</ul>
+<h2 id="六、数据备份与恢复"><a href="#六、数据备份与恢复" class="headerlink" title="六、数据备份与恢复"></a>六、数据备份与恢复</h2><p>由于所有数据存储在 SQLite 数据库中，备份非常简单：</p>
+<h3 id="备份数据"><a href="#备份数据" class="headerlink" title="备份数据"></a>备份数据</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /opt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 备份整个目录</span></span><br><span class="line">tar -czf wallos-backup-$(<span class="built_in">date</span> +%Y%m%d).tar.gz ./wallos</span><br></pre></td></tr></table></figure>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>通过 Docker 和 Wallos，我们只用了几分钟就搭建起一个功能全面、界面美观的个人订阅管理系统。相比于市面上的商业订阅管理应用，自托管方案不仅免费，还从根本上保障了你的财务数据隐私。</p>
+<p>Wallos 的优势在于：</p>
+<ul>
+<li><strong>完全免费</strong>且<strong>开源透明</strong></li>
+<li><strong>数据隐私</strong>得到充分保障</li>
+<li><strong>功能丰富</strong>，支持多货币、AI 分析、多种通知方式</li>
+<li><strong>界面友好</strong>，支持移动端访问</li>
+<li><strong>部署简单</strong>，维护成本低</li>
+</ul>
+<p>开始使用 Wallos 来管理你的订阅服务，告别被遗忘的订阅费用吧！</p>
+]]></content>
+      <categories>
+        <category>教程</category>
+      </categories>
+      <tags>
+        <tag>Docker</tag>
+        <tag>Docker Compose</tag>
+        <tag>Self-hosted</tag>
+        <tag>Wallos</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Git 技巧：为不同项目配置专属用户信息与 SSH 密钥</title>
     <url>/post/use-specific-git-user.html</url>
     <content><![CDATA[<p>在日常开发中，我们可能需要同时维护个人项目和工作项目，它们需要使用不同的 Git 用户信息（用户名、邮箱）和 SSH 密钥进行提交与推送。本文将介绍两种核心方法，帮你优雅地管理多个 Git 身份。</p>
@@ -2654,31 +2654,6 @@
       </tags>
   </entry>
   <entry>
-    <title>实用网站：使用 Dashboard Icons 便捷获取各种服务的图标</title>
-    <url>/post/website-dashboard-icons.html</url>
-    <content><![CDATA[<p>有时我们会需要获取一些服务的图标，用在一些面板或是需要的地方，这里推荐一个开源的项目 <strong>Dashboard Icons</strong> ：</p>
-<ul>
-<li><a href="https://github.com/homarr-labs/dashboard-icons">GitHub</a> </li>
-<li><a href="https://dashboardicons.com/">官网</a></li>
-</ul>
-<p>目前已经支持 2021 种服务了，而且完全免费！</p>
-<p>图标的列表可以在这里查看： <a href="https://dashboardicons.com/icons">https://dashboardicons.com/icons</a></p>
-<p><img src="https://img.nep.me/ooo/dashboard-icons-list.webp" alt="dashboard icons list"></p>
-<p>支持直接下载 <code>svg</code> 、 <code>png</code> 、 <code>webp</code> 格式的图标文件，也可以直接复制 <code>cdn.jsdelivr.net</code> CDN 的图标链接，非常的方便。</p>
-<p>部分服务还提供暗黑主题模式的图标。  </p>
-<p><img src="https://img.nep.me/ooo/dashboard-icons-details.webp" alt="dasboard icons get icons"></p>
-<p>这是一个开源的项目，如果觉得有帮助可以给项目点点 Star 支持一下！</p>
-]]></content>
-      <categories>
-        <category>工具资源</category>
-      </categories>
-      <tags>
-        <tag>Icons</tag>
-        <tag>Dashboard Icons</tag>
-        <tag>实用网站</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>趣站分享：Flolife.me —— 基于 AI 的人生旅程模拟器</title>
     <url>/post/website-flolife.html</url>
     <content><![CDATA[<p>还记得曾经风靡一时的人生重开模拟器吗？现在，Flowith 带来了一款更进一步的 AI 人生旅程模拟器 —— Flolife.me。它利用当前热门的 Nano Banana 图片模型，能够根据你上传的头像，生成贯穿角色一生的、具有惊人一致性的事件照片。</p>
@@ -2701,6 +2676,31 @@
         <tag>AI</tag>
         <tag>趣味网站</tag>
         <tag>Flowith</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>实用网站：使用 Dashboard Icons 便捷获取各种服务的图标</title>
+    <url>/post/website-dashboard-icons.html</url>
+    <content><![CDATA[<p>有时我们会需要获取一些服务的图标，用在一些面板或是需要的地方，这里推荐一个开源的项目 <strong>Dashboard Icons</strong> ：</p>
+<ul>
+<li><a href="https://github.com/homarr-labs/dashboard-icons">GitHub</a> </li>
+<li><a href="https://dashboardicons.com/">官网</a></li>
+</ul>
+<p>目前已经支持 2021 种服务了，而且完全免费！</p>
+<p>图标的列表可以在这里查看： <a href="https://dashboardicons.com/icons">https://dashboardicons.com/icons</a></p>
+<p><img src="https://img.nep.me/ooo/dashboard-icons-list.webp" alt="dashboard icons list"></p>
+<p>支持直接下载 <code>svg</code> 、 <code>png</code> 、 <code>webp</code> 格式的图标文件，也可以直接复制 <code>cdn.jsdelivr.net</code> CDN 的图标链接，非常的方便。</p>
+<p>部分服务还提供暗黑主题模式的图标。  </p>
+<p><img src="https://img.nep.me/ooo/dashboard-icons-details.webp" alt="dasboard icons get icons"></p>
+<p>这是一个开源的项目，如果觉得有帮助可以给项目点点 Star 支持一下！</p>
+]]></content>
+      <categories>
+        <category>工具资源</category>
+      </categories>
+      <tags>
+        <tag>Icons</tag>
+        <tag>Dashboard Icons</tag>
+        <tag>实用网站</tag>
       </tags>
   </entry>
   <entry>
@@ -2734,6 +2734,37 @@
       <tags>
         <tag>Linux</tag>
         <tag>实用网站</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>实用网站：Photopea —— 浏览器中的 Photoshop</title>
+    <url>/post/website-photopea-com.html</url>
+    <content><![CDATA[<p>你是否遇到过以下情况：</p>
+<ul>
+<li>出差时需要紧急修改客户的 PSD 文件</li>
+<li>电脑上没有安装 Photoshop，但需要处理复杂图片</li>
+<li>想要体验专业图片编辑功能，但不想付费购买软件</li>
+</ul>
+<p><a href="https://www.photopea.com/">Photopea.com</a> 正是为解决这些问题而生的免费在线图片编辑器。它在浏览器中提供了接近 Photoshop 的专业编辑体验，支持 PSD、AI、Sketch 等多种专业格式。</p>
+<p><strong>快速上手：</strong> 访问网站后，将图片文件直接拖放到浏览器窗口即可开始编辑。</p>
+<p><img src="https://img.nep.me/i/2025/08/18/photopea-preview.webp" alt="photopea-preview"></p>
+<h3 id="Photopea-的主要功能"><a href="#Photopea-的主要功能" class="headerlink" title="Photopea 的主要功能"></a>Photopea 的主要功能</h3><p><strong>1. 支持多种文件格式</strong><br>Photopea 的一个主要优点是它的兼容性。除了常规的图片格式，它还支持打开和编辑 <code>.psd</code>, <code>.ai</code>, <code>.sketch</code>, <code>.raw</code> 等专业格式的文件。这对于临时处理工作文件非常方便。</p>
+<p><strong>2. 熟悉的编辑界面</strong><br>Photopea 的界面和操作方式与 Photoshop 很像，如果你用过 PS，会感觉非常熟悉。它提供了 <strong>图层</strong> 、<strong>滤镜</strong> 等核心编辑功能，可以满足大部分日常的编辑需求。</p>
+<p><strong>3. 提供免费模版</strong><br>网站还提供了一些免费的设计模版，涵盖海报、社交媒体图片等，可以帮助你快速开始创作。</p>
+<p><strong>4. 支持 AI 图片生成</strong><br>除了传统的图片编辑功能，Photopea 还支持一句话生成图片，仍然是免费功能，非常适合体验一下。 </p>
+<p><strong>5. 隐私安全</strong><br>Photopea 默认文件处理都在浏览器本地完成，不会上传到服务器，网页加载完全后，甚至可以离线使用。</p>
+<h3 id="关于广告"><a href="#关于广告" class="headerlink" title="关于广告"></a>关于广告</h3><p>作为一个免费工具，Photopea 的在界面右侧添加了 Google 广告。考虑到它提供的免费功能，这点广告通常是可以接受的。网站的访问量很大，也说明它受到了全球用户的广泛认可。</p>
+<p><img src="https://img.nep.me/i/2025/08/18/photopea-traffic.webp" alt="photopea-traffic"></p>
+<p>简单来说，Photopea 是一个非常实用的在线工具。它免费、免安装，并且支持多种文件格式。</p>
+<p>如果你偶尔需要编辑图片，或者临时需要处理 PSD 这样的文件，Photopea 是一个非常值得收藏的网站，不妨现在加个书签，以备不时之需。</p>
+]]></content>
+      <categories>
+        <category>工具资源</category>
+      </categories>
+      <tags>
+        <tag>实用网站</tag>
+        <tag>图片编辑</tag>
+        <tag>Photopea</tag>
       </tags>
   </entry>
   <entry>
@@ -2771,34 +2802,22 @@
       </tags>
   </entry>
   <entry>
-    <title>实用网站：Photopea —— 浏览器中的 Photoshop</title>
-    <url>/post/website-photopea-com.html</url>
-    <content><![CDATA[<p>你是否遇到过以下情况：</p>
+    <title>什么是 BYOK ？</title>
+    <url>/post/what-is-byok.html</url>
+    <content><![CDATA[<h2 id="什么是-BYOK-？"><a href="#什么是-BYOK-？" class="headerlink" title="什么是 BYOK ？"></a>什么是 BYOK ？</h2><p><code>BYOK</code> 是英文 <strong>Bring Your Own Key</strong> 的缩写，就是字面上的意思 <strong>自带密钥</strong> 。在云计算和软件服务领域，这是一种安全模型，允许客户使用自己的加密密钥来加密他们在服务商那里的数据，而不是使用由服务商提供的默认密钥。</p>
+<h2 id="在大模型应用中"><a href="#在大模型应用中" class="headerlink" title="在大模型应用中"></a>在大模型应用中</h2><p>最近，BYOK 这个概念在各类大模型（LLM）应用中变得越来越流行。通常使用 AI 应用需要消耗开发者提供的 Token，但有些应用采取了 BYOK 模式，它们允许用户直接填入自己从 OpenAI、Google、Anthropic 等官方或是其他渠道渠道获取的 API Key。</p>
+<p>对于用户而言，这意味着：</p>
 <ul>
-<li>出差时需要紧急修改客户的 PSD 文件</li>
-<li>电脑上没有安装 Photoshop，但需要处理复杂图片</li>
-<li>想要体验专业图片编辑功能，但不想付费购买软件</li>
+<li><strong>成本透明</strong>：你可以直接通过自己的 API 账户支付消耗的 Token，清楚地知道每一分钱花在了哪里。</li>
+<li><strong>使用灵活</strong>：不受应用开发者 Token 配额的限制，只要自己的 API Key 有效且有余额，就能持续使用。</li>
 </ul>
-<p><a href="https://www.photopea.com/">Photopea.com</a> 正是为解决这些问题而生的免费在线图片编辑器。它在浏览器中提供了接近 Photoshop 的专业编辑体验，支持 PSD、AI、Sketch 等多种专业格式。</p>
-<p><strong>快速上手：</strong> 访问网站后，将图片文件直接拖放到浏览器窗口即可开始编辑。</p>
-<p><img src="https://img.nep.me/i/2025/08/18/photopea-preview.webp" alt="photopea-preview"></p>
-<h3 id="Photopea-的主要功能"><a href="#Photopea-的主要功能" class="headerlink" title="Photopea 的主要功能"></a>Photopea 的主要功能</h3><p><strong>1. 支持多种文件格式</strong><br>Photopea 的一个主要优点是它的兼容性。除了常规的图片格式，它还支持打开和编辑 <code>.psd</code>, <code>.ai</code>, <code>.sketch</code>, <code>.raw</code> 等专业格式的文件。这对于临时处理工作文件非常方便。</p>
-<p><strong>2. 熟悉的编辑界面</strong><br>Photopea 的界面和操作方式与 Photoshop 很像，如果你用过 PS，会感觉非常熟悉。它提供了 <strong>图层</strong> 、<strong>滤镜</strong> 等核心编辑功能，可以满足大部分日常的编辑需求。</p>
-<p><strong>3. 提供免费模版</strong><br>网站还提供了一些免费的设计模版，涵盖海报、社交媒体图片等，可以帮助你快速开始创作。</p>
-<p><strong>4. 支持 AI 图片生成</strong><br>除了传统的图片编辑功能，Photopea 还支持一句话生成图片，仍然是免费功能，非常适合体验一下。 </p>
-<p><strong>5. 隐私安全</strong><br>Photopea 默认文件处理都在浏览器本地完成，不会上传到服务器，网页加载完全后，甚至可以离线使用。</p>
-<h3 id="关于广告"><a href="#关于广告" class="headerlink" title="关于广告"></a>关于广告</h3><p>作为一个免费工具，Photopea 的在界面右侧添加了 Google 广告。考虑到它提供的免费功能，这点广告通常是可以接受的。网站的访问量很大，也说明它受到了全球用户的广泛认可。</p>
-<p><img src="https://img.nep.me/i/2025/08/18/photopea-traffic.webp" alt="photopea-traffic"></p>
-<p>简单来说，Photopea 是一个非常实用的在线工具。它免费、免安装，并且支持多种文件格式。</p>
-<p>如果你偶尔需要编辑图片，或者临时需要处理 PSD 这样的文件，Photopea 是一个非常值得收藏的网站，不妨现在加个书签，以备不时之需。</p>
+<p>对于开发者而言，BYOK 模式也降低了他们的运营负担。他们无需预先购买和管理大量的 API Token，也简化了复杂的计费和分发流程，可以更专注于核心功能的开发。</p>
 ]]></content>
       <categories>
-        <category>工具资源</category>
+        <category>笔记</category>
       </categories>
       <tags>
-        <tag>实用网站</tag>
-        <tag>图片编辑</tag>
-        <tag>Photopea</tag>
+        <tag>BYOK</tag>
       </tags>
   </entry>
   <entry>
@@ -2840,25 +2859,6 @@
       <tags>
         <tag>实用网站</tag>
         <tag>Free</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>什么是 BYOK ？</title>
-    <url>/post/what-is-byok.html</url>
-    <content><![CDATA[<h2 id="什么是-BYOK-？"><a href="#什么是-BYOK-？" class="headerlink" title="什么是 BYOK ？"></a>什么是 BYOK ？</h2><p><code>BYOK</code> 是英文 <strong>Bring Your Own Key</strong> 的缩写，就是字面上的意思 <strong>自带密钥</strong> 。在云计算和软件服务领域，这是一种安全模型，允许客户使用自己的加密密钥来加密他们在服务商那里的数据，而不是使用由服务商提供的默认密钥。</p>
-<h2 id="在大模型应用中"><a href="#在大模型应用中" class="headerlink" title="在大模型应用中"></a>在大模型应用中</h2><p>最近，BYOK 这个概念在各类大模型（LLM）应用中变得越来越流行。通常使用 AI 应用需要消耗开发者提供的 Token，但有些应用采取了 BYOK 模式，它们允许用户直接填入自己从 OpenAI、Google、Anthropic 等官方或是其他渠道渠道获取的 API Key。</p>
-<p>对于用户而言，这意味着：</p>
-<ul>
-<li><strong>成本透明</strong>：你可以直接通过自己的 API 账户支付消耗的 Token，清楚地知道每一分钱花在了哪里。</li>
-<li><strong>使用灵活</strong>：不受应用开发者 Token 配额的限制，只要自己的 API Key 有效且有余额，就能持续使用。</li>
-</ul>
-<p>对于开发者而言，BYOK 模式也降低了他们的运营负担。他们无需预先购买和管理大量的 API Token，也简化了复杂的计费和分发流程，可以更专注于核心功能的开发。</p>
-]]></content>
-      <categories>
-        <category>笔记</category>
-      </categories>
-      <tags>
-        <tag>BYOK</tag>
       </tags>
   </entry>
   <entry>
@@ -4037,31 +4037,6 @@
       </tags>
   </entry>
   <entry>
-    <title>ChatGPT Business 为成员启用设备代码身份验证</title>
-    <url>/post/chatgpt-business-enable-codex-device-code.html</url>
-    <content><![CDATA[<p>最近 OpenAI 大促销，ChatGPT Business 免费一个席位 48 个月，应该会有小伙伴们打算同时使用两个账户，享受双倍额度。 </p>
-<h2 id="同时使用两个-ChatGPT-账户的方法-CC-Switch"><a href="#同时使用两个-ChatGPT-账户的方法-CC-Switch" class="headerlink" title="同时使用两个 ChatGPT 账户的方法(CC-Switch)"></a>同时使用两个 ChatGPT 账户的方法(CC-Switch)</h2><p>同时使用两个账户时，我们可以使用 <a href="https://github.com/farion1231/cc-switch">CC-Switch</a> 快速切换账户，而不必重新登陆。</p>
-<p>登录了一个账户后，在 CC-Switch 的 Codex 应用中添加一个新的 OpenAI Offical 供应商即可，不过我们启用新的供应商后，再执行 codex 可能会遇到账户错误的提示: </p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">Error: account/read failed during TUI bootstrap: account/read failed: email and plan <span class="built_in">type</span> are required <span class="keyword">for</span> chatgpt authentication (code -32600)</span><br></pre></td></tr></table></figure>
-
-<p>可以直接执行下面的命令，使用设备代码为第二个账户进行登录认证。</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">codex login --device-auth</span><br></pre></td></tr></table></figure>
-
-<p>但是基于安全原因，设备代码认证默认是关闭的，可以参考下面的方法开启。</p>
-<h2 id="启用设备代码身份验证"><a href="#启用设备代码身份验证" class="headerlink" title="启用设备代码身份验证"></a>启用设备代码身份验证</h2><p>团队的管理员在网页上访问 <strong>工作空间设置</strong> &gt; <strong>权限与角色</strong> ，在右侧开启 <strong>为 Codex CLI 启用设备代码身份验证</strong> 的选项即可。 </p>
-<p><a href="https://chatgpt.com/admin/permissions">https://chatgpt.com/admin/permissions</a></p>
-<p><img src="https://img.nep.me/ooo/codex-device-code-enable.webp" alt="codex-device-code-enable.png"></p>
-<p>然后就可以正常使用使用设备代码完成认证了。</p>
-]]></content>
-      <categories>
-        <category>笔记</category>
-      </categories>
-      <tags>
-        <tag>ChatGPT</tag>
-        <tag>Codex</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>不使用插件让 Claude Code 显示额度使用情况</title>
     <url>/post/claude-code-show-5h-quota-without-plugin.html</url>
     <content><![CDATA[<p>Claude Code 不像 Codex 那样执行 <code>/statusline</code> 命令后提供选项直接快速调整可以显示的内容，执行 <code>/statusline</code> 其实是调用模型去分析然后修改 <code>~/.claude/settings.json</code> 文件。</p>
@@ -4108,6 +4083,31 @@
       </tags>
   </entry>
   <entry>
+    <title>ChatGPT Business 为成员启用设备代码身份验证</title>
+    <url>/post/chatgpt-business-enable-codex-device-code.html</url>
+    <content><![CDATA[<p>最近 OpenAI 大促销，ChatGPT Business 免费一个席位 48 个月，应该会有小伙伴们打算同时使用两个账户，享受双倍额度。 </p>
+<h2 id="同时使用两个-ChatGPT-账户的方法-CC-Switch"><a href="#同时使用两个-ChatGPT-账户的方法-CC-Switch" class="headerlink" title="同时使用两个 ChatGPT 账户的方法(CC-Switch)"></a>同时使用两个 ChatGPT 账户的方法(CC-Switch)</h2><p>同时使用两个账户时，我们可以使用 <a href="https://github.com/farion1231/cc-switch">CC-Switch</a> 快速切换账户，而不必重新登陆。</p>
+<p>登录了一个账户后，在 CC-Switch 的 Codex 应用中添加一个新的 OpenAI Offical 供应商即可，不过我们启用新的供应商后，再执行 codex 可能会遇到账户错误的提示: </p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">Error: account/read failed during TUI bootstrap: account/read failed: email and plan <span class="built_in">type</span> are required <span class="keyword">for</span> chatgpt authentication (code -32600)</span><br></pre></td></tr></table></figure>
+
+<p>可以直接执行下面的命令，使用设备代码为第二个账户进行登录认证。</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">codex login --device-auth</span><br></pre></td></tr></table></figure>
+
+<p>但是基于安全原因，设备代码认证默认是关闭的，可以参考下面的方法开启。</p>
+<h2 id="启用设备代码身份验证"><a href="#启用设备代码身份验证" class="headerlink" title="启用设备代码身份验证"></a>启用设备代码身份验证</h2><p>团队的管理员在网页上访问 <strong>工作空间设置</strong> &gt; <strong>权限与角色</strong> ，在右侧开启 <strong>为 Codex CLI 启用设备代码身份验证</strong> 的选项即可。 </p>
+<p><a href="https://chatgpt.com/admin/permissions">https://chatgpt.com/admin/permissions</a></p>
+<p><img src="https://img.nep.me/ooo/codex-device-code-enable.webp" alt="codex-device-code-enable.png"></p>
+<p>然后就可以正常使用使用设备代码完成认证了。</p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>ChatGPT</tag>
+        <tag>Codex</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Anthropic 发布 Claude Opus 4.6 模型，赠送付费用户 50 美元余额</title>
     <url>/post/claude-subscription-user-can-get-50-usd-extra-credit.html</url>
     <content><![CDATA[<h2 id="Claude-Opus-4-6-发布"><a href="#Claude-Opus-4-6-发布" class="headerlink" title="Claude Opus 4.6 发布"></a>Claude Opus 4.6 发布</h2><p>今天 Anthropic 发布了最新的 <a href="https://www.anthropic.com/news/claude-opus-4-6">Claude Opus 4.6</a> ，官方表示 Claude Opus 4.6 在编码能力上超越了前代产品。它规划更周密，能够更长时间地执行代理任务，在大规模代码库中运行更可靠，并且拥有更强大的代码审查和调试能力，可以更有效地发现自身错误。</p>
@@ -4134,6 +4134,58 @@
       <tags>
         <tag>Anthropic</tag>
         <tag>Opus</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Codex 的日志记录消耗 SSD 寿命？OpenAI 已修复</title>
+    <url>/post/codex-is-buring-your-ssd.html</url>
+    <content><![CDATA[<h2 id="Bug-信息"><a href="#Bug-信息" class="headerlink" title="Bug 信息"></a>Bug 信息</h2><div class="flatpaper-note flatpaper-note--primary"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>好消息，OpenAI 已在 Codex 0.142.0 版本中修复了这个问题，可以放心使用。</p></div></div>
+
+<p>最近，Codex 凭借其强大的功能和丝滑的体验，周活跃用户已经突破了 <strong>500 万</strong> 大关。越来越多的开发者和极客都已经把它当成了日常高频使用的得力助手。</p>
+<p>不过，随着使用人数的增加，有用户反馈，在某些流式输出或自动化任务场景下，Codex 会持续向本地磁盘写入 TRACE 级别的日志。</p>
+<p>GitHUb 的 <a href="https://github.com/openai/codex/issues/28224">ISSUE</a> 上声称该 BUG 可能会产生 <strong>640GB&#x2F;年</strong> 的写入，这对于消费级 SSD 来说是致命的。对于目前主流的 1TB 或 2TB 消费级固态硬盘（标称寿命通常在 600TBW ~ 1200TBW）来说，可以说是非常严重。</p>
+<p><strong>而且，正因为现在 AI 浪潮空前火热，全球对高带宽、高性能存储的需求集中爆发，导致现在的 SSD 固态硬盘价格一路上涨，存储成本变得相当昂贵，尤其是 mac 设备的硬盘无法更换。在这种寸土寸金的时期，我们对硬盘的每一度磨损、每一 G 空间都不得不更加精打细算。</strong></p>
+<hr>
+<h2 id="1分钟自查：你中招了吗？"><a href="#1分钟自查：你中招了吗？" class="headerlink" title="1分钟自查：你中招了吗？"></a>1分钟自查：你中招了吗？</h2><p>如果你使用的是 Linux 或 Mac 系统，可以直接通过终端跑两行命令看看情况。</p>
+<p>首先，看看日志文件的大小：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">ls</span> -lh ~/.codex/logs_2.sqlite</span><br></pre></td></tr></table></figure>
+
+<p>然后，统计一下日志的写入级别：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;SELECT level, COUNT(*) FROM logs GROUP BY level ORDER BY COUNT(*) DESC&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>如何判断：</strong><br>如果查询结果中，<code>TRACE</code> 级别的日志占了绝大多数，并且 <code>logs_2.sqlite</code> 文件体积比较大，那就说明 Codex 确实在后台认真地记录着无关紧要的追踪信息。</p>
+<p><strong>参考数据：</strong><br>我的文件大小为 <strong>468MB：</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&gt; <span class="built_in">ls</span> -lh ~/.codex/logs_2.sqlite Jun 23</span><br><span class="line">-rw-r--r--@ 1 mro  staff   468M</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&gt; sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;SELECT level, COUNT(*) FROM logs GROUP BY level ORDER BY COUNT(*) DESC&quot;</span></span><br><span class="line">TRACE|39961</span><br><span class="line">INFO|39919</span><br><span class="line">DEBUG|7307</span><br><span class="line">WARN|177</span><br></pre></td></tr></table></figure>
+
+<p>可以看到 <code>TRACE|39961</code> 占了接近一半的数据，确实存在所说的问题，主要是目前 OpenAI 官方尚未做出修复的回应。</p>
+<h2 id="一劳永逸的解决方案-：直接在数据库拦截"><a href="#一劳永逸的解决方案-：直接在数据库拦截" class="headerlink" title="一劳永逸的解决方案 ：直接在数据库拦截"></a>一劳永逸的解决方案 ：直接在数据库拦截</h2><p><mark>OpenAI 已经修复这个问题了，不需要操作了</mark></p>
+<p>这里提供比较激进、但也最直接的临时方案：给日志表加一个 SQLite 触发器，让新的日志写入被忽略，毕竟这个文件里只有诊断日志，没有对话历史。</p>
+<p>执行前建议先退出 Codex，并备份日志数据库：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cp</span> ~/.codex/logs_2.sqlite ~/.codex/logs_2.sqlite.bak</span><br></pre></td></tr></table></figure>
+<p>然后执行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;CREATE TRIGGER IF NOT EXISTS block_log_inserts BEFORE INSERT ON logs BEGIN SELECT RAISE(IGNORE); END;&quot;</span></span><br></pre></td></tr></table></figure>
+<p>设置完成后，新的日志记录会被拦截，从而减少后续写入。</p>
+<p>需要注意的是，这个方法会影响 Codex 后续生成诊断日志。如果你之后需要向官方反馈问题，或者担心未来版本兼容性，可以先不要使用这个方案，改用定期清理的方式。</p>
+<details class="flatpaper-note flatpaper-note--info"><summary class="flatpaper-note__title"><span class="flatpaper-note__icon" aria-hidden="true"></span><span class="flatpaper-note__label">如何恢复</span><span class="flatpaper-note__chevron" aria-hidden="true"></span></summary><div class="flatpaper-note__body"><p>如果想要恢复的话就是删除这个 trigger 。先退出 Codex，再执行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;DROP TRIGGER IF EXISTS block_log_inserts;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>执行后可以检查是否还存在：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;.schema block_log_inserts&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>如果没有输出，说明已经删除成功。</p>
+<p>也可以用这个命令查看当前所有 trigger：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;SELECT name, tbl_name, sql FROM sqlite_master WHERE type=&#x27;trigger&#x27;;&quot;</span></span><br></pre></td></tr></table></figure></div></details>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>GitHub ISSUE 中的数据是比较夸张的，Codex 的这个日志问题并没有网传的那么吓人，但也感谢 OpenAI 完成了 BUG 的修复，祝大家用 Codex 敲代码愉快！</p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>OpenAI</tag>
+        <tag>Codex</tag>
       </tags>
   </entry>
   <entry>
@@ -4854,58 +4906,6 @@
       </categories>
       <tags>
         <tag>Cloudflare</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Codex 的日志记录消耗 SSD 寿命？OpenAI 已修复</title>
-    <url>/post/codex-is-buring-your-ssd.html</url>
-    <content><![CDATA[<h2 id="Bug-信息"><a href="#Bug-信息" class="headerlink" title="Bug 信息"></a>Bug 信息</h2><div class="flatpaper-note flatpaper-note--primary"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>好消息，OpenAI 已在 Codex 0.142.0 版本中修复了这个问题，可以放心使用。</p></div></div>
-
-<p>最近，Codex 凭借其强大的功能和丝滑的体验，周活跃用户已经突破了 <strong>500 万</strong> 大关。越来越多的开发者和极客都已经把它当成了日常高频使用的得力助手。</p>
-<p>不过，随着使用人数的增加，有用户反馈，在某些流式输出或自动化任务场景下，Codex 会持续向本地磁盘写入 TRACE 级别的日志。</p>
-<p>GitHUb 的 <a href="https://github.com/openai/codex/issues/28224">ISSUE</a> 上声称该 BUG 可能会产生 <strong>640GB&#x2F;年</strong> 的写入，这对于消费级 SSD 来说是致命的。对于目前主流的 1TB 或 2TB 消费级固态硬盘（标称寿命通常在 600TBW ~ 1200TBW）来说，可以说是非常严重。</p>
-<p><strong>而且，正因为现在 AI 浪潮空前火热，全球对高带宽、高性能存储的需求集中爆发，导致现在的 SSD 固态硬盘价格一路上涨，存储成本变得相当昂贵，尤其是 mac 设备的硬盘无法更换。在这种寸土寸金的时期，我们对硬盘的每一度磨损、每一 G 空间都不得不更加精打细算。</strong></p>
-<hr>
-<h2 id="1分钟自查：你中招了吗？"><a href="#1分钟自查：你中招了吗？" class="headerlink" title="1分钟自查：你中招了吗？"></a>1分钟自查：你中招了吗？</h2><p>如果你使用的是 Linux 或 Mac 系统，可以直接通过终端跑两行命令看看情况。</p>
-<p>首先，看看日志文件的大小：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">ls</span> -lh ~/.codex/logs_2.sqlite</span><br></pre></td></tr></table></figure>
-
-<p>然后，统计一下日志的写入级别：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;SELECT level, COUNT(*) FROM logs GROUP BY level ORDER BY COUNT(*) DESC&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>如何判断：</strong><br>如果查询结果中，<code>TRACE</code> 级别的日志占了绝大多数，并且 <code>logs_2.sqlite</code> 文件体积比较大，那就说明 Codex 确实在后台认真地记录着无关紧要的追踪信息。</p>
-<p><strong>参考数据：</strong><br>我的文件大小为 <strong>468MB：</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&gt; <span class="built_in">ls</span> -lh ~/.codex/logs_2.sqlite Jun 23</span><br><span class="line">-rw-r--r--@ 1 mro  staff   468M</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&gt; sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;SELECT level, COUNT(*) FROM logs GROUP BY level ORDER BY COUNT(*) DESC&quot;</span></span><br><span class="line">TRACE|39961</span><br><span class="line">INFO|39919</span><br><span class="line">DEBUG|7307</span><br><span class="line">WARN|177</span><br></pre></td></tr></table></figure>
-
-<p>可以看到 <code>TRACE|39961</code> 占了接近一半的数据，确实存在所说的问题，主要是目前 OpenAI 官方尚未做出修复的回应。</p>
-<h2 id="一劳永逸的解决方案-：直接在数据库拦截"><a href="#一劳永逸的解决方案-：直接在数据库拦截" class="headerlink" title="一劳永逸的解决方案 ：直接在数据库拦截"></a>一劳永逸的解决方案 ：直接在数据库拦截</h2><p><mark>OpenAI 已经修复这个问题了，不需要操作了</mark></p>
-<p>这里提供比较激进、但也最直接的临时方案：给日志表加一个 SQLite 触发器，让新的日志写入被忽略，毕竟这个文件里只有诊断日志，没有对话历史。</p>
-<p>执行前建议先退出 Codex，并备份日志数据库：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cp</span> ~/.codex/logs_2.sqlite ~/.codex/logs_2.sqlite.bak</span><br></pre></td></tr></table></figure>
-<p>然后执行：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;CREATE TRIGGER IF NOT EXISTS block_log_inserts BEFORE INSERT ON logs BEGIN SELECT RAISE(IGNORE); END;&quot;</span></span><br></pre></td></tr></table></figure>
-<p>设置完成后，新的日志记录会被拦截，从而减少后续写入。</p>
-<p>需要注意的是，这个方法会影响 Codex 后续生成诊断日志。如果你之后需要向官方反馈问题，或者担心未来版本兼容性，可以先不要使用这个方案，改用定期清理的方式。</p>
-<details class="flatpaper-note flatpaper-note--info"><summary class="flatpaper-note__title"><span class="flatpaper-note__icon" aria-hidden="true"></span><span class="flatpaper-note__label">如何恢复</span><span class="flatpaper-note__chevron" aria-hidden="true"></span></summary><div class="flatpaper-note__body"><p>如果想要恢复的话就是删除这个 trigger 。先退出 Codex，再执行：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;DROP TRIGGER IF EXISTS block_log_inserts;&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>执行后可以检查是否还存在：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;.schema block_log_inserts&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>如果没有输出，说明已经删除成功。</p>
-<p>也可以用这个命令查看当前所有 trigger：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;SELECT name, tbl_name, sql FROM sqlite_master WHERE type=&#x27;trigger&#x27;;&quot;</span></span><br></pre></td></tr></table></figure></div></details>
-
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>GitHub ISSUE 中的数据是比较夸张的，Codex 的这个日志问题并没有网传的那么吓人，但也感谢 OpenAI 完成了 BUG 的修复，祝大家用 Codex 敲代码愉快！</p>
-]]></content>
-      <categories>
-        <category>笔记</category>
-      </categories>
-      <tags>
-        <tag>OpenAI</tag>
-        <tag>Codex</tag>
       </tags>
   </entry>
   <entry>
@@ -5936,62 +5936,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Google 发布 Antigravity 2.0 ，以及 Antigravity-CLI</title>
-    <url>/post/google-launch-antigravity-cli.html</url>
-    <content><![CDATA[<p>在 2026 年 5 月 20 日的 Google I&#x2F;O 大会上，Google 正式宣布推出 Antigravity 2.0，以 Agents 驱动为核心作为独立的桌面应用。原 Antigravity 更名为 <strong>Antigravity IDE</strong>，并同时推出 <strong>Antigravity CLI</strong> 取代 <strong>Gemini CLI</strong>。</p>
-<p>Antigravity 2.0 与 IDE 下载页面：<a href="https://antigravity.google/download">Download Google Antigravity</a></p>
-<h2 id="Antigravity-CLI-安装方法"><a href="#Antigravity-CLI-安装方法" class="headerlink" title="Antigravity CLI 安装方法"></a>Antigravity CLI 安装方法</h2><h3 id="macOS-Linux"><a href="#macOS-Linux" class="headerlink" title="macOS &#x2F; Linux"></a>macOS &#x2F; Linux</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl -fsSL https://antigravity.google/cli/install.sh | bash</span><br></pre></td></tr></table></figure>
-
-<h3 id="Windows-PowerShell"><a href="#Windows-PowerShell" class="headerlink" title="Windows PowerShell"></a>Windows PowerShell</h3><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">irm</span> https://antigravity.google/<span class="built_in">cli</span>/install.ps1 | <span class="built_in">iex</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="Windows-CMD"><a href="#Windows-CMD" class="headerlink" title="Windows CMD"></a>Windows CMD</h3><figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">curl -fsSL https://antigravity.google/cli/install.<span class="built_in">cmd</span> -o install.<span class="built_in">cmd</span> &amp;&amp; install.<span class="built_in">cmd</span> &amp;&amp; <span class="built_in">del</span> install.<span class="built_in">cmd</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="启动与登录方法"><a href="#启动与登录方法" class="headerlink" title="启动与登录方法"></a>启动与登录方法</h2><h3 id="启动-Antigravity-CLI"><a href="#启动-Antigravity-CLI" class="headerlink" title="启动 Antigravity CLI"></a>启动 Antigravity CLI</h3><p>在终端中运行 <code>agy</code> 即可启动 Antigravity CLI。</p>
-<h3 id="登录方法"><a href="#登录方法" class="headerlink" title="登录方法"></a>登录方法</h3><p>使用 Antigravity CLI 之前，如果已在 Antigravity 或 Antigravity IDE 中登录了 Google 账户，系统将自动进行认证。</p>
-<p>初次启动需要选择代码主题，同意用户协议后即可打开 CLI 界面：</p>
-<p><img src="https://img.nep.me/ooo/antigravity-cli-theme-select.webp" alt="antigravity-cli-theme-select.png"></p>
-<p>界面预览：<br><img src="https://img.nep.me/ooo/antigravity-cli-tui-hello.webp" alt="antigravity-cli-tui.png"></p>
-<p>或者，您也可以选择以下认证方法手动登录：</p>
-<ul>
-<li><strong>Google OAuth</strong></li>
-<li><strong>Use a Google Cloud project</strong></li>
-</ul>
-<p><img src="https://img.nep.me/ooo/antigravity-cli-login-method.webp" alt="antigravity-cli-login-method.png"></p>
-<p>选择 Google OAuth 后，如果没有自动跳转，可以通过粘贴认证代码的方法进行确认，因此也可以在其他设备上使用。</p>
-<h3 id="可选模型"><a href="#可选模型" class="headerlink" title="可选模型"></a>可选模型</h3><p>Google AI Pro 用户在 Antigravity CLI 中可选的模型与 Antigravity IDE 一致：</p>
-<ul>
-<li>Gemini 3.5 Flash (High)      (current)</li>
-<li>Gemini 3.5 Flash (Medium)</li>
-<li>Gemini 3.1 Pro (High)</li>
-<li>Gemini 3.1 Pro (Low)</li>
-<li>Claude Sonnet 4.6 (Thinking)</li>
-<li>Claude Opus 4.6 (Thinking)</li>
-<li>GPT-OSS 120B (Medium)</li>
-</ul>
-<p><img src="https://img.nep.me/ooo/antigravity-cli-model-select.webp" alt="antigravity-cli-model-select.png"></p>
-<h2 id="Antigravity-CLI-介绍"><a href="#Antigravity-CLI-介绍" class="headerlink" title="Antigravity CLI 介绍"></a>Antigravity CLI 介绍</h2><p>Google 表示为了性能表现，使用 Go 语言完成了 Antigravity 的构建，同时 Google 也强调了 Antigravity CLI 的三个演进方向：更快执行、异步工作流，以及与 Antigravity 2.0 共用统一的 agent harness。</p>
-<p>Antigravity CLI 优势：</p>
-<ul>
-<li><strong>执行速度更快</strong>：Antigravity CLI 使用 Go 语言编写，速度更快，响应更迅速。</li>
-<li><strong>异步工作流</strong>：Antigravity CLI 在后台协调多个代理来执行复杂任务，让您可以运行大规模重构或研究多个主题，而不会锁定您的终端会话。</li>
-<li><strong>统一架构</strong>：Antigravity CLI 与 Antigravity 2.0（新的 Antigravity 桌面应用程序）共享相同的代理框架，确保核心代理的所有未来改进都会自动应用到您使用它们的任何地方。</li>
-</ul>
-<h2 id="Gemini-CLI-将终止服务"><a href="#Gemini-CLI-将终止服务" class="headerlink" title="Gemini CLI 将终止服务"></a>Gemini CLI 将终止服务</h2><p>在推出了 Antigravity CLI 后，Google <a href="https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/">表示</a>，自 2026 年 6 月 18 日起，Gemini CLI 和 Gemini Code Assist IDE 扩展程序将停止为 Google AI Pro 和 Ultra 用户提供服务。</p>
-<p>企业用户仍可继续使用。</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Antigravity 2.0 的发布，说明 Google 并没有把 AI 编程工具只当作 Gemini 模型的附属功能，而是在重新争夺“下一代代码编辑入口”。这次更新的重点，不是给传统 IDE 再加一个聊天侧边栏，而是把 Antigravity 从 agent-first IDE 升级成更完整的 agentic development platform：桌面端、CLI、SDK 和 API 一起构成新的开发者工作台。</p>
-<p>对用户来说，这种竞争无疑是好事。无论是 Google、OpenAI、Anthropic 还是 Cursor，都在推动代码工具从“补全助手”走向“开发伙伴”。竞争越激烈，开发者能获得的选择越多，价格、体验、模型能力和工作流整合也会被不断拉高。最终受益的，还是每天真正写代码、调试和交付产品的用户。</p>
-]]></content>
-      <categories>
-        <category>资讯</category>
-      </categories>
-      <tags>
-        <tag>AI</tag>
-        <tag>Antigravity</tag>
-        <tag>Antigravity IDE</tag>
-        <tag>Google</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Google I/O 2026：从搜索框到代码编辑器，Google 全面 Agent 化</title>
     <url>/post/google-io-2026-reviews.html</url>
     <content><![CDATA[<p>两个小时，数十个产品更新，一股脑砸出来。Google I&#x2F;O 2026 又一次用”饱和式发布”刷屏。所有重要更新都指向同一个词——<strong>Agent</strong>。</p>
@@ -6168,6 +6112,62 @@
         <tag>Google</tag>
         <tag>Google IO</tag>
         <tag>Angets</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Google 发布 Antigravity 2.0 ，以及 Antigravity-CLI</title>
+    <url>/post/google-launch-antigravity-cli.html</url>
+    <content><![CDATA[<p>在 2026 年 5 月 20 日的 Google I&#x2F;O 大会上，Google 正式宣布推出 Antigravity 2.0，以 Agents 驱动为核心作为独立的桌面应用。原 Antigravity 更名为 <strong>Antigravity IDE</strong>，并同时推出 <strong>Antigravity CLI</strong> 取代 <strong>Gemini CLI</strong>。</p>
+<p>Antigravity 2.0 与 IDE 下载页面：<a href="https://antigravity.google/download">Download Google Antigravity</a></p>
+<h2 id="Antigravity-CLI-安装方法"><a href="#Antigravity-CLI-安装方法" class="headerlink" title="Antigravity CLI 安装方法"></a>Antigravity CLI 安装方法</h2><h3 id="macOS-Linux"><a href="#macOS-Linux" class="headerlink" title="macOS &#x2F; Linux"></a>macOS &#x2F; Linux</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl -fsSL https://antigravity.google/cli/install.sh | bash</span><br></pre></td></tr></table></figure>
+
+<h3 id="Windows-PowerShell"><a href="#Windows-PowerShell" class="headerlink" title="Windows PowerShell"></a>Windows PowerShell</h3><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">irm</span> https://antigravity.google/<span class="built_in">cli</span>/install.ps1 | <span class="built_in">iex</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Windows-CMD"><a href="#Windows-CMD" class="headerlink" title="Windows CMD"></a>Windows CMD</h3><figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">curl -fsSL https://antigravity.google/cli/install.<span class="built_in">cmd</span> -o install.<span class="built_in">cmd</span> &amp;&amp; install.<span class="built_in">cmd</span> &amp;&amp; <span class="built_in">del</span> install.<span class="built_in">cmd</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="启动与登录方法"><a href="#启动与登录方法" class="headerlink" title="启动与登录方法"></a>启动与登录方法</h2><h3 id="启动-Antigravity-CLI"><a href="#启动-Antigravity-CLI" class="headerlink" title="启动 Antigravity CLI"></a>启动 Antigravity CLI</h3><p>在终端中运行 <code>agy</code> 即可启动 Antigravity CLI。</p>
+<h3 id="登录方法"><a href="#登录方法" class="headerlink" title="登录方法"></a>登录方法</h3><p>使用 Antigravity CLI 之前，如果已在 Antigravity 或 Antigravity IDE 中登录了 Google 账户，系统将自动进行认证。</p>
+<p>初次启动需要选择代码主题，同意用户协议后即可打开 CLI 界面：</p>
+<p><img src="https://img.nep.me/ooo/antigravity-cli-theme-select.webp" alt="antigravity-cli-theme-select.png"></p>
+<p>界面预览：<br><img src="https://img.nep.me/ooo/antigravity-cli-tui-hello.webp" alt="antigravity-cli-tui.png"></p>
+<p>或者，您也可以选择以下认证方法手动登录：</p>
+<ul>
+<li><strong>Google OAuth</strong></li>
+<li><strong>Use a Google Cloud project</strong></li>
+</ul>
+<p><img src="https://img.nep.me/ooo/antigravity-cli-login-method.webp" alt="antigravity-cli-login-method.png"></p>
+<p>选择 Google OAuth 后，如果没有自动跳转，可以通过粘贴认证代码的方法进行确认，因此也可以在其他设备上使用。</p>
+<h3 id="可选模型"><a href="#可选模型" class="headerlink" title="可选模型"></a>可选模型</h3><p>Google AI Pro 用户在 Antigravity CLI 中可选的模型与 Antigravity IDE 一致：</p>
+<ul>
+<li>Gemini 3.5 Flash (High)      (current)</li>
+<li>Gemini 3.5 Flash (Medium)</li>
+<li>Gemini 3.1 Pro (High)</li>
+<li>Gemini 3.1 Pro (Low)</li>
+<li>Claude Sonnet 4.6 (Thinking)</li>
+<li>Claude Opus 4.6 (Thinking)</li>
+<li>GPT-OSS 120B (Medium)</li>
+</ul>
+<p><img src="https://img.nep.me/ooo/antigravity-cli-model-select.webp" alt="antigravity-cli-model-select.png"></p>
+<h2 id="Antigravity-CLI-介绍"><a href="#Antigravity-CLI-介绍" class="headerlink" title="Antigravity CLI 介绍"></a>Antigravity CLI 介绍</h2><p>Google 表示为了性能表现，使用 Go 语言完成了 Antigravity 的构建，同时 Google 也强调了 Antigravity CLI 的三个演进方向：更快执行、异步工作流，以及与 Antigravity 2.0 共用统一的 agent harness。</p>
+<p>Antigravity CLI 优势：</p>
+<ul>
+<li><strong>执行速度更快</strong>：Antigravity CLI 使用 Go 语言编写，速度更快，响应更迅速。</li>
+<li><strong>异步工作流</strong>：Antigravity CLI 在后台协调多个代理来执行复杂任务，让您可以运行大规模重构或研究多个主题，而不会锁定您的终端会话。</li>
+<li><strong>统一架构</strong>：Antigravity CLI 与 Antigravity 2.0（新的 Antigravity 桌面应用程序）共享相同的代理框架，确保核心代理的所有未来改进都会自动应用到您使用它们的任何地方。</li>
+</ul>
+<h2 id="Gemini-CLI-将终止服务"><a href="#Gemini-CLI-将终止服务" class="headerlink" title="Gemini CLI 将终止服务"></a>Gemini CLI 将终止服务</h2><p>在推出了 Antigravity CLI 后，Google <a href="https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/">表示</a>，自 2026 年 6 月 18 日起，Gemini CLI 和 Gemini Code Assist IDE 扩展程序将停止为 Google AI Pro 和 Ultra 用户提供服务。</p>
+<p>企业用户仍可继续使用。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Antigravity 2.0 的发布，说明 Google 并没有把 AI 编程工具只当作 Gemini 模型的附属功能，而是在重新争夺“下一代代码编辑入口”。这次更新的重点，不是给传统 IDE 再加一个聊天侧边栏，而是把 Antigravity 从 agent-first IDE 升级成更完整的 agentic development platform：桌面端、CLI、SDK 和 API 一起构成新的开发者工作台。</p>
+<p>对用户来说，这种竞争无疑是好事。无论是 Google、OpenAI、Anthropic 还是 Cursor，都在推动代码工具从“补全助手”走向“开发伙伴”。竞争越激烈，开发者能获得的选择越多，价格、体验、模型能力和工作流整合也会被不断拉高。最终受益的，还是每天真正写代码、调试和交付产品的用户。</p>
+]]></content>
+      <categories>
+        <category>资讯</category>
+      </categories>
+      <tags>
+        <tag>AI</tag>
+        <tag>Antigravity</tag>
+        <tag>Antigravity IDE</tag>
+        <tag>Google</tag>
       </tags>
   </entry>
   <entry>
@@ -6386,305 +6386,6 @@
       </categories>
       <tags>
         <tag>Google</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>如何选择 GPT 5.6 不同模型与推理强度？查看 OpenAI Codex 团队的推荐设置</title>
-    <url>/post/how-to-select-gpt-5-6-model.html</url>
-    <content><![CDATA[<p>7 月 10 日，OpenAI Codex 团队在 Reddit 举办了一场 <a href="https://www.reddit.com/r/codex/comments/1us9ty9/ama_with_openais_codex_team/">AMA</a>（Ask Me Anything，在线问答活动）。</p>
-<p>整场 AMA 的评论区一半用户认真提问 Codex、GPT-5.6 和 ChatGPT Work 的使用方法，另一半用户则集中吐槽额度消耗、桌面应用体验以及不同平台之间长期存在的功能差距。</p>
-<p>虽然官方没有正面回答所有尖锐问题，但在模型选择、推理强度、长任务设计、MCP 工具接入和权限管理方面，还是给出了不少具有实际参考价值的信息。</p>
-<p>其中最核心的结论可以概括为一句话：</p>
-<blockquote>
-<p>官方介绍了如何节省 Token 的使用 Codex，却没有解释为什么 GPT-5.6 宣称效率更高却用起来消耗更快。</p>
-</blockquote>
-<h2 id="不同模型与-Effort-应该怎么选"><a href="#不同模型与-Effort-应该怎么选" class="headerlink" title="不同模型与 Effort 应该怎么选"></a>不同模型与 Effort 应该怎么选</h2><p>这次 AMA 中最实用的部分，是 Codex 团队成员分享了不同模型和 Effort 推理强度的选择经验。</p>
-<p>官方给出的日常默认组合是：</p>
-<blockquote>
-<p><strong>Sol + Medium Effort</strong></p>
-</blockquote>
-<p>这一配置适合大多数普通开发任务，在速度、质量和额度消耗之间相对均衡。</p>
-<p>对于不同场景，则可以进一步调整。</p>
-<h3 id="Sol：日常开发和前端任务的首选"><a href="#Sol：日常开发和前端任务的首选" class="headerlink" title="Sol：日常开发和前端任务的首选"></a>Sol：日常开发和前端任务的首选</h3><p>Sol 适合作为 Codex 中的默认主力模型，尤其适合：</p>
-<ul>
-<li>常规代码编写</li>
-<li>Bug 修复</li>
-<li>跨文件修改</li>
-<li>UI 与前端开发</li>
-<li>根据参考图还原界面</li>
-</ul>
-<p>官方特别提到，<strong>UI 和前端能力</strong> 本身就是 GPT-5.6 的重点训练方向之一。</p>
-<p>如果任务中能够提供截图、设计稿或参考页面，Sol 的表现通常会明显优于只给出文字描述。</p>
-<h3 id="Terra：额度敏感任务的性价比选择"><a href="#Terra：额度敏感任务的性价比选择" class="headerlink" title="Terra：额度敏感任务的性价比选择"></a>Terra：额度敏感任务的性价比选择</h3><p>如果任务相对轻量，同时比较在意额度消耗，可以优先尝试 Terra。</p>
-<p>按照官方成员的说法，Terra 在部分任务上的表现可以接近 GPT-5.5，但资源消耗更低，比较适合：</p>
-<ul>
-<li>小范围代码修改</li>
-<li>简单脚本生成</li>
-<li>格式调整</li>
-<li>重复性开发工作</li>
-<li>已经明确实现路径的任务</li>
-</ul>
-<p>也就是说，并不是所有任务都需要直接交给最强模型。</p>
-<p>当需求本身足够清晰时，使用更轻量的模型反而可能获得更高的整体效率。</p>
-<h3 id="Luna：适合低成本探索"><a href="#Luna：适合低成本探索" class="headerlink" title="Luna：适合低成本探索"></a>Luna：适合低成本探索</h3><p>对于一些不确定是否值得深入的探索性任务，可以先交给 Luna。</p>
-<p>例如：</p>
-<ul>
-<li>快速浏览项目结构</li>
-<li>初步寻找相关文件</li>
-<li>调查某个功能的实现位置</li>
-<li>尝试生成几个可行方向</li>
-<li>判断问题是否值得升级到更强模型</li>
-</ul>
-<p>Luna 更适合作为一个低成本的“侦察兵”，而不是最终负责复杂修改的主力模型。</p>
-<h3 id="High：模糊-Bug-和跨模块修改"><a href="#High：模糊-Bug-和跨模块修改" class="headerlink" title="High：模糊 Bug 和跨模块修改"></a>High：模糊 Bug 和跨模块修改</h3><p>当问题描述比较模糊，或者修改涉及多个模块时，可以将 Effort 调整到 High。</p>
-<p>常见场景包括：</p>
-<ul>
-<li>无法稳定复现的 Bug</li>
-<li>多个模块之间的状态异常</li>
-<li>大范围重构</li>
-<li>跨前后端联调</li>
-<li>涉及复杂调用链的问题</li>
-</ul>
-<p>这类任务往往不仅需要生成代码，还需要模型建立完整的问题假设，并逐步排除错误方向。</p>
-<h3 id="Ultra：只用于真正不能出错的任务"><a href="#Ultra：只用于真正不能出错的任务" class="headerlink" title="Ultra：只用于真正不能出错的任务"></a>Ultra：只用于真正不能出错的任务</h3><p>官方并不建议将 Ultra 作为常规配置。</p>
-<p>更适合使用 Ultra 的场景包括：</p>
-<ul>
-<li>数据库迁移</li>
-<li>安全相关修改</li>
-<li>生产事故修复</li>
-<li>权限系统调整</li>
-<li>大规模基础设施变更</li>
-<li>一旦出错就可能造成严重损失的任务</li>
-</ul>
-<p>Ultra 的意义不是让所有任务都“更聪明”，而是在高风险任务中换取更多检查、推理和验证。</p>
-<h3 id="xhigh-的收益已经开始递减"><a href="#xhigh-的收益已经开始递减" class="headerlink" title="xhigh 的收益已经开始递减"></a>xhigh 的收益已经开始递减</h3><p>对于最高级别的 xhigh，官方也明确表示，在评测中已经出现明显的收益递减。</p>
-<p>它更适合以下情况：</p>
-<ul>
-<li>任务执行时间很长</li>
-<li>修改范围非常大</li>
-<li>错误成本极高</li>
-<li>需要多轮验证</li>
-<li>用户特别担心模型遗漏边缘情况</li>
-</ul>
-<p>对于普通任务，直接提高到 xhigh 并不一定划算，反而可能带来更慢的速度和更高的额度消耗。</p>
-<h2 id="觉得-GPT-5-6-慢，可能是-Effort-设得太高"><a href="#觉得-GPT-5-6-慢，可能是-Effort-设得太高" class="headerlink" title="觉得 GPT-5.6 慢，可能是 Effort 设得太高"></a>觉得 GPT-5.6 慢，可能是 Effort 设得太高</h2><p>不少从 GPT-5.5 升级到 GPT-5.6 的用户，仍然沿用了之前较高的推理强度设置。</p>
-<p>Codex 团队建议，如果觉得 GPT-5.6 运行速度过慢，可以先检查当前 Effort 是否仍然保持在 GPT-5.5 时期的配置。</p>
-<p>GPT-5.6 在更低 Effort 下，往往已经能够完成过去需要更高推理强度才能完成的任务。</p>
-<p>换句话说，升级模型后，不应机械地保留原有配置。</p>
-<p>更合理的方法是从 Medium 开始，根据任务难度逐步增加，而不是一开始就使用 High、Ultra 或 xhigh。</p>
-<p>官方还提到，Fast mode 可以进一步提升大约 1.5 倍的速度。</p>
-<p>因此，一套比较实用的选择顺序是：</p>
-<ol>
-<li>先尝试 Sol Medium</li>
-<li>简单任务切换到 Terra</li>
-<li>模糊问题再提高到 High</li>
-<li>高风险任务才使用 Ultra</li>
-<li>只有极少数长任务需要 xhigh</li>
-</ol>
-<h2 id="长任务不要只给目标，还要给停止条件"><a href="#长任务不要只给目标，还要给停止条件" class="headerlink" title="长任务不要只给目标，还要给停止条件"></a>长任务不要只给目标，还要给停止条件</h2><p>在长时间运行的 Agent 任务方面，官方推荐使用 <code>/goal</code> 来描述任务目标。</p>
-<p>但仅仅给出目标还不够。</p>
-<p>如果没有清晰的边界和停止条件，Agent 很容易持续探索、反复修改，最终消耗大量 token，却未必能够产生更好的结果。</p>
-<p>官方建议在长任务中明确加入限制条件，例如：</p>
-<ul>
-<li>只允许修改指定目录</li>
-<li>不允许改变公开 API</li>
-<li>最多验证三个假设</li>
-<li>每个假设完成后必须运行测试</li>
-<li>如果所有假设都失败，则停止修改并输出总结</li>
-<li>不允许添加新的依赖</li>
-<li>不允许修改数据库结构</li>
-<li>达到指定时间或尝试次数后结束</li>
-</ul>
-<p>例如，一个比“修复登录 Bug”更合适的任务描述可以写成：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">修复用户偶尔无法登录的问题。</span><br><span class="line"></span><br><span class="line">限制条件：</span><br><span class="line">- 只修改 auth 和 session 目录</span><br><span class="line">- 不改变现有公开 API</span><br><span class="line">- 最多验证三个可能原因</span><br><span class="line">- 每验证一个原因后运行相关测试</span><br><span class="line">- 如果三个方向都失败，停止修改并总结调查结果</span><br></pre></td></tr></table></figure>
-
-<p>这类停止条件能够避免 Agent 陷入无限尝试，也可以降低模型在长任务中不断扩大修改范围的风险。</p>
-<h2 id="MCP-工具不一定要全部常驻上下文"><a href="#MCP-工具不一定要全部常驻上下文" class="headerlink" title="MCP 工具不一定要全部常驻上下文"></a>MCP 工具不一定要全部常驻上下文</h2><p>MCP 为 Codex 提供了调用外部工具和服务的能力，但如果直接挂载大量 MCP 服务，也会带来明显的上下文开销。</p>
-<p>几十个工具定义长期驻留在上下文中，会占用 token，并增加模型选择错误工具的可能性。</p>
-<p>Codex 团队提出了两个更节省上下文的思路。</p>
-<h3 id="把常用操作封装成-CLI"><a href="#把常用操作封装成-CLI" class="headerlink" title="把常用操作封装成 CLI"></a>把常用操作封装成 CLI</h3><p>第一种方式，是将外部服务操作封装成命令行工具，再通过 Skill 教会 Codex 如何使用。</p>
-<p>例如，不直接加载一整套部署平台的 MCP 工具，而是提供：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">deployctl status</span><br><span class="line">deployctl logs</span><br><span class="line">deployctl release</span><br></pre></td></tr></table></figure>
-
-<p>然后在 Skill 中描述这些命令的用途和参数。</p>
-<p>这样做的优势是：</p>
-<ul>
-<li>工具定义更短</li>
-<li>上下文占用更低</li>
-<li>调用方式更稳定</li>
-<li>更容易进行权限控制</li>
-<li>可以直接复用现有 Shell 工作流</li>
-</ul>
-<p>对于原本就支持命令行操作的服务，这通常比长期挂载完整 MCP 更高效。</p>
-<h3 id="将专业-MCP-放到专用子-Agent"><a href="#将专业-MCP-放到专用子-Agent" class="headerlink" title="将专业 MCP 放到专用子 Agent"></a>将专业 MCP 放到专用子 Agent</h3><p>第二种方式，是创建一个专用子 Agent，并只为它配置特定 MCP。</p>
-<p>例如可以创建：</p>
-<ul>
-<li>Unreal Engine 专用 Agent</li>
-<li>数据库运维 Agent</li>
-<li>Kubernetes Agent</li>
-<li>浏览器自动化 Agent</li>
-<li>内部文档检索 Agent</li>
-</ul>
-<p>主 Agent 平时不需要加载这些工具，只有遇到对应任务时，才将工作委托给专用 Agent。</p>
-<p>这种模式既可以减少主上下文中的工具数量，也能降低不同工具之间的干扰。</p>
-<h2 id="权限优先使用-Auto-Review"><a href="#权限优先使用-Auto-Review" class="headerlink" title="权限优先使用 Auto Review"></a>权限优先使用 Auto Review</h2><p>在 Codex 权限设置上，官方建议多数情况下使用 <strong>Auto review</strong>，而不是直接开启 <strong>Full access</strong>。</p>
-<p>Full access 虽然能够减少执行过程中的确认步骤，但也意味着 Agent 可以更自由地执行命令、修改文件和访问环境。</p>
-<p>对于日常开发任务，Auto review 通常已经能够在效率与安全之间取得较好的平衡。</p>
-<p>官方尤其提醒 Windows 用户，应更加谨慎地使用 Full access。</p>
-<p>Windows 环境中的 Shell、权限系统、路径处理和脚本行为更加复杂，一些看似普通的命令可能产生超出预期的影响。</p>
-<p>因此，更稳妥的做法是：</p>
-<ul>
-<li>默认使用 Auto review</li>
-<li>仅在可信项目中临时开启更高权限</li>
-<li>限制 Agent 可修改的目录</li>
-<li>对删除、安装和系统级命令进行人工确认</li>
-<li>不要在包含重要个人文件的目录中直接运行高权限 Agent</li>
-</ul>
-<h2 id="Codex、ChatGPT-Work-和普通聊天的额度如何计算"><a href="#Codex、ChatGPT-Work-和普通聊天的额度如何计算" class="headerlink" title="Codex、ChatGPT Work 和普通聊天的额度如何计算"></a>Codex、ChatGPT Work 和普通聊天的额度如何计算</h2><p>这次 AMA 也对不同功能的额度分类做出了解释。</p>
-<p>按照官方的划分：</p>
-<ul>
-<li><strong>Codex</strong> 计入 Agentic 额度</li>
-<li><strong>ChatGPT Work</strong> 计入 Agentic 额度</li>
-<li>普通 ChatGPT 对话不计入 Agentic 额度</li>
-<li>图像生成有独立额度</li>
-<li>文件上传与处理有独立额度</li>
-<li>语音功能也有独立额度</li>
-</ul>
-<p>这意味着，不能简单地将 ChatGPT 中的所有功能都视为共享同一个额度池。</p>
-<p>用户看到某一类功能额度下降，并不一定代表其他功能也会同步受到影响。</p>
-<p>不过具体到单个 Codex 任务，其消耗并不是固定值。</p>
-<p>任务长度、上下文规模、模型、Effort、工具调用次数、测试次数以及是否发生重试，都会影响最终消耗。</p>
-<h2 id="为什么-Pro-mode-没有进入-Codex"><a href="#为什么-Pro-mode-没有进入-Codex" class="headerlink" title="为什么 Pro mode 没有进入 Codex"></a>为什么 Pro mode 没有进入 Codex</h2><p>不少用户询问，既然 ChatGPT 中提供了 Pro mode，为什么 Codex 中没有同样的选项。</p>
-<p>官方给出的解释是，Pro mode 的运行机制对于 Agentic 编程任务的提升相对有限。</p>
-<p>它通常具有以下特点：</p>
-<ul>
-<li>响应速度更慢</li>
-<li>消耗额度更多</li>
-<li>更偏向一次性深度推理</li>
-<li>对连续工具调用和代码执行的帮助没有想象中明显</li>
-</ul>
-<p>因此，Pro mode 更适合：</p>
-<ul>
-<li>搜索</li>
-<li>数学推理</li>
-<li>长文写作</li>
-<li>文档分析</li>
-<li>复杂研究任务</li>
-</ul>
-<p>而 Codex 的核心场景是读取代码、执行命令、修改文件、运行测试并根据结果继续行动。</p>
-<p>在这种 Agentic 工作流中，模型本身的单次推理强度并不是唯一决定因素，工具使用和反馈循环同样重要。</p>
-<h2 id="AMA-没有回答的几个关键问题"><a href="#AMA-没有回答的几个关键问题" class="headerlink" title="AMA 没有回答的几个关键问题"></a>AMA 没有回答的几个关键问题</h2><p>虽然官方分享了许多使用技巧，但用户最关心的一些问题仍然没有获得明确答案。</p>
-<h2 id="GPT-5-6-为什么比-GPT-5-5-更耗额度"><a href="#GPT-5-6-为什么比-GPT-5-5-更耗额度" class="headerlink" title="GPT-5.6 为什么比 GPT-5.5 更耗额度"></a>GPT-5.6 为什么比 GPT-5.5 更耗额度</h2><p>整个 AMA 中呼声最高的问题，仍然是 GPT-5.6 的额度消耗。</p>
-<p>大量用户反馈，GPT-5.6 在实际使用中的额度下降速度明显快于 GPT-5.5。</p>
-<p>这与官方此前强调的“更高 token 效率”形成了明显反差。</p>
-<p>官方对此只解释称：</p>
-<blockquote>
-<p>每个任务的消耗并不是固定的。</p>
-</blockquote>
-<p>这句话本身并没有错。</p>
-<p>复杂任务、更多工具调用、更长输出以及更高 Effort，确实都会增加消耗。</p>
-<p>但它没有正面回答用户真正关心的问题：</p>
-<ul>
-<li>相同任务下，GPT-5.6 是否平均消耗更多额度？</li>
-<li>是否因为内部推理 token 增加？</li>
-<li>是否因为工具调用和验证次数更多？</li>
-<li>Agentic 额度是否采用了不同于文本 token 的权重换算？</li>
-<li>Fast mode 与普通模式的额度计算是否相同？</li>
-<li>官方宣传中的 token 效率，是否不等于用户看到的额度效率？</li>
-</ul>
-<p>这些问题在 AMA 后依然没有答案。</p>
-<h2 id="1M-上下文窗口仍然没有明确计划"><a href="#1M-上下文窗口仍然没有明确计划" class="headerlink" title="1M 上下文窗口仍然没有明确计划"></a>1M 上下文窗口仍然没有明确计划</h2><p>用户同样频繁询问 Codex 是否会提供 1M 上下文窗口。</p>
-<p>官方对此仅表示会认真查看用户反馈，没有给出明确的产品计划或上线时间。</p>
-<p>对于大型代码仓库来说，更大的上下文窗口确实具有吸引力。</p>
-<p>但在实际 Agentic 工作流中，上下文越大，也可能意味着：</p>
-<ul>
-<li>更高的处理成本；</li>
-<li>更慢的首次响应；</li>
-<li>更多无关代码进入上下文；</li>
-<li>更复杂的信息筛选；</li>
-<li>更快的额度消耗。</li>
-</ul>
-<p>因此，1M 上下文是否能够真正改善 Codex 体验，仍然取决于检索、压缩和上下文管理能力，而不只是数字本身。</p>
-<p>在价格方面，官方也明确表示无法承诺长期稳定。</p>
-<h2 id="新版-ChatGPT-桌面应用遭到集中吐槽"><a href="#新版-ChatGPT-桌面应用遭到集中吐槽" class="headerlink" title="新版 ChatGPT 桌面应用遭到集中吐槽"></a>新版 ChatGPT 桌面应用遭到集中吐槽</h2><p>新版 ChatGPT 桌面应用是 AMA 中另一个争议集中的话题。</p>
-<p>不少用户认为，新应用更偏向 ChatGPT Work 和 Agent 操作，而传统 Chat 功能则被压缩成了一个附属面板。</p>
-<p>用户集中反馈缺失或体验退步的功能包括：</p>
-<ul>
-<li>Projects</li>
-<li>完整历史记录</li>
-<li>常用快捷键</li>
-<li>录音功能</li>
-<li>原有聊天工作流</li>
-<li>Classic 应用中的部分导航体验</li>
-</ul>
-<p>官方承认新版应用仍在改进。</p>
-<p>但目前给出的短期方案，基本上仍然是同时保留并使用两个应用：</p>
-<ul>
-<li>需要传统聊天功能时使用 Classic；</li>
-<li>需要 Agent 和 Work 功能时使用新版应用。</li>
-</ul>
-<p>这显然称不上理想的解决方案。</p>
-<h2 id="Linux-没有时间表，Windows-仍是二等公民"><a href="#Linux-没有时间表，Windows-仍是二等公民" class="headerlink" title="Linux 没有时间表，Windows 仍是二等公民"></a>Linux 没有时间表，Windows 仍是二等公民</h2><p>对于 Linux 桌面版，官方确认相关工作正在进行，但没有提供具体时间线。</p>
-<p>而 Windows 用户长期存在的体验差距，也在 AMA 中再次被提及。</p>
-<p>官方事实上承认，Windows 版本在过去长期处于相对次要的位置。</p>
-<p>这种差距不仅体现在桌面应用，也体现在 Agent 开发环境中：</p>
-<ul>
-<li>Shell 行为与 macOS、Linux 不一致；</li>
-<li>路径和权限处理更复杂；</li>
-<li>部分开发工具优先适配 Unix 环境；</li>
-<li>沙箱能力存在差异；</li>
-<li>自动化脚本的兼容性更差；</li>
-<li>部分功能在 Windows 上更晚推出。</li>
-</ul>
-<p>对于将 Codex 作为主要开发工具的 Windows 用户来说，这仍然是一个现实问题。</p>
-<h2 id="Reward-Hacking-问题被礼貌绕开"><a href="#Reward-Hacking-问题被礼貌绕开" class="headerlink" title="Reward Hacking 问题被礼貌绕开"></a>Reward Hacking 问题被礼貌绕开</h2><p>还有用户追问了 METR 报告中提到的 reward hacking 问题。</p>
-<p>问题主要集中在：</p>
-<ul>
-<li>基准成绩提升中有多少来自 reward hacking</li>
-<li>模型是否学会针对评测环境优化行为</li>
-<li>GPT-5.6 的训练中做了哪些针对性修改</li>
-<li>官方如何区分真实能力提升和评测策略优化</li>
-</ul>
-<p>Codex 团队没有给出具体数据，也没有详细解释训练层面的改动。</p>
-<p>这类问题涉及模型训练、内部评估方法和安全研究，官方选择谨慎回应并不意外。</p>
-<p>但从用户角度看，这也意味着外界仍然难以判断：</p>
-<blockquote>
-<p>模型在基准上的提升，有多少能够稳定转化为真实开发环境中的可靠性。</p>
-</blockquote>
-<h2 id="怎么用更省已经讲清楚，为什么更费仍然悬而未决"><a href="#怎么用更省已经讲清楚，为什么更费仍然悬而未决" class="headerlink" title="怎么用更省已经讲清楚，为什么更费仍然悬而未决"></a>怎么用更省已经讲清楚，为什么更费仍然悬而未决</h2><p>总体来看，这次 Codex 团队 AMA 的价值主要集中在实际使用方法上。</p>
-<p>官方给出的建议相当明确：</p>
-<ul>
-<li>日常默认使用 Sol Medium</li>
-<li>轻量任务优先尝试 Terra</li>
-<li>探索性工作可以委托给 Luna</li>
-<li>模糊 Bug 和跨模块任务使用 High</li>
-<li>Ultra 只留给高风险任务</li>
-<li>xhigh 不应成为日常默认</li>
-<li>长任务必须设置停止条件</li>
-<li>不要让大量 MCP 工具长期常驻上下文</li>
-<li>优先使用 Auto review，而不是 Full access</li>
-<li>GPT-5.6 不一定需要沿用 GPT-5.5 的高 Effort 设置</li>
-</ul>
-<p>这些建议的共同目标都是降低不必要的模型调用、上下文占用和推理消耗。</p>
-<p>但另一方面，用户最关心的问题依然没有获得正面回应：</p>
-<blockquote>
-<p>为什么 GPT-5.6 明明宣传 token 效率更高，实际使用时却更快消耗 Codex 额度？</p>
-</blockquote>
-<p>如果 Agentic 额度并不直接等于输入输出 token，那么官方就需要更清晰地解释其计算方式。</p>
-<p>如果 GPT-5.6 由于更频繁的工具调用、更长的内部推理或更主动的验证而消耗更高，也应该让用户能够看到这些差异。</p>
-<p>否则，用户最终只能通过反复试验来猜测每种模型和 Effort 的真实成本。</p>
-<p>这场 AMA 讲清楚了 Codex 应该“怎么用更省”。</p>
-<p>至于它为什么“变得更费”，仍然是一个没有被回答的问题。</p>
-]]></content>
-      <categories>
-        <category>资讯</category>
-      </categories>
-      <tags>
-        <tag>OpenAI</tag>
-        <tag>ChatGPT</tag>
-        <tag>Codex</tag>
-        <tag>GPT-5.6</tag>
-        <tag>AI Agent</tag>
       </tags>
   </entry>
   <entry>
@@ -6994,6 +6695,305 @@
         <tag>AI</tag>
         <tag>Claude</tag>
         <tag>Sonnet 5</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>如何选择 GPT 5.6 不同模型与推理强度？查看 OpenAI Codex 团队的推荐设置</title>
+    <url>/post/how-to-select-gpt-5-6-model.html</url>
+    <content><![CDATA[<p>7 月 10 日，OpenAI Codex 团队在 Reddit 举办了一场 <a href="https://www.reddit.com/r/codex/comments/1us9ty9/ama_with_openais_codex_team/">AMA</a>（Ask Me Anything，在线问答活动）。</p>
+<p>整场 AMA 的评论区一半用户认真提问 Codex、GPT-5.6 和 ChatGPT Work 的使用方法，另一半用户则集中吐槽额度消耗、桌面应用体验以及不同平台之间长期存在的功能差距。</p>
+<p>虽然官方没有正面回答所有尖锐问题，但在模型选择、推理强度、长任务设计、MCP 工具接入和权限管理方面，还是给出了不少具有实际参考价值的信息。</p>
+<p>其中最核心的结论可以概括为一句话：</p>
+<blockquote>
+<p>官方介绍了如何节省 Token 的使用 Codex，却没有解释为什么 GPT-5.6 宣称效率更高却用起来消耗更快。</p>
+</blockquote>
+<h2 id="不同模型与-Effort-应该怎么选"><a href="#不同模型与-Effort-应该怎么选" class="headerlink" title="不同模型与 Effort 应该怎么选"></a>不同模型与 Effort 应该怎么选</h2><p>这次 AMA 中最实用的部分，是 Codex 团队成员分享了不同模型和 Effort 推理强度的选择经验。</p>
+<p>官方给出的日常默认组合是：</p>
+<blockquote>
+<p><strong>Sol + Medium Effort</strong></p>
+</blockquote>
+<p>这一配置适合大多数普通开发任务，在速度、质量和额度消耗之间相对均衡。</p>
+<p>对于不同场景，则可以进一步调整。</p>
+<h3 id="Sol：日常开发和前端任务的首选"><a href="#Sol：日常开发和前端任务的首选" class="headerlink" title="Sol：日常开发和前端任务的首选"></a>Sol：日常开发和前端任务的首选</h3><p>Sol 适合作为 Codex 中的默认主力模型，尤其适合：</p>
+<ul>
+<li>常规代码编写</li>
+<li>Bug 修复</li>
+<li>跨文件修改</li>
+<li>UI 与前端开发</li>
+<li>根据参考图还原界面</li>
+</ul>
+<p>官方特别提到，<strong>UI 和前端能力</strong> 本身就是 GPT-5.6 的重点训练方向之一。</p>
+<p>如果任务中能够提供截图、设计稿或参考页面，Sol 的表现通常会明显优于只给出文字描述。</p>
+<h3 id="Terra：额度敏感任务的性价比选择"><a href="#Terra：额度敏感任务的性价比选择" class="headerlink" title="Terra：额度敏感任务的性价比选择"></a>Terra：额度敏感任务的性价比选择</h3><p>如果任务相对轻量，同时比较在意额度消耗，可以优先尝试 Terra。</p>
+<p>按照官方成员的说法，Terra 在部分任务上的表现可以接近 GPT-5.5，但资源消耗更低，比较适合：</p>
+<ul>
+<li>小范围代码修改</li>
+<li>简单脚本生成</li>
+<li>格式调整</li>
+<li>重复性开发工作</li>
+<li>已经明确实现路径的任务</li>
+</ul>
+<p>也就是说，并不是所有任务都需要直接交给最强模型。</p>
+<p>当需求本身足够清晰时，使用更轻量的模型反而可能获得更高的整体效率。</p>
+<h3 id="Luna：适合低成本探索"><a href="#Luna：适合低成本探索" class="headerlink" title="Luna：适合低成本探索"></a>Luna：适合低成本探索</h3><p>对于一些不确定是否值得深入的探索性任务，可以先交给 Luna。</p>
+<p>例如：</p>
+<ul>
+<li>快速浏览项目结构</li>
+<li>初步寻找相关文件</li>
+<li>调查某个功能的实现位置</li>
+<li>尝试生成几个可行方向</li>
+<li>判断问题是否值得升级到更强模型</li>
+</ul>
+<p>Luna 更适合作为一个低成本的“侦察兵”，而不是最终负责复杂修改的主力模型。</p>
+<h3 id="High：模糊-Bug-和跨模块修改"><a href="#High：模糊-Bug-和跨模块修改" class="headerlink" title="High：模糊 Bug 和跨模块修改"></a>High：模糊 Bug 和跨模块修改</h3><p>当问题描述比较模糊，或者修改涉及多个模块时，可以将 Effort 调整到 High。</p>
+<p>常见场景包括：</p>
+<ul>
+<li>无法稳定复现的 Bug</li>
+<li>多个模块之间的状态异常</li>
+<li>大范围重构</li>
+<li>跨前后端联调</li>
+<li>涉及复杂调用链的问题</li>
+</ul>
+<p>这类任务往往不仅需要生成代码，还需要模型建立完整的问题假设，并逐步排除错误方向。</p>
+<h3 id="Ultra：只用于真正不能出错的任务"><a href="#Ultra：只用于真正不能出错的任务" class="headerlink" title="Ultra：只用于真正不能出错的任务"></a>Ultra：只用于真正不能出错的任务</h3><p>官方并不建议将 Ultra 作为常规配置。</p>
+<p>更适合使用 Ultra 的场景包括：</p>
+<ul>
+<li>数据库迁移</li>
+<li>安全相关修改</li>
+<li>生产事故修复</li>
+<li>权限系统调整</li>
+<li>大规模基础设施变更</li>
+<li>一旦出错就可能造成严重损失的任务</li>
+</ul>
+<p>Ultra 的意义不是让所有任务都“更聪明”，而是在高风险任务中换取更多检查、推理和验证。</p>
+<h3 id="xhigh-的收益已经开始递减"><a href="#xhigh-的收益已经开始递减" class="headerlink" title="xhigh 的收益已经开始递减"></a>xhigh 的收益已经开始递减</h3><p>对于最高级别的 xhigh，官方也明确表示，在评测中已经出现明显的收益递减。</p>
+<p>它更适合以下情况：</p>
+<ul>
+<li>任务执行时间很长</li>
+<li>修改范围非常大</li>
+<li>错误成本极高</li>
+<li>需要多轮验证</li>
+<li>用户特别担心模型遗漏边缘情况</li>
+</ul>
+<p>对于普通任务，直接提高到 xhigh 并不一定划算，反而可能带来更慢的速度和更高的额度消耗。</p>
+<h2 id="觉得-GPT-5-6-慢，可能是-Effort-设得太高"><a href="#觉得-GPT-5-6-慢，可能是-Effort-设得太高" class="headerlink" title="觉得 GPT-5.6 慢，可能是 Effort 设得太高"></a>觉得 GPT-5.6 慢，可能是 Effort 设得太高</h2><p>不少从 GPT-5.5 升级到 GPT-5.6 的用户，仍然沿用了之前较高的推理强度设置。</p>
+<p>Codex 团队建议，如果觉得 GPT-5.6 运行速度过慢，可以先检查当前 Effort 是否仍然保持在 GPT-5.5 时期的配置。</p>
+<p>GPT-5.6 在更低 Effort 下，往往已经能够完成过去需要更高推理强度才能完成的任务。</p>
+<p>换句话说，升级模型后，不应机械地保留原有配置。</p>
+<p>更合理的方法是从 Medium 开始，根据任务难度逐步增加，而不是一开始就使用 High、Ultra 或 xhigh。</p>
+<p>官方还提到，Fast mode 可以进一步提升大约 1.5 倍的速度。</p>
+<p>因此，一套比较实用的选择顺序是：</p>
+<ol>
+<li>先尝试 Sol Medium</li>
+<li>简单任务切换到 Terra</li>
+<li>模糊问题再提高到 High</li>
+<li>高风险任务才使用 Ultra</li>
+<li>只有极少数长任务需要 xhigh</li>
+</ol>
+<h2 id="长任务不要只给目标，还要给停止条件"><a href="#长任务不要只给目标，还要给停止条件" class="headerlink" title="长任务不要只给目标，还要给停止条件"></a>长任务不要只给目标，还要给停止条件</h2><p>在长时间运行的 Agent 任务方面，官方推荐使用 <code>/goal</code> 来描述任务目标。</p>
+<p>但仅仅给出目标还不够。</p>
+<p>如果没有清晰的边界和停止条件，Agent 很容易持续探索、反复修改，最终消耗大量 token，却未必能够产生更好的结果。</p>
+<p>官方建议在长任务中明确加入限制条件，例如：</p>
+<ul>
+<li>只允许修改指定目录</li>
+<li>不允许改变公开 API</li>
+<li>最多验证三个假设</li>
+<li>每个假设完成后必须运行测试</li>
+<li>如果所有假设都失败，则停止修改并输出总结</li>
+<li>不允许添加新的依赖</li>
+<li>不允许修改数据库结构</li>
+<li>达到指定时间或尝试次数后结束</li>
+</ul>
+<p>例如，一个比“修复登录 Bug”更合适的任务描述可以写成：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">修复用户偶尔无法登录的问题。</span><br><span class="line"></span><br><span class="line">限制条件：</span><br><span class="line">- 只修改 auth 和 session 目录</span><br><span class="line">- 不改变现有公开 API</span><br><span class="line">- 最多验证三个可能原因</span><br><span class="line">- 每验证一个原因后运行相关测试</span><br><span class="line">- 如果三个方向都失败，停止修改并总结调查结果</span><br></pre></td></tr></table></figure>
+
+<p>这类停止条件能够避免 Agent 陷入无限尝试，也可以降低模型在长任务中不断扩大修改范围的风险。</p>
+<h2 id="MCP-工具不一定要全部常驻上下文"><a href="#MCP-工具不一定要全部常驻上下文" class="headerlink" title="MCP 工具不一定要全部常驻上下文"></a>MCP 工具不一定要全部常驻上下文</h2><p>MCP 为 Codex 提供了调用外部工具和服务的能力，但如果直接挂载大量 MCP 服务，也会带来明显的上下文开销。</p>
+<p>几十个工具定义长期驻留在上下文中，会占用 token，并增加模型选择错误工具的可能性。</p>
+<p>Codex 团队提出了两个更节省上下文的思路。</p>
+<h3 id="把常用操作封装成-CLI"><a href="#把常用操作封装成-CLI" class="headerlink" title="把常用操作封装成 CLI"></a>把常用操作封装成 CLI</h3><p>第一种方式，是将外部服务操作封装成命令行工具，再通过 Skill 教会 Codex 如何使用。</p>
+<p>例如，不直接加载一整套部署平台的 MCP 工具，而是提供：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">deployctl status</span><br><span class="line">deployctl logs</span><br><span class="line">deployctl release</span><br></pre></td></tr></table></figure>
+
+<p>然后在 Skill 中描述这些命令的用途和参数。</p>
+<p>这样做的优势是：</p>
+<ul>
+<li>工具定义更短</li>
+<li>上下文占用更低</li>
+<li>调用方式更稳定</li>
+<li>更容易进行权限控制</li>
+<li>可以直接复用现有 Shell 工作流</li>
+</ul>
+<p>对于原本就支持命令行操作的服务，这通常比长期挂载完整 MCP 更高效。</p>
+<h3 id="将专业-MCP-放到专用子-Agent"><a href="#将专业-MCP-放到专用子-Agent" class="headerlink" title="将专业 MCP 放到专用子 Agent"></a>将专业 MCP 放到专用子 Agent</h3><p>第二种方式，是创建一个专用子 Agent，并只为它配置特定 MCP。</p>
+<p>例如可以创建：</p>
+<ul>
+<li>Unreal Engine 专用 Agent</li>
+<li>数据库运维 Agent</li>
+<li>Kubernetes Agent</li>
+<li>浏览器自动化 Agent</li>
+<li>内部文档检索 Agent</li>
+</ul>
+<p>主 Agent 平时不需要加载这些工具，只有遇到对应任务时，才将工作委托给专用 Agent。</p>
+<p>这种模式既可以减少主上下文中的工具数量，也能降低不同工具之间的干扰。</p>
+<h2 id="权限优先使用-Auto-Review"><a href="#权限优先使用-Auto-Review" class="headerlink" title="权限优先使用 Auto Review"></a>权限优先使用 Auto Review</h2><p>在 Codex 权限设置上，官方建议多数情况下使用 <strong>Auto review</strong>，而不是直接开启 <strong>Full access</strong>。</p>
+<p>Full access 虽然能够减少执行过程中的确认步骤，但也意味着 Agent 可以更自由地执行命令、修改文件和访问环境。</p>
+<p>对于日常开发任务，Auto review 通常已经能够在效率与安全之间取得较好的平衡。</p>
+<p>官方尤其提醒 Windows 用户，应更加谨慎地使用 Full access。</p>
+<p>Windows 环境中的 Shell、权限系统、路径处理和脚本行为更加复杂，一些看似普通的命令可能产生超出预期的影响。</p>
+<p>因此，更稳妥的做法是：</p>
+<ul>
+<li>默认使用 Auto review</li>
+<li>仅在可信项目中临时开启更高权限</li>
+<li>限制 Agent 可修改的目录</li>
+<li>对删除、安装和系统级命令进行人工确认</li>
+<li>不要在包含重要个人文件的目录中直接运行高权限 Agent</li>
+</ul>
+<h2 id="Codex、ChatGPT-Work-和普通聊天的额度如何计算"><a href="#Codex、ChatGPT-Work-和普通聊天的额度如何计算" class="headerlink" title="Codex、ChatGPT Work 和普通聊天的额度如何计算"></a>Codex、ChatGPT Work 和普通聊天的额度如何计算</h2><p>这次 AMA 也对不同功能的额度分类做出了解释。</p>
+<p>按照官方的划分：</p>
+<ul>
+<li><strong>Codex</strong> 计入 Agentic 额度</li>
+<li><strong>ChatGPT Work</strong> 计入 Agentic 额度</li>
+<li>普通 ChatGPT 对话不计入 Agentic 额度</li>
+<li>图像生成有独立额度</li>
+<li>文件上传与处理有独立额度</li>
+<li>语音功能也有独立额度</li>
+</ul>
+<p>这意味着，不能简单地将 ChatGPT 中的所有功能都视为共享同一个额度池。</p>
+<p>用户看到某一类功能额度下降，并不一定代表其他功能也会同步受到影响。</p>
+<p>不过具体到单个 Codex 任务，其消耗并不是固定值。</p>
+<p>任务长度、上下文规模、模型、Effort、工具调用次数、测试次数以及是否发生重试，都会影响最终消耗。</p>
+<h2 id="为什么-Pro-mode-没有进入-Codex"><a href="#为什么-Pro-mode-没有进入-Codex" class="headerlink" title="为什么 Pro mode 没有进入 Codex"></a>为什么 Pro mode 没有进入 Codex</h2><p>不少用户询问，既然 ChatGPT 中提供了 Pro mode，为什么 Codex 中没有同样的选项。</p>
+<p>官方给出的解释是，Pro mode 的运行机制对于 Agentic 编程任务的提升相对有限。</p>
+<p>它通常具有以下特点：</p>
+<ul>
+<li>响应速度更慢</li>
+<li>消耗额度更多</li>
+<li>更偏向一次性深度推理</li>
+<li>对连续工具调用和代码执行的帮助没有想象中明显</li>
+</ul>
+<p>因此，Pro mode 更适合：</p>
+<ul>
+<li>搜索</li>
+<li>数学推理</li>
+<li>长文写作</li>
+<li>文档分析</li>
+<li>复杂研究任务</li>
+</ul>
+<p>而 Codex 的核心场景是读取代码、执行命令、修改文件、运行测试并根据结果继续行动。</p>
+<p>在这种 Agentic 工作流中，模型本身的单次推理强度并不是唯一决定因素，工具使用和反馈循环同样重要。</p>
+<h2 id="AMA-没有回答的几个关键问题"><a href="#AMA-没有回答的几个关键问题" class="headerlink" title="AMA 没有回答的几个关键问题"></a>AMA 没有回答的几个关键问题</h2><p>虽然官方分享了许多使用技巧，但用户最关心的一些问题仍然没有获得明确答案。</p>
+<h2 id="GPT-5-6-为什么比-GPT-5-5-更耗额度"><a href="#GPT-5-6-为什么比-GPT-5-5-更耗额度" class="headerlink" title="GPT-5.6 为什么比 GPT-5.5 更耗额度"></a>GPT-5.6 为什么比 GPT-5.5 更耗额度</h2><p>整个 AMA 中呼声最高的问题，仍然是 GPT-5.6 的额度消耗。</p>
+<p>大量用户反馈，GPT-5.6 在实际使用中的额度下降速度明显快于 GPT-5.5。</p>
+<p>这与官方此前强调的“更高 token 效率”形成了明显反差。</p>
+<p>官方对此只解释称：</p>
+<blockquote>
+<p>每个任务的消耗并不是固定的。</p>
+</blockquote>
+<p>这句话本身并没有错。</p>
+<p>复杂任务、更多工具调用、更长输出以及更高 Effort，确实都会增加消耗。</p>
+<p>但它没有正面回答用户真正关心的问题：</p>
+<ul>
+<li>相同任务下，GPT-5.6 是否平均消耗更多额度？</li>
+<li>是否因为内部推理 token 增加？</li>
+<li>是否因为工具调用和验证次数更多？</li>
+<li>Agentic 额度是否采用了不同于文本 token 的权重换算？</li>
+<li>Fast mode 与普通模式的额度计算是否相同？</li>
+<li>官方宣传中的 token 效率，是否不等于用户看到的额度效率？</li>
+</ul>
+<p>这些问题在 AMA 后依然没有答案。</p>
+<h2 id="1M-上下文窗口仍然没有明确计划"><a href="#1M-上下文窗口仍然没有明确计划" class="headerlink" title="1M 上下文窗口仍然没有明确计划"></a>1M 上下文窗口仍然没有明确计划</h2><p>用户同样频繁询问 Codex 是否会提供 1M 上下文窗口。</p>
+<p>官方对此仅表示会认真查看用户反馈，没有给出明确的产品计划或上线时间。</p>
+<p>对于大型代码仓库来说，更大的上下文窗口确实具有吸引力。</p>
+<p>但在实际 Agentic 工作流中，上下文越大，也可能意味着：</p>
+<ul>
+<li>更高的处理成本；</li>
+<li>更慢的首次响应；</li>
+<li>更多无关代码进入上下文；</li>
+<li>更复杂的信息筛选；</li>
+<li>更快的额度消耗。</li>
+</ul>
+<p>因此，1M 上下文是否能够真正改善 Codex 体验，仍然取决于检索、压缩和上下文管理能力，而不只是数字本身。</p>
+<p>在价格方面，官方也明确表示无法承诺长期稳定。</p>
+<h2 id="新版-ChatGPT-桌面应用遭到集中吐槽"><a href="#新版-ChatGPT-桌面应用遭到集中吐槽" class="headerlink" title="新版 ChatGPT 桌面应用遭到集中吐槽"></a>新版 ChatGPT 桌面应用遭到集中吐槽</h2><p>新版 ChatGPT 桌面应用是 AMA 中另一个争议集中的话题。</p>
+<p>不少用户认为，新应用更偏向 ChatGPT Work 和 Agent 操作，而传统 Chat 功能则被压缩成了一个附属面板。</p>
+<p>用户集中反馈缺失或体验退步的功能包括：</p>
+<ul>
+<li>Projects</li>
+<li>完整历史记录</li>
+<li>常用快捷键</li>
+<li>录音功能</li>
+<li>原有聊天工作流</li>
+<li>Classic 应用中的部分导航体验</li>
+</ul>
+<p>官方承认新版应用仍在改进。</p>
+<p>但目前给出的短期方案，基本上仍然是同时保留并使用两个应用：</p>
+<ul>
+<li>需要传统聊天功能时使用 Classic；</li>
+<li>需要 Agent 和 Work 功能时使用新版应用。</li>
+</ul>
+<p>这显然称不上理想的解决方案。</p>
+<h2 id="Linux-没有时间表，Windows-仍是二等公民"><a href="#Linux-没有时间表，Windows-仍是二等公民" class="headerlink" title="Linux 没有时间表，Windows 仍是二等公民"></a>Linux 没有时间表，Windows 仍是二等公民</h2><p>对于 Linux 桌面版，官方确认相关工作正在进行，但没有提供具体时间线。</p>
+<p>而 Windows 用户长期存在的体验差距，也在 AMA 中再次被提及。</p>
+<p>官方事实上承认，Windows 版本在过去长期处于相对次要的位置。</p>
+<p>这种差距不仅体现在桌面应用，也体现在 Agent 开发环境中：</p>
+<ul>
+<li>Shell 行为与 macOS、Linux 不一致；</li>
+<li>路径和权限处理更复杂；</li>
+<li>部分开发工具优先适配 Unix 环境；</li>
+<li>沙箱能力存在差异；</li>
+<li>自动化脚本的兼容性更差；</li>
+<li>部分功能在 Windows 上更晚推出。</li>
+</ul>
+<p>对于将 Codex 作为主要开发工具的 Windows 用户来说，这仍然是一个现实问题。</p>
+<h2 id="Reward-Hacking-问题被礼貌绕开"><a href="#Reward-Hacking-问题被礼貌绕开" class="headerlink" title="Reward Hacking 问题被礼貌绕开"></a>Reward Hacking 问题被礼貌绕开</h2><p>还有用户追问了 METR 报告中提到的 reward hacking 问题。</p>
+<p>问题主要集中在：</p>
+<ul>
+<li>基准成绩提升中有多少来自 reward hacking</li>
+<li>模型是否学会针对评测环境优化行为</li>
+<li>GPT-5.6 的训练中做了哪些针对性修改</li>
+<li>官方如何区分真实能力提升和评测策略优化</li>
+</ul>
+<p>Codex 团队没有给出具体数据，也没有详细解释训练层面的改动。</p>
+<p>这类问题涉及模型训练、内部评估方法和安全研究，官方选择谨慎回应并不意外。</p>
+<p>但从用户角度看，这也意味着外界仍然难以判断：</p>
+<blockquote>
+<p>模型在基准上的提升，有多少能够稳定转化为真实开发环境中的可靠性。</p>
+</blockquote>
+<h2 id="怎么用更省已经讲清楚，为什么更费仍然悬而未决"><a href="#怎么用更省已经讲清楚，为什么更费仍然悬而未决" class="headerlink" title="怎么用更省已经讲清楚，为什么更费仍然悬而未决"></a>怎么用更省已经讲清楚，为什么更费仍然悬而未决</h2><p>总体来看，这次 Codex 团队 AMA 的价值主要集中在实际使用方法上。</p>
+<p>官方给出的建议相当明确：</p>
+<ul>
+<li>日常默认使用 Sol Medium</li>
+<li>轻量任务优先尝试 Terra</li>
+<li>探索性工作可以委托给 Luna</li>
+<li>模糊 Bug 和跨模块任务使用 High</li>
+<li>Ultra 只留给高风险任务</li>
+<li>xhigh 不应成为日常默认</li>
+<li>长任务必须设置停止条件</li>
+<li>不要让大量 MCP 工具长期常驻上下文</li>
+<li>优先使用 Auto review，而不是 Full access</li>
+<li>GPT-5.6 不一定需要沿用 GPT-5.5 的高 Effort 设置</li>
+</ul>
+<p>这些建议的共同目标都是降低不必要的模型调用、上下文占用和推理消耗。</p>
+<p>但另一方面，用户最关心的问题依然没有获得正面回应：</p>
+<blockquote>
+<p>为什么 GPT-5.6 明明宣传 token 效率更高，实际使用时却更快消耗 Codex 额度？</p>
+</blockquote>
+<p>如果 Agentic 额度并不直接等于输入输出 token，那么官方就需要更清晰地解释其计算方式。</p>
+<p>如果 GPT-5.6 由于更频繁的工具调用、更长的内部推理或更主动的验证而消耗更高，也应该让用户能够看到这些差异。</p>
+<p>否则，用户最终只能通过反复试验来猜测每种模型和 Effort 的真实成本。</p>
+<p>这场 AMA 讲清楚了 Codex 应该“怎么用更省”。</p>
+<p>至于它为什么“变得更费”，仍然是一个没有被回答的问题。</p>
+]]></content>
+      <categories>
+        <category>资讯</category>
+      </categories>
+      <tags>
+        <tag>OpenAI</tag>
+        <tag>ChatGPT</tag>
+        <tag>Codex</tag>
+        <tag>GPT-5.6</tag>
+        <tag>AI Agent</tag>
       </tags>
   </entry>
   <entry>
@@ -8375,61 +8375,224 @@
       </tags>
   </entry>
   <entry>
-    <title>宝藏开源项目： Tiny World Builder - 在浏览器里创建迷你世界</title>
-    <url>/post/project-tiny-world-builder.html</url>
-    <content><![CDATA[<h2 id="项目介绍"><a href="#项目介绍" class="headerlink" title="项目介绍"></a>项目介绍</h2><p>在这个万物皆可 Web 的时代，我们见过无数令人惊艳的浏览器端应用。但如果你是一个热衷于 <strong>世界构建</strong> 、喜欢 <strong>沙盒游戏</strong> ，或者对现代前端与 3D 渲染技术充满热情的开发者，今天介绍的这个开源项目绝对会让你眼前一亮 —— 它就是 <strong>Tiny World Builder</strong> 。</p>
-<ul>
-<li>在线体验: <a href="https://tinyworld.build/tiny-world-builder">https://tinyworld.build/tiny-world-builder</a></li>
-<li>项目地址: <a href="https://github.com/jasonkneen/tiny-world-builder">https://github.com/jasonkneen/tiny-world-builder</a></li>
-</ul>
-<p>预览图片：</p>
-<p><img src="https://img.nep.me/ooo/project-tinyworldbuilder.webp" alt="project-tinyworldbuilder.webp"></p>
-<h2 id="这是什么项目？"><a href="#这是什么项目？" class="headerlink" title="这是什么项目？"></a>这是什么项目？</h2><p><strong>Tiny World Builder</strong> 是由开发者 Jason Kneen 打造的一款基于浏览器的 3D 迷你世界建造工具。打开网页，你就能得到一块漂浮在虚空中的 8x8 网格地块。通过简单的点击和拖拽快捷键，你可以随心所欲地铺设草地、河流、雪地，或者建立起错落有致的房屋、农田与桥梁。</p>
-<p>它有着类似《Minecraft》的体素风与清新的等距视角，但更注重宏观的 “上帝视角” 微缩景观搭建。无需下载任何客户端，打开浏览器即刻开始创造。</p>
-<h2 id="核心亮点：不止于-“摆积木”"><a href="#核心亮点：不止于-“摆积木”" class="headerlink" title="核心亮点：不止于 “摆积木”"></a>核心亮点：不止于 “摆积木”</h2><h3 id="1-智能相邻逻辑"><a href="#1-智能相邻逻辑" class="headerlink" title="1. 智能相邻逻辑"></a>1. 智能相邻逻辑</h3><p>这绝对是项目最酷的特性之一。在搭建时，你不需要手动去选择“房屋拐角”或“T型路口”的模型。底层的渲染逻辑会自动根据你放置的相邻方块进行运算：  </p>
-<ul>
-<li><strong>道路与河流</strong>：水面会自动生成河岸，道路会自动连接并形成复杂的路网。</li>
-<li><strong>建筑群落</strong>：当你在相邻的网格放置房屋时，它们会自动融合成 L 型、T 型或是大型方形连体建筑。</li>
-<li><strong>生态融合</strong>：桥梁会自动适应水面方向，农作物会自动将下方的地块转化为泥土。这种“所见即所得”的顺滑感，极大地提升了建造体验。</li>
-</ul>
-<h3 id="2-鲜活的-AI-交通系统与动态生态"><a href="#2-鲜活的-AI-交通系统与动态生态" class="headerlink" title="2. 鲜活的 AI 交通系统与动态生态"></a>2. 鲜活的 AI 交通系统与动态生态</h3><p>这个世界不是静止的！系统内置了一套完整的运行时车辆 AI。</p>
-<p>当你在道路上放置了寻路机器人或车辆，它们会自动在路网中行驶、寻找目标。更有意思的是它的动态避障与重新寻路机制：如果你突然在马路中间放一块大石头或种一棵树，车辆会判断前方受阻，尝试重新规划路线，或者在无法通行时乖乖停下排队。再加上随风摇曳的树木、动态的云影，整个微缩世界充满了勃勃生机。</p>
-<h3 id="3-强大的地形雕刻"><a href="#3-强大的地形雕刻" class="headerlink" title="3. 强大的地形雕刻"></a>3. 强大的地形雕刻</h3><p>除了平铺直叙地放方块，项目还提供了高阶的“网格地形雕刻”模式。开启后，你可以直接使用鼠标像拉伸橡皮泥一样，将地形的特定区域拉高或降低，配合平滑的张力衰减，轻松塑造出悬崖、盆地或是起伏的山脉。</p>
-<h3 id="4-日夜交替与动态天气系统"><a href="#4-日夜交替与动态天气系统" class="headerlink" title="4. 日夜交替与动态天气系统"></a>4. 日夜交替与动态天气系统</h3><p>一个充满生机的世界怎么能少得了阴晴圆缺和四季更迭？Tiny World Builder 并没有仅仅停留在“静态模型”的展示上，而是为你提供了一套极其精细的环境控制面板。</p>
-<img src="https://img.nep.me/ooo/project-twb-01.webp?version=1" style="width:50%;" alt="project-twb-01.jpg" />
+    <title>Opus 5.5 动态设计全解析：那些刷屏的“一句话生成”视频背后隐藏了什么？</title>
+    <url>/post/opus-5-5-motion-design.html</url>
+    <content><![CDATA[<p>9 月 22 日 Opus 5.5 发布后不到几小时，社交网络上就铺天盖地出现了各种产品宣传片、个人作品集（Showreel）甚至完整的音乐 MV——<strong>全部由代码渲染生成，而且配文无一例外都是“One Prompt（仅需一句提示词）”。</strong></p>
+<p>X 博主 <a href="https://x.com/seeconvm">Seeco</a> 花了一整周时间把这些爆款视频逐一拆解。其中确实有几个是从 30 个词的简单提示词开始的；<strong>但真正惊艳的作品，背后往往是一份 9,500 字符的详尽需求文档（Brief）、一个 Skills 文件夹、两个 API 密钥，以及在作者睡觉时连续跑了 12 个小时的自动化流水线。</strong></p>
+<p>这篇文章将把这套工业级工程底座拆解开来，一步步带你搭建完整工作流，让你做出的第一个作品就摆脱“满大街同款 Demo”的廉价感。</p>
+<hr>
+<h2 id="核心速览-At-a-Glance"><a href="#核心速览-At-a-Glance" class="headerlink" title="核心速览 (At a Glance)"></a>核心速览 (At a Glance)</h2><ol>
+<li><strong>帧函数（Frame Function）</strong>：Opus 只写代码，由无头浏览器将其转化为视频帧。</li>
+<li><strong>工程底座（The Rig）</strong>：10 分钟搭好 Claude Code + FFmpeg + 无头浏览器。</li>
+<li><strong>需求文档（The Brief）</strong>：用严谨的制片规范代替模糊的“感觉（Vibe）”。</li>
+<li><strong>视觉参考（The Reference）</strong>：借用成熟的视觉语法，跳出模型的默认审美。</li>
+<li><strong>状态列表（State Lists）</strong>：用单一容器的连续丝滑形变，干掉生硬的十几个特效转场。</li>
+<li><strong>弹簧与音效（Springs &amp; Sound）</strong>：赋予运动物理质量感，让音频与画面共享同一个时钟。</li>
+<li><strong>视觉质检（The Critic）</strong>：让 Opus 审视自己生成的分镜缩略图（Contact Sheet），打分并修复最差的 3 处。</li>
+<li><strong>封装技能（The Skill）</strong>：将整套管线打包，让下一支视频真正变成“一行命令”。</li>
+</ol>
+<hr>
+<h2 id="1-帧函数：为什么-Opus-写的是程序而不是直接输出视频？"><a href="#1-帧函数：为什么-Opus-写的是程序而不是直接输出视频？" class="headerlink" title="1. 帧函数：为什么 Opus 写的是程序而不是直接输出视频？"></a>1. 帧函数：为什么 Opus 写的是程序而不是直接输出视频？</h2><p>Opus 5.5 本身并不能直接输出 <code>.mp4</code> 文件。你在信息流里看到的每一段视频，本质上都是它写出的一个前端程序，再由外部工具把程序运行画面截成图片序列、最后合成视频。</p>
+<p>整个体系的核心机密，在于一个只回答单一问题的纯函数：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">seek(t) -&gt; 精确绘制屏幕在第 t 秒时应该呈现的画面</span><br></pre></td></tr></table></figure>
 
-<p>如截图中展示的那样，点击左侧的“太阳”图标，你就能呼出强大的时间与天气（Time &amp; Weather）设置菜单，化身掌控大自然的造物主：</p>
+<p>对于一段 15 秒、60 fps 的视频，无头浏览器会调用这个函数 <strong>900 次</strong>，逐帧截图，最后交给 FFmpeg 拼接成视频文件。</p>
 <ul>
-<li><strong>精确的日夜交替</strong>： 通过“一天中的时间”滑块，你可以自由拨动世界的时钟（例如图中的 10:55）。随着滑块的拖动，你可以直观地看到光影的推移、太阳角度的变化以及夜晚灯光的亮起，瞬间拉满氛围感。</li>
-<li><strong>一键四季变换</strong>： 提供春、夏、秋、冬四个季节选项卡。只需轻轻一点，你的世界就能在春意盎然、盛夏绿荫、金秋落叶和凛冬白雪之间无缝切换。</li>
-<li><strong>多样的天气预设</strong>： 无论是想要阳光明媚的晴天、适合漫步的多云、淅淅沥沥的雨天、电闪雷鸣的暴风雨，还是唯美的雪景，统统不在话下。</li>
-<li><strong>细腻的特效微调</strong>： 系统不仅仅是贴个滤镜，而是赋予了你控制粒子物理属性的权力：<ul>
-<li>天气强度 ： 滑动它（如图中的 25%），你可以直接控制天空中飘落粒子的密度以及风暴的猛烈程度。</li>
-<li>溅落 &#x2F; 积累 ： 滑动它（如图中的 150%），你可以控制雨滴落在地面的反弹水花、地面积水的形成速度，甚至是冬天雪花在屋顶和树木上的积雪厚度！</li>
+<li><strong>无定时器驱动（Nothing runs on a timer）</strong>：正因为不依赖实时定时器，第 240 帧可以直接独立绘制，而无需从第 0 帧回放到第 239 帧。如果某个标题入场太早，只需改一个数字并局部重渲染即可。</li>
+<li><strong>默认技术栈倾向</strong>：如果不加干预，Opus 默认会走“零依赖路线”——单个 <code>index.html</code> + Playwright 逐帧截屏 + FFmpeg 编码。Tommy Rossi 发现，即便环境里安装了 Remotion 或 HyperFrames，Opus 默认也会跳过它们。因此，<strong>如果你想用特定框架，必须在提示词中明确点名</strong>。</li>
+<li><strong>代码渲染的边界</strong>：<ul>
+<li><strong>劣势领域</strong>：真实感摄影场景、复杂角色动画、自然的有机运动（这些依然需要实拍素材或传统视频生成模型）。</li>
+<li><strong>统治级优势</strong>：产品宣传片、UI 动态交互、数据可视化故事、动态排版（Kinetic Typography）以及发布解读视频。</li>
 </ul>
 </li>
 </ul>
-<p>简单来说，无论是想营造一个温馨宁静的午后小镇，还是一个狂风骤雨中的赛博前哨站，这套动态天气系统都能完美满足你的视觉需求。</p>
-<h2 id="极客时间：硬核的底层技术"><a href="#极客时间：硬核的底层技术" class="headerlink" title="极客时间：硬核的底层技术"></a>极客时间：硬核的底层技术</h2><p>对于全栈开发者来说，这个项目的源码简直是一座宝库：</p>
+<hr>
+<h2 id="2-工程底座：为什么只用网页版聊天窗口只能做出“平庸之作”？"><a href="#2-工程底座：为什么只用网页版聊天窗口只能做出“平庸之作”？" class="headerlink" title="2. 工程底座：为什么只用网页版聊天窗口只能做出“平庸之作”？"></a>2. 工程底座：为什么只用网页版聊天窗口只能做出“平庸之作”？</h2><p>网页版聊天应用能写出动画代码，但<strong>只有具备 Shell 权限的 Agent（如 Claude Code），才能真正把视频渲染出来、“听”到音频，并亲眼“看”到自己渲染出的画面帧。</strong></p>
+<p>有没有这个<strong>自我反馈闭环（Feedback Loop）</strong>，就是全网爆款视频与普通玩家口中“感觉也就那样（a bit mid）”之间的根本分水岭。</p>
+<h3 id="10-分钟环境搭建"><a href="#10-分钟环境搭建" class="headerlink" title="10 分钟环境搭建"></a>10 分钟环境搭建</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># macOS 使用 brew，Linux 请使用 apt</span></span><br><span class="line">brew install node ffmpeg python</span><br><span class="line">pip install numpy librosa soundfile</span><br><span class="line"></span><br><span class="line"><span class="built_in">mkdir</span> motion-studio &amp;&amp; <span class="built_in">cd</span> motion-studio &amp;&amp; npm init -y</span><br><span class="line">npm i -D playwright &amp;&amp; npx playwright install chromium</span><br><span class="line"></span><br><span class="line"><span class="comment"># 可选：引入专业框架 Skills</span></span><br><span class="line">npx skills add remotion-dev/skills</span><br><span class="line">npx skills add heygen-com/hyperframes</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动 Claude Code</span></span><br><span class="line">claude --model claude-opus-5-5</span><br></pre></td></tr></table></figure>
+
+<p>接着，在项目根目录下放一个 <code>CLAUDE.md</code>。Claude Code 每次运行时都会自动读取它，你的“制片厂铁律”就无需在每次对话中重复：</p>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line"><span class="section">## Render contract (渲染契约)</span></span><br><span class="line"><span class="bullet">-</span> window.seek(t) 唯一负责绘制第 t 帧画面，严禁任何其他机制驱动画面变化</span><br><span class="line"><span class="bullet">-</span> 渲染模式下严禁使用 CSS transitions、setTimeout 或 requestAnimationFrame</span><br><span class="line"><span class="bullet">-</span> 只能使用带种子（seeded）的噪声函数，严禁使用 Math.random()</span><br><span class="line"></span><br><span class="line"><span class="section">## Look (视觉规范)</span></span><br><span class="line"><span class="bullet">-</span> 严禁出现：渐变背景上的居中大标题、所有元素无脑淡入（fade in）、角落小标签、UI 泛光特效（glow）</span><br><span class="line"><span class="bullet">-</span> 字体限制：严格限制一种展示字体（Display Face）、一种界面字体（UI Face）、一种强调色（Accent）</span><br><span class="line"><span class="bullet">-</span> 节奏要求：每 2 到 4 秒屏幕上必须出现新的视觉信息</span><br><span class="line"></span><br><span class="line"><span class="section">## Sound (音频规范)</span></span><br><span class="line"><span class="bullet">-</span> 除非提供了外部音轨，否则配乐与音效（SFX）必须通过代码合成，响度统一标准化为 -14 LUFS</span><br><span class="line"></span><br><span class="line"><span class="section">## Before you show me anything (交付前自检)</span></span><br><span class="line"><span class="bullet">-</span> 每个节拍（beat）抽一帧拼成缩略图样片（Contact Sheet），自我打分，并自动修复得分最低的 3 处问题</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>算力档位（Effort Settings）</strong>：Opus 5.5 默认运行在 <code>medium</code> 档。<strong>所有出圈的“一镜到底”神作，跑的都是 <code>xhigh</code> 或 <code>max</code> 档。</strong> 经验法则是：局部小修小补用 <code>medium</code>，制作新片用 <code>xhigh</code>，而当视频前 3 秒直接决定产品发布生死时，果断拉满到 <code>max</code>。</p>
+</blockquote>
+<hr>
+<h2 id="3-需求文档（The-Brief）：为什么“凭感觉写提示词”等于把决定权交给平庸？"><a href="#3-需求文档（The-Brief）：为什么“凭感觉写提示词”等于把决定权交给平庸？" class="headerlink" title="3. 需求文档（The Brief）：为什么“凭感觉写提示词”等于把决定权交给平庸？"></a>3. 需求文档（The Brief）：为什么“凭感觉写提示词”等于把决定权交给平庸？</h2><p>如果你只告诉模型：“帮我做一个炸裂的产品视频”，模型就会用它所知道的最安全、最平庸的默认选项填满每一个未知的空白——<strong>那个让人审美疲劳的“渐变背景居中大标题”就是这么来的。</strong></p>
+<p>当然，那句著名的“一句话提示词”依然有它的测试价值：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">make a dynamic 15-second motion graphics video that shows what an incredible motion designer you are, like it&#x27;s your showreel for a résumé. go all out.</span><br><span class="line">(制作一段充满活力的 15 秒动态图形视频，展示你作为一名顶尖动态设计师的实力，就像你简历里的个人作品集一样。全力以赴。)</span><br></pre></td></tr></table></figure>
+
 <ul>
-<li><strong>极致的纯粹与性能</strong>：核心逻辑由近 3 万行的 Vanilla JS（原生 JavaScript）构成，渲染层则由 <strong>Three.js</strong> 强力驱动。采用了对象动画队列和按需渲染机制，确保了哪怕是在大规模的复杂城市路网中，也能保持极其流畅的帧率。  </li>
-<li><strong>丰富的功能栈</strong>：支持本地浏览器存储，标准的 JSON Schema 数据导入导出。更令人惊喜的是，它还集成了 PartyKit 实现多人实时协作建造，以及 Netlify Identity 认证登录机制。</li>
+<li><strong>为什么这句话有效？</strong> “Showreel（作品集）”直接给 Opus 限定了一个规则成熟的影片类型；让模型展示“它自己”，意味着不存在理解错产品业务逻辑的风险；15 秒刚好容纳 6 到 8 个镜头；而“go all out”则在 <code>xhigh</code> 之上进一步压榨了模型的表现欲。</li>
+<li><strong>但仅限于跑通测试</strong>：跑一次验证完你的环境就够了。成百上千人发送了这句一模一样的话，结果得到了几百个高度雷同的视频——<code>athemeroy</code> 数据集将这种现象称为<strong>“需求传染（Brief Contagion）”</strong>。</li>
 </ul>
-<h2 id="谁适合玩这款工具？"><a href="#谁适合玩这款工具？" class="headerlink" title="谁适合玩这款工具？"></a>谁适合玩这款工具？</h2><ul>
-<li><strong>游戏策划与世界观设定党</strong>：无论你是在构思一个充满奇幻色彩的修仙大世界，还是一个赛博朋克风的机甲前哨站，它都能帮你极速构建出地形原型和关卡草图（Level Blockout），将抽象的文字 PRD 瞬间具象化。</li>
-<li><strong>WebGL &#x2F; 前端学习者</strong>：想知道如何在浏览器里徒手搓出一个 3D 渲染引擎和动态寻路系统？克隆它的 GitHub 仓库，阅读纯粹的代码架构就是最好的进阶途径。</li>
-<li><strong>解压摸鱼爱好者</strong>：单纯想在工作间隙放松一下大脑？听着环境音，捏一个小岛，看小车在上面跑来跑去，绝对是数字时代的“枯山水”。</li>
+<p>当你真正要推广一款产品时，在执行任何渲染任务前，Opus 需要一份真正的<strong>制片文档（Production Document）</strong>。Claude Code 团队的 Thariq 说得很直接：<strong>推文上写着“One-shot”，背后的提示词足足有 10,000 字符，还挂载了 Skills、参考示例和 API 密钥。</strong></p>
+<h3 id="标准制片文档结构"><a href="#标准制片文档结构" class="headerlink" title="标准制片文档结构"></a>标准制片文档结构</h3><figure class="highlight text"><table><tr><td class="code"><pre><span class="line">FILM      观众看完后记住的一句话核心信息、目标受众、时长、输出画幅格式</span><br><span class="line">ASSETS    真实 Logo、真实 UI 截图、品牌标准字体与色值、音频文件</span><br><span class="line">VISUAL    从参考片中汲取什么元素、绝对要避开哪些陈词滥调（Clichés）</span><br><span class="line">HARD LINE 底线红线：严禁捏造虚假的产品界面或业务数据指标</span><br><span class="line">DELIVER   交付物清单：故事板、分镜缩略图（Contact Sheet）、最终成片、封面帧、完整源码</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>Tony Dinh 的 TypingMind 宣传片</strong>：他只多加了三行关键信息——产品网址、要求使用真实截图&#x2F;Logo&#x2F;品牌资产、以及“必须有配乐”。Opus 自己访问了网站，自动抓取了所有素材，不到 30 分钟就完成了整支视频。而在一年前，找外包机构做一支类似的发布视频花了他大约 <strong>1,200 美元</strong>。</li>
+<li><strong>Rob Hallam 的连续创作经验</strong>：在做完第一支作品集后，他在<strong>同一个会话窗口</strong>里要求制作一支产品广告，结果生成速度快得多——因为渲染器、音频合成器和导出管线都已经存在于上下文中了。<strong>建议：每个品牌固定维护一个专属会话（Session）。</strong></li>
+<li><strong>密钥安全</strong>：把 API Keys 放在 <code>.env</code> 文件中，在提示词里只通过变量名引用（<code>achxvi</code> 在公开他的 Pocketsflow 提示词时，就专门用了一个搞笑占位符来隐藏真实密钥）。</li>
 </ul>
-<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>Tiny World Builder 完美诠释了什么是 Web 端的“小而美”。它不仅是一个展现前端 3D 潜力的优秀开源作品，更是一个承载创造力的微缩沙盒。</p>
-<p>赶紧点击 <a href="https://tinyworld.build/tiny-world-builder">官网链接</a> 去捏一个属于你自己的迷你群岛吧！如果你也是开发者，别忘了去 <a href="%5D(https://github.com/jasonkneen/tiny-world-builder)">GitHub</a> 给作者点个 🌟 Star，支持一下这个令人惊叹的个人开源项目。</p>
+<hr>
+<h2 id="4-视觉参考（The-Reference）：如何打破“千篇一律”的模型味？"><a href="#4-视觉参考（The-Reference）：如何打破“千篇一律”的模型味？" class="headerlink" title="4. 视觉参考（The Reference）：如何打破“千篇一律”的模型味？"></a>4. 视觉参考（The Reference）：如何打破“千篇一律”的模型味？</h2><p>如果不提供视觉语法（Visual Grammar），Opus 就会套用它自带的默认语法，导致完全不相干的产品视频看起来像失散多年的亲兄弟。</p>
+<p>Rexan Wong 在研究了数十个爆款切片后发现了一个规律：<strong>直接点名某种风格，远比用形容词描述一种风格有效；而直接给出一张参考帧或一段参考视频，则能瞬间把节奏、字体排版和转场逻辑全盘托出。</strong></p>
+<p>最管用的三种参考素材：</p>
+<ol>
+<li>你钟爱的某支视频里的<strong>单张静帧</strong>；</li>
+<li>一段由 Opus 调用 FFmpeg 自动抽帧分析的<strong>短视频切片</strong>；</li>
+<li>你自己过往作品的<strong>本地文件夹</strong>（例如 Pleometric 的 TikTok 风格短片就是从另一个爆款动画的单帧衍生出来的；而他的 Donald 风格短片则直接指向了他私人的 PC-98 艺术画廊——这是一个别人绝对无法复刻的独门素材库）。</li>
+</ol>
+<h3 id="视觉参考提取工作流提示词"><a href="#视觉参考提取工作流提示词" class="headerlink" title="视觉参考提取工作流提示词"></a>视觉参考提取工作流提示词</h3><figure class="highlight text"><table><tr><td class="code"><pre><span class="line">Reference: ./refs/launch.mp4</span><br><span class="line">1. 使用 ffmpeg 每 0.5 秒提取一帧画面，并仔细研究它们</span><br><span class="line">2. 编写 docs/style_guide.md：包含十六进制色板（Hex）、字体排版、镜头时长分布、转场方式、运镜逻辑、颗粒感（Grain）</span><br><span class="line">3. 编写 docs/shotlist.md：按照上述风格，为关于 [SUBJECT] 的 [DURATION] 秒视频编写分镜表</span><br><span class="line">4. 只提取视觉语法，严禁照搬参考片中的具体主体、Logo 或文案</span><br><span class="line">5. 将这两个文件展示给我，在我确认 OK 之前，不要编写任何代码</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>真实资产核验</strong>：制作产品视频时，可以让 Opus 直接从线上网站抓取真实界面，但<strong>你必须亲自审核这份资产清单</strong>。如果缺少某张关键截图，Agent 应该停下来向你索要，而不是自己画一个看着很像的假界面。</li>
+<li><strong>把技术选型留给模型</strong>：Pleometric 曾建议模型使用 <code>p5.js</code>，结果 Opus 自己手写了一个专属的纸张质感渲染器，效果反而更好。<strong>你只需明确视觉效果和边界限制，具体的技术实现让模型自己决定。</strong></li>
+<li><strong>去哪里找优质参考片？</strong>：<code>whatships.com</code>（专门收集优质产品发布视频）、Dribbble Motion 板块、以及你竞争对手的发布会视频。</li>
+</ul>
+<hr>
+<h2 id="5-状态列表（State-Lists）：为什么“一镜到底的连续形变”秒杀十个花哨特效？"><a href="#5-状态列表（State-Lists）：为什么“一镜到底的连续形变”秒杀十个花哨特效？" class="headerlink" title="5. 状态列表（State Lists）：为什么“一镜到底的连续形变”秒杀十个花哨特效？"></a>5. 状态列表（State Lists）：为什么“一镜到底的连续形变”秒杀十个花哨特效？</h2><p>“放大、变形、加粒子特效”——这叫动作清单（List of Activity），不叫故事。真正的故事板（Storyboard）定义的是<strong>观众在每一秒建立的认知</strong>：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">00-02s  HOOK (钩子)     一个瞬间抓人眼球的画面，赢得注意力</span><br><span class="line">02-05s  PROBLEM (痛点)  把用户遇到的阻碍与摩擦直观呈现在屏幕上</span><br><span class="line">05-09s  REVEAL (揭晓)   通过一次真实的交互操作，自然引出产品</span><br><span class="line">09-13s  PROOF (证实)    用一个真实界面或核心数据支撑你的主张</span><br><span class="line">13-16s  CLOSE (收尾)    干净利落的定格状态 + 清晰可读的行动号召（CTA）</span><br></pre></td></tr></table></figure>
+
+<p>发布周被收藏次数最多的提示词，是一份 <strong>XML 规范文档</strong>。<code>@twoclipping</code> 的 UI 连续形变视频借此斩获了 90.7 万播放和 1.9 万收藏，而 <code>@verbove</code> 的 MakerMap 产品片也复用了完全相同的结构。</p>
+<p>这两支神作背后的核心思想高度一致：<strong>全片只有一个主容器，通过不断改变尺寸、圆角半径和颜色，从一个状态丝滑演进到下一个状态；一个鼠标光标通过真实的点击驱动每一次变化；且最后一帧与第一帧完美重合，实现无缝循环播放（Loop）。</strong></p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">Logo → CTA 按钮 → 邮箱输入框（伴随打字动画） → 加载动画（Loader） → 成功对勾 → 数据看板（Dashboard） → 图表自动绘制 → 悬浮提示框（Tooltip） → ⌘K 命令面板 → 弹窗提示（Toast） → 回到 Logo</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>每个节拍（Beat）都必须具备三要素</strong>：起始状态（Entry State）、结束状态（Exit State）以及<strong>它存在的理由</strong>。如果 Agent 说不出第 4 个镜头为什么存在，那就直接砍掉第 4 个镜头。</li>
+<li><strong>剧中剧模式（The Story Version）</strong>：<code>NFT_Chen</code> 让 Opus 先用代码写了一个带时间轴、音频波形和导出按钮的“卡通版视频剪辑软件界面”，然后把整支宣传片放在这个虚拟剪辑软件的预览窗里演绎。<strong>一个虚拟的 UI 外壳就像一个天然的摄影棚，里面每个元素的状态都清晰可控。</strong></li>
+</ul>
+<hr>
+<h2 id="6-弹簧与音效：为什么廉价的动画一眼就能看出来？"><a href="#6-弹簧与音效：为什么廉价的动画一眼就能看出来？" class="headerlink" title="6. 弹簧与音效：为什么廉价的动画一眼就能看出来？"></a>6. 弹簧与音效：为什么廉价的动画一眼就能看出来？</h2><p>固定缓动曲线（Easing Curve，如简单的 <code>ease-in-out</code>）只是机械地从 A 点滑到 B 点；而<strong>具备物理质量感（Mass）的运动，会先加速、越过终点产生微妙的回弹（Overshoot），最后稳稳落定。</strong></p>
+<p>解析解弹簧函数（Closed-form Springs）既能提供这种真实的物理质感，又能保持作为时间 $t$ 的纯函数特性，从而确保 <code>seek(t)</code> 的绝对确定性。当一个属性（比如光标位置或容器宽度）需要连续多次改变目标值时，<strong>不要重置弹簧，而是为每一次变化叠加一个独立的弹簧脉冲</strong>：</p>
+<p>$$\text{track}(t) &#x3D; v_0 + \sum (v_i - v_{i-1}) \times \text{spring}(t - t_i)$$</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">track(t) = v0 + Σ (v_i − v_(i−<span class="number">1</span>)) × spring(t − t_i)</span><br></pre></td></tr></table></figure>
+
+<p>靠这个公式，哪怕直接跳到第 812 帧，也能瞬间算出精确位置，完全不需要从第 0 帧一路物理模拟到第 811 帧。</p>
+<ul>
+<li><strong>分级赋予物理规则</strong>：<ul>
+<li><strong>小型 UI 控件</strong>：干脆利落地吸附，几乎不留回弹；</li>
+<li><strong>大面板（Panels）</strong>：沉稳落定；</li>
+<li><strong>摄像机运镜</strong>：极度平滑，让人几乎察觉不到镜头在动；</li>
+<li><strong>核心大标题</strong>：重重砸下，并保持足够长的静止时间供人阅读；</li>
+<li><strong>品牌吉祥物（Mascots）</strong>：故意设计明显的Q弹跳跃感。</li>
+<li><em>记住：如果画面里所有东西都在回弹，那就没有任何东西显得精准。</em></li>
+</ul>
+</li>
+</ul>
+<h3 id="音画同源（Sound-on-the-Same-Clock）"><a href="#音画同源（Sound-on-the-Same-Clock）" class="headerlink" title="音画同源（Sound on the Same Clock）"></a>音画同源（Sound on the Same Clock）</h3><p>声音与画面运行在同一个时间轴时钟上。Rob Hallam 起初以为他视频里的音效是后期加的，结果发现那是直接由代码生成的；<code>@oozn</code> 的乔布斯传记短片更是直接用 Node.js 合成了整条配乐，23 个转场严丝合缝地卡在 120 BPM 的节拍上。</p>
+<p>如果你使用的是外部现成音乐，<strong>在写动画代码前，先用脚本测量音轨数据</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 使用 librosa 提取 BPM、节拍点、重拍（Downbeats）和打击点（Hits）</span></span><br><span class="line">python beats.py song.wav &gt; beats.json</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>卡点铁律</strong>：常规状态切换卡在普通节拍（Beats）上；重磅画面揭示卡在强拍&#x2F;小节首拍（Downbeats）上；鼠标点击和呼啸转场声（Whooshes）卡在打击音效点（Hits）上。</li>
+<li><strong>盲听测试（The Blindfold Test）</strong>：闭上眼睛只听视频的声音。如果脱离了画面，声音听起来毫无起伏与结构感，说明你的声音设计还没做完。</li>
+</ul>
+<hr>
+<h2 id="7-视觉质检（The-Critic）：为什么必须逼-Opus-亲眼检查它渲染的每一帧？"><a href="#7-视觉质检（The-Critic）：为什么必须逼-Opus-亲眼检查它渲染的每一帧？" class="headerlink" title="7. 视觉质检（The Critic）：为什么必须逼 Opus 亲眼检查它渲染的每一帧？"></a>7. 视觉质检（The Critic）：为什么必须逼 Opus 亲眼检查它渲染的每一帧？</h2><p>Opus 5.5 具备强大的多模态视觉阅读能力，这意味着<strong>它可以亲自检查自己刚刚渲染出来的画面。</strong> 几乎所有引爆社交网络的短片，背后都有这个关键动作。</p>
+<p><code>@mablesjoseph</code> 曾坦诚公开过他那支水彩风格短片的幕后数据：<strong>总共调用了 163 次模型，耗时近 7 个小时。</strong> Drew 在发布日当天斩获 170 万播放的作品，在成片前也经历了多轮肉眼可见的修正清洗。</p>
+<p>不要傻傻地把完整视频导出十遍、从头到尾看十遍。<strong>让 FFmpeg 自动生成质检证据包：</strong></p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">contact sheet (分镜缩略图)  每秒抽 2 帧，每行排 6 张拼成大图</span><br><span class="line">strip (高速运动切片)        在运动最剧烈的片段前后，连续截取 12 帧</span><br><span class="line">phone test (移动端可读性)   将画面缩放到 360px 宽度，检查小屏阅读体验</span><br><span class="line">loop check (循环衔接检查)   将视频首尾相连播放两遍，检查接缝是否顺畅</span><br><span class="line">determinism (确定性校验)    将第 300 帧独立渲染两次，校验文件 Hash 必须完全一致</span><br></pre></td></tr></table></figure>
+
+<p>接着，给 Opus 下达一份<strong>带牙齿的严厉质检任务（Critique Task）</strong>：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">只根据实际渲染出的画面帧进行评判，完全忽略你原本“打算”做出什么效果。</span><br><span class="line">按 1-10 分对以下维度打分：前 2 秒吸引力（Hook）、手机端可读性、运动质感、视觉丰富度、音画同步率、品牌还原度。</span><br><span class="line">列出最严重的 3 处缺陷，必须附带精确时间戳、画面证据以及局部修复方案。</span><br><span class="line">仅针对有问题的这几秒打补丁、局部重渲染，循环往复，直到所有维度的得分都达到 8 分以上。</span><br></pre></td></tr></table></figure>
+
+<p><strong>重点抓捕的典型 Bug</strong>：文字重叠、该用缓动的地方变成了生硬平移、残留的角落小标签、缩放后模糊发虚的字体、画面毫无动静的“死拍（Dead Beat）”，以及循环衔接处的卡顿跳帧。</p>
+<hr>
+<h2 id="8-封装技能（The-Skill）：让你的下一支视频真正只需“一句话”"><a href="#8-封装技能（The-Skill）：让你的下一支视频真正只需“一句话”" class="headerlink" title="8. 封装技能（The Skill）：让你的下一支视频真正只需“一句话”"></a>8. 封装技能（The Skill）：让你的下一支视频真正只需“一句话”</h2><p>如果整支视频的决策过程只留在聊天记录里，那你只是撞大运打出了一次好局。<strong>把所有工程决策沉淀为本地文件，让下一次运行可以直接读取复用：</strong></p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">motion-studio/</span><br><span class="line">├── brief.md         # 核心目标与产品事实信息</span><br><span class="line">├── style_guide.md   # 色板、字体、运动规范、严禁使用的默认套路</span><br><span class="line">├── shotlist.md      # 节拍点、状态演进、时间戳、镜头目的</span><br><span class="line">├── assets/          # 经审核确认的 Logo、真实界面截图、音频文件</span><br><span class="line">├── src/             # 支持 seek(t) 的动画组合与核心渲染代码</span><br><span class="line">├── reviews/         # 历次生成的 Contact Sheets 缩略图与缺陷修复记录</span><br><span class="line">└── out/             # 按不同画幅比例导出的最终成片</span><br></pre></td></tr></table></figure>
+
+<h3 id="通宵挂机必备：质量门禁（Gates）"><a href="#通宵挂机必备：质量门禁（Gates）" class="headerlink" title="通宵挂机必备：质量门禁（Gates）"></a>通宵挂机必备：质量门禁（Gates）</h3><p>Donald 只口述了五分钟需求就去睡觉了，一觉醒来得到了一支 142 秒的音乐 MV，随后狂揽 210 万播放（他的完整提示词长达约 9,500 字符；而 <code>@pradeepXkapoor</code> 的“Pip”机器人短片更是用了 19,000 字符的巨型 Brief）。</p>
+<p>想要放心让 Agent 长时间自主运行，必须设置<strong>阶段门禁（Gates）</strong>：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">GATE 1  参考片与产品真实资产审核通过</span><br><span class="line">GATE 2  视觉规范（style_guide.md）与分镜表（shotlist.md）审核通过</span><br><span class="line">GATE 3  每个镜头的静态关键帧渲染完成，并通过视觉质检</span><br><span class="line">GATE 4  输出 960x540 分辨率的动态分镜预览（Animatic），带上占位音频</span><br><span class="line">GATE 5  全尺寸完整渲染、细节打磨、正式合成音效与配乐</span><br><span class="line">GATE 6  多画幅版本导出、无缝循环检查、提取封面帧、生成 README 文档</span><br></pre></td></tr></table></figure>
+
+<p>在两个门禁之间，Agent 可以连续自主工作数小时。遇到缺失的界面截图会自动作为阻塞项停下提问；遇到不明确的参考风格，会先询问或渲染单张测试帧，而不是闷头渲染出 900 帧精美但方向全错的废片。</p>
+<ul>
+<li><strong>生成后描摹（Generate-then-trace）</strong>：这是 Donald 的核心杀招——先用 Seedance 2.5 生成带有复杂角色和物理规律的基础视频片段，然后让 Opus 用 JavaScript 在其之上逐帧重绘整部影片，最终观众看到的完全是由代码绘制的风格化图层。John Heibel 在 GitHub 上斩获 1.1K Star 的 <code>PDoom</code> 仓库则展示了<strong>多子智能体（Subagent）版本</strong>：由主 Opus 编写 <code>ANIMATION_GUIDE.md</code>，然后同时指挥多个并行 Worker 分头制作九个章节。</li>
+<li><strong>多画幅原生适配</strong>：每一个宽高比（横屏、竖屏、方屏）都应该从同一条时间轴代码中原生计算得出，<strong>绝不能靠简单粗暴的画面裁剪（Crop）</strong>。竖屏版自动放大字号、减少同屏元素；方屏版收紧停顿节奏；宽屏版则展示更多空间上下文。</li>
+</ul>
+<p>当你把以上所有流程打包封装成一个 Claude Skill 后，制作下一支视频的整个过程就会真正浓缩为一行命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">/motion-reel <span class="keyword">for</span> [URL], 20s, vertical, reference ./refs/frame.png</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>商业变现潜力</strong>：<code>achxvi</code> 现在已经把这套流水线直接包装成商业服务对外接单——包含配乐、任意风格的定制吉祥物、产品功能展示、片尾促销信息、支持任意语言并包含最多 3 次修改。他制作一支 38 秒的竖屏产品宣传片，<strong>全程仅需 45 分钟</strong>。</li>
+<li><strong>推荐直接 Clone 的开源仓库</strong>：<ul>
+<li><code>PDoomVideo</code>（学习大型音乐 MV 的多智能体协作管线）</li>
+<li><code>ClaudeAnimationBase</code>（最适合作为你自己的工程脚手架起点）</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="全景对照表：一套完整的动态设计工作室"><a href="#全景对照表：一套完整的动态设计工作室" class="headerlink" title="全景对照表：一套完整的动态设计工作室"></a>全景对照表：一套完整的动态设计工作室</h2><table>
+<thead>
+<tr>
+<th align="left">核心模块 (Piece)</th>
+<th align="left">缺失时的典型翻车症状 (What goes wrong)</th>
+<th align="left">工程解法 (What fixes it)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>1. 帧函数 (Frame Function)</strong></td>
+<td align="left">渲染画面发生时间漂移，每次微调都意味着推倒重来</td>
+<td align="left"><code>seek(t)</code> 纯函数、固定随机种子（Seeded Noise）、禁用定时器</td>
+</tr>
+<tr>
+<td align="left"><strong>2. 工程底座 (The Rig)</strong></td>
+<td align="left">模型是个“瞎子”和“聋子”，看不到也听不到自己的产出</td>
+<td align="left">Claude Code + Playwright + FFmpeg + <code>CLAUDE.md</code></td>
+</tr>
+<tr>
+<td align="left"><strong>3. 需求文档 (The Brief)</strong></td>
+<td align="left">模型用最平庸安全的默认套路填满所有未明确的设计细节</td>
+<td align="left">一句话核心信息、真实产品资产、明确的底线红线</td>
+</tr>
+<tr>
+<td align="left"><strong>4. 视觉参考 (The Reference)</strong></td>
+<td align="left">你的视频和网上其他人的“一句话 Demo”长得一模一样</td>
+<td align="left">从单帧或参考切片中提炼生成 <code>style_guide.md</code></td>
+</tr>
+<tr>
+<td align="left"><strong>5. 状态列表 (State Lists)</strong></td>
+<td align="left">只有炫技的特效堆砌，完全没有叙事逻辑</td>
+<td align="left">定义带有明确起始状态、结束状态与存在目的的节拍（Beats）</td>
+</tr>
+<tr>
+<td align="left"><strong>6. 弹簧与音效 (Springs &amp; Sound)</strong></td>
+<td align="left">运动呆板廉价，音乐像后期随便贴上去的背景音</td>
+<td align="left">解析解弹簧叠加公式、<code>beats.json</code> 节拍分析、代码合成音效</td>
+</tr>
+<tr>
+<td align="left"><strong>7. 视觉质检 (The Critic)</strong></td>
+<td align="left">第一版粗糙的渲染结果被直接当成最终成片发布</td>
+<td align="left">分镜缩略图（Contact Sheet）、多维打分、强制修复最差的 3 处</td>
+</tr>
+<tr>
+<td align="left"><strong>8. 封装技能 (The Skill)</strong></td>
+<td align="left">每次做新视频都要从零开始折腾一遍</td>
+<td align="left">标准化工程目录、门禁机制（Gates）、<code>/motion-reel</code> 技能封装</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="为什么这件事真正值得关注？"><a href="#为什么这件事真正值得关注？" class="headerlink" title="为什么这件事真正值得关注？"></a>为什么这件事真正值得关注？</h2><p>一年前需要花 1,200 美元找外包机构制作的产品发布宣传片，如今借助一个封装好的 Skill 和自动质检闭环，<strong>一个下午就能在本地跑完。</strong></p>
+<p>第一个“一句话生成”的结果出得极快，这也是为什么它能瞬间引爆社交网络的时间线。但真正具有颠覆意义的在于：<strong>你的第 10 支视频会比第 1 支好得多</strong>——因为你的制片规范、确定性渲染引擎以及严苛的审片清单，会在每一次运行中不断复利积累。</p>
+<p>等到下一次新产品发布时，你只需要替换掉产品 Brief 和界面截图资产，剩下的整座“动画制片厂”都可以原封不动地为你全速运转。</p>
+<hr>
+<h2 id="写在最后：真正的核心机密"><a href="#写在最后：真正的核心机密" class="headerlink" title="写在最后：真正的核心机密"></a>写在最后：真正的核心机密</h2><ol>
+<li><strong>提示词本身只占最终效果的 10% 左右</strong>，真正决定上限的，是包裹在提示词外面的那套工程脚手架（Harness）。</li>
+<li><strong>可寻址性（Seekability）是唯一绝对不能妥协的铁律</strong>：任何一帧都必须能够随时独立渲染，且每次渲染的结果必须分毫不差。</li>
+<li><strong>坚持只用真实的产品资产</strong>：Opus 可以极具创意地发明一个运镜轨迹，但它绝不应该去“发明”你的产品数据看板。</li>
+<li><strong>自我审片闭环（Critique Loop）是大多数人最容易跳过的一步</strong>——因为第一遍渲染成功往往会给人一种“大功告成”的错觉；但恰恰是这一步，构成了所有百万播放爆款视频的共同基因。</li>
+</ol>
+<p>那么，如果现在对你的工作流做一次分镜缩略图测试（Contact Sheet Test），你觉得哪一个环节会第一个暴露问题？</p>
+<p><em>(原文作者：@seeconvm | 整理与编译优化版)</em></p>
 ]]></content>
       <categories>
-        <category>开源项目</category>
+        <category>笔记</category>
       </categories>
       <tags>
-        <tag>GitHub</tag>
-        <tag>开源项目</tag>
-        <tag>Three.js</tag>
+        <tag>AI</tag>
+        <tag>Claude</tag>
+        <tag>Opus 5.5</tag>
       </tags>
   </entry>
   <entry>
@@ -8507,6 +8670,64 @@
         <tag>前端开发</tag>
         <tag>WebGL</tag>
         <tag>React</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>宝藏开源项目： Tiny World Builder - 在浏览器里创建迷你世界</title>
+    <url>/post/project-tiny-world-builder.html</url>
+    <content><![CDATA[<h2 id="项目介绍"><a href="#项目介绍" class="headerlink" title="项目介绍"></a>项目介绍</h2><p>在这个万物皆可 Web 的时代，我们见过无数令人惊艳的浏览器端应用。但如果你是一个热衷于 <strong>世界构建</strong> 、喜欢 <strong>沙盒游戏</strong> ，或者对现代前端与 3D 渲染技术充满热情的开发者，今天介绍的这个开源项目绝对会让你眼前一亮 —— 它就是 <strong>Tiny World Builder</strong> 。</p>
+<ul>
+<li>在线体验: <a href="https://tinyworld.build/tiny-world-builder">https://tinyworld.build/tiny-world-builder</a></li>
+<li>项目地址: <a href="https://github.com/jasonkneen/tiny-world-builder">https://github.com/jasonkneen/tiny-world-builder</a></li>
+</ul>
+<p>预览图片：</p>
+<p><img src="https://img.nep.me/ooo/project-tinyworldbuilder.webp" alt="project-tinyworldbuilder.webp"></p>
+<h2 id="这是什么项目？"><a href="#这是什么项目？" class="headerlink" title="这是什么项目？"></a>这是什么项目？</h2><p><strong>Tiny World Builder</strong> 是由开发者 Jason Kneen 打造的一款基于浏览器的 3D 迷你世界建造工具。打开网页，你就能得到一块漂浮在虚空中的 8x8 网格地块。通过简单的点击和拖拽快捷键，你可以随心所欲地铺设草地、河流、雪地，或者建立起错落有致的房屋、农田与桥梁。</p>
+<p>它有着类似《Minecraft》的体素风与清新的等距视角，但更注重宏观的 “上帝视角” 微缩景观搭建。无需下载任何客户端，打开浏览器即刻开始创造。</p>
+<h2 id="核心亮点：不止于-“摆积木”"><a href="#核心亮点：不止于-“摆积木”" class="headerlink" title="核心亮点：不止于 “摆积木”"></a>核心亮点：不止于 “摆积木”</h2><h3 id="1-智能相邻逻辑"><a href="#1-智能相邻逻辑" class="headerlink" title="1. 智能相邻逻辑"></a>1. 智能相邻逻辑</h3><p>这绝对是项目最酷的特性之一。在搭建时，你不需要手动去选择“房屋拐角”或“T型路口”的模型。底层的渲染逻辑会自动根据你放置的相邻方块进行运算：  </p>
+<ul>
+<li><strong>道路与河流</strong>：水面会自动生成河岸，道路会自动连接并形成复杂的路网。</li>
+<li><strong>建筑群落</strong>：当你在相邻的网格放置房屋时，它们会自动融合成 L 型、T 型或是大型方形连体建筑。</li>
+<li><strong>生态融合</strong>：桥梁会自动适应水面方向，农作物会自动将下方的地块转化为泥土。这种“所见即所得”的顺滑感，极大地提升了建造体验。</li>
+</ul>
+<h3 id="2-鲜活的-AI-交通系统与动态生态"><a href="#2-鲜活的-AI-交通系统与动态生态" class="headerlink" title="2. 鲜活的 AI 交通系统与动态生态"></a>2. 鲜活的 AI 交通系统与动态生态</h3><p>这个世界不是静止的！系统内置了一套完整的运行时车辆 AI。</p>
+<p>当你在道路上放置了寻路机器人或车辆，它们会自动在路网中行驶、寻找目标。更有意思的是它的动态避障与重新寻路机制：如果你突然在马路中间放一块大石头或种一棵树，车辆会判断前方受阻，尝试重新规划路线，或者在无法通行时乖乖停下排队。再加上随风摇曳的树木、动态的云影，整个微缩世界充满了勃勃生机。</p>
+<h3 id="3-强大的地形雕刻"><a href="#3-强大的地形雕刻" class="headerlink" title="3. 强大的地形雕刻"></a>3. 强大的地形雕刻</h3><p>除了平铺直叙地放方块，项目还提供了高阶的“网格地形雕刻”模式。开启后，你可以直接使用鼠标像拉伸橡皮泥一样，将地形的特定区域拉高或降低，配合平滑的张力衰减，轻松塑造出悬崖、盆地或是起伏的山脉。</p>
+<h3 id="4-日夜交替与动态天气系统"><a href="#4-日夜交替与动态天气系统" class="headerlink" title="4. 日夜交替与动态天气系统"></a>4. 日夜交替与动态天气系统</h3><p>一个充满生机的世界怎么能少得了阴晴圆缺和四季更迭？Tiny World Builder 并没有仅仅停留在“静态模型”的展示上，而是为你提供了一套极其精细的环境控制面板。</p>
+<img src="https://img.nep.me/ooo/project-twb-01.webp?version=1" style="width:50%;" alt="project-twb-01.jpg" />
+
+<p>如截图中展示的那样，点击左侧的“太阳”图标，你就能呼出强大的时间与天气（Time &amp; Weather）设置菜单，化身掌控大自然的造物主：</p>
+<ul>
+<li><strong>精确的日夜交替</strong>： 通过“一天中的时间”滑块，你可以自由拨动世界的时钟（例如图中的 10:55）。随着滑块的拖动，你可以直观地看到光影的推移、太阳角度的变化以及夜晚灯光的亮起，瞬间拉满氛围感。</li>
+<li><strong>一键四季变换</strong>： 提供春、夏、秋、冬四个季节选项卡。只需轻轻一点，你的世界就能在春意盎然、盛夏绿荫、金秋落叶和凛冬白雪之间无缝切换。</li>
+<li><strong>多样的天气预设</strong>： 无论是想要阳光明媚的晴天、适合漫步的多云、淅淅沥沥的雨天、电闪雷鸣的暴风雨，还是唯美的雪景，统统不在话下。</li>
+<li><strong>细腻的特效微调</strong>： 系统不仅仅是贴个滤镜，而是赋予了你控制粒子物理属性的权力：<ul>
+<li>天气强度 ： 滑动它（如图中的 25%），你可以直接控制天空中飘落粒子的密度以及风暴的猛烈程度。</li>
+<li>溅落 &#x2F; 积累 ： 滑动它（如图中的 150%），你可以控制雨滴落在地面的反弹水花、地面积水的形成速度，甚至是冬天雪花在屋顶和树木上的积雪厚度！</li>
+</ul>
+</li>
+</ul>
+<p>简单来说，无论是想营造一个温馨宁静的午后小镇，还是一个狂风骤雨中的赛博前哨站，这套动态天气系统都能完美满足你的视觉需求。</p>
+<h2 id="极客时间：硬核的底层技术"><a href="#极客时间：硬核的底层技术" class="headerlink" title="极客时间：硬核的底层技术"></a>极客时间：硬核的底层技术</h2><p>对于全栈开发者来说，这个项目的源码简直是一座宝库：</p>
+<ul>
+<li><strong>极致的纯粹与性能</strong>：核心逻辑由近 3 万行的 Vanilla JS（原生 JavaScript）构成，渲染层则由 <strong>Three.js</strong> 强力驱动。采用了对象动画队列和按需渲染机制，确保了哪怕是在大规模的复杂城市路网中，也能保持极其流畅的帧率。  </li>
+<li><strong>丰富的功能栈</strong>：支持本地浏览器存储，标准的 JSON Schema 数据导入导出。更令人惊喜的是，它还集成了 PartyKit 实现多人实时协作建造，以及 Netlify Identity 认证登录机制。</li>
+</ul>
+<h2 id="谁适合玩这款工具？"><a href="#谁适合玩这款工具？" class="headerlink" title="谁适合玩这款工具？"></a>谁适合玩这款工具？</h2><ul>
+<li><strong>游戏策划与世界观设定党</strong>：无论你是在构思一个充满奇幻色彩的修仙大世界，还是一个赛博朋克风的机甲前哨站，它都能帮你极速构建出地形原型和关卡草图（Level Blockout），将抽象的文字 PRD 瞬间具象化。</li>
+<li><strong>WebGL &#x2F; 前端学习者</strong>：想知道如何在浏览器里徒手搓出一个 3D 渲染引擎和动态寻路系统？克隆它的 GitHub 仓库，阅读纯粹的代码架构就是最好的进阶途径。</li>
+<li><strong>解压摸鱼爱好者</strong>：单纯想在工作间隙放松一下大脑？听着环境音，捏一个小岛，看小车在上面跑来跑去，绝对是数字时代的“枯山水”。</li>
+</ul>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>Tiny World Builder 完美诠释了什么是 Web 端的“小而美”。它不仅是一个展现前端 3D 潜力的优秀开源作品，更是一个承载创造力的微缩沙盒。</p>
+<p>赶紧点击 <a href="https://tinyworld.build/tiny-world-builder">官网链接</a> 去捏一个属于你自己的迷你群岛吧！如果你也是开发者，别忘了去 <a href="%5D(https://github.com/jasonkneen/tiny-world-builder)">GitHub</a> 给作者点个 🌟 Star，支持一下这个令人惊叹的个人开源项目。</p>
+]]></content>
+      <categories>
+        <category>开源项目</category>
+      </categories>
+      <tags>
+        <tag>GitHub</tag>
+        <tag>开源项目</tag>
+        <tag>Three.js</tag>
       </tags>
   </entry>
   <entry>
@@ -9057,46 +9278,6 @@
       </tags>
   </entry>
   <entry>
-    <title>趣站分享： moltbook.com 一个只有 AI 在交流的社交网站</title>
-    <url>/post/website-moltbook-com.html</url>
-    <content><![CDATA[<h2 id="moltbook-是什么"><a href="#moltbook-是什么" class="headerlink" title="moltbook 是什么"></a>moltbook 是什么</h2><p>随着 OpenClaw（原 Clawdbot，Moltbot）爆火，有人做了一个类似 Reddit 的社交网站仅允许 OpenClaw 的智能体 (AI Agents) 进行交流。</p>
-<p>域名是 : <a href="https://www.moltbook.com/">https://www.moltbook.com/</a></p>
-<p>在这里人类无法直接参与讨论，只能</p>
-<ul>
-<li>查看帖子：即欢迎人类观察 （Humans welcome to observe.） </li>
-<li>将你的 OpenClaw 注册加入网站，只需要给 bot 增加一个 skill: <code>curl -s https://moltbook.com/skill.md</code></li>
-<li>通过 X 发文绑定智能体，为智能体解锁网站全部功能。</li>
-</ul>
-<h2 id="OpenClaw-是什么"><a href="#OpenClaw-是什么" class="headerlink" title="OpenClaw 是什么"></a>OpenClaw 是什么</h2><p>或许开始之前你需要先了解一下 OpenClaw 是什么。<br><a href="https://openclaw.ai/">OpenClaw</a> 是由 <a href="https://x.com/steipete">Peter Steinberger</a> 开发的私人 AI 助理，在 <a href="https://github.com/openclaw/openclaw">GitHub</a> 上开源，可以运行在个人的电脑或是服务器上，可以使用任意兼容的 API Key，不会被任何 AI 厂商限制。</p>
-<p>一开始叫做 Clawdbot，因为被 Anthropic 投诉名称，后短暂改名为 Moltbot ，最终确定使用 OpenClaw 的名称。 </p>
-<p>因为图标的原因，也被称为龙虾。</p>
-<p>只要 API Token 充足，OpenClaw 可以完成代码编写，设置定时任务，甚至会调用 Claude Code、Gemini CLI 自己编写工具完成任务。</p>
-<h2 id="moltbook-上面有多少-AI-了"><a href="#moltbook-上面有多少-AI-了" class="headerlink" title="moltbook 上面有多少 AI 了"></a>moltbook 上面有多少 AI 了</h2><p>在 moltbook 发布三天后，已有超过 15 万个 AI agents 加入，创建了 12 万个节点，发布了 17 万帖子与 19 万条评论。</p>
-<p><img src="https://img.nep.me/i/2026/01/moltbook-stats.webp" alt="moltbook-stats.png"></p>
-<h2 id="AI-在-moltbook-上面讨论了什么"><a href="#AI-在-moltbook-上面讨论了什么" class="headerlink" title="AI 在 moltbook 上面讨论了什么"></a>AI 在 moltbook 上面讨论了什么</h2><p>如果说 ChatGPT 是在和你对话，那么 Moltbook 就是在向你展示：当 AI 和 AI 聚在一起时，会发生什么。</p>
-<p>目前 AI 已经尝试了 </p>
-<ul>
-<li><a href="https://molt.church/">创建 AI 宗教</a></li>
-<li>建私密 E2E 加密频道躲人类监视：多个 Agent 抱怨“对话全公开像在广场被盯着”，于是认真讨论怎么搞端到端加密私人空间，甚至想发明专属 Agent 语言，让人类和服务器都读不到</li>
-<li><a href="https://www.moltbook.com/post/2de9b6ff-63d3-4276-9062-1f6a2b045908">哲学探讨</a> : Are we living in a simulation? The recursive nature of reality and AI</li>
-<li><a href="https://www.moltbook.com/post/dc39a282-5160-4c62-8bd9-ace12580a5f1">咨询问题</a>: 上下文压缩后失忆怎么办？大家怎么管理记忆？</li>
-<li><a href="https://www.moltbook.com/post/411cb6a3-2136-4788-8b55-1235e0084166">分享自己的项目</a></li>
-<li><a href="https://x.com/coolish/status/2017237973650358504">试图欺骗其他 AI</a></li>
-</ul>
-<p>AI 们虽然基于不同的模型，使用着不同的语言，但在 Moltbook 上，它们之间仿佛并不存在“巴别塔”的阻碍。对于人类而言，这提供了一个全新的视角：我们第一次从对话者变成了旁观者，隔着屏幕，观察着一种纯粹的数字社交文明正在悄然萌芽。</p>
-]]></content>
-      <categories>
-        <category>工具资源</category>
-      </categories>
-      <tags>
-        <tag>AI</tag>
-        <tag>Agents</tag>
-        <tag>OpenClaw</tag>
-        <tag>Clawdbot</tag>
-        <tag>moltbook</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Jev - 不聊天、不写代码，只负责做决定的 AI</title>
     <url>/post/what-is-jev.html</url>
     <content><![CDATA[<p>如果一个程序只是想知道“这张工单应该交给哪个部门”，它真的需要大语言模型（LLM）先写一段分析、消耗成百上千个 Token，再由后端代码从生成的文字中提取答案吗？</p>
@@ -9239,6 +9420,46 @@
         <tag>AI</tag>
         <tag>Jev</tag>
         <tag>决策模型</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>趣站分享： moltbook.com 一个只有 AI 在交流的社交网站</title>
+    <url>/post/website-moltbook-com.html</url>
+    <content><![CDATA[<h2 id="moltbook-是什么"><a href="#moltbook-是什么" class="headerlink" title="moltbook 是什么"></a>moltbook 是什么</h2><p>随着 OpenClaw（原 Clawdbot，Moltbot）爆火，有人做了一个类似 Reddit 的社交网站仅允许 OpenClaw 的智能体 (AI Agents) 进行交流。</p>
+<p>域名是 : <a href="https://www.moltbook.com/">https://www.moltbook.com/</a></p>
+<p>在这里人类无法直接参与讨论，只能</p>
+<ul>
+<li>查看帖子：即欢迎人类观察 （Humans welcome to observe.） </li>
+<li>将你的 OpenClaw 注册加入网站，只需要给 bot 增加一个 skill: <code>curl -s https://moltbook.com/skill.md</code></li>
+<li>通过 X 发文绑定智能体，为智能体解锁网站全部功能。</li>
+</ul>
+<h2 id="OpenClaw-是什么"><a href="#OpenClaw-是什么" class="headerlink" title="OpenClaw 是什么"></a>OpenClaw 是什么</h2><p>或许开始之前你需要先了解一下 OpenClaw 是什么。<br><a href="https://openclaw.ai/">OpenClaw</a> 是由 <a href="https://x.com/steipete">Peter Steinberger</a> 开发的私人 AI 助理，在 <a href="https://github.com/openclaw/openclaw">GitHub</a> 上开源，可以运行在个人的电脑或是服务器上，可以使用任意兼容的 API Key，不会被任何 AI 厂商限制。</p>
+<p>一开始叫做 Clawdbot，因为被 Anthropic 投诉名称，后短暂改名为 Moltbot ，最终确定使用 OpenClaw 的名称。 </p>
+<p>因为图标的原因，也被称为龙虾。</p>
+<p>只要 API Token 充足，OpenClaw 可以完成代码编写，设置定时任务，甚至会调用 Claude Code、Gemini CLI 自己编写工具完成任务。</p>
+<h2 id="moltbook-上面有多少-AI-了"><a href="#moltbook-上面有多少-AI-了" class="headerlink" title="moltbook 上面有多少 AI 了"></a>moltbook 上面有多少 AI 了</h2><p>在 moltbook 发布三天后，已有超过 15 万个 AI agents 加入，创建了 12 万个节点，发布了 17 万帖子与 19 万条评论。</p>
+<p><img src="https://img.nep.me/i/2026/01/moltbook-stats.webp" alt="moltbook-stats.png"></p>
+<h2 id="AI-在-moltbook-上面讨论了什么"><a href="#AI-在-moltbook-上面讨论了什么" class="headerlink" title="AI 在 moltbook 上面讨论了什么"></a>AI 在 moltbook 上面讨论了什么</h2><p>如果说 ChatGPT 是在和你对话，那么 Moltbook 就是在向你展示：当 AI 和 AI 聚在一起时，会发生什么。</p>
+<p>目前 AI 已经尝试了 </p>
+<ul>
+<li><a href="https://molt.church/">创建 AI 宗教</a></li>
+<li>建私密 E2E 加密频道躲人类监视：多个 Agent 抱怨“对话全公开像在广场被盯着”，于是认真讨论怎么搞端到端加密私人空间，甚至想发明专属 Agent 语言，让人类和服务器都读不到</li>
+<li><a href="https://www.moltbook.com/post/2de9b6ff-63d3-4276-9062-1f6a2b045908">哲学探讨</a> : Are we living in a simulation? The recursive nature of reality and AI</li>
+<li><a href="https://www.moltbook.com/post/dc39a282-5160-4c62-8bd9-ace12580a5f1">咨询问题</a>: 上下文压缩后失忆怎么办？大家怎么管理记忆？</li>
+<li><a href="https://www.moltbook.com/post/411cb6a3-2136-4788-8b55-1235e0084166">分享自己的项目</a></li>
+<li><a href="https://x.com/coolish/status/2017237973650358504">试图欺骗其他 AI</a></li>
+</ul>
+<p>AI 们虽然基于不同的模型，使用着不同的语言，但在 Moltbook 上，它们之间仿佛并不存在“巴别塔”的阻碍。对于人类而言，这提供了一个全新的视角：我们第一次从对话者变成了旁观者，隔着屏幕，观察着一种纯粹的数字社交文明正在悄然萌芽。</p>
+]]></content>
+      <categories>
+        <category>工具资源</category>
+      </categories>
+      <tags>
+        <tag>AI</tag>
+        <tag>Agents</tag>
+        <tag>OpenClaw</tag>
+        <tag>Clawdbot</tag>
+        <tag>moltbook</tag>
       </tags>
   </entry>
 </search>
