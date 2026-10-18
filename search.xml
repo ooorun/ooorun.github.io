@@ -1452,6 +1452,38 @@
       </tags>
   </entry>
   <entry>
+    <title>OpenAI 发布两款高性能开源人工智能模型 GPT-OSS-20B 与 GPT-OSS-120B</title>
+    <url>/post/news-openai-releae-gpt-oss-model.html</url>
+    <content><![CDATA[<p><strong>旧金山 – 2025年8月6日</strong> – OpenAI今日宣布推出两款采用混合专家（MoE）架构的开源推理模型：<strong>GPT-OSS-120B</strong> 和 <strong>GPT-OSS-20B</strong> 。 </p>
+<p>这两款模型使用  Apache 2.0 开源许可证发布，允许开发者和研究人员免费使用、修改和分发。</p>
+<p>新模型专注于思维链（Chain-of-Thought）推理，旨在通过将复杂任务分解为更小的步骤来提升结果的准确性。根据 OpenAI 的基准测试，<strong>GPT-OSS-20B</strong> 的性能可与 <code>o4-mini</code> 相媲美，而 <strong>GPT-OSS-120B</strong> 的性能则与 <code>o3-mini</code> 相当。</p>
+<p>OpenAI CEO 萨姆·奥尔特曼表示：</p>
+<blockquote>
+<p>“我们很高兴能将这些模型交到全世界更多人的手中。它们不会取代现有的GPT模型，而是作为一种补充，推动人工智能领域的创新与协作。”</p>
+</blockquote>
+<p>此次发布的一大亮点是其在本地设备上的运行能力。GPT-OSS-20B 等较小尺寸的模型经过优化，可在笔记本电脑甚至智能手机上高效运行。在 M4 芯片的 MacBook 上，20B 模型的推理速度可达每秒30-40个token。</p>
+<p><strong>相关链接:</strong></p>
+<ul>
+<li><strong>模型信息:</strong> <a href="https://openai.com/zh-Hans-CN/open-models/">https://openai.com/zh-Hans-CN/open-models/</a></li>
+<li><strong>模型下载:</strong> <a href="https://huggingface.co/openai">https://huggingface.co/openai</a></li>
+</ul>
+<p><strong>本地运行 GPT-OSS-20B</strong><br><a href="https://ollama.com/download">ollama</a> 上 GPT-OSS-20B 模型大小为 14GB ，一键运行命令如下：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">ollama run gpt-oss:20b </span><br></pre></td></tr></table></figure>
+
+<p>图形界面则可以使用 <a href="https://lmstudio.ai/">LM Studio</a></p>
+<p><img src="https://img.nep.me/i/2025/08/06/lmstudio-run-gpt-oss-20b.webp" alt="LM Studio run GPT-OSS-20B"></p>
+]]></content>
+      <categories>
+        <category>资讯</category>
+      </categories>
+      <tags>
+        <tag>AI</tag>
+        <tag>大模型</tag>
+        <tag>OpenAI</tag>
+        <tag>开源</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>普通人掘金互联网：独立开发起步指南</title>
     <url>/post/how-to-make-money-from-internet.html</url>
     <content><![CDATA[<p>你是否也曾羡慕那些在社交媒体上“透明化”分享收入、靠个人项目实现财务自由的独立开发者？看到他们动辄上千美金的月收入，你或许会觉得那是一个难以达成的目标。</p>
@@ -1585,38 +1617,6 @@
         <tag>独立开发</tag>
         <tag>个人项目</tag>
         <tag>副业</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>OpenAI 发布两款高性能开源人工智能模型 GPT-OSS-20B 与 GPT-OSS-120B</title>
-    <url>/post/news-openai-releae-gpt-oss-model.html</url>
-    <content><![CDATA[<p><strong>旧金山 – 2025年8月6日</strong> – OpenAI今日宣布推出两款采用混合专家（MoE）架构的开源推理模型：<strong>GPT-OSS-120B</strong> 和 <strong>GPT-OSS-20B</strong> 。 </p>
-<p>这两款模型使用  Apache 2.0 开源许可证发布，允许开发者和研究人员免费使用、修改和分发。</p>
-<p>新模型专注于思维链（Chain-of-Thought）推理，旨在通过将复杂任务分解为更小的步骤来提升结果的准确性。根据 OpenAI 的基准测试，<strong>GPT-OSS-20B</strong> 的性能可与 <code>o4-mini</code> 相媲美，而 <strong>GPT-OSS-120B</strong> 的性能则与 <code>o3-mini</code> 相当。</p>
-<p>OpenAI CEO 萨姆·奥尔特曼表示：</p>
-<blockquote>
-<p>“我们很高兴能将这些模型交到全世界更多人的手中。它们不会取代现有的GPT模型，而是作为一种补充，推动人工智能领域的创新与协作。”</p>
-</blockquote>
-<p>此次发布的一大亮点是其在本地设备上的运行能力。GPT-OSS-20B 等较小尺寸的模型经过优化，可在笔记本电脑甚至智能手机上高效运行。在 M4 芯片的 MacBook 上，20B 模型的推理速度可达每秒30-40个token。</p>
-<p><strong>相关链接:</strong></p>
-<ul>
-<li><strong>模型信息:</strong> <a href="https://openai.com/zh-Hans-CN/open-models/">https://openai.com/zh-Hans-CN/open-models/</a></li>
-<li><strong>模型下载:</strong> <a href="https://huggingface.co/openai">https://huggingface.co/openai</a></li>
-</ul>
-<p><strong>本地运行 GPT-OSS-20B</strong><br><a href="https://ollama.com/download">ollama</a> 上 GPT-OSS-20B 模型大小为 14GB ，一键运行命令如下：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">ollama run gpt-oss:20b </span><br></pre></td></tr></table></figure>
-
-<p>图形界面则可以使用 <a href="https://lmstudio.ai/">LM Studio</a></p>
-<p><img src="https://img.nep.me/i/2025/08/06/lmstudio-run-gpt-oss-20b.webp" alt="LM Studio run GPT-OSS-20B"></p>
-]]></content>
-      <categories>
-        <category>资讯</category>
-      </categories>
-      <tags>
-        <tag>AI</tag>
-        <tag>大模型</tag>
-        <tag>OpenAI</tag>
-        <tag>开源</tag>
       </tags>
   </entry>
   <entry>
@@ -2217,82 +2217,6 @@
       </tags>
   </entry>
   <entry>
-    <title>使用 Docker 快速部署 Memos 个人笔记系统</title>
-    <url>/post/use-docker-run-memeos.html</url>
-    <content><![CDATA[<h2 id="Memos-简介"><a href="#Memos-简介" class="headerlink" title="Memos 简介"></a>Memos 简介</h2><p>Memos 是一款开源的轻量级笔记服务，它允许你像发微博或推特一样，轻松记录每一个灵感和想法。由于其开源、支持 Docker 部署的特性，我们可以用它来搭建一个完全由自己掌控的私有化笔记系统。</p>
-<p>Memos 的核心功能包括：</p>
-<ul>
-<li><strong>Markdown</strong> 语法支持</li>
-<li><strong>标签 (Tag)</strong> 管理</li>
-<li><strong>任务列表 (Task)</strong> 支持</li>
-<li><strong>公开&#x2F;私密</strong> 笔记权限设置</li>
-<li><strong>多用户</strong> 协同使用</li>
-</ul>
-<p>在开始部署之前，你可以访问官方的 <a href="https://demo.usememos.com/">Memos Live Demo</a> 来快速体验一下。</p>
-<p>本教程将指导你如何使用 Docker Compose 快速部署一个安全、私有的 Memos 实例，让你在快速拥有属于自己的笔记管理系统。</p>
-<h2 id="一、环境准备"><a href="#一、环境准备" class="headerlink" title="一、环境准备"></a>一、环境准备</h2><p>在开始前，需要我们有一个自己的 VPS 或是支持 Docker 容器的 NAS 系统。</p>
-<h3 id="1-安装-Docker-和-Docker-Compose"><a href="#1-安装-Docker-和-Docker-Compose" class="headerlink" title="1. 安装 Docker 和 Docker Compose"></a>1. 安装 Docker 和 Docker Compose</h3><p>如果你的服务器尚未安装 Docker 和 Docker Compose ，可以参考以下教程：</p>
-<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p><strong>延伸阅读:</strong> <a href="https://ooo.run/post/debian-install-docker.html">在 Debian 12 中安装 Docker 以及 Docker Compose</a></p></div></div>
-
-<h3 id="2-创建项目目录"><a href="#2-创建项目目录" class="headerlink" title="2. 创建项目目录"></a>2. 创建项目目录</h3><p>为 Memos 创建一个专用的目录，用于存放配置文件和数据。</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p /opt/memos &amp;&amp; <span class="built_in">cd</span> /opt/memos</span><br></pre></td></tr></table></figure>
-
-<h2 id="二、使用-Docker-Compose-部署-Memos"><a href="#二、使用-Docker-Compose-部署-Memos" class="headerlink" title="二、使用 Docker Compose 部署 Memos"></a>二、使用 Docker Compose 部署 Memos</h2><h3 id="创建-docker-compose-yml-文件"><a href="#创建-docker-compose-yml-文件" class="headerlink" title="创建 docker-compose.yml 文件"></a>创建 <code>docker-compose.yml</code> 文件</h3><p>在项目目录 (<code>/opt/memos</code>) 中，创建一个名为 <code>docker-compose.yml</code> 的文件。</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">vim docker-compose.yml</span><br></pre></td></tr></table></figure>
-
-<p>将以下内容粘贴到文件中：</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">memos:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">neosmemo/memos:latest</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">memos</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">5230</span><span class="string">:5230</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./data:/var/opt/memos</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">MEMOS_MODE=prod</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">MEMOS_PORT=5230</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>配置解析:</strong></p>
-<ul>
-<li><code>ports</code>: 将 Memos 的 Web 界面映射到主机的 5230 端口</li>
-<li><code>volumes</code>: 将 Memos 的数据存储在 <code>docker-compose.yml</code> 相同目录下的 <code>data</code> 文件夹中，确保容器重建后数据不丢失</li>
-</ul>
-<blockquote>
-<p>未来如果需要备份或是迁移，直接打包复制 <code>/opt/data</code> 文件夹即可。</p>
-</blockquote>
-<h3 id="启动-Memos-服务"><a href="#启动-Memos-服务" class="headerlink" title="启动 Memos 服务"></a>启动 Memos 服务</h3><p>在 <code>docker-compose.yml</code> 文件所在目录中，执行以下命令来拉取镜像并启动服务：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">docker compose up -d</span><br></pre></td></tr></table></figure>
-
-<p>然后打开浏览器，访问 <code>http://&lt;你的服务器IP&gt;:5230</code> 即可访问 Memos 的 Web 界面，第一次打开会让我们注册管理员账户（网页默认显示英文，可以在底部切换语言）。</p>
-<p><img src="https://img.nep.me/i/2025/08/18/memos-signup.webp" alt="memos-signup"></p>
-<h2 id="三、安全设置"><a href="#三、安全设置" class="headerlink" title="三、安全设置"></a>三、安全设置</h2><p>对于一个私有笔记系统，安全同样重要，如果我们只是个人使用，可以关闭注册。</p>
-<h3 id="1-禁用用户注册"><a href="#1-禁用用户注册" class="headerlink" title="1. 禁用用户注册"></a>1. 禁用用户注册</h3><p>登录到 Memos 后，进入管理员设置：</p>
-<ul>
-<li>点击左侧边栏的设置按钮</li>
-<li>选择 <strong>系统</strong></li>
-<li>打开 <code>Disallow user registration</code> 的选项</li>
-</ul>
-<h3 id="2-（强烈推荐）使用反向代理"><a href="#2-（强烈推荐）使用反向代理" class="headerlink" title="2. （强烈推荐）使用反向代理"></a>2. （强烈推荐）使用反向代理</h3><p>直接暴露 Web 端口到公网是不安全的。推荐使用 Nginx 或其他反向代理工具来提供 Web 服务，并且使用 HTTPS 访问。</p>
-<p><code>1</code> <strong>修改端口映射</strong>: 将 Memos 的 Web 端口限制为仅限本机访问。<br>修改 <code>docker-compose.yml</code> 文件中的 <code>ports</code> 部分：</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">ports:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">&quot;127.0.0.1:5230:5230&quot;</span> <span class="comment"># 仅允许本地访问</span></span><br></pre></td></tr></table></figure>
-
-<p><code>2</code> <strong>重启服务</strong>:</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">docker compose down</span><br><span class="line">docker compose up -d</span><br></pre></td></tr></table></figure>
-
-<p><code>3</code> <strong>配置反向代理</strong>: 在你的反向代理工具中，设置一个代理规则，将 <code>memos.yourdomain.com</code> 的流量转发到 <code>http://127.0.0.1:5230</code>。</p>
-<p><strong>Nginx 示例（仅反代部分）</strong></p>
-<p>以下示例将域名 <code>memos.example.com</code> 的 HTTP 流量反代到本机的 <code>127.0.0.1:5230</code>。</p>
-<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="section">location</span> / &#123;</span><br><span class="line">    <span class="attribute">proxy_pass</span> http://127.0.0.1:5230/;</span><br><span class="line">    </span><br><span class="line">    <span class="attribute">rewrite</span><span class="regexp"> ^/(.*)$</span> /<span class="variable">$1</span> <span class="literal">break</span>;</span><br><span class="line">    <span class="attribute">proxy_redirect</span> <span class="literal">off</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> Host <span class="variable">$host</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> X-Forwarded-Proto <span class="variable">$scheme</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> X-Real-IP <span class="variable">$remote_addr</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> Upgrade-Insecure-Requests <span class="number">1</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> X-Forwarded-Proto https;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>测试并重载 Nginx 配置：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">nginx -t</span><br><span class="line">nginx -s reload </span><br></pre></td></tr></table></figure>
-
-<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>恭喜！通过本教程，你已经成功地为自己搭建了一个功能强大且完全私有的个人笔记系统。Memos 以其轻量级的设计和对 Markdown 的良好支持，成为了记录想法、管理任务和构建个人知识库的绝佳工具。</p>
-<p>现在，你可以开始自由地记录你的每一个灵感，而无需担心数据隐私问题。由于我们使用了 Docker Compose，未来的维护和升级也将变得异常简单。</p>
-<p>希望这个全新的笔记系统能为你的学习和工作带来便利。</p>
-]]></content>
-      <categories>
-        <category>教程</category>
-      </categories>
-      <tags>
-        <tag>Docker</tag>
-        <tag>Docker Compose</tag>
-        <tag>Self-hosted</tag>
-        <tag>Memos</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>使用 Docker 与 Wallos 快速搭建个人订阅管理系统</title>
     <url>/post/use-docker-run-wallos.html</url>
     <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>在数字化时代，我们订阅的服务越来越多：Netflix、Spotify、Youtube Premium、各种云存储服务或是网站会员等等。这些订阅费用看似不多，但累积起来却是一笔不小的开支。有时，我们会忘记自己订阅了什么，导致为不再使用的服务继续付费。</p>
@@ -2416,6 +2340,82 @@
         <tag>Docker Compose</tag>
         <tag>Self-hosted</tag>
         <tag>Wallos</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用 Docker 快速部署 Memos 个人笔记系统</title>
+    <url>/post/use-docker-run-memeos.html</url>
+    <content><![CDATA[<h2 id="Memos-简介"><a href="#Memos-简介" class="headerlink" title="Memos 简介"></a>Memos 简介</h2><p>Memos 是一款开源的轻量级笔记服务，它允许你像发微博或推特一样，轻松记录每一个灵感和想法。由于其开源、支持 Docker 部署的特性，我们可以用它来搭建一个完全由自己掌控的私有化笔记系统。</p>
+<p>Memos 的核心功能包括：</p>
+<ul>
+<li><strong>Markdown</strong> 语法支持</li>
+<li><strong>标签 (Tag)</strong> 管理</li>
+<li><strong>任务列表 (Task)</strong> 支持</li>
+<li><strong>公开&#x2F;私密</strong> 笔记权限设置</li>
+<li><strong>多用户</strong> 协同使用</li>
+</ul>
+<p>在开始部署之前，你可以访问官方的 <a href="https://demo.usememos.com/">Memos Live Demo</a> 来快速体验一下。</p>
+<p>本教程将指导你如何使用 Docker Compose 快速部署一个安全、私有的 Memos 实例，让你在快速拥有属于自己的笔记管理系统。</p>
+<h2 id="一、环境准备"><a href="#一、环境准备" class="headerlink" title="一、环境准备"></a>一、环境准备</h2><p>在开始前，需要我们有一个自己的 VPS 或是支持 Docker 容器的 NAS 系统。</p>
+<h3 id="1-安装-Docker-和-Docker-Compose"><a href="#1-安装-Docker-和-Docker-Compose" class="headerlink" title="1. 安装 Docker 和 Docker Compose"></a>1. 安装 Docker 和 Docker Compose</h3><p>如果你的服务器尚未安装 Docker 和 Docker Compose ，可以参考以下教程：</p>
+<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p><strong>延伸阅读:</strong> <a href="https://ooo.run/post/debian-install-docker.html">在 Debian 12 中安装 Docker 以及 Docker Compose</a></p></div></div>
+
+<h3 id="2-创建项目目录"><a href="#2-创建项目目录" class="headerlink" title="2. 创建项目目录"></a>2. 创建项目目录</h3><p>为 Memos 创建一个专用的目录，用于存放配置文件和数据。</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p /opt/memos &amp;&amp; <span class="built_in">cd</span> /opt/memos</span><br></pre></td></tr></table></figure>
+
+<h2 id="二、使用-Docker-Compose-部署-Memos"><a href="#二、使用-Docker-Compose-部署-Memos" class="headerlink" title="二、使用 Docker Compose 部署 Memos"></a>二、使用 Docker Compose 部署 Memos</h2><h3 id="创建-docker-compose-yml-文件"><a href="#创建-docker-compose-yml-文件" class="headerlink" title="创建 docker-compose.yml 文件"></a>创建 <code>docker-compose.yml</code> 文件</h3><p>在项目目录 (<code>/opt/memos</code>) 中，创建一个名为 <code>docker-compose.yml</code> 的文件。</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">vim docker-compose.yml</span><br></pre></td></tr></table></figure>
+
+<p>将以下内容粘贴到文件中：</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">memos:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">neosmemo/memos:latest</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">memos</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">5230</span><span class="string">:5230</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./data:/var/opt/memos</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">MEMOS_MODE=prod</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">MEMOS_PORT=5230</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>配置解析:</strong></p>
+<ul>
+<li><code>ports</code>: 将 Memos 的 Web 界面映射到主机的 5230 端口</li>
+<li><code>volumes</code>: 将 Memos 的数据存储在 <code>docker-compose.yml</code> 相同目录下的 <code>data</code> 文件夹中，确保容器重建后数据不丢失</li>
+</ul>
+<blockquote>
+<p>未来如果需要备份或是迁移，直接打包复制 <code>/opt/data</code> 文件夹即可。</p>
+</blockquote>
+<h3 id="启动-Memos-服务"><a href="#启动-Memos-服务" class="headerlink" title="启动 Memos 服务"></a>启动 Memos 服务</h3><p>在 <code>docker-compose.yml</code> 文件所在目录中，执行以下命令来拉取镜像并启动服务：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">docker compose up -d</span><br></pre></td></tr></table></figure>
+
+<p>然后打开浏览器，访问 <code>http://&lt;你的服务器IP&gt;:5230</code> 即可访问 Memos 的 Web 界面，第一次打开会让我们注册管理员账户（网页默认显示英文，可以在底部切换语言）。</p>
+<p><img src="https://img.nep.me/i/2025/08/18/memos-signup.webp" alt="memos-signup"></p>
+<h2 id="三、安全设置"><a href="#三、安全设置" class="headerlink" title="三、安全设置"></a>三、安全设置</h2><p>对于一个私有笔记系统，安全同样重要，如果我们只是个人使用，可以关闭注册。</p>
+<h3 id="1-禁用用户注册"><a href="#1-禁用用户注册" class="headerlink" title="1. 禁用用户注册"></a>1. 禁用用户注册</h3><p>登录到 Memos 后，进入管理员设置：</p>
+<ul>
+<li>点击左侧边栏的设置按钮</li>
+<li>选择 <strong>系统</strong></li>
+<li>打开 <code>Disallow user registration</code> 的选项</li>
+</ul>
+<h3 id="2-（强烈推荐）使用反向代理"><a href="#2-（强烈推荐）使用反向代理" class="headerlink" title="2. （强烈推荐）使用反向代理"></a>2. （强烈推荐）使用反向代理</h3><p>直接暴露 Web 端口到公网是不安全的。推荐使用 Nginx 或其他反向代理工具来提供 Web 服务，并且使用 HTTPS 访问。</p>
+<p><code>1</code> <strong>修改端口映射</strong>: 将 Memos 的 Web 端口限制为仅限本机访问。<br>修改 <code>docker-compose.yml</code> 文件中的 <code>ports</code> 部分：</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">ports:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">&quot;127.0.0.1:5230:5230&quot;</span> <span class="comment"># 仅允许本地访问</span></span><br></pre></td></tr></table></figure>
+
+<p><code>2</code> <strong>重启服务</strong>:</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">docker compose down</span><br><span class="line">docker compose up -d</span><br></pre></td></tr></table></figure>
+
+<p><code>3</code> <strong>配置反向代理</strong>: 在你的反向代理工具中，设置一个代理规则，将 <code>memos.yourdomain.com</code> 的流量转发到 <code>http://127.0.0.1:5230</code>。</p>
+<p><strong>Nginx 示例（仅反代部分）</strong></p>
+<p>以下示例将域名 <code>memos.example.com</code> 的 HTTP 流量反代到本机的 <code>127.0.0.1:5230</code>。</p>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="section">location</span> / &#123;</span><br><span class="line">    <span class="attribute">proxy_pass</span> http://127.0.0.1:5230/;</span><br><span class="line">    </span><br><span class="line">    <span class="attribute">rewrite</span><span class="regexp"> ^/(.*)$</span> /<span class="variable">$1</span> <span class="literal">break</span>;</span><br><span class="line">    <span class="attribute">proxy_redirect</span> <span class="literal">off</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> Host <span class="variable">$host</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> X-Forwarded-Proto <span class="variable">$scheme</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> X-Real-IP <span class="variable">$remote_addr</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> Upgrade-Insecure-Requests <span class="number">1</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> X-Forwarded-Proto https;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>测试并重载 Nginx 配置：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">nginx -t</span><br><span class="line">nginx -s reload </span><br></pre></td></tr></table></figure>
+
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>恭喜！通过本教程，你已经成功地为自己搭建了一个功能强大且完全私有的个人笔记系统。Memos 以其轻量级的设计和对 Markdown 的良好支持，成为了记录想法、管理任务和构建个人知识库的绝佳工具。</p>
+<p>现在，你可以开始自由地记录你的每一个灵感，而无需担心数据隐私问题。由于我们使用了 Docker Compose，未来的维护和升级也将变得异常简单。</p>
+<p>希望这个全新的笔记系统能为你的学习和工作带来便利。</p>
+]]></content>
+      <categories>
+        <category>教程</category>
+      </categories>
+      <tags>
+        <tag>Docker</tag>
+        <tag>Docker Compose</tag>
+        <tag>Self-hosted</tag>
+        <tag>Memos</tag>
       </tags>
   </entry>
   <entry>
@@ -3993,6 +3993,31 @@
       </tags>
   </entry>
   <entry>
+    <title>ChatGPT Business 为成员启用设备代码身份验证</title>
+    <url>/post/chatgpt-business-enable-codex-device-code.html</url>
+    <content><![CDATA[<p>最近 OpenAI 大促销，ChatGPT Business 免费一个席位 48 个月，应该会有小伙伴们打算同时使用两个账户，享受双倍额度。 </p>
+<h2 id="同时使用两个-ChatGPT-账户的方法-CC-Switch"><a href="#同时使用两个-ChatGPT-账户的方法-CC-Switch" class="headerlink" title="同时使用两个 ChatGPT 账户的方法(CC-Switch)"></a>同时使用两个 ChatGPT 账户的方法(CC-Switch)</h2><p>同时使用两个账户时，我们可以使用 <a href="https://github.com/farion1231/cc-switch">CC-Switch</a> 快速切换账户，而不必重新登陆。</p>
+<p>登录了一个账户后，在 CC-Switch 的 Codex 应用中添加一个新的 OpenAI Offical 供应商即可，不过我们启用新的供应商后，再执行 codex 可能会遇到账户错误的提示: </p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">Error: account/read failed during TUI bootstrap: account/read failed: email and plan <span class="built_in">type</span> are required <span class="keyword">for</span> chatgpt authentication (code -32600)</span><br></pre></td></tr></table></figure>
+
+<p>可以直接执行下面的命令，使用设备代码为第二个账户进行登录认证。</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">codex login --device-auth</span><br></pre></td></tr></table></figure>
+
+<p>但是基于安全原因，设备代码认证默认是关闭的，可以参考下面的方法开启。</p>
+<h2 id="启用设备代码身份验证"><a href="#启用设备代码身份验证" class="headerlink" title="启用设备代码身份验证"></a>启用设备代码身份验证</h2><p>团队的管理员在网页上访问 <strong>工作空间设置</strong> &gt; <strong>权限与角色</strong> ，在右侧开启 <strong>为 Codex CLI 启用设备代码身份验证</strong> 的选项即可。 </p>
+<p><a href="https://chatgpt.com/admin/permissions">https://chatgpt.com/admin/permissions</a></p>
+<p><img src="https://img.nep.me/ooo/codex-device-code-enable.webp" alt="codex-device-code-enable.png"></p>
+<p>然后就可以正常使用使用设备代码完成认证了。</p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>ChatGPT</tag>
+        <tag>Codex</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>在不设置 SMTP 的情况下修改 Vaultwarden(Bitwarden) 的账户邮箱</title>
     <url>/post/change-vaultwarden-account-email-without-set-smtp.html</url>
     <content><![CDATA[<p>Vaultwarden 更改登录邮箱时，默认需要向新邮箱发送验证码进行验证，如果没配置 SMTP，验证码不会真正发出。但在 <code>LOG_LEVEL=debug</code> 时会把验证码打印到日志里。如果你也只是个人使用，且不想设置 SMTP，可以查看下面的方法获取验证码，完成修改。</p>
@@ -4034,31 +4059,6 @@
         <tag>Docker</tag>
         <tag>Bitwarden</tag>
         <tag>Vaultwarden</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ChatGPT Business 为成员启用设备代码身份验证</title>
-    <url>/post/chatgpt-business-enable-codex-device-code.html</url>
-    <content><![CDATA[<p>最近 OpenAI 大促销，ChatGPT Business 免费一个席位 48 个月，应该会有小伙伴们打算同时使用两个账户，享受双倍额度。 </p>
-<h2 id="同时使用两个-ChatGPT-账户的方法-CC-Switch"><a href="#同时使用两个-ChatGPT-账户的方法-CC-Switch" class="headerlink" title="同时使用两个 ChatGPT 账户的方法(CC-Switch)"></a>同时使用两个 ChatGPT 账户的方法(CC-Switch)</h2><p>同时使用两个账户时，我们可以使用 <a href="https://github.com/farion1231/cc-switch">CC-Switch</a> 快速切换账户，而不必重新登陆。</p>
-<p>登录了一个账户后，在 CC-Switch 的 Codex 应用中添加一个新的 OpenAI Offical 供应商即可，不过我们启用新的供应商后，再执行 codex 可能会遇到账户错误的提示: </p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">Error: account/read failed during TUI bootstrap: account/read failed: email and plan <span class="built_in">type</span> are required <span class="keyword">for</span> chatgpt authentication (code -32600)</span><br></pre></td></tr></table></figure>
-
-<p>可以直接执行下面的命令，使用设备代码为第二个账户进行登录认证。</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">codex login --device-auth</span><br></pre></td></tr></table></figure>
-
-<p>但是基于安全原因，设备代码认证默认是关闭的，可以参考下面的方法开启。</p>
-<h2 id="启用设备代码身份验证"><a href="#启用设备代码身份验证" class="headerlink" title="启用设备代码身份验证"></a>启用设备代码身份验证</h2><p>团队的管理员在网页上访问 <strong>工作空间设置</strong> &gt; <strong>权限与角色</strong> ，在右侧开启 <strong>为 Codex CLI 启用设备代码身份验证</strong> 的选项即可。 </p>
-<p><a href="https://chatgpt.com/admin/permissions">https://chatgpt.com/admin/permissions</a></p>
-<p><img src="https://img.nep.me/ooo/codex-device-code-enable.webp" alt="codex-device-code-enable.png"></p>
-<p>然后就可以正常使用使用设备代码完成认证了。</p>
-]]></content>
-      <categories>
-        <category>笔记</category>
-      </categories>
-      <tags>
-        <tag>ChatGPT</tag>
-        <tag>Codex</tag>
       </tags>
   </entry>
   <entry>
@@ -4134,6 +4134,58 @@
       <tags>
         <tag>Anthropic</tag>
         <tag>Opus</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Codex 的日志记录消耗 SSD 寿命？OpenAI 已修复</title>
+    <url>/post/codex-is-buring-your-ssd.html</url>
+    <content><![CDATA[<h2 id="Bug-信息"><a href="#Bug-信息" class="headerlink" title="Bug 信息"></a>Bug 信息</h2><div class="flatpaper-note flatpaper-note--primary"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>好消息，OpenAI 已在 Codex 0.142.0 版本中修复了这个问题，可以放心使用。</p></div></div>
+
+<p>最近，Codex 凭借其强大的功能和丝滑的体验，周活跃用户已经突破了 <strong>500 万</strong> 大关。越来越多的开发者和极客都已经把它当成了日常高频使用的得力助手。</p>
+<p>不过，随着使用人数的增加，有用户反馈，在某些流式输出或自动化任务场景下，Codex 会持续向本地磁盘写入 TRACE 级别的日志。</p>
+<p>GitHUb 的 <a href="https://github.com/openai/codex/issues/28224">ISSUE</a> 上声称该 BUG 可能会产生 <strong>640GB&#x2F;年</strong> 的写入，这对于消费级 SSD 来说是致命的。对于目前主流的 1TB 或 2TB 消费级固态硬盘（标称寿命通常在 600TBW ~ 1200TBW）来说，可以说是非常严重。</p>
+<p><strong>而且，正因为现在 AI 浪潮空前火热，全球对高带宽、高性能存储的需求集中爆发，导致现在的 SSD 固态硬盘价格一路上涨，存储成本变得相当昂贵，尤其是 mac 设备的硬盘无法更换。在这种寸土寸金的时期，我们对硬盘的每一度磨损、每一 G 空间都不得不更加精打细算。</strong></p>
+<hr>
+<h2 id="1分钟自查：你中招了吗？"><a href="#1分钟自查：你中招了吗？" class="headerlink" title="1分钟自查：你中招了吗？"></a>1分钟自查：你中招了吗？</h2><p>如果你使用的是 Linux 或 Mac 系统，可以直接通过终端跑两行命令看看情况。</p>
+<p>首先，看看日志文件的大小：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">ls</span> -lh ~/.codex/logs_2.sqlite</span><br></pre></td></tr></table></figure>
+
+<p>然后，统计一下日志的写入级别：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;SELECT level, COUNT(*) FROM logs GROUP BY level ORDER BY COUNT(*) DESC&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>如何判断：</strong><br>如果查询结果中，<code>TRACE</code> 级别的日志占了绝大多数，并且 <code>logs_2.sqlite</code> 文件体积比较大，那就说明 Codex 确实在后台认真地记录着无关紧要的追踪信息。</p>
+<p><strong>参考数据：</strong><br>我的文件大小为 <strong>468MB：</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&gt; <span class="built_in">ls</span> -lh ~/.codex/logs_2.sqlite Jun 23</span><br><span class="line">-rw-r--r--@ 1 mro  staff   468M</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&gt; sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;SELECT level, COUNT(*) FROM logs GROUP BY level ORDER BY COUNT(*) DESC&quot;</span></span><br><span class="line">TRACE|39961</span><br><span class="line">INFO|39919</span><br><span class="line">DEBUG|7307</span><br><span class="line">WARN|177</span><br></pre></td></tr></table></figure>
+
+<p>可以看到 <code>TRACE|39961</code> 占了接近一半的数据，确实存在所说的问题，主要是目前 OpenAI 官方尚未做出修复的回应。</p>
+<h2 id="一劳永逸的解决方案-：直接在数据库拦截"><a href="#一劳永逸的解决方案-：直接在数据库拦截" class="headerlink" title="一劳永逸的解决方案 ：直接在数据库拦截"></a>一劳永逸的解决方案 ：直接在数据库拦截</h2><p><mark>OpenAI 已经修复这个问题了，不需要操作了</mark></p>
+<p>这里提供比较激进、但也最直接的临时方案：给日志表加一个 SQLite 触发器，让新的日志写入被忽略，毕竟这个文件里只有诊断日志，没有对话历史。</p>
+<p>执行前建议先退出 Codex，并备份日志数据库：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cp</span> ~/.codex/logs_2.sqlite ~/.codex/logs_2.sqlite.bak</span><br></pre></td></tr></table></figure>
+<p>然后执行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;CREATE TRIGGER IF NOT EXISTS block_log_inserts BEFORE INSERT ON logs BEGIN SELECT RAISE(IGNORE); END;&quot;</span></span><br></pre></td></tr></table></figure>
+<p>设置完成后，新的日志记录会被拦截，从而减少后续写入。</p>
+<p>需要注意的是，这个方法会影响 Codex 后续生成诊断日志。如果你之后需要向官方反馈问题，或者担心未来版本兼容性，可以先不要使用这个方案，改用定期清理的方式。</p>
+<details class="flatpaper-note flatpaper-note--info"><summary class="flatpaper-note__title"><span class="flatpaper-note__icon" aria-hidden="true"></span><span class="flatpaper-note__label">如何恢复</span><span class="flatpaper-note__chevron" aria-hidden="true"></span></summary><div class="flatpaper-note__body"><p>如果想要恢复的话就是删除这个 trigger 。先退出 Codex，再执行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;DROP TRIGGER IF EXISTS block_log_inserts;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>执行后可以检查是否还存在：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;.schema block_log_inserts&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>如果没有输出，说明已经删除成功。</p>
+<p>也可以用这个命令查看当前所有 trigger：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;SELECT name, tbl_name, sql FROM sqlite_master WHERE type=&#x27;trigger&#x27;;&quot;</span></span><br></pre></td></tr></table></figure></div></details>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>GitHub ISSUE 中的数据是比较夸张的，Codex 的这个日志问题并没有网传的那么吓人，但也感谢 OpenAI 完成了 BUG 的修复，祝大家用 Codex 敲代码愉快！</p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>OpenAI</tag>
+        <tag>Codex</tag>
       </tags>
   </entry>
   <entry>
@@ -4857,58 +4909,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Codex 的日志记录消耗 SSD 寿命？OpenAI 已修复</title>
-    <url>/post/codex-is-buring-your-ssd.html</url>
-    <content><![CDATA[<h2 id="Bug-信息"><a href="#Bug-信息" class="headerlink" title="Bug 信息"></a>Bug 信息</h2><div class="flatpaper-note flatpaper-note--primary"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>好消息，OpenAI 已在 Codex 0.142.0 版本中修复了这个问题，可以放心使用。</p></div></div>
-
-<p>最近，Codex 凭借其强大的功能和丝滑的体验，周活跃用户已经突破了 <strong>500 万</strong> 大关。越来越多的开发者和极客都已经把它当成了日常高频使用的得力助手。</p>
-<p>不过，随着使用人数的增加，有用户反馈，在某些流式输出或自动化任务场景下，Codex 会持续向本地磁盘写入 TRACE 级别的日志。</p>
-<p>GitHUb 的 <a href="https://github.com/openai/codex/issues/28224">ISSUE</a> 上声称该 BUG 可能会产生 <strong>640GB&#x2F;年</strong> 的写入，这对于消费级 SSD 来说是致命的。对于目前主流的 1TB 或 2TB 消费级固态硬盘（标称寿命通常在 600TBW ~ 1200TBW）来说，可以说是非常严重。</p>
-<p><strong>而且，正因为现在 AI 浪潮空前火热，全球对高带宽、高性能存储的需求集中爆发，导致现在的 SSD 固态硬盘价格一路上涨，存储成本变得相当昂贵，尤其是 mac 设备的硬盘无法更换。在这种寸土寸金的时期，我们对硬盘的每一度磨损、每一 G 空间都不得不更加精打细算。</strong></p>
-<hr>
-<h2 id="1分钟自查：你中招了吗？"><a href="#1分钟自查：你中招了吗？" class="headerlink" title="1分钟自查：你中招了吗？"></a>1分钟自查：你中招了吗？</h2><p>如果你使用的是 Linux 或 Mac 系统，可以直接通过终端跑两行命令看看情况。</p>
-<p>首先，看看日志文件的大小：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">ls</span> -lh ~/.codex/logs_2.sqlite</span><br></pre></td></tr></table></figure>
-
-<p>然后，统计一下日志的写入级别：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;SELECT level, COUNT(*) FROM logs GROUP BY level ORDER BY COUNT(*) DESC&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>如何判断：</strong><br>如果查询结果中，<code>TRACE</code> 级别的日志占了绝大多数，并且 <code>logs_2.sqlite</code> 文件体积比较大，那就说明 Codex 确实在后台认真地记录着无关紧要的追踪信息。</p>
-<p><strong>参考数据：</strong><br>我的文件大小为 <strong>468MB：</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&gt; <span class="built_in">ls</span> -lh ~/.codex/logs_2.sqlite Jun 23</span><br><span class="line">-rw-r--r--@ 1 mro  staff   468M</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&gt; sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;SELECT level, COUNT(*) FROM logs GROUP BY level ORDER BY COUNT(*) DESC&quot;</span></span><br><span class="line">TRACE|39961</span><br><span class="line">INFO|39919</span><br><span class="line">DEBUG|7307</span><br><span class="line">WARN|177</span><br></pre></td></tr></table></figure>
-
-<p>可以看到 <code>TRACE|39961</code> 占了接近一半的数据，确实存在所说的问题，主要是目前 OpenAI 官方尚未做出修复的回应。</p>
-<h2 id="一劳永逸的解决方案-：直接在数据库拦截"><a href="#一劳永逸的解决方案-：直接在数据库拦截" class="headerlink" title="一劳永逸的解决方案 ：直接在数据库拦截"></a>一劳永逸的解决方案 ：直接在数据库拦截</h2><p><mark>OpenAI 已经修复这个问题了，不需要操作了</mark></p>
-<p>这里提供比较激进、但也最直接的临时方案：给日志表加一个 SQLite 触发器，让新的日志写入被忽略，毕竟这个文件里只有诊断日志，没有对话历史。</p>
-<p>执行前建议先退出 Codex，并备份日志数据库：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cp</span> ~/.codex/logs_2.sqlite ~/.codex/logs_2.sqlite.bak</span><br></pre></td></tr></table></figure>
-<p>然后执行：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;CREATE TRIGGER IF NOT EXISTS block_log_inserts BEFORE INSERT ON logs BEGIN SELECT RAISE(IGNORE); END;&quot;</span></span><br></pre></td></tr></table></figure>
-<p>设置完成后，新的日志记录会被拦截，从而减少后续写入。</p>
-<p>需要注意的是，这个方法会影响 Codex 后续生成诊断日志。如果你之后需要向官方反馈问题，或者担心未来版本兼容性，可以先不要使用这个方案，改用定期清理的方式。</p>
-<details class="flatpaper-note flatpaper-note--info"><summary class="flatpaper-note__title"><span class="flatpaper-note__icon" aria-hidden="true"></span><span class="flatpaper-note__label">如何恢复</span><span class="flatpaper-note__chevron" aria-hidden="true"></span></summary><div class="flatpaper-note__body"><p>如果想要恢复的话就是删除这个 trigger 。先退出 Codex，再执行：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;DROP TRIGGER IF EXISTS block_log_inserts;&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>执行后可以检查是否还存在：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;.schema block_log_inserts&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>如果没有输出，说明已经删除成功。</p>
-<p>也可以用这个命令查看当前所有 trigger：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sqlite3 ~/.codex/logs_2.sqlite <span class="string">&quot;SELECT name, tbl_name, sql FROM sqlite_master WHERE type=&#x27;trigger&#x27;;&quot;</span></span><br></pre></td></tr></table></figure></div></details>
-
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>GitHub ISSUE 中的数据是比较夸张的，Codex 的这个日志问题并没有网传的那么吓人，但也感谢 OpenAI 完成了 BUG 的修复，祝大家用 Codex 敲代码愉快！</p>
-]]></content>
-      <categories>
-        <category>笔记</category>
-      </categories>
-      <tags>
-        <tag>OpenAI</tag>
-        <tag>Codex</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>新时代挖矿：看看你的 Mac 一个月能赚多少钱</title>
     <url>/post/darkbloom-nodes-macbook-ai-mining-earnings.html</url>
     <content><![CDATA[<p>曾经，无数人为了比特币和以太坊疯狂囤积显卡，把家里变成轰鸣的矿场。随着传统加密货币 “显卡挖矿” 时代的逐渐降温，很多人以为用个人电脑赚取被动收入的日子已经结束了。然而，随着 AI 大模型时代的爆发，一种全新的 “挖矿” 模式正在悄然兴起——AI 节点推理算力共享。</p>
@@ -5399,6 +5399,48 @@
       </tags>
   </entry>
   <entry>
+    <title>解决 Antigravity 通过 SSH 连接远程服务器崩溃的问题</title>
+    <url>/post/fix-antigravity-ssh-remote-crash-problem.html</url>
+    <content><![CDATA[<h2 id="问题详情"><a href="#问题详情" class="headerlink" title="问题详情"></a>问题详情</h2><p>在使用 Google Antigravity 通过 SSH 连接运行在 <strong>PVE</strong> 的 <strong>Linux 虚拟机</strong> 时，会直接崩溃，报错信息如下：</p>
+<blockquote>
+<p>Antigravity server crashed unexpectedly. Please restart to fully restore AI features.</p>
+</blockquote>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>在 PVE 中将 Linux 虚拟机的 <strong>CPU 类型</strong> 设置为 <code>host</code>，再尝试连接就可以了。</p>
+<p>参考： <a href="https://discuss.ai.google.dev/t/antigravity-crashes-on-linux-but-works-on-windows/110355/3">Antigravity crashes on Linux, but works on Windows</a></p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>Antigravity</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>解决 Electron 42 APP 初次运行 pnpm dev 报错的问题</title>
+    <url>/post/fix-electron-42-app-cannot-run.html</url>
+    <content><![CDATA[<h2 id="问题复现"><a href="#问题复现" class="headerlink" title="问题复现"></a>问题复现</h2><p>开发或是 Clone 一个 Electron 42 APP 时，安装完依赖后第一次运行 <code>pnpm dev</code> 你可能遇到 <code>Error: Electron uninstall</code> 的错误信息：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pnpm install --frozen-lockfile</span><br><span class="line">pnpm approve-builds</span><br><span class="line"></span><br><span class="line">pnpm dev </span><br></pre></td></tr></table></figure>
+
+<p>报错信息</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">error during start dev server and electron app:</span><br><span class="line">Error: Electron uninstall</span><br><span class="line">    at getElectronPath</span><br><span class="line">...</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p>需要手动运行下面的命令</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npx install-electron</span><br></pre></td></tr></table></figure>
+
+<h2 id="问题原因"><a href="#问题原因" class="headerlink" title="问题原因"></a>问题原因</h2><p>这是由于为了应对供应链攻击， Electron 42 不再通过 <code>postinstall</code> 下载自身</p>
+<p><a href="https://www.electronjs.org/blog/electron-42-0#electron-no-longer-downloads-itself-via-postinstall-script">Electron 42: electron no longer downloads itself via postinstall script</a></p>
+<p>可以运行下面的命令</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install electron --save-dev --ignore-scripts</span><br><span class="line">npx install-electron</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>Electron</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>赛博特权阶级的诞生：从 Fable 5 白名单看 AI 非营利乌托邦的终结</title>
     <url>/post/fable-5-whitelist-new-privileged-class-ai-monopoly.html</url>
     <content><![CDATA[<p>2026 年夏天，科技界经历了一场 “AI大地震”。美国商务部的一纸出口管制令，让刚刚问世、霸榜各大模型基座的 Anthropic 旗舰模型 <strong>Claude Fable 5</strong> 与其底层孪生模型 Mythos 5 瞬间在全球范围内被按下了暂停键。紧接着，经过政商闭门博弈，部分 <strong>可信赖的实体</strong> 和特定白名单单位逐步重获访问特权。</p>
@@ -5439,48 +5481,6 @@
         <tag>AI</tag>
         <tag>OpenAI</tag>
         <tag>Claude Fable 5</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>解决 Antigravity 通过 SSH 连接远程服务器崩溃的问题</title>
-    <url>/post/fix-antigravity-ssh-remote-crash-problem.html</url>
-    <content><![CDATA[<h2 id="问题详情"><a href="#问题详情" class="headerlink" title="问题详情"></a>问题详情</h2><p>在使用 Google Antigravity 通过 SSH 连接运行在 <strong>PVE</strong> 的 <strong>Linux 虚拟机</strong> 时，会直接崩溃，报错信息如下：</p>
-<blockquote>
-<p>Antigravity server crashed unexpectedly. Please restart to fully restore AI features.</p>
-</blockquote>
-<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>在 PVE 中将 Linux 虚拟机的 <strong>CPU 类型</strong> 设置为 <code>host</code>，再尝试连接就可以了。</p>
-<p>参考： <a href="https://discuss.ai.google.dev/t/antigravity-crashes-on-linux-but-works-on-windows/110355/3">Antigravity crashes on Linux, but works on Windows</a></p>
-]]></content>
-      <categories>
-        <category>笔记</category>
-      </categories>
-      <tags>
-        <tag>Antigravity</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>解决 Electron 42 APP 初次运行 pnpm dev 报错的问题</title>
-    <url>/post/fix-electron-42-app-cannot-run.html</url>
-    <content><![CDATA[<h2 id="问题复现"><a href="#问题复现" class="headerlink" title="问题复现"></a>问题复现</h2><p>开发或是 Clone 一个 Electron 42 APP 时，安装完依赖后第一次运行 <code>pnpm dev</code> 你可能遇到 <code>Error: Electron uninstall</code> 的错误信息：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pnpm install --frozen-lockfile</span><br><span class="line">pnpm approve-builds</span><br><span class="line"></span><br><span class="line">pnpm dev </span><br></pre></td></tr></table></figure>
-
-<p>报错信息</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">error during start dev server and electron app:</span><br><span class="line">Error: Electron uninstall</span><br><span class="line">    at getElectronPath</span><br><span class="line">...</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-
-<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p>需要手动运行下面的命令</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npx install-electron</span><br></pre></td></tr></table></figure>
-
-<h2 id="问题原因"><a href="#问题原因" class="headerlink" title="问题原因"></a>问题原因</h2><p>这是由于为了应对供应链攻击， Electron 42 不再通过 <code>postinstall</code> 下载自身</p>
-<p><a href="https://www.electronjs.org/blog/electron-42-0#electron-no-longer-downloads-itself-via-postinstall-script">Electron 42: electron no longer downloads itself via postinstall script</a></p>
-<p>可以运行下面的命令</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install electron --save-dev --ignore-scripts</span><br><span class="line">npx install-electron</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>笔记</category>
-      </categories>
-      <tags>
-        <tag>Electron</tag>
       </tags>
   </entry>
   <entry>
@@ -5840,102 +5840,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Google 全量开放 Gmail 用户名修改：终于可以告别 8 岁注册的黑历史邮箱了</title>
-    <url>/post/google-finally-lets-you-change-gmail-address.html</url>
-    <content><![CDATA[<p>一个著名的互联网梗图，8 岁的用户坐在电脑前，注册伴随一生的账户邮箱。</p>
-<p>8 岁的我们还不知道什么叫 <strong>数字身份</strong> ，也不知道这个邮箱未来会被用来注册 GitHub、绑定银行卡、投简历、收验证码、登录一切服务。我们只是单纯地觉得：在邮箱前缀里加上生日、QQ 昵称、喜欢的动漫角色、几串看起来很酷的数字，应该会很帅。</p>
-<p><img src="https://img.nep.me/ooo/change-gmail-meme.webp" alt="change-gmail-meme.png"></p>
-<p>然后二十年过去了。</p>
-<p>你长大了，头像换了，网名换了，手机换了，连审美都换了好几轮，但那个邮箱地址还在。每次需要在正式场合填邮箱时，你都要假装它很合理。</p>
-<p>好消息是：Google 终于开始允许用户修改自己的 Gmail 地址了。</p>
-<h2 id="以前为什么这件事这么痛苦？"><a href="#以前为什么这件事这么痛苦？" class="headerlink" title="以前为什么这件事这么痛苦？"></a>以前为什么这件事这么痛苦？</h2><p>过去，如果你注册的是 Gmail 地址，基本就意味着这个地址会跟着你的 Google 账号走很久。</p>
-<p>你可以改用户名，可以改头像，可以改辅助邮箱，可以改各种个人资料，但邮箱地址本身通常很难改。对于很多人来说，想换一个更正式、更好记、没那么羞耻的 Gmail 地址，最现实的做法往往是：</p>
-<p><strong>重新注册一个 Google 账号。</strong></p>
-<p>但问题也随之而来。</p>
-<p>旧账号里可能有 Gmail 邮件、Google Drive 文件、Google Photos 照片、YouTube 数据、Google Play 记录、各种第三方网站登录记录。重新注册一个账号并不只是换一个邮箱，而是几乎等于重新整理一遍自己的互联网生活。</p>
-<p>所以很多人最后都选择了忍。</p>
-<p>忍受那个 8 岁时注册的邮箱继续出现在简历、合同、项目后台和登录页面里。</p>
-<h2 id="如何更改"><a href="#如何更改" class="headerlink" title="如何更改"></a>如何更改</h2><p>根据 Google 的说明，用户现在可以将原本以 @gmail.com 结尾的 Google 账号邮箱，修改为另一个新的 @gmail.com 地址。</p>
-<p>在 Gmail 页面，点击右上角的头像，再点击 <strong>管理您的Google 账号</strong>，打开 Google 账号设置页面，点击左侧的个人信息，在右侧的邮箱部分可以进行修改。</p>
-<p><img src="https://img.nep.me/blog/change-gmail.webp" alt="change-gmail.png"></p>
-<p><img src="https://img.nep.me/blog/change-gmail-2.webp" alt="change-gmail-2.png"></p>
-<h2 id="原来的邮箱将如何处理"><a href="#原来的邮箱将如何处理" class="headerlink" title="原来的邮箱将如何处理"></a>原来的邮箱将如何处理</h2><p>修改后，<mark>原来的 Gmail 地址不会直接消失，而是会变成账号的备用邮箱。你仍然可以收到发往旧地址的邮件，账号里的数据也不会因为改邮箱而丢失</mark>，包括历史邮件、照片、文件等内容。</p>
-<p>简单理解就是：</p>
-<p>你终于可以换一个新的 Gmail 门牌号，但原来的门牌号仍然能帮你收信。</p>
-<p>这对老用户来说非常重要。因为它不是让你抛弃旧账号、重新开始，而是在保留账号资产的前提下，给你一次重新命名自己的机会。</p>
-<h2 id="有一些网站遇到了问题"><a href="#有一些网站遇到了问题" class="headerlink" title="有一些网站遇到了问题"></a>有一些网站遇到了问题</h2><p>虽然这件事听起来很爽，但我并不建议大家看到入口后马上冲进去改。</p>
-<p>由于老的邮箱还可以正常接收邮件，所以对于在其他网站上使用该邮箱注册的账户，其实可以不做调整，继续使用。</p>
-<p>这次 Gmail 地址可修改后，最值得注意的问题并不是 Google 自己，<strong>而是第三方网站的一键登录</strong>。目前的反馈显示，在修改邮箱后，再次使用 Google 账号一键登录 V2EX、Spotify 等网站时，会直接创建新的账户。</p>
-<p>理论上，使用 Google 账号登录时，Google 会返回一组用户信息。其中适合用来识别账号身份的，应该是 Google 账号的 <code>Provider ID</code>，也就是这个 Google 用户在 Google 身份系统里的唯一标识。</p>
-<p><strong>Email 只是邮箱地址。</strong></p>
-<p>但现实里，有些网站开发者为了方便，可能直接把 Email 当成用户的唯一 ID 来用。这样做在邮箱永远不能改的时代，看起来似乎问题不大；但一旦邮箱可以修改，问题就会暴露出来。</p>
-<p>举个例子：</p>
-<p>你原来用 <code>oldname@gmail.com</code> 通过 Google 登录了某个网站。<br>后来你把 Gmail 地址改成了 <code>newname@gmail.com</code>。<br>如果这个网站使用 Google 返回的 <code>Provider ID</code> 来识别你，那么你下次登录时，它依然知道你是原来的那个账号。</p>
-<p>但如果这个网站偷懒，直接用 Email 来识别用户，那么它可能会认为：</p>
-<p><mark>“这是一个新邮箱，所以这是一个新用户。”</mark></p>
-<p>结果就是，你明明用的是同一个 Google 账号，却可能登录进一个全新的空账号，甚至出现账号丢失、数据无法关联、订阅状态异常等问题。</p>
-<p>更糟糕的情况是，如果某些系统对旧邮箱释放、复用、绑定逻辑处理不当，还可能引出更复杂的安全问题。</p>
-<p>目前已知会遇到此类问题的知名网站包括 <strong>V2EX</strong>、<strong>Spotify</strong> 等。</p>
-<h3 id="检查列表，确认修改范围"><a href="#检查列表，确认修改范围" class="headerlink" title="检查列表，确认修改范围"></a>检查列表，确认修改范围</h3><p>如果希望修改其他网站的绑定邮箱，在修改前，建议至少检查这几类地方，确认使用的是邮箱注册还是一键登陆的方式关联的账户：</p>
-<ul>
-<li><strong>1. 常用的第三方登录服务：</strong><br>比如 GitHub、Notion、Figma、Cloudflare、Vercel、各类论坛、博客后台、开发者平台等。</li>
-<li><strong>2. 金融、支付和账单类服务：</strong><br>比如银行通知、订阅服务、云服务账单、域名注册商、服务器厂商等。</li>
-<li><strong>3. 重要的账号恢复渠道：</strong><br>有些网站会把邮箱当作找回密码、验证身份、接收安全通知的核心渠道。</li>
-<li><strong>4.工作和公开资料：</strong><br>比如简历、个人网站、名片、Git 提交信息、项目 README、博客 About 页面等。</li>
-</ul>
-<p>虽然 Google 会让旧邮箱继续收信，但第三方网站是否能正确识别 “这是同一个人” ，就不一定了。</p>
-<h2 id="给普通用户的建议"><a href="#给普通用户的建议" class="headerlink" title="给普通用户的建议"></a>给普通用户的建议</h2><p>如果你准备修改 Gmail 地址，可以先整理一下自己最常用、最重要的网站，确认自己在哪些网站使用了 <strong>通过 Google 登录</strong> 的服务。修改邮箱后，优先测试这些服务是否还能正常登录，账号数据是否还在。</p>
-<p>对于特别重要的服务，最好提前确认它们是否支持修改登录邮箱，或者是否能绑定备用登录方式，比如 <strong>密码、通行密钥、备用邮箱、手机号</strong> 等。</p>
-<p>如果修改后遇到某个网站把你识别成新用户，可以尝试联系客服或开发者，说明你使用的是同一个 Google 账号，只是 Gmail 地址发生了变化。</p>
-<h2 id="给开发者的建议"><a href="#给开发者的建议" class="headerlink" title="给开发者的建议"></a>给开发者的建议</h2><p>如果你的网站支持 Google 一键登录，请不要用 Email 作为用户的唯一身份标识。</p>
-<p>应该使用 Google OAuth &#x2F; OpenID Connect 返回的稳定用户 ID 来绑定用户账号，而不是把 Email 当作主键。</p>
-<p>Email 可以作为展示信息、联系信息、通知地址，但不应该作为第三方登录账号的唯一身份依据。</p>
-<p>正确的做法应该是：</p>
-<ul>
-<li>使用 <code>Provider ID</code> 识别用户身份</li>
-<li>Email 只作为 <strong>可变属性</strong> 保存</li>
-<li>当用户邮箱变化时，更新邮箱字段，而不是创建新账号</li>
-<li>对历史账号绑定逻辑做好兼容</li>
-<li>对邮箱变更、账号合并、登录异常提供清晰提示</li>
-</ul>
-<p>以前很多开发者把 Email 当唯一 ID，是因为邮箱看起来不会变。但现在这个前提正在消失。</p>
-<h2 id="使用密码管理器"><a href="#使用密码管理器" class="headerlink" title="使用密码管理器"></a>使用密码管理器</h2><p>很多人早年注册账号时，不只是邮箱随便起，密码也可能是同一套：一个常用密码，加上网站名、生日、几个符号，稍微变形一下就到处复用。以前看起来很省事，但只要其中一个网站泄露，其他账号就可能一起遭殃。</p>
-<p>所以如果你还没有使用密码管理器，现在就是一个很好的整理节点。</p>
-<p>密码管理器的核心价值不是“帮你记密码”这么简单，而是：</p>
-<ul>
-<li>每个网站都使用 <strong>独立随机密码</strong></li>
-<li>不需要自己记 <strong>几十上百个</strong> 密码</li>
-<li>可以 <strong>自动填充</strong> ，减少输错和钓鱼风险</li>
-<li>可以 <strong>统一检查弱密码、重复密码和泄露密码</strong></li>
-<li>可以更方便地保存恢复码、密钥、银行卡、服务器信息等敏感内容</li>
-</ul>
-<p>比较常见的选择包括 1Password、Bitwarden、KeePassXC、iCloud 钥匙串等。</p>
-<p>如果只是普通用户，并且主要使用 Apple 设备，iCloud 钥匙串已经够用；如果希望跨平台体验更完整，可以考虑 1Password 或 Bitwarden；如果更在意开源、自托管和数据掌控权，我会更推荐 Bitwarden。</p>
-<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>查看： <a href="https://ooo.run/post/use-docker-run-bitwarden.html">使用 Docker 轻松部署 Bitwarden 服务端，搭建你自己的密码管理器</a></p></div></div>
-
-<p>如果你只是普通用户，不想维护服务器，直接使用 1Password 或是 Bitwarden 官方服务就很好，Bitwarden 的价格较为友好，Premium 年费仅需 <strong>$19.80</strong> 美元。<br>如果你有自己的服务器、NAS、Homelab，或者已经在使用 Docker 部署服务，那么自部署 Bitwarden 很值得尝试。</p>
-<p>无论选择哪一种，最重要的是这几件事：</p>
-<ul>
-<li>主密码一定要足够长，最好使用一句只有你知道的 passphrase</li>
-<li>开启两步验证，优先使用 <strong>Passkey、硬件安全密钥或 TOTP</strong></li>
-<li><strong>定期导出加密备份</strong>，并确认自己真的能恢复</li>
-<li>不要把密码库、备份文件和二次验证全部放在同一个地方</li>
-<li>修改 Gmail 地址前，先把重要网站的登录方式和恢复方式整理清楚</li>
-</ul>
-<p>邮箱地址可以改，密码也可以重置，但如果你的密码库和二次验证一起丢了，那才是真的麻烦。</p>
-<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>Google 开放 Gmail 地址修改，对很多老用户来说是一件非常值得高兴的事。</p>
-<p>它给了我们一次和童年黑历史和解的机会，也让那些早年随手注册的邮箱终于有机会变得更正式、更好记、更适合长期使用。</p>
-<p>开始修改之前要先检查重要账号，尤其是第三方一键登录，减少遇到问题的情况。</p>
-]]></content>
-      <categories>
-        <category>咨询</category>
-      </categories>
-      <tags>
-        <tag>Google</tag>
-        <tag>Gmail</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Google I/O 2026：从搜索框到代码编辑器，Google 全面 Agent 化</title>
     <url>/post/google-io-2026-reviews.html</url>
     <content><![CDATA[<p>两个小时，数十个产品更新，一股脑砸出来。Google I&#x2F;O 2026 又一次用”饱和式发布”刷屏。所有重要更新都指向同一个词——<strong>Agent</strong>。</p>
@@ -6112,6 +6016,102 @@
         <tag>Google</tag>
         <tag>Google IO</tag>
         <tag>Angets</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Google 全量开放 Gmail 用户名修改：终于可以告别 8 岁注册的黑历史邮箱了</title>
+    <url>/post/google-finally-lets-you-change-gmail-address.html</url>
+    <content><![CDATA[<p>一个著名的互联网梗图，8 岁的用户坐在电脑前，注册伴随一生的账户邮箱。</p>
+<p>8 岁的我们还不知道什么叫 <strong>数字身份</strong> ，也不知道这个邮箱未来会被用来注册 GitHub、绑定银行卡、投简历、收验证码、登录一切服务。我们只是单纯地觉得：在邮箱前缀里加上生日、QQ 昵称、喜欢的动漫角色、几串看起来很酷的数字，应该会很帅。</p>
+<p><img src="https://img.nep.me/ooo/change-gmail-meme.webp" alt="change-gmail-meme.png"></p>
+<p>然后二十年过去了。</p>
+<p>你长大了，头像换了，网名换了，手机换了，连审美都换了好几轮，但那个邮箱地址还在。每次需要在正式场合填邮箱时，你都要假装它很合理。</p>
+<p>好消息是：Google 终于开始允许用户修改自己的 Gmail 地址了。</p>
+<h2 id="以前为什么这件事这么痛苦？"><a href="#以前为什么这件事这么痛苦？" class="headerlink" title="以前为什么这件事这么痛苦？"></a>以前为什么这件事这么痛苦？</h2><p>过去，如果你注册的是 Gmail 地址，基本就意味着这个地址会跟着你的 Google 账号走很久。</p>
+<p>你可以改用户名，可以改头像，可以改辅助邮箱，可以改各种个人资料，但邮箱地址本身通常很难改。对于很多人来说，想换一个更正式、更好记、没那么羞耻的 Gmail 地址，最现实的做法往往是：</p>
+<p><strong>重新注册一个 Google 账号。</strong></p>
+<p>但问题也随之而来。</p>
+<p>旧账号里可能有 Gmail 邮件、Google Drive 文件、Google Photos 照片、YouTube 数据、Google Play 记录、各种第三方网站登录记录。重新注册一个账号并不只是换一个邮箱，而是几乎等于重新整理一遍自己的互联网生活。</p>
+<p>所以很多人最后都选择了忍。</p>
+<p>忍受那个 8 岁时注册的邮箱继续出现在简历、合同、项目后台和登录页面里。</p>
+<h2 id="如何更改"><a href="#如何更改" class="headerlink" title="如何更改"></a>如何更改</h2><p>根据 Google 的说明，用户现在可以将原本以 @gmail.com 结尾的 Google 账号邮箱，修改为另一个新的 @gmail.com 地址。</p>
+<p>在 Gmail 页面，点击右上角的头像，再点击 <strong>管理您的Google 账号</strong>，打开 Google 账号设置页面，点击左侧的个人信息，在右侧的邮箱部分可以进行修改。</p>
+<p><img src="https://img.nep.me/blog/change-gmail.webp" alt="change-gmail.png"></p>
+<p><img src="https://img.nep.me/blog/change-gmail-2.webp" alt="change-gmail-2.png"></p>
+<h2 id="原来的邮箱将如何处理"><a href="#原来的邮箱将如何处理" class="headerlink" title="原来的邮箱将如何处理"></a>原来的邮箱将如何处理</h2><p>修改后，<mark>原来的 Gmail 地址不会直接消失，而是会变成账号的备用邮箱。你仍然可以收到发往旧地址的邮件，账号里的数据也不会因为改邮箱而丢失</mark>，包括历史邮件、照片、文件等内容。</p>
+<p>简单理解就是：</p>
+<p>你终于可以换一个新的 Gmail 门牌号，但原来的门牌号仍然能帮你收信。</p>
+<p>这对老用户来说非常重要。因为它不是让你抛弃旧账号、重新开始，而是在保留账号资产的前提下，给你一次重新命名自己的机会。</p>
+<h2 id="有一些网站遇到了问题"><a href="#有一些网站遇到了问题" class="headerlink" title="有一些网站遇到了问题"></a>有一些网站遇到了问题</h2><p>虽然这件事听起来很爽，但我并不建议大家看到入口后马上冲进去改。</p>
+<p>由于老的邮箱还可以正常接收邮件，所以对于在其他网站上使用该邮箱注册的账户，其实可以不做调整，继续使用。</p>
+<p>这次 Gmail 地址可修改后，最值得注意的问题并不是 Google 自己，<strong>而是第三方网站的一键登录</strong>。目前的反馈显示，在修改邮箱后，再次使用 Google 账号一键登录 V2EX、Spotify 等网站时，会直接创建新的账户。</p>
+<p>理论上，使用 Google 账号登录时，Google 会返回一组用户信息。其中适合用来识别账号身份的，应该是 Google 账号的 <code>Provider ID</code>，也就是这个 Google 用户在 Google 身份系统里的唯一标识。</p>
+<p><strong>Email 只是邮箱地址。</strong></p>
+<p>但现实里，有些网站开发者为了方便，可能直接把 Email 当成用户的唯一 ID 来用。这样做在邮箱永远不能改的时代，看起来似乎问题不大；但一旦邮箱可以修改，问题就会暴露出来。</p>
+<p>举个例子：</p>
+<p>你原来用 <code>oldname@gmail.com</code> 通过 Google 登录了某个网站。<br>后来你把 Gmail 地址改成了 <code>newname@gmail.com</code>。<br>如果这个网站使用 Google 返回的 <code>Provider ID</code> 来识别你，那么你下次登录时，它依然知道你是原来的那个账号。</p>
+<p>但如果这个网站偷懒，直接用 Email 来识别用户，那么它可能会认为：</p>
+<p><mark>“这是一个新邮箱，所以这是一个新用户。”</mark></p>
+<p>结果就是，你明明用的是同一个 Google 账号，却可能登录进一个全新的空账号，甚至出现账号丢失、数据无法关联、订阅状态异常等问题。</p>
+<p>更糟糕的情况是，如果某些系统对旧邮箱释放、复用、绑定逻辑处理不当，还可能引出更复杂的安全问题。</p>
+<p>目前已知会遇到此类问题的知名网站包括 <strong>V2EX</strong>、<strong>Spotify</strong> 等。</p>
+<h3 id="检查列表，确认修改范围"><a href="#检查列表，确认修改范围" class="headerlink" title="检查列表，确认修改范围"></a>检查列表，确认修改范围</h3><p>如果希望修改其他网站的绑定邮箱，在修改前，建议至少检查这几类地方，确认使用的是邮箱注册还是一键登陆的方式关联的账户：</p>
+<ul>
+<li><strong>1. 常用的第三方登录服务：</strong><br>比如 GitHub、Notion、Figma、Cloudflare、Vercel、各类论坛、博客后台、开发者平台等。</li>
+<li><strong>2. 金融、支付和账单类服务：</strong><br>比如银行通知、订阅服务、云服务账单、域名注册商、服务器厂商等。</li>
+<li><strong>3. 重要的账号恢复渠道：</strong><br>有些网站会把邮箱当作找回密码、验证身份、接收安全通知的核心渠道。</li>
+<li><strong>4.工作和公开资料：</strong><br>比如简历、个人网站、名片、Git 提交信息、项目 README、博客 About 页面等。</li>
+</ul>
+<p>虽然 Google 会让旧邮箱继续收信，但第三方网站是否能正确识别 “这是同一个人” ，就不一定了。</p>
+<h2 id="给普通用户的建议"><a href="#给普通用户的建议" class="headerlink" title="给普通用户的建议"></a>给普通用户的建议</h2><p>如果你准备修改 Gmail 地址，可以先整理一下自己最常用、最重要的网站，确认自己在哪些网站使用了 <strong>通过 Google 登录</strong> 的服务。修改邮箱后，优先测试这些服务是否还能正常登录，账号数据是否还在。</p>
+<p>对于特别重要的服务，最好提前确认它们是否支持修改登录邮箱，或者是否能绑定备用登录方式，比如 <strong>密码、通行密钥、备用邮箱、手机号</strong> 等。</p>
+<p>如果修改后遇到某个网站把你识别成新用户，可以尝试联系客服或开发者，说明你使用的是同一个 Google 账号，只是 Gmail 地址发生了变化。</p>
+<h2 id="给开发者的建议"><a href="#给开发者的建议" class="headerlink" title="给开发者的建议"></a>给开发者的建议</h2><p>如果你的网站支持 Google 一键登录，请不要用 Email 作为用户的唯一身份标识。</p>
+<p>应该使用 Google OAuth &#x2F; OpenID Connect 返回的稳定用户 ID 来绑定用户账号，而不是把 Email 当作主键。</p>
+<p>Email 可以作为展示信息、联系信息、通知地址，但不应该作为第三方登录账号的唯一身份依据。</p>
+<p>正确的做法应该是：</p>
+<ul>
+<li>使用 <code>Provider ID</code> 识别用户身份</li>
+<li>Email 只作为 <strong>可变属性</strong> 保存</li>
+<li>当用户邮箱变化时，更新邮箱字段，而不是创建新账号</li>
+<li>对历史账号绑定逻辑做好兼容</li>
+<li>对邮箱变更、账号合并、登录异常提供清晰提示</li>
+</ul>
+<p>以前很多开发者把 Email 当唯一 ID，是因为邮箱看起来不会变。但现在这个前提正在消失。</p>
+<h2 id="使用密码管理器"><a href="#使用密码管理器" class="headerlink" title="使用密码管理器"></a>使用密码管理器</h2><p>很多人早年注册账号时，不只是邮箱随便起，密码也可能是同一套：一个常用密码，加上网站名、生日、几个符号，稍微变形一下就到处复用。以前看起来很省事，但只要其中一个网站泄露，其他账号就可能一起遭殃。</p>
+<p>所以如果你还没有使用密码管理器，现在就是一个很好的整理节点。</p>
+<p>密码管理器的核心价值不是“帮你记密码”这么简单，而是：</p>
+<ul>
+<li>每个网站都使用 <strong>独立随机密码</strong></li>
+<li>不需要自己记 <strong>几十上百个</strong> 密码</li>
+<li>可以 <strong>自动填充</strong> ，减少输错和钓鱼风险</li>
+<li>可以 <strong>统一检查弱密码、重复密码和泄露密码</strong></li>
+<li>可以更方便地保存恢复码、密钥、银行卡、服务器信息等敏感内容</li>
+</ul>
+<p>比较常见的选择包括 1Password、Bitwarden、KeePassXC、iCloud 钥匙串等。</p>
+<p>如果只是普通用户，并且主要使用 Apple 设备，iCloud 钥匙串已经够用；如果希望跨平台体验更完整，可以考虑 1Password 或 Bitwarden；如果更在意开源、自托管和数据掌控权，我会更推荐 Bitwarden。</p>
+<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>查看： <a href="https://ooo.run/post/use-docker-run-bitwarden.html">使用 Docker 轻松部署 Bitwarden 服务端，搭建你自己的密码管理器</a></p></div></div>
+
+<p>如果你只是普通用户，不想维护服务器，直接使用 1Password 或是 Bitwarden 官方服务就很好，Bitwarden 的价格较为友好，Premium 年费仅需 <strong>$19.80</strong> 美元。<br>如果你有自己的服务器、NAS、Homelab，或者已经在使用 Docker 部署服务，那么自部署 Bitwarden 很值得尝试。</p>
+<p>无论选择哪一种，最重要的是这几件事：</p>
+<ul>
+<li>主密码一定要足够长，最好使用一句只有你知道的 passphrase</li>
+<li>开启两步验证，优先使用 <strong>Passkey、硬件安全密钥或 TOTP</strong></li>
+<li><strong>定期导出加密备份</strong>，并确认自己真的能恢复</li>
+<li>不要把密码库、备份文件和二次验证全部放在同一个地方</li>
+<li>修改 Gmail 地址前，先把重要网站的登录方式和恢复方式整理清楚</li>
+</ul>
+<p>邮箱地址可以改，密码也可以重置，但如果你的密码库和二次验证一起丢了，那才是真的麻烦。</p>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>Google 开放 Gmail 地址修改，对很多老用户来说是一件非常值得高兴的事。</p>
+<p>它给了我们一次和童年黑历史和解的机会，也让那些早年随手注册的邮箱终于有机会变得更正式、更好记、更适合长期使用。</p>
+<p>开始修改之前要先检查重要账号，尤其是第三方一键登录，减少遇到问题的情况。</p>
+]]></content>
+      <categories>
+        <category>咨询</category>
+      </categories>
+      <tags>
+        <tag>Google</tag>
+        <tag>Gmail</tag>
       </tags>
   </entry>
   <entry>
@@ -6688,6 +6688,129 @@
       </tags>
   </entry>
   <entry>
+    <title>用 AI 制作 3D 游戏：Opus 5.5 / Astra + Tripo 全流程实战指南</title>
+    <url>/post/how-to-use-ai-build-3d-games.html</url>
+    <content><![CDATA[<blockquote>
+<p><strong>原作者</strong>：X 博主 <a href="https://x.com/Saccc_c">@Sac</a><br><strong>演示作品</strong>：<a href="https://littleprince.dev/">点击查看《小王子》3D 可探索星球演示</a><br><strong>核心看点</strong>：结合 Tripo + Blender + Unity，利用 Opus 5.5 将《小王子》故事中的每一个星球变成可探索的 3D 场景。从场景搭建、人物制作，到代码开发与调试，核心工作流全部交由 AI 完成。</p>
+</blockquote>
+<p>本文将完整公开这套 AI 3D 游戏制作的工作流，结合《小王子》实际案例与可复用的提示词（Prompts），手把手带你入门 AI 3D 游戏开发，搭建属于你想象中的世界。</p>
+<p>全文主要分为三个部分：</p>
+<ol>
+<li><strong>游戏开发流程与工具配置</strong></li>
+<li><strong>3D 场景构建全流程</strong></li>
+<li><strong>3D 角色建模与动作交互</strong></li>
+</ol>
+<hr>
+<h2 id="一、-游戏开发流程与工具配置"><a href="#一、-游戏开发流程与工具配置" class="headerlink" title="一、 游戏开发流程与工具配置"></a>一、 游戏开发流程与工具配置</h2><h3 id="1-核心-AI-协同工作流"><a href="#1-核心-AI-协同工作流" class="headerlink" title="1. 核心 AI 协同工作流"></a>1. 核心 AI 协同工作流</h3><p>整个游戏的开发由多个 AI 模型各司其职、串联完成：</p>
+<ul>
+<li><strong>需求与策划（Fable 5.1）</strong>：负责制作 PRD（产品需求文档），梳理游戏核心场景、人物设定以及剧情故事线。</li>
+<li><strong>视觉概念设定（GPT Image 2.5）</strong>：生成高一致性的场景参考图与人物多视角设定图。</li>
+<li><strong>核心 3D 资产生成（Tripo）</strong>：将 2D 概念图转化为高精度 3D 模型资产。</li>
+<li><strong>场景搭建与核心代码（Opus 5.5）</strong>：通过 CLI 与 MCP 工具操控 Blender 与 Unity，完成场景组装与核心代码搭建。</li>
+<li><strong>迭代优化与 Debug（Astra）</strong>：负责后期的细节打磨、性能优化以及 Bug 修复。</li>
+</ul>
+<h3 id="2-基础工具与环境配置"><a href="#2-基础工具与环境配置" class="headerlink" title="2. 基础工具与环境配置"></a>2. 基础工具与环境配置</h3><p>在开始制作前，需在本地配置好以下软件与插件接口，以便 AI 能够直接接管操作：</p>
+<ul>
+<li><strong>Blender 配置</strong>：<ul>
+<li>下载并配置 <strong>Blender CLI</strong>，用于让 AI 优化 Tripo 生成的 3D 模型，并完成游戏整体的 3D 建模组装。</li>
+<li>安装付费插件 <strong>Auto-Rig Pro</strong>，用于人物的自动绑骨与蒙皮，为后续动作交互打下基础。</li>
+</ul>
+</li>
+<li><strong>Unity 配置</strong>：<ul>
+<li>安装 <a href="https://unity.com/">Unity 客户端</a>，作为游戏引擎将场景、人物与交互动效打包成完整游戏。</li>
+<li>安装 <strong>Unity CLI</strong>，并在项目中安装 <strong>Pipeline 包</strong>，使 Claude（Opus 5.5）能够通过官方 <strong>Unity MCP</strong> 直接操作 Unity 项目。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="二、-3D-场景构建全流程"><a href="#二、-3D-场景构建全流程" class="headerlink" title="二、 3D 场景构建全流程"></a>二、 3D 场景构建全流程</h2><blockquote>
+<p><strong>核心链路</strong>：<code>Image 2.5 生成场景参考图</code> ➔ <code>AI 拆解 3D 资产并在 Tripo 中生成</code> ➔ <code>Opus 5.5 操控 Blender + Unity 完成场景建模与还原</code></p>
+</blockquote>
+<h3 id="步骤-1：使用-GPT-Image-2-5-生成多视角场景参考图"><a href="#步骤-1：使用-GPT-Image-2-5-生成多视角场景参考图" class="headerlink" title="步骤 1：使用 GPT Image 2.5 生成多视角场景参考图"></a>步骤 1：使用 GPT Image 2.5 生成多视角场景参考图</h3><p>根据前期整理好的游戏需求，使用 Image 2.5 生成场景参考图，以此确定整体画风、配色方案以及核心物体的空间位置。</p>
+<ul>
+<li><p><strong>实操建议</strong>：先确定一张满意的主场景效果图，再围绕它补充其他角度（尤其是包含室内外结构的复杂场景）：</p>
+<ul>
+<li><strong>俯视图</strong>：用于明确场景的整体平面布局。</li>
+<li><strong>斜侧视图</strong>：用于补充物体的高度、造型特征和前后层次关系。</li>
+<li><strong>全景多视图</strong>：也可以直接通过提示词一次性生成包含多视角与局部细节的综合参考图。<br><img src="https://img.nep.me/ooo/HUpgX9Jb0AAZWIv.webp" alt="HUpgX9Jb0AAZWIv.jpeg"></li>
+</ul>
+</li>
+<li><p><strong>💡 可复用提示词（生成多视角场景图）</strong>：</p>
+<blockquote>
+<p>基于上传的场景参考图，帮我生成一张该场景的全面貌参考图片，包括整体环境的多视角视图以及局部细节的展示。</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="步骤-2：利用-AI-拆解场景资产，并在-Tripo-中生成独立道具"><a href="#步骤-2：利用-AI-拆解场景资产，并在-Tripo-中生成独立道具" class="headerlink" title="步骤 2：利用 AI 拆解场景资产，并在 Tripo 中生成独立道具"></a>步骤 2：利用 AI 拆解场景资产，并在 Tripo 中生成独立道具</h3><p>拿到参考图后，不要急于建模。先让 AI 分析画面，判断哪些复杂资产需要在 Tripo 中单独生成，哪些基础几何结构可以直接交给 Opus 5.5 在 Blender&#x2F;Unity 中用代码搭建。</p>
+<ul>
+<li><p><strong>💡 可复用提示词（资产拆解与标注）</strong>：</p>
+<blockquote>
+<p>我现在要进行游戏开发，我的技术栈是 Tripo + Blender + Unity。请你根据上述生成的场景参考图，帮我深入分析哪些资产适合用 Tripo 生成，哪些资产适合用 Blender 直接进行搭建。并将需要用 Tripo 生成的资产在图片中标注出来，方便我确认。<br><img src="https://img.nep.me/ooo/HUpi6bPboAAW7av.webp" alt="HUpi6bPboAAW7av.jpeg"></p>
+</blockquote>
+</li>
+<li><p><strong>Tripo 模型选择技巧</strong>：在 Tripo 中制作场景道具类 3D 资产时，建议使用 <strong>H3.1 模型</strong>，该模型能最大程度保证静态资产的高精度细节。<br><img src="https://img.nep.me/ooo/HUpj0-mbIAAQUr-.webp" alt="HUpj0-mbIAAQUr-.jpeg"></p>
+</li>
+</ul>
+<h3 id="步骤-3：让-Opus-5-5-操控-Blender-与-Unity-进行组装与多机位迭代"><a href="#步骤-3：让-Opus-5-5-操控-Blender-与-Unity-进行组装与多机位迭代" class="headerlink" title="步骤 3：让 Opus 5.5 操控 Blender 与 Unity 进行组装与多机位迭代"></a>步骤 3：让 Opus 5.5 操控 Blender 与 Unity 进行组装与多机位迭代</h3><p>在 Tripo 中生成并导出独立 3D 道具后，将这些资产连同第一步的场景参考图一起交给 Opus 5.5。让它操控 Blender 和 Unity 搭建整体环境，并严格按照参考图摆放道具、调整比例与空间位置。</p>
+<ul>
+<li><p><strong>关键核心</strong>：提供详尽的参考图，并引入<strong>独立审查 Agent 进行多机位截图盲审</strong>，通过视觉反馈闭环不断调整布局与细节。</p>
+</li>
+<li><p><strong>💡 可复用提示词（场景复刻与自动盲审迭代）</strong>：</p>
+<blockquote>
+<p>根据上传的场景内外景多视角参考图以及生成好的 Tripo 3D 资产，请你对照参考图进行完美级的复刻，要求实现和参考图一致的惊艳质感与细节还原。</p>
+<p>在实现完成后，请派一个独立的审查 Agent 进行多机位的场景盲审。如果发现有和参考图存在差异的地方，就不断地进行迭代完善。</p>
+</blockquote>
+</li>
+</ul>
+<hr>
+<h2 id="三、-3D-角色建模与动作交互"><a href="#三、-3D-角色建模与动作交互" class="headerlink" title="三、 3D 角色建模与动作交互"></a>三、 3D 角色建模与动作交互</h2><blockquote>
+<p><strong>核心链路</strong>：<code>Image 2.5 生成人物四视图</code> ➔ <code>Tripo 生成 3D 角色模型</code> ➔ <code>Blender (Auto-Rig Pro) 绑骨蒙皮</code> ➔ <code>接入 Mixamo 动作库</code> ➔ <code>Blender 复杂交互二次精调（可选）</code></p>
+</blockquote>
+<p>以下我们以《小王子》主角的设计为例，拆解具体步骤：</p>
+<h3 id="步骤-1：使用-Image-2-5-生成人物-T-pose-四视图"><a href="#步骤-1：使用-Image-2-5-生成人物-T-pose-四视图" class="headerlink" title="步骤 1：使用 Image 2.5 生成人物 T-pose 四视图"></a>步骤 1：使用 Image 2.5 生成人物 T-pose 四视图</h3><p>根据人物形象设定，首先使用 Image 2.5 生成小王子的标准 <strong>T-pose 四视图</strong>（正视、背视、左视、右视），务必确保各个视角下的人物服装、比例等细节高度统一。<br><img src="https://img.nep.me/ooo/HUpkpDca4AActDR.webp" alt="HUpkpDca4AActDR.jpeg"></p>
+<h3 id="步骤-2：使用-Tripo-的-Smart-Mesh-P2-0-生成可编辑-3D-角色"><a href="#步骤-2：使用-Tripo-的-Smart-Mesh-P2-0-生成可编辑-3D-角色" class="headerlink" title="步骤 2：使用 Tripo 的 Smart Mesh P2.0 生成可编辑 3D 角色"></a>步骤 2：使用 Tripo 的 Smart Mesh P2.0 生成可编辑 3D 角色</h3><ul>
+<li><strong>为什么选 Smart Mesh P2.0？</strong> 这是一个专门面向游戏和交互内容的 3D 生成模型，其核心优势是<strong>生成的布线面数可控、拓扑结构规整</strong>，非常便于后期的骨骼绑定和动画制作。</li>
+<li><strong>实操流程</strong>：<ol>
+<li>在 Tripo 中选择<strong>「多视图生成 3D」</strong>，依次上传生成的四视图。</li>
+<li>参数设置：拓扑默认选择<strong>「四边形」</strong>，精度拉到<strong>最高</strong>，模型选择 <strong>P2.0</strong> 并开始生成。<br><img src="https://img.nep.me/ooo/HUpkyEwakAEzlkG.webp" alt="HUpkyEwakAEzlkG.jpeg"></li>
+<li><strong>网格检查与贴图</strong>：先观察初步生成的白模。若网格整齐无误，直接点击<strong>「Texture（纹理）」</strong>生成模型贴图；若发现局部网格形状不合理，可使用<strong>「Edit Mesh」</strong>功能进行局部重绘再生成。<br><img src="https://img.nep.me/ooo/HUpk4llbAAAQGLP.webp" alt="HUpk4llbAAAQGLP.jpeg"></li>
+</ol>
+</li>
+</ul>
+<h3 id="步骤-3：在-Blender-中利用-Auto-Rig-Pro-自动绑骨与蒙皮"><a href="#步骤-3：在-Blender-中利用-Auto-Rig-Pro-自动绑骨与蒙皮" class="headerlink" title="步骤 3：在 Blender 中利用 Auto-Rig Pro 自动绑骨与蒙皮"></a>步骤 3：在 Blender 中利用 Auto-Rig Pro 自动绑骨与蒙皮</h3><p>配置好 Auto-Rig Pro 插件后，直接在 Claude 中上传人物模型，通过提示词驱动 Blender 完成自动化骨骼绑定与权重测试。</p>
+<ul>
+<li><strong>💡 可复用提示词（自动绑骨、蒙皮与动作测试）</strong>：<blockquote>
+<p>使用 Auto-Rig Pro 为人物完成绑骨和蒙皮，确保骨骼位置与人物关节精准对齐。完成后测试抬手、弯腿、转身等基础动作，检查并修正明显的变形、拉扯和穿模问题。</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="步骤-4：从-Mixamo-获取动作文件并由-Opus-5-5-完成重定向"><a href="#步骤-4：从-Mixamo-获取动作文件并由-Opus-5-5-完成重定向" class="headerlink" title="步骤 4：从 Mixamo 获取动作文件并由 Opus 5.5 完成重定向"></a>步骤 4：从 Mixamo 获取动作文件并由 Opus 5.5 完成重定向</h3><ol>
+<li>根据游戏的交互设定，前往 <a href="https://www.mixamo.com/">Mixamo 官网</a> 按关键词搜索小王子所需的动作（如行走、跳跃、挥手等），并下载对应的 <code>.fbx</code> 动作文件。</li>
+<li>将动作文件交给 Opus 5.5，让其自动检查动作数据是否匹配小王子的真实骨骼结构，并在引擎&#x2F;Blender 中完成动作接入与重定向。<br><img src="https://img.nep.me/ooo/HUpgX9Jb0AAZWIv.webp" alt="HUpgX9Jb0AAZWIv.jpeg"></li>
+</ol>
+<h3 id="步骤-5：在-Blender-中精调特殊动作与道具接触细节（进阶可选）"><a href="#步骤-5：在-Blender-中精调特殊动作与道具接触细节（进阶可选）" class="headerlink" title="步骤 5：在 Blender 中精调特殊动作与道具接触细节（进阶可选）"></a>步骤 5：在 Blender 中精调特殊动作与道具接触细节（进阶可选）</h3><p>对于诸如「小王子提水壶」这类涉及<strong>人物与道具发生物理接触</strong>的复杂交互，Mixamo 的通用动作库往往无法完美适配。</p>
+<ul>
+<li><p><strong>解决方案</strong>：先在 Mixamo 中挑选一个姿势最接近的基础动作，再让 Opus 5.5 在 Blender 里利用控制器进行局部细节的迭代修正。<br><img src="https://img.nep.me/ooo/HUpmEFUbMAADsZk.webp" alt="HUpmEFUbMAADsZk.jpeg"></p>
+</li>
+<li><p><strong>💡 可复用提示词（复杂交互与 IK 手部精调）</strong>：</p>
+<blockquote>
+<p>请参考提供的 Mixamo 基础动作，保留其中适用的部分，并使用 Auto-Rig Pro 的手臂 IK 控制器调整手臂姿势，配合手指握持姿态和水壶空间位置的细节修正，补全「提水壶」的完整动作。确保手掌与水壶把手接触稳定、提起过程自然流畅，避免出现穿模、握持脱离或水壶悬空等问题。</p>
+</blockquote>
+</li>
+</ul>
+<p>Tripo 3D 的注册地址： <a href="https://studio.tripo3d.ai/">https://studio.tripo3d.ai/</a></p>
+]]></content>
+      <categories>
+        <category>教程</category>
+      </categories>
+      <tags>
+        <tag>AI</tag>
+        <tag>Opus 5.5</tag>
+        <tag>Tripo 3D</tag>
+        <tag>Games</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Sonnet 5 已发布，值得用吗？</title>
     <url>/post/is-sonnet-5-worth-using.html</url>
     <content><![CDATA[<p>北京时间 2026 年 7 月 1 日， Anthropic 宣布 <strong>Fable 5</strong> 解除封禁，并发布了新模型 <strong>Sonnet 5</strong>， Anthopic 宣称该版本显著提升了自主执行任务和调用工具的智能体 (Agent) 能力，性能逼近旗舰级 Opus 4.8，采用了全新的分词器。其定价为：</p>
@@ -6871,129 +6994,6 @@
         <tag>AI</tag>
         <tag>Claude</tag>
         <tag>Sonnet 5</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>用 AI 制作 3D 游戏：Opus 5.5 / Astra + Tripo 全流程实战指南</title>
-    <url>/post/how-to-use-ai-build-3d-games.html</url>
-    <content><![CDATA[<blockquote>
-<p><strong>原作者</strong>：X 博主 <a href="https://x.com/Saccc_c">@Sac</a><br><strong>演示作品</strong>：<a href="https://littleprince.dev/">点击查看《小王子》3D 可探索星球演示</a><br><strong>核心看点</strong>：结合 Tripo + Blender + Unity，利用 Opus 5.5 将《小王子》故事中的每一个星球变成可探索的 3D 场景。从场景搭建、人物制作，到代码开发与调试，核心工作流全部交由 AI 完成。</p>
-</blockquote>
-<p>本文将完整公开这套 AI 3D 游戏制作的工作流，结合《小王子》实际案例与可复用的提示词（Prompts），手把手带你入门 AI 3D 游戏开发，搭建属于你想象中的世界。</p>
-<p>全文主要分为三个部分：</p>
-<ol>
-<li><strong>游戏开发流程与工具配置</strong></li>
-<li><strong>3D 场景构建全流程</strong></li>
-<li><strong>3D 角色建模与动作交互</strong></li>
-</ol>
-<hr>
-<h2 id="一、-游戏开发流程与工具配置"><a href="#一、-游戏开发流程与工具配置" class="headerlink" title="一、 游戏开发流程与工具配置"></a>一、 游戏开发流程与工具配置</h2><h3 id="1-核心-AI-协同工作流"><a href="#1-核心-AI-协同工作流" class="headerlink" title="1. 核心 AI 协同工作流"></a>1. 核心 AI 协同工作流</h3><p>整个游戏的开发由多个 AI 模型各司其职、串联完成：</p>
-<ul>
-<li><strong>需求与策划（Fable 5.1）</strong>：负责制作 PRD（产品需求文档），梳理游戏核心场景、人物设定以及剧情故事线。</li>
-<li><strong>视觉概念设定（GPT Image 2.5）</strong>：生成高一致性的场景参考图与人物多视角设定图。</li>
-<li><strong>核心 3D 资产生成（Tripo）</strong>：将 2D 概念图转化为高精度 3D 模型资产。</li>
-<li><strong>场景搭建与核心代码（Opus 5.5）</strong>：通过 CLI 与 MCP 工具操控 Blender 与 Unity，完成场景组装与核心代码搭建。</li>
-<li><strong>迭代优化与 Debug（Astra）</strong>：负责后期的细节打磨、性能优化以及 Bug 修复。</li>
-</ul>
-<h3 id="2-基础工具与环境配置"><a href="#2-基础工具与环境配置" class="headerlink" title="2. 基础工具与环境配置"></a>2. 基础工具与环境配置</h3><p>在开始制作前，需在本地配置好以下软件与插件接口，以便 AI 能够直接接管操作：</p>
-<ul>
-<li><strong>Blender 配置</strong>：<ul>
-<li>下载并配置 <strong>Blender CLI</strong>，用于让 AI 优化 Tripo 生成的 3D 模型，并完成游戏整体的 3D 建模组装。</li>
-<li>安装付费插件 <strong>Auto-Rig Pro</strong>，用于人物的自动绑骨与蒙皮，为后续动作交互打下基础。</li>
-</ul>
-</li>
-<li><strong>Unity 配置</strong>：<ul>
-<li>安装 <a href="https://unity.com/">Unity 客户端</a>，作为游戏引擎将场景、人物与交互动效打包成完整游戏。</li>
-<li>安装 <strong>Unity CLI</strong>，并在项目中安装 <strong>Pipeline 包</strong>，使 Claude（Opus 5.5）能够通过官方 <strong>Unity MCP</strong> 直接操作 Unity 项目。</li>
-</ul>
-</li>
-</ul>
-<hr>
-<h2 id="二、-3D-场景构建全流程"><a href="#二、-3D-场景构建全流程" class="headerlink" title="二、 3D 场景构建全流程"></a>二、 3D 场景构建全流程</h2><blockquote>
-<p><strong>核心链路</strong>：<code>Image 2.5 生成场景参考图</code> ➔ <code>AI 拆解 3D 资产并在 Tripo 中生成</code> ➔ <code>Opus 5.5 操控 Blender + Unity 完成场景建模与还原</code></p>
-</blockquote>
-<h3 id="步骤-1：使用-GPT-Image-2-5-生成多视角场景参考图"><a href="#步骤-1：使用-GPT-Image-2-5-生成多视角场景参考图" class="headerlink" title="步骤 1：使用 GPT Image 2.5 生成多视角场景参考图"></a>步骤 1：使用 GPT Image 2.5 生成多视角场景参考图</h3><p>根据前期整理好的游戏需求，使用 Image 2.5 生成场景参考图，以此确定整体画风、配色方案以及核心物体的空间位置。</p>
-<ul>
-<li><p><strong>实操建议</strong>：先确定一张满意的主场景效果图，再围绕它补充其他角度（尤其是包含室内外结构的复杂场景）：</p>
-<ul>
-<li><strong>俯视图</strong>：用于明确场景的整体平面布局。</li>
-<li><strong>斜侧视图</strong>：用于补充物体的高度、造型特征和前后层次关系。</li>
-<li><strong>全景多视图</strong>：也可以直接通过提示词一次性生成包含多视角与局部细节的综合参考图。<br><img src="https://img.nep.me/ooo/HUpgX9Jb0AAZWIv.webp" alt="HUpgX9Jb0AAZWIv.jpeg"></li>
-</ul>
-</li>
-<li><p><strong>💡 可复用提示词（生成多视角场景图）</strong>：</p>
-<blockquote>
-<p>基于上传的场景参考图，帮我生成一张该场景的全面貌参考图片，包括整体环境的多视角视图以及局部细节的展示。</p>
-</blockquote>
-</li>
-</ul>
-<h3 id="步骤-2：利用-AI-拆解场景资产，并在-Tripo-中生成独立道具"><a href="#步骤-2：利用-AI-拆解场景资产，并在-Tripo-中生成独立道具" class="headerlink" title="步骤 2：利用 AI 拆解场景资产，并在 Tripo 中生成独立道具"></a>步骤 2：利用 AI 拆解场景资产，并在 Tripo 中生成独立道具</h3><p>拿到参考图后，不要急于建模。先让 AI 分析画面，判断哪些复杂资产需要在 Tripo 中单独生成，哪些基础几何结构可以直接交给 Opus 5.5 在 Blender&#x2F;Unity 中用代码搭建。</p>
-<ul>
-<li><p><strong>💡 可复用提示词（资产拆解与标注）</strong>：</p>
-<blockquote>
-<p>我现在要进行游戏开发，我的技术栈是 Tripo + Blender + Unity。请你根据上述生成的场景参考图，帮我深入分析哪些资产适合用 Tripo 生成，哪些资产适合用 Blender 直接进行搭建。并将需要用 Tripo 生成的资产在图片中标注出来，方便我确认。<br><img src="https://img.nep.me/ooo/HUpi6bPboAAW7av.webp" alt="HUpi6bPboAAW7av.jpeg"></p>
-</blockquote>
-</li>
-<li><p><strong>Tripo 模型选择技巧</strong>：在 Tripo 中制作场景道具类 3D 资产时，建议使用 <strong>H3.1 模型</strong>，该模型能最大程度保证静态资产的高精度细节。<br><img src="https://img.nep.me/ooo/HUpj0-mbIAAQUr-.webp" alt="HUpj0-mbIAAQUr-.jpeg"></p>
-</li>
-</ul>
-<h3 id="步骤-3：让-Opus-5-5-操控-Blender-与-Unity-进行组装与多机位迭代"><a href="#步骤-3：让-Opus-5-5-操控-Blender-与-Unity-进行组装与多机位迭代" class="headerlink" title="步骤 3：让 Opus 5.5 操控 Blender 与 Unity 进行组装与多机位迭代"></a>步骤 3：让 Opus 5.5 操控 Blender 与 Unity 进行组装与多机位迭代</h3><p>在 Tripo 中生成并导出独立 3D 道具后，将这些资产连同第一步的场景参考图一起交给 Opus 5.5。让它操控 Blender 和 Unity 搭建整体环境，并严格按照参考图摆放道具、调整比例与空间位置。</p>
-<ul>
-<li><p><strong>关键核心</strong>：提供详尽的参考图，并引入<strong>独立审查 Agent 进行多机位截图盲审</strong>，通过视觉反馈闭环不断调整布局与细节。</p>
-</li>
-<li><p><strong>💡 可复用提示词（场景复刻与自动盲审迭代）</strong>：</p>
-<blockquote>
-<p>根据上传的场景内外景多视角参考图以及生成好的 Tripo 3D 资产，请你对照参考图进行完美级的复刻，要求实现和参考图一致的惊艳质感与细节还原。</p>
-<p>在实现完成后，请派一个独立的审查 Agent 进行多机位的场景盲审。如果发现有和参考图存在差异的地方，就不断地进行迭代完善。</p>
-</blockquote>
-</li>
-</ul>
-<hr>
-<h2 id="三、-3D-角色建模与动作交互"><a href="#三、-3D-角色建模与动作交互" class="headerlink" title="三、 3D 角色建模与动作交互"></a>三、 3D 角色建模与动作交互</h2><blockquote>
-<p><strong>核心链路</strong>：<code>Image 2.5 生成人物四视图</code> ➔ <code>Tripo 生成 3D 角色模型</code> ➔ <code>Blender (Auto-Rig Pro) 绑骨蒙皮</code> ➔ <code>接入 Mixamo 动作库</code> ➔ <code>Blender 复杂交互二次精调（可选）</code></p>
-</blockquote>
-<p>以下我们以《小王子》主角的设计为例，拆解具体步骤：</p>
-<h3 id="步骤-1：使用-Image-2-5-生成人物-T-pose-四视图"><a href="#步骤-1：使用-Image-2-5-生成人物-T-pose-四视图" class="headerlink" title="步骤 1：使用 Image 2.5 生成人物 T-pose 四视图"></a>步骤 1：使用 Image 2.5 生成人物 T-pose 四视图</h3><p>根据人物形象设定，首先使用 Image 2.5 生成小王子的标准 <strong>T-pose 四视图</strong>（正视、背视、左视、右视），务必确保各个视角下的人物服装、比例等细节高度统一。<br><img src="https://img.nep.me/ooo/HUpkpDca4AActDR.webp" alt="HUpkpDca4AActDR.jpeg"></p>
-<h3 id="步骤-2：使用-Tripo-的-Smart-Mesh-P2-0-生成可编辑-3D-角色"><a href="#步骤-2：使用-Tripo-的-Smart-Mesh-P2-0-生成可编辑-3D-角色" class="headerlink" title="步骤 2：使用 Tripo 的 Smart Mesh P2.0 生成可编辑 3D 角色"></a>步骤 2：使用 Tripo 的 Smart Mesh P2.0 生成可编辑 3D 角色</h3><ul>
-<li><strong>为什么选 Smart Mesh P2.0？</strong> 这是一个专门面向游戏和交互内容的 3D 生成模型，其核心优势是<strong>生成的布线面数可控、拓扑结构规整</strong>，非常便于后期的骨骼绑定和动画制作。</li>
-<li><strong>实操流程</strong>：<ol>
-<li>在 Tripo 中选择<strong>「多视图生成 3D」</strong>，依次上传生成的四视图。</li>
-<li>参数设置：拓扑默认选择<strong>「四边形」</strong>，精度拉到<strong>最高</strong>，模型选择 <strong>P2.0</strong> 并开始生成。<br><img src="https://img.nep.me/ooo/HUpkyEwakAEzlkG.webp" alt="HUpkyEwakAEzlkG.jpeg"></li>
-<li><strong>网格检查与贴图</strong>：先观察初步生成的白模。若网格整齐无误，直接点击<strong>「Texture（纹理）」</strong>生成模型贴图；若发现局部网格形状不合理，可使用<strong>「Edit Mesh」</strong>功能进行局部重绘再生成。<br><img src="https://img.nep.me/ooo/HUpk4llbAAAQGLP.webp" alt="HUpk4llbAAAQGLP.jpeg"></li>
-</ol>
-</li>
-</ul>
-<h3 id="步骤-3：在-Blender-中利用-Auto-Rig-Pro-自动绑骨与蒙皮"><a href="#步骤-3：在-Blender-中利用-Auto-Rig-Pro-自动绑骨与蒙皮" class="headerlink" title="步骤 3：在 Blender 中利用 Auto-Rig Pro 自动绑骨与蒙皮"></a>步骤 3：在 Blender 中利用 Auto-Rig Pro 自动绑骨与蒙皮</h3><p>配置好 Auto-Rig Pro 插件后，直接在 Claude 中上传人物模型，通过提示词驱动 Blender 完成自动化骨骼绑定与权重测试。</p>
-<ul>
-<li><strong>💡 可复用提示词（自动绑骨、蒙皮与动作测试）</strong>：<blockquote>
-<p>使用 Auto-Rig Pro 为人物完成绑骨和蒙皮，确保骨骼位置与人物关节精准对齐。完成后测试抬手、弯腿、转身等基础动作，检查并修正明显的变形、拉扯和穿模问题。</p>
-</blockquote>
-</li>
-</ul>
-<h3 id="步骤-4：从-Mixamo-获取动作文件并由-Opus-5-5-完成重定向"><a href="#步骤-4：从-Mixamo-获取动作文件并由-Opus-5-5-完成重定向" class="headerlink" title="步骤 4：从 Mixamo 获取动作文件并由 Opus 5.5 完成重定向"></a>步骤 4：从 Mixamo 获取动作文件并由 Opus 5.5 完成重定向</h3><ol>
-<li>根据游戏的交互设定，前往 <a href="https://www.mixamo.com/">Mixamo 官网</a> 按关键词搜索小王子所需的动作（如行走、跳跃、挥手等），并下载对应的 <code>.fbx</code> 动作文件。</li>
-<li>将动作文件交给 Opus 5.5，让其自动检查动作数据是否匹配小王子的真实骨骼结构，并在引擎&#x2F;Blender 中完成动作接入与重定向。<br><img src="https://img.nep.me/ooo/HUpgX9Jb0AAZWIv.webp" alt="HUpgX9Jb0AAZWIv.jpeg"></li>
-</ol>
-<h3 id="步骤-5：在-Blender-中精调特殊动作与道具接触细节（进阶可选）"><a href="#步骤-5：在-Blender-中精调特殊动作与道具接触细节（进阶可选）" class="headerlink" title="步骤 5：在 Blender 中精调特殊动作与道具接触细节（进阶可选）"></a>步骤 5：在 Blender 中精调特殊动作与道具接触细节（进阶可选）</h3><p>对于诸如「小王子提水壶」这类涉及<strong>人物与道具发生物理接触</strong>的复杂交互，Mixamo 的通用动作库往往无法完美适配。</p>
-<ul>
-<li><p><strong>解决方案</strong>：先在 Mixamo 中挑选一个姿势最接近的基础动作，再让 Opus 5.5 在 Blender 里利用控制器进行局部细节的迭代修正。<br><img src="https://img.nep.me/ooo/HUpmEFUbMAADsZk.webp" alt="HUpmEFUbMAADsZk.jpeg"></p>
-</li>
-<li><p><strong>💡 可复用提示词（复杂交互与 IK 手部精调）</strong>：</p>
-<blockquote>
-<p>请参考提供的 Mixamo 基础动作，保留其中适用的部分，并使用 Auto-Rig Pro 的手臂 IK 控制器调整手臂姿势，配合手指握持姿态和水壶空间位置的细节修正，补全「提水壶」的完整动作。确保手掌与水壶把手接触稳定、提起过程自然流畅，避免出现穿模、握持脱离或水壶悬空等问题。</p>
-</blockquote>
-</li>
-</ul>
-<p>Tripo 3D 的注册地址： <a href="https://studio.tripo3d.ai/">https://studio.tripo3d.ai/</a></p>
-]]></content>
-      <categories>
-        <category>教程</category>
-      </categories>
-      <tags>
-        <tag>AI</tag>
-        <tag>Opus 5.5</tag>
-        <tag>Tripo 3D</tag>
-        <tag>Games</tag>
       </tags>
   </entry>
   <entry>
@@ -8731,6 +8731,60 @@
       </tags>
   </entry>
   <entry>
+    <title>快讯：美国政府对 Claude Fable 5 发布禁令</title>
+    <url>/post/us-government-ban-claude-fable-5.html</url>
+    <content><![CDATA[<h2 id="AI-的“数字铁幕”落下：Claude-Fable-5-遭出口管制限制"><a href="#AI-的“数字铁幕”落下：Claude-Fable-5-遭出口管制限制" class="headerlink" title="AI 的“数字铁幕”落下：Claude Fable 5 遭出口管制限制"></a>AI 的“数字铁幕”落下：Claude Fable 5 遭出口管制限制</h2><p>北京时间 2026 年 6 月 13 日，在 Claude Fable 5 仅仅上线三天后，Anthropic 在社交平台上发布了一则令人震惊的 <a href="https://x.com/AnthropicAI/status/2065597531644743999">声明</a>： <strong>因美国政府援引国家安全授权下达出口管制指令，要求禁止任何外国公民访问 Fable 5 和 Mythos 5</strong> ，公司为确保合规，不得不紧急对所有客户全面停用这两款模型。</p>
+<blockquote>
+<p>The US government, citing national security authorities, has issued an export control directive to suspend all access to Fable 5 and Mythos 5 by any foreign national, whether inside or outside the United States, including foreign national Anthropic employees.</p>
+<p>The net effect of this order is that we must abruptly disable Fable 5 and Mythos 5 for all our customers to ensure compliance.</p>
+<p>Access to all other Claude models is not affected.</p>
+</blockquote>
+<p>在 Anthropic 的官网 <a href="https://www.anthropic.com/news/fable-mythos-access">声明</a> 中表示，美国政府是基于发现了一种绕过或破解 Fable 5 限制（即大模型的 <strong>越狱</strong>）的方法而发布了禁令。</p>
+<p>虽然其他 Claude 模型暂未受波及，但这则短短的声明，却无异于在生成式 AI 领域投下了一枚重磅炸弹。它不仅宣告了一个特定模型的下线，更标志着整个行业底层逻辑的根本性转折。</p>
+<h2 id="核心剧变：从“算力霸权”向“模型主权”的转移"><a href="#核心剧变：从“算力霸权”向“模型主权”的转移" class="headerlink" title="核心剧变：从“算力霸权”向“模型主权”的转移"></a>核心剧变：从“算力霸权”向“模型主权”的转移</h2><p>过去，大国博弈与行业竞争的焦点一直停留在硬件层面——谁掌握了最先进的 GPU 和芯片制造工艺，谁就扼住了 AI 发展的咽喉。</p>
+<p>然而，Fable 5 事件证明，到了 2026 年，最先进 AI 的核心价值已经从“训练基础设施”正式转移到了“模型本身”。当一个前沿模型具备了以下特征时，它便不再仅仅是商业软件，而是名副其实的国家战略级技术资产：</p>
+<ul>
+<li>顶级的科研与科学发现能力</li>
+<li>深度的自主编程与除错能力</li>
+<li>长周期的复杂任务规划与执行能力</li>
+<li>自动化的网络攻防与安全渗透能力</li>
+</ul>
+<p>美国政府对 Fable 5 的封锁逻辑，与当年限制高端芯片出口的逻辑如出一辙。因为在国家安全视域下，具备上述能力的软件，其杀伤力与重要性已与尖端军工硬件无异。</p>
+<h2 id="致命悖论：Anthropic-被自己的“安全牌”反噬"><a href="#致命悖论：Anthropic-被自己的“安全牌”反噬" class="headerlink" title="致命悖论：Anthropic 被自己的“安全牌”反噬"></a>致命悖论：Anthropic 被自己的“安全牌”反噬</h2><p>这起事件中最具戏剧性的一幕，在于 Anthropic 一直以来的人设。作为业界最著名的“AI 安全路线”倡导者，Anthropic 经常在公开场合展示其模型在网络安全、生物科学辅助、自动化代理等领域的强大乃至“危险”的能力。</p>
+<p>这种策略在商业上曾无比成功：</p>
+<ul>
+<li>对投资者： 证明了自己拥有逼近 AGI 的技术实力。</li>
+<li>对监管者： 彰显了企业对潜在风险的重视与透明度。</li>
+</ul>
+<p><strong>但也这是一个致命的悖论</strong>：<br>为了证明模型足够强大，企业必须充分展示其潜在的破坏力；而当这种危险性被反复强调并被广泛认可后，必然会精准踩中监管机构的红线。Anthropic 近期对 Fable 5 和 Mythos 5 危险能力的渲染，最终成为了促使监管重锤落下的核心背书。</p>
+<h2 id="行业新常态：互联网“无国界时代”的终结"><a href="#行业新常态：互联网“无国界时代”的终结" class="headerlink" title="行业新常态：互联网“无国界时代”的终结"></a>行业新常态：互联网“无国界时代”的终结</h2><p>Fable 5 的下线只是一个开始，它真正值得警惕的是其开创的政策先例。如果政府可以直接介入并限制特定 AI 模型的全球访问权，那么我们很可能即将迎来一个“技术边境”森严的新时代。</p>
+<p>未来，全球统一的 AI 软件服务模式可能走向瓦解，取而代之的将是高度分化的访问机制：</p>
+<ul>
+<li><strong>基于国籍的隔离</strong>： 不同国家的用户只能访问被阉割或完全不同的模型版本。  </li>
+<li><strong>模块化的权限管控</strong>： 科研、编程等关键能力模块受到严格的许可限制。</li>
+<li><strong>身份层级分化</strong>： 个人用户、普通企业与具有特殊资质的科研&#x2F;政府机构获得截然不同的访问权限。</li>
+</ul>
+<p>过去的焦点是<strong>数据主权</strong>，而未来的核心博弈将是<strong>模型主权</strong>。</p>
+<h2 id="悬念犹存：GPT-5-5-会步其后尘吗？"><a href="#悬念犹存：GPT-5-5-会步其后尘吗？" class="headerlink" title="悬念犹存：GPT-5.5 会步其后尘吗？"></a>悬念犹存：GPT-5.5 会步其后尘吗？</h2><p>面对 Claude 的遭遇，用户的焦虑很快蔓延至其竞争对手：OpenAI 的 GPT-5.5 会不会成为下一个管制目标？ 尤其是在 Anthropic 的官网 <a href="https://www.anthropic.com/news/fable-mythos-access">声明</a> 中包含了下面的内容：</p>
+<blockquote>
+<p>我们已经审查了一份据信是政府下达该指令依据的报告。我们已经核实，报告中所展示的能力水平在其他模型（包括 OpenAI 的 GPT-5.5）中广泛存在，并且每天都在被维护系统安全的防御者们所使用。</p>
+</blockquote>
+<p>Anthropic 认为，这场风波本质上是一场误解。所谓“越狱”并非体现模型具备普遍性、高风险能力，而只是某些狭窄、非通用的漏洞；类似能力在其他公开模型中也普遍存在，并不应被单独放大为管制依据。</p>
+<p>从声明全文来看，Anthropic 对相关管制政策持明确反对态度。其核心诉求显然是自救，而不是将其他竞争对手一并拖入困境。它真正希望推动的，是监管层重新评估 Claude Fable 5 的风险判断，并最终解除对其访问限制。</p>
+<p>毕竟，如果两家 AI 巨头的旗舰模型都相继被限制，那将不只是某一家公司的危机，而可能成为整个技术开放生态的至暗时刻。</p>
+<h2 id="结语：AI“开放时代”的落幕"><a href="#结语：AI“开放时代”的落幕" class="headerlink" title="结语：AI“开放时代”的落幕"></a>结语：AI“开放时代”的落幕</h2><p>回顾过去三年，大模型行业经历了一场狂飙突进的全球化盛宴。模型能力呈指数级跃升，使用成本不断逼近底线，全球用户几乎能够跨越地理界限，同步享受到人类最前沿的智慧结晶。</p>
+<p>但 6 月 13 日的 Fable 5 事件，是一道冰冷的历史分水岭。</p>
+<p>它宣告了先进 AI 正式脱离单纯的“消费级科技产品”范畴，被摆上了与核武器、航空航天、先进制程芯片同等的战略博弈棋盘。对于普通人而言，最大的震撼不在于某一个聊天窗口的暂时失效，而是我们终于看清了未来的残酷现实：</p>
+<p>由技术全球化所构筑的“普惠 AI”乌托邦正在消散，取而代之的，是数字铁幕时代下，被权力、国籍和安全政策严格切割的智能世界。</p>
+]]></content>
+      <categories>
+        <category>资讯</category>
+      </categories>
+      <tags>
+        <tag>Claude Fable 5</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>在 OpenCode 中免费体验 Kimi K2.5 模型</title>
     <url>/post/try-kimi-k25-free-in-opencode.html</url>
     <content><![CDATA[<h2 id="有关-Kimi-K2-5"><a href="#有关-Kimi-K2-5" class="headerlink" title="有关 Kimi K2.5"></a>有关 Kimi K2.5</h2><p>Kimi 是 <strong>月之暗面</strong> (<a href="https://www.moonshot.ai/">Moonshot AI</a>) 推出的系列模型，最新版本是 Kimi K2.5，点击这里查看 <a href="https://platform.moonshot.cn/docs/guide/kimi-k2-5-quickstart">Kimi K2.5 模型介绍</a></p>
@@ -8851,60 +8905,6 @@
       <tags>
         <tag>OpenCode</tag>
         <tag>Kimi</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>快讯：美国政府对 Claude Fable 5 发布禁令</title>
-    <url>/post/us-government-ban-claude-fable-5.html</url>
-    <content><![CDATA[<h2 id="AI-的“数字铁幕”落下：Claude-Fable-5-遭出口管制限制"><a href="#AI-的“数字铁幕”落下：Claude-Fable-5-遭出口管制限制" class="headerlink" title="AI 的“数字铁幕”落下：Claude Fable 5 遭出口管制限制"></a>AI 的“数字铁幕”落下：Claude Fable 5 遭出口管制限制</h2><p>北京时间 2026 年 6 月 13 日，在 Claude Fable 5 仅仅上线三天后，Anthropic 在社交平台上发布了一则令人震惊的 <a href="https://x.com/AnthropicAI/status/2065597531644743999">声明</a>： <strong>因美国政府援引国家安全授权下达出口管制指令，要求禁止任何外国公民访问 Fable 5 和 Mythos 5</strong> ，公司为确保合规，不得不紧急对所有客户全面停用这两款模型。</p>
-<blockquote>
-<p>The US government, citing national security authorities, has issued an export control directive to suspend all access to Fable 5 and Mythos 5 by any foreign national, whether inside or outside the United States, including foreign national Anthropic employees.</p>
-<p>The net effect of this order is that we must abruptly disable Fable 5 and Mythos 5 for all our customers to ensure compliance.</p>
-<p>Access to all other Claude models is not affected.</p>
-</blockquote>
-<p>在 Anthropic 的官网 <a href="https://www.anthropic.com/news/fable-mythos-access">声明</a> 中表示，美国政府是基于发现了一种绕过或破解 Fable 5 限制（即大模型的 <strong>越狱</strong>）的方法而发布了禁令。</p>
-<p>虽然其他 Claude 模型暂未受波及，但这则短短的声明，却无异于在生成式 AI 领域投下了一枚重磅炸弹。它不仅宣告了一个特定模型的下线，更标志着整个行业底层逻辑的根本性转折。</p>
-<h2 id="核心剧变：从“算力霸权”向“模型主权”的转移"><a href="#核心剧变：从“算力霸权”向“模型主权”的转移" class="headerlink" title="核心剧变：从“算力霸权”向“模型主权”的转移"></a>核心剧变：从“算力霸权”向“模型主权”的转移</h2><p>过去，大国博弈与行业竞争的焦点一直停留在硬件层面——谁掌握了最先进的 GPU 和芯片制造工艺，谁就扼住了 AI 发展的咽喉。</p>
-<p>然而，Fable 5 事件证明，到了 2026 年，最先进 AI 的核心价值已经从“训练基础设施”正式转移到了“模型本身”。当一个前沿模型具备了以下特征时，它便不再仅仅是商业软件，而是名副其实的国家战略级技术资产：</p>
-<ul>
-<li>顶级的科研与科学发现能力</li>
-<li>深度的自主编程与除错能力</li>
-<li>长周期的复杂任务规划与执行能力</li>
-<li>自动化的网络攻防与安全渗透能力</li>
-</ul>
-<p>美国政府对 Fable 5 的封锁逻辑，与当年限制高端芯片出口的逻辑如出一辙。因为在国家安全视域下，具备上述能力的软件，其杀伤力与重要性已与尖端军工硬件无异。</p>
-<h2 id="致命悖论：Anthropic-被自己的“安全牌”反噬"><a href="#致命悖论：Anthropic-被自己的“安全牌”反噬" class="headerlink" title="致命悖论：Anthropic 被自己的“安全牌”反噬"></a>致命悖论：Anthropic 被自己的“安全牌”反噬</h2><p>这起事件中最具戏剧性的一幕，在于 Anthropic 一直以来的人设。作为业界最著名的“AI 安全路线”倡导者，Anthropic 经常在公开场合展示其模型在网络安全、生物科学辅助、自动化代理等领域的强大乃至“危险”的能力。</p>
-<p>这种策略在商业上曾无比成功：</p>
-<ul>
-<li>对投资者： 证明了自己拥有逼近 AGI 的技术实力。</li>
-<li>对监管者： 彰显了企业对潜在风险的重视与透明度。</li>
-</ul>
-<p><strong>但也这是一个致命的悖论</strong>：<br>为了证明模型足够强大，企业必须充分展示其潜在的破坏力；而当这种危险性被反复强调并被广泛认可后，必然会精准踩中监管机构的红线。Anthropic 近期对 Fable 5 和 Mythos 5 危险能力的渲染，最终成为了促使监管重锤落下的核心背书。</p>
-<h2 id="行业新常态：互联网“无国界时代”的终结"><a href="#行业新常态：互联网“无国界时代”的终结" class="headerlink" title="行业新常态：互联网“无国界时代”的终结"></a>行业新常态：互联网“无国界时代”的终结</h2><p>Fable 5 的下线只是一个开始，它真正值得警惕的是其开创的政策先例。如果政府可以直接介入并限制特定 AI 模型的全球访问权，那么我们很可能即将迎来一个“技术边境”森严的新时代。</p>
-<p>未来，全球统一的 AI 软件服务模式可能走向瓦解，取而代之的将是高度分化的访问机制：</p>
-<ul>
-<li><strong>基于国籍的隔离</strong>： 不同国家的用户只能访问被阉割或完全不同的模型版本。  </li>
-<li><strong>模块化的权限管控</strong>： 科研、编程等关键能力模块受到严格的许可限制。</li>
-<li><strong>身份层级分化</strong>： 个人用户、普通企业与具有特殊资质的科研&#x2F;政府机构获得截然不同的访问权限。</li>
-</ul>
-<p>过去的焦点是<strong>数据主权</strong>，而未来的核心博弈将是<strong>模型主权</strong>。</p>
-<h2 id="悬念犹存：GPT-5-5-会步其后尘吗？"><a href="#悬念犹存：GPT-5-5-会步其后尘吗？" class="headerlink" title="悬念犹存：GPT-5.5 会步其后尘吗？"></a>悬念犹存：GPT-5.5 会步其后尘吗？</h2><p>面对 Claude 的遭遇，用户的焦虑很快蔓延至其竞争对手：OpenAI 的 GPT-5.5 会不会成为下一个管制目标？ 尤其是在 Anthropic 的官网 <a href="https://www.anthropic.com/news/fable-mythos-access">声明</a> 中包含了下面的内容：</p>
-<blockquote>
-<p>我们已经审查了一份据信是政府下达该指令依据的报告。我们已经核实，报告中所展示的能力水平在其他模型（包括 OpenAI 的 GPT-5.5）中广泛存在，并且每天都在被维护系统安全的防御者们所使用。</p>
-</blockquote>
-<p>Anthropic 认为，这场风波本质上是一场误解。所谓“越狱”并非体现模型具备普遍性、高风险能力，而只是某些狭窄、非通用的漏洞；类似能力在其他公开模型中也普遍存在，并不应被单独放大为管制依据。</p>
-<p>从声明全文来看，Anthropic 对相关管制政策持明确反对态度。其核心诉求显然是自救，而不是将其他竞争对手一并拖入困境。它真正希望推动的，是监管层重新评估 Claude Fable 5 的风险判断，并最终解除对其访问限制。</p>
-<p>毕竟，如果两家 AI 巨头的旗舰模型都相继被限制，那将不只是某一家公司的危机，而可能成为整个技术开放生态的至暗时刻。</p>
-<h2 id="结语：AI“开放时代”的落幕"><a href="#结语：AI“开放时代”的落幕" class="headerlink" title="结语：AI“开放时代”的落幕"></a>结语：AI“开放时代”的落幕</h2><p>回顾过去三年，大模型行业经历了一场狂飙突进的全球化盛宴。模型能力呈指数级跃升，使用成本不断逼近底线，全球用户几乎能够跨越地理界限，同步享受到人类最前沿的智慧结晶。</p>
-<p>但 6 月 13 日的 Fable 5 事件，是一道冰冷的历史分水岭。</p>
-<p>它宣告了先进 AI 正式脱离单纯的“消费级科技产品”范畴，被摆上了与核武器、航空航天、先进制程芯片同等的战略博弈棋盘。对于普通人而言，最大的震撼不在于某一个聊天窗口的暂时失效，而是我们终于看清了未来的残酷现实：</p>
-<p>由技术全球化所构筑的“普惠 AI”乌托邦正在消散，取而代之的，是数字铁幕时代下，被权力、国籍和安全政策严格切割的智能世界。</p>
-]]></content>
-      <categories>
-        <category>资讯</category>
-      </categories>
-      <tags>
-        <tag>Claude Fable 5</tag>
       </tags>
   </entry>
   <entry>
@@ -9043,7 +9043,7 @@
       </tags>
   </entry>
   <entry>
-    <title># Claude Opus 5.5 视频生成指南：从底层原理、技术栈选型到工程化 Prompt 实践</title>
+    <title>Claude Opus 5.5 视频生成指南：从底层原理、技术栈选型到工程化 Prompt 实践</title>
     <url>/post/use-opus-make-videos.html</url>
     <content><![CDATA[<p>当提到使用 Claude Opus 5.5 制作视频时，一个常见的误区是将其等同于 Sora 或 Runway 等端到端的扩散视频生成模型（Diffusion Video Models）。实际上，Opus 5.5 作为多模态大语言模型，具备文本与图像理解能力，但其输出模态依然严格受限于<strong>文本（代码）</strong>。</p>
 <p>那么，Opus 5.5 生成的高水准动态设计（Motion Design）视频从何而来？答案是<strong>程序化生成（Procedural Generation）与无头渲染管线（Headless Rendering Pipeline）</strong>。</p>
