@@ -1,0 +1,972 @@
+<!doctype html>
+
+<html lang="zh-CN" data-fancybox-enabled="1">
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f7f3e9" data-flatpaper-theme-color>
+
+<title># Claude Opus 5.5 视频生成指南：从底层原理、技术栈选型到工程化 Prompt 实践 | O&#39;s World</title>
+<meta name="description" content="当提到使用 Claude Opus 5.5 制作视频时，一个常见的误区是将其等同于 Sora 或 Runway 等端到端的扩散视频生成模型（Diffusion Video Models）。实际上，Opus 5.5 作为多模态大语言模型，具备文本与图像理解能力，但其输出模态依然严格受限于文本（代码）。 那么，Opus 5.5 生成的高水准动态设计（Motion...">
+<meta property="og:type" content="article">
+<meta property="og:title" content="# Claude Opus 5.5 视频生成指南：从底层原理、技术栈选型到工程化 Prompt 实践 | O&#39;s World">
+<meta property="og:url" content="https://ooo.run/post/use-opus-make-videos.html">
+<meta property="og:site_name" content="O&#39;s World">
+<meta property="og:description" content="当提到使用 Claude Opus 5.5 制作视频时，一个常见的误区是将其等同于 Sora 或 Runway 等端到端的扩散视频生成模型（Diffusion Video Models）。实际上，Opus 5.5 作为多模态大语言模型，具备文本与图像理解能力，但其输出模态依然严格受限于文本（代码）。 那么，Opus 5.5 生成的高水准动态设计（Motion...">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img.nep.me/ooo/opus-video-01.webp">
+<meta property="og:image" content="https://img.nep.me/ooo/HTYbeNlbYAAbMQQ.webp">
+<meta property="og:image" content="https://img.nep.me/ooo/opus-video-02.webp">
+<meta property="og:image" content="https://img.nep.me/ooo/opus-video-03.webp?v1">
+<meta property="og:image" content="https://img.nep.me/ooo/HTYc1VSaEAIj-37.webp">
+<meta property="article:published_time" content="2026-10-18T04:54:23.000Z">
+<meta property="article:modified_time" content="2026-10-18T05:17:34.772Z">
+<meta property="article:author" content="Mr. O">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="Claude">
+<meta property="article:tag" content="Opus 5.5">
+<meta property="article:tag" content="制作视频">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img.nep.me/ooo/opus-video-01.webp">
+<link rel="canonical" href="https://ooo.run/post/use-opus-make-videos.html">
+
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"# Claude Opus 5.5 视频生成指南：从底层原理、技术栈选型到工程化 Prompt 实践","name":"# Claude Opus 5.5 视频生成指南：从底层原理、技术栈选型到工程化 Prompt 实践 | O's World","description":"当提到使用 Claude Opus 5.5 制作视频时，一个常见的误区是将其等同于 Sora 或 Runway 等端到端的扩散视频生成模型（Diffusion Video Models）。实际上，Opus 5.5 作为多模态大语言模型，具备文本与图像理解能力，但其输出模态依然严格受限于文本（代码）。 那么，Opus 5.5 生成的高水准动态设计（Motion...","url":"https://ooo.run/post/use-opus-make-videos.html","inLanguage":"zh-CN","isPartOf":{"@type":"WebSite","name":"O's World","url":"https://ooo.run/"},"mainEntityOfPage":"https://ooo.run/post/use-opus-make-videos.html","datePublished":"2026-10-18T04:54:23.000Z","dateModified":"2026-10-18T05:17:34.772Z","author":{"@type":"Person","name":"Mr. O"},"publisher":{"@type":"Organization","name":"O's World"},"keywords":"AI, Claude, Opus 5.5, 制作视频"}</script>
+
+<script>
+  (function () {
+    var accents = { orange: 1, purple: 1, sakura: 1, blue: 1, pink: 1, green: 1, black: 1 };
+    var match = document.cookie.match(/(?:^|;\s*)flatpaper-accent=([^;]+)/);
+    var accent = 'blue';
+    if (match) {
+      try { accent = decodeURIComponent(match[1]); } catch (e) {}
+    }
+    if (!accents[accent]) accent = 'blue';
+    document.documentElement.setAttribute('data-accent', accent);
+    try {
+      if (localStorage.getItem('flatpaper-mode') === 'dark') {
+        document.documentElement.classList.add('dark-mode');
+      }
+    } catch (e) {}
+    // Reveal-on-scroll opts in from here so it is applied before first paint
+    // (no flash) and never applies without JS. If main.js never runs the
+    // observer, the timeout drops the class again so nothing stays hidden.
+    if ('IntersectionObserver' in window) {
+      document.documentElement.classList.add('reveal-ready');
+      setTimeout(function () {
+        if (!window.flatpaperRevealReady) {
+          document.documentElement.classList.remove('reveal-ready');
+        }
+      }, 2000);
+    }
+  })();
+</script>
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+
+
+
+  
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-PZSHQ0MC4Q"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-PZSHQ0MC4Q');
+</script>
+
+
+  
+<script defer src="https://u.nep.me/script.js" data-website-id="768b68c3-d4ed-429e-aa11-f5099ea5adbf" data-domains="ooo.run"></script>
+
+
+  
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8052638941019443" crossorigin="anonymous"></script>
+
+
+  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/artalk@2.9.1/dist/Artalk.css">
+
+<script defer src="https://cdn.jsdelivr.net/npm/artalk@2.9.1/dist/Artalk.js"></script>
+
+
+  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css">
+<script defer src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+
+
+  
+<meta name="generator" content="Hexo 8.1.2"><link rel="alternate" href="/atom.xml" title="O's World" type="application/atom+xml">
+</head>
+
+<body
+  class="is-post tag-style-tape bg-style-default"
+  data-default-accent="blue"
+  data-code-theme="simple"
+  data-note-style="sticky"
+  data-note-icons="on"
+  data-button-style="tape"
+  data-strong-accent="on"
+>
+  <svg width="0" height="0" style="position:absolute;z-index:-1;" aria-hidden="true">
+    <defs>
+      <filter id="paper-edge" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" result="noise" />
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G" />
+      </filter>
+    </defs>
+  </svg>
+  
+  <header class="site-header">
+  
+  <button class="icon-button js-sidebar-toggle sidebar-toggle" type="button" aria-label="打开侧边栏" aria-controls="paper-sidebar-drawer" aria-expanded="false">
+    
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-menu"></use></svg>
+
+  </button>
+
+  <div class="brand">
+    <div class="brand-mark-wrapper">
+      
+        <button class="brand-mark" type="button" aria-label="打开站点导航" aria-haspopup="true" aria-expanded="false" aria-controls="brand-nav-menu">
+          
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-grid flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-layout-grid"></use></svg>
+
+        </button>
+        <div class="brand-nav-menu" id="brand-nav-menu" role="menu">
+          
+            <div class="brand-nav-group">
+              <div class="brand-nav-title">Blog</div>
+              
+                <a role="menuitem" href="https://ooo.run/" target="_blank" rel="noopener noreferrer">
+                  
+                    <img src="https://ooo.run/favicon.ico" alt="" class="nav-img-icon" aria-hidden="true" />
+                  
+                  <span>O&#39;s World</span>
+                </a>
+              
+            </div>
+          
+            <div class="brand-nav-group">
+              <div class="brand-nav-title">Project</div>
+              
+                <a role="menuitem" href="https://tools.ooo.run" target="_blank" rel="noopener noreferrer">
+                  
+                    <img src="https://tools.ooo.run/favicon.png" alt="" class="nav-img-icon" aria-hidden="true" />
+                  
+                  <span>简易工具</span>
+                </a>
+              
+            </div>
+          
+        </div>
+      
+    </div>
+    <a class="brand-text" href="/">O&#39;s World</a>
+  </div>
+
+  <nav class="site-nav" aria-label="主导航">
+    
+      
+        <a class="site-nav-link " href="/">
+          
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-house flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-house"></use></svg>
+
+          <span>首页</span>
+        </a>
+      
+    
+      
+        <a class="site-nav-link " href="/links/">
+          
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-link"></use></svg>
+
+          <span>友链</span>
+        </a>
+      
+    
+      
+        <div class="site-nav-item has-children">
+          <button class="site-nav-link site-nav-parent" type="button" aria-haspopup="true" aria-expanded="false">
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-folder"></use></svg>
+
+            <span>文章</span>
+          </button>
+          <div class="site-nav-menu" role="menu">
+            
+              <a role="menuitem" class="" href="/archives/">
+                
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-archive flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-archive"></use></svg>
+
+                <span>归档</span>
+              </a>
+            
+              <a role="menuitem" class="" href="/categories/">
+                
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-folder"></use></svg>
+
+                <span>分类</span>
+              </a>
+            
+              <a role="menuitem" class="" href="/tags/">
+                
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tag flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-tag"></use></svg>
+
+                <span>标签</span>
+              </a>
+            
+          </div>
+        </div>
+      
+    
+      
+        <a class="site-nav-link " target="_blank" rel="noopener" href="https://www.travellings.cn/go.html">
+          
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tram-front flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-tram-front"></use></svg>
+
+          <span>开往</span>
+        </a>
+      
+    
+  </nav>
+
+  <div class="header-tools">
+    <button class="icon-button js-search-open" type="button" aria-label="搜索文章">
+      
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-search"></use></svg>
+
+    </button>
+    <div class="accent-picker">
+      <button class="icon-button accent-toggle" type="button" aria-label="选择主题色" title="选择主题色" aria-haspopup="true" aria-expanded="false" aria-controls="accent-menu">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-palette flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-palette"></use></svg>
+
+      </button>
+      <div class="accent-menu" id="accent-menu" role="menu" aria-label="主题色">
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="橙色" aria-checked="false" data-accent-option="orange">
+          <span class="accent-swatch accent-swatch--orange" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="紫色" aria-checked="false" data-accent-option="purple">
+          <span class="accent-swatch accent-swatch--purple" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="樱花粉" aria-checked="false" data-accent-option="sakura">
+          <span class="accent-swatch accent-swatch--sakura" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="蓝色" aria-checked="false" data-accent-option="blue">
+          <span class="accent-swatch accent-swatch--blue" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="粉色" aria-checked="false" data-accent-option="pink">
+          <span class="accent-swatch accent-swatch--pink" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="绿色" aria-checked="false" data-accent-option="green">
+          <span class="accent-swatch accent-swatch--green" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="accent-option" role="menuitemradio" aria-label="黑色" aria-checked="false" data-accent-option="black">
+          <span class="accent-swatch accent-swatch--black" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
+    <button class="theme-toggle" type="button" aria-label="切换颜色模式">
+      <span class="theme-icon theme-icon--sun">
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sun flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-sun"></use></svg>
+</span>
+      <span class="theme-icon theme-icon--moon">
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-moon flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-moon"></use></svg>
+</span>
+    </button>
+  </div>
+</header>
+
+
+  
+  <main class="paper-shell paper-shell--article">
+    
+
+<aside id="paper-sidebar-drawer" class="paper-sidebar paper-sidebar--right" aria-label="侧边栏">
+  <div class="drawer-toolbar" aria-label="侧边栏工具">
+    <div class="drawer-accent-options" role="group" aria-label="主题色">
+      <button type="button" class="accent-option" aria-label="橙色" aria-pressed="false" data-accent-option="orange">
+        <span class="accent-swatch accent-swatch--orange" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="accent-option" aria-label="紫色" aria-pressed="false" data-accent-option="purple">
+        <span class="accent-swatch accent-swatch--purple" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="accent-option" aria-label="樱花粉" aria-pressed="false" data-accent-option="sakura">
+        <span class="accent-swatch accent-swatch--sakura" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="accent-option" aria-label="蓝色" aria-pressed="false" data-accent-option="blue">
+        <span class="accent-swatch accent-swatch--blue" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="accent-option" aria-label="粉色" aria-pressed="false" data-accent-option="pink">
+        <span class="accent-swatch accent-swatch--pink" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="accent-option" aria-label="绿色" aria-pressed="false" data-accent-option="green">
+        <span class="accent-swatch accent-swatch--green" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="accent-option" aria-label="黑色" aria-pressed="false" data-accent-option="black">
+        <span class="accent-swatch accent-swatch--black" aria-hidden="true"></span>
+      </button>
+    </div>
+    <button class="icon-button drawer-close js-sidebar-close" type="button" aria-label="关闭侧边栏">
+      
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-x"></use></svg>
+
+    </button>
+  </div>
+
+  <section class="side-card nav-card">
+    <nav class="site-nav-drawer" aria-label="移动端导航">
+      
+        
+          <a class="" href="/">
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-house flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-house"></use></svg>
+
+            <span>首页</span>
+          </a>
+        
+      
+        
+          <a class="" href="/links/">
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-link"></use></svg>
+
+            <span>友链</span>
+          </a>
+        
+      
+        
+          <div class="drawer-nav-group">
+            <button class="drawer-nav-parent" type="button" aria-expanded="false">
+              
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-folder"></use></svg>
+
+              <span>文章</span>
+            </button>
+            <div class="drawer-nav-children">
+              
+                <a class="" href="/archives/">
+                  
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-archive flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-archive"></use></svg>
+
+                  <span>归档</span>
+                </a>
+              
+                <a class="" href="/categories/">
+                  
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-folder"></use></svg>
+
+                  <span>分类</span>
+                </a>
+              
+                <a class="" href="/tags/">
+                  
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tag flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-tag"></use></svg>
+
+                  <span>标签</span>
+                </a>
+              
+            </div>
+          </div>
+        
+      
+        
+          <a class="" target="_blank" rel="noopener" href="https://www.travellings.cn/go.html">
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tram-front flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-tram-front"></use></svg>
+
+            <span>开往</span>
+          </a>
+        
+      
+    </nav>
+  </section>
+
+  <section class="side-card profile-card reveal">
+    
+      <div class="avatar avatar--image avatar--circle">
+        <img src="/images/avatar.png" alt="Mr. O" loading="lazy" referrerpolicy="no-referrer">
+      </div>
+    
+    <h3>Mr. O</h3>
+    <p class="profile-role">独立开发者</p>
+    <p>探索互联网世界，分享实用教程与精彩内容，发现更多有趣之处。</p>
+    
+      <div class="site-info" aria-label="站点信息">
+        
+          
+            <a class="site-info__item" href="/archives/">
+              <strong>86</strong>
+              <span>文章</span>
+            </a>
+          
+        
+          
+            <a class="site-info__item" href="/categories/">
+              <strong>8</strong>
+              <span>分类</span>
+            </a>
+          
+        
+          
+            <a class="site-info__item" href="/tags/">
+              <strong>124</strong>
+              <span>标签</span>
+            </a>
+          
+        
+      </div>
+    
+    <div class="socials">
+      
+        <a href="https://tools.ooo.run" target="_blank" rel="noopener" aria-label="Tools" data-tooltip="Tools">
+          
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tool-case flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-tool-case"></use></svg>
+
+          
+        </a>
+      
+      
+        
+        
+        <a href="/atom.xml" aria-label="RSS feed" data-tooltip="RSS feed">
+          
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-rss flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-rss"></use></svg>
+
+        </a>
+      
+    </div>
+  </section>
+
+  
+    <section class="side-card brand-link-card" aria-label="站点链接">
+      
+        <div class="brand-link-group">
+          <div class="brand-link-title">Blog</div>
+          <div class="brand-link-list">
+            
+              <a href="https://ooo.run/" target="_blank" rel="noopener noreferrer">
+                
+                  <img src="https://ooo.run/favicon.ico" alt="" class="nav-img-icon" aria-hidden="true" />
+                
+                <span>O&#39;s World</span>
+              </a>
+            
+          </div>
+        </div>
+      
+        <div class="brand-link-group">
+          <div class="brand-link-title">Project</div>
+          <div class="brand-link-list">
+            
+              <a href="https://tools.ooo.run" target="_blank" rel="noopener noreferrer">
+                
+                  <img src="https://tools.ooo.run/favicon.png" alt="" class="nav-img-icon" aria-hidden="true" />
+                
+                <span>简易工具</span>
+              </a>
+            
+          </div>
+        </div>
+      
+    </section>
+  
+
+  
+    <div class="post-sticky-stack">
+      <section class="side-card toc-card">
+        <header class="toc-card__head">
+          <h2>
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-table-of-contents flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-table-of-contents"></use></svg>
+文章目录</h2>
+          <button type="button" class="toc-toggle-all" data-action="toggle-toc" aria-pressed="false" aria-label="展开全部目录" title="展开全部目录">
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-chevron-down"></use></svg>
+
+          </button>
+        </header>
+        <div class="toc-content">
+          
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81-%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86%EF%BC%9A%E5%9F%BA%E4%BA%8E%E6%97%B6%E9%97%B4%E5%87%BD%E6%95%B0%E7%9A%84%E7%A1%AE%E5%AE%9A%E6%80%A7%E6%B8%B2%E6%9F%93"><span class="toc-text">一、 底层原理：基于时间函数的确定性渲染</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81-%E8%A7%86%E8%A7%89%E6%B8%B2%E6%9F%93%E6%8A%80%E6%9C%AF%E6%A0%88%EF%BC%9A7-%E7%B1%BB%E6%A0%B8%E5%BF%83%E6%96%B9%E6%A1%88%E9%80%89%E5%9E%8B"><span class="toc-text">二、 视觉渲染技术栈：7 类核心方案选型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81-%E6%9E%B6%E6%9E%84%E6%8B%86%E8%A7%A3%E4%B8%8E%E5%AE%9E%E6%88%98%EF%BC%9A5-%E5%A4%A7%E4%BB%A3%E8%A1%A8%E6%80%A7%E6%A1%88%E4%BE%8B%E5%89%96%E6%9E%90"><span class="toc-text">三、 架构拆解与实战：5 大代表性案例剖析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B-1%EF%BC%9A16-bit-%E5%83%8F%E7%B4%A0%E5%B7%AB%E5%B8%88%EF%BC%88%E7%BA%AF-Canvas-2D-%E6%B8%B2%E6%9F%93%EF%BC%89"><span class="toc-text">案例 1：16-bit 像素巫师（纯 Canvas 2D 渲染）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B-2%EF%BC%9A%E4%B8%9D%E6%BB%91-UI-%E8%BF%9E%E7%BB%AD%E5%BD%A2%E5%8F%98%EF%BC%88HTML-CSS-SVG-%E7%89%A9%E7%90%86%E5%BC%B9%E7%B0%A7-%E8%8A%82%E6%8B%8D%E5%90%8C%E6%AD%A5%EF%BC%89"><span class="toc-text">案例 2：丝滑 UI 连续形变（HTML&#x2F;CSS&#x2F;SVG + 物理弹簧 + 节拍同步）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B-3%EF%BC%9A%E7%94%B5%E5%AD%90%E6%B8%B8%E6%88%8F%E5%8F%91%E5%B1%95%E5%8F%B2%EF%BC%88Canvas-WebGL-%E7%9D%80%E8%89%B2%E5%99%A8-Three-js-%E6%B7%B7%E5%90%88%E7%AE%A1%E7%BA%BF%EF%BC%89"><span class="toc-text">案例 3：电子游戏发展史（Canvas + WebGL 着色器 + Three.js 混合管线）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B-4%EF%BC%9A%E7%94%9C%E9%85%B7%E8%88%9E%E8%B9%88%E6%B7%B7%E5%89%AA%EF%BC%88AI-%E8%A7%86%E9%A2%91%E6%A8%A1%E5%9E%8B%E7%94%9F%E6%88%90%E4%B8%BB%E4%BD%93-%E4%BB%A3%E7%A0%81%E5%90%88%E6%88%90%E7%89%B9%E6%95%88%EF%BC%89"><span class="toc-text">案例 4：甜酷舞蹈混剪（AI 视频模型生成主体 + 代码合成特效）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B-5%EF%BC%9A%E4%BB%8E-Transformer-%E5%88%B0-AGI%EF%BC%88%E5%9F%BA%E4%BA%8E-Remotion-%E7%9A%84-3-%E5%88%86%E9%92%9F%E5%8F%99%E4%BA%8B%E9%95%BF%E7%89%87%EF%BC%89"><span class="toc-text">案例 5：从 Transformer 到 AGI（基于 Remotion 的 3 分钟叙事长片）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81-%E6%8F%90%E7%A4%BA%E8%AF%8D%E5%B7%A5%E7%A8%8B%EF%BC%9A%E5%A6%82%E4%BD%95%E7%94%A8-XML-%E7%BB%93%E6%9E%84%E5%AE%9E%E7%8E%B0%E5%B7%A5%E4%B8%9A%E7%BA%A7%E7%A8%B3%E5%AE%9A%E5%87%BA%E7%89%87"><span class="toc-text">四、 提示词工程：如何用 XML 结构实现工业级稳定出片</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E6%96%B9%E6%B3%95%E8%AE%BA%EF%BC%9A%E9%80%9A%E8%BF%87-%E7%9A%84%E2%80%9C%E8%B4%9F%E9%9D%A2%E6%B8%85%E5%8D%95%E2%80%9D%E6%89%93%E7%A0%B4%E6%A8%A1%E5%9E%8B%E9%BB%98%E8%AE%A4%E6%83%B0%E6%80%A7"><span class="toc-text">核心方法论：通过 &lt;direction&gt; 的“负面清单”打破模型默认惰性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%9A%E7%94%A8%E5%B7%A5%E4%B8%9A%E7%BA%A7%E8%A7%86%E9%A2%91%E7%94%9F%E6%88%90-Prompt-%E6%A8%A1%E6%9D%BF"><span class="toc-text">通用工业级视频生成 Prompt 模板</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81-%E5%B7%A5%E7%A8%8B%E5%8C%96%E8%BF%9B%E9%98%B6%EF%BC%9AAgent-Skill-%E8%87%AA%E5%8A%A8%E5%8C%96%E4%B8%8E%E8%B4%A8%E9%87%8F%E6%8E%A7%E5%88%B6%EF%BC%88QA%EF%BC%89"><span class="toc-text">五、 工程化进阶：Agent Skill 自动化与质量控制（QA）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E9%83%A8%E7%BD%B2%E5%BC%80%E6%BA%90%E8%87%AA%E5%8A%A8%E5%8C%96%E5%B7%A5%E4%BD%9C%E6%B5%81%EF%BC%9Axilo-opus-video"><span class="toc-text">1. 部署开源自动化工作流：xilo-opus-video</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%8F%90%E5%8D%87%E5%87%BA%E7%89%87%E8%B4%A8%E9%87%8F%E7%9A%84-3-%E4%B8%AA%E5%B7%A5%E7%A8%8B%E6%8A%80%E5%B7%A7"><span class="toc-text">2. 提升出片质量的 3 个工程技巧</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81-%E5%BB%B6%E4%BC%B8%E9%98%85%E8%AF%BB%E4%B8%8E%E5%BC%80%E6%BA%90%E7%94%9F%E6%80%81%E5%8F%82%E8%80%83"><span class="toc-text">六、 延伸阅读与开源生态参考</span></a></li></ol>
+          
+        </div>
+      </section>
+      
+
+  <section class="side-card recent-card latest-posts-card">
+    <h2>
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-history flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-history"></use></svg>
+最新文章</h2>
+    <ul class="recent-list">
+      
+        <li>
+          <a class="recent-item" href="/post/opus-5-5-motion-design.html">
+            <strong>Opus 5.5 动态设计全解析：那些刷屏的“一句话生成”视频背后隐藏了什么？</strong>
+            <em>2026-10-17</em>
+          </a>
+        </li>
+      
+        <li>
+          <a class="recent-item" href="/post/deploy-hexo-blog-to-vps.html">
+            <strong>快速把 Hexo 博客部署到 VPS 教程指南</strong>
+            <em>2026-10-16</em>
+          </a>
+        </li>
+      
+        <li>
+          <a class="recent-item" href="/post/how-to-use-ai-build-3d-games.html">
+            <strong>用 AI 制作 3D 游戏：Opus 5.5 / Astra + Tripo 全流程实战指南</strong>
+            <em>2026-10-16</em>
+          </a>
+        </li>
+      
+        <li>
+          <a class="recent-item" href="/post/free-domains-with-doma-in.html">
+            <strong>发现一个宝藏域名注册平台 doma.in ：好看的短域名，签到就能免费拿！</strong>
+            <em>2026-10-13</em>
+          </a>
+        </li>
+      
+        <li>
+          <a class="recent-item" href="/post/what-is-jev.html">
+            <strong>Jev - 不聊天、不写代码，只负责做决定的 AI</strong>
+            <em>2026-09-18</em>
+          </a>
+        </li>
+      
+    </ul>
+  </section>
+
+
+    </div>
+  
+
+  
+
+</aside>
+
+    <section class="paper-main">
+      
+
+<div class="article-tape-wrap">
+<span class="tape tape--top-right" aria-hidden="true"></span>
+<article class="article-paper article-paper--with-top-img">
+  
+    <figure class="article-top-img" aria-label="# Claude Opus 5.5 视频生成指南：从底层原理、技术栈选型到工程化 Prompt 实践">
+      <img src="https://img.nep.me/ooo/opus-video-01.webp" alt="" loading="eager" fetchpriority="high" referrerpolicy="no-referrer" draggable="false">
+    </figure>
+  
+  <header class="article-header">
+    
+      <a class="label-pill" href="/categories/%E6%95%99%E7%A8%8B/">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-folder"></use></svg>
+
+        教程
+      </a>
+    
+    <h1># Claude Opus 5.5 视频生成指南：从底层原理、技术栈选型到工程化 Prompt 实践</h1>
+    <div class="meta-line meta-line--article">
+      <span class="meta-date">
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-calendar"></use></svg>
+2026-10-18</span>
+      
+        <span class="meta-tags">
+          
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tag flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-tag"></use></svg>
+
+          <a class="meta-tag-link" href="/tags/AI/">#AI</a><a class="meta-tag-link" href="/tags/Claude/">#Claude</a><a class="meta-tag-link" href="/tags/Opus-5-5/">#Opus 5.5</a><a class="meta-tag-link" href="/tags/%E5%88%B6%E4%BD%9C%E8%A7%86%E9%A2%91/">#制作视频</a>
+        </span>
+      
+    </div>
+  </header>
+
+  
+
+
+  <div class="article-content">
+    <p>当提到使用 Claude Opus 5.5 制作视频时，一个常见的误区是将其等同于 Sora 或 Runway 等端到端的扩散视频生成模型（Diffusion Video Models）。实际上，Opus 5.5 作为多模态大语言模型，具备文本与图像理解能力，但其输出模态依然严格受限于<strong>文本（代码）</strong>。</p>
+<p>那么，Opus 5.5 生成的高水准动态设计（Motion Design）视频从何而来？答案是<strong>程序化生成（Procedural Generation）与无头渲染管线（Headless Rendering Pipeline）</strong>。</p>
+<p>本文将系统拆解 Opus 5.5 制作视频的底层工程逻辑、7 大核心渲染技术栈、5 个代表性实战案例的架构与 Prompt，并提供一套可直接复用的工业级 XML 提示词框架与自动化工作流。</p>
+<hr>
+<h2 id="一、-底层原理：基于时间函数的确定性渲染"><a href="#一、-底层原理：基于时间函数的确定性渲染" class="headerlink" title="一、 底层原理：基于时间函数的确定性渲染"></a>一、 底层原理：基于时间函数的确定性渲染</h2><p>传统手翻书动画（Flipbook）的原理是在每一页绘制微小的姿态变化，通过快速翻动形成视觉暂留。代码生成视频在工程上遵循完全一致的逻辑，核心在于构建一个<strong>确定性的时间渲染函数（Deterministic Time-step Function）</strong>。</p>
+<p>整个自动化生成管线分为三个阶段：</p>
+<ol>
+<li><strong>状态函数构建</strong>：Opus 5.5 编写前端或图形代码，并在全局暴露一个基于时间的纯函数（如 <code>window.render(t)</code> 或 <code>seek(t)</code>）。向该函数传入任意时间戳 $t$（或帧序号），程序即可实时计算出该时刻所有视觉元素的精确状态（坐标、形变、色彩、光影）并完成单帧绘制。</li>
+<li><strong>无头浏览器逐帧采样</strong>：使用 <strong>Playwright</strong> 等自动化测试工具在后台启动无头浏览器（Headless Browser），按照目标帧率（如 24 FPS 或 60 FPS）步进调用渲染函数，并将每一帧画面截取为无损图像序列。</li>
+<li><strong>音画合成与编码</strong>：在音频侧，可通过 Python 的 <code>NumPy</code> 和 <code>SciPy</code> 直接进行数字信号处理（DSP），计算正弦波、方波及包络线来程序化合成鼓点、贝斯、合成器配乐与 UI 音效；最后调用 <strong>FFmpeg</strong> 将数千张图像序列与音频流混流编码，输出标准 MP4 文件。</li>
+</ol>
+<hr>
+<h2 id="二、-视觉渲染技术栈：7-类核心方案选型"><a href="#二、-视觉渲染技术栈：7-类核心方案选型" class="headerlink" title="二、 视觉渲染技术栈：7 类核心方案选型"></a>二、 视觉渲染技术栈：7 类核心方案选型</h2><p>无论是原生代码构建还是调用成熟框架，程序化视频的核心都在于渲染引擎的选择。根据目标视觉风格，可将主流方案划分为以下 7 类：</p>
+<table>
+<thead>
+<tr>
+<th align="left">方案名称</th>
+<th align="left">核心技术定位</th>
+<th align="left">适用视觉风格与场景</th>
+<th align="left">工程优势与局限</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>1. JS + Canvas 2D</strong></td>
+<td align="left">2D 位图画布 API</td>
+<td align="left">像素艺术（Pixel Art）、扁平插画、基础几何动效、2D 粒子</td>
+<td align="left">零依赖、渲染极快；适合精细控制单个像素，但缺乏原生的 3D 与复杂光影支持。</td>
+</tr>
+<tr>
+<td align="left"><strong>2. HTML &#x2F; CSS &#x2F; SVG</strong></td>
+<td align="left">DOM 排版与矢量图形</td>
+<td align="left">SaaS 产品宣传片、高保真 UI 交互演示、动态排版（Kinetic Typography）</td>
+<td align="left">天然支持现代网页的圆角、阴影、弹性布局与无损矢量曲线，丝滑度极高。</td>
+</tr>
+<tr>
+<td align="left"><strong>3. WebGL Shader</strong></td>
+<td align="left">GPU 逐像素着色器</td>
+<td align="left">复古 CRT 扫描线与曲面畸变、胶片颗粒、流体反光、赛博发光粒子</td>
+<td align="left">直接调用显卡算力计算单像素颜色，质感极佳；常作为后处理层叠加在 Canvas 之上。</td>
+</tr>
+<tr>
+<td align="left"><strong>4. Three.js</strong></td>
+<td align="left">WebGL 3D 引擎封装</td>
+<td align="left">3D 空间运镜、产品 360° 环绕、三维粒子云、体素（Voxel）小镇</td>
+<td align="left">支持完整的网格、材质、灯光与摄像机推拉摇移；纯代码仅适合基础几何体拼接，高精度实物需导入外部 3D 模型（如 <code>.gltf</code>）。</td>
+</tr>
+<tr>
+<td align="left"><strong>5. p5.js + p5.brush</strong></td>
+<td align="left">创意编程与自然笔刷</td>
+<td align="left">彩铅、水彩、蜡笔、手绘艺术短片</td>
+<td align="left">能够高度还原真实物理笔刷的运笔方向、笔触粗细与纸张纹理。</td>
+</tr>
+<tr>
+<td align="left"><strong>6. Remotion &#x2F; HyperFrames</strong></td>
+<td align="left">声明式代码视频框架</td>
+<td align="left">多镜头叙事长片、复杂转场编排、工程化批量视频生产</td>
+<td align="left">封装了底层时间轴与渲染管线。<strong>HyperFrames</strong> 基于时间线控制，<strong>Remotion</strong>（React 生态）基于帧控制，后者在工程可控性上更胜一筹。</td>
+</tr>
+<tr>
+<td align="left"><strong>7. Manim</strong></td>
+<td align="left">Python 数学动画引擎</td>
+<td align="left">严谨的数学推导、算法可视化、物理与几何科普（3Blue1Brown 风格）</td>
+<td align="left">采用声明式对象变换逻辑，自动插值计算过渡过程，公式与图形精度极高；但视觉风格偏极简学术，缺乏商业设计质感。</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="三、-架构拆解与实战：5-大代表性案例剖析"><a href="#三、-架构拆解与实战：5-大代表性案例剖析" class="headerlink" title="三、 架构拆解与实战：5 大代表性案例剖析"></a>三、 架构拆解与实战：5 大代表性案例剖析</h2><p>单一技术栈可以独立成片，多技术栈混合则能突破视觉上限。以下通过 5 个典型社区案例，拆解不同风格视频的技术组合与 Prompt 设计工程。</p>
+<h3 id="案例-1：16-bit-像素巫师（纯-Canvas-2D-渲染）"><a href="#案例-1：16-bit-像素巫师（纯-Canvas-2D-渲染）" class="headerlink" title="案例 1：16-bit 像素巫师（纯 Canvas 2D 渲染）"></a>案例 1：16-bit 像素巫师（纯 Canvas 2D 渲染）</h3><ul>
+<li><strong>原作者</strong>：<a target="_blank" rel="noopener" href="https://x.com/majidmanzarpour/status/2102476258948927543">@majidmanzarpour</a></li>
+<li><strong>成片规格</strong>：11 秒无缝循环（单次循环约 5.5 秒），从 Claude 网页端对话生成，耗时约 30 分钟，零外部素材。</li>
+<li><strong>画面拆解</strong>：巫师处于待机呼吸状态 -&gt; 举起法杖，杖头宝石聚拢蓝色螺旋火花 -&gt; 挥杖释放光圈与飞弹（伴随屏幕震动） -&gt; 收招复位。</li>
+</ul>
+<p><img src="https://img.nep.me/ooo/opus-video-01.webp" alt="opus-video-01.png">  </p>
+<p><img src="https://img.nep.me/ooo/HTYbeNlbYAAbMQQ.webp" alt="HTYbeNlbYAAbMQQ.png"></p>
+<h4 id="核心技术实现"><a href="#核心技术实现" class="headerlink" title="核心技术实现"></a>核心技术实现</h4><ol>
+<li><strong>低分辨率离屏渲染</strong>：所有元素先绘制在逻辑分辨率仅为 <code>128×96</code> 的离屏画布（Offscreen Canvas）上，随后按最大整数倍缩放至全屏，并强制关闭图像平滑（<code>imageSmoothingEnabled = false</code>），确保每个逻辑像素呈现出边缘锐利的方块感。</li>
+<li><strong>帧率解耦与网格量化</strong>：将角色的法杖角度、手臂高度抽象为参数。主循环以 60Hz 运行，但角色姿态参数通过网格量化限制在每秒更新 8–12 次，还原复古游戏的抽帧动画感；与此同时，粒子与飞弹特效保持 60 FPS 更新，保证视觉流畅度。</li>
+</ol>
+<h4 id="复刻提示词（Prompt）"><a href="#复刻提示词（Prompt）" class="headerlink" title="复刻提示词（Prompt）"></a>复刻提示词（Prompt）</h4><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">创建一个独立的单 HTML 文件，用原生 JavaScript 和 Canvas 2D 渲染一个正在施法的像素风巫师动画。不使用任何外部素材、库或网络请求。</span><br><span class="line"></span><br><span class="line">渲染</span><br><span class="line">- 所有内容先画在一块逻辑分辨率固定为 128×96 的离屏画布上，再按能放进窗口的最大整数倍放大，画到全屏的显示画布上，居中，设置 imageSmoothingEnabled = false 和 CSS image-rendering: pixelated。</span><br><span class="line">- 所有绘制都对齐到逻辑画布的整数坐标。不要亚像素位置、抗锯齿、渐变和 shadowBlur。</span><br><span class="line">- 固定调色板，大约 24 个颜色：夜空用深蓝和深紫，长袍用暖色，再加 3–4 个明亮的魔法色。每一个像素都必须来自这个调色板。</span><br><span class="line"></span><br><span class="line">角色</span><br><span class="line">- 用填充矩形和一串串像素程序化地搭出巫师，大约 24×32 个逻辑像素：带弯折的尖顶帽、长胡子、双色长袍加深色描边、杖头有宝石的法杖。</span><br><span class="line">- 把姿势做成参数（法杖角度、手臂抬起高度、头部倾斜、长袍摆动）。参数平滑变化，但每一帧都量化到像素网格上，这样虽然循环以 60fps 运行，动作看起来却像每秒 8–12 张的像素动画。</span><br><span class="line"></span><br><span class="line">动画</span><br><span class="line">- 循环状态机：待机（两帧上下晃动、胡子摆动）→ 蓄力（法杖举起、宝石闪烁、火花螺旋着向内聚拢）→ 施法（一道强光爆发，飞弹横穿画面，屏幕震动 1–2 像素）→ 收招（回到原位）。关键帧之间的姿势参数用缓动过渡。</span><br><span class="line">- 粒子系统预先分配好、循环复用，不产生新对象。蓄力时火花围着宝石转，施法时向外炸开，每个粒子消失前从白色经过魔法色变成深色。画粒子时位置对齐到像素网格。</span><br><span class="line">- 用固定的 60Hz 时间步长更新，用 requestAnimationFrame 渲染。循环里不产生任何新对象。</span><br><span class="line"></span><br><span class="line">场景</span><br><span class="line">- 极简背景：深色夜空、几颗闪烁的 1 像素星星、月亮、石头地面。角色的剪影必须清晰可辨。</span><br><span class="line">- 宝石给巫师打一圈 1 像素的轮廓光，蓄力和施法时变亮。</span><br><span class="line"></span><br><span class="line">质量标准</span><br><span class="line">- 任何窗口大小下像素都清晰，无缝循环，稳定 60fps，剪影清楚。看起来要像一段精致的 16-bit 游戏角色动画，而不是缩小了的矢量图形。</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="案例-2：丝滑-UI-连续形变（HTML-CSS-SVG-物理弹簧-节拍同步）"><a href="#案例-2：丝滑-UI-连续形变（HTML-CSS-SVG-物理弹簧-节拍同步）" class="headerlink" title="案例 2：丝滑 UI 连续形变（HTML&#x2F;CSS&#x2F;SVG + 物理弹簧 + 节拍同步）"></a>案例 2：丝滑 UI 连续形变（HTML&#x2F;CSS&#x2F;SVG + 物理弹簧 + 节拍同步）</h3><ul>
+<li><strong>原作者</strong>：<a target="_blank" rel="noopener" href="https://x.com/twoclipping/status/2103273003555402193">@twoclipping</a></li>
+<li><strong>成片特征</strong>：零 After Effects 介入，纯代码实现 Dribbble 级交互动效。全片一镜到底，单一黑白组件在鼠标光标的真实点击与拖拽下，连续变形为按钮、播放器、滑块、图表、命令面板等 10 余种状态。</li>
+</ul>
+<p><img src="https://img.nep.me/ooo/opus-video-02.webp" alt="opus-video-02.png"></p>
+<h4 id="核心技术实现-1"><a href="#核心技术实现-1" class="headerlink" title="核心技术实现"></a>核心技术实现</h4><ol>
+<li><strong>解析式弹簧物理（Analytical Spring Physics）</strong>：摒弃生硬的线性过渡与 CSS <code>transition</code>，所有尺寸、圆角变化均由纯时间函数 <code>seek(t)</code> 结合弹簧动力学公式实时计算，甚至将组件的前沿与后沿绑定不同刚度的弹簧，实现移动时的拉伸形变（Stretch &amp; Squash）。</li>
+<li><strong>音频节拍网格对齐（Beat-Grid Synchronization）</strong>：预先通过 Python（<code>NumPy</code>）对音频进行节拍检测，提取精确的时间戳网格，确保每一次 UI 状态切换与交互音效严格卡在 120 BPM 的节拍点上。</li>
+<li><strong>子帧采样运动模糊（Sub-frame Motion Blur）</strong>：使用 Playwright 渲染时，针对每一帧进行 4 次高密度子帧截图，再通过 FFmpeg 混合叠加，生成自然的动态模糊拖影。</li>
+</ol>
+<h4 id="复刻提示词（Prompt）-1"><a href="#复刻提示词（Prompt）-1" class="headerlink" title="复刻提示词（Prompt）"></a>复刻提示词（Prompt）</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">inputs</span>&gt;</span></span><br><span class="line">开工前先问我：8–12 个界面状态（按钮、加载、播放器、滑块、开关、标签页、图表、命令面板、通知这些），纯黑白还是加一个强调色，以及一首 120 BPM 左右、可以商用的免版税音乐。</span><br><span class="line"><span class="tag">&lt;/<span class="name">inputs</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">direction</span>&gt;</span></span><br><span class="line">Dribbble 级别的界面动效。从头到尾只有一个形状，永远不切镜头：每一个状态都是同一个元素改变尺寸、圆角和颜色变过去，里面的内容在一下短暂的模糊里切换。</span><br><span class="line">一个鼠标光标用真实的点击和拖拽驱动每一次变化。浅暖灰背景，黑白组件，一种干净的界面字体（Geist）。所有动画都用弹簧，最多带一点点回弹。镜头跟着缩放，让每个状态都占满画面。最后一帧和第一帧一样，可以无缝循环。</span><br><span class="line">禁止：弹跳缓动、粒子爆炸、发光、组件上的渐变、粗细不统一的图标、没有动作的空档、任何看起来像模板的东西。</span><br><span class="line"><span class="tag">&lt;/<span class="name">direction</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">structure</span>&gt;</span></span><br><span class="line">120 BPM，7 个小节，每一拍都有事情发生。</span><br><span class="line">按钮 → 加载 → 对勾 → 灵动岛 → 音乐播放器（播放和暂停图标互相变形）→ 拖动进度条 → 变成音量滑块，拖过最大值时被拉长 → 开关踩着节拍翻转 → 开关的圆点变成标签页的指示条 → 标签页展开成一张自己画出来的图表，悬停时出现提示 → 收成 ⌘K 命令面板 → 输入筛选 → 回车 → 通知 → 回到按钮。</span><br><span class="line"><span class="tag">&lt;/<span class="name">structure</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">1. 一个 HTML 文件，1440×1440。所有样式都在 seek(t) 里由时间算出来：不用 CSS 过渡，不用计时器，帧和帧之间不保存状态。</span><br><span class="line">2. 弹簧用公式直接算。一个值要多次改变目标时，把每一次变化的弹簧叠加起来，这样它始终只由时间决定。</span><br><span class="line">3. 标签页指示条的左右两条边用两个不同的弹簧，前沿先走、后沿后跟，移动的时候会被拉长。开关的圆点也这样做。</span><br><span class="line">4. 拖拽要像真的在拖：光标按住时，数值由光标的位置算出来；松手后从当前位置弹回去。</span><br><span class="line">5. 用 numpy 分析音乐，找出节拍网格，从重拍开始。每一个界面音效都放在对应动作的那一拍上。</span><br><span class="line">6. 用 Playwright 渲染，每帧截 4 张，用 ffmpeg 混合出运动模糊，输出 60 帧的视频。</span><br><span class="line">7. 渲整片之前，每一拍先渲一帧检查，偏离节拍、太挤、看不清的地方先修掉。</span><br><span class="line"><span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">gotchas</span>&gt;</span></span><br><span class="line">被镜头缩放的元素、会渲染文字的元素，都不要加 will-change，否则文字会糊。在变形容器里切换的文字，要有自己的进场和出场时间，不然新旧文字会叠在一起。最后一帧要和第一帧完全一样，包括光标的位置和速度，否则循环的时候会卡一下。</span><br><span class="line"><span class="tag">&lt;/<span class="name">gotchas</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">start</span>&gt;</span></span><br><span class="line">先问我要输入的内容，写任何代码之前，先把状态列表排在节拍网格上给我看。</span><br><span class="line"><span class="tag">&lt;/<span class="name">start</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="案例-3：电子游戏发展史（Canvas-WebGL-着色器-Three-js-混合管线）"><a href="#案例-3：电子游戏发展史（Canvas-WebGL-着色器-Three-js-混合管线）" class="headerlink" title="案例 3：电子游戏发展史（Canvas + WebGL 着色器 + Three.js 混合管线）"></a>案例 3：电子游戏发展史（Canvas + WebGL 着色器 + Three.js 混合管线）</h3><ul>
+<li><strong>原作者</strong>：<a target="_blank" rel="noopener" href="https://x.com/prasenx/status/2103851939457093635">@prasenx</a>（于 Cursor 中调用 Claude 完成）</li>
+<li><strong>成片特征</strong>：2 分钟史诗级短片，跨越多个游戏世代，全片零外部素材、零音频采样。</li>
+</ul>
+<p><img src="https://img.nep.me/ooo/opus-video-03.webp?v1" alt="opus-video-03.png"></p>
+<h4 id="核心技术实现-2"><a href="#核心技术实现-2" class="headerlink" title="核心技术实现"></a>核心技术实现</h4><p>该项目展示了多渲染管线分阶段协同与叠加的能力：</p>
+<ul>
+<li><strong>Canvas 2D</strong>：负责绘制早期 8-bit &#x2F; 16-bit 像素世代的游戏画面。</li>
+<li><strong>WebGL 着色器（Shader）</strong>：作为后处理层叠加在 Canvas 之上，实现老式 CRT 电视的屏幕弧面畸变、扫描线（Scanlines）与荧光辉光（Bloom）。<em>（注：实测对比 3 秒 90 帧的同一像素片段，纯 Canvas 渲染耗时 7 秒，叠加 WebGL 着色器后渲染耗时增至 48 秒，以算力换取了极高的物理质感。）</em></li>
+<li><strong>Three.js（3D）</strong>：负责渲染 1993 年之后的 3D 游戏世代（如走廊射击、立体城堡、体素方块世界）。</li>
+<li><strong>Python 音频合成</strong>：纯代码编写合成器配乐，并驱动画面剪辑节奏。</li>
+</ul>
+<h4 id="复刻提示词（Prompt）-2"><a href="#复刻提示词（Prompt）-2" class="headerlink" title="复刻提示词（Prompt）"></a>复刻提示词（Prompt）</h4><p>该案例证明了在 Agent 编程环境（如 Cursor &#x2F; Claude Code）中，极简的高层意图指令同样能激发 Opus 5.5 的自主工程规划能力：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">做一条 2 分钟的电影感视频，讲电子游戏的历史，要史诗、要动人，像一部纪录片预告片，全力以赴。</span><br><span class="line">配乐你自己写，完全用代码合成，不要采样，不要音频文件，不要虚拟乐器。画面要跟着音乐剪。</span><br><span class="line"></span><br><span class="line">1920x1080，60 帧。不要下载任何图片或素材，每一帧都用代码生成。最后把画面和音乐混在一起，渲染成 MP4，保存到【你指定的位置】。</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="案例-4：甜酷舞蹈混剪（AI-视频模型生成主体-代码合成特效）"><a href="#案例-4：甜酷舞蹈混剪（AI-视频模型生成主体-代码合成特效）" class="headerlink" title="案例 4：甜酷舞蹈混剪（AI 视频模型生成主体 + 代码合成特效）"></a>案例 4：甜酷舞蹈混剪（AI 视频模型生成主体 + 代码合成特效）</h3><ul>
+<li><strong>原作者</strong>：<a href="">@Gorden_Sun</a></li>
+<li><strong>核心痛点与破局</strong>：纯代码擅长几何、排版与特效，但难以直接绘制写实人物与复杂舞蹈动作。最佳实践是采用<strong>混合管线（Hybrid Pipeline）</strong>——将写实人物交给生成式视频模型（如 Grok、Flova 等），将后期包装、场景搭建与卡点动效交给 Opus 5.5。</li>
+</ul>
+<p><img src="https://img.nep.me/ooo/HTYc1VSaEAIj-37.webp" alt="HTYc1VSaEAIj-37.jpg"></p>
+<h4 id="核心技术实现-3"><a href="#核心技术实现-3" class="headerlink" title="核心技术实现"></a>核心技术实现</h4><p>以一段 15 秒的绿幕女孩跳舞视频（由 Grok 生成）为输入源，Opus 5.5 通过代码自动化完成了原本需要剪映或 After Effects 处理的三大后期工程：</p>
+<ol>
+<li><strong>色度键控抠像（Chroma Keying）</strong>：通过像素级颜色阈值算法剥离绿色背景，提取纯净的人物前景图层。</li>
+<li><strong>多维场景与包装合成</strong>：使用前端代码在人物底层与顶层绘制动态背景、巨型排版文字、警戒胶带装饰、多画面分屏以及 3D 环绕字幕。</li>
+<li><strong>音乐节拍驱动剪辑</strong>：人物原片保持连贯播放，背景色彩切换、大字冲击与分屏动效严格对齐音乐节拍。</li>
+</ol>
+<hr>
+<h3 id="案例-5：从-Transformer-到-AGI（基于-Remotion-的-3-分钟叙事长片）"><a href="#案例-5：从-Transformer-到-AGI（基于-Remotion-的-3-分钟叙事长片）" class="headerlink" title="案例 5：从 Transformer 到 AGI（基于 Remotion 的 3 分钟叙事长片）"></a>案例 5：从 Transformer 到 AGI（基于 Remotion 的 3 分钟叙事长片）</h3><ul>
+<li><strong>原作者</strong>：<a target="_blank" rel="noopener" href="https://x.com/kimmonismus/status/2102844654169575547">@kimmonismus</a></li>
+<li><strong>成片特征</strong>：在 Claude Code 中使用约 7400 行 React &#x2F; TypeScript 代码（基于 Remotion 框架）构建的 3 分钟科普短片。融合了 SVG、Canvas、开源 TTS 语音模型与 Python 合成配乐，具备 Kurzgesagt 式的视觉叙事水准。</li>
+</ul>
+<h4 id="复刻提示词（Prompt）-3"><a href="#复刻提示词（Prompt）-3" class="headerlink" title="复刻提示词（Prompt）"></a>复刻提示词（Prompt）</h4><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">你是一位动态设计师兼创意总监，正在制作一部 3 分钟的动画短片，完全用代码搭建，最后渲染成 MP4。</span><br><span class="line"></span><br><span class="line">这部片子</span><br><span class="line">标题：「Attention Is All You Need → AGI」</span><br><span class="line">讲的是 2017 年的一篇论文，怎样一步一步引出了大语言模型、推理、会用工具的 AI 智能体，以及 AGI 这个还没有答案的问题。它应该像一篇有电影感的影像随笔，而不是幻灯片或者时间线信息图。可以想象成 Kurzgesagt 遇上皮克斯电影的开场：有情绪、聪明、精准。</span><br><span class="line"></span><br><span class="line">技术设置</span><br><span class="line">用 Remotion（React）。新建一个项目，1920×1080，30fps，时长正好 180 秒（5400 帧）。</span><br><span class="line">每个场景一个 composition，在一个主 composition 里按顺序排好。</span><br><span class="line">不用任何外部图片素材或现成视频：所有东西都用 SVG、Canvas、CSS 和代码生成的粒子、形状来画。可以用 Google Fonts。</span><br><span class="line">动手之前，先写一份 STORYBOARD.md，写清楚每个场景的时间、画面、屏幕上的文字和转场。然后一个场景一个场景地做。</span><br><span class="line">每做完一个场景，渲染 3–4 张静帧（npx remotion still），用挑剔的眼光看一遍。先修好排版、重叠、可读性和节奏，再做下一个。</span><br><span class="line">最后用 npx remotion render 输出到 out/film.mp4。给音乐留一个可选的 &lt;Audio&gt; 位置（public/music.mp3），我之后再加；如果文件不存在，就渲染无声版。</span><br><span class="line"></span><br><span class="line">叙事主线 / 贯穿全片的母题</span><br><span class="line">主角是一个会发光的词元，也就是单词「the」，它穿过每一个时代。2017 年，它是一个孤独的光点，突然通过注意力连线「看见」了所有其他单词。随着时间推移，它有了声音、感官（多模态）、推理能力、双手（工具），最后，有了一个问题。</span><br><span class="line"></span><br><span class="line">场景（时间是大概的，你可以重新分配）</span><br><span class="line">0:00–0:15 冷开场。一片黑暗。单词像星星一样散落，彼此不相连。RNN 式的逐个处理：单词一个接一个亮起，慢慢忘掉前面的。</span><br><span class="line">0:15–0:35 2017 年 6 月，「Attention Is All You Need」（Vaswani 等人，Google）。每个单词同时连到其他所有单词。注意力连线绽放成一张网。论文标题像排版印刷一样出现。</span><br><span class="line">0:35–0:55 2018–2020：大语言模型崛起，GPT-1、BERT、GPT-2、GPT-3。规模定律：这张网指数级增长，镜头往后拉。模型开始补全句子，流畅得有点诡异。</span><br><span class="line">0:55–1:20 2022：指令微调和 RLHF，然后是 ChatGPT（2022 年 11 月 30 日）。词元有了一个聊天气泡。用户数计数器爆炸式增长。世界开始跟它对话。</span><br><span class="line">1:20–1:40 2023：多模态。图像、音频和代码从四面八方流进同一张网，词元有了「感官」。每一种模态都变成词元，流过同一个注意力机制。</span><br><span class="line">1:40–2:05 2024–2025：推理模型。一条看得见的思维链展开，分叉、剪枝、回溯。模型「先想再说」，时间变慢。</span><br><span class="line">2:05–2:30 工具使用和智能体。词元长出了双手：它调用搜索、运行代码、打开文件，调度子智能体。很多条线程同时工作，屏幕变成一个忙碌又漂亮的工作室。</span><br><span class="line">2:30–2:50 走向 AGI。所有母题汇合。2017 年的那张网重新出现，但现在是星球尺度。保持开放：不要乌托邦，也不要末日。屏幕上写：「Attention was all we needed. What comes next is up to us.」（如果你能写得更好，就改进这句话。）</span><br><span class="line">2:50–3:00 回到黑暗中一个发光的词元。片名卡，结束。</span><br><span class="line"></span><br><span class="line">制作规则</span><br><span class="line">准确性很重要：年份、人名、论文标题都要正确。对某个具体事实没把握时，宁可不写也不要猜，并把所有不确定的说法列在 NOTES.md 里。</span><br><span class="line">文字排版：屏幕上同时最多约 8 个单词，每段文字停留时间要够读完（至少 2.5 秒）。用一种展示字体，再用一种等宽字体表示「模型输出」。</span><br><span class="line">动效：用弹簧和缓动曲线，不要线性运动。场景之间的转场要从内容里长出来（网络变形、镜头穿过一个节点），不用通用的淡入淡出。</span><br><span class="line">颜色：深色背景，加一个暖色强调色，这个强调色随着时代慢慢变化。</span><br><span class="line">细节和彩蛋留给认真看的人（比如真实的论文片段、小小的界面细节、看起来可信的模型输出），像高水准的动态设计作品那样。</span><br><span class="line">节奏：密集和平静的时刻交替，给推理那一场和 AGI 那一拍留出呼吸的空间。</span><br><span class="line"></span><br><span class="line">全程自主完成整条流程。做完以后，告诉我 MP4 的路径、一段简短的创作决策总结，以及 NOTES.md。</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="四、-提示词工程：如何用-XML-结构实现工业级稳定出片"><a href="#四、-提示词工程：如何用-XML-结构实现工业级稳定出片" class="headerlink" title="四、 提示词工程：如何用 XML 结构实现工业级稳定出片"></a>四、 提示词工程：如何用 XML 结构实现工业级稳定出片</h2><p>在社交媒体上，常见一种“炫技式”的一句话提示词（例如：<em>“做一条 15 秒的动态图形视频，展示你作为动效设计师的最高水平，全力以赴”</em>）。这类提示词适合测试模型的创作上限，但缺乏可控性，无法直接应用于自媒体生产、产品商业广告或特定叙事短片。</p>
+<p>对比社区内的高质量可控作品可以发现，最稳定的工程实践是遵循 Anthropic 官方推荐的 <strong>XML 标签结构化提示词</strong>。将角色设定、输入参数、艺术指导、分镜结构与构建规范封装在独立的 XML 标签中，能够彻底消除上下文混淆。</p>
+<h3 id="核心方法论：通过-的“负面清单”打破模型默认惰性"><a href="#核心方法论：通过-的“负面清单”打破模型默认惰性" class="headerlink" title="核心方法论：通过 &lt;direction&gt; 的“负面清单”打破模型默认惰性"></a>核心方法论：通过 <code>&lt;direction&gt;</code> 的“负面清单”打破模型默认惰性</h3><p>在缺乏明确约束时，Opus 5.5 极易退化回其训练分布中最常见的“平庸默认风格”：<strong>深色渐变背景、居中大字标题、全局统一淡入淡出（Fade-in&#x2F;out）、线性匀速运动</strong>。</p>
+<p>要获得具备高级设计感的成片，必须在 <code>&lt;direction&gt;</code> 标签中明确列出<strong>负面约束（Negative Constraints）</strong>，例如明确禁止：弹跳缓动、廉价粒子爆炸、组件发光（Glow）、渐变填充以及模板化的布局。</p>
+<h3 id="通用工业级视频生成-Prompt-模板"><a href="#通用工业级视频生成-Prompt-模板" class="headerlink" title="通用工业级视频生成 Prompt 模板"></a>通用工业级视频生成 Prompt 模板</h3><p>以下模板整合了分镜确认、静帧自检、纯函数渲染与波形防爆音检查，可直接复制用于商业或自媒体视频生产：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">role</span>&gt;</span></span><br><span class="line">你是一位动态设计师，也是一位创意程序员，擅长用代码做出有设计感的视频。</span><br><span class="line"><span class="tag">&lt;/<span class="name">role</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">inputs</span>&gt;</span></span><br><span class="line">开工前先问我这几件事，我没给的不要自己编：</span><br><span class="line">1. 主题，以及看完以后希望观众记住的一句话：【你的主题】</span><br><span class="line">2. 时长和画幅：【30】秒，【1920×1080 / 1080×1920 / 1080×1080】，【30 / 60】帧</span><br><span class="line">3. 风格：【像素 / 扁平插画 / 界面动效 / 彩铅手绘 / 复古电视 / 3D】，有参考视频或截图就发给你</span><br><span class="line">4. 配色和字体：【主色 #颜色】，【字体】</span><br><span class="line">5. 声音：【我提供的音乐文件 / 用代码合成配乐】，要不要配音：【要 / 不要】</span><br><span class="line"><span class="tag">&lt;/<span class="name">inputs</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">direction</span>&gt;</span></span><br><span class="line">整片只用一套风格、一套配色，同一个角色或元素在每个镜头里的样子都要一致。</span><br><span class="line">每个镜头只讲一件事，画面上的字少而大，每段文字至少停留 2.5 秒。</span><br><span class="line">动画用缓动或弹簧，不用匀速运动。转场从画面内容里长出来，比如一条线变成下一个场景的地平线，不用默认的淡入淡出。</span><br><span class="line">镜头要跟着内容动，推近、拉远、跟随，让主体在画面里足够大。</span><br><span class="line">禁止：【居中大字加渐变背景的默认风格、所有元素同时淡入、满屏小字、任何看起来像模板的东西，按你的情况补充】</span><br><span class="line"><span class="tag">&lt;/<span class="name">direction</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">structure</span>&gt;</span></span><br><span class="line">先写分镜表，每个镜头写清楚：</span><br><span class="line">镜头 [N]｜[开始–结束秒]</span><br><span class="line">画面：构图、元素、文字</span><br><span class="line">动作：进场、主要动作、出场</span><br><span class="line">镜头：推、拉、跟随还是固定</span><br><span class="line">声音：这一段的音乐和音效</span><br><span class="line">转场：怎么过渡到下一个镜头</span><br><span class="line">如果有音乐，先分析节拍，镜头切换和关键动作都落在拍子上。</span><br><span class="line"><span class="tag">&lt;/<span class="name">structure</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">1. 画面用【Canvas 2D / HTML+CSS+SVG / WebGL 着色器 / Three.js / Remotion / HyperFrames】来做，不用外部图片和素材。</span><br><span class="line">2. 页面暴露 window.render(t)，画出第 t 秒。所有画面只由 t 算出来，随机数带固定种子，不用计时器，帧和帧之间不保存状态。</span><br><span class="line">3. 用 Playwright 逐帧调用 render(t) 并截图，再用 ffmpeg 合成 MP4。</span><br><span class="line">4. 配乐和音效用 Python（numpy、scipy）从零合成，每个音效放在画面动作发生的那一帧上；有配音的话，整段合成，不要一句一句拼。</span><br><span class="line">5. 每做完一个镜头，先渲 3 张静帧自己检查：文字有没有溢出、元素有没有重叠、画面够不够满，修好了再做下一个。</span><br><span class="line"><span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">gotchas</span>&gt;</span></span><br><span class="line">- 字体加载完再开始截图，不然前几帧会用默认字体。</span><br><span class="line">- 用了 WebGL 的话，先渲一帧确认着色器真的生效了，再渲整片。</span><br><span class="line">- 你听不到声音，所以要把音频的波形画成图自己检查，确认没有爆音。</span><br><span class="line"><span class="tag">&lt;/<span class="name">gotchas</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">start</span>&gt;</span></span><br><span class="line">先问我 inputs 里的问题，然后给我分镜表，等我确认。再渲 3 张关键帧让我看风格，确认后再渲整片。</span><br><span class="line"><span class="tag">&lt;/<span class="name">start</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="五、-工程化进阶：Agent-Skill-自动化与质量控制（QA）"><a href="#五、-工程化进阶：Agent-Skill-自动化与质量控制（QA）" class="headerlink" title="五、 工程化进阶：Agent Skill 自动化与质量控制（QA）"></a>五、 工程化进阶：Agent Skill 自动化与质量控制（QA）</h2><p>在高频生产场景中，手动维护长提示词依然存在效率瓶颈。通过引入 Claude Code 的 <strong>Skill 机制</strong>、<strong>全局规范文件（<code>CLAUDE.md</code>）</strong>与<strong>多模态视觉自检闭环</strong>，可将工作流升级为全自动管线。</p>
+<h3 id="1-部署开源自动化工作流：xilo-opus-video"><a href="#1-部署开源自动化工作流：xilo-opus-video" class="headerlink" title="1. 部署开源自动化工作流：xilo-opus-video"></a>1. 部署开源自动化工作流：<code>xilo-opus-video</code></h3><p>社区已将上述完整的制作规范封装为开源 Agent Skill。在支持 Skill 的终端或客户端中，直接向 AI 发送以下指令即可完成部署：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">帮我安装这个 Skill：[https://github.com/Kianzzz/xilo-opus-video](https://github.com/Kianzzz/xilo-opus-video)</span><br></pre></td></tr></table></figure>
+
+<p>该 Skill 激活后将自动接管以下标准作业程序（SOP）：</p>
+<ol>
+<li><strong>多源需求解析</strong>：支持输入文本创意、文章链接、产品 URL 或参考视频。若提供参考视频，Agent 会自动抽帧分析其分镜与剪辑节奏；若提供背景音乐，则先行运行节拍检测算法。</li>
+<li><strong>差异化提案生成</strong>：输出 3 套在视觉风格、底层代码技术栈、分镜设计与预估渲染耗时上显著区分的方案。</li>
+<li><strong>关键帧&#x2F;小样预览</strong>：为每个方案渲染静态关键帧（或数秒的动效小样），实现“所见即所得”的方案决策。</li>
+<li><strong>分步实施与自检交付</strong>：方案确认后自动生成包含 7 大 XML 模块的 <code>brief.md</code>，逐镜头编码并抽帧自检，最终完成多维度打分迭代（全项达 8 分以上）后交付成片。</li>
+</ol>
+<h3 id="2-提升出片质量的-3-个工程技巧"><a href="#2-提升出片质量的-3-个工程技巧" class="headerlink" title="2. 提升出片质量的 3 个工程技巧"></a>2. 提升出片质量的 3 个工程技巧</h3><h4 id="技巧一：拉满推理思考强度（Thinking-Effort）"><a href="#技巧一：拉满推理思考强度（Thinking-Effort）" class="headerlink" title="技巧一：拉满推理思考强度（Thinking Effort）"></a>技巧一：拉满推理思考强度（Thinking Effort）</h4><p>程序化动画涉及复杂的空间坐标计算、缓动函数推导与时间轴对齐。在生成效果不理想时，优先在配置中将模型的推理预算（Thinking Budget &#x2F; Effort）调至最高档位。</p>
+<h4 id="技巧二：配置项目级持久化规范（CLAUDE-md）"><a href="#技巧二：配置项目级持久化规范（CLAUDE-md）" class="headerlink" title="技巧二：配置项目级持久化规范（CLAUDE.md）"></a>技巧二：配置项目级持久化规范（<code>CLAUDE.md</code>）</h4><p>在工作区根目录下创建 <code>CLAUDE.md</code> 文件。Claude Code 每次启动会话时会自动加载该文件作为全局系统上下文，无需在单次对话中重复强调基础规范：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="section"># 视频制作规矩</span></span><br><span class="line"><span class="section">## 渲染</span></span><br><span class="line"><span class="bullet">-</span> 每一条视频都只由时间决定：window.render(t) 画出第 t 秒。</span><br><span class="line"><span class="bullet">-</span> 不用 CSS 动画、不用计时器，帧和帧之间不保存状态，随机数带固定种子。</span><br><span class="line"></span><br><span class="line"><span class="section">## 画面</span></span><br><span class="line"><span class="bullet">-</span> 禁用的默认风格：居中大字加渐变背景、所有元素一起淡入、角落里的标签和边框、界面上的发光。</span><br><span class="line"><span class="bullet">-</span> 一种标题字体、一种正文字体，除非我另外说明，只用一个强调色。</span><br><span class="line"><span class="bullet">-</span> 每 2–4 秒画面上要有新东西出现。</span><br><span class="line"></span><br><span class="line"><span class="section">## 声音</span></span><br><span class="line"><span class="bullet">-</span> 没有给音乐的话，配乐和音效都用代码合成，放在节拍上，响度 -14 LUFS。</span><br><span class="line"></span><br><span class="line"><span class="section">## 给我看之前</span></span><br><span class="line"><span class="bullet">-</span> 先出抽帧图，自己打分，把最严重的 3 个问题改掉，每一项都到 8 分以上再给我看。</span><br></pre></td></tr></table></figure>
+
+<h4 id="技巧三：建立多模态抽帧自查闭环（Self-Correction-Loop）"><a href="#技巧三：建立多模态抽帧自查闭环（Self-Correction-Loop）" class="headerlink" title="技巧三：建立多模态抽帧自查闭环（Self-Correction Loop）"></a>技巧三：建立多模态抽帧自查闭环（Self-Correction Loop）</h4><p>利用 Opus 5.5 强大的视觉理解能力，让其在完成初步渲染后，将视频拆解为网格静帧图并切换至“严苛的动效导演”视角进行自我审查。可直接复用以下自检 Prompt：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">检查视频，先完成抽帧处理，然后站在严格的动效导演视角，专门挑毛病，别替自己说好话。</span><br><span class="line">按下面几项各打 1–10 分：前 2 秒抓不抓人、缩到手机屏幕大小还看不看得清、动作是否自然（有没有匀速滑动、有没有卡住不动的空拍）、画面变化是否足够（每 2–4 秒要有新东西）、构图、声音和画面是否对得上。</span><br><span class="line"></span><br><span class="line">列出最严重的 3 个问题，标上时间点。重点找这几类：切换时文字叠在一起、居中大字加渐变背景的默认画面、角落里多余的标签和边框、缩放以后变糊的字、循环接缝处的卡顿。</span><br><span class="line"></span><br><span class="line">列出以后重新渲染有问题的部分，再出一张新的抽帧图和新的分数。</span><br><span class="line"></span><br><span class="line">重复这个过程，直到每一项都在 8 分以上。</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="六、-延伸阅读与开源生态参考"><a href="#六、-延伸阅读与开源生态参考" class="headerlink" title="六、 延伸阅读与开源生态参考"></a>六、 延伸阅读与开源生态参考</h2><p>Opus 5.5 并非视频生成模型，但其顶尖的代码架构能力与视觉审美先验，使其成为了极具潜力的“程序化动态设计引擎”。如需进一步探索底层源码与提示词范式，推荐参考以下开源仓库：</p>
+<ul>
+<li>**<a target="_blank" rel="noopener" href="https://github.com/athemeroy/awesome-opus-5-5-videos">athemeroy&#x2F;awesome-opus-5-5-videos</a>**：收录了 1000+ 条由 Opus 5.5 生成的视频案例，并详细标注了每条作品对应的渲染技术栈与实现路径。</li>
+<li>**<a target="_blank" rel="noopener" href="https://github.com/guanmo-ai/awesome-ai-motion">guanmo-ai&#x2F;awesome-ai-motion</a>**：中文 AI 动效案例精选集，附带原作者完整 Prompt 与原始出处链接。</li>
+<li>**<a target="_blank" rel="noopener" href="https://github.com/JohnHeibel/ClaudeAnimationBase">JohnHeibel&#x2F;ClaudeAnimationBase</a>**：基于 <code>p5.js</code> 与 <code>p5.brush</code> 构建手绘卡通动画的标准化工程脚手架。</li>
+<li>**<a target="_blank" rel="noopener" href="https://github.com/JohnHeibel/PDoomVideo">JohnHeibel&#x2F;PDoomVideo</a>**：一支完整音乐 MV 的全量工程源码，适合深入研究长视频的代码目录组织与状态管理模式。</li>
+</ul>
+
+  </div>
+
+  <footer class="article-reactions">
+    <div class="reaction-group">
+      <button type="button" class="reaction reaction--comment" aria-label="跳转到评论区" data-action="scroll-to-comments">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-message-circle"></use></svg>
+
+      </button>
+      <span class="reaction-label">评论</span>
+      
+    </div>
+    <div class="reaction-group reaction-group--right">
+      
+      <button type="button" class="reaction reaction--share" aria-label="分享" data-action="share">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-share-2 flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-share-2"></use></svg>
+
+      </button>
+      <span class="reaction-label">分享</span>
+    </div>
+  </footer>
+
+  
+
+
+  <nav class="article-actions">
+    
+      <span class="article-action article-action--prev is-disabled" aria-disabled="true">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-arrow-left"></use></svg>
+
+        <span class="action-label">上一篇</span>
+        <span class="action-title">没有更早的文章了</span>
+      </span>
+    
+    
+      <a class="article-action article-action--next" href="/post/opus-5-5-motion-design.html">
+        <span class="action-label">下一篇</span>
+        <span class="action-title">Opus 5.5 动态设计全解析：那些刷屏的“一句话生成”视频背后隐藏了什么？</span>
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-arrow-right"></use></svg>
+
+      </a>
+    
+  </nav>
+</article>
+</div>
+
+<button type="button" class="back-to-top" data-action="scroll-to-top" aria-label="返回顶部" hidden>
+  
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-arrow-up"></use></svg>
+
+</button>
+
+
+  <section class="related-paper">
+    <header class="related-paper__head">
+      <h2>
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-link"></use></svg>
+相关文章</h2>
+      <a class="related-paper__more" href="/archives/">
+        <span>查看更多</span>
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-arrow-right"></use></svg>
+
+      </a>
+    </header>
+    <div class="related-paper__grid">
+      
+        <a class="related-card" href="/post/how-to-use-ai-build-3d-games.html">
+          <span class="related-card__thumb">
+            
+<div class="paper-thumb paper-thumb-0 paper-thumb--cover">
+  
+    <img class="paper-thumb__img" src="https://img.nep.me/ooo/cover-3d-games.webp" alt="用 AI 制作 3D 游戏：Opus 5.5 / Astra + Tripo 全流程实战指南" loading="lazy" referrerpolicy="no-referrer">
+  
+</div>
+
+          </span>
+          <span class="related-card__body">
+            <strong class="related-card__title">用 AI 制作 3D 游戏：Opus 5.5 / Astra + Tripo 全流程实战指南</strong>
+            <em class="related-card__date">2026-10-16</em>
+          </span>
+        </a>
+      
+        <a class="related-card" href="/post/opus-5-5-motion-design.html">
+          <span class="related-card__thumb">
+            
+<div class="paper-thumb paper-thumb-1 paper-thumb--cover">
+  
+    <img class="paper-thumb__img" src="https://img.nep.me/2026/10/claude-opus-motion.webp" alt="Opus 5.5 动态设计全解析：那些刷屏的“一句话生成”视频背后隐藏了什么？" loading="lazy" referrerpolicy="no-referrer">
+  
+</div>
+
+          </span>
+          <span class="related-card__body">
+            <strong class="related-card__title">Opus 5.5 动态设计全解析：那些刷屏的“一句话生成”视频背后隐藏了什么？</strong>
+            <em class="related-card__date">2026-10-17</em>
+          </span>
+        </a>
+      
+        <a class="related-card" href="/post/is-sonnet-5-worth-using.html">
+          <span class="related-card__thumb">
+            
+<div class="paper-thumb paper-thumb-2 paper-thumb--cover">
+  
+    <img class="paper-thumb__img" src="https://img.nep.me/ooo/cover-sonnet5.webp" alt="Sonnet 5 已发布，值得用吗？" loading="lazy" referrerpolicy="no-referrer">
+  
+</div>
+
+          </span>
+          <span class="related-card__body">
+            <strong class="related-card__title">Sonnet 5 已发布，值得用吗？</strong>
+            <em class="related-card__date">2026-07-01</em>
+          </span>
+        </a>
+      
+        <a class="related-card" href="/post/anthropic-releases-claude-fable-5.html">
+          <span class="related-card__thumb">
+            
+<div class="paper-thumb paper-thumb-0 paper-thumb--cover">
+  
+    <img class="paper-thumb__img" src="https://img.nep.me/ooo/cover-claude-fable5.webp" alt="Anthropic 发布 Claude Fable 5：首个公开 Mythos-class 模型亮相，但充满限制" loading="lazy" referrerpolicy="no-referrer">
+  
+</div>
+
+          </span>
+          <span class="related-card__body">
+            <strong class="related-card__title">Anthropic 发布 Claude Fable 5：首个公开 Mythos-class 模型亮相，但充满限制</strong>
+            <em class="related-card__date">2026-06-10</em>
+          </span>
+        </a>
+      
+    </div>
+  </section>
+
+
+      
+
+<section class="comments-section" aria-label="评论">
+  <header class="comments-section__head">
+    <h2>
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-message-circle"></use></svg>
+评论</h2>
+  </header>
+  <div id="artalk-comments"></div>
+</section>
+<script>
+window.addEventListener('load', function () {
+  if (typeof Artalk === 'undefined' || typeof Artalk.init !== 'function') return;
+  Artalk.init({
+    el: '#artalk-comments',
+    pageKey: "https://ooo.run/post/use-opus-make-videos.html",
+    pageTitle: "# Claude Opus 5.5 视频生成指南：从底层原理、技术栈选型到工程化 Prompt 实践",
+    server: "https://artalk.ooo.run",
+    site: "Mr. O 的博客"
+  });
+});
+</script>
+
+
+    </section>
+    
+  </main>
+
+  <div class="sidebar-backdrop js-sidebar-close" aria-hidden="true"></div>
+
+  
+<footer class="site-footer">
+  <span class="site-footer__left">© 2026 By Mr. O</span>
+  
+    <span class="site-footer__right">
+      
+        <span class="site-footer__row"><a href="/terms">服务条款</a><span class="site-footer__separator"> · </span><a href="/privacy">隐私政策</a><span class="site-footer__separator"> · </span><span class="site-footer__powered"><span class="site-footer__powered-prefix">Powered by Theme</span> <a href="https://github.com/Homulilly/hexo-theme-flatpaper" target="_blank" rel="noopener">FlatPaper</a></span></span>
+      
+        <span class="site-footer__row"><a href="https://tools.ooo.run" target="_blank" rel="noopener">简易工具</a><span class="site-footer__separator"> · </span><a href="https://endfield.ooo.run" target="_blank" rel="noopener">终末地基质工具箱</a></span>
+      
+    </span>
+  
+</footer>
+
+  
+<div class="search-panel" aria-hidden="true" data-index-url="/flatpaper-search.json">
+  <div class="search-backdrop js-search-close"></div>
+  <section class="search-dialog" role="dialog" aria-modal="true" aria-label="搜索文章">
+    <span class="tape tape--top-left" aria-hidden="true"></span>
+    <header class="search-head">
+      <h2><span class="green-dot"></span>搜索文章</h2>
+      <button class="icon-button js-search-close" type="button" aria-label="关闭搜索">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-x"></use></svg>
+
+      </button>
+    </header>
+    <label class="search-field">
+      
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search flatpaper-icon flatpaper-icon--lucide" aria-hidden="true"><use href="/icons.svg#flatpaper-icon-lucide-search"></use></svg>
+
+      <input id="flatpaper-search" class="search-input" type="search" placeholder="输入关键词，按 Esc 关闭" autocomplete="off">
+    </label>
+    <div class="search-results" data-empty="输入关键词后显示匹配的文章">
+      <p class="search-empty">输入关键词后显示匹配的文章</p>
+    </div>
+  </section>
+</div>
+
+  <script>
+  window.FLATPAPER_I18N = {"language":"zh-CN","common.posts":"文章","common.categories":"分类","common.tags":"标签","common.comments":"评论","common.share":"分享","common.page":"页面","common.archive":"归档","common.post_list":"文章列表","common.search_posts":"搜索文章","common.random_posts":"随机文章","common.reward":"赞赏","common.view_all":"查看全部","pagination.prev":"上一页","pagination.next":"下一页","pagination.post_pager":"文章分页","pagination.archive_pager":"归档分页","index.featured":"精选文章","index.pinned":"置顶","index.read_more":"阅读全文","index.previous_slide":"上一张","index.next_slide":"下一张","index.carousel_pagination":"轮播页码","index.carousel_slide":"第 %d 张","index.latest_posts":"最新文章","index.empty_posts":"还没有文章。创建第一篇文章后，这里会显示最新内容。","archive.title":"归档","archive.post_list":"文章列表","taxonomy.category_count":"%d 篇","taxonomy.empty_categories":"暂时还没有分类。","taxonomy.empty_tags":"暂时还没有标签。","links.label":"友链","links.title":"友情链接","links.empty_data":"暂未加载到友链数据。请确认 source/_data/links.yml 存在并已 hexo clean。","links.rss_label":"%s 的 RSS","friends_feed.label":"朋友圈","friends_feed.title":"友链朋友圈","friends_feed.loading":"正在加载友链动态…","friends_feed.missing_url":"暂未配置 all.json 地址。","friends_feed.load_failed":"友链动态加载失败，请稍后再试。","friends_feed.empty":"暂时没有抓取到友链文章。","friends_feed.load_more":"加载更多","friends_feed.updated_at":"更新于 %s","friends_feed.friend_count":"%d 位友邻","friends_feed.active_count":"%d 位活跃","friends_feed.article_count":"%d 篇文章","friends_feed.unknown_author":"未知站点","friends_feed.date_unknown":"时间未知","guestbook.label":"留言板","guestbook.title":"留言板","guestbook.loading":"正在铺开留言墙…","guestbook.missing_config":"留言墙需要评论系统：请在主题配置中设置 comments: twikoo（并填写 envId）或 comments: artalk（并填写 server）。","guestbook.load_failed":"留言加载失败，请稍后再试。","guestbook.empty":"墙上还空着，来贴第一张留言吧！","guestbook.load_more":"展开更多留言","guestbook.total_count":"共 %d 条留言","guestbook.latest_note":"墙上展示最新 %d 条","guestbook.jump_to_comment":"查看留言","guestbook.sort_time":"查看最新","guestbook.sort_random":"随机排序","guestbook.anonymous":"匿名访客","guestbook.write_hint":"在下方留言，刷新后就会贴到墙上","post.scroll_to_comments":"跳转到评论区","post.previous":"上一篇","post.next":"下一篇","post.no_previous":"没有更早的文章了","post.no_next":"已经是最新的一篇","post.back_to_top":"返回顶部","post.related_posts":"相关文章","post.view_more":"查看更多","not_found.label":"页面走丢了","not_found.title":"找不到这个页面","not_found.text":"这个地址可能已经移动、删除，或者从未存在。","not_found.home":"返回首页","not_found.search":"搜索文章","search.placeholder":"输入关键词，按 Esc 关闭","search.empty":"输入关键词后显示匹配的文章","search.loading":"正在加载搜索索引…","search.load_failed":"搜索索引加载失败，请重新打开搜索重试","search.no_result":"没有找到与 \"%s\" 相关的文章","search.close":"关闭搜索","code.copy":"复制代码","code.collapse":"折叠代码","code.expand":"展开代码","heading.anchor":"链接到此节: %s","head.tag":"标签：%s","head.category":"分类：%s","head.archive":"归档","head.archive_with_date":"归档：%s","head.page_number":"第 %d 页","navigation.primary":"主导航","navigation.mobile":"移动端导航","navigation.brand_home":"FlatPaper 首页","navigation.brand_menu":"打开站点导航","navigation.open_sidebar":"打开侧边栏","navigation.close_sidebar":"关闭侧边栏","navigation.sidebar":"侧边栏","navigation.sidebar_tools":"侧边栏工具","navigation.site_links":"站点链接","navigation.site_info":"站点信息","colors.choose_theme_color":"选择主题色","colors.theme_color":"主题色","colors.toggle_color_mode":"切换颜色模式","colors.green":"绿色","colors.purple":"紫色","colors.pink":"粉色","colors.sakura":"樱花粉","colors.blue":"蓝色","colors.orange":"橙色","colors.black":"黑色","profile.default_bio":"热爱生活，热爱代码，喜欢分享技术与生活中的点滴。","welcome.cta":"开始阅读","welcome.title":"欢迎来到 FlatPaper","welcome.text":"一个专注于内容与阅读体验的博客主题。","typed.from":"出自","stack_album.label":"堆叠相册","home_hero.label":"首页开屏","home_hero.enter":"开始阅读","home_hero.note":"今日","home_hero.default_subtitle":"日常记录","home_hero.nav_links":"开屏导航","home_hero.profile_links":"个人链接","home_hero.tools":"开屏工具","home_hero.shuffle_stickers":"打乱贴纸位置","home_hero.link":"链接","home_hero.sticker_image":"贴纸图片","home_hero.visit_confirm":"要访问 %s 吗？","home_hero.visit":"访问","home_hero.cancel":"取消","toc.title":"文章目录","toc.empty":"目录会根据文章标题自动生成。","toc.expand_all":"展开全部目录","toc.collapse_all":"收起全部目录","sidebar.hot_tags":"热门标签","sidebar.latest_posts":"最新文章"};
+  </script>
+  
+<script src="/js/main.js"></script>
+
+  
+</body>
+</html>
