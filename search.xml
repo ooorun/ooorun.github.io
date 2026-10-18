@@ -221,91 +221,6 @@
       </tags>
   </entry>
   <entry>
-    <title>如何使用 SSH key 连接 GitHub</title>
-    <url>/post/how-to-add-ssh-key-to-github.html</url>
-    <content><![CDATA[<p>如果需要频繁的进行 GitHub pull&#x2F;push 操作，使用 SSH key 绑定到 GitHub 会更加方便，绑定后将使用公钥加密来验证用户身份，比传统的用户名和密码方式更安全。  </p>
-<p>本文命令与截图对应下面的系统版本，需要先安装 <a href="https://git-scm.com/downloads">Git</a></p>
-<ul>
-<li><strong>Windows 11</strong> : 一般安装 <code>64-bit Git for Windows Setup</code>, 安装选项全部<strong>默认</strong>即可</li>
-<li><strong>macOS 15.1</strong> : 更推荐通过安装 <a href="https://brew.sh/">Homebrew</a> 获取 Git 程序，查看 <a href="https://ooo.run/post/how-to-install-homebrew-on-macos.html">如何在 macOS 中安装 Homebrew </a></li>
-</ul>
-<h2 id="打开终端程序"><a href="#打开终端程序" class="headerlink" title="打开终端程序"></a>打开终端程序</h2><h3 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h3><ul>
-<li>右键点击开始菜单，选择终端</li>
-<li>或是按 <code>Windows + R</code> 快捷键打开 <strong>运行</strong> 窗口，输入 <code>cmd</code> ，回车打开</li>
-</ul>
-<h3 id="macOS"><a href="#macOS" class="headerlink" title="macOS"></a>macOS</h3><ul>
-<li>启动台 &gt; 其他 &gt; 终端</li>
-<li><strong>启动台</strong> 或是　<code>Commond⌘ + 空格</code> 打开聚焦搜索，搜索 <strong>终端</strong> 或是 <strong>Terminal</strong></li>
-</ul>
-<p>安装 Git 后，使用 <code>git -v</code> 测试，如果安装成功会显示版本号</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt; git -v</span><br><span class="line">git version 2.47.1</span><br></pre></td></tr></table></figure>
-<p>然后设置 Git 的个人信息</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;yourname&quot;</span></span><br><span class="line">git config --global user.email <span class="string">&quot;your_email@example.com&quot;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="测试一下-github-com"><a href="#测试一下-github-com" class="headerlink" title="测试一下 github.com"></a>测试一下 github.com</h2><div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>Windows 10 用户可以使用 Git Bash</p></div></div>
-<div class="flatpaper-note flatpaper-note--warning"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>测试时会自动创建 <code>.ssh</code> 文件夹，因此你也需要测试一下</p></div></div>
-
-<p>打开终端程序，运行测试命令，如果是第一次运行，需要输入 <code>yes</code> 确认</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure>
-
-<p>我们没有添加过 SSH key，会提示 <code>Permission denied (publickey).</code></p>
-<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-4-tab-0" aria-controls="tabs-4-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">Windows</button><button type="button" role="tab" id="tabs-4-tab-1" aria-controls="tabs-4-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">macOS</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-4-panel-0" aria-labelledby="tabs-4-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><p><img src="https://img.nep.me/i/2024/12/13/122owl6-2.webp"></p></section><section role="tabpanel" id="tabs-4-panel-1" aria-labelledby="tabs-4-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><p><img src="https://img.nep.me/i/2024/12/13/124oz3l-2.webp"></p></section></div></div>
-
-<h2 id="创建-SSH-Key"><a href="#创建-SSH-Key" class="headerlink" title="创建 SSH Key"></a>创建 SSH Key</h2><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> .ssh</span><br><span class="line"></span><br><span class="line">ssh-keygen -t rsa -C <span class="string">&quot;your_email@example.com&quot;</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">C:\Users\ME\.ssh&gt;ssh-keygen -t rsa</span><br><span class="line"></span><br><span class="line">Generating public/private rsa key pair.</span><br><span class="line"><span class="comment"># 设置保存文件名，留空则为 id_rsa</span></span><br><span class="line">Enter file <span class="keyword">in</span> <span class="built_in">which</span> to save the key (C:\Users\ME/.ssh/id_rsa):</span><br><span class="line"><span class="comment"># 设置密码，留空则是没有密码</span></span><br><span class="line">Enter passphrase (empty <span class="keyword">for</span> no passphrase):</span><br><span class="line"><span class="comment"># 确认密码</span></span><br><span class="line">Enter same passphrase again:</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成的私钥</span></span><br><span class="line">Your identification has been saved <span class="keyword">in</span> C:\Users\ME/.ssh/id_rsa</span><br><span class="line"><span class="comment"># 生成的公钥</span></span><br><span class="line">Your public key has been saved <span class="keyword">in</span> C:\Users\ME/.ssh/id_rsa.pub</span><br></pre></td></tr></table></figure>
-<div class="flatpaper-note flatpaper-note--warning"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p><code>.pub</code> 后缀的是公钥，可以公开，<strong>私钥相当于个人密码，要小心保存</strong></p></div></div>
-
-<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>git 默认会查找名称为 <code>id_rsa</code> 的 SSH key </p></div></div>
-
-<div class="flatpaper-note flatpaper-note--primary"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>如果设置了文件名称，或是生成其他格式的 SSH key 可以查看后文的配合 <code>SSH config</code> 的部分</p></div></div>
-
-<div class="flatpaper-note flatpaper-note--default"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>rsa 格式的 key 内容很长，使用 <code>ssh-keygen -t ed25519</code> 生成 <code>ed25519</code> 格式的 key，更简洁，更安全</p></div></div>
-
-<h2 id="添加公钥到-GitHub"><a href="#添加公钥到-GitHub" class="headerlink" title="添加公钥到 GitHub"></a>添加公钥到 GitHub</h2><p>使用命令或是文本编辑器查看公钥的内容</p>
-<ul>
-<li>Windows 使用 <code>type id_rsa.pub</code> </li>
-<li>macOS &#x2F; Linux 使用 <code>cat id_rsa.pub</code></li>
-</ul>
-<p>访问 <a href="https://github.com/settings/keys">Github - SSH Keys</a>，点击右上角 <strong>New SSH key</strong>。<br>手动访问路径：右上角点击 <strong>头像</strong> &gt; <strong>Settings</strong> &gt; <strong>SSH and GPG keys</strong> &gt; <strong>New SSH key</strong></p>
-<p><img src="https://img.nep.me/i/2024/12/13/12s8co0-2.webp" alt="github-add-ssh-key"></p>
-<ul>
-<li><strong>Title</strong>：取个备注名字</li>
-<li><strong>Key type</strong>：不需要修改，保持默认 <strong>Authentication Key</strong></li>
-<li><strong>Key</strong>：粘贴 <code>id_rsa.pub</code> 对应的文本内容</li>
-<li>点击 <code>Add SSH key</code> 保存</li>
-</ul>
-<p><img src="https://img.nep.me/i/2024/12/13/12sain9-2.webp" alt="github-add-ssh-key-details"></p>
-<p>添加成功会在列表显示<br><img src="https://img.nep.me/i/2024/12/13/12vf7u0-2.webp" alt="github-add-ssh-key-done"></p>
-<p>此时我们再执行测试命令，就会获得成功的欢迎提示。 </p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt;ssh -T git@github.com</span><br><span class="line">Hi &lt;Your username&gt;! You<span class="string">&#x27;ve successfully authenticated, but GitHub does not provide shell access.</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="配合-SSH-config-使用"><a href="#配合-SSH-config-使用" class="headerlink" title="配合 SSH config 使用"></a>配合 SSH config 使用</h2><p>如果我们的私钥的名称不是 <code>id_rsa</code> ，我们将仍然无法成功连接 GitHub ，你可以将私钥修改文件名后再试试 </p>
-<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-5-tab-0" aria-controls="tabs-5-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">Windows</button><button type="button" role="tab" id="tabs-5-tab-1" aria-controls="tabs-5-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">macOS&amp;Linux</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-5-panel-0" aria-labelledby="tabs-5-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt; rename id_rsa id_mysshkey</span><br><span class="line"></span><br><span class="line">&gt; ssh -T git@github.com</span><br><span class="line">git@github.com: Permission denied (publickey).</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-5-panel-1" aria-labelledby="tabs-5-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt; <span class="built_in">mv</span> id_rsa id_mysshkey</span><br><span class="line"></span><br><span class="line">&gt; ssh -T git@github.com</span><br><span class="line">git@github.com: Permission denied (publickey).</span><br></pre></td></tr></table></figure></section></div></div>
-
-<p>这时我们可以通过在 <code>.ssh</code> 文件夹中创建一个 <code>config</code> 文件，填入下面的内容来告诉 git 程序在哪里找到密钥</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Host github.com</span><br><span class="line">    HostName github.com</span><br><span class="line">    User git</span><br><span class="line">    IdentityFile ~/.ssh/id_mysshkey</span><br></pre></td></tr></table></figure>
-
-<p>其中 <code>IdentityFile</code> 部分填写私钥的路径， <code>~</code> 代表用户 Home 目录</p>
-<ul>
-<li>Windows 相当于 <code>C:\Users\&lt;username&gt;\</code></li>
-<li>macOS 相当于 <code>/Users/&lt;username&gt;/</code></li>
-<li>Linux 相当于 <code>/root/</code> 或是 <code>/home/&lt;username&gt;/</code></li>
-</ul>
-<p>再进行测试，发现又能显示成功的欢迎消息。  </p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt;ssh -T git@github.com</span><br><span class="line">Hi &lt;Your username&gt;! You<span class="string">&#x27;ve successfully authenticated, but GitHub does not provide shell access.</span></span><br></pre></td></tr></table></figure>
-
-<p>以后就可以很方便的使用 Git 了！</p>
-]]></content>
-      <categories>
-        <category>教程</category>
-      </categories>
-      <tags>
-        <tag>GitHub</tag>
-        <tag>SSH</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>为 Hexo 博客添加评论系统，Giscus or Twikoo or Arttalk or Disqus</title>
     <url>/post/how-to-add-comment-system-for-static-blog.html</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>静态博客系统不像 Wordpress 一样自带评论系统，不过由于使用静态博客的人越来越多，社区已经有了多种评论系统可以供我们选择。</p>
@@ -362,7 +277,7 @@
 <h3 id="Artalk-介绍"><a href="#Artalk-介绍" class="headerlink" title="Artalk 介绍"></a>Artalk 介绍</h3><p><a href="https://artalk.js.org/">Artalk</a> 同样是一款简单易用但功能丰富的评论系统，与 Twikoo 项目，Artalk 国际化更加友好，支持更多的语言，但是无法使用第三方云服务托管。</p>
 <p>如果你也有一台 VPS 服务器，那么 Twikoo 和 Artalk 都是不错的选择，可以对比一下具体的功能与界面样式再做选择。 </p>
 <h3 id="创建-docker-compose-yml"><a href="#创建-docker-compose-yml" class="headerlink" title="创建 docker-compose.yml"></a>创建 docker-compose.yml</h3><p>首先创建一个工作目录，然后在文件夹内创建 <code>docker-compose.yml</code> 文件，填入下面的内容</p>
-<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-6-tab-0" aria-controls="tabs-6-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">Twikoo</button><button type="button" role="tab" id="tabs-6-tab-1" aria-controls="tabs-6-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">Artalk</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-6-panel-0" aria-labelledby="tabs-6-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">twikoo:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">imaegoo/twikoo:latest</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">twikoo</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="comment"># 本机设置 Nginx 反代后可以设置为 - 127.0.0.1:8080:8080 关闭公网访问</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">8080</span><span class="string">:8080</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="comment"># 数据存放路径:容器内路径</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/var/www/twikoo/data:/app/data</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-6-panel-1" aria-labelledby="tabs-6-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">artalk:</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">artalk</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">artalk/artalk-go</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">unless-stopped</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">8080</span><span class="string">:23366</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/opt/artalk/data:/data</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">TZ=Asia/Shanghai</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">ATK_LOCALE=zh-CN</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">ATK_SITE_DEFAULT=Artalk</span> <span class="string">的博客</span></span><br><span class="line">      <span class="comment"># 填写博客域名</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">ATK_SITE_URL=https://your_domain</span></span><br></pre></td></tr></table></figure></section></div></div>
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-4-tab-0" aria-controls="tabs-4-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">Twikoo</button><button type="button" role="tab" id="tabs-4-tab-1" aria-controls="tabs-4-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">Artalk</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-4-panel-0" aria-labelledby="tabs-4-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">twikoo:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">imaegoo/twikoo:latest</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">twikoo</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="comment"># 本机设置 Nginx 反代后可以设置为 - 127.0.0.1:8080:8080 关闭公网访问</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">8080</span><span class="string">:8080</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="comment"># 数据存放路径:容器内路径</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/var/www/twikoo/data:/app/data</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-4-panel-1" aria-labelledby="tabs-4-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">artalk:</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">artalk</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">artalk/artalk-go</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">unless-stopped</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">8080</span><span class="string">:23366</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/opt/artalk/data:/data</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">TZ=Asia/Shanghai</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">ATK_LOCALE=zh-CN</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">ATK_SITE_DEFAULT=Artalk</span> <span class="string">的博客</span></span><br><span class="line">      <span class="comment"># 填写博客域名</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">ATK_SITE_URL=https://your_domain</span></span><br></pre></td></tr></table></figure></section></div></div>
 
 <h3 id="启动服务"><a href="#启动服务" class="headerlink" title="启动服务"></a>启动服务</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 拉取、更新镜像</span></span><br><span class="line">docker compose pull</span><br><span class="line"><span class="comment"># 启动后台</span></span><br><span class="line">docker compose up -d</span><br><span class="line"></span><br><span class="line"><span class="comment"># 常用命令</span></span><br><span class="line">docker compose stop     <span class="comment"># 暂停容器</span></span><br><span class="line">docker compose down     <span class="comment"># 删除容器</span></span><br><span class="line">docker compose restart  <span class="comment"># 重启容器</span></span><br></pre></td></tr></table></figure>
 
@@ -375,11 +290,11 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#123;&quot;code&quot;:100,&quot;message&quot;:&quot;Twikoo 云函数运行正常，...&quot;,&quot;version&quot;:&quot;1.x.x&quot;&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="测试-Artalk"><a href="#测试-Artalk" class="headerlink" title="测试 Artalk"></a>测试 Artalk</h3><p>访问使用的域名，如果成功 Artalk 会显示登录界面<br><img src="https://img.nep.me/i/2024/12/15/agkca0-2.webp" style="width:50%;" alt="image" /></p>
 <h3 id="在主题中启用"><a href="#在主题中启用" class="headerlink" title="在主题中启用"></a>在主题中启用</h3><p>编辑 Hexo 目录下的 <code>_config.butterfly.yml</code> 文件： </p>
-<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-7-tab-0" aria-controls="tabs-7-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">Twikoo</button><button type="button" role="tab" id="tabs-7-tab-1" aria-controls="tabs-7-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">Artalk</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-7-panel-0" aria-labelledby="tabs-7-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">comments:</span>  </span><br><span class="line">  <span class="comment"># 设置为 twikoo</span></span><br><span class="line">  <span class="attr">use:</span> <span class="string">twikoo</span></span><br><span class="line"></span><br><span class="line"><span class="attr">twikoo:</span></span><br><span class="line">  <span class="comment"># envId 填写你的域名</span></span><br><span class="line">  <span class="attr">envId:</span> <span class="string">https://twikoo.example.com</span></span><br><span class="line">  <span class="attr">region:</span></span><br><span class="line">  <span class="attr">visitor:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">option:</span></span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-7-panel-1" aria-labelledby="tabs-7-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">comments:</span>  </span><br><span class="line">  <span class="comment"># 设置为 artalk</span></span><br><span class="line">  <span class="attr">use:</span> <span class="string">artalk</span></span><br><span class="line"></span><br><span class="line"><span class="attr">artalk:</span></span><br><span class="line">  <span class="comment"># server 填 artalk 的域名</span></span><br><span class="line">  <span class="attr">server:</span> <span class="string">https://artalk.example.com</span></span><br><span class="line">  <span class="comment"># site ATK_SITE_DEFAULT 设置的内容，不是博客域名，不能包含引号</span></span><br><span class="line">  <span class="attr">site:</span> <span class="string">Artalk</span> <span class="string">的博客</span></span><br><span class="line">  <span class="comment"># Use Artalk visitor count as the page view count</span></span><br><span class="line">  <span class="attr">visitor:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">option:</span></span><br></pre></td></tr></table></figure></section></div></div>
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-5-tab-0" aria-controls="tabs-5-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">Twikoo</button><button type="button" role="tab" id="tabs-5-tab-1" aria-controls="tabs-5-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">Artalk</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-5-panel-0" aria-labelledby="tabs-5-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">comments:</span>  </span><br><span class="line">  <span class="comment"># 设置为 twikoo</span></span><br><span class="line">  <span class="attr">use:</span> <span class="string">twikoo</span></span><br><span class="line"></span><br><span class="line"><span class="attr">twikoo:</span></span><br><span class="line">  <span class="comment"># envId 填写你的域名</span></span><br><span class="line">  <span class="attr">envId:</span> <span class="string">https://twikoo.example.com</span></span><br><span class="line">  <span class="attr">region:</span></span><br><span class="line">  <span class="attr">visitor:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">option:</span></span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-5-panel-1" aria-labelledby="tabs-5-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">comments:</span>  </span><br><span class="line">  <span class="comment"># 设置为 artalk</span></span><br><span class="line">  <span class="attr">use:</span> <span class="string">artalk</span></span><br><span class="line"></span><br><span class="line"><span class="attr">artalk:</span></span><br><span class="line">  <span class="comment"># server 填 artalk 的域名</span></span><br><span class="line">  <span class="attr">server:</span> <span class="string">https://artalk.example.com</span></span><br><span class="line">  <span class="comment"># site ATK_SITE_DEFAULT 设置的内容，不是博客域名，不能包含引号</span></span><br><span class="line">  <span class="attr">site:</span> <span class="string">Artalk</span> <span class="string">的博客</span></span><br><span class="line">  <span class="comment"># Use Artalk visitor count as the page view count</span></span><br><span class="line">  <span class="attr">visitor:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">option:</span></span><br></pre></td></tr></table></figure></section></div></div>
 
 <h3 id="预览"><a href="#预览" class="headerlink" title="预览"></a>预览</h3><p>运行命令在网站查看评论预览</p>
 <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">hexo g</span><br><span class="line">hexo s</span><br><span class="line"></span><br><span class="line"><span class="comment"># Artalk 默认需要推送到服务器才可以预览</span></span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure>
-<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-8-tab-0" aria-controls="tabs-8-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">Twikoo</button><button type="button" role="tab" id="tabs-8-tab-1" aria-controls="tabs-8-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">Artalk</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-8-panel-0" aria-labelledby="tabs-8-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><p><img src="https://img.nep.me/i/2024/12/14/5cyu50-2.webp" alt="Twikoo Preview"></p></section><section role="tabpanel" id="tabs-8-panel-1" aria-labelledby="tabs-8-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><p><img src="https://img.nep.me/i/2024/12/15/c38ctz-2.webp" alt="Artalk Preview"></p></section></div></div>
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-6-tab-0" aria-controls="tabs-6-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">Twikoo</button><button type="button" role="tab" id="tabs-6-tab-1" aria-controls="tabs-6-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">Artalk</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-6-panel-0" aria-labelledby="tabs-6-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><p><img src="https://img.nep.me/i/2024/12/14/5cyu50-2.webp" alt="Twikoo Preview"></p></section><section role="tabpanel" id="tabs-6-panel-1" aria-labelledby="tabs-6-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><p><img src="https://img.nep.me/i/2024/12/15/c38ctz-2.webp" alt="Artalk Preview"></p></section></div></div>
 
 <h3 id="设置面板"><a href="#设置面板" class="headerlink" title="设置面板"></a>设置面板</h3><p>Twikoo：<br>第一次打开 Twikoo 面板，需要设置 <strong>密码</strong> ，然后进入面板可以导入评论、设置站点信息、SMTP 邮件发送、消息推送等功能。</p>
 <p>Artalk：<br>Artalk 则是访问自己的域名，使用管理员账户登陆后台进行设置，同样可以设置SMTP 邮件发送、消息推送等功能。</p>
@@ -407,100 +322,88 @@
       </tags>
   </entry>
   <entry>
-    <title>如何安装 Node.js</title>
-    <url>/post/how-to-install-nodejs.html</url>
-    <content><![CDATA[<p>本文将带介绍如何在电脑上安装 Node.js 运行环境，从而可以使用丰富的应用 Nodejs 程序。 </p>
-<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-9-tab-0" aria-controls="tabs-9-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">Windows</button><button type="button" role="tab" id="tabs-9-tab-1" aria-controls="tabs-9-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">macOS</button><button type="button" role="tab" id="tabs-9-tab-2" aria-controls="tabs-9-panel-2" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="2">Linux</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-9-panel-0" aria-labelledby="tabs-9-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><h2 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h2><p>测试安装环境为 <code>Windows 11</code></p>
-<h3 id="下载-Node-js"><a href="#下载-Node-js" class="headerlink" title="下载 Node.js"></a>下载 Node.js</h3><p>访问 Node.js 的官方网站的 <a href="https://nodejs.org/zh-cn/download/prebuilt-installer">下载页面</a> 下载安装包。 </p>
-<p>我们选择 <strong>预构建安装程序</strong> ，选择一下自己的系统与 CPU 架构类型， Windows 一般选择 <strong>x64</strong>，再选择 Node.js 版本。</p>
-<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>推荐选择版本号为偶数的 LTS 版本</p></div></div>  
-
-<p><img src="https://img.nep.me/i/2024/12/13/7fzq5m-2.webp" alt="nodejs-home-page"></p>
-<h3 id="安装-Node-js"><a href="#安装-Node-js" class="headerlink" title="安装 Node.js"></a>安装 Node.js</h3><p>然后打开安装程序 <code>node-v22.12.0-x64.msi</code>，安装过程没有陷阱，我们 <strong>同意</strong> 协议后，一路点击 Next 即可。  </p>
-<p><img src="https://img.nep.me/i/2024/12/13/7hc7pi-2.webp" alt="nodejs-setup"></p>
-<p>安装完成后，打开终端程序：</p>
+    <title>如何使用 SSH key 连接 GitHub</title>
+    <url>/post/how-to-add-ssh-key-to-github.html</url>
+    <content><![CDATA[<p>如果需要频繁的进行 GitHub pull&#x2F;push 操作，使用 SSH key 绑定到 GitHub 会更加方便，绑定后将使用公钥加密来验证用户身份，比传统的用户名和密码方式更安全。  </p>
+<p>本文命令与截图对应下面的系统版本，需要先安装 <a href="https://git-scm.com/downloads">Git</a></p>
 <ul>
+<li><strong>Windows 11</strong> : 一般安装 <code>64-bit Git for Windows Setup</code>, 安装选项全部<strong>默认</strong>即可</li>
+<li><strong>macOS 15.1</strong> : 更推荐通过安装 <a href="https://brew.sh/">Homebrew</a> 获取 Git 程序，查看 <a href="https://ooo.run/post/how-to-install-homebrew-on-macos.html">如何在 macOS 中安装 Homebrew </a></li>
+</ul>
+<h2 id="打开终端程序"><a href="#打开终端程序" class="headerlink" title="打开终端程序"></a>打开终端程序</h2><h3 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h3><ul>
 <li>右键点击开始菜单，选择终端</li>
 <li>或是按 <code>Windows + R</code> 快捷键打开 <strong>运行</strong> 窗口，输入 <code>cmd</code> ，回车打开</li>
-<li>或是在资源管理器的地址栏中输入 <code>cmd</code> 回车打开（终端的运行目录将是资源管理器所在的目录）</li>
 </ul>
-<p>运行下面的命令测试安装结果。</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">node -v</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm -v</span><br></pre></td></tr></table></figure>
-
-<p>如果可以成功输出版本号，表示安装成功。  </p>
-<p><img src="https://img.nep.me/i/2024/12/13/7ilvge-2.webp" alt="nodejs-install-done"></p></section><section role="tabpanel" id="tabs-9-panel-1" aria-labelledby="tabs-9-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><h2 id="macOS"><a href="#macOS" class="headerlink" title="macOS"></a>macOS</h2><p>测试安装环境为 <code>macOS 15.1</code> ，macOS 更推荐使用 <strong>包管理器</strong> <code>Homebrew</code> 进行安装。</p>
-<blockquote>
-<p><a href="https://brew.sh/zh-cn/">Homebrew</a> 是 macOS 和 Linux 缺失软件包的管理器，用于安装 Apple没有预装但你需要的东西。</p>
-</blockquote>
-<p>安装需要使用终端，<a href="https://support.apple.com/zh-cn/guide/terminal/apd5265185d-f365-44cb-8b09-71a064a42125/mac">在 Mac 上打开或退出“终端”</a>：</p>
-<ul>
+<h3 id="macOS"><a href="#macOS" class="headerlink" title="macOS"></a>macOS</h3><ul>
 <li>启动台 &gt; 其他 &gt; 终端</li>
 <li><strong>启动台</strong> 或是　<code>Commond⌘ + 空格</code> 打开聚焦搜索，搜索 <strong>终端</strong> 或是 <strong>Terminal</strong></li>
 </ul>
-<h3 id="安装-Homebrew"><a href="#安装-Homebrew" class="headerlink" title="安装 Homebrew"></a>安装 Homebrew</h3><p>中国大陆地区或是更详细步骤请查看：<a href="https://ooo.run/post/how-to-install-homebrew-on-macos.html" target="_blank">如何在 macOS 中安装 Homebrew</a></p>
-<p>首先复制安装命令  </p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">/bin/bash -c <span class="string">&quot;<span class="subst">$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)</span>&quot;</span></span><br></pre></td></tr></table></figure>
+<p>安装 Git 后，使用 <code>git -v</code> 测试，如果安装成功会显示版本号</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt; git -v</span><br><span class="line">git version 2.47.1</span><br></pre></td></tr></table></figure>
+<p>然后设置 Git 的个人信息</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;yourname&quot;</span></span><br><span class="line">git config --global user.email <span class="string">&quot;your_email@example.com&quot;</span></span><br></pre></td></tr></table></figure>
 
-<p>在终端内执行安装命令，安装时需要输入你的电脑密码进行授权：  </p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">==&gt; Checking <span class="keyword">for</span> `<span class="built_in">sudo</span>` access (<span class="built_in">which</span> may request your password)...</span><br><span class="line">Password:</span><br></pre></td></tr></table></figure>
-<p>brew 会提示将安装的软件以及创建的文件夹，按回车继续，等待下载和安装完成。</p>
-<p>命令执行结束后按照提示复制执行下面的三条命令添加 PATH :</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> &gt;&gt; /Users/me/.zprofile</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;eval &quot;$(/opt/homebrew/bin/brew shellenv)&quot;&#x27;</span> &gt;&gt; /Users/me/.zprofile</span><br><span class="line"><span class="built_in">eval</span> <span class="string">&quot;<span class="subst">$(/opt/homebrew/bin/brew shellenv)</span>&quot;</span></span><br></pre></td></tr></table></figure>
+<h2 id="测试一下-github-com"><a href="#测试一下-github-com" class="headerlink" title="测试一下 github.com"></a>测试一下 github.com</h2><div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>Windows 10 用户可以使用 Git Bash</p></div></div>
+<div class="flatpaper-note flatpaper-note--warning"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>测试时会自动创建 <code>.ssh</code> 文件夹，因此你也需要测试一下</p></div></div>
 
-<p>如果使用了 <code>oh-my-zsh</code> ，需要执行下面的命令:</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export PATH=&quot;/opt/homebrew/bin:$PATH&quot;&#x27;</span> &gt;&gt; ~/.zshrc   </span><br><span class="line"><span class="built_in">source</span> ~/.zshrc</span><br></pre></td></tr></table></figure>
+<p>打开终端程序，运行测试命令，如果是第一次运行，需要输入 <code>yes</code> 确认</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure>
 
-<p>然后可以执行 <code>brew -v</code> 测试安装结果，成功会显示 Hombrew 的版本号。   </p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt;brew -v</span><br><span class="line">Homebrew 4.4.11</span><br></pre></td></tr></table></figure>
+<p>我们没有添加过 SSH key，会提示 <code>Permission denied (publickey).</code></p>
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-7-tab-0" aria-controls="tabs-7-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">Windows</button><button type="button" role="tab" id="tabs-7-tab-1" aria-controls="tabs-7-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">macOS</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-7-panel-0" aria-labelledby="tabs-7-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><p><img src="https://img.nep.me/i/2024/12/13/122owl6-2.webp"></p></section><section role="tabpanel" id="tabs-7-panel-1" aria-labelledby="tabs-7-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><p><img src="https://img.nep.me/i/2024/12/13/124oz3l-2.webp"></p></section></div></div>
 
-<h3 id="安装-Nodejs"><a href="#安装-Nodejs" class="headerlink" title="安装 Nodejs"></a>安装 Nodejs</h3><p>打开终端，执行</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">brew install node</span><br></pre></td></tr></table></figure>
+<h2 id="创建-SSH-Key"><a href="#创建-SSH-Key" class="headerlink" title="创建 SSH Key"></a>创建 SSH Key</h2><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> .ssh</span><br><span class="line"></span><br><span class="line">ssh-keygen -t rsa -C <span class="string">&quot;your_email@example.com&quot;</span></span><br></pre></td></tr></table></figure>
 
-<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt;node -v</span><br><span class="line">v23.4.0</span><br><span class="line"></span><br><span class="line">&gt;npm -v</span><br><span class="line">10.9.2</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">C:\Users\ME\.ssh&gt;ssh-keygen -t rsa</span><br><span class="line"></span><br><span class="line">Generating public/private rsa key pair.</span><br><span class="line"><span class="comment"># 设置保存文件名，留空则为 id_rsa</span></span><br><span class="line">Enter file <span class="keyword">in</span> <span class="built_in">which</span> to save the key (C:\Users\ME/.ssh/id_rsa):</span><br><span class="line"><span class="comment"># 设置密码，留空则是没有密码</span></span><br><span class="line">Enter passphrase (empty <span class="keyword">for</span> no passphrase):</span><br><span class="line"><span class="comment"># 确认密码</span></span><br><span class="line">Enter same passphrase again:</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成的私钥</span></span><br><span class="line">Your identification has been saved <span class="keyword">in</span> C:\Users\ME/.ssh/id_rsa</span><br><span class="line"><span class="comment"># 生成的公钥</span></span><br><span class="line">Your public key has been saved <span class="keyword">in</span> C:\Users\ME/.ssh/id_rsa.pub</span><br></pre></td></tr></table></figure>
+<div class="flatpaper-note flatpaper-note--warning"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p><code>.pub</code> 后缀的是公钥，可以公开，<strong>私钥相当于个人密码，要小心保存</strong></p></div></div>
 
-<h3 id="brew-常用命令"><a href="#brew-常用命令" class="headerlink" title="brew 常用命令"></a>brew 常用命令</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 安装指定版本</span></span><br><span class="line">brew install node@22</span><br><span class="line"></span><br><span class="line"><span class="comment"># 卸载</span></span><br><span class="line">brew remove node</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看已安装软件</span></span><br><span class="line">brew list </span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查更新</span></span><br><span class="line">brew update</span><br><span class="line"></span><br><span class="line"><span class="comment"># 下载更新</span></span><br><span class="line">brew upgrade</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-9-panel-2" aria-labelledby="tabs-9-tab-2" class="flatpaper-tabs__panel" data-index="2" hidden><h2 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h2><p>Linux 使用 nvm 包管理器可以很方便的安装 Node.js</p>
-<h3 id="首先安装-nvm"><a href="#首先安装-nvm" class="headerlink" title="首先安装 nvm"></a>首先安装 nvm</h3><h1 id="安装-nvm-Node-版本管理器"><a href="#安装-nvm-Node-版本管理器" class="headerlink" title="安装 nvm (Node 版本管理器)"></a>安装 nvm (Node 版本管理器)</h1><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash</span><br></pre></td></tr></table></figure>
+<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>git 默认会查找名称为 <code>id_rsa</code> 的 SSH key </p></div></div>
 
-<p>更新一下 PATH</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># bash</span></span><br><span class="line"><span class="built_in">source</span> ~/.bashrc</span><br><span class="line"></span><br><span class="line"><span class="comment"># zsh</span></span><br><span class="line"><span class="built_in">source</span> ~/.zshrc</span><br></pre></td></tr></table></figure>
+<div class="flatpaper-note flatpaper-note--primary"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>如果设置了文件名称，或是生成其他格式的 SSH key 可以查看后文的配合 <code>SSH config</code> 的部分</p></div></div>
 
-<p>验证</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">root@debian:~# nvm -v</span><br><span class="line">0.40.1</span><br></pre></td></tr></table></figure>
+<div class="flatpaper-note flatpaper-note--default"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>rsa 格式的 key 内容很长，使用 <code>ssh-keygen -t ed25519</code> 生成 <code>ed25519</code> 格式的 key，更简洁，更安全</p></div></div>
 
-<h3 id="安装-Node-js"><a href="#安装-Node-js" class="headerlink" title="安装 Node.js"></a>安装 Node.js</h3><p>下载并安装 Node.js 22 LTS 版本</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">nvm install 22</span><br></pre></td></tr></table></figure>
+<h2 id="添加公钥到-GitHub"><a href="#添加公钥到-GitHub" class="headerlink" title="添加公钥到 GitHub"></a>添加公钥到 GitHub</h2><p>使用命令或是文本编辑器查看公钥的内容</p>
+<ul>
+<li>Windows 使用 <code>type id_rsa.pub</code> </li>
+<li>macOS &#x2F; Linux 使用 <code>cat id_rsa.pub</code></li>
+</ul>
+<p>访问 <a href="https://github.com/settings/keys">Github - SSH Keys</a>，点击右上角 <strong>New SSH key</strong>。<br>手动访问路径：右上角点击 <strong>头像</strong> &gt; <strong>Settings</strong> &gt; <strong>SSH and GPG keys</strong> &gt; <strong>New SSH key</strong></p>
+<p><img src="https://img.nep.me/i/2024/12/13/12s8co0-2.webp" alt="github-add-ssh-key"></p>
+<ul>
+<li><strong>Title</strong>：取个备注名字</li>
+<li><strong>Key type</strong>：不需要修改，保持默认 <strong>Authentication Key</strong></li>
+<li><strong>Key</strong>：粘贴 <code>id_rsa.pub</code> 对应的文本内容</li>
+<li>点击 <code>Add SSH key</code> 保存</li>
+</ul>
+<p><img src="https://img.nep.me/i/2024/12/13/12sain9-2.webp" alt="github-add-ssh-key-details"></p>
+<p>添加成功会在列表显示<br><img src="https://img.nep.me/i/2024/12/13/12vf7u0-2.webp" alt="github-add-ssh-key-done"></p>
+<p>此时我们再执行测试命令，就会获得成功的欢迎提示。 </p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt;ssh -T git@github.com</span><br><span class="line">Hi &lt;Your username&gt;! You<span class="string">&#x27;ve successfully authenticated, but GitHub does not provide shell access.</span></span><br></pre></td></tr></table></figure>
 
-<p>验证</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">root@debian:~# node -v</span><br><span class="line">v22.12.0</span><br><span class="line">root@debian:~# npm -v</span><br><span class="line">10.9.0</span><br></pre></td></tr></table></figure></section></div></div>
+<h2 id="配合-SSH-config-使用"><a href="#配合-SSH-config-使用" class="headerlink" title="配合 SSH config 使用"></a>配合 SSH config 使用</h2><p>如果我们的私钥的名称不是 <code>id_rsa</code> ，我们将仍然无法成功连接 GitHub ，你可以将私钥修改文件名后再试试 </p>
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-8-tab-0" aria-controls="tabs-8-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">Windows</button><button type="button" role="tab" id="tabs-8-tab-1" aria-controls="tabs-8-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">macOS&amp;Linux</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-8-panel-0" aria-labelledby="tabs-8-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt; rename id_rsa id_mysshkey</span><br><span class="line"></span><br><span class="line">&gt; ssh -T git@github.com</span><br><span class="line">git@github.com: Permission denied (publickey).</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-8-panel-1" aria-labelledby="tabs-8-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt; <span class="built_in">mv</span> id_rsa id_mysshkey</span><br><span class="line"></span><br><span class="line">&gt; ssh -T git@github.com</span><br><span class="line">git@github.com: Permission denied (publickey).</span><br></pre></td></tr></table></figure></section></div></div>
 
-<h2 id="npm-常用命令"><a href="#npm-常用命令" class="headerlink" title="npm 常用命令"></a>npm 常用命令</h2><p><code>npm</code> 是 Node.js 自带的包管理器是 ，我们可以很方便的安装 Node.js 应用，常用命令介绍：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 初始化项目，创建 package.json 文件</span></span><br><span class="line">npm init</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看版本</span></span><br><span class="line">npm -v</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看当前 npm 的配</span></span><br><span class="line">npm config list	</span><br><span class="line"></span><br><span class="line"><span class="comment"># 更新 npm 到最新版本</span></span><br><span class="line">npm update -g npm</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装项目中的所有依赖项（基于 package.json）</span></span><br><span class="line">npm i</span><br><span class="line">npm install </span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装指定包，并添加到项目依赖</span></span><br><span class="line">npm install &lt;package&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装指定版本的包，例如：npm i lodash@4.17.20</span></span><br><span class="line">npm install &lt;package&gt;@&lt;version&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 全局安装指定的包（通常为 CLI 工具） </span></span><br><span class="line">npm install &lt;package&gt; -g</span><br><span class="line"></span><br><span class="line"><span class="comment"># 卸载指定包</span></span><br><span class="line">npm uninstall &lt;package&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 更新指定的包到最新版本</span></span><br><span class="line">npm update &lt;package&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看当前项目已安装的依赖包</span></span><br><span class="line">npm list</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看全局已安装的依赖包</span></span><br><span class="line">npm list -g</span><br><span class="line"></span><br><span class="line"><span class="comment"># 移除未在 package.json 中声明的多余依赖包</span></span><br><span class="line">npm prune</span><br></pre></td></tr></table></figure>
+<p>这时我们可以通过在 <code>.ssh</code> 文件夹中创建一个 <code>config</code> 文件，填入下面的内容来告诉 git 程序在哪里找到密钥</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Host github.com</span><br><span class="line">    HostName github.com</span><br><span class="line">    User git</span><br><span class="line">    IdentityFile ~/.ssh/id_mysshkey</span><br></pre></td></tr></table></figure>
 
-<h2 id="使用-pnpm"><a href="#使用-pnpm" class="headerlink" title="使用 pnpm"></a>使用 pnpm</h2><p>如果你需要经常使用 Node.js 应用，更推荐安装 <code>pnpm</code> 包管理，它的性能更好，安装速度速度更快，默认开启严格模式，确保项目中的依赖版本一致，避免了某些隐藏的版本冲突问题，并且对保持对 npm 的兼容。</p>
-<p>pnpm 的版本锁定文件是 <code>pnpm-lock.yaml</code></p>
-<h3 id="安装-pnpm"><a href="#安装-pnpm" class="headerlink" title="安装 pnpm"></a>安装 pnpm</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm install -g pnpm</span><br></pre></td></tr></table></figure>
+<p>其中 <code>IdentityFile</code> 部分填写私钥的路径， <code>~</code> 代表用户 Home 目录</p>
+<ul>
+<li>Windows 相当于 <code>C:\Users\&lt;username&gt;\</code></li>
+<li>macOS 相当于 <code>/Users/&lt;username&gt;/</code></li>
+<li>Linux 相当于 <code>/root/</code> 或是 <code>/home/&lt;username&gt;/</code></li>
+</ul>
+<p>再进行测试，发现又能显示成功的欢迎消息。  </p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt;ssh -T git@github.com</span><br><span class="line">Hi &lt;Your username&gt;! You<span class="string">&#x27;ve successfully authenticated, but GitHub does not provide shell access.</span></span><br></pre></td></tr></table></figure>
 
-<h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><p><code>pnpm</code> 使用命令与 <code>npm</code> 类似，比如：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 基于 pnpm-lock.yaml 安装依赖</span></span><br><span class="line">pnpm i</span><br><span class="line">pnpm install </span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看自身版本</span></span><br><span class="line">pnpm -v</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装单个依赖，使用 pnpm install 也是可以的</span></span><br><span class="line">pnpm add &lt;package&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 全局安装</span></span><br><span class="line">pnpm add -g &lt;package&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 指定版本</span></span><br><span class="line">pnpm add &lt;package&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除软件包</span></span><br><span class="line">pnpm remove &lt;package&gt; </span><br><span class="line"></span><br><span class="line"><span class="comment"># 更新自身</span></span><br><span class="line">pnpm self-update</span><br><span class="line">pnpm add -g pnpm</span><br></pre></td></tr></table></figure>
-
-<h2 id="其他操作"><a href="#其他操作" class="headerlink" title="其他操作"></a>其他操作</h2><h3 id="更换镜像源"><a href="#更换镜像源" class="headerlink" title="更换镜像源"></a>更换镜像源</h3><div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>中国大陆用户可以使用下面的命令切换使用淘宝的镜像源，加速下载</p></div></div>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm config <span class="built_in">set</span> registry https://registry.npm.taobao.org</span><br></pre></td></tr></table></figure>
-
-<p>查看当前的镜像源</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm config get registry</span><br></pre></td></tr></table></figure>
-
-
+<p>以后就可以很方便的使用 Git 了！</p>
 ]]></content>
       <categories>
         <category>教程</category>
       </categories>
       <tags>
-        <tag>Linux</tag>
-        <tag>Nodejs</tag>
-        <tag>macOS</tag>
-        <tag>Windows</tag>
+        <tag>GitHub</tag>
+        <tag>SSH</tag>
       </tags>
   </entry>
   <entry>
@@ -543,7 +446,7 @@
 
 <p>或是查看下面的内容</p>
 <p>替换使用 <a href="https://developer.aliyun.com/mirror/homebrew/">阿里镜像源</a></p>
-<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-10-tab-0" aria-controls="tabs-10-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">zsh</button><button type="button" role="tab" id="tabs-10-tab-1" aria-controls="tabs-10-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">bash</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-10-panel-0" aria-labelledby="tabs-10-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo &#x27;export HOMEBREW_API_DOMAIN=&quot;https://mirrors.aliyun.com/homebrew-bottles/api&quot;&#x27; &gt;&gt; ~/.zshrc</span><br><span class="line">echo &#x27;export HOMEBREW_BREW_GIT_REMOTE=&quot;https://mirrors.aliyun.com/homebrew/brew.git&quot;&#x27; &gt;&gt; ~/.zshrc</span><br><span class="line">echo &#x27;export HOMEBREW_CORE_GIT_REMOTE=&quot;https://mirrors.aliyun.com/homebrew/homebrew-core.git&quot;&#x27; &gt;&gt; ~/.zshrc</span><br><span class="line">echo &#x27;export HOMEBREW_BOTTLE_DOMAIN=&quot;https://mirrors.aliyun.com/homebrew/homebrew-bottles&quot;&#x27; &gt;&gt; ~/.zshrc</span><br><span class="line">source ~/.zshrc</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-10-panel-1" aria-labelledby="tabs-10-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export HOMEBREW_API_DOMAIN=&quot;https://mirrors.aliyun.com/homebrew-bottles/api&quot;&#x27;</span> &gt;&gt; ~/.bash_profile</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export HOMEBREW_BREW_GIT_REMOTE=&quot;https://mirrors.aliyun.com/homebrew/brew.git&quot;&#x27;</span> &gt;&gt; ~/.bash_profile</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export HOMEBREW_CORE_GIT_REMOTE=&quot;https://mirrors.aliyun.com/homebrew/homebrew-core.git&quot;&#x27;</span> &gt;&gt; ~/.bash_profile</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export HOMEBREW_BOTTLE_DOMAIN=&quot;https://mirrors.aliyun.com/homebrew/homebrew-bottles&quot;&#x27;</span> &gt;&gt; ~/.bash_profile</span><br><span class="line"><span class="built_in">source</span> ~/.bash_profile</span><br></pre></td></tr></table></figure></section></div></div>
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-9-tab-0" aria-controls="tabs-9-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">zsh</button><button type="button" role="tab" id="tabs-9-tab-1" aria-controls="tabs-9-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">bash</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-9-panel-0" aria-labelledby="tabs-9-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo &#x27;export HOMEBREW_API_DOMAIN=&quot;https://mirrors.aliyun.com/homebrew-bottles/api&quot;&#x27; &gt;&gt; ~/.zshrc</span><br><span class="line">echo &#x27;export HOMEBREW_BREW_GIT_REMOTE=&quot;https://mirrors.aliyun.com/homebrew/brew.git&quot;&#x27; &gt;&gt; ~/.zshrc</span><br><span class="line">echo &#x27;export HOMEBREW_CORE_GIT_REMOTE=&quot;https://mirrors.aliyun.com/homebrew/homebrew-core.git&quot;&#x27; &gt;&gt; ~/.zshrc</span><br><span class="line">echo &#x27;export HOMEBREW_BOTTLE_DOMAIN=&quot;https://mirrors.aliyun.com/homebrew/homebrew-bottles&quot;&#x27; &gt;&gt; ~/.zshrc</span><br><span class="line">source ~/.zshrc</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-9-panel-1" aria-labelledby="tabs-9-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export HOMEBREW_API_DOMAIN=&quot;https://mirrors.aliyun.com/homebrew-bottles/api&quot;&#x27;</span> &gt;&gt; ~/.bash_profile</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export HOMEBREW_BREW_GIT_REMOTE=&quot;https://mirrors.aliyun.com/homebrew/brew.git&quot;&#x27;</span> &gt;&gt; ~/.bash_profile</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export HOMEBREW_CORE_GIT_REMOTE=&quot;https://mirrors.aliyun.com/homebrew/homebrew-core.git&quot;&#x27;</span> &gt;&gt; ~/.bash_profile</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export HOMEBREW_BOTTLE_DOMAIN=&quot;https://mirrors.aliyun.com/homebrew/homebrew-bottles&quot;&#x27;</span> &gt;&gt; ~/.bash_profile</span><br><span class="line"><span class="built_in">source</span> ~/.bash_profile</span><br></pre></td></tr></table></figure></section></div></div>
 
 <p>然后执行安装命令，从阿里云下载安装脚本并安装 Homebrew</p>
 <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://mirrors.aliyun.com/homebrew/install.git brew-install</span><br><span class="line">/bin/bash brew-install/install.sh</span><br><span class="line"><span class="built_in">rm</span> -rf brew-install</span><br></pre></td></tr></table></figure>
@@ -571,8 +474,105 @@
         <category>教程</category>
       </categories>
       <tags>
-        <tag>macOS</tag>
         <tag>Homebrew</tag>
+        <tag>macOS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>如何安装 Node.js</title>
+    <url>/post/how-to-install-nodejs.html</url>
+    <content><![CDATA[<p>本文将带介绍如何在电脑上安装 Node.js 运行环境，从而可以使用丰富的应用 Nodejs 程序。 </p>
+<div class="flatpaper-tabs"><div class="flatpaper-tabs__nav" role="tablist"><button type="button" role="tab" id="tabs-10-tab-0" aria-controls="tabs-10-panel-0" aria-selected="true" class="flatpaper-tabs__nav-item is-active" data-index="0">Windows</button><button type="button" role="tab" id="tabs-10-tab-1" aria-controls="tabs-10-panel-1" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="1">macOS</button><button type="button" role="tab" id="tabs-10-tab-2" aria-controls="tabs-10-panel-2" aria-selected="false" class="flatpaper-tabs__nav-item" data-index="2">Linux</button></div><div class="flatpaper-tabs__panels"><section role="tabpanel" id="tabs-10-panel-0" aria-labelledby="tabs-10-tab-0" class="flatpaper-tabs__panel is-active" data-index="0"><h2 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h2><p>测试安装环境为 <code>Windows 11</code></p>
+<h3 id="下载-Node-js"><a href="#下载-Node-js" class="headerlink" title="下载 Node.js"></a>下载 Node.js</h3><p>访问 Node.js 的官方网站的 <a href="https://nodejs.org/zh-cn/download/prebuilt-installer">下载页面</a> 下载安装包。 </p>
+<p>我们选择 <strong>预构建安装程序</strong> ，选择一下自己的系统与 CPU 架构类型， Windows 一般选择 <strong>x64</strong>，再选择 Node.js 版本。</p>
+<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>推荐选择版本号为偶数的 LTS 版本</p></div></div>  
+
+<p><img src="https://img.nep.me/i/2024/12/13/7fzq5m-2.webp" alt="nodejs-home-page"></p>
+<h3 id="安装-Node-js"><a href="#安装-Node-js" class="headerlink" title="安装 Node.js"></a>安装 Node.js</h3><p>然后打开安装程序 <code>node-v22.12.0-x64.msi</code>，安装过程没有陷阱，我们 <strong>同意</strong> 协议后，一路点击 Next 即可。  </p>
+<p><img src="https://img.nep.me/i/2024/12/13/7hc7pi-2.webp" alt="nodejs-setup"></p>
+<p>安装完成后，打开终端程序：</p>
+<ul>
+<li>右键点击开始菜单，选择终端</li>
+<li>或是按 <code>Windows + R</code> 快捷键打开 <strong>运行</strong> 窗口，输入 <code>cmd</code> ，回车打开</li>
+<li>或是在资源管理器的地址栏中输入 <code>cmd</code> 回车打开（终端的运行目录将是资源管理器所在的目录）</li>
+</ul>
+<p>运行下面的命令测试安装结果。</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">node -v</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm -v</span><br></pre></td></tr></table></figure>
+
+<p>如果可以成功输出版本号，表示安装成功。  </p>
+<p><img src="https://img.nep.me/i/2024/12/13/7ilvge-2.webp" alt="nodejs-install-done"></p></section><section role="tabpanel" id="tabs-10-panel-1" aria-labelledby="tabs-10-tab-1" class="flatpaper-tabs__panel" data-index="1" hidden><h2 id="macOS"><a href="#macOS" class="headerlink" title="macOS"></a>macOS</h2><p>测试安装环境为 <code>macOS 15.1</code> ，macOS 更推荐使用 <strong>包管理器</strong> <code>Homebrew</code> 进行安装。</p>
+<blockquote>
+<p><a href="https://brew.sh/zh-cn/">Homebrew</a> 是 macOS 和 Linux 缺失软件包的管理器，用于安装 Apple没有预装但你需要的东西。</p>
+</blockquote>
+<p>安装需要使用终端，<a href="https://support.apple.com/zh-cn/guide/terminal/apd5265185d-f365-44cb-8b09-71a064a42125/mac">在 Mac 上打开或退出“终端”</a>：</p>
+<ul>
+<li>启动台 &gt; 其他 &gt; 终端</li>
+<li><strong>启动台</strong> 或是　<code>Commond⌘ + 空格</code> 打开聚焦搜索，搜索 <strong>终端</strong> 或是 <strong>Terminal</strong></li>
+</ul>
+<h3 id="安装-Homebrew"><a href="#安装-Homebrew" class="headerlink" title="安装 Homebrew"></a>安装 Homebrew</h3><p>中国大陆地区或是更详细步骤请查看：<a href="https://ooo.run/post/how-to-install-homebrew-on-macos.html" target="_blank">如何在 macOS 中安装 Homebrew</a></p>
+<p>首先复制安装命令  </p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">/bin/bash -c <span class="string">&quot;<span class="subst">$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>在终端内执行安装命令，安装时需要输入你的电脑密码进行授权：  </p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">==&gt; Checking <span class="keyword">for</span> `<span class="built_in">sudo</span>` access (<span class="built_in">which</span> may request your password)...</span><br><span class="line">Password:</span><br></pre></td></tr></table></figure>
+<p>brew 会提示将安装的软件以及创建的文件夹，按回车继续，等待下载和安装完成。</p>
+<p>命令执行结束后按照提示复制执行下面的三条命令添加 PATH :</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> &gt;&gt; /Users/me/.zprofile</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;eval &quot;$(/opt/homebrew/bin/brew shellenv)&quot;&#x27;</span> &gt;&gt; /Users/me/.zprofile</span><br><span class="line"><span class="built_in">eval</span> <span class="string">&quot;<span class="subst">$(/opt/homebrew/bin/brew shellenv)</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>如果使用了 <code>oh-my-zsh</code> ，需要执行下面的命令:</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export PATH=&quot;/opt/homebrew/bin:$PATH&quot;&#x27;</span> &gt;&gt; ~/.zshrc   </span><br><span class="line"><span class="built_in">source</span> ~/.zshrc</span><br></pre></td></tr></table></figure>
+
+<p>然后可以执行 <code>brew -v</code> 测试安装结果，成功会显示 Hombrew 的版本号。   </p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt;brew -v</span><br><span class="line">Homebrew 4.4.11</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装-Nodejs"><a href="#安装-Nodejs" class="headerlink" title="安装 Nodejs"></a>安装 Nodejs</h3><p>打开终端，执行</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">brew install node</span><br></pre></td></tr></table></figure>
+
+<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">&gt;node -v</span><br><span class="line">v23.4.0</span><br><span class="line"></span><br><span class="line">&gt;npm -v</span><br><span class="line">10.9.2</span><br></pre></td></tr></table></figure>
+
+<h3 id="brew-常用命令"><a href="#brew-常用命令" class="headerlink" title="brew 常用命令"></a>brew 常用命令</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 安装指定版本</span></span><br><span class="line">brew install node@22</span><br><span class="line"></span><br><span class="line"><span class="comment"># 卸载</span></span><br><span class="line">brew remove node</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看已安装软件</span></span><br><span class="line">brew list </span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查更新</span></span><br><span class="line">brew update</span><br><span class="line"></span><br><span class="line"><span class="comment"># 下载更新</span></span><br><span class="line">brew upgrade</span><br></pre></td></tr></table></figure></section><section role="tabpanel" id="tabs-10-panel-2" aria-labelledby="tabs-10-tab-2" class="flatpaper-tabs__panel" data-index="2" hidden><h2 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h2><p>Linux 使用 nvm 包管理器可以很方便的安装 Node.js</p>
+<h3 id="首先安装-nvm"><a href="#首先安装-nvm" class="headerlink" title="首先安装 nvm"></a>首先安装 nvm</h3><h1 id="安装-nvm-Node-版本管理器"><a href="#安装-nvm-Node-版本管理器" class="headerlink" title="安装 nvm (Node 版本管理器)"></a>安装 nvm (Node 版本管理器)</h1><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash</span><br></pre></td></tr></table></figure>
+
+<p>更新一下 PATH</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># bash</span></span><br><span class="line"><span class="built_in">source</span> ~/.bashrc</span><br><span class="line"></span><br><span class="line"><span class="comment"># zsh</span></span><br><span class="line"><span class="built_in">source</span> ~/.zshrc</span><br></pre></td></tr></table></figure>
+
+<p>验证</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">root@debian:~# nvm -v</span><br><span class="line">0.40.1</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装-Node-js"><a href="#安装-Node-js" class="headerlink" title="安装 Node.js"></a>安装 Node.js</h3><p>下载并安装 Node.js 22 LTS 版本</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">nvm install 22</span><br></pre></td></tr></table></figure>
+
+<p>验证</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">root@debian:~# node -v</span><br><span class="line">v22.12.0</span><br><span class="line">root@debian:~# npm -v</span><br><span class="line">10.9.0</span><br></pre></td></tr></table></figure></section></div></div>
+
+<h2 id="npm-常用命令"><a href="#npm-常用命令" class="headerlink" title="npm 常用命令"></a>npm 常用命令</h2><p><code>npm</code> 是 Node.js 自带的包管理器是 ，我们可以很方便的安装 Node.js 应用，常用命令介绍：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 初始化项目，创建 package.json 文件</span></span><br><span class="line">npm init</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看版本</span></span><br><span class="line">npm -v</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看当前 npm 的配</span></span><br><span class="line">npm config list	</span><br><span class="line"></span><br><span class="line"><span class="comment"># 更新 npm 到最新版本</span></span><br><span class="line">npm update -g npm</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装项目中的所有依赖项（基于 package.json）</span></span><br><span class="line">npm i</span><br><span class="line">npm install </span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装指定包，并添加到项目依赖</span></span><br><span class="line">npm install &lt;package&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装指定版本的包，例如：npm i lodash@4.17.20</span></span><br><span class="line">npm install &lt;package&gt;@&lt;version&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 全局安装指定的包（通常为 CLI 工具） </span></span><br><span class="line">npm install &lt;package&gt; -g</span><br><span class="line"></span><br><span class="line"><span class="comment"># 卸载指定包</span></span><br><span class="line">npm uninstall &lt;package&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 更新指定的包到最新版本</span></span><br><span class="line">npm update &lt;package&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看当前项目已安装的依赖包</span></span><br><span class="line">npm list</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看全局已安装的依赖包</span></span><br><span class="line">npm list -g</span><br><span class="line"></span><br><span class="line"><span class="comment"># 移除未在 package.json 中声明的多余依赖包</span></span><br><span class="line">npm prune</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用-pnpm"><a href="#使用-pnpm" class="headerlink" title="使用 pnpm"></a>使用 pnpm</h2><p>如果你需要经常使用 Node.js 应用，更推荐安装 <code>pnpm</code> 包管理，它的性能更好，安装速度速度更快，默认开启严格模式，确保项目中的依赖版本一致，避免了某些隐藏的版本冲突问题，并且对保持对 npm 的兼容。</p>
+<p>pnpm 的版本锁定文件是 <code>pnpm-lock.yaml</code></p>
+<h3 id="安装-pnpm"><a href="#安装-pnpm" class="headerlink" title="安装 pnpm"></a>安装 pnpm</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm install -g pnpm</span><br></pre></td></tr></table></figure>
+
+<h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><p><code>pnpm</code> 使用命令与 <code>npm</code> 类似，比如：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 基于 pnpm-lock.yaml 安装依赖</span></span><br><span class="line">pnpm i</span><br><span class="line">pnpm install </span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看自身版本</span></span><br><span class="line">pnpm -v</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装单个依赖，使用 pnpm install 也是可以的</span></span><br><span class="line">pnpm add &lt;package&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 全局安装</span></span><br><span class="line">pnpm add -g &lt;package&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 指定版本</span></span><br><span class="line">pnpm add &lt;package&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除软件包</span></span><br><span class="line">pnpm remove &lt;package&gt; </span><br><span class="line"></span><br><span class="line"><span class="comment"># 更新自身</span></span><br><span class="line">pnpm self-update</span><br><span class="line">pnpm add -g pnpm</span><br></pre></td></tr></table></figure>
+
+<h2 id="其他操作"><a href="#其他操作" class="headerlink" title="其他操作"></a>其他操作</h2><h3 id="更换镜像源"><a href="#更换镜像源" class="headerlink" title="更换镜像源"></a>更换镜像源</h3><div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>中国大陆用户可以使用下面的命令切换使用淘宝的镜像源，加速下载</p></div></div>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm config <span class="built_in">set</span> registry https://registry.npm.taobao.org</span><br></pre></td></tr></table></figure>
+
+<p>查看当前的镜像源</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm config get registry</span><br></pre></td></tr></table></figure>
+
+
+]]></content>
+      <categories>
+        <category>教程</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>macOS</tag>
+        <tag>Nodejs</tag>
+        <tag>Windows</tag>
       </tags>
   </entry>
   <entry>
@@ -830,8 +830,8 @@
         <category>教程</category>
       </categories>
       <tags>
-        <tag>GitHub</tag>
         <tag>Hexo</tag>
+        <tag>GitHub</tag>
       </tags>
   </entry>
   <entry>
@@ -1359,6 +1359,99 @@
       </tags>
   </entry>
   <entry>
+    <title>域名选择与注册简要指南</title>
+    <url>/post/how-to-choose-domain.html</url>
+    <content><![CDATA[<p>拥有一个好域名，是打造个人博客或项目网站的重要第一步。一个简洁、易记的域名，不仅能提升网站的专业感，还能让访问者更容易记住并再次找到你。</p>
+<p>本文将带你简单了解如何挑选并注册最适合自己的域名。</p>
+<h2 id="第一步：免费还是付费？你需要哪种域名？"><a href="#第一步：免费还是付费？你需要哪种域名？" class="headerlink" title="第一步：免费还是付费？你需要哪种域名？"></a>第一步：免费还是付费？你需要哪种域名？</h2><p>在开始之前，首先要明确你的需求。域名主要分为免费的二级域名和付费的独立域名。</p>
+<h3 id="选项A：免费二级域名"><a href="#选项A：免费二级域名" class="headerlink" title="选项A：免费二级域名"></a>选项A：免费二级域名</h3><p>许多平台为开发者提供了免费的二级域名，例如 <code>your-name.github.io</code> 或 <code>your-project.vercel.app</code>。</p>
+<ul>
+<li><strong>优点</strong>：<ul>
+<li><strong>完全免费</strong>：零成本启动项目。</li>
+<li><strong>部署简单</strong>：通常与平台自带的托管服务（如 GitHub Pages, Vercel, Cloudflare Pages）深度集成，部署非常方便。</li>
+</ul>
+</li>
+<li><strong>缺点</strong>：<ul>
+<li><strong>不够专业</strong>：域名中包含他人品牌，显得不够正式。</li>
+<li><strong>没有所有权</strong>：你只是使用者，域名归平台所有，受其政策限制。</li>
+<li><strong>不利于品牌建设</strong>：用户记住的是 <code>github.io</code> 而不是你的品牌。</li>
+</ul>
+</li>
+</ul>
+<p><strong>适用场景</strong>：个人玩具项目、技术演示、临时页面。</p>
+<h3 id="选项B：付费独立域名"><a href="#选项B：付费独立域名" class="headerlink" title="选项B：付费独立域名"></a>选项B：付费独立域名</h3><p>一级域名，如 <code>your-brand.com</code>，是你自己拥有的独立域名。</p>
+<ul>
+<li><strong>优点</strong>：<ul>
+<li><strong>专业形象</strong>：拥有独立域名是专业网站的标志。</li>
+<li><strong>完全控制权</strong>：你可以自由地将其指向任何服务器，并设置任意数量子域名。</li>
+<li><strong>利于品牌和SEO</strong>：一个好的域名本身就是品牌的一部分，也更容易被搜索引擎收录。</li>
+</ul>
+</li>
+<li><strong>缺点</strong>：<ul>
+<li><strong>需要成本</strong>：涉及注册费和年续费。</li>
+</ul>
+</li>
+</ul>
+<p><strong>适用场景</strong>：个人博客、作品集、商业网站、任何长期项目。</p>
+<h2 id="第二步：如何挑选一个完美的域名？"><a href="#第二步：如何挑选一个完美的域名？" class="headerlink" title="第二步：如何挑选一个完美的域名？"></a>第二步：如何挑选一个完美的域名？</h2><p>确定要购买独立域名后，就进入了最有创造性的一步：选择一个好名字。</p>
+<h3 id="1-选择域名后缀-TLD"><a href="#1-选择域名后缀-TLD" class="headerlink" title="1. 选择域名后缀 (TLD)"></a>1. 选择域名后缀 (TLD)</h3><p>后缀是域名的重要组成部分，不同的后缀有不同的含义和价值。</p>
+<ul>
+<li><strong>首选 <code>.com</code>：</strong> 作为全球最流行、最受认可的后缀，<code>.com</code> 依然是王道。如果能注册到，应作为第一选择。</li>
+<li><strong>备选 <code>.net</code>, <code>.org</code>：</strong>当 <code>.com</code> 被占用时，这两个是常见的替代选项。</li>
+<li><strong>国别域名 (ccTLD)：</strong> 如 <code>.io</code>, <code>.ai</code>, <code>.me</code>, <code>.cn</code> 等，是特定国家或地区的后缀，因其科技感和简洁性在技术圈广受欢迎。</li>
+<li><strong>新通用后缀 (gTLD)：</strong> 如 <code>.app</code>, <code>.blog</code>, <code>.xyz</code> 等，非常个性化，能准确反映网站主题。但需注意，相比国别域名可能会出现涨价或是各种意外情况。</li>
+</ul>
+<h3 id="2-构思域名主体"><a href="#2-构思域名主体" class="headerlink" title="2. 构思域名主体"></a>2. 构思域名主体</h3><p>域名主体应力求：</p>
+<ul>
+<li><strong>简短易记</strong>：越短越好记，也越不容易拼错。</li>
+<li><strong>紧扣主题</strong>：能直接反映你的网站是关于什么的。</li>
+<li><strong>避免使用连字符和数字</strong>：这会增加输入难度和口头传播的障碍。</li>
+</ul>
+<h2 id="第三步：去哪里买？如何找到最低价？"><a href="#第三步：去哪里买？如何找到最低价？" class="headerlink" title="第三步：去哪里买？如何找到最低价？"></a>第三步：去哪里买？如何找到最低价？</h2><p>域名价格由两部分组成：<strong>首年注册价</strong>和<strong>后续续费价</strong>。很多注册商用极低的“首年优惠”吸引用户，但续费价格可能很高。因此，我们需要工具来全面比较价格。</p>
+<h3 id="价格比较工具"><a href="#价格比较工具" class="headerlink" title="价格比较工具"></a>价格比较工具</h3><ol>
+<li><p><strong>TLD-List</strong>：一个强大的国际域名价格对比网站，支持 3400+ 后缀和数十家主流注册商，信息非常全面(<a href="https://zh-hans.tld-list.com/">tld-list.com</a>)。<br><img src="https://img.nep.me/i/2025/08/20/domain-tld-list.webp" alt="domain-tld-list"></p>
+</li>
+<li><p><strong>哪煮米</strong> ：一个中文域名比价网站，支持 2900+ 后缀，收录了包括中国大陆注册商在内的多家服务商，界面友好 (<a href="https://nazhumi.com/">nazhumi.com</a>)。<br><img src="https://img.nep.me/i/2025/08/20/domain-nazhumi.webp" alt="domain-nazhumi"></p>
+</li>
+</ol>
+<h3 id="优秀注册商推荐"><a href="#优秀注册商推荐" class="headerlink" title="优秀注册商推荐"></a>优秀注册商推荐</h3><ol>
+<li><p><strong>porkbun.com</strong></p>
+<ul>
+<li><strong>优点</strong>：常年提供极具竞争力的价格，无论是注册还是续费都相对便宜，支持后缀也较多。界面友好，免费提供 WHOIS 隐私保护。并且支持使用支付宝付款。<blockquote>
+<p>在 <a href="https://porkbun.com/">porkbun.com</a> 点击查询后，点击 <code>Show All Extensions</code> ，新的页面继续点击 <code>Sort by price</code> 可以按照价格从低到高排序，会发现很多域名首年只需要 1 - 2 美元，但一定要注意续费价格，一般来说续费价格在 <strong>20 美元&#x2F;年</strong> 以内是比较合适的。</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p><strong>cloudflare.com</strong></p>
+<ul>
+<li><strong>优点</strong>：Cloudflare 承诺以<strong>成本价</strong>提供域名注册和续费服务，不加收任何利润。这意味着它的续费价格几乎是全网最低的。<blockquote>
+<p>可以在其他平台（如 Porkbun）用首年优惠价注册，然后在第一年到期前，将域名<strong>转移 (Transfer)</strong> 到 Cloudflare，以享受其低廉的续费价格。</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p><strong>阿里云</strong></p>
+<ul>
+<li>中国最大的云服务商，如果你域名需要备案，那么 <a href="https://wanwang.aliyun.com/">阿里云</a> 是你的不二之选。</li>
+</ul>
+</li>
+</ol>
+<h2 id="特别注意：面向中国大陆用户"><a href="#特别注意：面向中国大陆用户" class="headerlink" title="特别注意：面向中国大陆用户"></a>特别注意：面向中国大陆用户</h2><p>如果你的网站主要服务于中国大陆用户，并计划将服务器部署在中国大陆境内，则必须完成<strong>ICP备案</strong>，ICP 备案需要 <strong>后缀</strong> 以及 <strong>注册商</strong> 都已获得工信部批准。  </p>
+<p>并非所有域名后缀都支持备案，比如常见的 <code>.org</code> 就无法进行备案，在购买前，请务必通过 <a href="https://domain.miit.gov.cn/">工信部 - 中国互联网域名体系</a> 查询你心仪的后缀是否在支持备案的列表中。</p>
+<p>然后前往 <a href="https://wanwang.aliyun.com/">阿里云</a> 或是其他中国大陆的域名服务商进行域名注册，他们将提供包含备案在内的支持服务。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>使用国外的域名注册商可以有更多的后缀选择，价格也相对便宜，转入转出一般也不会受到限制。</p>
+<p>如果需要进行备案，则只能选择国内的域名注册商。</p>
+<p>希望这篇指南能帮助你顺利开启你的网站之旅！</p>
+]]></content>
+      <categories>
+        <category>教程</category>
+      </categories>
+      <tags>
+        <tag>域名</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>普通人掘金互联网：独立开发起步指南</title>
     <url>/post/how-to-make-money-from-internet.html</url>
     <content><![CDATA[<p>你是否也曾羡慕那些在社交媒体上“透明化”分享收入、靠个人项目实现财务自由的独立开发者？看到他们动辄上千美金的月收入，你或许会觉得那是一个难以达成的目标。</p>
@@ -1492,99 +1585,6 @@
         <tag>独立开发</tag>
         <tag>个人项目</tag>
         <tag>副业</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>域名选择与注册简要指南</title>
-    <url>/post/how-to-choose-domain.html</url>
-    <content><![CDATA[<p>拥有一个好域名，是打造个人博客或项目网站的重要第一步。一个简洁、易记的域名，不仅能提升网站的专业感，还能让访问者更容易记住并再次找到你。</p>
-<p>本文将带你简单了解如何挑选并注册最适合自己的域名。</p>
-<h2 id="第一步：免费还是付费？你需要哪种域名？"><a href="#第一步：免费还是付费？你需要哪种域名？" class="headerlink" title="第一步：免费还是付费？你需要哪种域名？"></a>第一步：免费还是付费？你需要哪种域名？</h2><p>在开始之前，首先要明确你的需求。域名主要分为免费的二级域名和付费的独立域名。</p>
-<h3 id="选项A：免费二级域名"><a href="#选项A：免费二级域名" class="headerlink" title="选项A：免费二级域名"></a>选项A：免费二级域名</h3><p>许多平台为开发者提供了免费的二级域名，例如 <code>your-name.github.io</code> 或 <code>your-project.vercel.app</code>。</p>
-<ul>
-<li><strong>优点</strong>：<ul>
-<li><strong>完全免费</strong>：零成本启动项目。</li>
-<li><strong>部署简单</strong>：通常与平台自带的托管服务（如 GitHub Pages, Vercel, Cloudflare Pages）深度集成，部署非常方便。</li>
-</ul>
-</li>
-<li><strong>缺点</strong>：<ul>
-<li><strong>不够专业</strong>：域名中包含他人品牌，显得不够正式。</li>
-<li><strong>没有所有权</strong>：你只是使用者，域名归平台所有，受其政策限制。</li>
-<li><strong>不利于品牌建设</strong>：用户记住的是 <code>github.io</code> 而不是你的品牌。</li>
-</ul>
-</li>
-</ul>
-<p><strong>适用场景</strong>：个人玩具项目、技术演示、临时页面。</p>
-<h3 id="选项B：付费独立域名"><a href="#选项B：付费独立域名" class="headerlink" title="选项B：付费独立域名"></a>选项B：付费独立域名</h3><p>一级域名，如 <code>your-brand.com</code>，是你自己拥有的独立域名。</p>
-<ul>
-<li><strong>优点</strong>：<ul>
-<li><strong>专业形象</strong>：拥有独立域名是专业网站的标志。</li>
-<li><strong>完全控制权</strong>：你可以自由地将其指向任何服务器，并设置任意数量子域名。</li>
-<li><strong>利于品牌和SEO</strong>：一个好的域名本身就是品牌的一部分，也更容易被搜索引擎收录。</li>
-</ul>
-</li>
-<li><strong>缺点</strong>：<ul>
-<li><strong>需要成本</strong>：涉及注册费和年续费。</li>
-</ul>
-</li>
-</ul>
-<p><strong>适用场景</strong>：个人博客、作品集、商业网站、任何长期项目。</p>
-<h2 id="第二步：如何挑选一个完美的域名？"><a href="#第二步：如何挑选一个完美的域名？" class="headerlink" title="第二步：如何挑选一个完美的域名？"></a>第二步：如何挑选一个完美的域名？</h2><p>确定要购买独立域名后，就进入了最有创造性的一步：选择一个好名字。</p>
-<h3 id="1-选择域名后缀-TLD"><a href="#1-选择域名后缀-TLD" class="headerlink" title="1. 选择域名后缀 (TLD)"></a>1. 选择域名后缀 (TLD)</h3><p>后缀是域名的重要组成部分，不同的后缀有不同的含义和价值。</p>
-<ul>
-<li><strong>首选 <code>.com</code>：</strong> 作为全球最流行、最受认可的后缀，<code>.com</code> 依然是王道。如果能注册到，应作为第一选择。</li>
-<li><strong>备选 <code>.net</code>, <code>.org</code>：</strong>当 <code>.com</code> 被占用时，这两个是常见的替代选项。</li>
-<li><strong>国别域名 (ccTLD)：</strong> 如 <code>.io</code>, <code>.ai</code>, <code>.me</code>, <code>.cn</code> 等，是特定国家或地区的后缀，因其科技感和简洁性在技术圈广受欢迎。</li>
-<li><strong>新通用后缀 (gTLD)：</strong> 如 <code>.app</code>, <code>.blog</code>, <code>.xyz</code> 等，非常个性化，能准确反映网站主题。但需注意，相比国别域名可能会出现涨价或是各种意外情况。</li>
-</ul>
-<h3 id="2-构思域名主体"><a href="#2-构思域名主体" class="headerlink" title="2. 构思域名主体"></a>2. 构思域名主体</h3><p>域名主体应力求：</p>
-<ul>
-<li><strong>简短易记</strong>：越短越好记，也越不容易拼错。</li>
-<li><strong>紧扣主题</strong>：能直接反映你的网站是关于什么的。</li>
-<li><strong>避免使用连字符和数字</strong>：这会增加输入难度和口头传播的障碍。</li>
-</ul>
-<h2 id="第三步：去哪里买？如何找到最低价？"><a href="#第三步：去哪里买？如何找到最低价？" class="headerlink" title="第三步：去哪里买？如何找到最低价？"></a>第三步：去哪里买？如何找到最低价？</h2><p>域名价格由两部分组成：<strong>首年注册价</strong>和<strong>后续续费价</strong>。很多注册商用极低的“首年优惠”吸引用户，但续费价格可能很高。因此，我们需要工具来全面比较价格。</p>
-<h3 id="价格比较工具"><a href="#价格比较工具" class="headerlink" title="价格比较工具"></a>价格比较工具</h3><ol>
-<li><p><strong>TLD-List</strong>：一个强大的国际域名价格对比网站，支持 3400+ 后缀和数十家主流注册商，信息非常全面(<a href="https://zh-hans.tld-list.com/">tld-list.com</a>)。<br><img src="https://img.nep.me/i/2025/08/20/domain-tld-list.webp" alt="domain-tld-list"></p>
-</li>
-<li><p><strong>哪煮米</strong> ：一个中文域名比价网站，支持 2900+ 后缀，收录了包括中国大陆注册商在内的多家服务商，界面友好 (<a href="https://nazhumi.com/">nazhumi.com</a>)。<br><img src="https://img.nep.me/i/2025/08/20/domain-nazhumi.webp" alt="domain-nazhumi"></p>
-</li>
-</ol>
-<h3 id="优秀注册商推荐"><a href="#优秀注册商推荐" class="headerlink" title="优秀注册商推荐"></a>优秀注册商推荐</h3><ol>
-<li><p><strong>porkbun.com</strong></p>
-<ul>
-<li><strong>优点</strong>：常年提供极具竞争力的价格，无论是注册还是续费都相对便宜，支持后缀也较多。界面友好，免费提供 WHOIS 隐私保护。并且支持使用支付宝付款。<blockquote>
-<p>在 <a href="https://porkbun.com/">porkbun.com</a> 点击查询后，点击 <code>Show All Extensions</code> ，新的页面继续点击 <code>Sort by price</code> 可以按照价格从低到高排序，会发现很多域名首年只需要 1 - 2 美元，但一定要注意续费价格，一般来说续费价格在 <strong>20 美元&#x2F;年</strong> 以内是比较合适的。</p>
-</blockquote>
-</li>
-</ul>
-</li>
-<li><p><strong>cloudflare.com</strong></p>
-<ul>
-<li><strong>优点</strong>：Cloudflare 承诺以<strong>成本价</strong>提供域名注册和续费服务，不加收任何利润。这意味着它的续费价格几乎是全网最低的。<blockquote>
-<p>可以在其他平台（如 Porkbun）用首年优惠价注册，然后在第一年到期前，将域名<strong>转移 (Transfer)</strong> 到 Cloudflare，以享受其低廉的续费价格。</p>
-</blockquote>
-</li>
-</ul>
-</li>
-<li><p><strong>阿里云</strong></p>
-<ul>
-<li>中国最大的云服务商，如果你域名需要备案，那么 <a href="https://wanwang.aliyun.com/">阿里云</a> 是你的不二之选。</li>
-</ul>
-</li>
-</ol>
-<h2 id="特别注意：面向中国大陆用户"><a href="#特别注意：面向中国大陆用户" class="headerlink" title="特别注意：面向中国大陆用户"></a>特别注意：面向中国大陆用户</h2><p>如果你的网站主要服务于中国大陆用户，并计划将服务器部署在中国大陆境内，则必须完成<strong>ICP备案</strong>，ICP 备案需要 <strong>后缀</strong> 以及 <strong>注册商</strong> 都已获得工信部批准。  </p>
-<p>并非所有域名后缀都支持备案，比如常见的 <code>.org</code> 就无法进行备案，在购买前，请务必通过 <a href="https://domain.miit.gov.cn/">工信部 - 中国互联网域名体系</a> 查询你心仪的后缀是否在支持备案的列表中。</p>
-<p>然后前往 <a href="https://wanwang.aliyun.com/">阿里云</a> 或是其他中国大陆的域名服务商进行域名注册，他们将提供包含备案在内的支持服务。</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>使用国外的域名注册商可以有更多的后缀选择，价格也相对便宜，转入转出一般也不会受到限制。</p>
-<p>如果需要进行备案，则只能选择国内的域名注册商。</p>
-<p>希望这篇指南能帮助你顺利开启你的网站之旅！</p>
-]]></content>
-      <categories>
-        <category>教程</category>
-      </categories>
-      <tags>
-        <tag>域名</tag>
       </tags>
   </entry>
   <entry>
@@ -6688,129 +6688,6 @@
       </tags>
   </entry>
   <entry>
-    <title>用 AI 制作 3D 游戏：Opus 5.5 / Astra + Tripo 全流程实战指南</title>
-    <url>/post/how-to-use-ai-build-3d-games.html</url>
-    <content><![CDATA[<blockquote>
-<p><strong>原作者</strong>：X 博主 <a href="https://x.com/Saccc_c">@Sac</a><br><strong>演示作品</strong>：<a href="https://littleprince.dev/">点击查看《小王子》3D 可探索星球演示</a><br><strong>核心看点</strong>：结合 Tripo + Blender + Unity，利用 Opus 5.5 将《小王子》故事中的每一个星球变成可探索的 3D 场景。从场景搭建、人物制作，到代码开发与调试，核心工作流全部交由 AI 完成。</p>
-</blockquote>
-<p>本文将完整公开这套 AI 3D 游戏制作的工作流，结合《小王子》实际案例与可复用的提示词（Prompts），手把手带你入门 AI 3D 游戏开发，搭建属于你想象中的世界。</p>
-<p>全文主要分为三个部分：</p>
-<ol>
-<li><strong>游戏开发流程与工具配置</strong></li>
-<li><strong>3D 场景构建全流程</strong></li>
-<li><strong>3D 角色建模与动作交互</strong></li>
-</ol>
-<hr>
-<h2 id="一、-游戏开发流程与工具配置"><a href="#一、-游戏开发流程与工具配置" class="headerlink" title="一、 游戏开发流程与工具配置"></a>一、 游戏开发流程与工具配置</h2><h3 id="1-核心-AI-协同工作流"><a href="#1-核心-AI-协同工作流" class="headerlink" title="1. 核心 AI 协同工作流"></a>1. 核心 AI 协同工作流</h3><p>整个游戏的开发由多个 AI 模型各司其职、串联完成：</p>
-<ul>
-<li><strong>需求与策划（Fable 5.1）</strong>：负责制作 PRD（产品需求文档），梳理游戏核心场景、人物设定以及剧情故事线。</li>
-<li><strong>视觉概念设定（GPT Image 2.5）</strong>：生成高一致性的场景参考图与人物多视角设定图。</li>
-<li><strong>核心 3D 资产生成（Tripo）</strong>：将 2D 概念图转化为高精度 3D 模型资产。</li>
-<li><strong>场景搭建与核心代码（Opus 5.5）</strong>：通过 CLI 与 MCP 工具操控 Blender 与 Unity，完成场景组装与核心代码搭建。</li>
-<li><strong>迭代优化与 Debug（Astra）</strong>：负责后期的细节打磨、性能优化以及 Bug 修复。</li>
-</ul>
-<h3 id="2-基础工具与环境配置"><a href="#2-基础工具与环境配置" class="headerlink" title="2. 基础工具与环境配置"></a>2. 基础工具与环境配置</h3><p>在开始制作前，需在本地配置好以下软件与插件接口，以便 AI 能够直接接管操作：</p>
-<ul>
-<li><strong>Blender 配置</strong>：<ul>
-<li>下载并配置 <strong>Blender CLI</strong>，用于让 AI 优化 Tripo 生成的 3D 模型，并完成游戏整体的 3D 建模组装。</li>
-<li>安装付费插件 <strong>Auto-Rig Pro</strong>，用于人物的自动绑骨与蒙皮，为后续动作交互打下基础。</li>
-</ul>
-</li>
-<li><strong>Unity 配置</strong>：<ul>
-<li>安装 <a href="https://unity.com/">Unity 客户端</a>，作为游戏引擎将场景、人物与交互动效打包成完整游戏。</li>
-<li>安装 <strong>Unity CLI</strong>，并在项目中安装 <strong>Pipeline 包</strong>，使 Claude（Opus 5.5）能够通过官方 <strong>Unity MCP</strong> 直接操作 Unity 项目。</li>
-</ul>
-</li>
-</ul>
-<hr>
-<h2 id="二、-3D-场景构建全流程"><a href="#二、-3D-场景构建全流程" class="headerlink" title="二、 3D 场景构建全流程"></a>二、 3D 场景构建全流程</h2><blockquote>
-<p><strong>核心链路</strong>：<code>Image 2.5 生成场景参考图</code> ➔ <code>AI 拆解 3D 资产并在 Tripo 中生成</code> ➔ <code>Opus 5.5 操控 Blender + Unity 完成场景建模与还原</code></p>
-</blockquote>
-<h3 id="步骤-1：使用-GPT-Image-2-5-生成多视角场景参考图"><a href="#步骤-1：使用-GPT-Image-2-5-生成多视角场景参考图" class="headerlink" title="步骤 1：使用 GPT Image 2.5 生成多视角场景参考图"></a>步骤 1：使用 GPT Image 2.5 生成多视角场景参考图</h3><p>根据前期整理好的游戏需求，使用 Image 2.5 生成场景参考图，以此确定整体画风、配色方案以及核心物体的空间位置。</p>
-<ul>
-<li><p><strong>实操建议</strong>：先确定一张满意的主场景效果图，再围绕它补充其他角度（尤其是包含室内外结构的复杂场景）：</p>
-<ul>
-<li><strong>俯视图</strong>：用于明确场景的整体平面布局。</li>
-<li><strong>斜侧视图</strong>：用于补充物体的高度、造型特征和前后层次关系。</li>
-<li><strong>全景多视图</strong>：也可以直接通过提示词一次性生成包含多视角与局部细节的综合参考图。<br><img src="https://img.nep.me/ooo/HUpgX9Jb0AAZWIv.webp" alt="HUpgX9Jb0AAZWIv.jpeg"></li>
-</ul>
-</li>
-<li><p><strong>💡 可复用提示词（生成多视角场景图）</strong>：</p>
-<blockquote>
-<p>基于上传的场景参考图，帮我生成一张该场景的全面貌参考图片，包括整体环境的多视角视图以及局部细节的展示。</p>
-</blockquote>
-</li>
-</ul>
-<h3 id="步骤-2：利用-AI-拆解场景资产，并在-Tripo-中生成独立道具"><a href="#步骤-2：利用-AI-拆解场景资产，并在-Tripo-中生成独立道具" class="headerlink" title="步骤 2：利用 AI 拆解场景资产，并在 Tripo 中生成独立道具"></a>步骤 2：利用 AI 拆解场景资产，并在 Tripo 中生成独立道具</h3><p>拿到参考图后，不要急于建模。先让 AI 分析画面，判断哪些复杂资产需要在 Tripo 中单独生成，哪些基础几何结构可以直接交给 Opus 5.5 在 Blender&#x2F;Unity 中用代码搭建。</p>
-<ul>
-<li><p><strong>💡 可复用提示词（资产拆解与标注）</strong>：</p>
-<blockquote>
-<p>我现在要进行游戏开发，我的技术栈是 Tripo + Blender + Unity。请你根据上述生成的场景参考图，帮我深入分析哪些资产适合用 Tripo 生成，哪些资产适合用 Blender 直接进行搭建。并将需要用 Tripo 生成的资产在图片中标注出来，方便我确认。<br><img src="https://img.nep.me/ooo/HUpi6bPboAAW7av.webp" alt="HUpi6bPboAAW7av.jpeg"></p>
-</blockquote>
-</li>
-<li><p><strong>Tripo 模型选择技巧</strong>：在 Tripo 中制作场景道具类 3D 资产时，建议使用 <strong>H3.1 模型</strong>，该模型能最大程度保证静态资产的高精度细节。<br><img src="https://img.nep.me/ooo/HUpj0-mbIAAQUr-.webp" alt="HUpj0-mbIAAQUr-.jpeg"></p>
-</li>
-</ul>
-<h3 id="步骤-3：让-Opus-5-5-操控-Blender-与-Unity-进行组装与多机位迭代"><a href="#步骤-3：让-Opus-5-5-操控-Blender-与-Unity-进行组装与多机位迭代" class="headerlink" title="步骤 3：让 Opus 5.5 操控 Blender 与 Unity 进行组装与多机位迭代"></a>步骤 3：让 Opus 5.5 操控 Blender 与 Unity 进行组装与多机位迭代</h3><p>在 Tripo 中生成并导出独立 3D 道具后，将这些资产连同第一步的场景参考图一起交给 Opus 5.5。让它操控 Blender 和 Unity 搭建整体环境，并严格按照参考图摆放道具、调整比例与空间位置。</p>
-<ul>
-<li><p><strong>关键核心</strong>：提供详尽的参考图，并引入<strong>独立审查 Agent 进行多机位截图盲审</strong>，通过视觉反馈闭环不断调整布局与细节。</p>
-</li>
-<li><p><strong>💡 可复用提示词（场景复刻与自动盲审迭代）</strong>：</p>
-<blockquote>
-<p>根据上传的场景内外景多视角参考图以及生成好的 Tripo 3D 资产，请你对照参考图进行完美级的复刻，要求实现和参考图一致的惊艳质感与细节还原。</p>
-<p>在实现完成后，请派一个独立的审查 Agent 进行多机位的场景盲审。如果发现有和参考图存在差异的地方，就不断地进行迭代完善。</p>
-</blockquote>
-</li>
-</ul>
-<hr>
-<h2 id="三、-3D-角色建模与动作交互"><a href="#三、-3D-角色建模与动作交互" class="headerlink" title="三、 3D 角色建模与动作交互"></a>三、 3D 角色建模与动作交互</h2><blockquote>
-<p><strong>核心链路</strong>：<code>Image 2.5 生成人物四视图</code> ➔ <code>Tripo 生成 3D 角色模型</code> ➔ <code>Blender (Auto-Rig Pro) 绑骨蒙皮</code> ➔ <code>接入 Mixamo 动作库</code> ➔ <code>Blender 复杂交互二次精调（可选）</code></p>
-</blockquote>
-<p>以下我们以《小王子》主角的设计为例，拆解具体步骤：</p>
-<h3 id="步骤-1：使用-Image-2-5-生成人物-T-pose-四视图"><a href="#步骤-1：使用-Image-2-5-生成人物-T-pose-四视图" class="headerlink" title="步骤 1：使用 Image 2.5 生成人物 T-pose 四视图"></a>步骤 1：使用 Image 2.5 生成人物 T-pose 四视图</h3><p>根据人物形象设定，首先使用 Image 2.5 生成小王子的标准 <strong>T-pose 四视图</strong>（正视、背视、左视、右视），务必确保各个视角下的人物服装、比例等细节高度统一。<br><img src="https://img.nep.me/ooo/HUpkpDca4AActDR.webp" alt="HUpkpDca4AActDR.jpeg"></p>
-<h3 id="步骤-2：使用-Tripo-的-Smart-Mesh-P2-0-生成可编辑-3D-角色"><a href="#步骤-2：使用-Tripo-的-Smart-Mesh-P2-0-生成可编辑-3D-角色" class="headerlink" title="步骤 2：使用 Tripo 的 Smart Mesh P2.0 生成可编辑 3D 角色"></a>步骤 2：使用 Tripo 的 Smart Mesh P2.0 生成可编辑 3D 角色</h3><ul>
-<li><strong>为什么选 Smart Mesh P2.0？</strong> 这是一个专门面向游戏和交互内容的 3D 生成模型，其核心优势是<strong>生成的布线面数可控、拓扑结构规整</strong>，非常便于后期的骨骼绑定和动画制作。</li>
-<li><strong>实操流程</strong>：<ol>
-<li>在 Tripo 中选择<strong>「多视图生成 3D」</strong>，依次上传生成的四视图。</li>
-<li>参数设置：拓扑默认选择<strong>「四边形」</strong>，精度拉到<strong>最高</strong>，模型选择 <strong>P2.0</strong> 并开始生成。<br><img src="https://img.nep.me/ooo/HUpkyEwakAEzlkG.webp" alt="HUpkyEwakAEzlkG.jpeg"></li>
-<li><strong>网格检查与贴图</strong>：先观察初步生成的白模。若网格整齐无误，直接点击<strong>「Texture（纹理）」</strong>生成模型贴图；若发现局部网格形状不合理，可使用<strong>「Edit Mesh」</strong>功能进行局部重绘再生成。<br><img src="https://img.nep.me/ooo/HUpk4llbAAAQGLP.webp" alt="HUpk4llbAAAQGLP.jpeg"></li>
-</ol>
-</li>
-</ul>
-<h3 id="步骤-3：在-Blender-中利用-Auto-Rig-Pro-自动绑骨与蒙皮"><a href="#步骤-3：在-Blender-中利用-Auto-Rig-Pro-自动绑骨与蒙皮" class="headerlink" title="步骤 3：在 Blender 中利用 Auto-Rig Pro 自动绑骨与蒙皮"></a>步骤 3：在 Blender 中利用 Auto-Rig Pro 自动绑骨与蒙皮</h3><p>配置好 Auto-Rig Pro 插件后，直接在 Claude 中上传人物模型，通过提示词驱动 Blender 完成自动化骨骼绑定与权重测试。</p>
-<ul>
-<li><strong>💡 可复用提示词（自动绑骨、蒙皮与动作测试）</strong>：<blockquote>
-<p>使用 Auto-Rig Pro 为人物完成绑骨和蒙皮，确保骨骼位置与人物关节精准对齐。完成后测试抬手、弯腿、转身等基础动作，检查并修正明显的变形、拉扯和穿模问题。</p>
-</blockquote>
-</li>
-</ul>
-<h3 id="步骤-4：从-Mixamo-获取动作文件并由-Opus-5-5-完成重定向"><a href="#步骤-4：从-Mixamo-获取动作文件并由-Opus-5-5-完成重定向" class="headerlink" title="步骤 4：从 Mixamo 获取动作文件并由 Opus 5.5 完成重定向"></a>步骤 4：从 Mixamo 获取动作文件并由 Opus 5.5 完成重定向</h3><ol>
-<li>根据游戏的交互设定，前往 <a href="https://www.mixamo.com/">Mixamo 官网</a> 按关键词搜索小王子所需的动作（如行走、跳跃、挥手等），并下载对应的 <code>.fbx</code> 动作文件。</li>
-<li>将动作文件交给 Opus 5.5，让其自动检查动作数据是否匹配小王子的真实骨骼结构，并在引擎&#x2F;Blender 中完成动作接入与重定向。<br><img src="https://img.nep.me/ooo/HUpgX9Jb0AAZWIv.webp" alt="HUpgX9Jb0AAZWIv.jpeg"></li>
-</ol>
-<h3 id="步骤-5：在-Blender-中精调特殊动作与道具接触细节（进阶可选）"><a href="#步骤-5：在-Blender-中精调特殊动作与道具接触细节（进阶可选）" class="headerlink" title="步骤 5：在 Blender 中精调特殊动作与道具接触细节（进阶可选）"></a>步骤 5：在 Blender 中精调特殊动作与道具接触细节（进阶可选）</h3><p>对于诸如「小王子提水壶」这类涉及<strong>人物与道具发生物理接触</strong>的复杂交互，Mixamo 的通用动作库往往无法完美适配。</p>
-<ul>
-<li><p><strong>解决方案</strong>：先在 Mixamo 中挑选一个姿势最接近的基础动作，再让 Opus 5.5 在 Blender 里利用控制器进行局部细节的迭代修正。<br><img src="https://img.nep.me/ooo/HUpmEFUbMAADsZk.webp" alt="HUpmEFUbMAADsZk.jpeg"></p>
-</li>
-<li><p><strong>💡 可复用提示词（复杂交互与 IK 手部精调）</strong>：</p>
-<blockquote>
-<p>请参考提供的 Mixamo 基础动作，保留其中适用的部分，并使用 Auto-Rig Pro 的手臂 IK 控制器调整手臂姿势，配合手指握持姿态和水壶空间位置的细节修正，补全「提水壶」的完整动作。确保手掌与水壶把手接触稳定、提起过程自然流畅，避免出现穿模、握持脱离或水壶悬空等问题。</p>
-</blockquote>
-</li>
-</ul>
-<p>Tripo 3D 的注册地址： <a href="https://studio.tripo3d.ai/">https://studio.tripo3d.ai/</a></p>
-]]></content>
-      <categories>
-        <category>教程</category>
-      </categories>
-      <tags>
-        <tag>AI</tag>
-        <tag>Opus 5.5</tag>
-        <tag>Tripo 3D</tag>
-        <tag>Games</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Sonnet 5 已发布，值得用吗？</title>
     <url>/post/is-sonnet-5-worth-using.html</url>
     <content><![CDATA[<p>北京时间 2026 年 7 月 1 日， Anthropic 宣布 <strong>Fable 5</strong> 解除封禁，并发布了新模型 <strong>Sonnet 5</strong>， Anthopic 宣称该版本显著提升了自主执行任务和调用工具的智能体 (Agent) 能力，性能逼近旗舰级 Opus 4.8，采用了全新的分词器。其定价为：</p>
@@ -6994,6 +6871,129 @@
         <tag>AI</tag>
         <tag>Claude</tag>
         <tag>Sonnet 5</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>用 AI 制作 3D 游戏：Opus 5.5 / Astra + Tripo 全流程实战指南</title>
+    <url>/post/how-to-use-ai-build-3d-games.html</url>
+    <content><![CDATA[<blockquote>
+<p><strong>原作者</strong>：X 博主 <a href="https://x.com/Saccc_c">@Sac</a><br><strong>演示作品</strong>：<a href="https://littleprince.dev/">点击查看《小王子》3D 可探索星球演示</a><br><strong>核心看点</strong>：结合 Tripo + Blender + Unity，利用 Opus 5.5 将《小王子》故事中的每一个星球变成可探索的 3D 场景。从场景搭建、人物制作，到代码开发与调试，核心工作流全部交由 AI 完成。</p>
+</blockquote>
+<p>本文将完整公开这套 AI 3D 游戏制作的工作流，结合《小王子》实际案例与可复用的提示词（Prompts），手把手带你入门 AI 3D 游戏开发，搭建属于你想象中的世界。</p>
+<p>全文主要分为三个部分：</p>
+<ol>
+<li><strong>游戏开发流程与工具配置</strong></li>
+<li><strong>3D 场景构建全流程</strong></li>
+<li><strong>3D 角色建模与动作交互</strong></li>
+</ol>
+<hr>
+<h2 id="一、-游戏开发流程与工具配置"><a href="#一、-游戏开发流程与工具配置" class="headerlink" title="一、 游戏开发流程与工具配置"></a>一、 游戏开发流程与工具配置</h2><h3 id="1-核心-AI-协同工作流"><a href="#1-核心-AI-协同工作流" class="headerlink" title="1. 核心 AI 协同工作流"></a>1. 核心 AI 协同工作流</h3><p>整个游戏的开发由多个 AI 模型各司其职、串联完成：</p>
+<ul>
+<li><strong>需求与策划（Fable 5.1）</strong>：负责制作 PRD（产品需求文档），梳理游戏核心场景、人物设定以及剧情故事线。</li>
+<li><strong>视觉概念设定（GPT Image 2.5）</strong>：生成高一致性的场景参考图与人物多视角设定图。</li>
+<li><strong>核心 3D 资产生成（Tripo）</strong>：将 2D 概念图转化为高精度 3D 模型资产。</li>
+<li><strong>场景搭建与核心代码（Opus 5.5）</strong>：通过 CLI 与 MCP 工具操控 Blender 与 Unity，完成场景组装与核心代码搭建。</li>
+<li><strong>迭代优化与 Debug（Astra）</strong>：负责后期的细节打磨、性能优化以及 Bug 修复。</li>
+</ul>
+<h3 id="2-基础工具与环境配置"><a href="#2-基础工具与环境配置" class="headerlink" title="2. 基础工具与环境配置"></a>2. 基础工具与环境配置</h3><p>在开始制作前，需在本地配置好以下软件与插件接口，以便 AI 能够直接接管操作：</p>
+<ul>
+<li><strong>Blender 配置</strong>：<ul>
+<li>下载并配置 <strong>Blender CLI</strong>，用于让 AI 优化 Tripo 生成的 3D 模型，并完成游戏整体的 3D 建模组装。</li>
+<li>安装付费插件 <strong>Auto-Rig Pro</strong>，用于人物的自动绑骨与蒙皮，为后续动作交互打下基础。</li>
+</ul>
+</li>
+<li><strong>Unity 配置</strong>：<ul>
+<li>安装 <a href="https://unity.com/">Unity 客户端</a>，作为游戏引擎将场景、人物与交互动效打包成完整游戏。</li>
+<li>安装 <strong>Unity CLI</strong>，并在项目中安装 <strong>Pipeline 包</strong>，使 Claude（Opus 5.5）能够通过官方 <strong>Unity MCP</strong> 直接操作 Unity 项目。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="二、-3D-场景构建全流程"><a href="#二、-3D-场景构建全流程" class="headerlink" title="二、 3D 场景构建全流程"></a>二、 3D 场景构建全流程</h2><blockquote>
+<p><strong>核心链路</strong>：<code>Image 2.5 生成场景参考图</code> ➔ <code>AI 拆解 3D 资产并在 Tripo 中生成</code> ➔ <code>Opus 5.5 操控 Blender + Unity 完成场景建模与还原</code></p>
+</blockquote>
+<h3 id="步骤-1：使用-GPT-Image-2-5-生成多视角场景参考图"><a href="#步骤-1：使用-GPT-Image-2-5-生成多视角场景参考图" class="headerlink" title="步骤 1：使用 GPT Image 2.5 生成多视角场景参考图"></a>步骤 1：使用 GPT Image 2.5 生成多视角场景参考图</h3><p>根据前期整理好的游戏需求，使用 Image 2.5 生成场景参考图，以此确定整体画风、配色方案以及核心物体的空间位置。</p>
+<ul>
+<li><p><strong>实操建议</strong>：先确定一张满意的主场景效果图，再围绕它补充其他角度（尤其是包含室内外结构的复杂场景）：</p>
+<ul>
+<li><strong>俯视图</strong>：用于明确场景的整体平面布局。</li>
+<li><strong>斜侧视图</strong>：用于补充物体的高度、造型特征和前后层次关系。</li>
+<li><strong>全景多视图</strong>：也可以直接通过提示词一次性生成包含多视角与局部细节的综合参考图。<br><img src="https://img.nep.me/ooo/HUpgX9Jb0AAZWIv.webp" alt="HUpgX9Jb0AAZWIv.jpeg"></li>
+</ul>
+</li>
+<li><p><strong>💡 可复用提示词（生成多视角场景图）</strong>：</p>
+<blockquote>
+<p>基于上传的场景参考图，帮我生成一张该场景的全面貌参考图片，包括整体环境的多视角视图以及局部细节的展示。</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="步骤-2：利用-AI-拆解场景资产，并在-Tripo-中生成独立道具"><a href="#步骤-2：利用-AI-拆解场景资产，并在-Tripo-中生成独立道具" class="headerlink" title="步骤 2：利用 AI 拆解场景资产，并在 Tripo 中生成独立道具"></a>步骤 2：利用 AI 拆解场景资产，并在 Tripo 中生成独立道具</h3><p>拿到参考图后，不要急于建模。先让 AI 分析画面，判断哪些复杂资产需要在 Tripo 中单独生成，哪些基础几何结构可以直接交给 Opus 5.5 在 Blender&#x2F;Unity 中用代码搭建。</p>
+<ul>
+<li><p><strong>💡 可复用提示词（资产拆解与标注）</strong>：</p>
+<blockquote>
+<p>我现在要进行游戏开发，我的技术栈是 Tripo + Blender + Unity。请你根据上述生成的场景参考图，帮我深入分析哪些资产适合用 Tripo 生成，哪些资产适合用 Blender 直接进行搭建。并将需要用 Tripo 生成的资产在图片中标注出来，方便我确认。<br><img src="https://img.nep.me/ooo/HUpi6bPboAAW7av.webp" alt="HUpi6bPboAAW7av.jpeg"></p>
+</blockquote>
+</li>
+<li><p><strong>Tripo 模型选择技巧</strong>：在 Tripo 中制作场景道具类 3D 资产时，建议使用 <strong>H3.1 模型</strong>，该模型能最大程度保证静态资产的高精度细节。<br><img src="https://img.nep.me/ooo/HUpj0-mbIAAQUr-.webp" alt="HUpj0-mbIAAQUr-.jpeg"></p>
+</li>
+</ul>
+<h3 id="步骤-3：让-Opus-5-5-操控-Blender-与-Unity-进行组装与多机位迭代"><a href="#步骤-3：让-Opus-5-5-操控-Blender-与-Unity-进行组装与多机位迭代" class="headerlink" title="步骤 3：让 Opus 5.5 操控 Blender 与 Unity 进行组装与多机位迭代"></a>步骤 3：让 Opus 5.5 操控 Blender 与 Unity 进行组装与多机位迭代</h3><p>在 Tripo 中生成并导出独立 3D 道具后，将这些资产连同第一步的场景参考图一起交给 Opus 5.5。让它操控 Blender 和 Unity 搭建整体环境，并严格按照参考图摆放道具、调整比例与空间位置。</p>
+<ul>
+<li><p><strong>关键核心</strong>：提供详尽的参考图，并引入<strong>独立审查 Agent 进行多机位截图盲审</strong>，通过视觉反馈闭环不断调整布局与细节。</p>
+</li>
+<li><p><strong>💡 可复用提示词（场景复刻与自动盲审迭代）</strong>：</p>
+<blockquote>
+<p>根据上传的场景内外景多视角参考图以及生成好的 Tripo 3D 资产，请你对照参考图进行完美级的复刻，要求实现和参考图一致的惊艳质感与细节还原。</p>
+<p>在实现完成后，请派一个独立的审查 Agent 进行多机位的场景盲审。如果发现有和参考图存在差异的地方，就不断地进行迭代完善。</p>
+</blockquote>
+</li>
+</ul>
+<hr>
+<h2 id="三、-3D-角色建模与动作交互"><a href="#三、-3D-角色建模与动作交互" class="headerlink" title="三、 3D 角色建模与动作交互"></a>三、 3D 角色建模与动作交互</h2><blockquote>
+<p><strong>核心链路</strong>：<code>Image 2.5 生成人物四视图</code> ➔ <code>Tripo 生成 3D 角色模型</code> ➔ <code>Blender (Auto-Rig Pro) 绑骨蒙皮</code> ➔ <code>接入 Mixamo 动作库</code> ➔ <code>Blender 复杂交互二次精调（可选）</code></p>
+</blockquote>
+<p>以下我们以《小王子》主角的设计为例，拆解具体步骤：</p>
+<h3 id="步骤-1：使用-Image-2-5-生成人物-T-pose-四视图"><a href="#步骤-1：使用-Image-2-5-生成人物-T-pose-四视图" class="headerlink" title="步骤 1：使用 Image 2.5 生成人物 T-pose 四视图"></a>步骤 1：使用 Image 2.5 生成人物 T-pose 四视图</h3><p>根据人物形象设定，首先使用 Image 2.5 生成小王子的标准 <strong>T-pose 四视图</strong>（正视、背视、左视、右视），务必确保各个视角下的人物服装、比例等细节高度统一。<br><img src="https://img.nep.me/ooo/HUpkpDca4AActDR.webp" alt="HUpkpDca4AActDR.jpeg"></p>
+<h3 id="步骤-2：使用-Tripo-的-Smart-Mesh-P2-0-生成可编辑-3D-角色"><a href="#步骤-2：使用-Tripo-的-Smart-Mesh-P2-0-生成可编辑-3D-角色" class="headerlink" title="步骤 2：使用 Tripo 的 Smart Mesh P2.0 生成可编辑 3D 角色"></a>步骤 2：使用 Tripo 的 Smart Mesh P2.0 生成可编辑 3D 角色</h3><ul>
+<li><strong>为什么选 Smart Mesh P2.0？</strong> 这是一个专门面向游戏和交互内容的 3D 生成模型，其核心优势是<strong>生成的布线面数可控、拓扑结构规整</strong>，非常便于后期的骨骼绑定和动画制作。</li>
+<li><strong>实操流程</strong>：<ol>
+<li>在 Tripo 中选择<strong>「多视图生成 3D」</strong>，依次上传生成的四视图。</li>
+<li>参数设置：拓扑默认选择<strong>「四边形」</strong>，精度拉到<strong>最高</strong>，模型选择 <strong>P2.0</strong> 并开始生成。<br><img src="https://img.nep.me/ooo/HUpkyEwakAEzlkG.webp" alt="HUpkyEwakAEzlkG.jpeg"></li>
+<li><strong>网格检查与贴图</strong>：先观察初步生成的白模。若网格整齐无误，直接点击<strong>「Texture（纹理）」</strong>生成模型贴图；若发现局部网格形状不合理，可使用<strong>「Edit Mesh」</strong>功能进行局部重绘再生成。<br><img src="https://img.nep.me/ooo/HUpk4llbAAAQGLP.webp" alt="HUpk4llbAAAQGLP.jpeg"></li>
+</ol>
+</li>
+</ul>
+<h3 id="步骤-3：在-Blender-中利用-Auto-Rig-Pro-自动绑骨与蒙皮"><a href="#步骤-3：在-Blender-中利用-Auto-Rig-Pro-自动绑骨与蒙皮" class="headerlink" title="步骤 3：在 Blender 中利用 Auto-Rig Pro 自动绑骨与蒙皮"></a>步骤 3：在 Blender 中利用 Auto-Rig Pro 自动绑骨与蒙皮</h3><p>配置好 Auto-Rig Pro 插件后，直接在 Claude 中上传人物模型，通过提示词驱动 Blender 完成自动化骨骼绑定与权重测试。</p>
+<ul>
+<li><strong>💡 可复用提示词（自动绑骨、蒙皮与动作测试）</strong>：<blockquote>
+<p>使用 Auto-Rig Pro 为人物完成绑骨和蒙皮，确保骨骼位置与人物关节精准对齐。完成后测试抬手、弯腿、转身等基础动作，检查并修正明显的变形、拉扯和穿模问题。</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="步骤-4：从-Mixamo-获取动作文件并由-Opus-5-5-完成重定向"><a href="#步骤-4：从-Mixamo-获取动作文件并由-Opus-5-5-完成重定向" class="headerlink" title="步骤 4：从 Mixamo 获取动作文件并由 Opus 5.5 完成重定向"></a>步骤 4：从 Mixamo 获取动作文件并由 Opus 5.5 完成重定向</h3><ol>
+<li>根据游戏的交互设定，前往 <a href="https://www.mixamo.com/">Mixamo 官网</a> 按关键词搜索小王子所需的动作（如行走、跳跃、挥手等），并下载对应的 <code>.fbx</code> 动作文件。</li>
+<li>将动作文件交给 Opus 5.5，让其自动检查动作数据是否匹配小王子的真实骨骼结构，并在引擎&#x2F;Blender 中完成动作接入与重定向。<br><img src="https://img.nep.me/ooo/HUpgX9Jb0AAZWIv.webp" alt="HUpgX9Jb0AAZWIv.jpeg"></li>
+</ol>
+<h3 id="步骤-5：在-Blender-中精调特殊动作与道具接触细节（进阶可选）"><a href="#步骤-5：在-Blender-中精调特殊动作与道具接触细节（进阶可选）" class="headerlink" title="步骤 5：在 Blender 中精调特殊动作与道具接触细节（进阶可选）"></a>步骤 5：在 Blender 中精调特殊动作与道具接触细节（进阶可选）</h3><p>对于诸如「小王子提水壶」这类涉及<strong>人物与道具发生物理接触</strong>的复杂交互，Mixamo 的通用动作库往往无法完美适配。</p>
+<ul>
+<li><p><strong>解决方案</strong>：先在 Mixamo 中挑选一个姿势最接近的基础动作，再让 Opus 5.5 在 Blender 里利用控制器进行局部细节的迭代修正。<br><img src="https://img.nep.me/ooo/HUpmEFUbMAADsZk.webp" alt="HUpmEFUbMAADsZk.jpeg"></p>
+</li>
+<li><p><strong>💡 可复用提示词（复杂交互与 IK 手部精调）</strong>：</p>
+<blockquote>
+<p>请参考提供的 Mixamo 基础动作，保留其中适用的部分，并使用 Auto-Rig Pro 的手臂 IK 控制器调整手臂姿势，配合手指握持姿态和水壶空间位置的细节修正，补全「提水壶」的完整动作。确保手掌与水壶把手接触稳定、提起过程自然流畅，避免出现穿模、握持脱离或水壶悬空等问题。</p>
+</blockquote>
+</li>
+</ul>
+<p>Tripo 3D 的注册地址： <a href="https://studio.tripo3d.ai/">https://studio.tripo3d.ai/</a></p>
+]]></content>
+      <categories>
+        <category>教程</category>
+      </categories>
+      <tags>
+        <tag>AI</tag>
+        <tag>Opus 5.5</tag>
+        <tag>Tripo 3D</tag>
+        <tag>Games</tag>
       </tags>
   </entry>
   <entry>
@@ -8908,6 +8908,141 @@
       </tags>
   </entry>
   <entry>
+    <title>在 pnpm 中设置 minimumReleaseAge，远离供应链攻击</title>
+    <url>/post/use-miniumreleaseage-feature-in-pnpm.html</url>
+    <content><![CDATA[<p>近来针对开发者的供应链攻击越来越频繁，且规模也在变大，比如最近的 <a href="https://ooo.run/post/mini-shai-hulud-check-and-defense.html">Mini Shai-Hulud 供应链攻击事件</a> 中，顶级项目的开发者也难以避免，事后攻击发起者黑客团队 TeamPCP 居然将攻击代码开源了（现已被 GitHub 下架），使得攻击更为容易。</p>
+<p>不过一般攻击窗口时间都很短暂，只要不在相关时间内安装对应软件包即可避免。 <strong>pnpm</strong> 就提供了这一特性，<code>minimumReleaseAge</code> 是 pnpm 用来降低 npm 供应链攻击风险的配置。它的作用是：一个包的新版本发布后，必须经过指定分钟数，pnpm 才允许解析和安装它。</p>
+<p>pnpm 官方说明该配置适用于所有依赖，包括传递依赖；它从 pnpm v10.16.0 开始加入，在 pnpm v11 中默认值变为 1440，也就是 1 天。</p>
+<p>建议 pnpm 用户升级至 v11 ： <a href="https://pnpm.io/zh/migration">pnpm - 从 v10 迁移到 v11</a></p>
+<h2 id="1-为什么需要-minimumReleaseAge"><a href="#1-为什么需要-minimumReleaseAge" class="headerlink" title="1. 为什么需要 minimumReleaseAge"></a>1. 为什么需要 minimumReleaseAge</h2><p>很多供应链攻击的套路是：攻击者盗取维护者账号或发布流程，立刻发布一个恶意版本。恶意版本通常会在社区、平台或安全工具发现后被下架。pnpm 官方也建议通过 “延迟更新依赖” 降低安装受污染版本的概率，并说明延迟 24 小时通常可以避开许多高风险窗口。</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">minimumReleaseAge:</span> <span class="number">1440</span></span><br></pre></td></tr></table></figure>
+<p>表示只安装发布时间至少超过 1440 分钟，也就是 24 小时 的版本：</p>
+<h2 id="2-前置条件：确认-pnpm-版本"><a href="#2-前置条件：确认-pnpm-版本" class="headerlink" title="2. 前置条件：确认 pnpm 版本"></a>2. 前置条件：确认 pnpm 版本</h2><p><code>minimumReleaseAge</code> 从 pnpm <code>v10.16.0</code> 开始支持。</p>
+<p>先检查当前版本：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pnpm -v</span><br></pre></td></tr></table></figure>
+
+<p>目前 pnpm 已发布 <code>v11.1.3</code> 版本，该配置默认就是 1440 。</p>
+<p>如果项目里还没有固定 pnpm 版本，可以在 <code>package.json</code> 中添加：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;packageManager&quot;</span><span class="punctuation">:</span> <span class="string">&quot;pnpm@11.1.0&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注意 pnpm v11 要求 Node.js 22+</p>
+</blockquote>
+<h2 id="3-把时间设置为一周"><a href="#3-把时间设置为一周" class="headerlink" title="3. 把时间设置为一周"></a>3. 把时间设置为一周</h2><p>pnpm v11 在项目根目录会创建 <code>pnpm-workspace.yaml</code> 文件，可以直接修改该文件进行配置。</p>
+<p>我们可以把时间设置为一周的时间 1440*7 &#x3D; <code>10080</code></p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">minimumReleaseAge:</span> <span class="number">10080</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="4-常见取值"><a href="#4-常见取值" class="headerlink" title="4. 常见取值"></a>4. 常见取值</h2><p><code>minimumReleaseAge</code> 的单位是 <strong>分钟</strong> 。</p>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th align="right">配置值</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>不启用延迟</td>
+<td align="right"><code>0</code></td>
+<td>立即允许安装新版本</td>
+</tr>
+<tr>
+<td>保守开发环境</td>
+<td align="right"><code>60</code></td>
+<td>延迟 1 小时</td>
+</tr>
+<tr>
+<td>推荐默认值</td>
+<td align="right"><code>1440</code></td>
+<td>延迟 1 天</td>
+</tr>
+<tr>
+<td>更严格生产环境</td>
+<td align="right"><code>2880</code></td>
+<td>延迟 2 天</td>
+</tr>
+<tr>
+<td>高安全项目</td>
+<td align="right"><code>10080</code></td>
+<td>延迟 7 天</td>
+</tr>
+</tbody></table>
+<h2 id="5-为特定依赖设置例外"><a href="#5-为特定依赖设置例外" class="headerlink" title="5. 为特定依赖设置例外"></a>5. 为特定依赖设置例外</h2><p>有些包可能需要紧急升级，比如安全修复、内部包、框架核心包。这时可以使用 <code>minimumReleaseAgeExclude</code> 。</p>
+<h3 id="5-1-排除指定包"><a href="#5-1-排除指定包" class="headerlink" title="5.1 排除指定包"></a>5.1 排除指定包</h3><figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">minimumReleaseAge:</span> <span class="number">1440</span></span><br><span class="line"></span><br><span class="line"><span class="attr">minimumReleaseAgeExclude:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">webpack</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">react</span></span><br></pre></td></tr></table></figure>
+
+<p>这表示：大多数依赖必须发布满 1 天才能安装，但 webpack 和 react 可以立即安装。pnpm <a href="https://pnpm.io/zh/settings">官方文档</a> 说明，minimumReleaseAgeExclude 会按包名排除，并作用于该包的所有版本。</p>
+<h3 id="5-2-排除组织作用域包"><a href="#5-2-排除组织作用域包" class="headerlink" title="5.2 排除组织作用域包"></a>5.2 排除组织作用域包</h3><p>从 pnpm v10.17.0 开始， <code>minimumReleaseAgeExclude</code>  支持模式匹配。</p>
+<p>例如，允许公司内部包立即安装：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">minimumReleaseAge:</span> <span class="number">1440</span></span><br><span class="line"></span><br><span class="line"><span class="attr">minimumReleaseAgeExclude:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">&quot;@myorg/*&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="5-3-只排除特定版本"><a href="#5-3-只排除特定版本" class="headerlink" title="5.3 只排除特定版本"></a>5.3 只排除特定版本</h3><p>从 pnpm v10.19.0 开始，minimumReleaseAgeExclude 支持精确版本，也支持用 || 写多个版本。</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">minimumReleaseAge:</span> <span class="number">1440</span></span><br><span class="line"></span><br><span class="line"><span class="attr">minimumReleaseAgeExclude:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">nx@21.6.5</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">webpack@4.47.0</span> <span class="string">||</span> <span class="number">5.102</span><span class="number">.1</span></span><br></pre></td></tr></table></figure>
+
+<p>这比直接排除整个包更安全，适合临时放行某个已验证版本。</p>
+<h2 id="6-推荐的项目配置模板"><a href="#6-推荐的项目配置模板" class="headerlink" title="6. 推荐的项目配置模板"></a>6. 推荐的项目配置模板</h2><p>下面是一份适合团队项目直接落地的配置：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">packages:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">&quot;apps/*&quot;</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">&quot;packages/*&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 新发布版本至少等待 24 小时再安装</span></span><br><span class="line"><span class="attr">minimumReleaseAge:</span> <span class="number">1440</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 显式开启严格模式：如果没有满足发布时间要求的版本，则安装失败</span></span><br><span class="line"><span class="attr">minimumReleaseAgeStrict:</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 私有包或已验证的紧急修复版本可以临时放行</span></span><br><span class="line"><span class="attr">minimumReleaseAgeExclude:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">&quot;@your-company/*&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>minimumReleaseAgeStrict</code> 是 pnpm v11 新增的行为控制项。官方文档说明：当没有版本满足 <code>minimumReleaseAge</code> 约束时， <code>true</code> 会让解析失败， <code>false</code> 则允许回退到不满足约束的版本；如果你显式配置了 <code>minimumReleaseAge</code> ，严格模式默认开启。</p>
+<h2 id="7-在-CI-中引入"><a href="#7-在-CI-中引入" class="headerlink" title="7. 在 CI 中引入"></a>7. 在 CI 中引入</h2><p>CI 里建议同时做两件事：</p>
+<p>第一，固定 pnpm 版本：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;packageManager&quot;</span><span class="punctuation">:</span> <span class="string">&quot;pnpm@11.1.0&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>第二，使用锁文件安装：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pnpm install --frozen-lockfile</span><br></pre></td></tr></table></figure>
+
+<p>这样 CI 不会随意解析新版本， <code>minimumReleaseAge</code> 主要会在新增依赖、更新依赖、刷新 lockfile 时发挥作用。</p>
+<p>典型 GitHub Actions 示例：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">name:</span> <span class="string">CI</span></span><br><span class="line"></span><br><span class="line"><span class="attr">on:</span></span><br><span class="line">  <span class="attr">pull_request:</span></span><br><span class="line">  <span class="attr">push:</span></span><br><span class="line">    <span class="attr">branches:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">main</span></span><br><span class="line"></span><br><span class="line"><span class="attr">jobs:</span></span><br><span class="line">  <span class="attr">test:</span></span><br><span class="line">    <span class="attr">runs-on:</span> <span class="string">ubuntu-latest</span></span><br><span class="line"></span><br><span class="line">    <span class="attr">steps:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">uses:</span> <span class="string">actions/checkout@v4</span></span><br><span class="line"></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">uses:</span> <span class="string">pnpm/action-setup@v4</span></span><br><span class="line"></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">uses:</span> <span class="string">actions/setup-node@v4</span></span><br><span class="line">        <span class="attr">with:</span></span><br><span class="line">          <span class="attr">node-version:</span> <span class="number">22</span></span><br><span class="line">          <span class="attr">cache:</span> <span class="string">pnpm</span></span><br><span class="line"></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">run:</span> <span class="string">pnpm</span> <span class="string">install</span> <span class="string">--frozen-lockfile</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">run:</span> <span class="string">pnpm</span> <span class="string">test</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="8-如何验证配置是否生效"><a href="#8-如何验证配置是否生效" class="headerlink" title="8. 如何验证配置是否生效"></a>8. 如何验证配置是否生效</h2><p>可以尝试安装一个刚发布不久的版本：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pnpm add 某个刚发布的包@latest</span><br></pre></td></tr></table></figure>
+
+<p>如果该包版本发布时间没有达到配置的分钟数，pnpm 会避免解析该版本，或者在严格模式下直接失败。</p>
+<p>更常见的验证方式是在更新依赖时观察 lockfile：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pnpm update</span><br></pre></td></tr></table></figure>
+<p>如果最新版本太新，pnpm 不会马上把它写入 <code>pnpm-lock.yaml</code>。</p>
+<h2 id="9-常见问题"><a href="#9-常见问题" class="headerlink" title="9. 常见问题"></a>9. 常见问题</h2><p><strong>Q1</strong>： <code>minimumReleaseAge</code> 会影响传递依赖吗？</p>
+<p>会。pnpm 官方文档明确说明该配置适用于所有依赖，包括传递依赖。</p>
+<p><strong>Q2</strong> ：pnpm v11 还需要手动配置吗？</p>
+<p>pnpm v11 默认 minimumReleaseAge: 1440，也就是默认延迟 1 天。<br>如果你想更严格，需要手动改成 2880 或 10080；如果你想关闭，可以设置为：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">minimumReleaseAge:</span> <span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+<p>pnpm 官方供应链安全文档也说明，在 pnpm v11 中该值默认是 1440，如需退出该行为，可在 pnpm-workspace.yaml 中设置为 0。</p>
+<p><strong>Q3</strong> ：急需升级安全补丁怎么办？</p>
+<p>推荐只临时放行具体版本：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">minimumReleaseAge:</span> <span class="number">1440</span></span><br><span class="line"></span><br><span class="line"><span class="attr">minimumReleaseAgeExclude:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">vite@x.y.z</span></span><br></pre></td></tr></table></figure>
+
+<p>处理完成后，再删除这个例外。</p>
+<p><strong>Q4</strong>：私有 registry 没有发布时间怎么办？</p>
+<p>pnpm v11 提供了 <code>minimumReleaseAgeIgnoreMissingTime</code>。当为 true 时，如果 registry 元数据没有 time 字段，pnpm 会跳过该包的 <code>minimumReleaseAge</code> 检查；如果设为 false，则在缺失时间信息时失败。</p>
+<p>更严格的配置：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">minimumReleaseAge:</span> <span class="number">1440</span></span><br><span class="line"><span class="attr">minimumReleaseAgeIgnoreMissingTime:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+<h2 id="10-最佳实践总结"><a href="#10-最佳实践总结" class="headerlink" title="10. 最佳实践总结"></a>10. 最佳实践总结</h2><p>推荐从这个配置开始：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">minimumReleaseAge:</span> <span class="number">1440</span></span><br><span class="line"><span class="attr">minimumReleaseAgeStrict:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p>如果是 monorepo 或企业项目，可以加上内部包例外：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">packages:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">&quot;apps/*&quot;</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">&quot;packages/*&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">minimumReleaseAge:</span> <span class="number">1440</span></span><br><span class="line"><span class="attr">minimumReleaseAgeStrict:</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="attr">minimumReleaseAgeExclude:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">&quot;@your-company/*&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="11-其他包管理器如何设置"><a href="#11-其他包管理器如何设置" class="headerlink" title="11. 其他包管理器如何设置"></a>11. 其他包管理器如何设置</h2><ul>
+<li><strong>npm</strong> : 在 <code>.npmrc</code> 中， <code>min-release-age=X</code> 。X 是 <strong>天</strong> 的数量。需要 npm <code>v11.10.0</code> 或更高版本。</li>
+<li><strong>Yarn</strong> : 在 <code>.yarnrc.yml</code> 中，设置 <code>npmMinimalAgeGate: X</code>。<br>X 是持续时间（支持的日期单位是 ms, s, m, h, d, w，例如 7d）。如果没有指定持续时间，则解析为分钟（即 npmMinimalAgeGate: 1440 等于 npmMinimalAgeGate: 1440m）。需要 <code>Yarn v4.11</code> 或更高版本</li>
+<li><strong>Bun</strong> : 在 <code>bunfig.toml</code> 中，设置：  <figure class="highlight toml"><table><tr><td class="code"><pre><span class="line"><span class="section">[install]</span></span><br><span class="line"></span><br><span class="line"><span class="attr">minimumReleaseAge</span> = X</span><br></pre></td></tr></table></figure>
+  X 是秒数。需要 Bun <code>v1.3.0</code> 或更高版本。</li>
+</ul>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
+<li><a href="https://pnpm.io/zh/supply-chain-security">缓解供应链攻击 - pnpm</a></li>
+<li><a href="https://pnpm.io/zh/settings">设置（pnpm-workspace.yaml） - pnpm</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>教程</category>
+      </categories>
+      <tags>
+        <tag>开发者安全</tag>
+        <tag>pnpm</tag>
+      </tags>
+  </entry>
+  <entry>
     <title># Claude Opus 5.5 视频生成指南：从底层原理、技术栈选型到工程化 Prompt 实践</title>
     <url>/post/use-opus-make-videos.html</url>
     <content><![CDATA[<p>当提到使用 Claude Opus 5.5 制作视频时，一个常见的误区是将其等同于 Sora 或 Runway 等端到端的扩散视频生成模型（Diffusion Video Models）。实际上，Opus 5.5 作为多模态大语言模型，具备文本与图像理解能力，但其输出模态依然严格受限于<strong>文本（代码）</strong>。</p>
@@ -9082,141 +9217,6 @@
         <tag>Claude</tag>
         <tag>Opus 5.5</tag>
         <tag>制作视频</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>在 pnpm 中设置 minimumReleaseAge，远离供应链攻击</title>
-    <url>/post/use-miniumreleaseage-feature-in-pnpm.html</url>
-    <content><![CDATA[<p>近来针对开发者的供应链攻击越来越频繁，且规模也在变大，比如最近的 <a href="https://ooo.run/post/mini-shai-hulud-check-and-defense.html">Mini Shai-Hulud 供应链攻击事件</a> 中，顶级项目的开发者也难以避免，事后攻击发起者黑客团队 TeamPCP 居然将攻击代码开源了（现已被 GitHub 下架），使得攻击更为容易。</p>
-<p>不过一般攻击窗口时间都很短暂，只要不在相关时间内安装对应软件包即可避免。 <strong>pnpm</strong> 就提供了这一特性，<code>minimumReleaseAge</code> 是 pnpm 用来降低 npm 供应链攻击风险的配置。它的作用是：一个包的新版本发布后，必须经过指定分钟数，pnpm 才允许解析和安装它。</p>
-<p>pnpm 官方说明该配置适用于所有依赖，包括传递依赖；它从 pnpm v10.16.0 开始加入，在 pnpm v11 中默认值变为 1440，也就是 1 天。</p>
-<p>建议 pnpm 用户升级至 v11 ： <a href="https://pnpm.io/zh/migration">pnpm - 从 v10 迁移到 v11</a></p>
-<h2 id="1-为什么需要-minimumReleaseAge"><a href="#1-为什么需要-minimumReleaseAge" class="headerlink" title="1. 为什么需要 minimumReleaseAge"></a>1. 为什么需要 minimumReleaseAge</h2><p>很多供应链攻击的套路是：攻击者盗取维护者账号或发布流程，立刻发布一个恶意版本。恶意版本通常会在社区、平台或安全工具发现后被下架。pnpm 官方也建议通过 “延迟更新依赖” 降低安装受污染版本的概率，并说明延迟 24 小时通常可以避开许多高风险窗口。</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">minimumReleaseAge:</span> <span class="number">1440</span></span><br></pre></td></tr></table></figure>
-<p>表示只安装发布时间至少超过 1440 分钟，也就是 24 小时 的版本：</p>
-<h2 id="2-前置条件：确认-pnpm-版本"><a href="#2-前置条件：确认-pnpm-版本" class="headerlink" title="2. 前置条件：确认 pnpm 版本"></a>2. 前置条件：确认 pnpm 版本</h2><p><code>minimumReleaseAge</code> 从 pnpm <code>v10.16.0</code> 开始支持。</p>
-<p>先检查当前版本：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pnpm -v</span><br></pre></td></tr></table></figure>
-
-<p>目前 pnpm 已发布 <code>v11.1.3</code> 版本，该配置默认就是 1440 。</p>
-<p>如果项目里还没有固定 pnpm 版本，可以在 <code>package.json</code> 中添加：</p>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;packageManager&quot;</span><span class="punctuation">:</span> <span class="string">&quot;pnpm@11.1.0&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>注意 pnpm v11 要求 Node.js 22+</p>
-</blockquote>
-<h2 id="3-把时间设置为一周"><a href="#3-把时间设置为一周" class="headerlink" title="3. 把时间设置为一周"></a>3. 把时间设置为一周</h2><p>pnpm v11 在项目根目录会创建 <code>pnpm-workspace.yaml</code> 文件，可以直接修改该文件进行配置。</p>
-<p>我们可以把时间设置为一周的时间 1440*7 &#x3D; <code>10080</code></p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">minimumReleaseAge:</span> <span class="number">10080</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="4-常见取值"><a href="#4-常见取值" class="headerlink" title="4. 常见取值"></a>4. 常见取值</h2><p><code>minimumReleaseAge</code> 的单位是 <strong>分钟</strong> 。</p>
-<table>
-<thead>
-<tr>
-<th>场景</th>
-<th align="right">配置值</th>
-<th>含义</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>不启用延迟</td>
-<td align="right"><code>0</code></td>
-<td>立即允许安装新版本</td>
-</tr>
-<tr>
-<td>保守开发环境</td>
-<td align="right"><code>60</code></td>
-<td>延迟 1 小时</td>
-</tr>
-<tr>
-<td>推荐默认值</td>
-<td align="right"><code>1440</code></td>
-<td>延迟 1 天</td>
-</tr>
-<tr>
-<td>更严格生产环境</td>
-<td align="right"><code>2880</code></td>
-<td>延迟 2 天</td>
-</tr>
-<tr>
-<td>高安全项目</td>
-<td align="right"><code>10080</code></td>
-<td>延迟 7 天</td>
-</tr>
-</tbody></table>
-<h2 id="5-为特定依赖设置例外"><a href="#5-为特定依赖设置例外" class="headerlink" title="5. 为特定依赖设置例外"></a>5. 为特定依赖设置例外</h2><p>有些包可能需要紧急升级，比如安全修复、内部包、框架核心包。这时可以使用 <code>minimumReleaseAgeExclude</code> 。</p>
-<h3 id="5-1-排除指定包"><a href="#5-1-排除指定包" class="headerlink" title="5.1 排除指定包"></a>5.1 排除指定包</h3><figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">minimumReleaseAge:</span> <span class="number">1440</span></span><br><span class="line"></span><br><span class="line"><span class="attr">minimumReleaseAgeExclude:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">webpack</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">react</span></span><br></pre></td></tr></table></figure>
-
-<p>这表示：大多数依赖必须发布满 1 天才能安装，但 webpack 和 react 可以立即安装。pnpm <a href="https://pnpm.io/zh/settings">官方文档</a> 说明，minimumReleaseAgeExclude 会按包名排除，并作用于该包的所有版本。</p>
-<h3 id="5-2-排除组织作用域包"><a href="#5-2-排除组织作用域包" class="headerlink" title="5.2 排除组织作用域包"></a>5.2 排除组织作用域包</h3><p>从 pnpm v10.17.0 开始， <code>minimumReleaseAgeExclude</code>  支持模式匹配。</p>
-<p>例如，允许公司内部包立即安装：</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">minimumReleaseAge:</span> <span class="number">1440</span></span><br><span class="line"></span><br><span class="line"><span class="attr">minimumReleaseAgeExclude:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">&quot;@myorg/*&quot;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="5-3-只排除特定版本"><a href="#5-3-只排除特定版本" class="headerlink" title="5.3 只排除特定版本"></a>5.3 只排除特定版本</h3><p>从 pnpm v10.19.0 开始，minimumReleaseAgeExclude 支持精确版本，也支持用 || 写多个版本。</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">minimumReleaseAge:</span> <span class="number">1440</span></span><br><span class="line"></span><br><span class="line"><span class="attr">minimumReleaseAgeExclude:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">nx@21.6.5</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">webpack@4.47.0</span> <span class="string">||</span> <span class="number">5.102</span><span class="number">.1</span></span><br></pre></td></tr></table></figure>
-
-<p>这比直接排除整个包更安全，适合临时放行某个已验证版本。</p>
-<h2 id="6-推荐的项目配置模板"><a href="#6-推荐的项目配置模板" class="headerlink" title="6. 推荐的项目配置模板"></a>6. 推荐的项目配置模板</h2><p>下面是一份适合团队项目直接落地的配置：</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">packages:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">&quot;apps/*&quot;</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">&quot;packages/*&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 新发布版本至少等待 24 小时再安装</span></span><br><span class="line"><span class="attr">minimumReleaseAge:</span> <span class="number">1440</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 显式开启严格模式：如果没有满足发布时间要求的版本，则安装失败</span></span><br><span class="line"><span class="attr">minimumReleaseAgeStrict:</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 私有包或已验证的紧急修复版本可以临时放行</span></span><br><span class="line"><span class="attr">minimumReleaseAgeExclude:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">&quot;@your-company/*&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p><code>minimumReleaseAgeStrict</code> 是 pnpm v11 新增的行为控制项。官方文档说明：当没有版本满足 <code>minimumReleaseAge</code> 约束时， <code>true</code> 会让解析失败， <code>false</code> 则允许回退到不满足约束的版本；如果你显式配置了 <code>minimumReleaseAge</code> ，严格模式默认开启。</p>
-<h2 id="7-在-CI-中引入"><a href="#7-在-CI-中引入" class="headerlink" title="7. 在 CI 中引入"></a>7. 在 CI 中引入</h2><p>CI 里建议同时做两件事：</p>
-<p>第一，固定 pnpm 版本：</p>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;packageManager&quot;</span><span class="punctuation">:</span> <span class="string">&quot;pnpm@11.1.0&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
-
-<p>第二，使用锁文件安装：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pnpm install --frozen-lockfile</span><br></pre></td></tr></table></figure>
-
-<p>这样 CI 不会随意解析新版本， <code>minimumReleaseAge</code> 主要会在新增依赖、更新依赖、刷新 lockfile 时发挥作用。</p>
-<p>典型 GitHub Actions 示例：</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">name:</span> <span class="string">CI</span></span><br><span class="line"></span><br><span class="line"><span class="attr">on:</span></span><br><span class="line">  <span class="attr">pull_request:</span></span><br><span class="line">  <span class="attr">push:</span></span><br><span class="line">    <span class="attr">branches:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">main</span></span><br><span class="line"></span><br><span class="line"><span class="attr">jobs:</span></span><br><span class="line">  <span class="attr">test:</span></span><br><span class="line">    <span class="attr">runs-on:</span> <span class="string">ubuntu-latest</span></span><br><span class="line"></span><br><span class="line">    <span class="attr">steps:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">uses:</span> <span class="string">actions/checkout@v4</span></span><br><span class="line"></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">uses:</span> <span class="string">pnpm/action-setup@v4</span></span><br><span class="line"></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">uses:</span> <span class="string">actions/setup-node@v4</span></span><br><span class="line">        <span class="attr">with:</span></span><br><span class="line">          <span class="attr">node-version:</span> <span class="number">22</span></span><br><span class="line">          <span class="attr">cache:</span> <span class="string">pnpm</span></span><br><span class="line"></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">run:</span> <span class="string">pnpm</span> <span class="string">install</span> <span class="string">--frozen-lockfile</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">run:</span> <span class="string">pnpm</span> <span class="string">test</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="8-如何验证配置是否生效"><a href="#8-如何验证配置是否生效" class="headerlink" title="8. 如何验证配置是否生效"></a>8. 如何验证配置是否生效</h2><p>可以尝试安装一个刚发布不久的版本：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pnpm add 某个刚发布的包@latest</span><br></pre></td></tr></table></figure>
-
-<p>如果该包版本发布时间没有达到配置的分钟数，pnpm 会避免解析该版本，或者在严格模式下直接失败。</p>
-<p>更常见的验证方式是在更新依赖时观察 lockfile：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pnpm update</span><br></pre></td></tr></table></figure>
-<p>如果最新版本太新，pnpm 不会马上把它写入 <code>pnpm-lock.yaml</code>。</p>
-<h2 id="9-常见问题"><a href="#9-常见问题" class="headerlink" title="9. 常见问题"></a>9. 常见问题</h2><p><strong>Q1</strong>： <code>minimumReleaseAge</code> 会影响传递依赖吗？</p>
-<p>会。pnpm 官方文档明确说明该配置适用于所有依赖，包括传递依赖。</p>
-<p><strong>Q2</strong> ：pnpm v11 还需要手动配置吗？</p>
-<p>pnpm v11 默认 minimumReleaseAge: 1440，也就是默认延迟 1 天。<br>如果你想更严格，需要手动改成 2880 或 10080；如果你想关闭，可以设置为：</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">minimumReleaseAge:</span> <span class="number">0</span></span><br></pre></td></tr></table></figure>
-
-<p>pnpm 官方供应链安全文档也说明，在 pnpm v11 中该值默认是 1440，如需退出该行为，可在 pnpm-workspace.yaml 中设置为 0。</p>
-<p><strong>Q3</strong> ：急需升级安全补丁怎么办？</p>
-<p>推荐只临时放行具体版本：</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">minimumReleaseAge:</span> <span class="number">1440</span></span><br><span class="line"></span><br><span class="line"><span class="attr">minimumReleaseAgeExclude:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">vite@x.y.z</span></span><br></pre></td></tr></table></figure>
-
-<p>处理完成后，再删除这个例外。</p>
-<p><strong>Q4</strong>：私有 registry 没有发布时间怎么办？</p>
-<p>pnpm v11 提供了 <code>minimumReleaseAgeIgnoreMissingTime</code>。当为 true 时，如果 registry 元数据没有 time 字段，pnpm 会跳过该包的 <code>minimumReleaseAge</code> 检查；如果设为 false，则在缺失时间信息时失败。</p>
-<p>更严格的配置：</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">minimumReleaseAge:</span> <span class="number">1440</span></span><br><span class="line"><span class="attr">minimumReleaseAgeIgnoreMissingTime:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
-<h2 id="10-最佳实践总结"><a href="#10-最佳实践总结" class="headerlink" title="10. 最佳实践总结"></a>10. 最佳实践总结</h2><p>推荐从这个配置开始：</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">minimumReleaseAge:</span> <span class="number">1440</span></span><br><span class="line"><span class="attr">minimumReleaseAgeStrict:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-
-<p>如果是 monorepo 或企业项目，可以加上内部包例外：</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">packages:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">&quot;apps/*&quot;</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">&quot;packages/*&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">minimumReleaseAge:</span> <span class="number">1440</span></span><br><span class="line"><span class="attr">minimumReleaseAgeStrict:</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="attr">minimumReleaseAgeExclude:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">&quot;@your-company/*&quot;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="11-其他包管理器如何设置"><a href="#11-其他包管理器如何设置" class="headerlink" title="11. 其他包管理器如何设置"></a>11. 其他包管理器如何设置</h2><ul>
-<li><strong>npm</strong> : 在 <code>.npmrc</code> 中， <code>min-release-age=X</code> 。X 是 <strong>天</strong> 的数量。需要 npm <code>v11.10.0</code> 或更高版本。</li>
-<li><strong>Yarn</strong> : 在 <code>.yarnrc.yml</code> 中，设置 <code>npmMinimalAgeGate: X</code>。<br>X 是持续时间（支持的日期单位是 ms, s, m, h, d, w，例如 7d）。如果没有指定持续时间，则解析为分钟（即 npmMinimalAgeGate: 1440 等于 npmMinimalAgeGate: 1440m）。需要 <code>Yarn v4.11</code> 或更高版本</li>
-<li><strong>Bun</strong> : 在 <code>bunfig.toml</code> 中，设置：  <figure class="highlight toml"><table><tr><td class="code"><pre><span class="line"><span class="section">[install]</span></span><br><span class="line"></span><br><span class="line"><span class="attr">minimumReleaseAge</span> = X</span><br></pre></td></tr></table></figure>
-  X 是秒数。需要 Bun <code>v1.3.0</code> 或更高版本。</li>
-</ul>
-<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
-<li><a href="https://pnpm.io/zh/supply-chain-security">缓解供应链攻击 - pnpm</a></li>
-<li><a href="https://pnpm.io/zh/settings">设置（pnpm-workspace.yaml） - pnpm</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>教程</category>
-      </categories>
-      <tags>
-        <tag>开发者安全</tag>
-        <tag>pnpm</tag>
       </tags>
   </entry>
   <entry>
