@@ -16,7 +16,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://img.nep.me/ooo/cover-opus-video-skill.webp">
 <meta property="article:published_time" content="2026-10-18T06:56:26.000Z">
-<meta property="article:modified_time" content="2026-10-18T07:08:56.071Z">
+<meta property="article:modified_time" content="2026-10-19T04:01:04.165Z">
 <meta property="article:author" content="Mr. O">
 <meta property="article:tag" content="AI">
 <meta property="article:tag" content="Claude">
@@ -26,7 +26,7 @@
 <meta name="twitter:image" content="https://img.nep.me/ooo/cover-opus-video-skill.webp">
 <link rel="canonical" href="https://ooo.run/post/ai-animation-skills-code-generated-motion-videos.html">
 
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"AI 动画制作 Skill 分享：用代码生成动态视频与手绘动画","name":"AI 动画制作 Skill 分享：用代码生成动态视频与手绘动画 | O's World","description":"告别逐帧渲染：当大模型用代码直接“写”出动态视频与手绘动画提到 AI 生成视频，大多数人的第一反应是基于扩散模型（Diffusion）的像素级渲染——输入一段提示词，等待几分钟，然后祈祷生成的画面里人物手指数量正常、文字没有扭曲成乱码。在影视特效或实景空镜领域，像素生成确实惊艳；但在动态图形设计（Motion Graphics, MG）、技术科普动画以及叙事...","url":"https://ooo.run/post/ai-animation-skills-code-generated-motion-videos.html","inLanguage":"zh-CN","isPartOf":{"@type":"WebSite","name":"O's World","url":"https://ooo.run/"},"image":["https://img.nep.me/ooo/cover-opus-video-skill.webp"],"mainEntityOfPage":"https://ooo.run/post/ai-animation-skills-code-generated-motion-videos.html","datePublished":"2026-10-18T06:56:26.000Z","dateModified":"2026-10-18T07:08:56.071Z","author":{"@type":"Person","name":"Mr. O"},"publisher":{"@type":"Organization","name":"O's World"},"keywords":"AI, Claude, Opus 5.5, 动画制作"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"AI 动画制作 Skill 分享：用代码生成动态视频与手绘动画","name":"AI 动画制作 Skill 分享：用代码生成动态视频与手绘动画 | O's World","description":"告别逐帧渲染：当大模型用代码直接“写”出动态视频与手绘动画提到 AI 生成视频，大多数人的第一反应是基于扩散模型（Diffusion）的像素级渲染——输入一段提示词，等待几分钟，然后祈祷生成的画面里人物手指数量正常、文字没有扭曲成乱码。在影视特效或实景空镜领域，像素生成确实惊艳；但在动态图形设计（Motion Graphics, MG）、技术科普动画以及叙事...","url":"https://ooo.run/post/ai-animation-skills-code-generated-motion-videos.html","inLanguage":"zh-CN","isPartOf":{"@type":"WebSite","name":"O's World","url":"https://ooo.run/"},"image":["https://img.nep.me/ooo/cover-opus-video-skill.webp"],"mainEntityOfPage":"https://ooo.run/post/ai-animation-skills-code-generated-motion-videos.html","datePublished":"2026-10-18T06:56:26.000Z","dateModified":"2026-10-19T04:01:04.165Z","author":{"@type":"Person","name":"Mr. O"},"publisher":{"@type":"Organization","name":"O's World"},"keywords":"AI, Claude, Opus 5.5, 动画制作"}</script>
 
 <script>
   (function () {
@@ -488,7 +488,7 @@
         </header>
         <div class="toc-content">
           
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81-%E4%B8%BA%E4%BB%80%E4%B9%88%E2%80%9C%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90%E8%A7%86%E9%A2%91%E2%80%9D%E6%AD%A3%E5%9C%A8%E6%88%90%E4%B8%BA%E6%96%B0%E8%8C%83%E5%BC%8F%EF%BC%9F"><span class="toc-text">一、 为什么“代码生成视频”正在成为新范式？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81-%E4%B8%A4%E5%A4%A7%E6%A0%87%E6%9D%86%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90"><span class="toc-text">二、 两大标杆开源项目深度解析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-mg-styles-15%EF%BC%9A15-%E7%A7%8D%E5%95%86%E7%94%A8%E6%B0%B4%E5%87%86-MG-%E9%A3%8E%E6%A0%BC%E7%9A%84%E2%80%9C%E6%8F%90%E7%A4%BA%E8%AF%8D%E4%B8%8E%E6%BA%90%E7%A0%81%E5%AD%97%E5%85%B8%E2%80%9D"><span class="toc-text">1. mg-styles-15：15 种商用水准 MG 风格的“提示词与源码字典”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-hand-drawn-storybook-animation-skill%EF%BC%9A%E5%9C%A8%E6%B5%8F%E8%A7%88%E5%99%A8%E9%87%8C%E2%80%9C%E7%8E%B0%E5%9C%BA%E4%BD%9C%E7%94%BB%E2%80%9D%E7%9A%84%E5%8F%99%E4%BA%8B%E5%8A%A8%E7%94%BB%E5%B7%A5%E4%BD%9C%E6%B5%81"><span class="toc-text">2. hand-drawn-storybook-animation-skill：在浏览器里“现场作画”的叙事动画工作流</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81-%E8%A7%A3%E5%89%96%E5%BA%95%E5%B1%82%E9%80%BB%E8%BE%91%EF%BC%9A%E4%B8%80%E4%B8%AA%E4%BC%98%E7%A7%80%E7%9A%84%E2%80%9C%E5%8A%A8%E6%80%81%E8%A7%86%E9%A2%91-Skill%E2%80%9D%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84%EF%BC%9F"><span class="toc-text">三、 解剖底层逻辑：一个优秀的“动态视频 Skill”是如何工作的？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E8%A7%86%E8%A7%89%E4%B8%8E%E5%8A%A8%E6%95%88%E7%9A%84%E5%8E%9F%E8%AF%AD%E6%8A%BD%E8%B1%A1%EF%BC%88Motion-Primitives%EF%BC%89"><span class="toc-text">1. 视觉与动效的原语抽象（Motion Primitives）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%97%B6%E9%97%B4%E8%BD%B4%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA%E9%A9%B1%E5%8A%A8%EF%BC%88Timeline-State-Machine%EF%BC%89"><span class="toc-text">2. 时间轴与状态机驱动（Timeline &amp; State Machine）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E7%A8%8B%E5%BA%8F%E5%8C%96%E9%9F%B3%E9%A2%91%E5%90%88%E6%88%90%EF%BC%88Procedural-Audio-TTS-Alignment%EF%BC%89"><span class="toc-text">3. 程序化音频合成（Procedural Audio &amp; TTS Alignment）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E7%A1%AE%E5%AE%9A%E6%80%A7%E5%BD%95%E5%88%B6%E4%B8%8E%E5%AF%BC%E5%87%BA%EF%BC%88Deterministic-Rendering%EF%BC%89"><span class="toc-text">4. 确定性录制与导出（Deterministic Rendering）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81-%E7%BB%93%E8%AF%AD%EF%BC%9A%E7%9F%A5%E8%AF%86%E4%BC%A0%E6%92%AD%E4%B8%8E%E4%B8%AA%E4%BA%BA%E8%A1%A8%E8%BE%BE%E7%9A%84%E2%80%9C%E5%8A%A8%E7%94%BB%E6%97%B6%E4%BB%A3%E2%80%9D"><span class="toc-text">四、 结语：知识传播与个人表达的“动画时代”</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81-%E4%B8%BA%E4%BB%80%E4%B9%88%E2%80%9C%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90%E8%A7%86%E9%A2%91%E2%80%9D%E6%AD%A3%E5%9C%A8%E6%88%90%E4%B8%BA%E6%96%B0%E8%8C%83%E5%BC%8F%EF%BC%9F"><span class="toc-text">一、 为什么“代码生成视频”正在成为新范式？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81-%E4%B8%A4%E5%A4%A7%E6%A0%87%E6%9D%86%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90"><span class="toc-text">三、 两大标杆开源项目深度解析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-mg-styles-15%EF%BC%9A15-%E7%A7%8D%E5%95%86%E7%94%A8%E6%B0%B4%E5%87%86-MG-%E9%A3%8E%E6%A0%BC%E7%9A%84%E2%80%9C%E6%8F%90%E7%A4%BA%E8%AF%8D%E4%B8%8E%E6%BA%90%E7%A0%81%E5%AD%97%E5%85%B8%E2%80%9D"><span class="toc-text">1. mg-styles-15：15 种商用水准 MG 风格的“提示词与源码字典”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-hand-drawn-storybook-animation-skill%EF%BC%9A%E5%9C%A8%E6%B5%8F%E8%A7%88%E5%99%A8%E9%87%8C%E2%80%9C%E7%8E%B0%E5%9C%BA%E4%BD%9C%E7%94%BB%E2%80%9D%E7%9A%84%E5%8F%99%E4%BA%8B%E5%8A%A8%E7%94%BB%E5%B7%A5%E4%BD%9C%E6%B5%81"><span class="toc-text">2. hand-drawn-storybook-animation-skill：在浏览器里“现场作画”的叙事动画工作流</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-lemo-opuscar%EF%BC%9A%E6%8A%8A%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%8F%98%E6%88%90%E4%BD%A0%E7%9A%84%E2%80%9C%E7%A7%81%E4%BA%BA%E5%BE%AE%E7%94%B5%E5%BD%B1%E5%88%B6%E7%89%87%E5%8E%82%E2%80%9D"><span class="toc-text">3. lemo-opuscar：把大模型变成你的“私人微电影制片厂”</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81-%E8%A7%A3%E5%89%96%E5%BA%95%E5%B1%82%E9%80%BB%E8%BE%91%EF%BC%9A%E4%B8%80%E4%B8%AA%E4%BC%98%E7%A7%80%E7%9A%84%E2%80%9C%E5%8A%A8%E6%80%81%E8%A7%86%E9%A2%91-Skill%E2%80%9D%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84%EF%BC%9F"><span class="toc-text">三、 解剖底层逻辑：一个优秀的“动态视频 Skill”是如何工作的？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E8%A7%86%E8%A7%89%E4%B8%8E%E5%8A%A8%E6%95%88%E7%9A%84%E5%8E%9F%E8%AF%AD%E6%8A%BD%E8%B1%A1%EF%BC%88Motion-Primitives%EF%BC%89"><span class="toc-text">1. 视觉与动效的原语抽象（Motion Primitives）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%97%B6%E9%97%B4%E8%BD%B4%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA%E9%A9%B1%E5%8A%A8%EF%BC%88Timeline-State-Machine%EF%BC%89"><span class="toc-text">2. 时间轴与状态机驱动（Timeline &amp; State Machine）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E7%A8%8B%E5%BA%8F%E5%8C%96%E9%9F%B3%E9%A2%91%E5%90%88%E6%88%90%EF%BC%88Procedural-Audio-TTS-Alignment%EF%BC%89"><span class="toc-text">3. 程序化音频合成（Procedural Audio &amp; TTS Alignment）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E7%A1%AE%E5%AE%9A%E6%80%A7%E5%BD%95%E5%88%B6%E4%B8%8E%E5%AF%BC%E5%87%BA%EF%BC%88Deterministic-Rendering%EF%BC%89"><span class="toc-text">4. 确定性录制与导出（Deterministic Rendering）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81-%E7%BB%93%E8%AF%AD%EF%BC%9A%E7%9F%A5%E8%AF%86%E4%BC%A0%E6%92%AD%E4%B8%8E%E4%B8%AA%E4%BA%BA%E8%A1%A8%E8%BE%BE%E7%9A%84%E2%80%9C%E5%8A%A8%E7%94%BB%E6%97%B6%E4%BB%A3%E2%80%9D"><span class="toc-text">四、 结语：知识传播与个人表达的“动画时代”</span></a></li></ol>
           
         </div>
       </section>
@@ -600,34 +600,39 @@
 </ol>
 <p>而 <strong>LLM + Agent Skill（技能包）</strong> 的思路，则是将专业动画师的审美规范、物理运动规律、分镜逻辑和音频合成 API 封装成标准化的上下文规则。大模型化身全栈动画工程师，直接调用 Canvas、SVG、WebGL 以及 Web Audio API，把“想法”编译成可交互、可录制、可二次修改的动态视频。</p>
 <hr>
-<h2 id="二、-两大标杆开源项目深度解析"><a href="#二、-两大标杆开源项目深度解析" class="headerlink" title="二、 两大标杆开源项目深度解析"></a>二、 两大标杆开源项目深度解析</h2><p>这两个项目恰好代表了代码生成视频的两个核心方向：一个是追求<strong>极致视觉风格与商用质感的 MG 动态设计</strong>，另一个则是打通<strong>叙事、分镜与音画同步的全流程绘本动画 Skill</strong>。</p>
+<h2 id="三、-两大标杆开源项目深度解析"><a href="#三、-两大标杆开源项目深度解析" class="headerlink" title="三、 两大标杆开源项目深度解析"></a>三、 两大标杆开源项目深度解析</h2><p>这三个项目恰好代表了“代码生成视频”从<strong>高燃视觉片段</strong>到<strong>垂直绘本工作流</strong>，再到<strong>全能型微电影制片厂</strong>的完整生态演进：</p>
 <table>
 <thead>
 <tr>
 <th align="left">维度</th>
-<th align="left"><strong>mg-styles-15</strong></th>
-<th align="left"><strong>hand-drawn-storybook-animation-skill</strong></th>
+<th align="left"><code>mg-styles-15</code> (Vincentwei1021)</th>
+<th align="left"><code>hand-drawn-storybook-animation-skill</code> (lhlGitHub)</th>
+<th align="left"><code>lemo-opuscar</code> (lemomo-ai)</th>
 </tr>
 </thead>
 <tbody><tr>
 <td align="left"><strong>核心定位</strong></td>
-<td align="left">达到商用水准的 15 种 MG 动态设计风格库与提示词基准</td>
+<td align="left">商用水准的 15 种 MG 动态设计风格库与提示词基准</td>
 <td align="left">全流程手绘水彩绘本动画 Claude Skill 制作工作流</td>
+<td align="left">纯代码驱动的本地微电影制片厂 Skill（含 43+ 核心风格与 OPUSCAR 98 画廊）</td>
 </tr>
 <tr>
 <td align="left"><strong>视觉呈现</strong></td>
-<td align="left">涵盖扁平矢量、等轴 2.5D、3D 渲染、赛博朋克 HUD 等 15 种风格</td>
-<td align="left">笔触级动态手绘、水彩晕染、真实纸张翻页与电影级运镜</td>
+<td align="left">扁平矢量、等轴 2.5D、3D 渲染、赛博朋克 HUD 等 15 种风格</td>
+<td align="left">笔触级动态手绘、水彩晕染、真实纸张翻页与电影运镜</td>
+<td align="left">涵盖油画厚涂、水彩、东亚传统美学等数十种 2D&#x2F;3D 艺术电影风格</td>
 </tr>
 <tr>
-<td align="left"><strong>音频方案</strong></td>
+<td align="left"><strong>音频与混音</strong></td>
 <td align="left">纯代码程序化生成配乐（BGM）与动作同步音效（SFX）</td>
 <td align="left">自动生成配乐 + 接入 TTS（如豆包语音）实现逐句旁白对齐</td>
+<td align="left">完整的声音指导体系：支持语音旁白、原创配乐与多轨混音（Mixing）</td>
 </tr>
 <tr>
-<td align="left"><strong>核心价值</strong></td>
-<td align="left">提供开箱即用的高审美 Prompt 模板与纯代码音画生成参考</td>
-<td align="left">零绘画与剪辑基础，将文本故事一键转化为数分钟的叙事动画</td>
+<td align="left"><strong>工程架构</strong></td>
+<td align="left">单文件&#x2F;纯前端源码 + 结构化高审美 Prompt 模板</td>
+<td align="left">浏览器实时笔触绘制 + 分镜脚本驱动</td>
+<td align="left">三层工业级架构：<code>DIRECTOR.md</code>（导演）+ <code>TECHNIQUE.md</code>（工程）+ <code>STYLE.md</code>（美术）</td>
 </tr>
 </tbody></table>
 <hr>
@@ -652,6 +657,20 @@
 <li><strong>配音配乐一条龙合成</strong>：动画的灵魂在于声音。该 Skill 支持自动生成契合故事氛围的背景音乐，并集成了自然流畅的语音合成（如豆包 TTS 旁白）。系统会自动根据每一句台词的时长计算动画节拍，做到旁白念到哪里、画笔就画到哪里，实现严丝合缝的音画同步。</li>
 <li><strong>极简的集成方式</strong>：对于习惯使用 Claude Code 的开发者或创作者，只需将仓库克隆下来，把技能目录复制到本地的 <code>.claude/skills/</code> 目录下即可一键激活。输入一段故事构想，剩下的分镜拆解、代码编写、音频对齐全部由 Agent 自动闭环。</li>
 </ul>
+<h3 id="3-lemo-opuscar：把大模型变成你的“私人微电影制片厂”"><a href="#3-lemo-opuscar：把大模型变成你的“私人微电影制片厂”" class="headerlink" title="3. lemo-opuscar：把大模型变成你的“私人微电影制片厂”"></a>3. <code>lemo-opuscar</code>：把大模型变成你的“私人微电影制片厂”</h3><p>如果既想要 <code>mg-styles-15</code> 丰富的风格库，又想要 <code>storybook-skill</code> 的完整叙事与成片管线，那么 <a target="_blank" rel="noopener" href="https://github.com/lemomo-ai/lemo-opuscar"><strong>lemomo-ai&#x2F;lemo-opuscar</strong></a> 就是将这两者推向极致的集大成者。</p>
+<p><img src="https://img.nep.me/ooo/lemo-opuscar-cover.webp" alt="lemo-opuscar-cover.jpg"></p>
+<p><code>lemo-opuscar</code> 是一个专为 Claude Code、Codex CLI 等编程智能体打造的开源微电影制作 Skill。它在完全不使用任何视频生成大模型的前提下，仅凭代码就构建了 <strong>43+ 种可直接复用的电影风格库（更包含扩展的 OPUSCAR 98 全景风格画廊）</strong>。“选一个风格，带上你自己的故事，让你的编程 Agent 来当导演”是它的核心设计哲学：</p>
+<ul>
+<li><strong>三层解耦的“制片厂”架构</strong>：为什么 <code>lemo-opuscar</code> 拍出来的代码短片没有“PPT 感”，反而充满电影质感？因为它让 Agent 在动手写代码前，先阅读三份核心指导手册：<ol>
+<li><strong><code>DIRECTOR.md</code>（导演手册）</strong>：指导 Agent 如何讲故事、把控声音与画面节奏、设计摄影机运动（Camera）、调度角色表演（Performance）以及进行自我质量检查。</li>
+<li><strong><code>TECHNIQUE.md</code>（技术工程手册）</strong>：解决底层构建问题，涵盖逐帧渲染（Frame-by-frame rendering）、人声合成、配乐生成与多轨混音（Mixing），最终通过 Node.js、Python 与 FFmpeg 直接在本地输出 1920×1080、24fps 的标准电影级视频文件。</li>
+<li><strong><code>styles/&lt;style&gt;/STYLE.md</code>（美术与听觉设定集）</strong>：定义特定风格的视觉笔触与听觉氛围（涵盖油画厚涂 Impasto Oil Painting、手绘水彩、东亚传统美学等 2D&#x2F;3D 风格），实现“视觉风格高度固定，故事内容完全自由”。</li>
+</ol>
+</li>
+<li><strong>交互式导演工作流（Storyboard First）</strong>：你只需用自然语言下达指令（例如：<em>“用水彩风格拍一部 45 秒关于我家咖啡庄园的短片，温暖的女声旁白”</em>）。Agent 会在开拍前主动向你确认一次细节与素材偏好，并询问是否需要先看分镜（Storyboard）。如果你选择“是”，它会先用真实的目标风格渲染出关键帧分镜供你审阅，确认无误后再自动耗时 30–60 分钟完成整部成片的逐帧渲染与混音合成。</li>
+<li><strong>一键插件化安装</strong>：支持直接通过 Claude 插件市场安装（<code>claude plugin marketplace add lemomo-ai/lemo-opuscar</code>），也可以直接将 <code>plugin/skills/lemo-opuscar/</code> 复制到其他编程 Agent 的技能目录中即插即用。</li>
+</ul>
+<p>视频风格预览： <a target="_blank" rel="noopener" href="https://lemomo-ai.github.io/lemo-opuscar/">https://lemomo-ai.github.io/lemo-opuscar/</a></p>
 <hr>
 <h2 id="三、-解剖底层逻辑：一个优秀的“动态视频-Skill”是如何工作的？"><a href="#三、-解剖底层逻辑：一个优秀的“动态视频-Skill”是如何工作的？" class="headerlink" title="三、 解剖底层逻辑：一个优秀的“动态视频 Skill”是如何工作的？"></a>三、 解剖底层逻辑：一个优秀的“动态视频 Skill”是如何工作的？</h2><p>把这两个项目放在一起看，我们会发现“大模型制作动态视频 Skill”背后有一套非常清晰的工程架构。如果你也想基于这些项目定制自己的视频生成 Skill，核心在于抓准以下四个层面：</p>
 <h3 id="1-视觉与动效的原语抽象（Motion-Primitives）"><a href="#1-视觉与动效的原语抽象（Motion-Primitives）" class="headerlink" title="1. 视觉与动效的原语抽象（Motion Primitives）"></a>1. 视觉与动效的原语抽象（Motion Primitives）</h3><p>大模型直接写底层图形代码容易陷入细节泥潭。优秀的动画 Skill 会在指令或脚手架中规范好动效原语——比如强制规定使用特定的三次贝塞尔曲线（Cubic Bezier）而非默认线性过渡；定义好 SVG <code>stroke-dashoffset</code> 的路径生长计算公式；或者预设好噪点纹理滤镜（SVG Filter）来模拟纸张颗粒感与手绘抖动。</p>
