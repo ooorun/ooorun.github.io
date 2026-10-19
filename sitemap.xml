@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://ooo.run/post/claude-p5js-p5brush-hand-painted-animation.html</loc>
+    
+    <lastmod>2026-10-19</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://ooo.run/post/ai-animation-skills-code-generated-motion-videos.html</loc>
     
     <lastmod>2026-10-19</lastmod>
@@ -308,7 +317,7 @@
   </url>
   
   <url>
-    <loc>https://ooo.run/post/use-docker-run-memeos.html</loc>
+    <loc>https://ooo.run/post/use-docker-run-gitea.html</loc>
     
     <lastmod>2026-06-24</lastmod>
     
@@ -317,7 +326,7 @@
   </url>
   
   <url>
-    <loc>https://ooo.run/post/use-docker-run-gitea.html</loc>
+    <loc>https://ooo.run/post/use-docker-run-memeos.html</loc>
     
     <lastmod>2026-06-24</lastmod>
     
@@ -353,6 +362,15 @@
   </url>
   
   <url>
+    <loc>https://ooo.run/post/openai-codex-support-login-by-chatgpt-plus.html</loc>
+    
+    <lastmod>2026-06-24</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://ooo.run/post/docker-project-easy-images.html</loc>
     
     <lastmod>2026-06-24</lastmod>
@@ -371,6 +389,15 @@
   </url>
   
   <url>
+    <loc>https://ooo.run/post/how-to-add-ssh-key-to-github.html</loc>
+    
+    <lastmod>2026-06-24</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://ooo.run/post/how-to-install-homebrew-on-macos.html</loc>
     
     <lastmod>2026-06-24</lastmod>
@@ -380,7 +407,7 @@
   </url>
   
   <url>
-    <loc>https://ooo.run/post/how-to-add-ssh-key-to-github.html</loc>
+    <loc>https://ooo.run/post/how-to-install-nodejs.html</loc>
     
     <lastmod>2026-06-24</lastmod>
     
@@ -399,24 +426,6 @@
   
   <url>
     <loc>https://ooo.run/post/use-nginx-proxy-manager.html</loc>
-    
-    <lastmod>2026-06-24</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://ooo.run/post/how-to-install-nodejs.html</loc>
-    
-    <lastmod>2026-06-24</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://ooo.run/post/openai-codex-support-login-by-chatgpt-plus.html</loc>
     
     <lastmod>2026-06-24</lastmod>
     
@@ -488,7 +497,7 @@
   </url>
   
   <url>
-    <loc>https://ooo.run/post/anthropic-announced-claude-mythos-preview.html</loc>
+    <loc>https://ooo.run/post/animation-cheatsheet.html</loc>
     
     <lastmod>2026-06-24</lastmod>
     
@@ -497,7 +506,7 @@
   </url>
   
   <url>
-    <loc>https://ooo.run/post/animation-cheatsheet.html</loc>
+    <loc>https://ooo.run/post/anthropic-announced-claude-mythos-preview.html</loc>
     
     <lastmod>2026-06-24</lastmod>
     
@@ -524,15 +533,6 @@
   </url>
   
   <url>
-    <loc>https://ooo.run/post/claude-code-show-5h-quota-without-plugin.html</loc>
-    
-    <lastmod>2026-06-24</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://ooo.run/post/chatgpt-business-enable-codex-device-code.html</loc>
     
     <lastmod>2026-06-24</lastmod>
@@ -542,7 +542,7 @@
   </url>
   
   <url>
-    <loc>https://ooo.run/post/cloudflare-free-tier.html</loc>
+    <loc>https://ooo.run/post/claude-code-show-5h-quota-without-plugin.html</loc>
     
     <lastmod>2026-06-24</lastmod>
     
@@ -552,6 +552,15 @@
   
   <url>
     <loc>https://ooo.run/post/claude-subscription-user-can-get-50-usd-extra-credit.html</loc>
+    
+    <lastmod>2026-06-24</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://ooo.run/post/cloudflare-free-tier.html</loc>
     
     <lastmod>2026-06-24</lastmod>
     
@@ -596,7 +605,7 @@
   </url>
   
   <url>
-    <loc>https://ooo.run/post/nginx-vs-caddy.html</loc>
+    <loc>https://ooo.run/post/mini-shai-hulud-check-and-defense.html</loc>
     
     <lastmod>2026-06-24</lastmod>
     
@@ -605,7 +614,7 @@
   </url>
   
   <url>
-    <loc>https://ooo.run/post/mini-shai-hulud-check-and-defense.html</loc>
+    <loc>https://ooo.run/post/nginx-vs-caddy.html</loc>
     
     <lastmod>2026-06-24</lastmod>
     
@@ -731,7 +740,7 @@
   </url>
   
   <url>
-    <loc>https://ooo.run/post/change-hexo-theme-to-anzhiyu.html</loc>
+    <loc>https://ooo.run/post/connect-linux-server-with-ssh-keys.html</loc>
     
     <lastmod>2026-06-24</lastmod>
     
@@ -740,7 +749,7 @@
   </url>
   
   <url>
-    <loc>https://ooo.run/post/connect-linux-server-with-ssh-keys.html</loc>
+    <loc>https://ooo.run/post/change-hexo-theme-to-anzhiyu.html</loc>
     
     <lastmod>2026-06-24</lastmod>
     
@@ -758,7 +767,7 @@
   </url>
   
   <url>
-    <loc>https://ooo.run/post/news-openai-releae-gpt-oss-model.html</loc>
+    <loc>https://ooo.run/post/how-to-make-money-from-internet.html</loc>
     
     <lastmod>2026-06-24</lastmod>
     
@@ -767,7 +776,7 @@
   </url>
   
   <url>
-    <loc>https://ooo.run/post/how-to-make-money-from-internet.html</loc>
+    <loc>https://ooo.run/post/news-openai-releae-gpt-oss-model.html</loc>
     
     <lastmod>2026-06-24</lastmod>
     
@@ -857,125 +866,6 @@
 
   
   <url>
-    <loc>https://ooo.run/tags/Docker/</loc>
-    <lastmod>2026-10-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://ooo.run/tags/Docker-Compose/</loc>
-    <lastmod>2026-10-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://ooo.run/tags/EasyImage/</loc>
-    <lastmod>2026-10-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://ooo.run/tags/%E5%9B%BE%E5%BA%8A/</loc>
-    <lastmod>2026-10-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://ooo.run/tags/Debian/</loc>
-    <lastmod>2026-10-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://ooo.run/tags/Linux/</loc>
-    <lastmod>2026-10-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://ooo.run/tags/Hexo/</loc>
-    <lastmod>2026-10-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://ooo.run/tags/Blog/</loc>
-    <lastmod>2026-10-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://ooo.run/tags/Twikoo/</loc>
-    <lastmod>2026-10-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://ooo.run/tags/Artalk/</loc>
-    <lastmod>2026-10-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://ooo.run/tags/Giscus/</loc>
-    <lastmod>2026-10-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://ooo.run/tags/Homebrew/</loc>
-    <lastmod>2026-10-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://ooo.run/tags/macOS/</loc>
-    <lastmod>2026-10-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://ooo.run/tags/GitHub/</loc>
-    <lastmod>2026-10-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://ooo.run/tags/SSH/</loc>
-    <lastmod>2026-10-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://ooo.run/tags/Nginx-Proxy-Manager/</loc>
-    <lastmod>2026-10-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://ooo.run/tags/HTTPS/</loc>
-    <lastmod>2026-10-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://ooo.run/tags/AI/</loc>
     <lastmod>2026-10-19</lastmod>
     <changefreq>weekly</changefreq>
@@ -1025,20 +915,6 @@
   </url>
   
   <url>
-    <loc>https://ooo.run/tags/Nodejs/</loc>
-    <lastmod>2026-10-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://ooo.run/tags/Windows/</loc>
-    <lastmod>2026-10-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://ooo.run/tags/%E5%AF%BC%E8%88%AA/</loc>
     <lastmod>2026-10-19</lastmod>
     <changefreq>weekly</changefreq>
@@ -1060,6 +936,20 @@
   </url>
   
   <url>
+    <loc>https://ooo.run/tags/Linux/</loc>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://ooo.run/tags/SSH/</loc>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://ooo.run/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/</loc>
     <lastmod>2026-10-19</lastmod>
     <changefreq>weekly</changefreq>
@@ -1067,14 +957,14 @@
   </url>
   
   <url>
-    <loc>https://ooo.run/tags/%E5%9F%9F%E5%90%8D/</loc>
+    <loc>https://ooo.run/tags/Hexo/</loc>
     <lastmod>2026-10-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://ooo.run/tags/%E5%BC%80%E6%BA%90/</loc>
+    <loc>https://ooo.run/tags/%E5%9F%9F%E5%90%8D/</loc>
     <lastmod>2026-10-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1102,14 +992,7 @@
   </url>
   
   <url>
-    <loc>https://ooo.run/tags/Codex-CLI/</loc>
-    <lastmod>2026-10-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://ooo.run/tags/%E7%BC%96%E7%A8%8B%E5%8A%A9%E6%89%8B/</loc>
+    <loc>https://ooo.run/tags/%E5%BC%80%E6%BA%90/</loc>
     <lastmod>2026-10-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1130,7 +1013,21 @@
   </url>
   
   <url>
-    <loc>https://ooo.run/tags/%E8%AE%B0%E8%B4%A6/</loc>
+    <loc>https://ooo.run/tags/Codex-CLI/</loc>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://ooo.run/tags/%E7%BC%96%E7%A8%8B%E5%8A%A9%E6%89%8B/</loc>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://ooo.run/tags/Docker/</loc>
     <lastmod>2026-10-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1151,6 +1048,20 @@
   </url>
   
   <url>
+    <loc>https://ooo.run/tags/Docker-Compose/</loc>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://ooo.run/tags/%E8%AE%B0%E8%B4%A6/</loc>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://ooo.run/tags/Memos/</loc>
     <lastmod>2026-10-19</lastmod>
     <changefreq>weekly</changefreq>
@@ -1159,13 +1070,6 @@
   
   <url>
     <loc>https://ooo.run/tags/Wallos/</loc>
-    <lastmod>2026-10-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://ooo.run/tags/DPanel/</loc>
     <lastmod>2026-10-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1214,6 +1118,13 @@
   </url>
   
   <url>
+    <loc>https://ooo.run/tags/DPanel/</loc>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://ooo.run/tags/OpenRouter/</loc>
     <lastmod>2026-10-19</lastmod>
     <changefreq>weekly</changefreq>
@@ -1249,6 +1160,104 @@
   </url>
   
   <url>
+    <loc>https://ooo.run/tags/Debian/</loc>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://ooo.run/tags/EasyImage/</loc>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://ooo.run/tags/%E5%9B%BE%E5%BA%8A/</loc>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://ooo.run/tags/Blog/</loc>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://ooo.run/tags/Twikoo/</loc>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://ooo.run/tags/Artalk/</loc>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://ooo.run/tags/Giscus/</loc>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://ooo.run/tags/GitHub/</loc>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://ooo.run/tags/Homebrew/</loc>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://ooo.run/tags/macOS/</loc>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://ooo.run/tags/Nodejs/</loc>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://ooo.run/tags/Windows/</loc>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://ooo.run/tags/Nginx-Proxy-Manager/</loc>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://ooo.run/tags/HTTPS/</loc>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://ooo.run/tags/Antigravity/</loc>
     <lastmod>2026-10-19</lastmod>
     <changefreq>weekly</changefreq>
@@ -1277,20 +1286,6 @@
   </url>
   
   <url>
-    <loc>https://ooo.run/tags/Claude-Mythos/</loc>
-    <lastmod>2026-10-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://ooo.run/tags/Anthropic/</loc>
-    <lastmod>2026-10-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://ooo.run/tags/vibe-coding/</loc>
     <lastmod>2026-10-19</lastmod>
     <changefreq>weekly</changefreq>
@@ -1306,6 +1301,20 @@
   
   <url>
     <loc>https://ooo.run/tags/UI/</loc>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://ooo.run/tags/Claude-Mythos/</loc>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://ooo.run/tags/Anthropic/</loc>
     <lastmod>2026-10-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1410,7 +1419,28 @@
   </url>
   
   <url>
-    <loc>https://ooo.run/tags/Cloudflare/</loc>
+    <loc>https://ooo.run/tags/p5-js/</loc>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://ooo.run/tags/p5-brush/</loc>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://ooo.run/tags/AI-Video/</loc>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://ooo.run/tags/%E5%8A%A8%E6%80%81%E8%A7%86%E9%A2%91/</loc>
     <lastmod>2026-10-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1418,6 +1448,13 @@
   
   <url>
     <loc>https://ooo.run/tags/Opus/</loc>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://ooo.run/tags/Cloudflare/</loc>
     <lastmod>2026-10-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1494,13 +1531,6 @@
   </url>
   
   <url>
-    <loc>https://ooo.run/tags/Gmail/</loc>
-    <lastmod>2026-10-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://ooo.run/tags/Google-IO/</loc>
     <lastmod>2026-10-19</lastmod>
     <changefreq>weekly</changefreq>
@@ -1523,6 +1553,13 @@
   
   <url>
     <loc>https://ooo.run/tags/Gemini/</loc>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://ooo.run/tags/Gmail/</loc>
     <lastmod>2026-10-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1571,14 +1608,14 @@
   </url>
   
   <url>
-    <loc>https://ooo.run/tags/Nginx/</loc>
+    <loc>https://ooo.run/tags/NPM/</loc>
     <lastmod>2026-10-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://ooo.run/tags/Caddy/</loc>
+    <loc>https://ooo.run/tags/%E5%AE%89%E5%85%A8/</loc>
     <lastmod>2026-10-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1599,14 +1636,14 @@
   </url>
   
   <url>
-    <loc>https://ooo.run/tags/NPM/</loc>
+    <loc>https://ooo.run/tags/Nginx/</loc>
     <lastmod>2026-10-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://ooo.run/tags/%E5%AE%89%E5%85%A8/</loc>
+    <loc>https://ooo.run/tags/Caddy/</loc>
     <lastmod>2026-10-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1627,13 +1664,6 @@
   </url>
   
   <url>
-    <loc>https://ooo.run/tags/Codex-APP/</loc>
-    <lastmod>2026-10-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://ooo.run/tags/GPT/</loc>
     <lastmod>2026-10-19</lastmod>
     <changefreq>weekly</changefreq>
@@ -1641,7 +1671,7 @@
   </url>
   
   <url>
-    <loc>https://ooo.run/tags/Three-js/</loc>
+    <loc>https://ooo.run/tags/Codex-APP/</loc>
     <lastmod>2026-10-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1656,6 +1686,13 @@
   
   <url>
     <loc>https://ooo.run/tags/React/</loc>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://ooo.run/tags/Three-js/</loc>
     <lastmod>2026-10-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1734,14 +1771,14 @@
 
   
   <url>
-    <loc>https://ooo.run/categories/%E6%95%99%E7%A8%8B/</loc>
+    <loc>https://ooo.run/categories/%E8%B5%84%E8%AE%AF/</loc>
     <lastmod>2026-10-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://ooo.run/categories/%E8%B5%84%E8%AE%AF/</loc>
+    <loc>https://ooo.run/categories/%E6%95%99%E7%A8%8B/</loc>
     <lastmod>2026-10-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
