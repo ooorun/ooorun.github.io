@@ -6,7 +6,7 @@
   <link href="https://ooo.run/atom.xml" rel="self"/>
   
   <link href="https://ooo.run/"/>
-  <updated>2026-10-19T08:38:51.505Z</updated>
+  <updated>2026-10-21T15:13:19.306Z</updated>
   <id>https://ooo.run/</id>
   
   <author>
@@ -15,6 +15,39 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>把金库密码设成 4？一文看懂 eMudhra 证书私钥泄露为何影响全球每个人</title>
+    <link href="https://ooo.run/post/why-emudhra-key-leak-matters.html"/>
+    <id>https://ooo.run/post/why-emudhra-key-leak-matters.html</id>
+    <published>2026-10-21T15:08:24.000Z</published>
+    <updated>2026-10-21T15:13:19.306Z</updated>
+    
+    <content type="html"><![CDATA[<p><strong>当你打开浏览器访问网上银行时，你怎么知道眼前这个页面是真的银行，而不是黑客精仿的钓鱼网站？</strong> </p><p>答案藏在浏览器地址栏旁边的安全认证机制里。最近爆发的 <strong>eMudhra（印度知名数字证书颁发机构，旗下品牌为 emSign）私钥缺陷事件</strong>，让 Google、苹果、微软、Mozilla 以及 Go 语言团队在同一天拉响了最高级别的紧急安全警报。</p><p>很多人的第一反应是：“我又没用过这家印度公司的产品，甚至都没听过它的名字，这关我什么事？”</p><p>在互联网的底层逻辑里，<strong>一家受信任的证书机构出事，全世界所有人的设备都会直接暴露在危险之中。</strong> 下面我们就用最通俗的语言，拆解这场让人啼笑皆非又细思极恐的安全大地震。</p><hr><h2 id="一、-什么是-CA？互联网的“护照管理局”"><a href="#一、-什么是-CA？互联网的“护照管理局”" class="headerlink" title="一、 什么是 CA？互联网的“护照管理局”"></a>一、 什么是 CA？互联网的“护照管理局”</h2><p>在现实生活中，你去银行办业务，银行看你的身份证或护照就能相信你是谁。为什么？因为身份证是由<strong>国家公安机关</strong>签发的，银行无条件信任公安机关的防伪印章。</p><p>在互联网上，这个“发证机关”就叫做 <strong>CA（Certificate Authority，证书颁发机构）</strong>。</p><ul><li>当你访问 <code>google.com</code> 或 <code>taobao.com</code> 时，网站会向你的浏览器出示一张“数字身份证”（即 TLS&#x2F;SSL 证书）。</li><li>你的手机和电脑（无论是 Windows、macOS、iOS 还是 Android）在出厂时，系统里就内置了一份<strong>“绝对信任的发证机关名单”（根证书库）</strong>。</li><li><strong>eMudhra 就是这份全球白名单里的正式成员之一。</strong> 只要盖有它家“数字印章”的网站，全世界的手机和浏览器都会默认放行，告诉用户：“这个网站是安全的、正牌的。”</li></ul><hr><h2 id="二、-离谱的缺陷：把金库密码设成了“4”"><a href="#二、-离谱的缺陷：把金库密码设成了“4”" class="headerlink" title="二、 离谱的缺陷：把金库密码设成了“4”"></a>二、 离谱的缺陷：把金库密码设成了“4”</h2><p>CA 机构用来给网站“盖章”的核心工具，叫做<strong>私钥（Private Key）</strong>。</p><p>按照现代密码学（如椭圆曲线加密 ECC）的设计，一个合格的私钥应该是一个极其庞大、完全随机生成的数字。大到什么程度？就算把全地球所有的超级计算机加起来不眠不休地猜，也需要算到宇宙毁灭才能猜中。因此，即使全天下都能看到公开的证书（公钥），也绝对反推不出背后的私钥。</p><p>然而，在最近披露的漏洞中，安全研究人员发现 eMudhra 旗下有 <strong>8 张核心中级证书（Intermediate CA）</strong> 的私钥生成过程出现了灾难性的代码缺陷——<strong>随机数生成器（RNG）几乎完全失效了。</strong></p><p>这导致了什么结果？</p><ul><li>正常情况下，私钥应该是一个几百位的天文数字。</li><li>而 eMudhra 生成的这 8 把私钥，竟然全都是<strong>小于 256 的整数</strong>！</li><li>安全研究员 Scott Helme 测试后震惊地发现，**其中一把核心私钥的数字竟然就是 <code>4</code>**。</li></ul><p>这就好比一家掌控着全球通行证的顶级印钞厂，花重金建造了厚达十米的钛合金金库大门，结果锁匠在装密码锁时偷懒，把密码设成了 <code>0004</code>。</p><p><strong>为什么说它“不需要被黑客偷走就已经泄露了”？</strong><br>因为证书本身是公开在互联网上的。任何人用一台普通家用笔记本电脑，写几行简单的代码，从 <code>1</code> 开始往上试，<strong>不到 1 秒钟（甚至用 AI 跑一句提示词）</strong>，就能从公开的证书里把这 8 把绝密私钥全部算出来。</p><hr><h2 id="三、-为什么这会影响到“每一个人”？"><a href="#三、-为什么这会影响到“每一个人”？" class="headerlink" title="三、 为什么这会影响到“每一个人”？"></a>三、 为什么这会影响到“每一个人”？</h2><p>对于普通网民和初级开发者来说，理解这件事的杀伤力，需要明白互联网信任链中的一个核心软肋：<strong>木桶效应（最弱一环决定整体安全）</strong>。</p><p>在浏览器的信任机制里，默认情况下，<strong>任何一家受信任的 CA，都可以为全世界任何一个域名签发证书。</strong></p><p>哪怕 Google、苹果自己用的证书是由 DigiCert 或 Let’s Encrypt 签发的，跟印度的 eMudhra 半毛钱关系都没有，但只要你的电脑系统信任 eMudhra，攻击者算出那把等于 <code>4</code> 的私钥后，就能干出下面两件极其恐怖的事：</p><h3 id="1-完美的“中间人攻击”与网站伪造（针对-6-张-TLS-证书）"><a href="#1-完美的“中间人攻击”与网站伪造（针对-6-张-TLS-证书）" class="headerlink" title="1. 完美的“中间人攻击”与网站伪造（针对 6 张 TLS 证书）"></a>1. 完美的“中间人攻击”与网站伪造（针对 6 张 TLS 证书）</h3><p>泄露的 8 把钥匙里，有 6 把是用来给网站签发 HTTPS 证书的。攻击者拿到钥匙后，可以自己开个假网站，然后用 eMudhra 的私钥给自己盖个章，签发一张写着 <code>www.google.com</code> 或你常用的某家银行域名的<strong>“真证书”</strong>。</p><p>当你连上咖啡馆、机场的公共 Wi-Fi，或者你的路由器、DNS 被劫持时：</p><ul><li>黑客把你的流量引向他伪造的假银行网站。</li><li>你的浏览器上前检查身份证，一看：“哟，有 eMudhra 的亲笔签名，而且在我的出厂信任名单里！”</li><li><strong>浏览器不会弹出任何红色的安全警告</strong>，地址栏依然显示安全锁标志。你输入的账号、密码、聊天记录，会在毫不知情的情况下被黑客全部截获解密。</li></ul><h3 id="2-给木马病毒穿上“正版免死金牌”（针对-2-张代码签名证书）"><a href="#2-给木马病毒穿上“正版免死金牌”（针对-2-张代码签名证书）" class="headerlink" title="2. 给木马病毒穿上“正版免死金牌”（针对 2 张代码签名证书）"></a>2. 给木马病毒穿上“正版免死金牌”（针对 2 张代码签名证书）</h3><p>更要命的是，这 8 把钥匙里还有 <strong>2 把是代码签名证书（Code Signing CA）</strong>。<br>平时我们在 Windows 或 Mac 上安装软件时，如果是个来历不明的病毒程序，系统会弹出大大的黄色或红色警告拦截它。但如果黑客用这把泄露的私钥给勒索病毒“签个名”，操作系统就会认为这是经过权威机构认证的合法企业软件，直接静音放行。</p><hr><h2 id="四、-全球紧急拆弹：科技巨头们做了什么？"><a href="#四、-全球紧急拆弹：科技巨头们做了什么？" class="headerlink" title="四、 全球紧急拆弹：科技巨头们做了什么？"></a>四、 全球紧急拆弹：科技巨头们做了什么？</h2><p>正因为这把“万能钥匙”谁都能在 1 秒内算出来，整个互联网基础设施在短短几十小时内上演了一场生死时速的“拆弹行动”：</p><table><thead><tr><th align="left">参与方</th><th align="left">紧急应对措施</th><th align="left">影响范围</th></tr></thead><tbody><tr><td align="left"><strong>Google (Chrome &#x2F; Android)</strong></td><td align="left">通过在线更新机制，直接拉黑这 8 张问题证书，并启动对 eMudhra 根证书的全面审查与移除程序。</td><td align="left">全球数十亿 Chrome 浏览器及安卓设备。</td></tr><tr><td align="left"><strong>Mozilla (Firefox)</strong></td><td align="left">启用 OneCRL 远程吊销机制，并连夜发布 Firefox 158.0.1 等紧急补丁版本将黑名单焊死在代码里。</td><td align="left">所有火狐浏览器及依赖 NSS 安全库的系统。</td></tr><tr><td align="left"><strong>Apple &amp; Microsoft</strong></td><td align="left">在各自的信任库（Trust Store）中紧急拉黑受影响的证书链，拦截伪造签名。</td><td align="left">全球 Windows、macOS、iPhone 和 iPad 用户。</td></tr><tr><td align="left"><strong>Go 语言团队 (Golang)</strong></td><td align="left">走最高优先级的 URGENT 通道发布紧急版本（CVE-2026-111943），在底层直接拒绝包含这 8 把公钥的任何连接。</td><td align="left">全球无数互联网公司的后端服务器、云原生基础设施（如 Docker&#x2F;K8s 生态）。</td></tr></tbody></table><hr><h2 id="五、-普通人与初级技术人员该做什么？"><a href="#五、-普通人与初级技术人员该做什么？" class="headerlink" title="五、 普通人与初级技术人员该做什么？"></a>五、 普通人与初级技术人员该做什么？</h2><p>这次事件给我们上了一堂生动的网络安全课：<strong>数字世界的信任是极其脆弱的，密码学算法本身固若金汤，但写代码和做配置的人却可能犯下最低级的错误。</strong></p><p>为了保护自己和公司的业务不受波及，建议立即采取以下行动：</p><ol><li><strong>普通用户：立即重启并更新你的浏览器和系统。</strong><br>去检查一下你的 Chrome、Edge、Firefox 或 Safari 是否有待重启的更新。虽然现代浏览器大多有自动后台推送黑名单的功能，但保持最新版本能确保那 8 把“假钥匙”在你的设备上彻底作废。如果近期上网看到浏览器弹出<strong>“您的连接不是私密连接”</strong>的红色拦截警告，<strong>千万不要点击“继续前往”</strong>。</li><li><strong>初级开发者 &#x2F; 运维人员：检查后端环境与证书链。</strong><ul><li><strong>后端环境升级：</strong> 如果你的服务端使用了 Go 语言（Golang）编写并且会主动发起外部 HTTPS 请求，或者在离线环境中使用了 Mozilla 的 <code>NSS</code> 库，请立刻升级到刚刚发布的紧急修复版本并重新编译部署（因为后端语言不会像浏览器那样自动接收远程黑名单更新）。</li><li><strong>排查自有域名：</strong> 检查公司业务是否采购过 <code>emSign</code>（eMudhra）签发的 SSL 证书。如果有，你的网站现在可能已经在用户的浏览器里报错瘫痪了，需立即更换为 Let’s Encrypt、DigiCert 或 Cloudflare 等其他机构的证书。</li></ul></li></ol>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;&lt;strong&gt;当你打开浏览器访问网上银行时，你怎么知道眼前这个页面是真的银行，而不是黑客精仿的钓鱼网站？&lt;/strong&gt; &lt;/p&gt;
+&lt;p&gt;答案藏在浏览器地址栏旁边的安全认证机制里。最近爆发的 &lt;strong&gt;eMudhra（印度知名数字证书颁发机构，旗下品牌为 emSi</summary>
+      
+    
+    
+    
+    <category term="笔记" scheme="https://ooo.run/categories/%E7%AC%94%E8%AE%B0/"/>
+    
+    
+    <category term="HTTPS" scheme="https://ooo.run/tags/HTTPS/"/>
+    
+    <category term="网络安全" scheme="https://ooo.run/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/"/>
+    
+    <category term="eMudhra" scheme="https://ooo.run/tags/eMudhra/"/>
+    
+    <category term="SSL证书" scheme="https://ooo.run/tags/SSL%E8%AF%81%E4%B9%A6/"/>
+    
+    <category term="漏洞分析" scheme="https://ooo.run/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"/>
+    
+  </entry>
   
   <entry>
     <title>告别“抽卡”：为什么 p5.js + p5.brush 在 Claude 动态手绘视频圈彻底火了？</title>
@@ -158,9 +191,9 @@
     <category term="教程" scheme="https://ooo.run/categories/%E6%95%99%E7%A8%8B/"/>
     
     
-    <category term="Hexo" scheme="https://ooo.run/tags/Hexo/"/>
-    
     <category term="Debian" scheme="https://ooo.run/tags/Debian/"/>
+    
+    <category term="Hexo" scheme="https://ooo.run/tags/Hexo/"/>
     
   </entry>
   
@@ -504,13 +537,13 @@
     <category term="教程" scheme="https://ooo.run/categories/%E6%95%99%E7%A8%8B/"/>
     
     
-    <category term="Linux" scheme="https://ooo.run/tags/Linux/"/>
-    
     <category term="Docker" scheme="https://ooo.run/tags/Docker/"/>
     
     <category term="Docker Compose" scheme="https://ooo.run/tags/Docker-Compose/"/>
     
     <category term="Debian" scheme="https://ooo.run/tags/Debian/"/>
+    
+    <category term="Linux" scheme="https://ooo.run/tags/Linux/"/>
     
   </entry>
   
@@ -566,32 +599,6 @@
     <category term="Git" scheme="https://ooo.run/tags/Git/"/>
     
     <category term="开发工具" scheme="https://ooo.run/tags/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>如何查询 Codex 赠送的重置机会的到期日期</title>
-    <link href="https://ooo.run/post/how-to-check-codex-reset-expiration.html"/>
-    <id>https://ooo.run/post/how-to-check-codex-reset-expiration.html</id>
-    <published>2026-06-29T07:48:09.000Z</published>
-    <updated>2026-07-09T19:53:11.900Z</updated>
-    
-    <content type="html"><![CDATA[<div class="flatpaper-note flatpaper-note--info"><span class="flatpaper-note__icon" aria-hidden="true"></span><div class="flatpaper-note__body"><p>更新: <strong>2026 年 7 月 10 日</strong>，OpenAI 推出 GPT-5.6 系列模型，同时推出新的 ChatGPT APP 取代了 Codex 应用，<strong>新版本中已内置到期时间显示</strong>。</p></div></div><p>2026 年 6 月份 Codex 的重置机制改为了可以存储的重置机会，并且由于一些 BUG 6 月份已经赠送了三次免费的重置机会，如通过邀请好友也可以额外获得最多三次的重置机会。不过重置次数不能无限期保存，每个重置次数只有 30 天的有效期，而 Codex 界面里不会显示每次重置机会的具体到期日期。</p><p>下面给大家提供一个简单的查询方法</p><h2 id="直接让-Codex-自己查询"><a href="#直接让-Codex-自己查询" class="headerlink" title="直接让 Codex 自己查询"></a>直接让 Codex 自己查询</h2><p>方法非常简单，只需要把下面的 <strong>提示词</strong> 发送给 Codex，让它使用本机凭证自行查询即可。</p><figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">请使用本机 Codex 凭证查一下 rate-limit reset credits：</span><br><span class="line"></span><br><span class="line">读取 `~/.codex/auth.json` 里的 `tokens.access_token`，请求接口：</span><br><span class="line">https://chatgpt.com/backend-api/wham/rate-limit-reset-credits</span><br><span class="line"></span><br><span class="line">要求：</span><br><span class="line"></span><br><span class="line">1. 不要打印 access_token、refresh_token、cookie 或完整唯一 ID</span><br><span class="line">2. 只汇总 available_count、每个 credit 的 status/title/granted_at/expires_at</span><br><span class="line">3. 把 granted_at/expires_at 从 UTC 转成本地时间</span><br><span class="line">4. 如果状态码返回 401，说明是凭证失效或没带对 Authorization header</span><br></pre></td></tr></table></figure><details class="flatpaper-note flatpaper-note--info"><summary class="flatpaper-note__title"><span class="flatpaper-note__icon" aria-hidden="true"></span><span class="flatpaper-note__label">回复示例</span><span class="flatpaper-note__chevron" aria-hidden="true"></span></summary><div class="flatpaper-note__body"><p>6 月份共赠送三次，我已经用掉了一次，所以显示还剩两次。</p><figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">请求成功，状态码 200。</span><br><span class="line">available_count: 2</span><br><span class="line">Credits:</span><br><span class="line">1. status: available</span><br><span class="line">    title: Full reset (Weekly + 5 hr)</span><br><span class="line">    granted_at: 2026-06-18 08:42:00 </span><br><span class="line">    expires_at: 2026-07-18 08:42:00 </span><br><span class="line"></span><br><span class="line">2. status: available</span><br><span class="line">    title: Full reset (Weekly + 5 hr)</span><br><span class="line">    granted_at: 2026-06-27 07:52:00 </span><br><span class="line">    expires_at: 2026-07-27 07:52:00 </span><br></pre></td></tr></table></figure></div></details><h2 id="OpenAI-赠送的重置记录"><a href="#OpenAI-赠送的重置记录" class="headerlink" title="OpenAI 赠送的重置记录"></a>OpenAI 赠送的重置记录</h2><h3 id="7-月份赠送记录（三次）"><a href="#7-月份赠送记录（三次）" class="headerlink" title="7 月份赠送记录（三次）"></a>7 月份赠送记录（三次）</h3><ol><li>推出重置保存机制时赠送：2026 年 6 月 12 日，到期日期为 <strong>7 月 12 日</strong></li><li>BUG 赠送：2026 年 6 月 18 日，到期日期 <strong>7 月 18 日</strong></li><li>BUG 赠送：2026 年 6 月 27 日，到期日期 <strong>7 月 27 日</strong></li></ol><p>我在 6 月 29 日的查询结果与记录一致，如果你有 X.com 账户，查看 <a href="https://x.com/thsottiaux">Tibo</a> 的推文获取最新 Codex 更新消息。</p><h3 id="7-月份赠送记录"><a href="#7-月份赠送记录" class="headerlink" title="7 月份赠送记录"></a>7 月份赠送记录</h3><ol><li>BUG 赠送：2026 年 7 月 2 日，到期日期 <strong>8 月 1 日</strong></li></ol><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>快看看你的重置机会什么时候到期吧。Plus 用户每周额度价值大约 100 美元，千万不要浪费了。</p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;div class=&quot;flatpaper-note flatpaper-note--info&quot;&gt;&lt;span class=&quot;flatpaper-note__icon&quot; aria-hidden=&quot;true&quot;&gt;&lt;/span&gt;&lt;div class=&quot;flatpaper-note__bo</summary>
-      
-    
-    
-    
-    <category term="笔记" scheme="https://ooo.run/categories/%E7%AC%94%E8%AE%B0/"/>
-    
-    
-    <category term="OpenAI" scheme="https://ooo.run/tags/OpenAI/"/>
-    
-    <category term="Codex" scheme="https://ooo.run/tags/Codex/"/>
     
   </entry>
   
